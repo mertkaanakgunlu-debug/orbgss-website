@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.8.0-web-hero-001c-aoi-acquisition — 2026-09-16 (WEB-HERO-001C, branch `feat/web-hero-001-predata-scene`)
+
+- accepted the WEB-HERO-001B Earth/satellite/camera scene at `e35bb16`; implemented WEB-HERO-001C on the same branch;
+- built the `hero_aoi_acquisition` scene: it `extends` `hero_earth_orbit` instead of copying it, reuses the 001B camera keyframes verbatim for frames 1–120, and continues that same move to frame 240 through acquisition and regional approach — one scene, one camera path, one AOI identity, no cut;
+- `hero/scripts/aoi_system.py` owns every AOI coordinate conversion and sampling decision and imports no `bpy`, so `validate_hero.py` checks the same numbers the renderer uses without launching Blender;
+- AOI corners come from the spherical destination formula applied to the configured centre/span/bearing; edges and interior are sampled by slerp between unit vectors and scaled by one radius, so sphere conformance is true by construction rather than by tuning — measured worst radial deviation is 0.68 m on a 6 371 km radius, which is single-precision transform error;
+- border and corner-lock ribbons are widened by rotating each sample *within its own tangent plane*, so both rails stay on the sphere instead of a flat strip being stretched over it;
+- beam registration is structural, not keyframed: each beam is a unit-length tapered tube with Copy Location on the satellite and Stretch To on its corner empty, so an endpoint is derived from the AOI every frame rather than being a constant that happens to match on one; measured tip-to-corner error stays at 2.2 m on beams up to 11 000 km;
+- the scan sweep is a band in the interior mesh's own AOI-local UV space, so it travels across the footprint without any possibility of detaching from the surface;
+- generated meshes are face-oriented by comparing each face normal against the direction it should face; a wrongly wound blended face renders as *nothing*, which cost a debugging pass when the footprint fill was present, correct and invisible;
+- the beams appearing to stop short of the AOI in EEVEE was blend-sorting against the atmosphere shell, not a geometry error — Cycles, the actual quality target, resolves them correctly; preview iteration on this scene should not be trusted for beam/footprint occlusion;
+- atmosphere shell gained an optional `silhouette_fade_start`, off unless a scene asks for it: 001B never flew close enough for the shell's hard outer edge to show, and at approach distance it became a straight-edged wedge across frame; `hero_earth_orbit` does not set it and rebuilds unchanged;
+- `validate_hero.py` grew 81 → 117 checks covering the AOI contract (points on the configured sphere, offset small enough to be a z-fighting guard rather than an altitude, four uniquely named corners, edges measuring the configured span, chord-to-arc sagitta ≤ 50 m, beams targeting the AOI system, no literal coordinate in an `aoi_system` spec, two fixtures resolving to genuinely different footprints); verified against nine deliberate regressions, all caught;
+- `hero/scripts/audit_aoi.py` measures the *built* scene in world space per frame; both fixtures pass all five checks;
+- discovered and documented that the Cycles+OptiX GPU path is not bit-reproducible here, so Phase A/B reproducibility is proven by pixel measurement against the renderer's own noise floor (`hero/scripts/compare_renders.py`, `hero/evidence/phase_ab_reproducibility.json`) rather than by checksum;
+- four Cycles evidence stills, a continuity contact sheet and a fixture A/B comparison committed under `hero/evidence/`, plus both geometry audits;
+- no new external asset (the whole AOI system is procedural), no scientific layer, no homepage integration, no deployment or DNS change.
+
 ## v0.7.1-web-hero-001b-visual-revision — 2026-09-16 (WEB-HERO-001B visual-acceptance revision, branch `feat/web-hero-001-predata-scene`)
 
 Narrow visual-polish revision on the reviewed WEB-HERO-001B scene; no composition, geography, camera-path, or scope change.

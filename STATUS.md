@@ -1,11 +1,11 @@
 # OrbGSS Website — WEB-HERO-001 branch status
 
-**Date:** 2026-09-15  
+**Date:** 2026-09-16  
 **Branch:** `feat/web-hero-001-predata-scene`  
 **Baseline:** accepted canonical `main@677bfa7672ac18c2c808ddaaf235ff12863de443`  
 **Authority-publication HEAD before implementation:** `0e572e9cfd1709a4e3eb6d3ca110390c79cc6668`  
-**Stage:** `WEB-HERO-001B — REVIEW_READY` (Earth/space/satellite/orbit cinematography implemented; WEB-HERO-001A accepted)  
-**Tracking:** parent `MER-97`; active phase `MER-99`  
+**Stage:** `WEB-HERO-001C — REVIEW_READY` (surface-conforming AOI acquisition and scan system implemented; WEB-HERO-001A accepted, WEB-HERO-001B accepted)  
+**Tracking:** parent `MER-97`; active phase `MER-100`  
 **Execution channel:** Claude Code Desktop
 
 ## Branch-specific authority override
@@ -25,9 +25,11 @@ All other still-valid website, rights, claim, deployment and safety rules remain
 
 `tasks/WEB-HERO-001A_PRODUCTION_SCAFFOLD.md` — **ACCEPTED** at `81a0b892a355a22d24c78193506ea138de1db017`.
 
-`tasks/WEB-HERO-001B_EARTH_SATELLITE_CINEMATOGRAPHY.md` — implemented, `REVIEW_READY`, awaiting review.
+`tasks/WEB-HERO-001B_EARTH_SATELLITE_CINEMATOGRAPHY.md` — **ACCEPTED** at `e35bb168f9b08300fac23bfc4148c3bbfa2a9874`.
 
-`WEB-HERO-001C` may start once this phase's accepted scene state is confirmed.
+`tasks/WEB-HERO-001C_AOI_SCAN_SYSTEM.md` — implemented, `REVIEW_READY`, awaiting review.
+
+`WEB-HERO-001D` may start once this phase's accepted acquisition system is confirmed. Do not start it before then.
 
 ## WEB-HERO-001A outcome
 
@@ -98,6 +100,60 @@ sun-direction term the Earth terminator uses, instead of glowing at a uniform de
 the starfield is two brightness-varied Voronoi layers plus a faint large-scale depth drift instead
 of one uniform-threshold layer. No composition, geography, camera-path or scope change; the three
 representative stills were re-rendered and replaced. See `CHANGELOG.md`.
+
+## WEB-HERO-001C outcome
+
+**Implementation HEAD:** `9a79a03e742d007b8abba2e4c6ec572e20df0155`
+
+The `hero_aoi_acquisition` scene `extends` the accepted `hero_earth_orbit` rather than copying it,
+so the Earth/atmosphere/satellite/starfield/lighting system has exactly one definition. Frames
+1–120 reuse the WEB-HERO-001B camera keyframes verbatim and the shot continues, in one move, to
+frame 240 through acquisition and regional approach. `hero_common.resolve_scene_spec` performs the
+inheritance and holds no `bpy` import, so the validator resolves exactly the scene the renderer
+builds.
+
+`hero/scripts/aoi_system.py` owns all AOI geometry and, like the resolver, imports no `bpy`, so
+the validator checks the same numbers the renderer uses. Corners come from the spherical
+destination formula applied to the configured centre, span and bearing; edges and the interior are
+sampled by slerp between unit vectors and scaled by one radius, so conformance to the sphere is
+true by construction rather than by tuning. Border and corner-lock ribbons widen by rotating each
+sample within its own tangent plane, keeping both rails on the sphere. Measured worst-case radial
+deviation across the built scene is 0.68 m on a 6 371 km radius — single-precision transform
+error, not approximation.
+
+Registration is structural, not keyframed. The AOI is parented to the Earth, so footprint, corner
+locks and per-corner target empties ride the globe's rotation. Each beam is a unit-length tapered
+tube driven by a Copy Location constraint on the satellite and a Stretch To constraint on its
+corner empty, so a beam endpoint is *derived* from the AOI at every frame instead of being a
+constant that happens to match on one; measured tip-to-corner error stays at 2.2 m on beams up to
+11 000 km long. The scan sweep is a band in the interior mesh's own AOI-local UV space, so it
+cannot detach from the surface. The validator rejects any literal coordinate inside an
+`aoi_system` spec for the same reason.
+
+Configurability is a contract, not a demo: `aoi_injection_interface` ships two design fixtures
+differing in centre, hemisphere, span (420 km / 700 km), bearing (0° / 25°) and sampling density,
+and `--aoi-fixture` switches any build or render entrypoint between them with no code change.
+`hero/evidence/hero_aoi_fixture_comparison_f130.png` shows the same scene at the same frame with
+only the fixture config changed.
+
+`hero/scripts/audit_aoi.py` measures the built scene in world space per frame; both fixtures pass
+all five checks. `validate_hero.py` grew from 81 to 117 checks and was verified against nine
+deliberate regressions, each of which it caught.
+
+The atmosphere shell gained an optional `silhouette_fade_start`, off unless a scene asks for it:
+WEB-HERO-001B never flew close enough for the shell's hard outer edge to show, and at Phase C
+approach distances it became a straight-edged wedge across frame. `hero_earth_orbit` does not set
+it and rebuilds unchanged.
+
+Pre-data throughout. Both fixtures are neutral design placeholders carrying no measurement
+meaning; the footprint interior shows only a faint cyan wash, a denser already-swept region and
+the sweep band, with no legend, scale or classification. No new external asset was introduced —
+the whole AOI system is procedural. No public-site, imagery, deployment or DNS change.
+
+**Known limitation carried to WEB-HERO-001D:** the Phase B Earth albedo map is 2 048 px wide, so a
+420 km footprint spans roughly 27 texels and the surface is visibly soft at the closest approach.
+The approach was moderated rather than swapping the accepted Phase B texture. A higher-resolution
+NASA Blue Marble composite is the fix, and it belongs with Phase D's quality gate.
 
 Phase graph:
 

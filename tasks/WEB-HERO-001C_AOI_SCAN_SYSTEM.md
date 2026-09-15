@@ -4,7 +4,9 @@
 **Blocked by:** `MER-99 / WEB-HERO-001B`  
 **Authority:** `docs/WEB_HERO_001_AUTHORITY.md` + Drive CURRENT Hero Visual & Production Authority v1.0  
 **Branch:** `feat/web-hero-001-predata-scene`  
-**State:** `BLOCKED_BY_WEB-HERO-001B`
+**State:** `REVIEW_READY`  
+**Predecessor:** `WEB-HERO-001B` accepted at `e35bb168f9b08300fac23bfc4148c3bbfa2a9874`  
+**Implementation HEAD:** `9a79a03e742d007b8abba2e4c6ec572e20df0155`
 
 ## Outcome
 
