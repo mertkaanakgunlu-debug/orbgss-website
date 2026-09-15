@@ -6,7 +6,7 @@
 **Accepted WEB-001 head:** `677bfa7672ac18c2c808ddaaf235ff12863de443`.  
 **Accepted WEB-002 implementation head:** `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`.  
 **Accepted WEB-003 implementation head:** `3670d43bece4ffba657a3d9645cbea20c7e698bf`.  
-**Current tracking:** Linear MER-90 — WEB-002 accepted/complete; MER-91 — WEB-003 accepted/complete; MER-92 — WEB-004 next / not started.  
+**Current tracking:** Linear MER-90 — WEB-002 accepted/complete; MER-91 — WEB-003 accepted/complete; MER-92 — WEB-004 implemented, REVIEW_READY on `feat/web-004-preview-hardening`.  
 **Status:** WEB-001, WEB-002 and WEB-003 are accepted/complete. WEB-003 reached `REVIEW_READY`, completed one bounded conformant Product review revision, and was terminally accepted at `3670d43bece4ffba657a3d9645cbea20c7e698bf`; no Product/Science semantic change was required. Exact WEB-002 contract: `tasks/WEB-002_PRODUCT_PROOF.md`; exact WEB-003 contract: `tasks/WEB-003_PUBLIC_SITE_DEPTH.md`. Website implementation in this workstream proceeds directly through Claude Code Desktop under Product authority; E&D is reserved for the post-Control-Plane semi-automated/headless Claude execution flow. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for non-superseded imagery, palette, on-image label, logo and claim-discipline rules.
 
 ## 1. Brand hierarchy
@@ -116,7 +116,7 @@ WEB-001 → WEB-002 → WEB-003 → WEB-004 → WEB-005 → WEB-006
 - **WEB-001** — foundation/homepage shell — **ACCEPTED / COMPLETE** at `677bfa7672ac18c2c808ddaaf235ff12863de443`.
 - **WEB-002** — product-proof/geothermal proof — **ACCEPTED / COMPLETE** at implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`.
 - **WEB-003** — public-site depth/credibility/conversion/bilingual content — **ACCEPTED / COMPLETE** at implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf`.
-- **WEB-004** — responsive, accessibility, performance and hosted preview acceptance — next; exact task publication may proceed under Product ownership, but implementation requires deliberate CTO approval.
+- **WEB-004** — responsive, accessibility, performance and hosted preview acceptance — **IMPLEMENTED / REVIEW_READY** on `feat/web-004-preview-hardening`, from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4` under authority publication `3a4d8e006add2725d45b02071bda654be5bd09f5`. Evidence: `docs/WEB-004_HARDENING_EVIDENCE.md`. Two decisions are routed to Product with the review: homepage LCP 3.2 s against the 2.5 s target (residual is an accepted checksummed proof derivative WEB-004 may not re-encode), and the score-legend `image-aspect-ratio` deviation (Best Practices 96, above its ≥ 95 floor). Product performs terminal acceptance/merge.
 - **WEB-005** — final cinematic hero integration/release candidate — deferred behind WEB-004 and deliberate CTO approval.
 - **WEB-006** — production domain cutover (`orbgss.com` via Squarespace → Vercel) — deferred; explicit CTO human gate required for DNS writes.
 

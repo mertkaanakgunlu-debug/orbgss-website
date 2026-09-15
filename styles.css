@@ -28,7 +28,10 @@ button,a{-webkit-tap-highlight-color:transparent}
 
 /* ---------- header / navigation ---------- */
 .site-header{height:var(--header-h);padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(4,12,18,.96);position:relative;z-index:40}
-.brand{display:inline-flex;align-items:center}
+/* Padding, not a larger wordmark: WCAG 2.5.8 wants a >=24px activation box and the bare 21px
+   line box of the wordmark was short of it. The header centres its children, so the extra box
+   height changes nothing visually. */
+.brand{display:inline-flex;align-items:center;padding:6px 0}
 .brand-wordmark{font-size:24px;font-weight:430;letter-spacing:-.035em;line-height:1}.brand-wordmark span{color:var(--accent)}
 .main-nav{display:flex;align-items:center;justify-content:flex-end;gap:clamp(22px,2.8vw,44px);font-size:10px;text-transform:uppercase;letter-spacing:.17em}
 .nav-list{display:flex;align-items:center;gap:clamp(24px,3.2vw,52px);list-style:none;margin:0;padding:0}
@@ -46,7 +49,9 @@ button,a{-webkit-tap-highlight-color:transparent}
 .submenu a:hover,.submenu a:focus-visible{opacity:1;background:rgba(67,191,240,.08)}
 .submenu a:focus-visible{outline-offset:-3px}
 .lang-switch{display:flex;align-items:center;gap:8px;padding-left:clamp(20px,2.6vw,40px);border-left:1px solid var(--line)}
-.lang-btn{background:none;border:0;padding:6px 3px;color:var(--dim);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;transition:color .2s ease}
+/* min-width, not a bigger label: at 10px uppercase the two-letter codes measured 21-22px wide on
+   desktop, just under the 24px WCAG 2.5.8 target. The mobile rules below already raise them to 44px. */
+.lang-btn{background:none;border:0;padding:6px 5px;min-width:24px;color:var(--dim);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;transition:color .2s ease}
 .lang-btn:hover{color:var(--text)}
 .lang-btn[aria-pressed="true"]{color:var(--accent)}
 .lang-sep{color:var(--dim);opacity:.55}
@@ -176,7 +181,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 /* ---------- contact beam ---------- */
 .contact-beam{padding:clamp(38px,4.8vw,68px) var(--pad);display:grid;grid-template-columns:minmax(200px,.85fr) minmax(0,1.55fr) auto;gap:clamp(28px,5vw,88px);align-items:center;background:linear-gradient(90deg,#061018,#08131b);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .contact-actions{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
-.contact-mail{font-size:13px;letter-spacing:.06em;padding-bottom:2px;border-bottom:1px solid rgba(255,255,255,.35);transition:border-color .2s ease}.contact-mail:hover{border-bottom-color:#fff}
+.contact-mail{display:inline-block;font-size:13px;letter-spacing:.06em;padding:4px 0 4px;border-bottom:1px solid rgba(255,255,255,.35);transition:border-color .2s ease}.contact-mail:hover{border-bottom-color:#fff}
 
 /* ---------- WEB-003: deep public route pages ---------- */
 /* Shared page header: kicker + H1 + intro, used at the top of every deep route.
@@ -212,14 +217,19 @@ button,a{-webkit-tap-highlight-color:transparent}
 /* Contact routes: one clear next action per row, no form, no backend. */
 .contact-options{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
 .contact-option{display:grid;grid-template-columns:minmax(160px,.6fr) minmax(0,1.4fr) auto;gap:clamp(16px,3vw,40px);align-items:center;padding:28px 0;border-bottom:1px solid var(--line)}
-.contact-option h3{margin:0;font-size:clamp(15px,1.2vw,19px);font-weight:430;letter-spacing:-.01em}
+/* These are the first headings under the page H1, so they are H2s: /contact/ has no intermediate
+   section heading to hang an H3 from, and skipping a level broke the document outline. */
+.contact-option h2{margin:0;font-size:clamp(15px,1.2vw,19px);font-weight:430;letter-spacing:-.01em}
 .contact-option p{margin:6px 0 0;font-size:14.5px;line-height:1.6;color:#a9b5bd;max-width:52ch}
 .contact-direct{margin-top:28px;display:flex;align-items:baseline;gap:16px;color:var(--dim);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
 
 /* ---------- footer ---------- */
 .site-footer{min-height:180px;padding:34px var(--pad) 46px;display:flex;justify-content:space-between;align-items:flex-end;gap:60px;background:#050d13;border-top:1px solid var(--line)}
 .footer-brand img{width:230px;height:auto;margin-left:-5px}.footer-brand span{display:block;margin-top:2px;font-size:8.5px;text-transform:uppercase;letter-spacing:.25em;color:#7f8d97}
-.footer-right{max-width:760px;text-align:right}.footer-right nav{display:flex;justify-content:flex-end;gap:30px;font-size:8.5px;text-transform:uppercase;letter-spacing:.16em;margin-bottom:18px}.footer-right nav a{opacity:.8}.footer-right nav a:hover{opacity:1}.footer-right p{font-size:9px;line-height:1.65;color:#73838d;margin:6px 0}.footer-right .attribution{max-width:690px;margin-left:auto}
+/* The footer links sit at 8.5px, so their bare line box was only 11px tall — well under the 24px
+   WCAG 2.5.8 activation target. Vertical padding gives them a real target without enlarging the
+   type or loosening the footer's density; the negative block margin keeps the original spacing. */
+.footer-right{max-width:760px;text-align:right}.footer-right nav{display:flex;justify-content:flex-end;gap:30px;font-size:8.5px;text-transform:uppercase;letter-spacing:.16em;margin:-7px 0 11px}.footer-right nav a{opacity:.8;padding:7px 0}.footer-right nav a:hover{opacity:1}.footer-right p{font-size:9px;line-height:1.65;color:#73838d;margin:6px 0}.footer-right .attribution{max-width:690px;margin-left:auto}
 
 /* ---------- tablet / mobile ---------- */
 @media(max-width:1180px){

@@ -60,7 +60,40 @@
           "hero"
         ],
         "note": "Hero poster only. Story slots now carry WEB-002 product proof. WEB-005 replaces the hero visual."
-      }
+      },
+      "derivatives": [
+        {
+          "path": "assets/imagery/crater-lake-2023-900.webp",
+          "role": "hero-poster-responsive",
+          "width_px": 900,
+          "height_px": 562,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/crater-lake-2023.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 151832,
+          "sha256": "8f3666319309973b753ce6d93d83cac743d616b840bd5ef12217ccdd3c2034f4"
+        },
+        {
+          "path": "assets/imagery/crater-lake-2023-1400.webp",
+          "role": "hero-poster-responsive",
+          "width_px": 1400,
+          "height_px": 875,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/crater-lake-2023.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 284940,
+          "sha256": "699dcf1a334e498171ef424860ba8b514ee99d76d47d9590d719f3d8b00d4690"
+        },
+        {
+          "path": "assets/imagery/crater-lake-2023-1800.webp",
+          "role": "hero-poster-responsive",
+          "width_px": 1800,
+          "height_px": 1125,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/crater-lake-2023.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 379334,
+          "sha256": "e41500298d0e03797cf19161de17ad9e20f77c40c087f8e8c70b51c4be726f48"
+        }
+      ],
+      "derivation_note": "WEB-004 presentation derivatives of the recorded hero composite. Resize and re-encode only: the pixels remain the same OrbGSS natural-color Landsat composite. Shipped so the hero LCP element is not a 553 KiB JPEG on mobile."
     },
     {
       "id": "yellowstone-2013",

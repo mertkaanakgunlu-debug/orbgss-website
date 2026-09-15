@@ -6,7 +6,7 @@
 **Reference/upstream only:** `baran-orbgss/website`  
 **Accepted baseline:** `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4` (WEB-003 accepted/published; accepted WEB-003 implementation head `3670d43bece4ffba657a3d9645cbea20c7e698bf`).  
 **Branch:** `feat/web-004-preview-hardening`  
-**Product state:** `READY_FOR_CTO_APPROVAL — NOT STARTED`
+**Product state:** `IMPLEMENTED — REVIEW_READY` (CTO start approval given; implemented on `feat/web-004-preview-hardening`. Evidence: `docs/WEB-004_HARDENING_EVIDENCE.md`. Two items routed to Product with the review: homepage LCP 3.2 s against the 2.5 s target, and the score-legend `image-aspect-ratio` deviation.)
 
 ## Outcome
 

@@ -6,5 +6,12 @@
   "display": "standalone",
   "background_color": "#061018",
   "theme_color": "#061018",
-  "icons": []
+  "icons": [
+    {
+      "src": "/assets/mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }

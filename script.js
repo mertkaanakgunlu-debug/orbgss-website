@@ -599,6 +599,28 @@ if (menuItem && trigger) {
 }
 
 /* ------------------------------------------------------------------ */
+/* WEB-004: a viewport or orientation change must not leave stale       */
+/* disclosure state. Crossing the 980px breakpoint with the mobile menu */
+/* open used to keep .main-nav flagged open and leave the now-hidden    */
+/* menu button reporting aria-expanded="true" with its "Close           */
+/* navigation" label, and the Solutions submenu stayed visibly open on  */
+/* the desktop bar with no pointer or focus inside it. Both are reset   */
+/* on the breakpoint crossing, which is also what a phone rotation      */
+/* into a wide landscape layout triggers.                              */
+/* ------------------------------------------------------------------ */
+function resetNavState() {
+  closeNav();
+  setSubmenu(false);
+  openedByFocus = false;
+  openedByHover = false;
+}
+if (typeof desktopLayout.addEventListener === 'function') {
+  desktopLayout.addEventListener('change', resetNavState);
+} else if (typeof desktopLayout.addListener === 'function') {
+  desktopLayout.addListener(resetNavState);
+}
+
+/* ------------------------------------------------------------------ */
 /* Escape: close dropdown first, then the mobile menu                   */
 /* ------------------------------------------------------------------ */
 document.addEventListener('keydown', (event) => {
@@ -637,11 +659,38 @@ document.querySelectorAll('.panel-image, .story-panel > img, .layer-pane > img')
 /* Without JavaScript the first pane stays visible and the others stay  */
 /* hidden, which is still a truthful single-layer panel.                */
 /* ------------------------------------------------------------------ */
+/* WEB-004: promote a deferred layer's data-src/data-srcset to the real attributes. The inactive
+   evidence layers ship deferred so they do not compete with the hero during the initial load;
+   this runs when the switch is approaching the viewport, well before anyone can press a tab. */
+function promoteDeferredImages(root) {
+  root.querySelectorAll('img[data-src]').forEach((image) => {
+    const srcset = image.getAttribute('data-srcset');
+    if (srcset) {
+      image.setAttribute('srcset', srcset);
+      image.removeAttribute('data-srcset');
+    }
+    image.setAttribute('src', image.getAttribute('data-src'));
+    image.removeAttribute('data-src');
+  });
+}
+
 document.querySelectorAll('.layer-switch[role="tablist"]').forEach((tablist) => {
   const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
   if (tabs.length < 2) return;
   const panes = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')));
   if (panes.some((pane) => !pane)) return;
+
+  const stack = tablist.closest('.story-panel') || tablist.parentElement;
+  if (typeof IntersectionObserver === 'function') {
+    const loader = new IntersectionObserver((entries, self) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      promoteDeferredImages(stack);
+      self.disconnect();
+    }, { rootMargin: '600px 0px' });
+    loader.observe(stack);
+  } else {
+    promoteDeferredImages(stack);
+  }
 
   function select(index, { focus = false } = {}) {
     tabs.forEach((tab, i) => {
@@ -655,8 +704,15 @@ document.querySelectorAll('.layer-switch[role="tablist"]').forEach((tablist) => 
     if (focus) tabs[index].focus();
   }
 
+  // Defensive: a reader who reaches the switch before the observer fired must still get a layer.
+  // This is deliberately on the interaction handlers rather than inside select(), because select()
+  // also runs once at start-up to adopt the authored state — promoting there would fetch the
+  // deferred layers during the initial load and undo the deferral entirely.
+  tablist.addEventListener('pointerdown', () => promoteDeferredImages(stack));
+  tablist.addEventListener('focusin', () => promoteDeferredImages(stack));
+
   tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => select(index));
+    tab.addEventListener('click', () => { promoteDeferredImages(stack); select(index); });
     tab.addEventListener('keydown', (event) => {
       const last = tabs.length - 1;
       let next = null;
@@ -666,9 +722,143 @@ document.querySelectorAll('.layer-switch[role="tablist"]').forEach((tablist) => 
       else if (event.key === 'End') next = last;
       if (next === null) return;
       event.preventDefault();
+      promoteDeferredImages(stack);
       select(next, { focus: true });
     });
   });
 
   select(Math.max(0, tabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true')));
 });
+
+/* ------------------------------------------------------------------ */
+/* WEB-004 measured caption tone                                        */
+/*                                                                      */
+/* WEB-002 chose each proof panel's caption tone by hand, from the      */
+/* measured luminance of the region the caption sits over. That rule is */
+/* right; applying it once is not. Story panels crop their raster with  */
+/* object-fit: cover, so the pixels underneath the bottom-right caption */
+/* change every time the viewport changes shape. Measured on the        */
+/* accepted build, the light captions read 5.1:1 at 375px but only      */
+/* 2.4-2.9:1 at 1440px, and ALT-01/ALT-02 invert outright between       */
+/* 768px and 1440px — so no single authored value can be correct at     */
+/* every width.                                                         */
+/*                                                                      */
+/* The fix applies WEB-002's own rule continuously: sample the rendered */
+/* region, keep whichever of the two accepted tones contrasts better.   */
+/* The raster is never touched, read back or re-rendered — only the     */
+/* caption's own colour changes, and only between tones the design      */
+/* already ships. Without JavaScript, or if the canvas cannot be read,  */
+/* the authored WEB-002 tone stays exactly as it is.                    */
+/* ------------------------------------------------------------------ */
+
+/* Relative luminance at which the accepted light caption (#fbfdfe) and the accepted dark caption
+   (#050d13) contrast equally against their backdrop. Above it the dark tone wins, below it the
+   light tone does. Derived from the WCAG contrast formula for those two exact colours. */
+const CAPTION_TONE_CROSSOVER = 0.185;
+
+function backdropLuminance(label, image) {
+  if (!image || !image.naturalWidth || !image.naturalHeight) return null;
+  const labelBox = label.getBoundingClientRect();
+  const imageBox = image.getBoundingClientRect();
+  if (!labelBox.width || !labelBox.height || !imageBox.width || !imageBox.height) return null;
+
+  // Undo object-fit: cover to find which part of the raster is actually under the caption.
+  // object-position is read rather than assumed to be centred: the story panels all use the
+  // default 50% 50%, but the hero crops at 68% on narrow viewports, and a panel that ever picks
+  // its own crop would otherwise be measured against the wrong pixels without anything failing.
+  const position = window.getComputedStyle(image).objectPosition.split(' ');
+  const posX = (parseFloat(position[0]) || 0) / 100;
+  const posY = (parseFloat(position[1]) || 0) / 100;
+  const scale = Math.max(imageBox.width / image.naturalWidth, imageBox.height / image.naturalHeight);
+  const originX = imageBox.left + (imageBox.width - image.naturalWidth * scale) * posX;
+  const originY = imageBox.top + (imageBox.height - image.naturalHeight * scale) * posY;
+  const sx = Math.max(0, (labelBox.left - originX) / scale);
+  const sy = Math.max(0, (labelBox.top - originY) / scale);
+  const sw = Math.min(image.naturalWidth - sx, labelBox.width / scale);
+  const sh = Math.min(image.naturalHeight - sy, labelBox.height / scale);
+  if (sw <= 1 || sh <= 1) return null;
+
+  // Sample small: the caption only needs the average tone under it, not a faithful copy.
+  const width = Math.max(1, Math.min(96, Math.round(sw)));
+  const height = Math.max(1, Math.min(32, Math.round(sh)));
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext('2d', { willReadFrequently: true });
+  if (!context) return null;
+
+  let pixels;
+  try {
+    context.drawImage(image, sx, sy, sw, sh, 0, 0, width, height);
+    pixels = context.getImageData(0, 0, width, height).data;
+  } catch (error) {
+    return null; /* cross-origin or otherwise unreadable: keep the authored tone */
+  }
+
+  const channel = (value) => {
+    const v = value / 255;
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  };
+  let total = 0;
+  for (let i = 0; i < pixels.length; i += 4) {
+    total += 0.2126 * channel(pixels[i]) + 0.7152 * channel(pixels[i + 1]) + 0.0722 * channel(pixels[i + 2]);
+  }
+  return total / (pixels.length / 4);
+}
+
+function tunePanel(panel) {
+  const label = panel.querySelector('.scene-label');
+  const image = panel.querySelector('img');
+  if (!label || !image) return;
+  const luminance = backdropLuminance(label, image);
+  if (luminance === null) return;
+  panel.setAttribute('data-label-tone', luminance > CAPTION_TONE_CROSSOVER ? 'dark' : 'light');
+}
+
+/* Only panels at or near the viewport are measured. Reading pixels back from seven full-size
+   rasters in one go cost ~100ms of blocking time on a mid-range phone, for captions the reader
+   could not see yet; spread across the scroll it costs nothing anyone can perceive. */
+const captionPanels = Array.from(document.querySelectorAll('[data-label-tone]'));
+const nearViewport = new Set();
+
+function tuneNearbyPanels() {
+  nearViewport.forEach(tunePanel);
+}
+
+let captionToneTimer = null;
+function scheduleCaptionTones() {
+  window.clearTimeout(captionToneTimer);
+  captionToneTimer = window.setTimeout(tuneNearbyPanels, 150);
+}
+
+if (captionPanels.length && typeof IntersectionObserver === 'function') {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        nearViewport.add(entry.target);
+        tunePanel(entry.target);
+      } else {
+        nearViewport.delete(entry.target);
+      }
+    });
+  }, { rootMargin: '250px 0px' });
+  captionPanels.forEach((panel) => {
+    observer.observe(panel);
+    // A lazy raster usually arrives after the panel is already in view, so the first useful
+    // measurement is the one taken when it finishes decoding.
+    const image = panel.querySelector('img');
+    if (image && !image.complete) {
+      image.addEventListener('load', () => { if (nearViewport.has(panel)) tunePanel(panel); }, { once: true });
+    }
+  });
+  window.addEventListener('resize', scheduleCaptionTones);
+} else {
+  /* No IntersectionObserver: measure everything once, late, and on resize. */
+  captionPanels.forEach((panel) => {
+    nearViewport.add(panel);
+    const image = panel.querySelector('img');
+    if (image && !image.complete) image.addEventListener('load', scheduleCaptionTones, { once: true });
+  });
+  window.addEventListener('resize', scheduleCaptionTones);
+  scheduleCaptionTones();
+}

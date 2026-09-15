@@ -84,6 +84,8 @@ class SiteParser(HTMLParser):
         super().__init__()
         self.ids: set[str] = set()
         self.img_srcs: list[str] = []
+        # Responsive candidates from img[srcset] and link[rel=preload][imagesrcset] (WEB-004).
+        self.img_srcsets: list[str] = []
         self.links: list[str] = []
         self.text: list[str] = []
         self.claim_text: list[str] = []
@@ -125,6 +127,29 @@ class SiteParser(HTMLParser):
             self.visual_slots.append((str(data["data-visual-slot"]), str(data.get("data-visual-status") or "")))
         if tag == "img" and data.get("src"):
             self.img_srcs.append(str(data["src"]))
+        # WEB-004: a deferred layer (data-src, promoted by script.js when the section is reached)
+        # is still imagery this page publishes, so it stays inside the provenance checks. Without
+        # this, moving a proof raster to data-src would silently exempt it from them.
+        if tag == "img" and data.get("data-src"):
+            self.img_srcs.append(str(data["data-src"]))
+        if data.get("data-srcset"):
+            for candidate in str(data["data-srcset"]).split(","):
+                url = candidate.strip().split()[0] if candidate.strip() else ""
+                if url:
+                    self.img_srcsets.append(url)
+        # WEB-004: responsive candidates are real shipped imagery too. Collecting them keeps a
+        # derivative from entering the page without a provenance/checksum record just because it
+        # was referenced from srcset rather than src.
+        if data.get("srcset"):
+            for candidate in str(data["srcset"]).split(","):
+                url = candidate.strip().split()[0] if candidate.strip() else ""
+                if url:
+                    self.img_srcsets.append(url)
+        if tag == "link" and str(data.get("rel") or "").lower() == "preload" and data.get("imagesrcset"):
+            for candidate in str(data["imagesrcset"]).split(","):
+                url = candidate.strip().split()[0] if candidate.strip() else ""
+                if url:
+                    self.img_srcsets.append(url)
         if tag == "a" and data.get("href"):
             self.links.append(str(data["href"]))
 
@@ -201,8 +226,41 @@ def main() -> int:
         elif path.stat().st_size < 50_000:
             fail(f"production imagery unexpectedly small: {local}", errors)
 
-    manifest_html_paths = {src for src in parser.img_srcs if src.startswith("assets/imagery/")}
-    extra = manifest_html_paths - scene_paths
+    # ------------------------------------------------------------------
+    # WEB-004 scene derivatives: the responsive hero candidates are resize-and-encode copies of a
+    # recorded scene, so they carry the same discipline as the WEB-002 proof derivatives — recorded
+    # path, byte size and SHA-256, recomputed here on every run. A derivative that is edited,
+    # re-encoded or swapped without updating the manifest fails the build rather than shipping as
+    # unprovenanced imagery.
+    # ------------------------------------------------------------------
+    scene_derivative_paths: set[str] = set()
+    for scene in scenes:
+        for deriv in scene.get("derivatives", []):
+            rel = str(deriv.get("path", ""))
+            sid = scene.get("id", "<unknown>")
+            if not rel:
+                fail(f"scene {sid!r} has a derivative without a path", errors)
+                continue
+            scene_derivative_paths.add(rel)
+            for key in ("role", "width_px", "format", "operation", "bytes", "sha256"):
+                if deriv.get(key) in (None, ""):
+                    fail(f"scene derivative {rel} missing field: {key}", errors)
+            path = ROOT / rel
+            if not path.exists():
+                fail(f"scene derivative missing from repository: {rel}", errors)
+                continue
+            recorded = str(deriv.get("sha256", ""))
+            actual = sha256_of(path)
+            if recorded != actual:
+                fail(f"scene derivative checksum mismatch for {rel}: "
+                     f"manifest {recorded[:12]}… != file {actual[:12]}…", errors)
+            if deriv.get("bytes") not in (None, path.stat().st_size):
+                fail(f"scene derivative byte size mismatch for {rel}", errors)
+
+    manifest_html_paths = {
+        src for src in parser.img_srcs + parser.img_srcsets if src.startswith("assets/imagery/")
+    }
+    extra = manifest_html_paths - scene_paths - scene_derivative_paths
     if extra:
         fail(f"HTML imagery paths missing from provenance manifest: {sorted(extra)}", errors)
 

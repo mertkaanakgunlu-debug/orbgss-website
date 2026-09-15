@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.9.0-web-004-preview-hardening — 2026-09-16 (WEB-004, MER-92, branch `feat/web-004-preview-hardening`)
+
+Hardening and acceptance of the accepted six-route site. No redesign, no new routes, no change to
+product, science or claim semantics. Full measurements in `docs/WEB-004_HARDENING_EVIDENCE.md`.
+
+- **Homepage performance 77 → 94** (Lighthouse 13.4.1, mobile profile, simulated Slow-4G), LCP 6.5 s → 3.2 s, CLS 0, TBT 0 ms. Total page transfer fell **1369.6 KiB → 645.1 KiB (−53%)**. Every route now clears the task's Accessibility / Best Practices / SEO ≥ 95 and Performance ≥ 90 floors.
+- **Hero delivery.** The 553 KiB JPEG that served every viewport now has three recorded WebP derivatives (900 / 1400 / 1800), wired with `srcset`/`sizes` and a matching `<link rel="preload" imagesrcset>` so the poster is discovered during the initial HTML scan rather than after the stylesheet. A 375 px phone fetches ~148 KiB instead of 553 KiB. Resize-and-encode only — no crop, colour, tone or gamma change — and each derivative is recorded in `assets/imagery/sources.json` with its operation, byte size and SHA-256.
+- **Inactive evidence layers are deferred.** All three evidence rasters used to load during the initial page load; the two nobody was looking at cost 340 KiB and six performance points. They now carry `data-src`/`data-srcset` and are promoted as the evidence section approaches the viewport, so switching stays instant. Without JavaScript the inactive panes are permanently hidden, so not fetching them is the truthful behaviour.
+- **Caption contrast is now measured, not assumed.** `object-fit: cover` re-crops each proof raster as the viewport changes shape, so the pixels under the bottom-right caption move — and the WEB-002 hand-chosen tones measured **2.84:1, 3.53:1 and 4.21:1** at some widths, below WCAG 1.4.3. `script.js` now applies WEB-002's own rule continuously: sample the rendered region, keep whichever of the two already-accepted tones contrasts better. Every caption now clears 4.5:1 at 375 / 768 / 1024 / 1440 (worst case 4.58:1). The raster is never touched and the caption is still bare monospace text with no card, box or band; without JavaScript the authored tone stands.
+- **Viewport-change state reset.** Crossing the 980 px breakpoint with the mobile menu open left the hidden menu button reporting `aria-expanded="true"` and left the Solutions submenu visibly open on the desktop bar. Both disclosures now reset on the breakpoint crossing.
+- **Touch targets meet WCAG 2.5.8.** Footer nav links (11 px tall), the direct email link (18 px), the brand wordmark (21 px) and the desktop EN/TR buttons (21–22 px wide) are now ≥ 24 px, via padding and `min-width` only — no type-size or density change. Zero undersized targets across all six routes at all four widths.
+- **`/contact/` heading order fixed** — three `<h3>` directly under the page `<h1>` are now `<h2>`; route Accessibility 98 → 100.
+- **`site.webmanifest`** declares a real icon instead of an empty `icons: []`.
+- **Validator extended and negative-tested.** `srcset`, `imagesrcset` and `data-src`/`data-srcset` candidates are now collected, so responsive or deferred imagery cannot enter a page without provenance; scene derivatives are checked like proof derivatives (fields, existence, byte size, recomputed SHA-256). Both new checks were confirmed to fail the build when deliberately broken. PASS with 0 warnings.
+- **WEB-005 hero media budget published** in `STATUS.md` and the evidence document, tightened from the Product defaults on measured grounds: WebM ≤ 3.0 MiB, MP4 ≤ 4.5 MiB, poster ≤ 180 KiB, mobile poster-only, plus four hard constraints including keeping the caption region at ≥ 4.5:1.
+- **Recorded, not silently relaxed:** homepage LCP remains 3.2 s against the 2.5 s target, the residual being an accepted checksummed proof derivative (`priority-800.webp`, 249.7 KiB) that WEB-004 may not re-encode; and `image-aspect-ratio` still flags the deliberately squashed score legend (Best Practices 96, above its ≥ 95 floor). Both are routed to Product as trade-offs.
+- **`HOSTED_PREVIEW_NOT_RUN — permission unavailable`** (no Vercel CLI, link or token on this machine; no credentials requested, no account state touched) with a reproducible local preview command. **`CONTACT_RELEASE_GATE`** retained: every mailto across both languages correctly targets `contact@orbgss.com`, but mailbox ownership cannot be proven without Workspace access.
+- No WEB-005 integration, no deployment, no domain or DNS change, no analytics/backend, no framework or dependency added.
+
 ## v0.8.1-web-003-review-revision — 2026-09-15 (WEB-003 Product review revision, MER-91, branch `feat/web-003-public-site-depth`)
 
 Bounded conformant fixes from Product review. No redesign, no scope or semantics change.

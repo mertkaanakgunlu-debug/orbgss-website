@@ -20,6 +20,20 @@
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml" />
   <link rel="manifest" href="site.webmanifest" />
   <meta property="og:image" content="https://orbgss.com/assets/imagery/crater-lake-2023.jpg" />
+  <!--
+    WEB-004: the hero image is the LCP element, and it used to be discovered only after styles.css
+    had been fetched and parsed. Preloading the same candidate set the <img> below declares lets
+    the browser start it during the initial HTML scan; imagesrcset/imagesizes must stay identical
+    to that img's srcset/sizes or the browser downloads the poster twice.
+  -->
+  <link
+    rel="preload"
+    as="image"
+    href="assets/imagery/crater-lake-2023.jpg"
+    imagesrcset="assets/imagery/crater-lake-2023-900.webp 900w, assets/imagery/crater-lake-2023-1400.webp 1400w, assets/imagery/crater-lake-2023-1800.webp 1800w"
+    imagesizes="100vw"
+    fetchpriority="high"
+  />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -69,13 +83,23 @@
     -->
     <section class="hero image-panel" aria-labelledby="hero-title" data-hero-slot="static-poster">
       <div class="hero-visual" data-visual-slot="hero" data-visual-status="deferred-web-005">
+        <!--
+          WEB-004: the JPEG stays as the src fallback and as the Open Graph poster; every
+          srcset-capable browser takes one of the recorded WebP derivatives instead, so a 375 px
+          phone fetches ~148 KiB rather than the full 553 KiB composite. The derivatives are
+          resize-and-encode only and are checksummed in assets/imagery/sources.json.
+        -->
         <img
           class="panel-image hero-image"
           src="assets/imagery/crater-lake-2023.jpg"
+          srcset="assets/imagery/crater-lake-2023-900.webp 900w, assets/imagery/crater-lake-2023-1400.webp 1400w, assets/imagery/crater-lake-2023-1800.webp 1800w"
+          sizes="100vw"
           alt="Satellite view of Crater Lake and the surrounding landscape in Oregon, United States"
           data-i18n-alt="alt.crater"
           fetchpriority="high"
           decoding="async"
+          width="1800"
+          height="1125"
         />
         <div class="hero-shade" aria-hidden="true"></div>
       </div>
@@ -127,6 +151,7 @@
           alt="Greyscale elevation map of the 36 by 36 kilometre Kızıldere project area of interest, showing ridges and valleys across the pilot grid"
           data-i18n-alt="alt.observe"
           loading="lazy"
+          fetchpriority="low"
           decoding="async"
           width="1400"
           height="1400"
@@ -159,6 +184,7 @@
           alt="Colour elevation map of the Kızıldere area of interest, with low ground in dark blue and high ridges in pale yellow"
           data-i18n-alt="alt.terrain"
           loading="lazy"
+          fetchpriority="low"
           decoding="async"
           width="1400"
           height="1400"
@@ -189,6 +215,16 @@
           <button type="button" class="layer-tab mono" role="tab" id="tab-alt01" aria-controls="pane-alt01" aria-selected="false" tabindex="-1">ALT-01</button>
           <button type="button" class="layer-tab mono" role="tab" id="tab-alt02" aria-controls="pane-alt02" aria-selected="false" tabindex="-1">ALT-02</button>
         </div>
+        <!--
+          WEB-004: the two layers that are not on screen carry data-src/data-srcset instead of
+          src/srcset, and script.js promotes them as the evidence section comes into view. They
+          used to be fetched during the initial page load — 340 KiB of rasters nobody was looking
+          at yet, competing with the hero for bandwidth and costing the homepage six Lighthouse
+          performance points. They are still fetched before the reader can reach the switch, so
+          changing layer stays instant. Without JavaScript the inactive panes are permanently
+          hidden, so not fetching them is the truthful behaviour. They remain recorded,
+          checksummed proof assets, and the validator reads data-src/data-srcset too.
+        -->
         <div class="layer-stack">
           <div class="layer-pane is-active" role="tabpanel" id="pane-thm01" aria-labelledby="tab-thm01" aria-hidden="false" data-label-tone="dark">
             <img
@@ -198,6 +234,7 @@
               alt="Diverging thermal anomaly map of the Kızıldere area of interest, with cooler ground in blue and warmer ground in red"
               data-i18n-alt="alt.thm01"
               loading="lazy"
+              fetchpriority="low"
               decoding="async"
               width="1400"
               height="1400"
@@ -210,12 +247,13 @@
           </div>
           <div class="layer-pane" role="tabpanel" id="pane-alt01" aria-labelledby="tab-alt01" aria-hidden="true" data-label-tone="light">
             <img
-              src="assets/proof/alt01-1400.webp"
-              srcset="assets/proof/alt01-800.webp 800w, assets/proof/alt01-1400.webp 1400w"
+              data-src="assets/proof/alt01-1400.webp"
+              data-srcset="assets/proof/alt01-800.webp 800w, assets/proof/alt01-1400.webp 1400w"
               sizes="100vw"
               alt="Sequential map of the clay and hydroxyl spectral alteration proxy across the Kızıldere area of interest"
               data-i18n-alt="alt.alt01"
               loading="lazy"
+              fetchpriority="low"
               decoding="async"
               width="1400"
               height="1400"
@@ -228,12 +266,13 @@
           </div>
           <div class="layer-pane" role="tabpanel" id="pane-alt02" aria-labelledby="tab-alt02" aria-hidden="true" data-label-tone="light">
             <img
-              src="assets/proof/alt02-1400.webp"
-              srcset="assets/proof/alt02-800.webp 800w, assets/proof/alt02-1400.webp 1400w"
+              data-src="assets/proof/alt02-1400.webp"
+              data-srcset="assets/proof/alt02-800.webp 800w, assets/proof/alt02-1400.webp 1400w"
               sizes="100vw"
               alt="Sequential map of the ferric iron spectral alteration proxy across the Kızıldere area of interest"
               data-i18n-alt="alt.alt02"
               loading="lazy"
+              fetchpriority="low"
               decoding="async"
               width="1400"
               height="1400"
@@ -282,7 +321,7 @@
         <div class="beam-meta mono">
           <p class="beam-meta-line" data-i18n="story.priority.meta">Score · mvp_remote_sensing_priority_v1</p>
           <span class="scale-strip">
-            <img src="assets/proof/priority-scale.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="652" height="28" />
+            <img src="assets/proof/priority-scale.png" alt="" aria-hidden="true" loading="lazy" fetchpriority="low" decoding="async" width="652" height="28" />
             <span class="scale-ends"><span>0</span><span>100</span></span>
           </span>
         </div>
@@ -295,6 +334,7 @@
           alt="Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area"
           data-i18n-alt="alt.priority"
           loading="lazy"
+          fetchpriority="low"
           decoding="async"
           width="1400"
           height="1400"
@@ -320,7 +360,7 @@
         <div class="beam-meta mono">
           <p class="beam-meta-line" data-i18n="story.geothermal.meta">First application · Kızıldere pilot</p>
           <span class="scale-strip">
-            <img src="assets/proof/geothermal-scale.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="652" height="28" />
+            <img src="assets/proof/geothermal-scale.png" alt="" aria-hidden="true" loading="lazy" fetchpriority="low" decoding="async" width="652" height="28" />
             <span class="scale-ends"><span>0</span><span>100</span></span>
           </span>
         </div>
@@ -333,6 +373,7 @@
           alt="Relative priority surface over shaded NASADEM relief across the Kızıldere geothermal pilot area"
           data-i18n-alt="alt.geothermal"
           loading="lazy"
+          fetchpriority="low"
           decoding="async"
           width="1400"
           height="1400"
