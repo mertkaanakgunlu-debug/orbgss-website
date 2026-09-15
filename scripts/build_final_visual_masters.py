@@ -10,13 +10,15 @@ Two asset classes, two very different rules, one deterministic script:
 * **Class B — Acts 3 and 4 cartographic masters.** Each master is an accepted GEO-039 Workbench
   cartographic export of the persisted ``kizildere_mvp_v2`` project. This script verifies the
   master against the SHA-256 in its own ``export_manifest.json``, crops the rendered map panel and
-  the compact in-frame legend, and downscales the panel to at most the project grid's native cell
-  count. Crop, downscale and encode only: never a re-colour, re-projection, re-classification,
-  value change or upscale.
+  the compact in-frame legend, and never enlarges that accepted renderer-native panel. Crop,
+  downscale and encode only: never a re-colour, re-projection, re-classification, value change or
+  presentation upscale.
 
-The map panel of a 36 km x 36 km, 30 m project grid is 1200 x 1200 real cells. The renderer draws
-it at ~1249 px, so 1200 px is the largest honest derivative width — anything wider would be
-invented resolution. That ceiling is what ``max_safe_rendered_px`` in the manifest reports.
+The accepted project grid contains 1200 x 1200 real 30 m cells. GEO-039 renders that grid into a
+1249 x 1249 px map panel in the accepted 200 dpi master. The 1200-cell grid is the underlying
+information content; the renderer-native 1249 px panel is the largest honest presentation crop and
+is therefore the ``max_safe_rendered_px`` ceiling recorded by the package. No larger derivative is
+created.
 
 Usage::
 
