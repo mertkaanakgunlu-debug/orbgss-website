@@ -1,8 +1,8 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v0.8.0-web-003-public-site-depth` — WEB-003 implemented, REVIEW_READY
+**Canonical version:** `v0.8.1-web-003-review-revision` — WEB-003 REVIEW_READY, bounded Product review revision applied
 **Date:** 2026-09-15
-**Stage:** WEB-003 public-site depth implemented on `feat/web-003-public-site-depth` (five new public routes); awaiting Product review and merge
+**Stage:** WEB-003 public-site depth implemented on `feat/web-003-public-site-depth` (five new public routes); bounded Product review revision applied under MER-91 (EN/TR accessibility-text parity, truthful `/pilot/` social-preview imagery, authority/status reconciliation); awaiting Product review and merge
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
@@ -13,12 +13,12 @@
 **Hosting target:** Vercel
 **Company:** VirgaSoft
 **Product:** OrbGSS — Orbital Geo-Spatial Solutions
-**Product authority:** OrbGSS Website vNext Product & Execution Authority v1.5 (`docs/WEB_VNEXT_AUTHORITY.md`)
-**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003, implemented/REVIEW_READY); MER-96 / GEO-WEB-001 resolved
+**Product authority:** OrbGSS Website vNext Product & Execution Authority v1.7 (`docs/WEB_VNEXT_AUTHORITY.md`)
+**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003, REVIEW_READY, bounded Product review revision applied); MER-96 / GEO-WEB-001 resolved
 
 ## Authority
 
-`docs/WEB_VNEXT_AUTHORITY.md` is the repository-local summary of the product-owned *OrbGSS Website vNext Product & Execution Authority*. Where it disagrees with `docs/DESIGN_AUTHORITY.md` or `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`, it wins for vNext work. WEB-002 is terminally accepted under `tasks/WEB-002_PRODUCT_PROOF.md`. WEB-003 (public-site depth) received deliberate CTO start approval, is implemented on `feat/web-003-public-site-depth` under `tasks/WEB-003_PUBLIC_SITE_DEPTH.md`, and is REVIEW_READY — Product performs terminal acceptance/merge.
+`docs/WEB_VNEXT_AUTHORITY.md` is the repository-local summary of the product-owned *OrbGSS Website vNext Product & Execution Authority* (v1.7). Where it disagrees with `docs/DESIGN_AUTHORITY.md` or `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`, it wins for vNext work. WEB-002 is terminally accepted under `tasks/WEB-002_PRODUCT_PROOF.md`. WEB-003 (public-site depth) received deliberate CTO start approval, is implemented on `feat/web-003-public-site-depth` under `tasks/WEB-003_PUBLIC_SITE_DEPTH.md`, reached REVIEW_READY, and has now completed one bounded Product review revision under MER-91 — no new Product/Science semantics introduced. Product performs terminal acceptance/merge.
 
 ## Current state (WEB-003)
 
@@ -31,6 +31,8 @@ Five new public routes extend the homepage into a full small public site, each a
 - `/contact/` — three mailto conversation starters (pilot, partnership, technical) plus the direct address; no form, backend, analytics or PII capture.
 
 The homepage and every new route share one persistent header/footer navigation that now routes to these five destinations instead of same-page anchors. The homepage's own WEB-002 section ids, content, hero CTA and proof provenance/checksums are untouched — the accepted evidence-to-intelligence narrative did not change. `vercel.json` now serves trailing-slash canonical URLs; `sitemap.xml` lists all six routes. Language selection persists coherently across routes via the existing shared `localStorage` key. The validator now checks metadata, internal/cross-page links, sitemap coverage and EN/TR parity across every route, in addition to the unchanged WEB-002 provenance checks. See `CHANGELOG.md` (`v0.8.0-web-003-public-site-depth`) for the full change list.
+
+**MER-91 bounded Product review revision (2026-09-15):** every `aria-label` on a canonical public route is now bound to `data-i18n-aria-label` (`/contact/`'s "Contact options" and `/pilot/`'s "Next steps" were the two gaps found; the validator now fails the build if a future edit reintroduces an untranslated `aria-label` on any route); `/pilot/`'s Open Graph preview now uses the Kızıldere `geothermal-1400.webp` proof derivative (already recorded, unmodified) instead of the homepage's Crater Lake hero image, so its social-preview card truthfully represents the pilot; this document and `docs/WEB_VNEXT_AUTHORITY.md` are reconciled to authority v1.7 / MER-91's current review state. No Product/Science semantics changed. See `CHANGELOG.md` (`v0.8.1-web-003-review-revision`).
 
 ## Current state (WEB-002 accepted)
 
@@ -113,3 +115,4 @@ WEB-003 (public-site depth, credibility, conversion and bilingual content) is im
 - WEB-002 review revision (2026-09-15): removed CSS colour/contrast/opacity transforms from the scientific rasters and the score ramp; unified AOI framing across all story panels; restored THM-01 warning semantics in EN/TR and in the static HTML; reconciled the no-JS footer attribution and the two asset-class policies; validator now enforces visible warning coverage.
 - WEB-002 terminal Product acceptance (2026-09-15): accepted implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; no new Science/Product semantics introduced.
 - WEB-003 (2026-09-15): five new public routes (`/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/`) published as real static directories with trailing-slash canonical URLs; homepage/site-wide navigation now routes to them; `/pilot/` reuses accepted WEB-002 proof imagery and the structure data-gap panel verbatim; full EN/TR parity and route-specific metadata; validator extended site-wide (metadata, internal/cross-page links, sitemap coverage, EN/TR parity) with the WEB-002 provenance checks unchanged; PASS with 0 warnings. Implemented on `feat/web-003-public-site-depth` from accepted `main@79484bb7d11c3b26373649c802fb4db7d2bd445f`; REVIEW_READY, not merged.
+- WEB-003 bounded Product review revision (2026-09-15, MER-91): localized the two `aria-label` values that had escaped `data-i18n-aria-label` (`/contact/` "Contact options", `/pilot/` "Next steps"); validator now enforces that every `aria-label` on a canonical public route is bound to `data-i18n-aria-label`; `/pilot/` Open Graph preview switched from the Crater Lake hero image to the Kızıldere `geothermal-1400.webp` proof derivative (already-recorded asset, unmodified) so the social-preview card is truthful; `docs/WEB_VNEXT_AUTHORITY.md` and this document reconciled to authority v1.7 / MER-91's current review state. No Product/Science semantics changed; PASS with 0 warnings.

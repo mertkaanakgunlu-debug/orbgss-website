@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.8.1-web-003-review-revision — 2026-09-15 (WEB-003 Product review revision, MER-91, branch `feat/web-003-public-site-depth`)
+
+Bounded conformant fixes from Product review. No redesign, no scope or semantics change.
+
+- **EN/TR accessibility-text parity closed.** `/contact/`'s `aria-label="Contact options"` and `/pilot/`'s `aria-label="Next steps"` were the only two `aria-label` values on any canonical public route not bound to `data-i18n-aria-label` — both now carry it (`contactPage.optionsLabel`, `pilotPage.nextStepsLabel`), so they switch with the page like every other accessible name. `scripts/validate_site.py` now fails the build if any canonical route ever reintroduces an aria-label with no `data-i18n-aria-label` on the same element; verified the check has teeth by reverting each fix locally, confirming the new error, then restoring it.
+- **`/pilot/` social preview is now truthful.** Its Open Graph image no longer borrows the homepage's Crater Lake hero photo; it now points at the already-approved, already-checksummed Kızıldere `assets/proof/geothermal-1400.webp` derivative (unmodified — no re-colour, re-crop or re-encode), with `og:image:type` / `:width` / `:height` added for correctness. The validator now rejects the Crater Lake image specifically on `/pilot/` and requires its `og:image` to be a self-hosted `assets/proof/` or `assets/imagery/` asset.
+- **Authority/status pointers reconciled.** `docs/WEB_VNEXT_AUTHORITY.md` and `STATUS.md` now read Product & Execution Authority v1.7 and record WEB-003's actual state (implemented, `REVIEW_READY`, MER-91 bounded review revision) instead of the stale "not started" language left over from before CTO approval. No Product/Science semantics changed anywhere in this revision.
+
 ## v0.8.0-web-003-public-site-depth — 2026-09-15 (WEB-003, branch `feat/web-003-public-site-depth`)
 
 - published five new public routes as real static directories — `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/` (each `<route>/index.html`, root-relative assets) — completing the public information architecture beyond the homepage;

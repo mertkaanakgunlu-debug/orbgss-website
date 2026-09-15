@@ -94,6 +94,10 @@ class SiteParser(HTMLParser):
         # Every data-i18n* key this file references, regardless of which attribute carries it
         # (text content, alt, aria-label, meta content, href) — used for site-wide EN/TR parity.
         self.i18n_keys: set[str] = set()
+        # aria-label values with no data-i18n-aria-label on the same element (MER-91): a
+        # human-readable aria-label that only ever exists in English is exactly the kind of gap
+        # that reads fine in a spot-check and then fails EN/TR parity for a screen-reader user.
+        self.untranslated_aria_labels: list[str] = []
         self._note_depth = 0
         self._open: list[bool] = []
         self._key_stack: list[str | None] = []
@@ -112,6 +116,9 @@ class SiteParser(HTMLParser):
             attr_key = data.get(i18n_attr)
             if attr_key:
                 self.i18n_keys.add(str(attr_key))
+        aria_label = data.get("aria-label")
+        if aria_label and aria_label.strip() and not data.get("data-i18n-aria-label"):
+            self.untranslated_aria_labels.append(str(aria_label))
         if data.get("id"):
             self.ids.add(str(data["id"]))
         if data.get("data-visual-slot"):
@@ -383,6 +390,24 @@ def main() -> int:
             fail(f"{label}: og:url does not match {url!r}", errors)
         if 'property="og:title"' not in text or 'property="og:description"' not in text:
             fail(f"{label}: missing Open Graph title/description", errors)
+
+    # Accessibility-text parity (MER-91): a human-readable aria-label on a canonical public route
+    # must be bound to data-i18n-aria-label, exactly like every other visible/AT-exposed string on
+    # the site — otherwise it silently stays English-only no matter what language is selected.
+    for route, route_parser in route_parsers.items():
+        label = ROUTES[route]
+        for aria_label in route_parser.untranslated_aria_labels:
+            fail(f"{label}: aria-label {aria_label!r} has no data-i18n-aria-label "
+                 f"(untranslated accessibility text)", errors)
+
+    # Social-preview truthfulness (MER-91): /pilot/ must not borrow the homepage hero's Crater Lake
+    # image for its own Open Graph preview — its og:image must be a real Kızıldere asset (either an
+    # accepted WEB-002 proof derivative or the homepage's own on-topic imagery), never the hero.
+    pilot_html = route_html.get("pilot", "")
+    if 'property="og:image" content="https://orbgss.com/assets/imagery/crater-lake-2023.jpg"' in pilot_html:
+        fail("pilot/index.html: og:image reuses the Crater Lake hero image, not a Kızıldere pilot visual", errors)
+    if pilot_html and not re.search(r'property="og:image" content="https://orbgss\.com/assets/(proof|imagery)/', pilot_html):
+        fail("pilot/index.html: og:image is not a self-hosted approved asset", errors)
 
     # Internal links: every root-relative href must resolve to a real canonical route, and any
     # #fragment it carries must resolve to a real id — on the target page for a "/route/#frag"

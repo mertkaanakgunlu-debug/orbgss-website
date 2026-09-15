@@ -192,6 +192,7 @@ const I18N = {
     'pilotPage.closing.copy': 'Kızıldere is the first geothermal application of that baseline: the priority surface read over NASADEM relief, in an active pilot area in Denizli, Türkiye.',
     'pilotPage.cta.contact': 'Talk to Us About the Pilot',
     'pilotPage.cta.home': 'See the Full Story on the Homepage',
+    'pilotPage.nextStepsLabel': 'Next steps',
 
     'companyPage.meta.title': 'Company — OrbGSS',
     'companyPage.meta.description': 'OrbGSS — Orbital Geo-Spatial Solutions — is a geospatial-intelligence platform built by VirgaSoft, built on traceable provenance, explicit data gaps and evidence-based outputs.',
@@ -207,6 +208,7 @@ const I18N = {
     'contactPage.meta.ogDescription': 'For pilot, partnership and technical conversations.',
     'contactPage.title': "Let's talk about where to look next.",
     'contactPage.intro': 'OrbGSS is available for pilot, partnership and technical conversations. Reach out directly by email — there is no form to fill in.',
+    'contactPage.optionsLabel': 'Contact options',
     'contactPage.pilot.title': 'Pilot conversations',
     'contactPage.pilot.copy': 'Discuss a geothermal pilot, or what a first application in a new area could look like.',
     'contactPage.pilot.cta': 'Start a Pilot Conversation',
@@ -396,6 +398,7 @@ const I18N = {
     'pilotPage.closing.copy': "Kızıldere, bu temelin ilk jeotermal uygulamasıdır: Denizli, Türkiye'deki aktif pilot alanda, NASADEM rölyefi üzerinden okunan öncelik yüzeyi.",
     'pilotPage.cta.contact': 'Pilot Hakkında Bizimle Görüşün',
     'pilotPage.cta.home': 'Ana Sayfada Hikâyenin Tamamını Görün',
+    'pilotPage.nextStepsLabel': 'Sonraki adımlar',
 
     'companyPage.meta.title': 'Şirket — OrbGSS',
     'companyPage.meta.description': 'OrbGSS — Orbital Geo-Spatial Solutions — VirgaSoft tarafından geliştirilen; izlenebilir kaynak, açık veri boşlukları ve kanıta dayalı çıktılar üzerine kurulu bir coğrafi zekâ platformudur.',
@@ -411,6 +414,7 @@ const I18N = {
     'contactPage.meta.ogDescription': 'Pilot, iş birliği ve teknik görüşmeler için.',
     'contactPage.title': 'Sırada nereye bakacağımızı konuşalım.',
     'contactPage.intro': 'OrbGSS; pilot, iş birliği ve teknik görüşmeler için ulaşılabilir durumdadır. Doğrudan e-posta ile yazın — doldurulacak bir form yok.',
+    'contactPage.optionsLabel': 'İletişim seçenekleri',
     'contactPage.pilot.title': 'Pilot görüşmeleri',
     'contactPage.pilot.copy': 'Bir jeotermal pilotu, ya da yeni bir alanda ilk uygulamanın nasıl görünebileceğini konuşalım.',
     'contactPage.pilot.cta': 'Pilot Görüşmesi Başlatın',
