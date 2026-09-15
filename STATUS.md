@@ -1,95 +1,92 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v0.9.1-geo-web-002-final-visual-masters` — GEO-WEB-002 REVIEW_READY
+**Canonical version:** `v0.9.1-geo-web-002-final-visual-masters` — GEO-WEB-002 ACCEPTED / COMPLETE
 **Date:** 2026-09-16
-**Stage:** GEO-WEB-002 / MER-102 final homepage visual master package published on `feat/geo-web-002-final-visual-masters` from authority baseline `main@8a4fe9ba5cb19d09390cb8816c2324e012331728`; REVIEW_READY at implementation HEAD `ea693c2`, not merged. WEB-004 remains REVIEW_READY at `56cb530` with its Product decisions resolved on MER-92 (see below); both await terminal acceptance/merge.
+**Stage:** GEO-WEB-002 / MER-102 final homepage visual master package is terminally Science-accepted at implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`; acceptance record `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md`. WEB-004 is already Product-accepted / complete under MER-92 with acceptance publication `716104d677fea5021787b581470a436ed708f3a3`. GEO-WEB-002 is resolved for Product binding; WEB-005 does not auto-start.
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
 **Accepted WEB-002 implementation HEAD:** `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`
 **Accepted WEB-003 implementation HEAD:** `3670d43bece4ffba657a3d9645cbea20c7e698bf`
+**Accepted WEB-004 implementation HEAD:** `56cb53039b85a852110c737505bc2ae2282acb08`
+**Accepted GEO-WEB-002 implementation HEAD:** `ea693c29762279131fbed005e832c5ff2dca587b`
 **Reference/upstream only:** https://github.com/baran-orbgss/website
 **Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)
 **Registrar / DNS:** Squarespace
 **Hosting target:** Vercel
 **Company:** VirgaSoft
 **Product:** OrbGSS — Orbital Geo-Spatial Solutions
-**Product authority:** OrbGSS Website vNext Product & Execution Authority v1.8 (`docs/WEB_VNEXT_AUTHORITY.md`)
-**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003 accepted/complete); MER-92 (WEB-004 implemented, REVIEW_READY; Product decisions resolved); MER-102 / GEO-WEB-002 (final visual master package implemented, REVIEW_READY); MER-96 / GEO-WEB-001 resolved
+**Product authority:** OrbGSS Website vNext Product & Execution Authority v1.8 (`docs/WEB_VNEXT_AUTHORITY.md`); current Drive Product authority has precedence where newer.
+**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003 accepted/complete); MER-92 (WEB-004 Product-accepted/complete); MER-102 / GEO-WEB-002 (Science-accepted/complete); MER-96 / GEO-WEB-001 resolved
 
 ## Authority
 
-`docs/WEB_VNEXT_AUTHORITY.md` is the repository-local summary of the product-owned *OrbGSS Website vNext Product & Execution Authority* (v1.8). Where it disagrees with `docs/DESIGN_AUTHORITY.md` or `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`, it wins for vNext work. WEB-002 is terminally accepted under `tasks/WEB-002_PRODUCT_PROOF.md`. WEB-003 is terminally accepted under `tasks/WEB-003_PUBLIC_SITE_DEPTH.md` at implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf` after one bounded Product review revision. No new Product/Science semantics were introduced by the revision. WEB-004 is published under `tasks/WEB-004_PREVIEW_HARDENING.md` (authority publication `3a4d8e006add2725d45b02071bda654be5bd09f5`), received CTO start approval, and is implemented on `feat/web-004-preview-hardening` at `REVIEW_READY`. Product performs terminal acceptance/merge.
+`docs/WEB_VNEXT_AUTHORITY.md` is the repository-local summary of the product-owned *OrbGSS Website vNext Product & Execution Authority*. Where it disagrees with newer canonical Drive Product authority, the current Drive authority wins. WEB-002 is terminally accepted under `tasks/WEB-002_PRODUCT_PROOF.md`. WEB-003 is terminally accepted under `tasks/WEB-003_PUBLIC_SITE_DEPTH.md` at implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf` after one bounded Product review revision. WEB-004 is terminally Product-accepted under MER-92 at implementation HEAD `56cb53039b85a852110c737505bc2ae2282acb08`; canonical acceptance publication is `716104d677fea5021787b581470a436ed708f3a3` and acceptance record is `docs/WEB-004_PRODUCT_ACCEPTANCE.md`.
 
-`docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` locks the final four-act homepage story for WEB-005 and supersedes the repeated full-width proof-scene rhythm where they conflict; it does not supersede accepted Science semantics, WEB-002 provenance constraints, WEB-004 performance/accessibility decisions or the accepted route architecture. GEO-WEB-002 / MER-102 is the Science & Geospatial publication dependency it named: published under `tasks/GEO-WEB-002_FINAL_HOMEPAGE_VISUAL_MASTERS.md` (authority baseline `8a4fe9ba5cb19d09390cb8816c2324e012331728`), CTO start approved, implemented on `feat/geo-web-002-final-visual-masters` at `REVIEW_READY`. Science performs terminal acceptance; Product may bind the package into WEB-005 only afterwards.
+`docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` locks the final four-act homepage story for WEB-005 and supersedes the repeated full-width proof-scene rhythm where they conflict; it does not supersede accepted Science semantics, WEB-002 provenance constraints, WEB-004 performance/accessibility decisions or the accepted route architecture. GEO-WEB-002 / MER-102 is the Science & Geospatial publication dependency it named. It is terminally accepted under `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md` at implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`. Product may bind the package into WEB-005 while preserving its exact labels, warnings, provenance and maximum-safe-render constraints.
 
-## Current state (GEO-WEB-002, REVIEW_READY)
+## Current state (GEO-WEB-002, ACCEPTED / COMPLETE)
 
-`tasks/GEO-WEB-002_FINAL_HOMEPAGE_VISUAL_MASTERS.md` is implemented. The canonical package is
+`tasks/GEO-WEB-002_FINAL_HOMEPAGE_VISUAL_MASTERS.md` is implemented and terminally accepted. The canonical package is
 `docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md` (`READY_FOR_PRODUCT_BINDING`), mirrored
 machine-readably in `assets/imagery/sources.json` → `geo_web_002`. Nothing is placed on a public route:
 this publishes the visual masters the locked four-act homepage in
-`docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` needs, for WEB-005 to bind after Science acceptance.
+`docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` needs, for WEB-005 to bind under its own authority.
 
 - **Act 2 — real AOI context.** One natural-colour Landsat 8 OLI composite of the Kızıldere AOI in its
   regional setting: `LC08_L2SP_179034_20250505_02_T1`, acquired 2025-05-05, 0.90 % cloud, rendered by the
   existing `scripts/build_imagery.py` grammar at native 30 m into a 2400 × 1500 px (72 × 45 km) EPSG:32635
   frame with 100 % valid coverage, plus 2400 / 1800 / 1200 / 900 WebP candidates.
-- **Acts 3 and 4 — cartographic masters.** `terrain`, `thm01`, `alt01`, `alt02` and `priority` resolved to
+- **Acts 3 and 4 — cartographic masters.** `terrain`, `thm01`, `alt01`, `alt02` and `priority` resolve to
   their accepted GEO-039 exports of persisted `kizildere_mvp_v2`. Each ships the rendered map panel as a
   crop with **no resampling at all** (1249 px), an 800 px card derivative, and a native-resolution lossless
-  crop of the master's own governed legend — so a legend can sit inside the map frame instead of becoming a
+  crop of the master's own governed legend — so a necessary legend can sit inside the map frame instead of becoming a
   detached homepage colour bar.
 - **Resolution ceiling.** The accepted grid is 1200 × 1200 cells at 30 m and the accepted renderer draws it
   at 1249 px, so **1249 device pixels** is the maximum honest rendered width for any cartographic asset.
   Act 2 meets its ≥ 2000 px target natively and the evidence cards meet ≥ 1200 px. The Act-4 priority master
   **cannot** reach ≥ 2000 px from accepted science: the package publishes the exact ceiling instead of
-  upscaling, and WEB-005 must give Act 4 a contained composition (1249 CSS px at 1×, 624 CSS px at 2×).
+  upscaling, and WEB-005 must give Act 4 a contained composition (1249 CSS px at 1×, approximately 624 CSS px at 2×).
 - **Findings WEB-005 must not "fix".** ALT-01/ALT-02 render as dark fields with bright anomalies — their
-  only registry-approved style normalizes linearly over the full value range, so ~87 % of valid cells sit in
-  the lowest fifth of the ramp. No re-stretch, re-normalize or CSS adjustment. NoData (0.0–5.5 % per panel)
-  stays visible. ALT-01 is the recommended single alteration card.
+  registry-approved style normalizes linearly over the full value range, so ~87 % of valid cells sit in
+  the lowest fifth of the ramp. No re-stretch, re-normalize or CSS colour/contrast adjustment. NoData (0.0–5.5 % per panel)
+  stays visible. ALT-01 is the preferred single alteration card under the accepted package.
 - **Enforcement.** `scripts/build_final_visual_masters.py` rebuilds every derivative deterministically and
-  refuses an altered master, a wrong-layer export or any upscale. `scripts/validate_site.py` recomputes all
-  19 derivative checksums plus the class-A master on every run and enforces the publication record,
-  including each asset's declared no-upscale ceiling. Validator PASS, 0 warnings; `git diff --check` green.
+  refuses an altered master, a wrong-layer export, a wrong 1200 × 1200 source grid or any presentation upscale beyond the accepted renderer-native panel. `scripts/validate_site.py` recomputes all
+  19 derivative checksums plus the class-A master and enforces the publication record,
+  including each asset's declared no-upscale ceiling. REVIEW_READY evidence records validator PASS, 0 warnings; `git diff --check` green; negative tests and byte-for-byte rebuild PASS.
 - **No semantic change.** Mandatory core remains THM-01 + ALT-01 + ALT-02; fail-closed behaviour,
   terrain-as-context, the structure/geology `DATA_GAP`, CRS/grid/unit/NoData/mask/resampling semantics and
-  every public label and mandatory warning are carried verbatim from `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`.
+  every public label and mandatory warning are carried from `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`.
   No structure or geology asset is published; nothing is fabricated to fill that gap.
 
-## Current state (WEB-004, REVIEW_READY)
+## Current state (WEB-004 accepted / complete)
 
 WEB-004 hardened the accepted six-route site without redesigning it. Full measurements, tooling
-versions and negative tests are in `docs/WEB-004_HARDENING_EVIDENCE.md`.
+versions and negative tests are in `docs/WEB-004_HARDENING_EVIDENCE.md`; terminal Product acceptance is in `docs/WEB-004_PRODUCT_ACCEPTANCE.md`.
 
 - **Performance.** Homepage Lighthouse Performance 77 → **94**; LCP 6.5 s → 3.2 s; CLS 0; TBT 0 ms. Total page transfer **1369.6 KiB → 645.1 KiB (−53%)**. All six routes clear Accessibility / Best Practices / SEO ≥ 95, and Performance ≥ 90 on the homepage and every deep route.
 - **Hero delivery.** Three recorded WebP derivatives (900 / 1400 / 1800) plus `srcset`/`sizes` and a matching preload; a 375 px phone fetches ~148 KiB instead of 553 KiB. Resize-and-encode only, checksummed in `assets/imagery/sources.json`, validator-enforced. The hero visual itself is untouched and still belongs to WEB-005.
 - **Inactive evidence layers deferred** behind `data-src`/`data-srcset` and promoted as the section approaches the viewport — 340 KiB off the initial load, switching still instant, provenance still enforced.
-- **Caption contrast is now measured per viewport.** `object-fit: cover` re-crops each proof raster as the viewport changes shape, so the WEB-002 hand-chosen tones fell to 2.84 / 3.53 / 4.21:1 at some widths. The accepted rule is now applied continuously between the same two accepted tones; every caption clears 4.5:1 at 375 / 768 / 1024 / 1440 (worst case 4.58:1). No raster is modified, and the caption remains bare monospace text with no card, box or band.
+- **Caption contrast is measured per viewport.** `object-fit: cover` re-crops each proof raster as the viewport changes shape, so the WEB-002 hand-chosen tones fell to 2.84 / 3.53 / 4.21:1 at some widths. The accepted rule is applied continuously between the same two accepted tones; every caption clears 4.5:1 at 375 / 768 / 1024 / 1440 (worst case 4.58:1). No raster is modified, and the caption remains bare monospace text with no card, box or band.
 - **Accessibility.** Viewport-change reset for the mobile menu and Solutions disclosure; WCAG 2.5.8 touch targets (footer nav, direct email, brand, desktop EN/TR); `/contact/` heading order corrected (route Accessibility 98 → 100); real web-manifest icon. Zero horizontal overflow and zero undersized targets across all six routes at all four widths.
-- **Gates.** `HOSTED_PREVIEW_NOT_RUN — permission unavailable` (no Vercel CLI, project link or token present; no credentials requested, no account state touched), with a reproducible local preview — **accepted under the task on MER-92**. `CONTACT_RELEASE_GATE` **remains open** for pre-WEB-006 launch verification: every mailto correctly targets `contact@orbgss.com` in both languages, but mailbox ownership cannot be proven without Workspace access.
-- **Product decisions resolved (MER-92).** Homepage LCP 3.2 s under the local synthetic mobile profile is an **accepted bounded WEB-004 deviation**; accepted scientific proof derivatives must not be re-encoded solely to chase 2.5 s. The score-legend `image-aspect-ratio` finding is an **accepted intentional deviation**; the scientific legend must not be re-proportioned (Best Practices 96, above its ≥ 95 floor). Both are recorded against `tasks/WEB-004_PREVIEW_HARDENING.md`. No Product/Science semantics changed.
+- **Gates.** `HOSTED_PREVIEW_NOT_RUN — permission unavailable` was accepted under WEB-004 on MER-92. `CONTACT_RELEASE_GATE` **remains open** for pre-WEB-006 launch verification: every mailto correctly targets `contact@orbgss.com` in both languages, but mailbox ownership still requires Workspace/account evidence.
+- **Product decisions accepted (MER-92).** Homepage LCP 3.2 s under the recorded local synthetic mobile profile is an accepted bounded WEB-004 deviation; accepted scientific proof derivatives must not be re-encoded solely to chase 2.5 s. The score-legend `image-aspect-ratio` finding is an accepted intentional deviation; the scientific legend must not be re-proportioned solely to clear the heuristic. No Product/Science semantics changed.
 
 ### WEB-005 hero media budget (ACCEPTED, MER-92)
 
-Proposed from WEB-004's measurements and accepted by Product; this is now the binding WEB-005 budget.
-WEB-005 may tighten these ceilings; it may not loosen them without Product re-entry.
+The binding WEB-005 media envelope accepted by Product is:
 
 | Asset | Ceiling |
 | --- | --- |
-| Desktop autoplay WebM | ≤ 3.0 MiB (default was 4 MiB) |
-| MP4 fallback | ≤ 4.5 MiB (default was 6 MiB) |
-| Poster still | ≤ 180 KiB (default was 500 KiB) |
+| Desktop autoplay WebM | ≤ 3.0 MiB |
+| MP4 fallback | ≤ 4.5 MiB |
+| Poster still | ≤ 180 KiB |
 | Mobile / reduced-data | intentional static/poster fallback, no dual-video download |
 
-The four ceilings above are the accepted budget. The engineering conditions WEB-004 measured under —
-how the budget is met in practice, not additional Product policy — are: one encode per client, ever; the poster stays the preloaded LCP element with
+The engineering conditions WEB-004 measured under remain: one encode per client; the poster stays the preloaded LCP element with
 `imagesrcset`/`imagesizes` matching the `<img>`; `prefers-reduced-motion: reduce` gets the static
-poster; the bottom-right caption region must keep ≥ 4.5:1 (today 6.84:1 against the image alone,
-and the hero caption is deliberately outside the runtime tone system because `.hero-shade` sits
-between raster and text); and any hero media must be recorded and checksummed like the derivatives
-above.
+poster; the bottom-right caption region must keep ≥ 4.5:1; and hero media must be recorded and checksummed like the accepted derivatives.
 
 ## Current state (WEB-003 accepted)
 
@@ -103,7 +100,7 @@ Five public routes extend the homepage into a complete small public site, each a
 
 The homepage and every deeper route share one persistent header/footer navigation. `vercel.json` serves trailing-slash canonical URLs; `sitemap.xml` lists all six canonical routes. Language choice persists across routes through the shared `localStorage` key. The validator checks route metadata, internal/cross-page links, sitemap coverage, EN/TR parity, accessibility-label localization, pilot social-preview truthfulness and the unchanged WEB-002 scientific provenance/checksum/warning invariants.
 
-The MER-91 bounded Product review revision closed three findings before acceptance: every human-readable `aria-label` on canonical routes is now bound to `data-i18n-aria-label`; `/pilot/` uses the accepted Kızıldere `assets/proof/geothermal-1400.webp` derivative for Open Graph instead of the unrelated Crater Lake hero; repository authority/status pointers were reconciled. Validator result remained PASS with 0 warnings and the implementation reported 185 site-wide i18n keys.
+The MER-91 bounded Product review revision closed three findings before acceptance: every human-readable `aria-label` on canonical routes is bound to `data-i18n-aria-label`; `/pilot/` uses the accepted Kızıldere `assets/proof/geothermal-1400.webp` derivative for Open Graph instead of the unrelated Crater Lake hero; repository authority/status pointers were reconciled. Validator result remained PASS with 0 warnings and the implementation reported 185 site-wide i18n keys.
 
 ## Current state (WEB-002 accepted)
 
@@ -138,7 +135,7 @@ Every scientific visual is an OrbGSS cartographic export materialized through th
 - Navigation order remains Platform → Solutions → Pilot → Company → Contact → EN | TR.
 - EN default / TR second language; no flags/framework.
 - No unsupported customer, partner, revenue, ROI, accuracy, AI-performance or production-deployment claims.
-- Later R7 public visual/palette authority may simplify/recompose the final homepage story only under its downstream integration authority; WEB-004 hardening must not silently redesign the accepted WEB-003 site.
+- The locked four-act authority in `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` supersedes earlier homepage-layout assumptions where they conflict; WEB-005 owns that integration.
 
 ## Product positioning
 
@@ -146,23 +143,18 @@ OrbGSS is a geospatial-intelligence platform. Geothermal Exploration is the acti
 
 ## Production blockers
 
-1. `CONTACT_RELEASE_GATE` (open, MER-92) — confirm `contact@orbgss.com` ownership and deliverability before public launch. Route/mailto correctness is verified; mailbox ownership is not, and cannot be from this repository. Mandatory pre-WEB-006 gate.
-2. WEB-004 is REVIEW_READY and awaiting terminal acceptance/merge; WEB-005 remains incomplete.
-3. `HOSTED_PREVIEW_NOT_RUN` — accepted under the WEB-004 task on MER-92. A hosted Vercel preview still needs to be produced under already-authorized credentials before launch; WEB-004 recorded a reproducible local preview instead.
-5. WEB-006 only: connect `orbgss.com` / `www.orbgss.com` through Squarespace DNS while preserving Google Workspace MX/SPF/DKIM/DMARC and unrelated records.
+1. `CONTACT_RELEASE_GATE` (open, MER-92) — confirm `contact@orbgss.com` ownership and deliverability before public launch. Route/mailto correctness is verified; mailbox ownership requires Workspace/account evidence. Mandatory pre-WEB-006 gate.
+2. WEB-005 remains incomplete. GEO-WEB-002 is resolved; WEB-005 remains subject to its other canonical dependency/dependencies, including the accepted WEB-HERO-001 sequence, and deliberate CTO start approval.
+3. `HOSTED_PREVIEW_NOT_RUN` was accepted under WEB-004. A hosted Vercel preview still needs to be produced under already-authorized credentials before launch; WEB-004 recorded a reproducible local preview instead.
+4. WEB-006 only: connect `orbgss.com` / `www.orbgss.com` through Squarespace DNS while preserving Google Workspace MX/SPF/DKIM/DMARC and unrelated records.
 
 ## Next canonical task
 
-GEO-WEB-002 / MER-102 is implemented and **REVIEW_READY** on `feat/geo-web-002-final-visual-masters` at
-`ea693c2`. Science performs terminal acceptance; Product may bind the package into WEB-005 only after that.
+GEO-WEB-002 / MER-102 is **ACCEPTED / COMPLETE** at implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`; terminal acceptance is `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md`. Product may bind the accepted package into WEB-005 without reopening Science so long as the package constraints are preserved.
 
-WEB-004 remains implemented and **REVIEW_READY** on `feat/web-004-preview-hardening`, with its Product
-decisions resolved on MER-92 (LCP and score-legend deviations accepted; hero budget accepted;
-`HOSTED_PREVIEW_NOT_RUN` accepted; `CONTACT_RELEASE_GATE` open). Product performs terminal acceptance/merge.
+WEB-004 is **PRODUCT_ACCEPTED / COMPLETE** under MER-92 at implementation HEAD `56cb53039b85a852110c737505bc2ae2282acb08` with acceptance publication `716104d677fea5021787b581470a436ed708f3a3`.
 
-After both: WEB-005 final cinematic hero and four-act homepage integration, which now has an accepted media
-budget and an accepted visual master package with explicit maximum safe rendered sizes. WEB-006 production
-DNS cutover remains deferred behind an explicit CTO human gate.
+WEB-005 remains a deliberate CTO-start task and must also satisfy the remaining WEB-HERO-001 dependency chain. WEB-006 production DNS cutover remains deferred behind its explicit CTO human gate.
 
 ## History
 
@@ -173,5 +165,5 @@ DNS cutover remains deferred behind an explicit CTO human gate.
 - WEB-002 (2026-09-15): public-safe GEO-039 proof exports, Kızıldere evidence/prospectivity presentation and provenance/checksum enforcement accepted after one bounded Product review revision; implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`.
 - WEB-003 (2026-09-15): `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/`; cross-route EN/TR, metadata, sitemap/link validation and reuse of accepted Kızıldere proof. Initial implementation `5d99eb811dfbb3396ebade17ff6ab863b5463a35`.
 - WEB-003 bounded Product review revision (2026-09-15): accessibility-label localization guard, truthful Kızıldere pilot social preview and authority/status reconciliation; final implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf`; Product accepted and fast-forwarded canonical main non-destructively.
-- GEO-WEB-002 (2026-09-16): final homepage visual master package for the locked four-act composition — Kızıldere Act-2 natural-colour Landsat context master at native 30 m (2400 × 1500 px), and native-resolution `terrain` / `thm01` / `alt01` / `alt02` / `priority` cartographic panels, card derivatives and in-frame legend crops from the accepted GEO-039 exports; per-asset provenance, checksums, rights, warnings and maximum safe rendered size published, with the Act-4 ≥ 2000 px target recorded as not honestly achievable. Implemented on `feat/geo-web-002-final-visual-masters` from `8a4fe9b`; implementation HEAD `ea693c2`; REVIEW_READY, not merged.
-- WEB-004 (2026-09-16): responsive/accessibility/performance hardening of the accepted six-route site — homepage Lighthouse Performance 77 → 94, page transfer −53%, measured per-viewport caption tone, viewport-change disclosure reset, WCAG 2.5.8 touch targets, `/contact/` heading order, validator extended to responsive and deferred imagery. `HOSTED_PREVIEW_NOT_RUN` and `CONTACT_RELEASE_GATE` recorded. Implemented on `feat/web-004-preview-hardening` from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`; implementation HEAD `56cb530`; REVIEW_READY, not merged. Product decisions resolved on MER-92: LCP 3.2 s and the score-legend `image-aspect-ratio` finding accepted as bounded intentional deviations (no re-encode of proof derivatives, no re-proportioning of the legend), WEB-005 hero budget accepted, `HOSTED_PREVIEW_NOT_RUN` accepted, `CONTACT_RELEASE_GATE` left open for pre-WEB-006 verification.
+- WEB-004 (2026-09-16): responsive/accessibility/performance hardening accepted under MER-92; implementation HEAD `56cb53039b85a852110c737505bc2ae2282acb08`; acceptance publication `716104d677fea5021787b581470a436ed708f3a3`. `HOSTED_PREVIEW_NOT_RUN` accepted; `CONTACT_RELEASE_GATE` remains open for launch verification.
+- GEO-WEB-002 (2026-09-16): final homepage visual master package for the locked four-act composition — Kızıldere Act-2 natural-colour Landsat context master at native 30 m (2400 × 1500 px), and renderer-native `terrain` / `thm01` / `alt01` / `alt02` / `priority` cartographic panels, card derivatives and in-frame legend crops from the accepted GEO-039 exports; per-asset provenance, checksums, rights, warnings and maximum safe rendered size published. Act-4 ≥2000 px target is not honestly achievable under accepted science and the task-authorized 1249-device-pixel contained-composition fallback is accepted. Implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`; terminal Science acceptance `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md`.
