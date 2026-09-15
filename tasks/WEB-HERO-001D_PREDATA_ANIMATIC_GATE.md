@@ -1,10 +1,10 @@
 # WEB-HERO-001D — Continuous pre-data hero animatic & quality gate
 
 **Linear:** `MER-101` (parent `MER-97`)  
-**Blocked by:** `MER-100 / WEB-HERO-001C`  
+**Predecessor:** `MER-100 / WEB-HERO-001C` terminally accepted at remote implementation/publication HEAD `6593a80899720f8c7461aaa99ade0e5e63a3ea42`  
 **Authority:** `docs/WEB_HERO_001_AUTHORITY.md` + Drive CURRENT Hero Visual & Production Authority v1.0  
 **Branch:** `feat/web-hero-001-predata-scene`  
-**State:** `BLOCKED_BY_WEB-HERO-001C`
+**State:** `READY_FOR_CTO_APPROVAL`
 
 ## Outcome
 
@@ -111,6 +111,18 @@ Report at `REVIEW_READY`:
 - future real-data injection/handoff note;
 - confirmation that no scientific output, website integration, deployment or DNS change occurred.
 
+## Accepted Phase-C carry-forward
+
+WEB-HERO-001C is terminally accepted with no further revision required. Phase D must consume, not redesign, its configuration-driven spherical AOI system, beam/corner registration, scan-sweep geometry and continuity convention.
+
+The following accepted Phase-C limitations are explicit Phase-D quality-gate work, not reasons to reopen Phase C:
+
+- the current 2048 px Phase-B Earth albedo is visibly soft at the closest regional approach;
+- atmosphere treatment may require conformant refinement at regional scale;
+- EEVEE beam sorting is not authoritative; final visual judgment remains on Cycles evidence.
+
+A higher-resolution rights-safe Earth texture/material refinement is permitted only if it preserves the accepted geography/world-coordinate convention, is recorded in `hero/assets/manifest.json`, introduces no scientific semantics, and stays inside the existing free/rights-safe production architecture. Any paid/unclear-rights asset remains a CTO human gate.
+
 ## STOP / route
 
 Route to Product only if the approved continuous narrative, composition or visual invariants require a material change; if a new production dependency/architecture is required; or if quality cannot be achieved within the rights-safe/free tooling envelope without a Product trade-off.
@@ -124,3 +136,5 @@ Do not stop for normal keyframe/camera revisions, shader tuning, render performa
 ## Branch / publication policy
 
 Continue on `feat/web-hero-001-predata-scene`. Normal bounded implementation/revision commits are Claude-owned through `REVIEW_READY`; no feature work on `main`, no force push/history rewrite. Completion of this task does **not** authorize live hero integration. The accepted output becomes an input to the later real-data hero phase and `WEB-005` integration/release gate.
+
+Publication/readiness does not auto-start Claude execution. CTO deliberate start remains required.
