@@ -46,9 +46,11 @@ All phases stay on this branch unless Product publishes a revision.
 - External production assets require explicit rights/provenance/checksum discipline under `hero/assets/manifest.json`.
 - Paid/unclear-rights assets, credentials/admin, destructive action or commercial commitment are human gates.
 
-## Parallel website state
+## Parallel website state and checkout safety
 
 The primary website workstream continues independently on its own branches. WEB-002 product-proof work may proceed in parallel. This hero branch must not absorb or merge that work merely to stay current.
+
+If the ordinary repository checkout is currently occupied by WEB-002 or another Claude Code session, **do not switch/reset/clean that active checkout** to start WEB-HERO-001. Use a separate Git worktree or equivalent isolated checkout for `feat/web-hero-001-predata-scene`. Creating and maintaining that bounded worktree is routine implementer-owned Git hygiene, not a Product STOP.
 
 ## Terminal phase state
 
