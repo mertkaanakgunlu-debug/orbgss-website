@@ -219,10 +219,9 @@
       "world_overrides": {
         "stars": {
           "enabled": true,
-          "scale": 260.0,
-          "randomness": 1.0,
-          "point_size": 0.045,
-          "strength": 5.0,
+          "scale": 190.0,
+          "point_size": 0.05,
+          "strength": 4.0,
           "color_ref": "neutral_light"
         }
       },
@@ -315,27 +314,36 @@
         "atmosphere_shell": {
           "type": "atmosphere_shell",
           "rim_color_ref": "atmosphere_cyan",
-          "strength": 2.4,
-          "fresnel_ior": 1.15,
-          "falloff_min": 0.25,
+          "strength": 1.5,
+          "night_hint": 0.12,
+          "fresnel_ior": 1.08,
+          "falloff_min": 0.45,
           "falloff_max": 1.0
         },
         "satellite_hull": {
           "base_color_ref": "satellite_hull",
-          "roughness": 0.32,
-          "metallic": 0.75,
+          "roughness": 0.28,
+          "metallic": 0.8,
           "emission_color_ref": "scan_ice_blue",
-          "emission_strength": 0.25
+          "emission_strength": 0.25,
+          "rim_light_color_ref": "neutral_light",
+          "rim_light_strength": 1.4,
+          "rim_light_ior": 2.2,
+          "rim_light_falloff_min": 0.55
         },
         "satellite_panel": {
           "type": "solar_panel",
           "base_color_ref": "satellite_panel",
           "grid_color_ref": "scan_ice_blue",
-          "roughness": 0.2,
-          "metallic": 0.55,
-          "cell_scale": 7.0,
-          "grid_line_width": 0.015,
-          "grid_emission_strength": 0.5
+          "roughness": 0.18,
+          "metallic": 0.6,
+          "cell_scale": 4.0,
+          "grid_line_width": 0.02,
+          "grid_emission_strength": 0.7,
+          "rim_light_color_ref": "neutral_light",
+          "rim_light_strength": 1.1,
+          "rim_light_ior": 2.2,
+          "rim_light_falloff_min": 0.55
         }
       },
       "lights": [

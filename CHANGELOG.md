@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.7.1-web-hero-001b-visual-revision — 2026-09-16 (WEB-HERO-001B visual-acceptance revision, branch `feat/web-hero-001-predata-scene`)
+
+Narrow visual-polish revision on the reviewed WEB-HERO-001B scene; no composition, geography, camera-path, or scope change.
+
+- satellite no longer casts a shadow onto Earth (`visible_shadow = False` on every satellite part) — at review size the cast shadow read as a stray planning-marker/overlay mark on the surface rather than a deliberate detail, so it is suppressed;
+- satellite hull and solar panels gain a shared, reusable Fresnel-gated rim-light (`_apply_rim_light`) so the satellite keeps a crisp, legible silhouette against both deep space and sunlit Earth; panel grid cells enlarged (`cell_scale` 7→4) and thickened for clearer "solar panel" read at hero scale;
+- atmosphere rim narrowed and thinned (`falloff_min` 0.25→0.45, `fresnel_ior` 1.15→1.08, `strength` 2.4→1.5) and, more importantly, now scales with the same sun-direction term the Earth material's terminator uses, so the glow is bright on the day limb and fades to a faint hint on the night limb instead of a uniform, physically-detached outline;
+- starfield rebuilt as two Voronoi layers (bright/sparse + dim/dense) with per-star brightness pulled from Voronoi's own colour output, plus a very-low-contrast large-scale noise brightness drift ("restrained star/nebula depth" from the original locked composition) — replaces the single uniform-threshold layer that read as an obviously repeating procedural grid;
+- three representative Cycles evidence stills re-rendered and replaced in `hero/evidence/` at the same frames (1/60/120); Phase A validator (81 checks) and benchmark re-verified green, since the touched builder functions are shared with the `benchmark_neutral` scene.
+
 ## v0.7.0-web-hero-001b-earth-satellite — 2026-09-15 (WEB-HERO-001B, branch `feat/web-hero-001-predata-scene`)
 
 - accepted the WEB-HERO-001A production scaffold and benchmark at `81a0b89`; implemented WEB-HERO-001B on the same branch;

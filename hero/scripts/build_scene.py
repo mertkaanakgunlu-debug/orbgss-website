@@ -92,10 +92,52 @@ def _load_image(filename: str):
 # Materials
 # ---------------------------------------------------------------------------
 
+def _apply_rim_light(nt, spec: dict, scene_config: dict, base_shader_socket):
+    """Mix a thin Fresnel-gated edge light on top of an existing shader
+    output, and rewire Material Output to the result. A small hard-surface
+    prop (the satellite) needs this to keep a crisp, legible silhouette
+    against both deep space and a bright sunlit Earth at hero scale; a bare
+    Principled BSDF alone reads as a flat dark blob at that size. No-op
+    (returns the input unchanged) when the spec has no rim_light_color_ref.
+    """
+    rim_ref = spec.get("rim_light_color_ref")
+    if not rim_ref:
+        return base_shader_socket
+
+    nodes, links = nt.nodes, nt.links
+    output = nodes.get("Material Output")
+    rim_color = hc.palette_color(scene_config, rim_ref)
+
+    fresnel = nodes.new("ShaderNodeFresnel")
+    fresnel.location = (-250, -450)
+    fresnel.inputs["IOR"].default_value = float(spec.get("rim_light_ior", 2.2))
+
+    sharpen = nodes.new("ShaderNodeMapRange")
+    sharpen.location = (-50, -450)
+    sharpen.inputs["From Min"].default_value = float(spec.get("rim_light_falloff_min", 0.55))
+    sharpen.inputs["From Max"].default_value = 1.0
+    sharpen.clamp = True
+    links.new(fresnel.outputs["Fac"], sharpen.inputs["Value"])
+
+    rim_emission = nodes.new("ShaderNodeEmission")
+    rim_emission.location = (150, -450)
+    rim_emission.inputs["Color"].default_value = _rgba(rim_color)
+    rim_emission.inputs["Strength"].default_value = float(spec.get("rim_light_strength", 1.2))
+
+    rim_mix = nodes.new("ShaderNodeMixShader")
+    rim_mix.location = (550, -200)
+    links.new(sharpen.outputs["Result"], rim_mix.inputs["Fac"])
+    links.new(base_shader_socket, rim_mix.inputs[1])
+    links.new(rim_emission.outputs["Emission"], rim_mix.inputs[2])
+    links.new(rim_mix.outputs["Shader"], output.inputs["Surface"])
+    return rim_mix.outputs["Shader"]
+
+
 def _build_principled_material(name: str, spec: dict, scene_config: dict):
     material = bpy.data.materials.new(name=name)
     material.use_nodes = True
-    bsdf = material.node_tree.nodes.get("Principled BSDF")
+    nt = material.node_tree
+    bsdf = nt.nodes.get("Principled BSDF")
     if bsdf is None:
         return material
 
@@ -110,6 +152,8 @@ def _build_principled_material(name: str, spec: dict, scene_config: dict):
         if not _set_input(bsdf, "Emission Color", _rgba(emission)):
             _set_input(bsdf, "Emission", _rgba(emission))
         _set_input(bsdf, "Emission Strength", float(spec.get("emission_strength", 1.0)))
+
+    _apply_rim_light(nt, spec, scene_config, bsdf.outputs["BSDF"])
     return material
 
 
@@ -203,10 +247,21 @@ def _build_earth_material(name: str, spec: dict, scene_config: dict, sun_directi
     return material
 
 
-def _build_atmosphere_material(name: str, spec: dict, scene_config: dict):
+def _build_atmosphere_material(name: str, spec: dict, scene_config: dict, sun_direction):
     """Fresnel rim-glow shell: transparent facing the camera, emissive at
     grazing angles, so the atmosphere reads as a limb glow that visibly
     follows the globe instead of a flat neon outline.
+
+    The grazing-angle (Fresnel) factor alone made every previous version of
+    this shell glow at an equally uniform, thick, all-the-way-round
+    brightness regardless of where the sun was -- exactly the "detached
+    graphic outline" look this was flagged for. A real limb glow is
+    sunlight scattering in the atmosphere, so it must fade out on the night
+    side: the emission's *strength* (not the transparent/emissive mix
+    itself, which stays a pure viewing-angle effect) is additionally scaled
+    by the same dot(normal, sun_direction) term the Earth material uses,
+    remapped so the day limb stays bright and the night limb only keeps a
+    faint terminator-adjacent hint rather than going fully dark.
     """
     material = bpy.data.materials.new(name=name)
     material.use_nodes = True
@@ -215,16 +270,45 @@ def _build_atmosphere_material(name: str, spec: dict, scene_config: dict):
     nodes.clear()
 
     output = nodes.new("ShaderNodeOutputMaterial")
-    output.location = (600, 0)
+    output.location = (750, 0)
 
     transparent = nodes.new("ShaderNodeBsdfTransparent")
     transparent.location = (0, -150)
 
     emission = nodes.new("ShaderNodeEmission")
-    emission.location = (0, 150)
+    emission.location = (150, 150)
     color = hc.palette_color(scene_config, spec.get("rim_color_ref", "atmosphere_cyan"))
     emission.inputs["Color"].default_value = _rgba(color)
-    emission.inputs["Strength"].default_value = float(spec.get("strength", 2.4))
+
+    day_gate = nodes.new("ShaderNodeMath")
+    day_gate.operation = "MULTIPLY"
+    day_gate.location = (-50, 300)
+    day_gate.inputs[0].default_value = float(spec.get("strength", 1.6))
+    links.new(day_gate.outputs["Value"], emission.inputs["Strength"])
+
+    geometry = nodes.new("ShaderNodeNewGeometry")
+    geometry.location = (-450, 400)
+    sun_vec = nodes.new("ShaderNodeCombineXYZ")
+    sun_vec.location = (-450, 550)
+    sun_vec.inputs[0].default_value = float(sun_direction[0])
+    sun_vec.inputs[1].default_value = float(sun_direction[1])
+    sun_vec.inputs[2].default_value = float(sun_direction[2])
+    sun_dot = nodes.new("ShaderNodeVectorMath")
+    sun_dot.operation = "DOT_PRODUCT"
+    sun_dot.location = (-250, 450)
+    links.new(geometry.outputs["Normal"], sun_dot.inputs[0])
+    links.new(sun_vec.outputs["Vector"], sun_dot.inputs[1])
+
+    night_hint = float(spec.get("night_hint", 0.12))
+    day_night_gate = nodes.new("ShaderNodeMapRange")
+    day_night_gate.location = (-50, 450)
+    day_night_gate.inputs["From Min"].default_value = -0.6
+    day_night_gate.inputs["From Max"].default_value = 0.3
+    day_night_gate.inputs["To Min"].default_value = night_hint
+    day_night_gate.inputs["To Max"].default_value = 1.0
+    day_night_gate.clamp = True
+    links.new(sun_dot.outputs["Value"], day_night_gate.inputs["Value"])
+    links.new(day_night_gate.outputs["Result"], day_gate.inputs[1])
 
     fresnel = nodes.new("ShaderNodeFresnel")
     fresnel.location = (-250, 0)
@@ -239,7 +323,7 @@ def _build_atmosphere_material(name: str, spec: dict, scene_config: dict):
     falloff.clamp = True
 
     mix = nodes.new("ShaderNodeMixShader")
-    mix.location = (300, 0)
+    mix.location = (450, 0)
 
     links.new(fresnel.outputs["Fac"], falloff.inputs["Value"])
     links.new(falloff.outputs["Result"], mix.inputs["Fac"])
@@ -298,6 +382,8 @@ def _build_solar_panel_material(name: str, spec: dict, scene_config: dict):
     links.new(bsdf.outputs["BSDF"], mix.inputs[1])
     links.new(grid_emission.outputs["Emission"], mix.inputs[2])
     links.new(mix.outputs["Shader"], output.inputs["Surface"])
+
+    _apply_rim_light(nt, spec, scene_config, mix.outputs["Shader"])
     return material
 
 
@@ -308,7 +394,7 @@ def _build_material(name: str, spec: dict, scene_config: dict, sun_direction=(0.
     if kind == "earth_day_night":
         return _build_earth_material(name, spec, scene_config, sun_direction)
     if kind == "atmosphere_shell":
-        return _build_atmosphere_material(name, spec, scene_config)
+        return _build_atmosphere_material(name, spec, scene_config, sun_direction)
     if kind == "solar_panel":
         return _build_solar_panel_material(name, spec, scene_config)
     raise ValueError("unsupported material type " + repr(kind) + " for " + name)
@@ -360,6 +446,17 @@ def _build_satellite(spec: dict, materials: dict):
     panel_material = materials.get(spec.get("panel_material"))
     dish_material = materials.get(spec.get("dish_material"), bus_material)
 
+    # This lane is pre-data: a satellite silhouette cast onto Earth as a real
+    # shadow reads, at review size, like a stray AOI/placement marker rather
+    # than an intentional camera-framing beauty detail. Suppress shadow rays
+    # from every satellite part so the satellite still looks correctly lit
+    # itself but never marks the surface below it.
+    def _no_cast_shadow(obj):
+        try:
+            obj.visible_shadow = False
+        except AttributeError:
+            pass
+
     bpy.ops.mesh.primitive_cube_add(size=1.0)
     bus = bpy.context.active_object
     bus.name = spec["id"] + "_bus"
@@ -369,6 +466,7 @@ def _build_satellite(spec: dict, materials: dict):
         polygon.use_smooth = False
     if bus_material:
         bus.data.materials.append(bus_material)
+    _no_cast_shadow(bus)
 
     for side, sign in (("pos", 1.0), ("neg", -1.0)):
         bpy.ops.mesh.primitive_cube_add(size=1.0)
@@ -379,6 +477,7 @@ def _build_satellite(spec: dict, materials: dict):
         panel.location = (sign * (bus_size[0] / 2 + panel_size[0] / 2 + 0.015), 0.0, 0.0)
         if panel_material:
             panel.data.materials.append(panel_material)
+        _no_cast_shadow(panel)
 
     bpy.ops.mesh.primitive_cone_add(
         radius1=dish_radius, radius2=dish_radius * 0.12, depth=dish_radius * 0.55, vertices=28
@@ -393,6 +492,7 @@ def _build_satellite(spec: dict, materials: dict):
         polygon.use_smooth = True
     if dish_material:
         dish.data.materials.append(dish_material)
+    _no_cast_shadow(dish)
 
     bpy.ops.mesh.primitive_cylinder_add(radius=0.012, depth=bus_size[2] * 1.6, vertices=10)
     boom = bpy.context.active_object
@@ -402,6 +502,7 @@ def _build_satellite(spec: dict, materials: dict):
     boom.location = (bus_size[0] / 2 + bus_size[2] * 0.8, 0.0, 0.0)
     if bus_material:
         boom.data.materials.append(bus_material)
+    _no_cast_shadow(boom)
 
     scale = float(spec.get("scale", 1.0))
     root.scale = (scale, scale, scale)
@@ -574,37 +675,104 @@ def _build_world(scene_config: dict, scene_spec: dict | None = None) -> None:
     stars = world_spec.get("stars")
     if stars and stars.get("enabled", True):
         tex_coord = nodes.new("ShaderNodeTexCoord")
-        tex_coord.location = (-900, -300)
-
-        voronoi = nodes.new("ShaderNodeTexVoronoi")
-        voronoi.location = (-650, -300)
-        try:
-            voronoi.voronoi_dimensions = "3D"
-        except TypeError:
-            pass
-        _set_input(voronoi, "Scale", float(stars.get("scale", 260.0)))
-        _set_input(voronoi, "Randomness", float(stars.get("randomness", 1.0)))
-
-        star_ramp = nodes.new("ShaderNodeValToRGB")
-        star_ramp.location = (-400, -300)
-        threshold = float(stars.get("point_size", 0.045))
+        tex_coord.location = (-1100, -300)
         star_color = hc.palette_color(scene_config, stars.get("color_ref", "neutral_light"))
-        star_ramp.color_ramp.elements[0].position = 0.0
-        star_ramp.color_ramp.elements[0].color = _rgba(star_color)
-        star_ramp.color_ramp.elements[1].position = max(0.001, threshold)
-        star_ramp.color_ramp.elements[1].color = (0.0, 0.0, 0.0, 1.0)
+
+        def _star_layer(y, scale, point_size, brightness_lo, brightness_hi):
+            # A single uniform Voronoi threshold makes every point the same
+            # size and brightness, which reads as an obvious repeating grid
+            # ("procedural cheapness"/banding) rather than a real field. Each
+            # layer instead pulls its own per-cell brightness from Voronoi's
+            # Color output, so points vary the way real star magnitudes do.
+            voronoi = nodes.new("ShaderNodeTexVoronoi")
+            voronoi.location = (-850, y)
+            try:
+                voronoi.voronoi_dimensions = "3D"
+            except TypeError:
+                pass
+            _set_input(voronoi, "Scale", float(scale))
+            _set_input(voronoi, "Randomness", 1.0)
+
+            ramp = nodes.new("ShaderNodeValToRGB")
+            ramp.location = (-600, y)
+            ramp.color_ramp.elements[0].position = 0.0
+            ramp.color_ramp.elements[0].color = (1.0, 1.0, 1.0, 1.0)
+            ramp.color_ramp.elements[1].position = max(0.001, float(point_size))
+            ramp.color_ramp.elements[1].color = (0.0, 0.0, 0.0, 1.0)
+            distance_out = "Distance" if "Distance" in voronoi.outputs else voronoi.outputs[0].name
+            links.new(voronoi.outputs[distance_out], ramp.inputs["Fac"])
+
+            brightness = nodes.new("ShaderNodeMapRange")
+            brightness.location = (-600, y - 130)
+            brightness.inputs["From Min"].default_value = 0.0
+            brightness.inputs["From Max"].default_value = 1.0
+            brightness.inputs["To Min"].default_value = float(brightness_lo)
+            brightness.inputs["To Max"].default_value = float(brightness_hi)
+            color_out = "Color" if "Color" in voronoi.outputs else voronoi.outputs[-1].name
+            separate = nodes.new("ShaderNodeSeparateColor")
+            separate.location = (-750, y - 130)
+            links.new(voronoi.outputs[color_out], separate.inputs["Color"])
+            links.new(separate.outputs[0], brightness.inputs["Value"])
+
+            point_mask = nodes.new("ShaderNodeMath")
+            point_mask.operation = "MULTIPLY"
+            point_mask.location = (-350, y)
+            links.new(ramp.outputs["Color"], point_mask.inputs[0])
+            links.new(brightness.outputs["Result"], point_mask.inputs[1])
+            return point_mask
+
+        bright_layer = _star_layer(-250, stars.get("scale", 190.0), stars.get("point_size", 0.05), 0.5, 1.0)
+        dim_layer = _star_layer(-500, stars.get("scale", 190.0) * 2.4, stars.get("point_size", 0.05) * 0.55, 0.25, 0.55)
+
+        combine = nodes.new("ShaderNodeMath")
+        combine.operation = "MAXIMUM"
+        combine.location = (-150, -350)
+        links.new(bright_layer.outputs["Value"], combine.inputs[0])
+        links.new(dim_layer.outputs["Value"], combine.inputs[1])
 
         star_emission = nodes.new("ShaderNodeBackground")
-        star_emission.location = (-150, -300)
-        star_emission.inputs["Strength"].default_value = float(stars.get("strength", 5.0))
+        star_emission.location = (250, -300)
+        star_emission.inputs["Color"].default_value = _rgba(star_color)
+        star_emission.inputs["Strength"].default_value = 0.0
+
+        multiply_strength = nodes.new("ShaderNodeMath")
+        multiply_strength.operation = "MULTIPLY"
+        multiply_strength.location = (50, -450)
+        multiply_strength.inputs[1].default_value = float(stars.get("strength", 4.0))
+        links.new(combine.outputs["Value"], multiply_strength.inputs[0])
+
+        # A large-scale, very-low-contrast brightness drift across the sky
+        # ("restrained star/nebula depth") so the field doesn't look like a
+        # flat, uniformly-lit decal.
+        depth_noise = nodes.new("ShaderNodeTexNoise")
+        depth_noise.location = (-850, -650)
+        _set_input(depth_noise, "Scale", 1.4)
+        _set_input(depth_noise, "Detail", 2.0)
+        links.new(tex_coord.outputs["Generated"], depth_noise.inputs["Vector"])
+        depth_range = nodes.new("ShaderNodeMapRange")
+        depth_range.location = (-600, -650)
+        depth_range.inputs["From Min"].default_value = 0.3
+        depth_range.inputs["From Max"].default_value = 0.7
+        depth_range.inputs["To Min"].default_value = 0.75
+        depth_range.inputs["To Max"].default_value = 1.15
+        depth_range.clamp = True
+        fac_name = "Fac" if "Fac" in depth_noise.outputs else depth_noise.outputs[0].name
+        links.new(depth_noise.outputs[fac_name], depth_range.inputs["Value"])
+
+        depth_multiply = nodes.new("ShaderNodeMath")
+        depth_multiply.operation = "MULTIPLY"
+        depth_multiply.location = (250, -450)
+        links.new(multiply_strength.outputs["Value"], depth_multiply.inputs[0])
+        links.new(depth_range.outputs["Result"], depth_multiply.inputs[1])
+        links.new(depth_multiply.outputs["Value"], star_emission.inputs["Strength"])
+
+        # Wire each layer's own Voronoi vector input from the shared coord.
+        for node in nodes:
+            if node.bl_idname == "ShaderNodeTexVoronoi" and not node.inputs["Vector"].links:
+                links.new(tex_coord.outputs["Generated"], node.inputs["Vector"])
 
         add_shader = nodes.new("ShaderNodeAddShader")
-        add_shader.location = (200, 0)
-
-        links.new(tex_coord.outputs["Generated"], voronoi.inputs["Vector"])
-        distance_output = "Distance" if "Distance" in voronoi.outputs else voronoi.outputs[0].name
-        links.new(voronoi.outputs[distance_output], star_ramp.inputs["Fac"])
-        links.new(star_ramp.outputs["Color"], star_emission.inputs["Color"])
+        add_shader.location = (450, 0)
         links.new(background.outputs["Background"], add_shader.inputs[0])
         links.new(star_emission.outputs["Background"], add_shader.inputs[1])
         links.new(add_shader.outputs["Shader"], output.inputs["Surface"])

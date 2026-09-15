@@ -91,6 +91,14 @@ procedural and introduce no further external asset. Three representative Cycles 
 No AOI footprint, scan geometry or scientific layer was introduced. The Phase A benchmark scene
 and validator (81 checks) were re-run clean after these changes.
 
+**Visual-acceptance revision (2026-09-16):** satellite no longer casts a shadow onto Earth (read as
+a stray planning-marker in review); satellite hull/panels gained a shared Fresnel rim-light for a
+cleaner hero-scale silhouette; the atmosphere rim is thinner and now scales with the same
+sun-direction term the Earth terminator uses, instead of glowing at a uniform detached strength;
+the starfield is two brightness-varied Voronoi layers plus a faint large-scale depth drift instead
+of one uniform-threshold layer. No composition, geography, camera-path or scope change; the three
+representative stills were re-rendered and replaced. See `CHANGELOG.md`.
+
 Phase graph:
 
 `WEB-HERO-001A / MER-98` → `WEB-HERO-001B / MER-99` → `WEB-HERO-001C / MER-100` → `WEB-HERO-001D / MER-101`
