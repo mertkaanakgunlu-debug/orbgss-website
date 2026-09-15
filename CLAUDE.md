@@ -62,7 +62,7 @@ If a requested change conflicts with these rules, stop and ask for explicit desi
 
 ## Branching
 
-No feature work on `main`. vNext tasks (WEB-001 → WEB-006) land on feature branches and are reviewed before merge. WEB-001 is accepted at `677bfa7`; WEB-002 is REVIEW_READY on `feat/web-002-product-proof`. The cinematic hero is WEB-005; production DNS cutover is WEB-006.
+No feature work on `main`. vNext tasks (WEB-001 → WEB-006) land on feature branches and are reviewed before merge. WEB-001 is accepted at `677bfa7`; WEB-002 is accepted (implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`, merged to `main`); WEB-003 is REVIEW_READY on `feat/web-003-public-site-depth`. The cinematic hero is WEB-005; production DNS cutover is WEB-006.
 
 ## Deployment safety
 

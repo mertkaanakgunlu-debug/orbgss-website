@@ -34,8 +34,8 @@ button,a{-webkit-tap-highlight-color:transparent}
 .nav-list{display:flex;align-items:center;gap:clamp(24px,3.2vw,52px);list-style:none;margin:0;padding:0}
 .nav-list a,.nav-trigger{position:relative;display:inline-flex;align-items:center;gap:9px;padding:6px 0;opacity:.83;transition:opacity .2s ease;color:inherit;background:none;border:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;white-space:nowrap}
 .nav-list a:hover,.nav-trigger:hover,.has-menu.open .nav-trigger{opacity:1}
-.nav-list a[aria-current="page"]{opacity:1}
-.nav-list a[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--accent)}
+.nav-list a[aria-current="page"],.nav-trigger[aria-current="page"]{opacity:1}
+.nav-list a[aria-current="page"]::after,.nav-trigger[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--accent)}
 .chevron{width:5px;height:5px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s ease}
 .has-menu.open .chevron{transform:translateY(1px) rotate(225deg)}
 .has-menu{position:relative}
@@ -158,6 +158,10 @@ button,a{-webkit-tap-highlight-color:transparent}
 .ledger-status{grid-area:status;justify-self:end;text-align:right;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
 .ledger-status.is-active{color:var(--accent)}
 .ledger-row p{grid-area:copy;margin:0;font-size:14.5px;line-height:1.65;color:#a9b5bd;max-width:60ch}
+/* WEB-003: deep-page ledger rows carry more than one paragraph plus an optional inline CTA, so the
+   "copy" grid area holds one flex column instead of a single <p> directly. */
+.ledger-copy-group{grid-area:copy;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.ledger-copy-group p{max-width:60ch}
 
 /* ---------- trust / company ---------- */
 .company-section{padding:clamp(60px,7.5vw,120px) var(--pad);display:grid;grid-template-columns:minmax(260px,1fr) minmax(0,1.3fr);gap:clamp(40px,7vw,120px);align-items:start;background:#050d13;border-top:1px solid var(--line)}
@@ -173,6 +177,44 @@ button,a{-webkit-tap-highlight-color:transparent}
 .contact-beam{padding:clamp(38px,4.8vw,68px) var(--pad);display:grid;grid-template-columns:minmax(200px,.85fr) minmax(0,1.55fr) auto;gap:clamp(28px,5vw,88px);align-items:center;background:linear-gradient(90deg,#061018,#08131b);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .contact-actions{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
 .contact-mail{font-size:13px;letter-spacing:.06em;padding-bottom:2px;border-bottom:1px solid rgba(255,255,255,.35);transition:border-color .2s ease}.contact-mail:hover{border-bottom-color:#fff}
+
+/* ---------- WEB-003: deep public route pages ---------- */
+/* Shared page header: kicker + H1 + intro, used at the top of every deep route.
+   Deliberately subordinate in scale to the homepage hero (98px) — these are secondary pages. */
+.page-hero{padding:clamp(64px,9vw,140px) var(--pad) clamp(40px,5vw,64px);background:var(--bg);border-bottom:1px solid var(--line)}
+.page-hero-inner{max-width:920px}
+.page-hero h1{margin:0 0 22px;font-size:clamp(34px,4.2vw,64px);font-weight:370;letter-spacing:-.03em;line-height:1.1;max-width:18ch}
+.page-hero-copy{margin:0;max-width:64ch;font-size:clamp(16px,1.2vw,19px);line-height:1.7;color:#c2cbd0;font-weight:350}
+.page-hero-copy+.company-parent{margin-top:22px}
+
+/* Single padded wrapper for every deep-page content block; children below carry no padding of
+   their own so a page never has to reach for an inline style. */
+.page-section{padding:clamp(50px,6.5vw,96px) var(--pad);background:var(--bg);border-top:1px solid var(--line)}
+.page-section.is-deep{background:#050d13}
+.page-section-head{max-width:760px;margin:0 0 clamp(28px,3.5vw,48px)}
+.page-section-head h2{margin:0 0 16px;font-size:clamp(22px,2.2vw,32px);font-weight:370;letter-spacing:-.02em;line-height:1.16}
+.page-section-copy{margin:0;font-size:clamp(15px,1.1vw,17px);line-height:1.7;color:#c2cbd0}
+.page-actions{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(22px,3vw,40px);margin-top:clamp(28px,3.5vw,44px)}
+
+/* Numbered step / evidence-family list: platform workflow, pilot evidence walkthrough. */
+.workflow-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.workflow-row{display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-areas:"idx title" "idx copy";column-gap:clamp(18px,2.5vw,40px);row-gap:8px;padding:26px 0;border-bottom:1px solid var(--line)}
+.workflow-index{grid-area:idx;font-size:11px;color:var(--accent-soft);letter-spacing:.14em}
+.workflow-row h3{grid-area:title;margin:0;font-size:clamp(15px,1.2vw,19px);font-weight:430;letter-spacing:-.01em}
+.workflow-row p{grid-area:copy;margin:0;font-size:14.5px;line-height:1.68;color:#a9b5bd;max-width:62ch}
+.editorial-note{margin:24px 0 0;max-width:70ch;padding-left:14px;border-left:2px solid rgba(200,169,122,.5);font-size:clamp(12px,.82vw,13px);line-height:1.6;color:#9aa7b0}
+
+/* Editorial figure: reused WEB-002 proof imagery inside a deep page. Identical sizing/caption
+   system to .story-panel so the "no CSS transform on scientific rasters" guard travels with it. */
+.editorial-figure{position:relative;margin:24px 0 0;background:#0b141a;--panel-h:clamp(360px,52vh,620px)}
+.editorial-figure>img{width:100%;height:var(--panel-h);object-fit:cover}
+
+/* Contact routes: one clear next action per row, no form, no backend. */
+.contact-options{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.contact-option{display:grid;grid-template-columns:minmax(160px,.6fr) minmax(0,1.4fr) auto;gap:clamp(16px,3vw,40px);align-items:center;padding:28px 0;border-bottom:1px solid var(--line)}
+.contact-option h3{margin:0;font-size:clamp(15px,1.2vw,19px);font-weight:430;letter-spacing:-.01em}
+.contact-option p{margin:6px 0 0;font-size:14.5px;line-height:1.6;color:#a9b5bd;max-width:52ch}
+.contact-direct{margin-top:28px;display:flex;align-items:baseline;gap:16px;color:var(--dim);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
 
 /* ---------- footer ---------- */
 .site-footer{min-height:180px;padding:34px var(--pad) 46px;display:flex;justify-content:space-between;align-items:flex-end;gap:60px;background:#050d13;border-top:1px solid var(--line)}
@@ -215,6 +257,8 @@ button,a{-webkit-tap-highlight-color:transparent}
   .ledger-row{grid-template-columns:36px minmax(0,1fr);grid-template-areas:"idx title" "idx status" "idx copy";row-gap:8px}
   .ledger-status{justify-self:start;text-align:left;white-space:normal}
   .trust-list li{grid-template-columns:1fr;gap:6px}
+  .contact-option{grid-template-columns:1fr;gap:10px;align-items:start}
+  .page-hero{padding-top:44px}
   .contact-actions{align-items:flex-start;flex-direction:row;flex-wrap:wrap;gap:22px}
   .site-footer{align-items:flex-start;flex-direction:column}.footer-right{text-align:left}.footer-right nav{justify-content:flex-start;flex-wrap:wrap}.footer-right .attribution{margin-left:0}
 }

@@ -1,12 +1,12 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v0.7.1-web-002-review-revision` — WEB-002 accepted
+**Canonical version:** `v0.8.0-web-003-public-site-depth` — WEB-003 implemented, REVIEW_READY
 **Date:** 2026-09-15
-**Stage:** WEB-002 product proof accepted after bounded Product review revision; WEB-003 is next planned task and is not started
+**Stage:** WEB-003 public-site depth implemented on `feat/web-003-public-site-depth` (five new public routes); awaiting Product review and merge
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
-**Accepted WEB-002 implementation HEAD:** `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`
+**Accepted WEB-002 implementation HEAD:** `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b` (on `main`)
 **Reference/upstream only:** https://github.com/baran-orbgss/website
 **Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)
 **Registrar / DNS:** Squarespace
@@ -14,11 +14,23 @@
 **Company:** VirgaSoft
 **Product:** OrbGSS — Orbital Geo-Spatial Solutions
 **Product authority:** OrbGSS Website vNext Product & Execution Authority v1.5 (`docs/WEB_VNEXT_AUTHORITY.md`)
-**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-96 / GEO-WEB-001 resolved
+**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003, implemented/REVIEW_READY); MER-96 / GEO-WEB-001 resolved
 
 ## Authority
 
-`docs/WEB_VNEXT_AUTHORITY.md` is the repository-local summary of the product-owned *OrbGSS Website vNext Product & Execution Authority v1.5*. Where it disagrees with `docs/DESIGN_AUTHORITY.md` or `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`, it wins for vNext work. WEB-002 is terminally accepted under `tasks/WEB-002_PRODUCT_PROOF.md`; the next planned contract is WEB-003 and must not be started without deliberate CTO approval.
+`docs/WEB_VNEXT_AUTHORITY.md` is the repository-local summary of the product-owned *OrbGSS Website vNext Product & Execution Authority*. Where it disagrees with `docs/DESIGN_AUTHORITY.md` or `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`, it wins for vNext work. WEB-002 is terminally accepted under `tasks/WEB-002_PRODUCT_PROOF.md`. WEB-003 (public-site depth) received deliberate CTO start approval, is implemented on `feat/web-003-public-site-depth` under `tasks/WEB-003_PUBLIC_SITE_DEPTH.md`, and is REVIEW_READY — Product performs terminal acceptance/merge.
+
+## Current state (WEB-003)
+
+Five new public routes extend the homepage into a full small public site, each a real static directory (`<route>/index.html`, canonical trailing-slash URL):
+
+- `/platform/` — the accepted workflow (AOI → source/context → evidence → explicit data gaps → integrated priority → investigation decision support) as an editorial numbered list.
+- `/solutions/` — the application portfolio (Geothermal active first application; Mineral and Environmental & Land Intelligence as expansion directions), reusing the homepage's own copy and status labels.
+- `/pilot/` — the Kızıldere first-application proof in depth, reusing the accepted WEB-002 proof imagery and the structure/geology data-gap panel verbatim (same assets, same checksums, same mandatory EN/TR warnings) around new explanatory prose.
+- `/company/` — an actual company/about destination: identity, operating principles (the homepage trust list, reused), restrained expansion framing.
+- `/contact/` — three mailto conversation starters (pilot, partnership, technical) plus the direct address; no form, backend, analytics or PII capture.
+
+The homepage and every new route share one persistent header/footer navigation that now routes to these five destinations instead of same-page anchors. The homepage's own WEB-002 section ids, content, hero CTA and proof provenance/checksums are untouched — the accepted evidence-to-intelligence narrative did not change. `vercel.json` now serves trailing-slash canonical URLs; `sitemap.xml` lists all six routes. Language selection persists coherently across routes via the existing shared `localStorage` key. The validator now checks metadata, internal/cross-page links, sitemap coverage and EN/TR parity across every route, in addition to the unchanged WEB-002 provenance checks. See `CHANGELOG.md` (`v0.8.0-web-003-public-site-depth`) for the full change list.
 
 ## Current state (WEB-002 accepted)
 
@@ -83,13 +95,13 @@ OrbGSS is a geospatial-intelligence platform. Geothermal Exploration is the firs
 ## Production blockers
 
 1. Confirm `contact@orbgss.com` before public launch.
-2. WEB-003, WEB-004 and WEB-005 remain incomplete.
+2. WEB-003 review and merge; WEB-004 and WEB-005 remain incomplete.
 3. Vercel preview/acceptance is owned by WEB-004.
 4. WEB-006 only: connect `orbgss.com` / `www.orbgss.com` through Squarespace DNS, preserving Google Workspace MX/SPF/DKIM/DMARC.
 
 ## Next canonical task
 
-WEB-002 is **ACCEPTED / COMPLETE** at implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`. The next planned task is WEB-003 (public-site depth, credibility, conversion and bilingual content). Publication/preparation may occur under Product ownership, but implementation does not start without deliberate CTO approval. WEB-005 (cinematic hero) and WEB-006 (DNS cutover) remain deferred.
+WEB-003 (public-site depth, credibility, conversion and bilingual content) is implemented and REVIEW_READY on `feat/web-003-public-site-depth`, per deliberate CTO start approval. After Product review and merge: WEB-004 (responsive, accessibility, performance and hosted preview acceptance), which was blocked behind WEB-003. WEB-005 (cinematic hero) and WEB-006 (DNS cutover) remain deferred.
 
 ## History
 
@@ -100,3 +112,4 @@ WEB-002 is **ACCEPTED / COMPLETE** at implementation HEAD `a10cc141e3a7830c5e3c6
 - WEB-002 (2026-09-15): Science package MER-96 resolved; seven GEO-039 proof exports materialized and published with checksummed provenance; evidence layer switch; structure/geology data-gap state; validator now verifies proof provenance.
 - WEB-002 review revision (2026-09-15): removed CSS colour/contrast/opacity transforms from the scientific rasters and the score ramp; unified AOI framing across all story panels; restored THM-01 warning semantics in EN/TR and in the static HTML; reconciled the no-JS footer attribution and the two asset-class policies; validator now enforces visible warning coverage.
 - WEB-002 terminal Product acceptance (2026-09-15): accepted implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; no new Science/Product semantics introduced.
+- WEB-003 (2026-09-15): five new public routes (`/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/`) published as real static directories with trailing-slash canonical URLs; homepage/site-wide navigation now routes to them; `/pilot/` reuses accepted WEB-002 proof imagery and the structure data-gap panel verbatim; full EN/TR parity and route-specific metadata; validator extended site-wide (metadata, internal/cross-page links, sitemap coverage, EN/TR parity) with the WEB-002 provenance checks unchanged; PASS with 0 warnings. Implemented on `feat/web-003-public-site-depth` from accepted `main@79484bb7d11c3b26373649c802fb4db7d2bd445f`; REVIEW_READY, not merged.

@@ -28,7 +28,27 @@ REQUIRED_FILES = [
     "vercel.json",
     "robots.txt",
     "sitemap.xml",
+    # WEB-003 public routes
+    "platform/index.html",
+    "solutions/index.html",
+    "pilot/index.html",
+    "company/index.html",
+    "contact/index.html",
 ]
+
+# WEB-003: canonical public route -> its file, relative to ROOT. "" is the homepage.
+ROUTES = {
+    "": "index.html",
+    "platform": "platform/index.html",
+    "solutions": "solutions/index.html",
+    "pilot": "pilot/index.html",
+    "company": "company/index.html",
+    "contact": "contact/index.html",
+}
+
+
+def canonical_url(route: str) -> str:
+    return f"https://orbgss.com/{route + '/' if route else ''}"
 
 # WEB-001 vNext structure: story anchors, the pilot ledger and the trust/contact zone.
 REQUIRED_SECTION_IDS = {
@@ -71,6 +91,9 @@ class SiteParser(HTMLParser):
         # Static text carried by each data-i18n element, so warning coverage can be proved for a
         # reader with JavaScript disabled, not just for the dictionary.
         self.i18n_text: dict[str, str] = {}
+        # Every data-i18n* key this file references, regardless of which attribute carries it
+        # (text content, alt, aria-label, meta content, href) — used for site-wide EN/TR parity.
+        self.i18n_keys: set[str] = set()
         self._note_depth = 0
         self._open: list[bool] = []
         self._key_stack: list[str | None] = []
@@ -85,6 +108,10 @@ class SiteParser(HTMLParser):
             self._note_depth += 1
         key = data.get("data-i18n")
         self._key_stack.append(str(key) if key else None)
+        for i18n_attr in ("data-i18n", "data-i18n-alt", "data-i18n-aria-label", "data-i18n-content", "data-i18n-href"):
+            attr_key = data.get(i18n_attr)
+            if attr_key:
+                self.i18n_keys.add(str(attr_key))
         if data.get("id"):
             self.ids.add(str(data["id"]))
         if data.get("data-visual-slot"):
@@ -244,16 +271,28 @@ def main() -> int:
         else:
             fail(f"could not locate the {lang!r} block of the I18N dictionary", errors)
 
+    # A handful of dictionary entries (mailto links) point at a top-level const instead of an
+    # inline literal, e.g. 'mail.partner': MAIL_EN — resolve those the same way a JS engine would.
+    const_values: dict[str, str] = {}
+    for cname, cquote, cvalue in re.findall(r"const\s+([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(['\"])(.*?)\2\s*;", script):
+        const_values[cname] = cvalue
+
     def dictionary_value(lang: str, key: str) -> str | None:
+        # Keys are always single-quoted (dots make them invalid bare identifiers); values are
+        # single-quoted except where the copy itself needs an apostrophe, so try both delimiters.
         block = lang_blocks.get(lang)
         if block is None:
             return None
-        found = re.search(rf"^\s+{re.escape(key)!s}: '(.*)',$".replace("\\'", "'"),
-                          block, re.M)
-        if found:
-            return found.group(1)
-        found = re.search(rf"^\s+'{re.escape(key)}': '(.*?)',$", block, re.M)
-        return found.group(1) if found else None
+        escaped_key = re.escape(key)
+        for value_quote in ("'", '"'):
+            vq = re.escape(value_quote)
+            found = re.search(rf"^\s+'{escaped_key}':\s*{vq}(.*?){vq},?\s*$", block, re.M)
+            if found:
+                return found.group(1)
+        const_ref = re.search(rf"^\s+'{escaped_key}':\s*([A-Za-z_][A-Za-z0-9_]*),\s*$", block, re.M)
+        if const_ref:
+            return const_values.get(const_ref.group(1))
+        return None
 
     for asset in proof_assets:
         aid = asset.get("id", "<unknown>")
@@ -310,9 +349,117 @@ def main() -> int:
     if suspicious:
         fail("generic card/icon grid class detected; conflicts with locked design", errors)
 
+    # ------------------------------------------------------------------
+    # WEB-003: public-site depth. Every check above this point is homepage/WEB-002-specific and
+    # stays scoped to index.html. Everything below applies across all six canonical public routes,
+    # so a new page can never quietly ship a broken link, thin metadata or an EN/TR gap.
+    # ------------------------------------------------------------------
+    route_parsers: dict[str, SiteParser] = {}
+    route_html: dict[str, str] = {"": html}
+    route_parsers[""] = parser
+    for route, rel in ROUTES.items():
+        if route == "":
+            continue
+        path = ROOT / rel
+        if not path.exists():
+            continue  # already reported as a missing required file above
+        text = path.read_text(encoding="utf-8")
+        route_html[route] = text
+        route_parser = SiteParser()
+        route_parser.feed(text)
+        route_parsers[route] = route_parser
+
+    # Metadata: every route needs a truthful, route-specific title/description/canonical/OG url.
+    for route, text in route_html.items():
+        label = ROUTES[route]
+        url = canonical_url(route)
+        if "<title" not in text:
+            fail(f"{label}: missing <title>", errors)
+        if 'name="description"' not in text:
+            fail(f"{label}: missing meta description", errors)
+        if f'rel="canonical" href="{url}"' not in text:
+            fail(f"{label}: canonical link does not match {url!r}", errors)
+        if f'property="og:url" content="{url}"' not in text:
+            fail(f"{label}: og:url does not match {url!r}", errors)
+        if 'property="og:title"' not in text or 'property="og:description"' not in text:
+            fail(f"{label}: missing Open Graph title/description", errors)
+
+    # Internal links: every root-relative href must resolve to a real canonical route, and any
+    # #fragment it carries must resolve to a real id — on the target page for a "/route/#frag"
+    # link, or on the current page for a bare "#frag" link.
+    for route, route_parser in route_parsers.items():
+        label = ROUTES[route]
+        for href in route_parser.links:
+            if href.startswith(("mailto:", "tel:", "http://", "https://")):
+                continue
+            if href.startswith("#"):
+                if len(href) > 1 and href[1:] not in route_parser.ids:
+                    fail(f"{label}: broken internal fragment link: {href}", errors)
+                continue
+            if href.startswith("/"):
+                path_part, _, frag = href.partition("#")
+                target_route = path_part.strip("/")
+                if target_route not in ROUTES:
+                    fail(f"{label}: broken internal route link: {href!r}", errors)
+                    continue
+                if frag and target_route in route_parsers and frag not in route_parsers[target_route].ids:
+                    fail(f"{label}: {href!r} fragment #{frag} not found on {ROUTES[target_route]}", errors)
+                continue
+            fail(f"{label}: unrecognized internal link shape: {href!r}", errors)
+
+    # EN/TR parity: every data-i18n* key referenced anywhere on the public site must have a
+    # value in BOTH dictionary languages, so a route can never ship half-translated.
+    all_i18n_keys: set[str] = set()
+    for route_parser in route_parsers.values():
+        all_i18n_keys |= route_parser.i18n_keys
+    for key in sorted(all_i18n_keys):
+        for lang in ("en", "tr"):
+            if dictionary_value(lang, key) is None:
+                fail(f"i18n key {key!r} is missing from the {lang!r} dictionary", errors)
+
+    # Reused WEB-002 proof imagery on any deeper route must still be recorded provenance —
+    # extends the index.html-only provenance check above across every public page.
+    all_proof_srcs: set[str] = set()
+    for route_parser in route_parsers.values():
+        all_proof_srcs |= {src.lstrip("/") for src in route_parser.img_srcs if src.lstrip("/").startswith("assets/proof/")}
+    unrecorded_site_wide = all_proof_srcs - proof_paths
+    if unrecorded_site_wide:
+        fail(f"proof imagery referenced outside web_002.proof_assets: {sorted(unrecorded_site_wide)}", errors)
+
+    # Claim discipline and the card/icon-grid guard apply to every public route, not just the
+    # homepage (which was already scanned above, with its beam-note exclusion).
+    for route, text in route_html.items():
+        if route == "":
+            continue
+        label = ROUTES[route]
+        # PROHIBITED_COPY must never appear at all; PROHIBITED_SCORE_COPY is checked the same way
+        # index.html is above — allowed inside a mandatory .beam-note warning, nowhere else.
+        lowered_route_text = " ".join(route_parsers[route].text).lower()
+        for phrase in PROHIBITED_COPY:
+            if phrase in lowered_route_text:
+                fail(f"{label}: prohibited section/copy detected: {phrase!r}", errors)
+        lowered_route_claims = " ".join(route_parsers[route].claim_text).lower()
+        for phrase in PROHIBITED_SCORE_COPY:
+            if phrase in lowered_route_claims:
+                fail(f"{label}: prohibited phrase detected: {phrase!r}", errors)
+        suspicious_route = re.findall(r'class="[^"]*\b(?:card-grid|feature-grid|icon-grid)\b[^"]*"', text, flags=re.I)
+        if suspicious_route:
+            fail(f"{label}: generic card/icon grid class detected; conflicts with locked design", errors)
+
+    # sitemap.xml must list every canonical public route.
+    sitemap_path = ROOT / "sitemap.xml"
+    if sitemap_path.exists():
+        sitemap_text = sitemap_path.read_text(encoding="utf-8")
+        for route in ROUTES:
+            url = canonical_url(route)
+            if f"<loc>{url}</loc>" not in sitemap_text:
+                fail(f"sitemap.xml is missing {url!r}", errors)
+
     print("OrbGSS site validation")
     print(f"  scenes: {len(scenes)}")
     print(f"  html images: {len(parser.img_srcs)}")
+    print(f"  routes: {len(route_parsers)}")
+    print(f"  i18n keys referenced site-wide: {len(all_i18n_keys)}")
     print(f"  warnings: {len(warnings)}")
     for item in warnings:
         print(f"WARN: {item}")

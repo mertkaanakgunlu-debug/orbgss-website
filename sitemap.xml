@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://orbgss.com/</loc></url>
+  <url><loc>https://orbgss.com/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://orbgss.com/platform/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://orbgss.com/solutions/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://orbgss.com/pilot/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://orbgss.com/company/</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://orbgss.com/contact/</loc><lastmod>2026-09-15</lastmod></url>
 </urlset>

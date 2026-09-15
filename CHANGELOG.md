@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.8.0-web-003-public-site-depth — 2026-09-15 (WEB-003, branch `feat/web-003-public-site-depth`)
+
+- published five new public routes as real static directories — `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/` (each `<route>/index.html`, root-relative assets) — completing the public information architecture beyond the homepage;
+- `vercel.json` now serves trailing-slash canonical URLs (`trailingSlash: true`) to match the published route model; `sitemap.xml` lists all six canonical routes;
+- the homepage and every new route share one persistent header/footer navigation that now routes to these five destinations instead of same-page anchors; the homepage's own WEB-002 section ids, content and hero CTA are untouched, so the accepted evidence-to-intelligence narrative and its provenance/checksums are unchanged;
+- `/platform/` explains the accepted workflow (AOI → source/context → evidence → explicit data gaps → integrated priority → investigation decision support) as an editorial numbered list, not a feature grid;
+- `/solutions/` presents the three-application portfolio (Geothermal active first application; Mineral and Environmental & Land Intelligence as expansion directions) as an extended ledger, reusing the homepage's own application copy and status labels;
+- `/pilot/` reuses the accepted WEB-002 proof imagery and the structure/geology data-gap panel verbatim for Kızıldere — same assets, same checksums, same "no CSS transform on scientific rasters" guard, same mandatory EN/TR warnings — around new explanatory prose, so the first-application story can be read in depth without restating or drifting from the accepted semantics;
+- `/company/` and `/contact/` give OrbGSS an actual about/contact destination (operating principles, restrained expansion framing, three mailto conversation starters); no form, backend, analytics or PII capture;
+- every route carries truthful route-specific `<title>`, meta description, canonical URL and Open Graph metadata; `aria-current="page"` marks the active nav item; language selection persists coherently across routes via the existing shared `localStorage` key;
+- `script.js` gained new EN/TR key pairs for the five routes (plus `mail.pilot` / `mail.technical`), reusing existing homepage keys everywhere the meaning is identical (nav labels, trust list, company copy, mandatory warnings, image captions, coordinates) rather than forking duplicate strings;
+- `styles.css` gained a small set of new page-level components (`.page-hero`, `.workflow-list`, `.contact-options`, `.editorial-note`, `.ledger-copy-group`) built from the existing palette and type scale; no new visual system, no card grid;
+- validator extended site-wide: every route now gets metadata checks, internal-link and cross-page fragment resolution, sitemap coverage, and an EN/TR parity check across every `data-i18n*` key referenced anywhere on the site; the WEB-002 provenance/checksum/warning checks above it are untouched and stay scoped to `index.html`; PASS with 0 warnings;
+- no deploy, DNS, analytics, form backend, or WEB-004/WEB-005/WEB-006 work introduced.
+
 ## v0.7.1-web-002-review-revision — 2026-09-15 (WEB-002 Product review revision, branch `feat/web-002-product-proof`)
 
 Bounded conformant fixes from Product review at `854c37f`. No redesign, no scope or semantics change.
