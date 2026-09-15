@@ -29,6 +29,8 @@ For the key public homepage sequence, the preferred visual order is:
 
 This replaces the earlier concept of spreading many evidence families across a long sequence of separate technical posters/cards.
 
+It also supersedes the older provisional homepage image-order concept recorded in an earlier session as **AOI / Structure / Geology / Plume / Thermal**. That older ordering is no longer the target public composition unless a newer Product authority explicitly restores it.
+
 ## 3. Presentation intent
 
 - The hero captures attention and communicates observation/acquisition.
@@ -42,13 +44,19 @@ This replaces the earlier concept of spreading many evidence families across a l
 
 The following existing hero decisions remain authoritative:
 
+- Final production uses **Blender + Claude Code Desktop** as the controlled production path; generative-video tools may be used only for references/concepts, not as the authoritative final scene system.
+- The Blender scene must be reproducible from repository-controlled scripts/configuration under the isolated `hero/` workspace.
 - Earth is a true 3D sphere with coherent perspective and atmosphere.
 - The AOI is surface-conforming / geodetically anchored to the globe; it must never read as a flat screen-space rectangle pasted over Earth.
 - Scan beams and corner locks register to the real 3D AOI footprint.
-- The scan should visibly frame/lock the AOI and read as a genuine satellite acquisition/scan event.
+- The scan should visibly frame/lock the AOI and read as a genuine satellite acquisition/scan event; a subtle surface-following scan sweep is preferred over generic decorative beams.
 - Global → acquisition → regional camera motion preserves the same AOI identity, orientation and scale continuously; no AI-style scale jump is acceptable.
 - Acquisition visual language is restrained cyan / ice-blue / teal with premium cinematic lighting, not neon/HUD overload.
 - Realism is preserved while visual appeal may be elevated for a broad public audience.
+- The complete hero target remains approximately 8–12 seconds, with a calm establishing move, acquisition/scan, approach and a stable final state suitable for HTML headline/CTA readability.
+- Final production media target remains WebM primary + MP4 fallback + poster image + reduced-motion static fallback; GIF is not the production format.
+- Hero copy/navigation/CTA remain HTML/CSS content rather than baked text inside the rendered video.
+- The preferred playback behavior remains one-shot autoplay, muted/playsinline, followed by a stable final state rather than perpetual distracting looping; reduced-motion users receive a complete static experience.
 
 ## 5. Task boundaries
 
@@ -58,9 +66,14 @@ The following existing hero decisions remain authoritative:
 - `WEB-HERO-001B/C/D` continue to consume the locked Earth/satellite/AOI/continuity invariants.
 - Real scientific layer injection, public palette refinement and final public-layout/media integration remain downstream work owned by `WEB-005` or a later explicit Product revision.
 - `WEB-005` must treat **Hero → Real AOI satellite image → 3-card Evidence panel → Large Score/Prospectivity result** as the preferred public presentation direction unless a newer Product authority explicitly supersedes it.
+- No paid/licensed production dependency or commercial service is authorized by this decision. Free/owned tooling remains preferred; any paid/licensed asset/service is a human gate.
 
 ## 6. Science/public-safe constraint on the evidence trio
 
 The three-card layout is a Product presentation decision, not permission to fabricate data. If one intended family lacks approved/public-safe evidence, the site must use the canonical optional-support/data-gap semantics rather than inventing a layer.
 
 The public-facing palette may be more engaging than the technical/scientific palette, but it must remain truthful and must never imply stronger evidence, probability, reserve, discovery likelihood or drilling-success semantics than the accepted product/science authority supports.
+
+## 7. Session continuity rule
+
+For future Product & Software sessions, this file and the linked Drive CURRENT authorities are the canonical recall point for the hero/public-visual decisions above. Conversation memory is not authority. Before revising hero/public visual direction, resolve these documents plus the current exact Git task/Linear state first and explicitly publish any supersession rather than relying on chat history.
