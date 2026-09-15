@@ -1,8 +1,11 @@
 # OrbGSS website vNext — repository-local authority
 
-**Source of truth:** CURRENT — OrbGSS Website vNext Product & Execution Authority v1.2 (product-owned).
-**Tracking:** Linear MER-89 — WEB-001 — vNext information architecture, visual foundation & homepage shell.
-**Status:** published with WEB-001 (2026-09-15). Where this document and the older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; the older documents remain valid for everything they cover that is not restated here (imagery rules, palette, on-image labels, logo, claim discipline).
+**Source of truth:** CURRENT — OrbGSS Website vNext Product & Execution Authority v1.3 (product-owned).  
+**Canonical repository:** `mertkaanakgunlu-debug/orbgss-website`.  
+**Reference/upstream only:** `baran-orbgss/website`.  
+**Accepted WEB-001 head:** `677bfa7672ac18c2c808ddaaf235ff12863de443`.  
+**Current tracking:** Linear MER-90 — WEB-002 — Evidence-to-Intelligence Product Proof & Geothermal Pilot Experience.  
+**Status:** WEB-001 accepted; independent repository migration complete; WEB-002 authority published on `feat/web-002-product-proof`; implementation requires deliberate CTO start approval. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for everything they cover that is not restated here (imagery rules, palette, on-image labels, logo, claim discipline).
 
 ## 1. Brand hierarchy
 
@@ -61,7 +64,8 @@ Each numbered story section keeps the beam → visual rhythm. The story is what 
 ## 5. Scientific and public-claim boundaries
 
 - Do not fabricate DEM, thermal, alteration, geological, fault or score outputs. Temporary atmospheric imagery must never be labelled as one of those.
-- Real evidence / product-proof visuals are owned by WEB-002. Until then, story panels reuse provenance-safe Landsat composites and are marked as deferred slots in markup (`data-visual-slot`), not in public copy.
+- Real evidence / product-proof visuals are owned by WEB-002. Each real public visual must have a traceable accepted/public-safe source pointer or be explicitly marked as a design mockup that cannot be confused with measured evidence.
+- Scientific meaning remains owned by canonical Science authority. Product presentation must not redefine CRS/grid/units/NoData/mask, resampling, feature eligibility, validation semantics, uncertainty or score interpretation.
 - Never publish unsupported customer counts, enterprise partners, revenue, ROI, exploration accuracy, AI/model-performance claims, false production deployments, or claims that OrbGSS replaces field investigation.
 - Trust language is restrained and truthful: traceable provenance, explicit data gaps, evidence-based outputs, decision support, field investigation remains necessary.
 - Imagery provenance rules in `IMAGERY_RIGHTS.md` and `assets/imagery/sources.json` are unchanged and mandatory.
@@ -84,10 +88,11 @@ This supersedes the `Home → Solutions → About → Partner With Us` order rec
 
 ## 8. Execution rules
 
-- **No feature work on `main`.** All vNext work lands on feature branches and is reviewed before merge.
+- **No feature work on `main`.** All vNext work lands on feature branches and is reviewed before merge/acceptance.
 - Static HTML + CSS + vanilla JavaScript remains the architecture. A framework or dependency change requires Product approval.
 - No analytics, auth, CRM, backend, billing or production deployment inside website tasks unless a task says so.
 - Each task publishes its contract under `tasks/` before implementation code is written.
+- Publication alone never starts implementation; each WEB task requires deliberate CTO start approval.
 
 ## 9. Task sequence
 
@@ -95,8 +100,8 @@ This supersedes the `Home → Solutions → About → Partner With Us` order rec
 WEB-001 → WEB-002 → WEB-003 → WEB-004 → WEB-005 → WEB-006
 ```
 
-- **WEB-001** — information architecture, visual foundation, homepage shell (this repository state).
-- **WEB-002** — real evidence / product-proof imagery for the story panels.
-- **WEB-003, WEB-004** — subsequent vNext tasks as defined by the product authority.
-- **WEB-005** — cinematic Earth/satellite hero (motion, WebM/MP4). **Deferred; the WEB-001 hero is a static poster designed to be replaced without touching surrounding architecture.**
-- **WEB-006** — production DNS cutover (`orbgss.com` via Squarespace → Vercel). **Deferred; no DNS or production-domain change before then. Google Workspace MX/SPF/DKIM/DMARC are never touched by website work.**
+- **WEB-001** — information architecture, visual foundation, homepage shell — **ACCEPTED / COMPLETE** at `677bfa7672ac18c2c808ddaaf235ff12863de443`.
+- **WEB-002** — real evidence / product-proof imagery and geothermal proof experience — exact contract: `tasks/WEB-002_PRODUCT_PROOF.md`; **READY_FOR_CTO_APPROVAL**.
+- **WEB-003, WEB-004** — subsequent vNext tasks as defined by the Product authority.
+- **WEB-005** — cinematic Earth/satellite hero (motion, WebM/MP4). **Deferred; the current hero remains a static poster designed to be replaced without changing surrounding architecture.**
+- **WEB-006** — production DNS cutover (`orbgss.com` via Squarespace → Vercel). **Deferred; no DNS or production-domain change before then. Google Workspace MX/SPF/DKIM/DMARC are never touched by ordinary website work.**
