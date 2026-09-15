@@ -1,12 +1,20 @@
 # WEB-002 — Evidence-to-Intelligence Product Proof & Geothermal Pilot Experience
 
 **Linear:** MER-90  
-**Authority:** CURRENT — OrbGSS Website vNext Product & Execution Authority v1.4 + this R2 resume alignment.  
+**Authority:** CURRENT — OrbGSS Website vNext Product & Execution Authority v1.4 + this R3 execution alignment.  
 **Canonical repository:** `mertkaanakgunlu-debug/orbgss-website`  
 **Reference/upstream only:** `baran-orbgss/website`  
 **Accepted baseline:** `main@677bfa7672ac18c2c808ddaaf235ff12863de443` (accepted WEB-001).  
 **Branch:** `feat/web-002-product-proof`  
-**Product state:** `IN_PROGRESS — EXECUTION_CONTINUATION_READY`
+**Product state:** `IN_PROGRESS — CLAUDE_DESKTOP_CONTINUATION_READY`
+
+## R3 — website execution channel alignment
+
+OrbGSS website vNext implementation continues directly in **Claude Code Desktop** under Product authority in this project. Execution & Delivery is **not** the dispatch/revision bridge for the current website workstream.
+
+E&D remains reserved for the post-Control-Plane semi-automated/headless Claude Code operating model. This execution-channel distinction does not change WEB-002 scope, acceptance, Science authority, branch policy, or implementation ownership.
+
+WEB-002 already received deliberate CTO start approval before the Science STOP. No second CTO start gate is required. Claude Code Desktop may continue this exact task on the same branch through `REVIEW_READY`; routine export execution, frontend implementation, tests, evidence, and bounded conformant fixes are implementer-owned. Product re-enters only for a genuine new Product/Science/high-risk decision outside this contract.
 
 ## R2 — Science dependency resolved / resume authority
 
@@ -18,8 +26,6 @@ The WEB-002 Science dependency is resolved by the accepted public-safe package:
 - Science resolution HEAD before Product resume publication: `45e2e5b46a07a28cc4ec399173f57f3b82c19cbc`
 - immutable Science release authority: `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8`
 - accepted Kızıldere v2 scoring identity: `8716e89324ff5566859f470f207d5a1f0ab651c19d9c7e9dba3087960a63cf3c`
-
-WEB-002 already received deliberate CTO start approval before the domain STOP. This R2 publication does **not** create a new plan or require a second CTO start gate. Implementation continuation is authorized on the same branch and should proceed through normal E&D/implementer ownership to `REVIEW_READY`.
 
 The website implementer may materialize website proof masters only through the accepted GEO-039 Workbench cartographic export path described by the Science package. Real generated SHA-256 values must be taken from each `export_manifest.json`; hashes not present in canonical evidence must never be invented.
 
@@ -178,12 +184,12 @@ Stop rather than invent if:
 - a new scientific/product/UX/dependency decision outside this contract is required;
 - destructive Git history changes would be required.
 
-Routine export execution, web-derivative generation, HTML/CSS/JS bugs, image optimization, responsive/accessibility fixes, provenance-manifest updates, validator changes and conformant visual polish are implementer-owned and must not trigger Product re-entry.
+Routine export execution, web-derivative generation, HTML/CSS/JS bugs, image optimization, responsive/accessibility fixes, provenance-manifest updates, validator changes and conformant visual polish are Claude Code Desktop implementer-owned and must not trigger Product re-entry.
 
 ## Branch/publication policy
 
 - No feature work on `main`.
-- Continue on `feat/web-002-product-proof` from the current authority HEAD after this R2 publication.
+- Continue on `feat/web-002-product-proof` from the current authority HEAD after this R3 publication.
 - Normal bounded implementation commits are allowed; no artificial micro-step commit budget.
 - Do not begin WEB-003.
 - Terminal implementation state: `REVIEW_READY`.
