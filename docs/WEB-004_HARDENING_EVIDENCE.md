@@ -4,7 +4,8 @@
 **Branch:** `feat/web-004-preview-hardening`
 **Accepted baseline:** `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`
 **Authority publication:** `3a4d8e006add2725d45b02071bda654be5bd09f5`
-**Implementation state:** `REVIEW_READY`
+**Implementation HEAD:** `56cb530` (`feat(web-004): responsive, accessibility and performance hardening (MER-92)`)
+**Implementation state:** `REVIEW_READY` — committed on the feature branch, not merged and not pushed
 
 This records what was measured, what was changed and what was deliberately not changed. Every
 number below came from a run against a local static server on this repository; nothing here is an

@@ -2,7 +2,7 @@
 
 **Canonical version:** `v0.9.0-web-004-preview-hardening` — WEB-004 REVIEW_READY
 **Date:** 2026-09-16
-**Stage:** WEB-004 responsive/accessibility/performance hardening implemented on `feat/web-004-preview-hardening` from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`; REVIEW_READY, not merged. Awaiting Product review and terminal acceptance.
+**Stage:** WEB-004 responsive/accessibility/performance hardening implemented on `feat/web-004-preview-hardening` from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`; REVIEW_READY at implementation HEAD `56cb530`, not merged. Awaiting Product review and terminal acceptance.
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
@@ -126,4 +126,4 @@ WEB-004 is implemented and **REVIEW_READY** on `feat/web-004-preview-hardening`.
 - WEB-002 (2026-09-15): public-safe GEO-039 proof exports, Kızıldere evidence/prospectivity presentation and provenance/checksum enforcement accepted after one bounded Product review revision; implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`.
 - WEB-003 (2026-09-15): `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/`; cross-route EN/TR, metadata, sitemap/link validation and reuse of accepted Kızıldere proof. Initial implementation `5d99eb811dfbb3396ebade17ff6ab863b5463a35`.
 - WEB-003 bounded Product review revision (2026-09-15): accessibility-label localization guard, truthful Kızıldere pilot social preview and authority/status reconciliation; final implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf`; Product accepted and fast-forwarded canonical main non-destructively.
-- WEB-004 (2026-09-16): responsive/accessibility/performance hardening of the accepted six-route site — homepage Lighthouse Performance 77 → 94, page transfer −53%, measured per-viewport caption tone, viewport-change disclosure reset, WCAG 2.5.8 touch targets, `/contact/` heading order, validator extended to responsive and deferred imagery. `HOSTED_PREVIEW_NOT_RUN` and `CONTACT_RELEASE_GATE` recorded. Implemented on `feat/web-004-preview-hardening` from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`; REVIEW_READY, not merged.
+- WEB-004 (2026-09-16): responsive/accessibility/performance hardening of the accepted six-route site — homepage Lighthouse Performance 77 → 94, page transfer −53%, measured per-viewport caption tone, viewport-change disclosure reset, WCAG 2.5.8 touch targets, `/contact/` heading order, validator extended to responsive and deferred imagery. `HOSTED_PREVIEW_NOT_RUN` and `CONTACT_RELEASE_GATE` recorded. Implemented on `feat/web-004-preview-hardening` from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`; implementation HEAD `56cb530`; REVIEW_READY, not merged.
