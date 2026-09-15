@@ -2,7 +2,7 @@
 
 **Canonical version:** `v0.9.1-geo-web-002-final-visual-masters` — GEO-WEB-002 REVIEW_READY
 **Date:** 2026-09-16
-**Stage:** GEO-WEB-002 / MER-102 final homepage visual master package published on `feat/geo-web-002-final-visual-masters` from authority baseline `main@8a4fe9ba5cb19d09390cb8816c2324e012331728`; REVIEW_READY at implementation HEAD `3165a92`, not merged. WEB-004 remains REVIEW_READY at `56cb530` with its Product decisions resolved on MER-92 (see below); both await terminal acceptance/merge.
+**Stage:** GEO-WEB-002 / MER-102 final homepage visual master package published on `feat/geo-web-002-final-visual-masters` from authority baseline `main@8a4fe9ba5cb19d09390cb8816c2324e012331728`; REVIEW_READY at implementation HEAD `ea693c2`, not merged. WEB-004 remains REVIEW_READY at `56cb530` with its Product decisions resolved on MER-92 (see below); both await terminal acceptance/merge.
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
@@ -154,7 +154,7 @@ OrbGSS is a geospatial-intelligence platform. Geothermal Exploration is the acti
 ## Next canonical task
 
 GEO-WEB-002 / MER-102 is implemented and **REVIEW_READY** on `feat/geo-web-002-final-visual-masters` at
-`3165a92`. Science performs terminal acceptance; Product may bind the package into WEB-005 only after that.
+`ea693c2`. Science performs terminal acceptance; Product may bind the package into WEB-005 only after that.
 
 WEB-004 remains implemented and **REVIEW_READY** on `feat/web-004-preview-hardening`, with its Product
 decisions resolved on MER-92 (LCP and score-legend deviations accepted; hero budget accepted;
@@ -173,5 +173,5 @@ DNS cutover remains deferred behind an explicit CTO human gate.
 - WEB-002 (2026-09-15): public-safe GEO-039 proof exports, Kızıldere evidence/prospectivity presentation and provenance/checksum enforcement accepted after one bounded Product review revision; implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`.
 - WEB-003 (2026-09-15): `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/`; cross-route EN/TR, metadata, sitemap/link validation and reuse of accepted Kızıldere proof. Initial implementation `5d99eb811dfbb3396ebade17ff6ab863b5463a35`.
 - WEB-003 bounded Product review revision (2026-09-15): accessibility-label localization guard, truthful Kızıldere pilot social preview and authority/status reconciliation; final implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf`; Product accepted and fast-forwarded canonical main non-destructively.
-- GEO-WEB-002 (2026-09-16): final homepage visual master package for the locked four-act composition — Kızıldere Act-2 natural-colour Landsat context master at native 30 m (2400 × 1500 px), and native-resolution `terrain` / `thm01` / `alt01` / `alt02` / `priority` cartographic panels, card derivatives and in-frame legend crops from the accepted GEO-039 exports; per-asset provenance, checksums, rights, warnings and maximum safe rendered size published, with the Act-4 ≥ 2000 px target recorded as not honestly achievable. Implemented on `feat/geo-web-002-final-visual-masters` from `8a4fe9b`; implementation HEAD `3165a92`; REVIEW_READY, not merged.
+- GEO-WEB-002 (2026-09-16): final homepage visual master package for the locked four-act composition — Kızıldere Act-2 natural-colour Landsat context master at native 30 m (2400 × 1500 px), and native-resolution `terrain` / `thm01` / `alt01` / `alt02` / `priority` cartographic panels, card derivatives and in-frame legend crops from the accepted GEO-039 exports; per-asset provenance, checksums, rights, warnings and maximum safe rendered size published, with the Act-4 ≥ 2000 px target recorded as not honestly achievable. Implemented on `feat/geo-web-002-final-visual-masters` from `8a4fe9b`; implementation HEAD `ea693c2`; REVIEW_READY, not merged.
 - WEB-004 (2026-09-16): responsive/accessibility/performance hardening of the accepted six-route site — homepage Lighthouse Performance 77 → 94, page transfer −53%, measured per-viewport caption tone, viewport-change disclosure reset, WCAG 2.5.8 touch targets, `/contact/` heading order, validator extended to responsive and deferred imagery. `HOSTED_PREVIEW_NOT_RUN` and `CONTACT_RELEASE_GATE` recorded. Implemented on `feat/web-004-preview-hardening` from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`; implementation HEAD `56cb530`; REVIEW_READY, not merged. Product decisions resolved on MER-92: LCP 3.2 s and the score-legend `image-aspect-ratio` finding accepted as bounded intentional deviations (no re-encode of proof derivatives, no re-proportioning of the legend), WEB-005 hero budget accepted, `HOSTED_PREVIEW_NOT_RUN` accepted, `CONTACT_RELEASE_GATE` left open for pre-WEB-006 verification.

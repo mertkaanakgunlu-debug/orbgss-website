@@ -6,7 +6,7 @@
 - **Authority branch:** `feat/geo-web-002-final-visual-masters`
 - **Authority baseline:** `8a4fe9ba5cb19d09390cb8816c2324e012331728`
 - **Linear:** MER-102
-- **Implementation HEAD:** `3165a92` on `feat/geo-web-002-final-visual-masters`
+- **Implementation HEAD:** `ea693c2` on `feat/geo-web-002-final-visual-masters`
 - **Package:** `docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md` (`READY_FOR_PRODUCT_BINDING`)
 
 ## Outcome
@@ -209,7 +209,10 @@ Routine export failures, stale local paths, missing derivative scripts, checksum
 
 - Branch `feat/geo-web-002-final-visual-masters`, from authority baseline `8a4fe9b`.
 - `3165a92` — `feat(geo-web-002): publish final homepage visual master package (MER-102)`.
-- This evidence commit records the implementation HEAD and reconciles `STATUS.md`.
+- `88057d1` — this evidence record and the `STATUS.md` reconciliation.
+- `ea693c2` — implementation HEAD: assert the accepted 1200 x 1200 grid from the export manifest in
+  the derivative build, so the crop box and resolution ceiling can never be applied to a
+  differently-gridded export.
 - No force-push, no history rewrite, no work on `main`.
 
 ### 2. Changed paths
