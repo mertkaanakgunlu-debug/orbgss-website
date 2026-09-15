@@ -1,11 +1,13 @@
 # GEO-WEB-002 / MER-102 — Final homepage public-safe visual master package
 
-- **State:** IN PROGRESS — CTO start approved 2026-09-16
+- **State:** REVIEW_READY — implemented 2026-09-16; CTO start approved 2026-09-16
 - **Owner domain:** Science & Geospatial
 - **Consumer:** WEB-005 / MER-93
 - **Authority branch:** `feat/geo-web-002-final-visual-masters`
 - **Authority baseline:** `8a4fe9ba5cb19d09390cb8816c2324e012331728`
 - **Linear:** MER-102
+- **Implementation HEAD:** `3165a92` on `feat/geo-web-002-final-visual-masters`
+- **Package:** `docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md` (`READY_FOR_PRODUCT_BINDING`)
 
 ## Outcome
 
@@ -200,3 +202,168 @@ Routine export failures, stale local paths, missing derivative scripts, checksum
 - Publish the completed branch non-force after verification.
 - MER-102 reaches terminal Science state only after the canonical package pointer, checksums, rights basis, warnings and safe-render-size evidence are published and verified.
 - Product may bind the accepted package into WEB-005 only after terminal Science acceptance.
+
+## Execution evidence (2026-09-16, REVIEW_READY)
+
+### 1. Branch and commits
+
+- Branch `feat/geo-web-002-final-visual-masters`, from authority baseline `8a4fe9b`.
+- `3165a92` — `feat(geo-web-002): publish final homepage visual master package (MER-102)`.
+- This evidence commit records the implementation HEAD and reconciles `STATUS.md`.
+- No force-push, no history rewrite, no work on `main`.
+
+### 2. Changed paths
+
+```
+A  assets/imagery/kizildere-aoi-context-2025.jpg
+A  assets/imagery/kizildere-aoi-context-2025-{2400,1800,1200,900}.webp
+A  assets/proof/final/{terrain,thm01,alt01,alt02,priority}-1249.webp
+A  assets/proof/final/{terrain,thm01,alt01,alt02,priority}-800.webp
+A  assets/proof/final/{terrain,thm01,alt01,alt02,priority}-legend.png
+A  docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md
+A  scripts/build_final_visual_masters.py
+M  assets/imagery/sources.json          (new geo_web_002 block; version 0.8)
+M  IMAGERY_RIGHTS.md                     (v0.8: new source, class-B resolution ceiling)
+M  scripts/build_imagery.py              (also builds the package's context scene)
+M  scripts/validate_site.py              (enforces the new publication record)
+M  tasks/GEO-WEB-002_FINAL_HOMEPAGE_VISUAL_MASTERS.md
+M  STATUS.md
+```
+
+Nothing in `mertkaanakgunlu-debug/geothermal-prospectivity` was modified. It was read only: five accepted
+export directories and their `export_manifest.json` files, plus the vendored batlow LUT used to measure
+ramp occupancy for the legibility finding below.
+
+### 3. Asset inventory
+
+Full per-asset record with every SHA-256 is in `docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md` §4 and in
+`assets/imagery/sources.json` → `geo_web_002.assets`. Summary:
+
+| Asset | Role | Master | Shipped | Bytes (largest) |
+| --- | --- | --- | --- | --- |
+| `act2-context` | context | 2400 × 1500 JPEG in-repo | 2400 / 1800 / 1200 / 900 WebP | 867 942 |
+| `terrain` | context | 2338 × 1654 PNG export, panel 1249 | 1249 + 800 WebP, 732 × 122 legend PNG | 41 698 |
+| `thm01` | evidence | 2338 × 1654 PNG export, panel 1249 | 1249 + 800 WebP, 732 × 122 legend PNG | 251 574 |
+| `alt01` | evidence | 2338 × 1654 PNG export, panel 1249 | 1249 + 800 WebP, 732 × 122 legend PNG | 393 032 |
+| `alt02` | evidence | 2338 × 1654 PNG export, panel 1249 | 1249 + 800 WebP, 732 × 122 legend PNG | 381 046 |
+| `priority` | derived score | 2338 × 1654 PNG export, panel 1249 | 1249 + 800 WebP, 732 × 122 legend PNG | 702 856 |
+
+19 shipped files, 4 613 070 bytes in total across the whole responsive ladder.
+
+### 4. Act-2 Landsat provenance
+
+`LC08_L2SP_179034_20250505_02_T1` — Landsat 8 OLI, acquired **2025-05-05**, WRS-2 path 179 / row 034,
+Collection 2 Level-2 Tier 1, scene cloud cover 0.90 %, read anonymously through the Planetary Computer STAC
+mirror of the USGS archive. Rendered natural-colour (OLI 4/3/2) at native 30 m into EPSG:32635,
+2400 × 1500 px = 72 × 45 km, bounds UTM `621268.9, 4182542.0, 693268.9, 4227542.0`, 100 % valid coverage;
+percentile stretch `[1.0, 99.0]`, gamma 1.65, saturation 1.20, JPEG quality 82. Master SHA-256
+`9d4f93298d11b31ec7317e72bfd0485fe7bf8a724188108abdc48c8a630197a4`.
+
+The frame is centred on the accepted AOI centre 37.9794° N, 28.7907° E, so the 36 × 36 km AOI sits in the
+middle of a regional view. Selection was visual/contextual only. Three single scenes in 2024–2026 fully
+covered the frame with < 2 % cloud; this one was chosen for seasonal legibility. Two small cloud puffs
+remain in the north-west mountains, outside the AOI. No acquisition date is attributed to any THM/ALT
+evidence layer anywhere in the package.
+
+### 5. GEO-039 export identity per cartographic master
+
+All on `kizildere_mvp_v2`, renderer `geo039-cartographic-renderer-v1`, project config hash
+`c6eac56027d3118280d2a454bdcacf5b01ddb0d733ab23dacbf348b6a50b777c`; manifest pointer
+`geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/<id>/export_manifest.json`.
+
+| Asset | Export id | Master SHA-256 |
+| --- | --- | --- |
+| `terrain` | `20260915T104731Z-00fae5eb` | `8fc9403a022f28a6e5d56443ad16e5b2390a676fd2cd9cf2e50285eae2be6ca1` |
+| `thm01` | `20260915T104733Z-cfba9119` | `fe789994c29a9a87a3e08a29af5663e7c922f07c6e3016027fb1f5d2ef505dac` |
+| `alt01` | `20260915T104801Z-eb1bc414` | `80fd75303100728ca6fd935b56167f17f0fd68b0b719b9306e1fac9ed5b5adf8` |
+| `alt02` | `20260915T104804Z-1f837163` | `b3d1824de39293af4b10a56beb04f4e7bb28988cf86cafb30024da66b528f950` |
+| `priority` | `20260915T104736Z-55609249` | `4791435a1b1c1d19a18337997eaf51dfb468ed022349771e1007c6da026aa2ad` |
+
+These are the accepted masters the WEB-002 recipes already materialized, resolved rather than re-exported:
+an identical plan re-renders byte-identically under the GEO-039 determinism contract, so a fresh export
+would have produced the same bytes under a new id and weakened, not strengthened, traceability. Each was
+re-verified against the checksum in its own `export_manifest.json` before any derivative was written.
+
+### 6. Resolution outcome against the task's presentation targets
+
+The accepted grid is 1200 × 1200 cells at 30 m; the accepted renderer draws that panel at 1249 px with
+nearest-neighbour compositing. **1249 device pixels is the maximum honest rendered width for class B.**
+
+| Target | Delivered | Verdict |
+| --- | --- | --- |
+| Act-2 EO context ≥ 2000 px | 2400 px native | met |
+| Evidence cards ≥ 1200 px long axis | 1249 px | met |
+| Priority ≥ 2000 px large-display axis | 1249 px | **not met, not honestly achievable** |
+
+Raising `CARTOGRAPHIC_MAP_DPI` in the Science repository would yield a larger file with no more information
+and would break the byte-identical determinism the accepted GEO-039 contract relies on, so it was not done.
+The task's stated fallback was taken instead: every asset publishes `max_safe_rendered_px` with its basis,
+and the package tells WEB-005 that Act 4 must be a contained composition of at most 1249 device pixels on
+its long axis (1249 CSS px at 1×, 624 CSS px at 2×).
+
+To avoid a second resample the widest class-B derivative is the map-panel crop itself at 1249 px with no
+resizing at all; the 800 px card derivative is a Lanczos downscale of the same crop.
+
+### 7. Visual confirmation
+
+Each of the five cartographic panels was inspected and is the intended Kızıldere AOI and the intended
+layer, with the same framing, north arrow, scale bar and AOI outline. At 1:1 the priority panel resolves
+individual 30 m cells with no softness. The Act-2 composite resolves fields, roads and settlements and the
+Büyük Menderes graben scarp at native 30 m.
+
+Two presentation findings are published in package §5 as facts WEB-005 must not "fix":
+
+- **ALT-01 / ALT-02 read as dark fields with bright anomalies.** `alt_batlow_sequential` is the only
+  registry-approved style for both layers and it normalizes linearly over the full value range; measured on
+  the shipped panels, 87.4 % (ALT-01) and 87.5 % (ALT-02) of valid cells fall in the lowest fifth of the
+  batlow ramp. That is accepted scientific rendering — no re-stretch, re-normalize or CSS adjustment.
+  ALT-01 is recommended as the single alteration card and ALT-02 is published alongside it.
+- **NoData is real and visible**: 0.0 % (`terrain`), 0.2 % (`thm01`), 4.0 % (`alt01`), 4.6 % (`alt02`),
+  5.5 % (`priority`) of each panel is the neutral `#f3f2ee` ground.
+
+### 8. Deterministic checksum validation
+
+`scripts/build_final_visual_masters.py` re-verifies each class-B master against its own export manifest,
+checks the export's rendered layer ids against the asset's declared layers, and refuses any derivative
+wider than the master's map panel. Re-running the full build after the fact reproduced every shipped file
+byte-for-byte (validation stayed green with no checksum drift). A deliberately tampered master was
+rejected: `terrain: master checksum mismatch against its own export manifest … refusing to derive from an
+altered master`.
+
+`scripts/validate_site.py` now recomputes the SHA-256 and byte size of the class-A master and of all 19
+shipped derivatives on every run, requires the full publication record per asset, requires
+`derivation.no_upscale`, requires each asset to state whether it is context, evidence or a derived score,
+and fails any derivative wider than the ceiling the asset itself declares.
+
+Negative tests (mutate, run, restore — all six produced the expected failure and the tree was restored):
+
+| Mutation | Result |
+| --- | --- |
+| edit a shipped derivative | `geo_web_002 derivative checksum mismatch for assets/proof/final/priority-800.webp` |
+| drop `mandatory_warning` | `geo_web_002 asset 'priority' missing field: mandatory_warning` |
+| lower an asset's declared ceiling below its shipped width | `… is 1249 px wide but 'priority' declares a 800 px ceiling` |
+| drift the class-A master checksum | `geo_web_002 asset 'act2-context' master checksum mismatch …` |
+| diverge the scene and asset derivative records | `… publish different derivative records` |
+| drop a class-B master pointer | `geo_web_002 asset 'terrain' missing export.master_sha256` |
+
+### 9. Test and hygiene status
+
+- `python scripts/validate_site.py` — **PASS**, 0 warnings, 6 routes, 185 i18n keys, 6 package assets /
+  19 files. Run before the change (PASS at baseline) and after.
+- `git diff --check` — **GREEN**.
+- No public route, homepage composition, copy, style or script behaviour outside the package was changed;
+  the accepted WEB-002/WEB-003/WEB-004 site renders exactly as before.
+
+### 10. Semantic boundary
+
+No Science or Product semantics changed. Mandatory core remains THM-01 + ALT-01 + ALT-02; fail-closed
+behaviour, terrain-as-context, the structure/geology `DATA_GAP`, reference-data exclusion, CRS/grid/unit/
+NoData/mask/resampling semantics and every public label and mandatory warning are carried verbatim from
+`docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`. No new validation, uncertainty, probability, reserve/resource,
+discovery or drilling-success claim exists anywhere in the package. No structure or geology asset is
+published and nothing is fabricated to fill that gap. No STOP condition was reached.
+
+### 11. Remaining gate
+
+MER-102 reaches terminal Science state on acceptance of this branch. Product may bind the package into
+WEB-005 only after that acceptance.
