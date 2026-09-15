@@ -180,6 +180,13 @@ def build_cartographic(asset: dict, exports_root: pathlib.Path) -> dict:
             f"expected {asset['layer_ids']}"
         )
 
+    grid = export_manifest["grid"]
+    if (grid["width"], grid["height"]) != (NATIVE_GRID_PX, NATIVE_GRID_PX):
+        raise SystemExit(
+            f"{asset['id']}: export grid is {grid['width']}x{grid['height']}, not the "
+            f"{NATIVE_GRID_PX}x{NATIVE_GRID_PX} cells the recorded crop and resolution ceiling assume"
+        )
+
     master = Image.open(master_path).convert("RGB")
     panel = master.crop(MAP_CROP_BOX)
     if PANEL_CARD_WIDTH > panel.width:
