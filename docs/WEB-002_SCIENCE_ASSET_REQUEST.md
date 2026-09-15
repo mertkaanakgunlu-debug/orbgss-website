@@ -3,7 +3,8 @@
 **Requester:** OrbGSS Product / Website vNext  
 **Blocked task:** `tasks/WEB-002_PRODUCT_PROOF.md` / Linear MER-90  
 **Website branch:** `feat/web-002-product-proof`  
-**State:** `WAITING_DOMAIN_DECISION — Science & Geospatial public-safe asset/pointer required`
+**State:** `RESOLVED — READY_FOR_PRODUCT_RESUME`  
+**Resolution package:** `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`
 
 ## Why this request exists
 
@@ -64,3 +65,11 @@ The dependency is resolved when Science & Geospatial provides either:
 2. a published package generated strictly through already accepted MVP output/export paths, with provenance and rights recorded.
 
 If any requested asset cannot be made public-safe, state that explicitly. Product will retain an honest data-gap state rather than substitute fabricated evidence.
+
+## Resolution — GEO-WEB-001 / MER-96
+
+Resolved by `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md` on this branch. The response uses only the accepted ADR-0033 / GEO-037 / GEO-039 / GEO-042 boundary and the already-accepted GEO-039 Workbench cartographic export path.
+
+The package authorizes bounded derived website-export recipes for `observe`, `terrain`, THM-01, ALT-01, ALT-02, `mvp_remote_sensing_priority_v1`, and the Kızıldere first-application proof state; it explicitly returns Structure and Geology as `DATA_GAP` / optional support. No MTA data, new provider, new score, or validation claim is introduced.
+
+**Terminal state:** `READY_FOR_PRODUCT_RESUME`
