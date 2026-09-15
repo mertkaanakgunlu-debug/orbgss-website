@@ -2,7 +2,7 @@
 
 **Canonical version:** `v0.7.0-web-002-product-proof` (branch `feat/web-002-product-proof`, REVIEW_READY, not merged)
 **Date:** 2026-09-15
-**Stage:** WEB-002 product proof implemented — story panels 01–06 now carry real OrbGSS cartographic exports of the Kızıldere pilot AOI, or an explicit data gap; awaiting review
+**Stage:** WEB-002 product proof implemented and revised after Product review — story panels 01–06 carry real OrbGSS cartographic exports of the Kızıldere pilot AOI, or an explicit data gap; awaiting review
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website (accepted `main`: `677bfa7`; WEB-002 on `feat/web-002-product-proof`)
@@ -12,7 +12,8 @@
 **Hosting target:** Vercel
 **Company:** VirgaSoft
 **Product:** OrbGSS — Orbital Geo-Spatial Solutions
-**Tracking:** Linear MER-90 (WEB-002); MER-96 / GEO-WEB-001 resolved
+**Product authority:** OrbGSS Website vNext Product & Execution Authority v1.5 (`docs/WEB_VNEXT_AUTHORITY.md`)
+**Tracking:** Linear MER-90 (WEB-002); MER-96 / GEO-WEB-001 resolved; Product review revision applied on top of implementation `854c37f`
 
 ## Authority
 
@@ -64,7 +65,10 @@ are marked `retired-from-homepage` with files, provenance and rights intact.
 - Full-width, high-resolution Earth-observation imagery is the primary visual system.
 - Except for the hero, imagery stays clean: no cards, floating UI, map controls, pins, grids, diagrams or overlay copy.
 - Story copy lives on the dark technical beams: index, uppercase title, one or two sentences, monospace descriptor.
-- Every satellite image shows its real location and coordinates directly on the image, bottom-right, bare monospace text; story panels add the `Natural-color composite` line. No metadata strip below any image.
+- Every image shows its real location and coordinates directly on the image, bottom-right, bare monospace text. The third line names what the layer is: the accepted public label on a product-proof panel (`Natural-color composite` applies only to Landsat gallery imagery, which the story panels no longer use). No metadata strip below any image.
+- Product-proof rasters and the score colour ramp are published exactly as the accepted GEO-039 export rendered them: no saturation, contrast, brightness or opacity change. The gallery grade remains on the hero only.
+- All story panels render the same Kızıldere AOI, so their framing is identical. Per-slot `object-position` crops belonged to WEB-001's four different scenes and must not return.
+- Every proof asset's mandatory scientific warning is carried in visible page copy, in EN and TR and in the static HTML, and the validator enforces that wording.
 - Secondary monospace treatment is reserved for coordinates, evidence labels, metadata, status tags and technical descriptors.
 - Desktop navigation order is fixed: Platform → Solutions (Geothermal Exploration, Mineral Exploration, Environmental & Land Intelligence) → Pilot → Company → Contact → EN | TR, right-aligned. All destinations are real anchors.
 - Bilingual (EN default, TR) through the client-side dictionary; no flags, no framework.
@@ -94,3 +98,4 @@ WEB-002 is REVIEW_READY on `feat/web-002-product-proof`. After review and merge:
 - ORBWEB-002A (2026-09-10): GitHub publication to `baran-orbgss/website`.
 - WEB-001 (2026-09-15): vNext authority published; homepage shell, story sections, pilot ledger, company/trust, contact; navigation and hero renewed; validator extended. Accepted at `677bfa7`.
 - WEB-002 (2026-09-15): Science package MER-96 resolved; seven GEO-039 proof exports materialized and published with checksummed provenance; evidence layer switch; structure/geology data-gap state; validator now verifies proof provenance.
+- WEB-002 review revision (2026-09-15): removed CSS colour/contrast/opacity transforms from the scientific rasters and the score ramp; unified AOI framing across all story panels; restored THM-01 warning semantics in EN/TR and in the static HTML; reconciled the no-JS footer attribution and the two asset-class policies; validator now enforces visible warning coverage.

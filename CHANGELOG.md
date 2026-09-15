@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.7.1-web-002-review-revision — 2026-09-15 (WEB-002 Product review revision, branch `feat/web-002-product-proof`)
+
+Bounded conformant fixes from Product review at `854c37f`. No redesign, no scope or semantics change.
+
+- **Scientific rasters are no longer visually transformed.** Removed `saturate(.9) contrast(1.03)` from the story panels and evidence panes and the `opacity:.92` from the score colour ramp, and added an explicit `[data-visual-status="product-proof"] img, .scale-strip>img{filter:none;opacity:1}` guard so a future gallery-grade edit cannot reach proof imagery. The hero keeps its gallery grade.
+- **One frame for one ground.** Deleted the six per-slot `object-position` crops left over from WEB-001, when each slot held a different Landsat scene. Every story panel renders the same Kızıldere AOI, so all now use the default centred framing.
+- **THM-01 warning semantics restored** in EN, TR and the static HTML: THM-01 is thermal evidence, not geothermal probability, reserve or resource, discovery or drilling-success evidence.
+- **Warning coverage is now enforced.** Each proof asset carries a `visible_warning` record naming the i18n key and the exact wording required in each language; the validator checks the term appears in the EN dictionary, the TR dictionary and the static HTML, so a warning cannot silently disappear — including for readers with JavaScript disabled.
+- **Caption contrast re-checked** against the new framing; `priority` moved to the dark tone (5.1:1 desktop / 6.4:1 mobile, against 3.7 / 2.9 for white) and the dark halo was tightened so it no longer blooms over mid-tone ground.
+- **Stale copy reconciled:** the no-JS footer attribution in `index.html` now matches the dictionary (Landsat hero + WEB-002 cartographic exports); `STATUS.md` moves to Product authority v1.5 and drops the obsolete temporary-gallery / `Natural-color composite` story-panel rules; `IMAGERY_RIGHTS.md` and the `sources.json` policy now state the two asset classes and their different handling rules explicitly.
+
 ## v0.7.0-web-002-product-proof — 2026-09-15 (WEB-002, branch `feat/web-002-product-proof`)
 
 - replaced the temporary gallery story panels with real OrbGSS product proof: every panel 01–06 now shows the same Kızıldere pilot AOI (36 × 36 km, EPSG:32635, 30 m) so the reader watches one place gain evidence rather than six unrelated places;

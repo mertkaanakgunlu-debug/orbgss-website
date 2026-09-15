@@ -83,9 +83,16 @@ button,a{-webkit-tap-highlight-color:transparent}
 .beam-statement{margin:0;max-width:58ch;font-size:clamp(15px,1.15vw,18px);line-height:1.65;color:#c2cbd0;font-weight:350}
 .beam-meta{margin:0;justify-self:end;text-align:right;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);line-height:1.8;padding-top:5px}
 .story-panel{position:relative;margin:0;background:#0b141a;--panel-h:clamp(540px,64vh,880px)}
-.story-panel>img{width:100%;height:var(--panel-h);object-fit:cover;filter:saturate(.9) contrast(1.03)}
+.story-panel>img{width:100%;height:var(--panel-h);object-fit:cover}
 
 /* ---------- WEB-002 product proof ---------- */
+/* Scientific rasters and the score colour ramp are published exactly as the accepted GEO-039
+   export rendered them. Any saturation, contrast, brightness or opacity change would alter the
+   rendered scientific content, so proof imagery is explicitly exempt from the gallery grade that
+   the hero still uses. Do not remove this guard. */
+[data-visual-status="product-proof"] img,
+.scale-strip>img{filter:none;opacity:1}
+
 /* The WEB-001 label was tuned for dark satellite photography. The accepted cartographic exports
    are pale over much of the frame, so the same white text vanished on them. Still bare monospace
    text in the same place, with no card, box or band: legibility comes from a tight halo, and the
@@ -97,8 +104,10 @@ button,a{-webkit-tap-highlight-color:transparent}
               0 1px 2px rgba(2,7,11,1)}
 [data-label-tone="light"] .scene-label span+span{color:rgba(240,247,251,.95)}
 [data-label-tone="light"] .scene-label .scene-kind{color:rgba(232,243,250,.86)}
+/* Dark captions already clear 5:1 against the grounds they sit on, so the halo only needs to be
+   local insurance against bright speckle — a tight ring, not the dense glow the light tone needs. */
 [data-label-tone="dark"] .scene-label{color:#050d13;
-  text-shadow:0 0 1px rgba(255,255,255,1),0 0 2px rgba(255,255,255,1),0 0 4px rgba(255,255,255,.96),0 0 10px rgba(255,255,255,.8),0 1px 2px rgba(255,255,255,1)}
+  text-shadow:0 0 1px rgba(255,255,255,.95),0 0 3px rgba(255,255,255,.8),0 1px 2px rgba(255,255,255,.85)}
 [data-label-tone="dark"] .scene-label span+span{color:rgba(8,20,28,.95)}
 [data-label-tone="dark"] .scene-label .scene-kind{color:rgba(10,26,36,.86)}
 /* Mandatory scientific warning carried in visible copy next to every proof visual. */
@@ -108,7 +117,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 /* Legend colourbar, cropped from the same accepted export as the panel it describes. */
 .beam-meta-line{margin:0}
 .scale-strip{display:inline-block;width:clamp(110px,9vw,150px);margin-top:10px}
-.scale-strip>img{width:100%;height:9px;opacity:.92;border-radius:1px}
+.scale-strip>img{width:100%;height:9px;border-radius:1px}
 .scale-ends{display:flex;justify-content:space-between;margin-top:5px;font-size:9px;letter-spacing:.1em;color:var(--dim)}
 
 /* Evidence layer switch: one real control, three accepted layers, same ground. */
@@ -118,7 +127,7 @@ button,a{-webkit-tap-highlight-color:transparent}
    aria-hidden, which the tablist script keeps in step with the visible state. */
 .layer-pane{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .28s ease}
 .layer-pane.is-active{opacity:1;pointer-events:auto}
-.layer-pane>img{width:100%;height:100%;object-fit:cover;filter:saturate(.9) contrast(1.03)}
+.layer-pane>img{width:100%;height:100%;object-fit:cover}
 .layer-switch{position:absolute;z-index:4;top:clamp(16px,2vw,26px);left:var(--pad);display:flex;gap:6px;padding:5px;background:rgba(3,9,14,.74);border:1px solid rgba(205,226,239,.2);border-radius:3px;backdrop-filter:blur(7px)}
 .layer-tab{appearance:none;border:0;border-radius:2px;background:transparent;color:rgba(228,238,244,.7);font-family:var(--mono);font-size:10px;letter-spacing:.14em;padding:8px 13px;cursor:pointer;transition:background .18s ease,color .18s ease}
 .layer-tab:hover{color:#fff;background:rgba(67,191,240,.12)}
@@ -133,13 +142,10 @@ button,a{-webkit-tap-highlight-color:transparent}
 .gap-mark{margin:0 0 16px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,169,122,.9)}
 .gap-copy{margin:0;font-size:clamp(15px,1.15vw,18px);line-height:1.65;color:#c2cbd0;font-weight:350}
 .gap-meta{margin:18px 0 0;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-/* Temporary crops per deferred slot (WEB-002 replaces the visuals, not the slots). */
-[data-visual-slot="observe"]>img{object-position:center 55%}
-[data-visual-slot="terrain"]>img{object-position:center 8%}
-[data-visual-slot="evidence"]>img{object-position:center 38%}
-[data-visual-slot="structure"]>img{object-position:center 12%}
-[data-visual-slot="priority"]>img{object-position:center 88%}
-[data-visual-slot="geothermal"]>img{object-position:center 50%}
+/* WEB-001 set a different crop per slot because each slot then held a different Landsat scene.
+   Every story panel now renders the same Kızıldere AOI, so the framing must be identical across
+   Observe, Terrain, Evidence, Priority and Geothermal: one ground, one frame. The default
+   object-position (50% 50%) centres the AOI in every panel; do not reintroduce per-slot shifts. */
 
 /* ---------- pilot: application maturity ledger ---------- */
 .ledger-section{padding:clamp(60px,7.5vw,120px) var(--pad);display:grid;grid-template-columns:minmax(260px,.9fr) minmax(0,1.6fr);gap:clamp(40px,7vw,120px);align-items:start;background:var(--bg);border-top:1px solid var(--line)}

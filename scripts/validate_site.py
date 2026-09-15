@@ -68,8 +68,12 @@ class SiteParser(HTMLParser):
         self.text: list[str] = []
         self.claim_text: list[str] = []
         self.visual_slots: list[tuple[str, str]] = []
+        # Static text carried by each data-i18n element, so warning coverage can be proved for a
+        # reader with JavaScript disabled, not just for the dictionary.
+        self.i18n_text: dict[str, str] = {}
         self._note_depth = 0
         self._open: list[bool] = []
+        self._key_stack: list[str | None] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = dict(attrs)
@@ -79,6 +83,8 @@ class SiteParser(HTMLParser):
         self._open.append(is_note)
         if is_note:
             self._note_depth += 1
+        key = data.get("data-i18n")
+        self._key_stack.append(str(key) if key else None)
         if data.get("id"):
             self.ids.add(str(data["id"]))
         if data.get("data-visual-slot"):
@@ -91,11 +97,16 @@ class SiteParser(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         if self._open and self._open.pop():
             self._note_depth -= 1
+        if self._key_stack:
+            self._key_stack.pop()
 
     def handle_data(self, data: str) -> None:
         self.text.append(data)
         if self._note_depth == 0:
             self.claim_text.append(data)
+        for key in self._key_stack:
+            if key:
+                self.i18n_text[key] = self.i18n_text.get(key, "") + data
 
 
 def fail(message: str, errors: list[str]) -> None:
@@ -218,6 +229,60 @@ def main() -> int:
                      f"manifest {recorded[:12]}… != file {actual[:12]}…", errors)
             if deriv.get("bytes") not in (None, path.stat().st_size):
                 fail(f"proof derivative byte size mismatch for {rel}", errors)
+
+    # ------------------------------------------------------------------
+    # Mandatory scientific warnings must be visible on the page, in both languages, and in the
+    # static HTML as well as the dictionary — so they survive with JavaScript disabled and cannot
+    # be quietly dropped by a later copy edit.
+    # ------------------------------------------------------------------
+    script = (ROOT / "script.js").read_text(encoding="utf-8")
+    lang_blocks: dict[str, str] = {}
+    for lang in ("en", "tr"):
+        match = re.search(rf"\n  {lang}: \{{(.*?)\n  \}},?\n", script, re.S)
+        if match:
+            lang_blocks[lang] = match.group(1)
+        else:
+            fail(f"could not locate the {lang!r} block of the I18N dictionary", errors)
+
+    def dictionary_value(lang: str, key: str) -> str | None:
+        block = lang_blocks.get(lang)
+        if block is None:
+            return None
+        found = re.search(rf"^\s+{re.escape(key)!s}: '(.*)',$".replace("\\'", "'"),
+                          block, re.M)
+        if found:
+            return found.group(1)
+        found = re.search(rf"^\s+'{re.escape(key)}': '(.*?)',$", block, re.M)
+        return found.group(1) if found else None
+
+    for asset in proof_assets:
+        aid = asset.get("id", "<unknown>")
+        coverage = asset.get("visible_warning")
+        if not coverage:
+            fail(f"proof asset {aid!r} has no visible_warning record; every mandatory warning "
+                 f"must be bound to visible page copy", errors)
+            continue
+        key = str(coverage.get("i18n_key", ""))
+        if not key:
+            fail(f"proof asset {aid!r} visible_warning has no i18n_key", errors)
+            continue
+        static_text = parser.i18n_text.get(key)
+        if static_text is None:
+            fail(f"proof asset {aid!r} warning key {key!r} is not rendered by index.html", errors)
+            continue
+        for lang in ("en", "tr"):
+            value = dictionary_value(lang, key)
+            if value is None:
+                fail(f"warning key {key!r} is missing from the {lang!r} dictionary", errors)
+                continue
+            for term in coverage.get(f"required_terms_{lang}", []):
+                if term not in value:
+                    fail(f"proof asset {aid!r}: {lang} warning lost required wording {term!r}",
+                         errors)
+        for term in coverage.get("required_terms_en", []):
+            if term not in static_text:
+                fail(f"proof asset {aid!r}: static HTML warning under {key!r} lost required "
+                     f"wording {term!r} (no-JS readers would not see it)", errors)
 
     # Nothing scientific may be shown that is not recorded above.
     html_proof_paths = {src for src in parser.img_srcs if src.startswith("assets/proof/")}

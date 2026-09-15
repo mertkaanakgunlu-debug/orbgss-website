@@ -1,8 +1,27 @@
-# OrbGSS imagery rights and provenance — v0.5
+# OrbGSS imagery rights and provenance — v0.7
 
-## Production rule
+## Two asset classes
 
-OrbGSS serves only self-hosted Earth-observation imagery derived from source products whose reuse terms are clear enough for a commercial website. The production source is **USGS Landsat Collection 2 Level-2** surface reflectance.
+OrbGSS serves only self-hosted imagery, and the site now publishes **two distinct classes** with
+different sources, different rights bases and different handling rules. Do not describe one with
+the other's wording.
+
+| | **A — Landsat gallery imagery** | **B — WEB-002 product-proof exports** |
+| --- | --- | --- |
+| What it is | Natural-colour photographic composites of a landscape | Cartographic renderings of scientific analysis output |
+| Source | USGS Landsat Collection 2 Level-2 surface reflectance (public domain) | OrbGSS cartographic exports of the accepted `kizildere_mvp_v2` project |
+| Produced by | `scripts/build_imagery.py` (crop / stretch / encode) | The accepted GEO-039 Workbench cartographic export path |
+| Recorded in | `sources.json` → `scenes` | `sources.json` → `web_002.proof_assets` |
+| Where used | The hero poster only | Story panels 01–06 |
+| Permitted edits | Crop, contrast stretch, gamma, saturation, encoding | Crop and resize for presentation **only** — never re-colour, re-project, re-classify or change values, and no CSS colour/contrast/opacity transform on the served raster |
+| Extra duties | USGS acknowledgement in the footer | Mandatory scientific warnings in visible EN/TR page copy; checksummed provenance |
+
+Class B is a scientific output, not photography. The gallery grade that class A may carry is
+exactly what must never touch class B.
+
+## Class A — production rule
+
+The production source is **USGS Landsat Collection 2 Level-2** surface reflectance.
 
 USGS states that Landsat data are official USGS records in the public domain, permission is not required for use, and there are no restrictions on use or redistribution. USGS requests source acknowledgement.
 
@@ -64,7 +83,7 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Production source products: `LC08_L2SP_152029_20200307_02_T1` and `LC08_L2SP_152028_20200307_02_T1` (path 152 rows 029 + 028, same overpass, mosaicked)
 - Reference page: https://earthobservatory.nasa.gov/images/146552/a-delta-oasis-in-southeastern-kazakhstan
 
-## WEB-002 product-proof visuals (2026-09-15)
+## Class B — WEB-002 product-proof visuals (2026-09-15)
 
 Story panels 01–06 no longer carry Landsat gallery material. They carry OrbGSS **cartographic
 exports** of the Kızıldere MVP pilot AOI, produced through the accepted GEO-039 Workbench export
