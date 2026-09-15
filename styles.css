@@ -82,8 +82,57 @@ button,a{-webkit-tap-highlight-color:transparent}
 .beam-head h2{margin:0;font-size:clamp(14px,1.25vw,18px);font-weight:430;text-transform:uppercase;letter-spacing:.28em;line-height:1.4}
 .beam-statement{margin:0;max-width:58ch;font-size:clamp(15px,1.15vw,18px);line-height:1.65;color:#c2cbd0;font-weight:350}
 .beam-meta{margin:0;justify-self:end;text-align:right;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);line-height:1.8;padding-top:5px}
-.story-panel{position:relative;margin:0;background:#0b141a}
-.story-panel>img{width:100%;height:clamp(540px,64vh,880px);object-fit:cover;filter:saturate(.9) contrast(1.03)}
+.story-panel{position:relative;margin:0;background:#0b141a;--panel-h:clamp(540px,64vh,880px)}
+.story-panel>img{width:100%;height:var(--panel-h);object-fit:cover;filter:saturate(.9) contrast(1.03)}
+
+/* ---------- WEB-002 product proof ---------- */
+/* The WEB-001 label was tuned for dark satellite photography. The accepted cartographic exports
+   are pale over much of the frame, so the same white text vanished on them. Still bare monospace
+   text in the same place, with no card, box or band: legibility comes from a tight halo, and the
+   tone is chosen per panel from the measured luminance of the region the label sits over. */
+.story-panel[data-visual-status="product-proof"] .scene-label{font-size:10px;letter-spacing:.13em}
+[data-label-tone="light"] .scene-label{color:#fbfdfe;
+  text-shadow:0 0 1px rgba(2,7,11,1),0 0 2px rgba(2,7,11,1),0 0 3px rgba(2,7,11,1),
+              0 0 5px rgba(2,7,11,1),0 0 9px rgba(2,7,11,.95),0 0 18px rgba(2,7,11,.85),
+              0 1px 2px rgba(2,7,11,1)}
+[data-label-tone="light"] .scene-label span+span{color:rgba(240,247,251,.95)}
+[data-label-tone="light"] .scene-label .scene-kind{color:rgba(232,243,250,.86)}
+[data-label-tone="dark"] .scene-label{color:#050d13;
+  text-shadow:0 0 1px rgba(255,255,255,1),0 0 2px rgba(255,255,255,1),0 0 4px rgba(255,255,255,.96),0 0 10px rgba(255,255,255,.8),0 1px 2px rgba(255,255,255,1)}
+[data-label-tone="dark"] .scene-label span+span{color:rgba(8,20,28,.95)}
+[data-label-tone="dark"] .scene-label .scene-kind{color:rgba(10,26,36,.86)}
+/* Mandatory scientific warning carried in visible copy next to every proof visual. */
+.beam-body{display:flex;flex-direction:column;gap:14px;min-width:0}
+.beam-note{margin:0;max-width:62ch;padding-left:14px;border-left:2px solid rgba(200,169,122,.5);font-size:clamp(12px,.82vw,13px);line-height:1.6;color:#9aa7b0;font-weight:350}
+
+/* Legend colourbar, cropped from the same accepted export as the panel it describes. */
+.beam-meta-line{margin:0}
+.scale-strip{display:inline-block;width:clamp(110px,9vw,150px);margin-top:10px}
+.scale-strip>img{width:100%;height:9px;opacity:.92;border-radius:1px}
+.scale-ends{display:flex;justify-content:space-between;margin-top:5px;font-size:9px;letter-spacing:.1em;color:var(--dim)}
+
+/* Evidence layer switch: one real control, three accepted layers, same ground. */
+.layer-stack{position:relative;height:var(--panel-h)}
+/* Inactive panes keep their layout box so the browser lazy-loads every evidence layer once the
+   section is reached; the switch is then instant. They are hidden from assistive tech via
+   aria-hidden, which the tablist script keeps in step with the visible state. */
+.layer-pane{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .28s ease}
+.layer-pane.is-active{opacity:1;pointer-events:auto}
+.layer-pane>img{width:100%;height:100%;object-fit:cover;filter:saturate(.9) contrast(1.03)}
+.layer-switch{position:absolute;z-index:4;top:clamp(16px,2vw,26px);left:var(--pad);display:flex;gap:6px;padding:5px;background:rgba(3,9,14,.74);border:1px solid rgba(205,226,239,.2);border-radius:3px;backdrop-filter:blur(7px)}
+.layer-tab{appearance:none;border:0;border-radius:2px;background:transparent;color:rgba(228,238,244,.7);font-family:var(--mono);font-size:10px;letter-spacing:.14em;padding:8px 13px;cursor:pointer;transition:background .18s ease,color .18s ease}
+.layer-tab:hover{color:#fff;background:rgba(67,191,240,.12)}
+.layer-tab.is-active{color:#04121a;background:var(--accent-soft)}
+.layer-tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Slot 04: the structural layer that does not exist. Shown as an absence, never invented. */
+.story-panel.data-gap{display:flex;align-items:center;min-height:clamp(300px,34vh,430px);padding:clamp(40px,5vw,72px) var(--pad);background:
+  repeating-linear-gradient(90deg,rgba(205,226,239,.045) 0 1px,transparent 1px 88px),
+  linear-gradient(180deg,#040b11,#071019)}
+.gap-inner{max-width:52ch}
+.gap-mark{margin:0 0 16px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,169,122,.9)}
+.gap-copy{margin:0;font-size:clamp(15px,1.15vw,18px);line-height:1.65;color:#c2cbd0;font-weight:350}
+.gap-meta{margin:18px 0 0;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
 /* Temporary crops per deferred slot (WEB-002 replaces the visuals, not the slots). */
 [data-visual-slot="observe"]>img{object-position:center 55%}
 [data-visual-slot="terrain"]>img{object-position:center 8%}
@@ -129,6 +178,7 @@ button,a{-webkit-tap-highlight-color:transparent}
   .story-beam,.contact-beam{grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);grid-template-areas:"head statement" "meta statement"}
   .story-beam .beam-head,.contact-beam .beam-head{grid-area:head}
   .story-beam .beam-statement,.contact-beam .beam-statement{grid-area:statement}
+  .story-beam .beam-body{grid-area:statement}
   .beam-meta{grid-area:meta;justify-self:start;text-align:left;padding-top:0;margin-top:-10px}
   .contact-actions{grid-area:meta;align-items:flex-start}
 }
@@ -151,7 +201,9 @@ button,a{-webkit-tap-highlight-color:transparent}
   .hero h1{max-width:none}
   .story-beam,.contact-beam{grid-template-columns:1fr;grid-template-areas:"head" "statement" "meta";gap:14px;padding-top:28px;padding-bottom:28px}
   .beam-meta{margin-top:4px}
-  .story-panel>img{height:56svh;min-height:400px}
+  .story-panel{--panel-h:max(56svh,400px)}
+  .layer-switch{left:var(--pad);top:14px}
+  .layer-tab{padding:12px 14px;min-height:44px}
   .scene-label{bottom:16px;font-size:8.5px}
   .ledger-section,.company-section{grid-template-columns:1fr;gap:36px}
   .ledger-row{grid-template-columns:36px minmax(0,1fr);grid-template-areas:"idx title" "idx status" "idx copy";row-gap:8px}
@@ -165,7 +217,9 @@ button,a{-webkit-tap-highlight-color:transparent}
   .hero-actions{gap:18px}
   .scene-label{bottom:14px;font-size:8px;letter-spacing:.12em}
   .beam-head{gap:14px}.beam-head h2{font-size:13px;letter-spacing:.22em}.beam-statement{font-size:15px}
-  .story-panel>img{height:50svh;min-height:350px}
+  .story-panel{--panel-h:max(50svh,350px)}
+  .beam-note{font-size:12px}
+  .layer-switch{gap:4px;padding:4px}.layer-tab{padding:11px 11px;font-size:9.5px;letter-spacing:.1em}
   .ledger-intro h2{font-size:30px}
   .site-footer{min-height:220px}.footer-brand img{width:210px}.footer-right nav{gap:18px}
 }

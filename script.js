@@ -36,24 +36,50 @@ const I18N = {
     'hero.cta': 'Explore the Platform',
     'hero.secondary': 'Partner With Us',
     'story.observe.title': 'Observe',
-    'story.observe.statement': 'The platform starts from an area of interest. Imagery, terrain and geoscience inputs are brought into one spatial frame, so every later step refers to the same ground.',
-    'story.observe.meta': 'Input · Imagery / Terrain / Geoscience',
+    'story.observe.statement': 'Every OrbGSS analysis starts from one area of interest. The Kızıldere pilot AOI is a 36 × 36 km frame on a fixed 30 m grid, and every layer that follows is registered to exactly this ground.',
+    'story.observe.note': 'Source and AOI context only — not validation evidence.',
+    'story.observe.meta': 'AOI · EPSG:32635 · 30 m · 36 × 36 km',
     'story.terrain.title': 'Terrain',
-    'story.terrain.statement': 'Terrain is physical context. Elevation, slope and drainage shape how every other signal is read.',
-    'story.terrain.meta': 'Context · Elevation / Slope / Drainage',
+    'story.terrain.statement': 'Elevation gives the area its physical shape. NASADEM terrain is carried as display context, so every later signal can be read against real relief.',
+    'story.terrain.note': 'Context and display only. Terrain is not a scored predictor and carries no universal geothermal-favourability direction.',
+    'story.terrain.meta': 'Context · NASADEM elevation · metres',
     'story.evidence.title': 'Evidence',
-    'story.evidence.statement': 'Domain-relevant signals are mapped as spatial evidence: located, documented and traceable to their source data.',
-    'story.evidence.meta': 'Signal → Evidence layer',
+    'story.evidence.statement': 'Three accepted remote-sensing layers describe the same ground: one Landsat thermal anomaly and two Sentinel-2 spectral alteration proxies. Switch between them to see what each one contributes.',
+    'story.evidence.note': 'Evidence layers only — candidate and unvalidated. ALT-01 and ALT-02 are broad spectral alteration proxies, never mineral or kaolinite identification, and not proof of hydrothermal alteration.',
+    'story.evidence.meta': 'Evidence · THM-01 / ALT-01 / ALT-02',
+    'evidence.switchLabel': 'Evidence layer',
     'story.structure.title': 'Structure',
-    'story.structure.statement': 'Geological and structural context frames interpretation. The same signal means different things in different settings.',
-    'story.structure.meta': 'Context · Geology / Structure',
+    'story.structure.statement': 'Structural and geological context would sharpen interpretation here. For this baseline OrbGSS has no public-safe fault or lithology layer, so the page shows the gap rather than filling it.',
+    'story.structure.note': 'Structure and geology are optional support and score-invariant. Their absence does not change the remote-sensing priority baseline.',
+    'story.structure.meta': 'Optional support · Not published',
+    'structure.gapMark': 'Data gap',
+    'structure.gapCopy': 'No fault or lithology layer is published for this area. Nothing is drawn here on purpose: an invented structural line would look like evidence and would not be.',
+    'structure.gapMeta': 'Structural context — optional support / data gap',
     'story.priority.title': 'Priority',
-    'story.priority.statement': 'Evidence is integrated into a spatial priority view: where to investigate next, and why.',
-    'story.priority.meta': 'Evidence → Spatial priority',
+    'story.priority.statement': 'The thermal and alteration evidence is integrated into one within-AOI ranking surface, 0 to 100, so a team can order where to look first.',
+    'story.priority.note': 'AOI-relative experimental screening only. Not probability, reserve or resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a score calibrated across areas.',
+    'story.priority.meta': 'Score · mvp_remote_sensing_priority_v1',
     'story.geothermal.title': 'Geothermal',
-    'story.geothermal.statement': 'Geothermal exploration is OrbGSS\u2019s first active application. The evidence-to-priority workflow is being applied to geothermal targets in a pilot setting.',
-    'story.geothermal.meta': 'Status · First active application',
+    'story.geothermal.statement': 'Kızıldere is the first geothermal application of that baseline: the priority surface over NASADEM relief, in an active pilot area in Denizli, Türkiye.',
+    'story.geothermal.note': 'First-application proof, not field validation, discovery, reserve or resource, drilling-target or drilling-success proof.',
+    'story.geothermal.meta': 'First application · Kızıldere pilot',
     'scene.kind.naturalColor': 'Natural-color composite',
+    'scene.aoi.place': 'Kızıldere, Denizli, Türkiye',
+    'scene.aoi.coords': '37.9794° N, 28.7907° E',
+    'label.observe': 'Kızıldere AOI — accepted MVP project context',
+    'label.terrain': 'Elevation — NASADEM context',
+    'label.thm01': 'THM-01 Thermal Anomaly',
+    'label.alt01': 'ALT-01 Alteration Proxy — clay/hydroxyl',
+    'label.alt02': 'ALT-02 Alteration Proxy — ferric/iron',
+    'label.priority': 'Remote-Sensing Relative Priority — Experimental Baseline',
+    'label.geothermal': 'Kızıldere — first geothermal application of the experimental remote-sensing baseline',
+    'alt.observe': 'Greyscale elevation map of the 36 by 36 kilometre Kızıldere project area of interest, showing ridges and valleys across the pilot grid',
+    'alt.terrain': 'Colour elevation map of the Kızıldere area of interest, with low ground in dark blue and high ridges in pale yellow',
+    'alt.thm01': 'Diverging thermal anomaly map of the Kızıldere area of interest, with cooler ground in blue and warmer ground in red',
+    'alt.alt01': 'Sequential map of the clay and hydroxyl spectral alteration proxy across the Kızıldere area of interest',
+    'alt.alt02': 'Sequential map of the ferric iron spectral alteration proxy across the Kızıldere area of interest',
+    'alt.priority': 'Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area',
+    'alt.geothermal': 'Relative priority surface over shaded NASADEM relief across the Kızıldere geothermal pilot area',
     'pilot.kicker': 'Pilot',
     'pilot.title': 'Geothermal first.',
     'pilot.copy': 'Geothermal exploration is where OrbGSS is applied first. Mineral exploration and environmental & land intelligence follow the same evidence-to-priority workflow and are expansion directions, not finished products.',
@@ -95,7 +121,7 @@ const I18N = {
     'alt.chuquicamata': 'Satellite view of the Chuquicamata mining district in northern Chile',
     'alt.ili': 'Satellite view of the Ili River Delta and Lake Balkhash in Kazakhstan',
     'footer.builtBy': 'Built by VirgaSoft',
-    'footer.attribution': 'Landsat data courtesy of the U.S. Geological Survey. Scenes are OrbGSS natural-color composites of Landsat Collection 2 surface-reflectance products; full provenance is documented in the production package.',
+    'footer.attribution': 'Landsat data courtesy of the U.S. Geological Survey. The hero is an OrbGSS natural-color composite of Landsat Collection 2 surface reflectance. The story panels are OrbGSS cartographic exports of the Kızıldere pilot area, derived from NASADEM elevation, Landsat thermal and Sentinel-2 alteration evidence, with Scientific colour maps v8.0 by Fabio Crameri. Full provenance is documented in the production package.',
     'footer.copyright': '© 2026 OrbGSS. All rights reserved.'
   },
   tr: {
@@ -124,24 +150,50 @@ const I18N = {
     'hero.cta': 'Platformu Keşfedin',
     'hero.secondary': 'İş Birliği Kurun',
     'story.observe.title': 'Gözlem',
-    'story.observe.statement': 'Platform bir ilgi alanından başlar. Görüntü, topoğrafya ve yer bilimi girdileri tek bir mekânsal çerçevede bir araya getirilir; böylece sonraki her adım aynı zemine referans verir.',
-    'story.observe.meta': 'Girdi · Görüntü / Topoğrafya / Yer bilimi',
+    'story.observe.statement': 'Her OrbGSS analizi tek bir ilgi alanından başlar. Kızıldere pilot alanı, sabit 30 m ızgara üzerinde 36 × 36 km’lik bir çerçevedir; sonrasında gelen her katman tam olarak bu zemine oturur.',
+    'story.observe.note': 'Yalnızca kaynak ve alan bağlamı — doğrulama kanıtı değildir.',
+    'story.observe.meta': 'İlgi alanı · EPSG:32635 · 30 m · 36 × 36 km',
     'story.terrain.title': 'Topoğrafya',
-    'story.terrain.statement': 'Topoğrafya fiziksel bağlamdır. Yükselti, eğim ve drenaj, diğer her sinyalin nasıl okunacağını belirler.',
-    'story.terrain.meta': 'Bağlam · Yükselti / Eğim / Drenaj',
+    'story.terrain.statement': 'Yükselti, alana fiziksel biçimini verir. NASADEM topoğrafyası, sonraki her sinyalin gerçek rölyefe göre okunabilmesi için görüntüleme bağlamı olarak taşınır.',
+    'story.terrain.note': 'Yalnızca bağlam ve görüntüleme amaçlıdır. Topoğrafya skorlanan bir öngörücü değildir ve evrensel bir jeotermal uygunluk yönü taşımaz.',
+    'story.terrain.meta': 'Bağlam · NASADEM yükselti · metre',
     'story.evidence.title': 'Kanıt',
-    'story.evidence.statement': 'Alana özgü sinyaller mekânsal kanıt olarak haritalanır: konumlandırılmış, belgelenmiş ve kaynak verisine kadar izlenebilir.',
-    'story.evidence.meta': 'Sinyal → Kanıt katmanı',
+    'story.evidence.statement': 'Kabul edilmiş üç uzaktan algılama katmanı aynı zemini tarif eder: bir Landsat termal anomalisi ve iki Sentinel-2 spektral alterasyon vekili. Her birinin katkısını görmek için katmanlar arasında geçiş yapın.',
+    'story.evidence.note': 'Yalnızca kanıt katmanları — aday ve doğrulanmamış. ALT-01 ve ALT-02 geniş bantlı spektral alterasyon vekilleridir; mineral veya kaolinit tanımlaması değildir ve hidrotermal alterasyon kanıtı sayılmaz.',
+    'story.evidence.meta': 'Kanıt · THM-01 / ALT-01 / ALT-02',
+    'evidence.switchLabel': 'Kanıt katmanı',
     'story.structure.title': 'Yapı',
-    'story.structure.statement': 'Jeolojik ve yapısal bağlam yorumu çerçeveler. Aynı sinyal farklı ortamlarda farklı anlamlar taşır.',
-    'story.structure.meta': 'Bağlam · Jeoloji / Yapı',
+    'story.structure.statement': 'Yapısal ve jeolojik bağlam burada yorumu keskinleştirirdi. Bu temel sürüm için OrbGSS’in kamuya açık kullanıma uygun fay veya litoloji katmanı yoktur; bu nedenle sayfa boşluğu doldurmak yerine boşluğu gösterir.',
+    'story.structure.note': 'Yapı ve jeoloji isteğe bağlı destektir ve skoru değiştirmez. Bunların yokluğu uzaktan algılama önceliklendirme temelini etkilemez.',
+    'story.structure.meta': 'İsteğe bağlı destek · Yayımlanmadı',
+    'structure.gapMark': 'Veri boşluğu',
+    'structure.gapCopy': 'Bu alan için yayımlanmış bir fay veya litoloji katmanı yok. Buraya bilinçli olarak hiçbir şey çizilmedi: uydurulmuş bir yapısal çizgi kanıt gibi görünür ama kanıt olmazdı.',
+    'structure.gapMeta': 'Yapısal bağlam — isteğe bağlı destek / veri boşluğu',
     'story.priority.title': 'Öncelik',
-    'story.priority.statement': 'Kanıtlar mekânsal bir öncelik görünümünde bütünleştirilir: sırada nerenin inceleneceği ve nedeni.',
-    'story.priority.meta': 'Kanıt → Mekânsal öncelik',
+    'story.priority.statement': 'Termal ve alterasyon kanıtı, ekiplerin önce nereye bakacağını sıralayabilmesi için 0–100 aralığında tek bir alan içi sıralama yüzeyinde birleştirilir.',
+    'story.priority.note': 'Yalnızca alan içi deneysel ön eleme. Olasılık, rezerv veya kaynak tahmini, keşif olasılığı, sondaj başarısı olasılığı, Tam Prospektivite ya da alanlar arası kalibre edilmiş bir skor değildir.',
+    'story.priority.meta': 'Skor · mvp_remote_sensing_priority_v1',
     'story.geothermal.title': 'Jeotermal',
-    'story.geothermal.statement': 'Jeotermal arama, OrbGSS\u2019nin ilk aktif uygulamasıdır. Kanıttan önceliğe uzanan iş akışı, pilot kapsamında jeotermal hedeflere uygulanmaktadır.',
-    'story.geothermal.meta': 'Durum · İlk aktif uygulama',
+    'story.geothermal.statement': 'Kızıldere, bu temelin ilk jeotermal uygulamasıdır: Denizli, Türkiye’deki aktif pilot alanda NASADEM rölyefi üzerine serilmiş öncelik yüzeyi.',
+    'story.geothermal.note': 'İlk uygulama kanıtıdır; saha doğrulaması, keşif, rezerv veya kaynak, sondaj hedefi ya da sondaj başarısı kanıtı değildir.',
+    'story.geothermal.meta': 'İlk uygulama · Kızıldere pilotu',
     'scene.kind.naturalColor': 'Doğal renkli kompozit',
+    'scene.aoi.place': 'Kızıldere, Denizli, Türkiye',
+    'scene.aoi.coords': '37.9794° K, 28.7907° D',
+    'label.observe': 'Kızıldere ilgi alanı — kabul edilmiş MVP proje bağlamı',
+    'label.terrain': 'Yükselti — NASADEM bağlamı',
+    'label.thm01': 'THM-01 Termal Anomali',
+    'label.alt01': 'ALT-01 Alterasyon Vekili — kil/hidroksil',
+    'label.alt02': 'ALT-02 Alterasyon Vekili — ferrik/demir',
+    'label.priority': 'Uzaktan Algılama Göreli Önceliği — Deneysel Temel',
+    'label.geothermal': 'Kızıldere — deneysel uzaktan algılama temelinin ilk jeotermal uygulaması',
+    'alt.observe': 'Kızıldere proje alanının 36 çarpı 36 kilometrelik gri tonlamalı yükselti haritası; pilot ızgara boyunca sırtları ve vadileri gösterir',
+    'alt.terrain': 'Kızıldere ilgi alanının renkli yükselti haritası; alçak zemin koyu mavi, yüksek sırtlar soluk sarı',
+    'alt.thm01': 'Kızıldere ilgi alanının ıraksak termal anomali haritası; daha serin zemin mavi, daha sıcak zemin kırmızı',
+    'alt.alt01': 'Kızıldere ilgi alanı boyunca kil ve hidroksil spektral alterasyon vekilinin sıralı haritası',
+    'alt.alt02': 'Kızıldere ilgi alanı boyunca ferrik demir spektral alterasyon vekilinin sıralı haritası',
+    'alt.priority': 'Kızıldere ilgi alanının göreli öncelik haritası; zemini alan içinde 0 ile 100 arasında sıralar',
+    'alt.geothermal': 'Kızıldere jeotermal pilot alanında gölgelendirilmiş NASADEM rölyefi üzerindeki göreli öncelik yüzeyi',
     'pilot.kicker': 'Pilot',
     'pilot.title': 'Önce jeotermal.',
     'pilot.copy': 'OrbGSS ilk olarak jeotermal aramada uygulanıyor. Maden arama ile çevre ve arazi zekâsı aynı kanıttan önceliğe iş akışını izler; bunlar tamamlanmış ürünler değil, genişleme yönleridir.',
@@ -184,7 +236,7 @@ const I18N = {
     'alt.chuquicamata': 'Kuzey Şili Chuquicamata madencilik bölgesinin uydu görüntüsü',
     'alt.ili': 'Kazakistan İli Nehri Deltası ve Balkaş Gölü uydu görüntüsü',
     'footer.builtBy': 'VirgaSoft tarafından geliştirildi',
-    'footer.attribution': 'Landsat verileri ABD Jeoloji Araştırmaları Kurumu (USGS) kaynaklıdır. Görüntüler, Landsat Collection 2 yüzey yansıtması ürünlerinden OrbGSS tarafından üretilen doğal renkli kompozitlerdir; kaynak bilgileri üretim paketinde belgelenmiştir.',
+    'footer.attribution': 'Landsat verileri ABD Jeoloji Araştırmaları Kurumu (USGS) kaynaklıdır. Açılış görseli, Landsat Collection 2 yüzey yansıtması ürünlerinden OrbGSS tarafından üretilen doğal renkli bir kompozittir. Bölüm görselleri ise NASADEM yükselti, Landsat termal ve Sentinel-2 alterasyon kanıtlarından türetilen, Kızıldere pilot alanına ait OrbGSS kartografik dışa aktarımlarıdır; renk skalaları Fabio Crameri, Scientific colour maps v8.0. Kaynak bilgileri üretim paketinde belgelenmiştir.',
     'footer.copyright': '© 2026 OrbGSS. Tüm hakları saklıdır.'
   }
 };
@@ -385,8 +437,52 @@ applyLanguage(readStoredLang());
 /* Graceful failure for self-hosted imagery: hide a scene that fails    */
 /* to load so the dark panel background shows, never a broken glyph.    */
 /* ------------------------------------------------------------------ */
-document.querySelectorAll('.panel-image, .story-panel > img').forEach((image) => {
+document.querySelectorAll('.panel-image, .story-panel > img, .layer-pane > img').forEach((image) => {
   image.addEventListener('error', () => {
     image.style.visibility = 'hidden';
   }, { once: true });
+});
+
+/* ------------------------------------------------------------------ */
+/* WEB-002 evidence layer switch                                        */
+/* One tablist per switchable panel. Each tab shows one accepted        */
+/* evidence export of the same AOI; the caption travels with its pane,  */
+/* so the visible label can never drift from the layer on screen.       */
+/* Without JavaScript the first pane stays visible and the others stay  */
+/* hidden, which is still a truthful single-layer panel.                */
+/* ------------------------------------------------------------------ */
+document.querySelectorAll('.layer-switch[role="tablist"]').forEach((tablist) => {
+  const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+  if (tabs.length < 2) return;
+  const panes = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')));
+  if (panes.some((pane) => !pane)) return;
+
+  function select(index, { focus = false } = {}) {
+    tabs.forEach((tab, i) => {
+      const active = i === index;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+      tab.tabIndex = active ? 0 : -1;
+      panes[i].classList.toggle('is-active', active);
+      panes[i].setAttribute('aria-hidden', active ? 'false' : 'true');
+    });
+    if (focus) tabs[index].focus();
+  }
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => select(index));
+    tab.addEventListener('keydown', (event) => {
+      const last = tabs.length - 1;
+      let next = null;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = index === last ? 0 : index + 1;
+      else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = index === 0 ? last : index - 1;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = last;
+      if (next === null) return;
+      event.preventDefault();
+      select(next, { focus: true });
+    });
+  });
+
+  select(Math.max(0, tabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true')));
 });

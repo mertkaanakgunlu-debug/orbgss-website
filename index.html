@@ -95,12 +95,16 @@
     </section>
 
     <!--
-      STORY SECTIONS 01–06.
+      STORY SECTIONS 01–06 (WEB-002 product proof).
       Each section = dark technical beam + full-width visual panel.
-      Panels marked data-visual-status="temporary-gallery" reuse provenance-safe Landsat
-      natural-color composites as atmospheric material only. WEB-002 replaces them with the
-      real product-proof visual named in data-visual-slot. Public copy never calls a temporary
-      panel a DEM, evidence raster, structural map or priority output.
+      Panels marked data-visual-status="product-proof" carry real OrbGSS cartographic exports
+      materialized through the accepted GEO-039 Workbench export path from the persisted
+      kizildere_mvp_v2 project. Every panel shows the SAME 36 x 36 km AOI on the same 30 m grid.
+      Provenance, export id, master checksum and derivative checksums live in
+      assets/imagery/sources.json (proof_assets). Mandatory scientific warnings from
+      docs/WEB-002_SCIENCE_ASSET_PACKAGE.md are carried in visible copy as .beam-note.
+      Slot 04 (structure) is a deliberate data-gap state: no fault/lithology asset is authorized,
+      and the gap is score-invariant. Never fabricate one.
     -->
 
     <section id="platform" class="story-section" aria-labelledby="observe-title">
@@ -109,21 +113,28 @@
           <span class="beam-index mono">01</span>
           <h2 id="observe-title" data-i18n="story.observe.title">Observe</h2>
         </div>
-        <p class="beam-statement" data-i18n="story.observe.statement">The platform starts from an area of interest. Imagery, terrain and geoscience inputs are brought into one spatial frame, so every later step refers to the same ground.</p>
-        <p class="beam-meta mono" data-i18n="story.observe.meta">Input · Imagery / Terrain / Geoscience</p>
+        <div class="beam-body">
+          <p class="beam-statement" data-i18n="story.observe.statement">Every OrbGSS analysis starts from one area of interest. The Kızıldere pilot AOI is a 36 × 36 km frame on a fixed 30 m grid, and every layer that follows is registered to exactly this ground.</p>
+          <p class="beam-note" data-i18n="story.observe.note">Source and AOI context only — not validation evidence.</p>
+        </div>
+        <p class="beam-meta mono" data-i18n="story.observe.meta">AOI · EPSG:32635 · 30 m · 36 × 36 km</p>
       </div>
-      <figure class="story-panel" data-visual-slot="observe" data-visual-status="temporary-gallery">
+      <figure class="story-panel" data-visual-slot="observe" data-visual-status="product-proof" data-label-tone="light">
         <img
-          src="assets/imagery/ili-delta-2020.jpg"
-          alt="Satellite view of the Ili River Delta and Lake Balkhash in Kazakhstan"
-          data-i18n-alt="alt.ili"
+          src="assets/proof/observe-1400.webp"
+          srcset="assets/proof/observe-800.webp 800w, assets/proof/observe-1400.webp 1400w"
+          sizes="100vw"
+          alt="Greyscale elevation map of the 36 by 36 kilometre Kızıldere project area of interest, showing ridges and valleys across the pilot grid"
+          data-i18n-alt="alt.observe"
           loading="lazy"
           decoding="async"
+          width="1400"
+          height="1400"
         />
         <figcaption class="scene-label">
-          <span data-i18n="scene.ili.place">Ili River Delta &amp; Lake Balkhash, Kazakhstan</span>
-          <span data-i18n="scene.ili.coords">45.0600° N, 74.5200° E</span>
-          <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
+          <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
+          <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
+          <span class="scene-kind" data-i18n="label.observe">Kızıldere AOI — accepted MVP project context</span>
         </figcaption>
       </figure>
     </section>
@@ -134,22 +145,28 @@
           <span class="beam-index mono">02</span>
           <h2 id="terrain-title" data-i18n="story.terrain.title">Terrain</h2>
         </div>
-        <p class="beam-statement" data-i18n="story.terrain.statement">Terrain is physical context. Elevation, slope and drainage shape how every other signal is read.</p>
-        <p class="beam-meta mono" data-i18n="story.terrain.meta">Context · Elevation / Slope / Drainage</p>
+        <div class="beam-body">
+          <p class="beam-statement" data-i18n="story.terrain.statement">Elevation gives the area its physical shape. NASADEM terrain is carried as display context, so every later signal can be read against real relief.</p>
+          <p class="beam-note" data-i18n="story.terrain.note">Context and display only. Terrain is not a scored predictor and carries no universal geothermal-favourability direction.</p>
+        </div>
+        <p class="beam-meta mono" data-i18n="story.terrain.meta">Context · NASADEM elevation · metres</p>
       </div>
-      <!-- WEB-002: real terrain visual (DEM-derived) for the pilot AOI. Until then: natural-color composite, not a DEM. -->
-      <figure class="story-panel" data-visual-slot="terrain" data-visual-status="temporary-gallery">
+      <figure class="story-panel" data-visual-slot="terrain" data-visual-status="product-proof" data-label-tone="light">
         <img
-          src="assets/imagery/chuquicamata-2024.jpg"
-          alt="Satellite view of the Chuquicamata mining district in northern Chile"
-          data-i18n-alt="alt.chuquicamata"
+          src="assets/proof/terrain-1400.webp"
+          srcset="assets/proof/terrain-800.webp 800w, assets/proof/terrain-1400.webp 1400w"
+          sizes="100vw"
+          alt="Colour elevation map of the Kızıldere area of interest, with low ground in dark blue and high ridges in pale yellow"
+          data-i18n-alt="alt.terrain"
           loading="lazy"
           decoding="async"
+          width="1400"
+          height="1400"
         />
         <figcaption class="scene-label">
-          <span data-i18n="scene.chuquicamata.place">Chuquicamata, Antofagasta, Chile</span>
-          <span data-i18n="scene.chuquicamata.coords">22.3150° S, 68.9010° W</span>
-          <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
+          <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
+          <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
+          <span class="scene-kind" data-i18n="label.terrain">Elevation — NASADEM context</span>
         </figcaption>
       </figure>
     </section>
@@ -160,23 +177,74 @@
           <span class="beam-index mono">03</span>
           <h2 id="evidence-title" data-i18n="story.evidence.title">Evidence</h2>
         </div>
-        <p class="beam-statement" data-i18n="story.evidence.statement">Domain-relevant signals are mapped as spatial evidence: located, documented and traceable to their source data.</p>
-        <p class="beam-meta mono" data-i18n="story.evidence.meta">Signal → Evidence layer</p>
+        <div class="beam-body">
+          <p class="beam-statement" data-i18n="story.evidence.statement">Three accepted remote-sensing layers describe the same ground: one Landsat thermal anomaly and two Sentinel-2 spectral alteration proxies. Switch between them to see what each one contributes.</p>
+          <p class="beam-note" data-i18n="story.evidence.note">Evidence layers only — candidate and unvalidated. ALT-01 and ALT-02 are broad spectral alteration proxies, never mineral or kaolinite identification, and not proof of hydrothermal alteration.</p>
+        </div>
+        <p class="beam-meta mono" data-i18n="story.evidence.meta">Evidence · THM-01 / ALT-01 / ALT-02</p>
       </div>
-      <!-- WEB-002: real evidence raster for the pilot AOI. Until then: natural-color composite, not an evidence layer. -->
-      <figure class="story-panel" data-visual-slot="evidence" data-visual-status="temporary-gallery">
-        <img
-          src="assets/imagery/crater-lake-2023.jpg"
-          alt="Satellite view of Crater Lake and the surrounding landscape in Oregon, United States"
-          data-i18n-alt="alt.crater"
-          loading="lazy"
-          decoding="async"
-        />
-        <figcaption class="scene-label">
-          <span data-i18n="scene.crater.place">Crater Lake, Oregon, USA</span>
-          <span data-i18n="scene.crater.coords">42.9443° N, 122.1353° W</span>
-          <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
-        </figcaption>
+      <figure class="story-panel has-switch" data-visual-slot="evidence" data-visual-status="product-proof">
+        <div class="layer-switch" role="tablist" aria-label="Evidence layer" data-i18n-aria-label="evidence.switchLabel">
+          <button type="button" class="layer-tab is-active mono" role="tab" id="tab-thm01" aria-controls="pane-thm01" aria-selected="true">THM-01</button>
+          <button type="button" class="layer-tab mono" role="tab" id="tab-alt01" aria-controls="pane-alt01" aria-selected="false" tabindex="-1">ALT-01</button>
+          <button type="button" class="layer-tab mono" role="tab" id="tab-alt02" aria-controls="pane-alt02" aria-selected="false" tabindex="-1">ALT-02</button>
+        </div>
+        <div class="layer-stack">
+          <div class="layer-pane is-active" role="tabpanel" id="pane-thm01" aria-labelledby="tab-thm01" aria-hidden="false" data-label-tone="dark">
+            <img
+              src="assets/proof/thm01-1400.webp"
+              srcset="assets/proof/thm01-800.webp 800w, assets/proof/thm01-1400.webp 1400w"
+              sizes="100vw"
+              alt="Diverging thermal anomaly map of the Kızıldere area of interest, with cooler ground in blue and warmer ground in red"
+              data-i18n-alt="alt.thm01"
+              loading="lazy"
+              decoding="async"
+              width="1400"
+              height="1400"
+            />
+            <div class="scene-label">
+              <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
+              <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
+              <span class="scene-kind" data-i18n="label.thm01">THM-01 Thermal Anomaly</span>
+            </div>
+          </div>
+          <div class="layer-pane" role="tabpanel" id="pane-alt01" aria-labelledby="tab-alt01" aria-hidden="true" data-label-tone="light">
+            <img
+              src="assets/proof/alt01-1400.webp"
+              srcset="assets/proof/alt01-800.webp 800w, assets/proof/alt01-1400.webp 1400w"
+              sizes="100vw"
+              alt="Sequential map of the clay and hydroxyl spectral alteration proxy across the Kızıldere area of interest"
+              data-i18n-alt="alt.alt01"
+              loading="lazy"
+              decoding="async"
+              width="1400"
+              height="1400"
+            />
+            <div class="scene-label">
+              <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
+              <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
+              <span class="scene-kind" data-i18n="label.alt01">ALT-01 Alteration Proxy — clay/hydroxyl</span>
+            </div>
+          </div>
+          <div class="layer-pane" role="tabpanel" id="pane-alt02" aria-labelledby="tab-alt02" aria-hidden="true" data-label-tone="light">
+            <img
+              src="assets/proof/alt02-1400.webp"
+              srcset="assets/proof/alt02-800.webp 800w, assets/proof/alt02-1400.webp 1400w"
+              sizes="100vw"
+              alt="Sequential map of the ferric iron spectral alteration proxy across the Kızıldere area of interest"
+              data-i18n-alt="alt.alt02"
+              loading="lazy"
+              decoding="async"
+              width="1400"
+              height="1400"
+            />
+            <div class="scene-label">
+              <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
+              <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
+              <span class="scene-kind" data-i18n="label.alt02">ALT-02 Alteration Proxy — ferric/iron</span>
+            </div>
+          </div>
+        </div>
       </figure>
     </section>
 
@@ -186,24 +254,19 @@
           <span class="beam-index mono">04</span>
           <h2 id="structure-title" data-i18n="story.structure.title">Structure</h2>
         </div>
-        <p class="beam-statement" data-i18n="story.structure.statement">Geological and structural context frames interpretation. The same signal means different things in different settings.</p>
-        <p class="beam-meta mono" data-i18n="story.structure.meta">Context · Geology / Structure</p>
+        <div class="beam-body">
+          <p class="beam-statement" data-i18n="story.structure.statement">Structural and geological context would sharpen interpretation here. For this baseline OrbGSS has no public-safe fault or lithology layer, so the page shows the gap rather than filling it.</p>
+          <p class="beam-note" data-i18n="story.structure.note">Structure and geology are optional support and score-invariant. Their absence does not change the remote-sensing priority baseline.</p>
+        </div>
+        <p class="beam-meta mono" data-i18n="story.structure.meta">Optional support · Not published</p>
       </div>
-      <!-- WEB-002: real geological/structural context visual. Until then: natural-color composite, no mapped faults. -->
-      <figure class="story-panel" data-visual-slot="structure" data-visual-status="temporary-gallery">
-        <img
-          src="assets/imagery/ili-delta-2020.jpg"
-          alt="Satellite view of the Ili River Delta and Lake Balkhash in Kazakhstan"
-          data-i18n-alt="alt.ili"
-          loading="lazy"
-          decoding="async"
-        />
-        <figcaption class="scene-label">
-          <span data-i18n="scene.ili.place">Ili River Delta &amp; Lake Balkhash, Kazakhstan</span>
-          <span data-i18n="scene.ili.coords">45.0600° N, 74.5200° E</span>
-          <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
-        </figcaption>
-      </figure>
+      <div class="story-panel data-gap" data-visual-slot="structure" data-visual-status="data-gap">
+        <div class="gap-inner">
+          <p class="gap-mark mono" data-i18n="structure.gapMark">Data gap</p>
+          <p class="gap-copy" data-i18n="structure.gapCopy">No fault or lithology layer is published for this area. Nothing is drawn here on purpose: an invented structural line would look like evidence and would not be.</p>
+          <p class="gap-meta mono" data-i18n="structure.gapMeta">Structural context — optional support / data gap</p>
+        </div>
+      </div>
     </section>
 
     <section id="priority" class="story-section" aria-labelledby="priority-title">
@@ -212,22 +275,34 @@
           <span class="beam-index mono">05</span>
           <h2 id="priority-title" data-i18n="story.priority.title">Priority</h2>
         </div>
-        <p class="beam-statement" data-i18n="story.priority.statement">Evidence is integrated into a spatial priority view: where to investigate next, and why.</p>
-        <p class="beam-meta mono" data-i18n="story.priority.meta">Evidence → Spatial priority</p>
+        <div class="beam-body">
+          <p class="beam-statement" data-i18n="story.priority.statement">The thermal and alteration evidence is integrated into one within-AOI ranking surface, 0 to 100, so a team can order where to look first.</p>
+          <p class="beam-note" data-i18n="story.priority.note">AOI-relative experimental screening only. Not probability, reserve or resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a score calibrated across areas.</p>
+        </div>
+        <div class="beam-meta mono">
+          <p class="beam-meta-line" data-i18n="story.priority.meta">Score · mvp_remote_sensing_priority_v1</p>
+          <span class="scale-strip">
+            <img src="assets/proof/priority-scale.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="652" height="28" />
+            <span class="scale-ends"><span>0</span><span>100</span></span>
+          </span>
+        </div>
       </div>
-      <!-- WEB-002: real spatial-priority output for the pilot AOI. Until then: natural-color composite, not a score map. -->
-      <figure class="story-panel" data-visual-slot="priority" data-visual-status="temporary-gallery">
+      <figure class="story-panel" data-visual-slot="priority" data-visual-status="product-proof" data-label-tone="light">
         <img
-          src="assets/imagery/chuquicamata-2024.jpg"
-          alt="Satellite view of the Chuquicamata mining district in northern Chile"
-          data-i18n-alt="alt.chuquicamata"
+          src="assets/proof/priority-1400.webp"
+          srcset="assets/proof/priority-800.webp 800w, assets/proof/priority-1400.webp 1400w"
+          sizes="100vw"
+          alt="Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area"
+          data-i18n-alt="alt.priority"
           loading="lazy"
           decoding="async"
+          width="1400"
+          height="1400"
         />
         <figcaption class="scene-label">
-          <span data-i18n="scene.chuquicamata.place">Chuquicamata, Antofagasta, Chile</span>
-          <span data-i18n="scene.chuquicamata.coords">22.3150° S, 68.9010° W</span>
-          <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
+          <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
+          <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
+          <span class="scene-kind" data-i18n="label.priority">Remote-Sensing Relative Priority — Experimental Baseline</span>
         </figcaption>
       </figure>
     </section>
@@ -238,22 +313,34 @@
           <span class="beam-index mono">06</span>
           <h2 id="geothermal-title" data-i18n="story.geothermal.title">Geothermal</h2>
         </div>
-        <p class="beam-statement" data-i18n="story.geothermal.statement">Geothermal exploration is OrbGSS’s first active application. The evidence-to-priority workflow is being applied to geothermal targets in a pilot setting.</p>
-        <p class="beam-meta mono" data-i18n="story.geothermal.meta">Status · First active application</p>
+        <div class="beam-body">
+          <p class="beam-statement" data-i18n="story.geothermal.statement">Kızıldere is the first geothermal application of that baseline: the priority surface over NASADEM relief, in an active pilot area in Denizli, Türkiye.</p>
+          <p class="beam-note" data-i18n="story.geothermal.note">First-application proof, not field validation, discovery, reserve or resource, drilling-target or drilling-success proof.</p>
+        </div>
+        <div class="beam-meta mono">
+          <p class="beam-meta-line" data-i18n="story.geothermal.meta">First application · Kızıldere pilot</p>
+          <span class="scale-strip">
+            <img src="assets/proof/geothermal-scale.png" alt="" aria-hidden="true" loading="lazy" decoding="async" width="652" height="28" />
+            <span class="scale-ends"><span>0</span><span>100</span></span>
+          </span>
+        </div>
       </div>
-      <!-- WEB-002: pilot AOI geothermal evidence visual. Until then: Yellowstone natural-color composite as atmospheric context. -->
-      <figure class="story-panel" data-visual-slot="geothermal" data-visual-status="temporary-gallery">
+      <figure class="story-panel" data-visual-slot="geothermal" data-visual-status="product-proof" data-label-tone="light">
         <img
-          src="assets/imagery/yellowstone-2013.jpg"
-          alt="Satellite view of the geothermal landscape around Yellowstone National Park"
-          data-i18n-alt="alt.yellowstone"
+          src="assets/proof/geothermal-1400.webp"
+          srcset="assets/proof/geothermal-800.webp 800w, assets/proof/geothermal-1400.webp 1400w"
+          sizes="100vw"
+          alt="Relative priority surface over shaded NASADEM relief across the Kızıldere geothermal pilot area"
+          data-i18n-alt="alt.geothermal"
           loading="lazy"
           decoding="async"
+          width="1400"
+          height="1400"
         />
         <figcaption class="scene-label">
-          <span data-i18n="scene.yellowstone.place">Yellowstone National Park, USA</span>
-          <span data-i18n="scene.yellowstone.coords">44.4604° N, 110.8282° W</span>
-          <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
+          <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
+          <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
+          <span class="scene-kind" data-i18n="label.geothermal">Kızıldere — first geothermal application of the experimental remote-sensing baseline</span>
         </figcaption>
       </figure>
     </section>

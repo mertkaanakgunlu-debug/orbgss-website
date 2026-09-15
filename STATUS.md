@@ -1,45 +1,63 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v0.6.0-web-001-vnext-foundation` (branch `feat/web-001-vnext-foundation`, REVIEW_READY, not merged)  
-**Date:** 2026-09-15  
-**Stage:** WEB-001 vNext information architecture, visual foundation and homepage shell implemented; awaiting review; WEB-002 (product-proof imagery) not started  
-**Site architecture:** static HTML + CSS + vanilla JavaScript  
-**Public domain target:** `https://orbgss.com`  
-**Source repository:** https://github.com/baran-orbgss/website (accepted `main`: `b10cd72`; WEB-001 on `feat/web-001-vnext-foundation`)  
-**Registrar / DNS:** Squarespace  
-**Hosting target:** Vercel  
-**Company:** VirgaSoft  
-**Product:** OrbGSS — Orbital Geo-Spatial Solutions  
-**Tracking:** Linear MER-89 (WEB-001)
+**Canonical version:** `v0.7.0-web-002-product-proof` (branch `feat/web-002-product-proof`, REVIEW_READY, not merged)
+**Date:** 2026-09-15
+**Stage:** WEB-002 product proof implemented — story panels 01–06 now carry real OrbGSS cartographic exports of the Kızıldere pilot AOI, or an explicit data gap; awaiting review
+**Site architecture:** static HTML + CSS + vanilla JavaScript
+**Public domain target:** `https://orbgss.com`
+**Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website (accepted `main`: `677bfa7`; WEB-002 on `feat/web-002-product-proof`)
+**Reference/upstream only:** https://github.com/baran-orbgss/website
+**Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)
+**Registrar / DNS:** Squarespace
+**Hosting target:** Vercel
+**Company:** VirgaSoft
+**Product:** OrbGSS — Orbital Geo-Spatial Solutions
+**Tracking:** Linear MER-90 (WEB-002); MER-96 / GEO-WEB-001 resolved
 
 ## Authority
 
 `docs/WEB_VNEXT_AUTHORITY.md` is the repository-local summary of the product-owned *OrbGSS Website vNext Product & Execution Authority v1.2*. Where it disagrees with `docs/DESIGN_AUTHORITY.md` or `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`, it wins for vNext work. The active task contract is `tasks/WEB-001_VNEXT_FOUNDATION.md`.
 
-## Current state (WEB-001)
+## Current state (WEB-002)
 
-The homepage is a cinematic gallery that tells the evidence-to-intelligence story. Rhythm is unchanged: dark technical beam → large full-width visual panel. Structure:
+The homepage tells the evidence-to-intelligence story on one real area of interest. The rhythm is
+unchanged — dark technical beam → large full-width visual panel — but every story panel now shows
+the **same Kızıldere pilot AOI** (36 × 36 km, EPSG:32635, 30 m grid), so the reader watches one
+place accumulate evidence instead of touring six unrelated places.
 
 1. navigation (right-aligned: Platform → Solutions⌄ → Pilot → Company → Contact → EN | TR)
-2. hero: static poster (Crater Lake composite), eyebrow / headline / supporting copy / `Explore the Platform` / `Partner With Us`; location + coordinates on the image
-3. `01 Observe` beam → panel (`#platform`)
-4. `02 Terrain` beam → panel (`#terrain`)
-5. `03 Evidence` beam → panel (`#evidence`)
-6. `04 Structure` beam → panel (`#structure`)
-7. `05 Priority` beam → panel (`#priority`)
-8. `06 Geothermal` beam → panel (`#geothermal`) — first active application
-9. Pilot ledger (`#pilot`, list `#solutions`): Geothermal `Active · First application`; Mineral (`#mineral`) and Environmental & Land (`#environment`) `Expansion direction`
-10. Company + trust list (`#company`)
-11. Contact beam (`#contact`)
-12. compact footer
+2. hero: static Crater Lake poster, unchanged (`data-hero-slot="static-poster"`; WEB-005 owns it)
+3. `01 Observe` → Kızıldere AOI — accepted MVP project context (`top-dem`, greyscale)
+4. `02 Terrain` → Elevation — NASADEM context (`top-dem`, batlow terrain)
+5. `03 Evidence` → keyboard-accessible layer switch across THM-01 / ALT-01 / ALT-02
+6. `04 Structure` → **explicit data gap**, no image published
+7. `05 Priority` → Remote-Sensing Relative Priority — Experimental Baseline, with its 0–100 legend
+8. `06 Geothermal` → Kızıldere first-application composite (`top-dem` + score)
+9. Pilot ledger, Company/Trust, Contact beam, footer — unchanged
 
-Every visible string exists in EN and TR (`I18N` in `script.js`).
+Every visible string exists in EN and TR (`I18N` in `script.js`): 112 keys per language.
 
-## Temporary visuals (WEB-002 owns the replacement)
+## Product-proof provenance
 
-Story panels 01–06 reuse the four provenance-safe Landsat composites as atmospheric gallery material only. Each carries the on-image label `Natural-color composite` and is marked in markup with `data-visual-slot` / `data-visual-status="temporary-gallery"`. No panel is presented as a DEM, evidence raster, structural map or priority output. Placement is recorded per scene in `assets/imagery/sources.json` (`web_vnext_placement`). The validator enforces slot order and status.
+Every scientific visual is an OrbGSS cartographic export materialized through the accepted GEO-039
+Workbench export path from the persisted `kizildere_mvp_v2` project, then cropped and resized for
+the web. `assets/imagery/sources.json` (`web_002.proof_assets`) records, per asset: the export id,
+the `export_manifest.json` pointer, the master PNG SHA-256 from that manifest, the crop box, and a
+SHA-256 for every derivative shipped in this repository. `scripts/validate_site.py` recomputes
+those derivative checksums on every run, so provenance is self-enforcing.
 
-The hero is a static poster (`data-hero-slot="static-poster"`); WEB-005 replaces only `.hero-visual`.
+`05 Priority` and `06 Geothermal` use the accepted `mvp_remote_sensing_priority_v1` output from run
+`8716e89324ff5566859f470f207d5a1f0ab651c19d9c7e9dba3087960a63cf3c` under
+`remote_sensing_equal_family_v1`, published with its exact accepted semantics: a deterministic
+0–100 within-AOI screening surface, never probability, Full Prospectivity, reserve, discovery or
+drilling-success. Each panel carries its mandatory package warning as visible EN/TR copy.
+
+`04 Structure` and geology stay an explicit `DATA_GAP / optional support / score-invariant` state:
+no public-safe fault or lithology master is authorized, the page says so, and the copy records that
+the absence does not change the baseline. Nothing is fabricated to fill it.
+
+The three Landsat scenes no longer placed on the homepage (Yellowstone, Chuquicamata, Ili Delta)
+are marked `retired-from-homepage` with files, provenance and rights intact.
 
 ## Locked design decisions
 
@@ -60,18 +78,19 @@ OrbGSS is a geospatial-intelligence platform. Geothermal Exploration is the firs
 ## Production blockers
 
 1. Confirm `contact@orbgss.com` before public launch.
-2. WEB-001 review and merge (no feature work on `main`).
-3. WEB-002: product-proof visuals for the story slots, with provenance recorded before use.
+2. WEB-001 accepted at `677bfa7`; no feature work on `main`.
+3. WEB-002 review and merge.
 4. Vercel preview from the GitHub repository (explicit authorization for the Vercel write).
 5. WEB-006 only: connect `orbgss.com` / `www.orbgss.com` through Squarespace DNS, preserving Google Workspace MX/SPF/DKIM/DMARC.
 
 ## Next canonical task
 
-WEB-001 is REVIEW_READY. After review: `WEB-002` (product-proof imagery for the deferred visual slots). Do not start WEB-002 on this branch.
+WEB-002 is REVIEW_READY on `feat/web-002-product-proof`. After review and merge: `WEB-003` (site depth). WEB-005 (cinematic hero) and WEB-006 (DNS cutover) remain deferred. Do not start WEB-003 on this branch.
 
 ## History
 
 - ORBWEB-001 (2026-09-09): production imagery from USGS Landsat Collection 2 Level-2, provenance pinned.
 - ORBWEB-001.1 (2026-09-09): on-image labels, right-aligned navigation with Solutions dropdown, EN/TR.
 - ORBWEB-002A (2026-09-10): GitHub publication to `baran-orbgss/website`.
-- WEB-001 (2026-09-15): vNext authority published; homepage shell, story sections, pilot ledger, company/trust, contact; navigation and hero renewed; validator extended.
+- WEB-001 (2026-09-15): vNext authority published; homepage shell, story sections, pilot ledger, company/trust, contact; navigation and hero renewed; validator extended. Accepted at `677bfa7`.
+- WEB-002 (2026-09-15): Science package MER-96 resolved; seven GEO-039 proof exports materialized and published with checksummed provenance; evidence layer switch; structure/geology data-gap state; validator now verifies proof provenance.

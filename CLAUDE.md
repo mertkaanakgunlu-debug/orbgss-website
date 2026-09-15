@@ -28,8 +28,10 @@ These are requirements, not suggestions:
 - Full-width real Earth-observation imagery dominates the page.
 - Hero text may overlay the first image; story panels after the hero are clean.
 - Story copy appears on dark full-width technical beams between images (index, title, one or two sentences, monospace descriptor). The homepage sequence is Hero → 01 Observe → 02 Terrain → 03 Evidence → 04 Structure → 05 Priority → 06 Geothermal → Pilot ledger → Company/Trust → Contact → Footer (WEB-001).
-- Each image carries its location and coordinates directly on the image, bottom-right, as bare monospace text (no card, box, band or background container). Story panels add a `Natural-color composite` line while they reuse gallery imagery. Sensor and acquisition date stay in the manifest and are not shown on the homepage. There is no separate metadata strip below any image.
-- Temporary story panels are marked `data-visual-slot` / `data-visual-status="temporary-gallery"` and must never be labelled as DEM, evidence, structural or priority outputs. WEB-002 owns the real visuals.
+- Each image carries its location and coordinates directly on the image, bottom-right, as bare monospace text (no card, box, band or background container). The third line names what the layer is: the accepted public label on a product-proof panel, `Natural-color composite` on gallery imagery. Sensor and acquisition date stay in the manifest and are not shown on the homepage. There is no separate metadata strip below any image. Caption tone (`data-label-tone`) is chosen per panel from the measured luminance under the caption, because the cartographic exports are pale where the satellite photography was dark.
+- Story panels 01–06 are product proof (WEB-002): real OrbGSS cartographic exports of the Kızıldere pilot AOI, materialized through the accepted GEO-039 Workbench export path and recorded in `assets/imagery/sources.json` under `web_002.proof_assets` with export id, master SHA-256 and per-derivative SHA-256. Never add a scientific visual without that record; the validator recomputes the checksums.
+- `04 Structure` is a deliberate data-gap panel with no image. No public-safe fault or lithology master is authorized, and the gap is score-invariant. Do not fill it.
+- The published score is `mvp_remote_sensing_priority_v1`, public label **Remote-Sensing Relative Priority — Experimental Baseline**: a deterministic 0–100 within-AOI screening surface. Never call it probability, Full Prospectivity, a reserve/resource estimate, discovery or drilling-success likelihood, or a cross-AOI calibrated score. Every proof panel carries its mandatory scientific warning as visible EN/TR copy.
 - Desktop navigation is right-aligned in exactly this order: Platform → Solutions (dropdown: Geothermal Exploration, Mineral Exploration, Environmental & Land Intelligence) → Pilot → Company → Contact → EN | TR. Every item resolves to a real anchor; no flags in the language switch.
 - The homepage is bilingual (English default, Turkish) via the lightweight client-side dictionary in `script.js`. Every new visible string needs both languages.
 - No `How it works` section.
@@ -53,13 +55,14 @@ If a requested change conflicts with these rules, stop and ask for explicit desi
 - Production imagery must have documented provenance and reuse rights.
 - Preferred source: USGS Landsat Collection 2 / OrbGSS-generated composites from public-domain Landsat source data.
 - Every production scene must be recorded in `assets/imagery/sources.json`.
+- Scientific/product-proof visuals are a separate class: they are OrbGSS cartographic exports produced only through the accepted GEO-039 Workbench export path from a persisted, accepted project. Never copy a raw provider raster into this repository, and never publish paid/closed/restricted data. Derivatives may be cropped and resized for presentation only — no re-colouring, re-projection, re-classification or value change.
 - Keep `IMAGERY_RIGHTS.md` current when a source changes.
 - Do not add stock-photo satellite imagery or AI-generated satellite imagery to the production site.
 - Remote NASA Earth Observatory URLs are prototype fallbacks, not the desired final production dependency.
 
 ## Branching
 
-No feature work on `main`. vNext tasks (WEB-001 → WEB-006) land on feature branches and are reviewed before merge. The cinematic hero is WEB-005; production DNS cutover is WEB-006.
+No feature work on `main`. vNext tasks (WEB-001 → WEB-006) land on feature branches and are reviewed before merge. WEB-001 is accepted at `677bfa7`; WEB-002 is REVIEW_READY on `feat/web-002-product-proof`. The cinematic hero is WEB-005; production DNS cutover is WEB-006.
 
 ## Deployment safety
 

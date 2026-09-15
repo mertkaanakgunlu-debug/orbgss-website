@@ -64,9 +64,43 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Production source products: `LC08_L2SP_152029_20200307_02_T1` and `LC08_L2SP_152028_20200307_02_T1` (path 152 rows 029 + 028, same overpass, mosaicked)
 - Reference page: https://earthobservatory.nasa.gov/images/146552/a-delta-oasis-in-southeastern-kazakhstan
 
-## WEB-001 placement (2026-09-15)
+## WEB-002 product-proof visuals (2026-09-15)
 
-The four scenes are reused as temporary gallery material across the vNext story panels: Crater Lake (hero, 03 Evidence), Ili Delta (01 Observe, 04 Structure), Chuquicamata (02 Terrain, 05 Priority), Yellowstone (06 Geothermal). Each story panel is labelled on-image as `Natural-color composite` and marked `data-visual-status="temporary-gallery"`; none is presented as a DEM, evidence raster, structural map or priority output. Placement is recorded per scene under `web_vnext_placement` in `assets/imagery/sources.json`. WEB-002 replaces the story slots with product-proof visuals, which must be recorded here with full provenance before use. Rights, source products and the USGS acknowledgement are unchanged.
+Story panels 01–06 no longer carry Landsat gallery material. They carry OrbGSS **cartographic
+exports** of the Kızıldere MVP pilot AOI, produced through the accepted GEO-039 Workbench export
+path from the persisted `kizildere_mvp_v2` project in
+`mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag
+`v1.0.0`). The authorizing publication boundary is `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`.
+
+What is served: OrbGSS-rendered map imagery only. No raw provider raster is redistributed, no
+third-party licence is restated or widened, and no paid, closed or restricted MTA data is
+included. The underlying evidence families and their providers (NASADEM elevation via
+`nasa_earthdata`; Landsat thermal via `usgs_m2m`; Sentinel-2 alteration proxies via `cdse_stac`)
+remain credited inside each rendered export, whose attribution line the export itself carries.
+The colour ramps are Fabio Crameri's Scientific colour maps v8.0 (MIT, doi:10.5281/zenodo.8035877),
+credited in the same export.
+
+Each website file under `assets/proof/` is a presentation derivative — a crop of the rendered map
+panel, resized to 1400 px and 800 px and encoded as WebP. Cropping and resizing only; no
+re-colouring, re-projection, re-classification or value change. For every asset,
+`assets/imagery/sources.json` (`web_002.proof_assets`) records the export id, the
+`export_manifest.json` pointer, the master PNG SHA-256 taken from that manifest, the crop box and
+a SHA-256 for each derivative shipped here. `scripts/validate_site.py` recomputes those derivative
+checksums on every run, so a changed file fails validation.
+
+Mandatory scientific warnings from the package are carried on the page as visible EN/TR copy next
+to each panel. `04 Structure` publishes no asset: no public-safe fault or lithology master is
+authorized, and that gap is score-invariant under ADR-0033 / GEO-037.
+
+## WEB-001 placement (2026-09-15, superseded by WEB-002)
+
+WEB-001 reused the four scenes as temporary gallery material across the story panels. WEB-002 has
+now replaced every story slot with product proof, so only Crater Lake remains placed, as the hero
+poster (`web_vnext_placement.status: "hero-poster"`; WEB-005 replaces the hero visual). Yellowstone,
+Chuquicamata and the Ili Delta are marked `retired-from-homepage`: they keep their files, full
+provenance and reuse rights in `assets/imagery/sources.json` and remain available for later use,
+but nothing on the homepage references them. Rights, source products and the USGS acknowledgement
+are unchanged, and the acknowledgement stays in the footer while the hero uses Landsat imagery.
 
 ## Resolution note
 
