@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "phase": "WEB-HERO-001A",
+  "aspect_ratio": {
+    "width": 16,
+    "height": 9
+  },
+  "device_preference": [
+    "OPTIX",
+    "CUDA",
+    "HIP",
+    "ONEAPI",
+    "METAL"
+  ],
+  "allow_cpu_fallback": true,
+  "engine_aliases": {
+    "EEVEE": [
+      "BLENDER_EEVEE_NEXT",
+      "BLENDER_EEVEE"
+    ],
+    "CYCLES": [
+      "CYCLES"
+    ]
+  },
+  "profiles": {
+    "preview": {
+      "role": "fast_iteration",
+      "engine": "EEVEE",
+      "resolution_x": 1280,
+      "resolution_y": 720,
+      "resolution_percentage": 100,
+      "samples": 32,
+      "denoise": false,
+      "file_format": "PNG",
+      "color_depth": "8",
+      "compression": 20,
+      "prefer_gpu": true,
+      "publish_evidence": false
+    },
+    "master": {
+      "role": "high_quality",
+      "engine": "CYCLES",
+      "resolution_x": 1920,
+      "resolution_y": 1080,
+      "resolution_percentage": 100,
+      "samples": 256,
+      "adaptive_threshold": 0.01,
+      "max_bounces": 8,
+      "denoise": true,
+      "denoiser_preference": [
+        "OPTIX",
+        "OPENIMAGEDENOISE"
+      ],
+      "file_format": "PNG",
+      "color_depth": "16",
+      "compression": 15,
+      "prefer_gpu": true,
+      "publish_evidence": false
+    },
+    "evidence_still": {
+      "role": "bounded_evidence",
+      "engine": "CYCLES",
+      "resolution_x": 1280,
+      "resolution_y": 720,
+      "resolution_percentage": 100,
+      "samples": 256,
+      "adaptive_threshold": 0.01,
+      "max_bounces": 8,
+      "denoise": true,
+      "denoiser_preference": [
+        "OPTIX",
+        "OPENIMAGEDENOISE"
+      ],
+      "file_format": "PNG",
+      "color_depth": "8",
+      "compression": 25,
+      "prefer_gpu": true,
+      "publish_evidence": true,
+      "note": "Same Cycles path as the master profile at reviewable size and 8-bit depth, so a review still can be committed without putting a large binary in source control. Masters stay 16-bit and out of Git."
+    }
+  },
+  "default_preview_profile": "preview",
+  "default_still_profile": "master",
+  "benchmark_profiles": [
+    "preview",
+    "master",
+    "evidence_still"
+  ]
+}

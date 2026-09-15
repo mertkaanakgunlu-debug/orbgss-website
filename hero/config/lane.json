@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "phase": "WEB-HERO-001A",
+  "lane": "WEB-HERO-001",
+  "branch": "feat/web-hero-001-predata-scene",
+  "baseline_commit": "677bfa7672ac18c2c808ddaaf235ff12863de443",
+  "data_state": "pre_data",
+  "write_surface": {
+    "allowed_prefixes": ["hero/"],
+    "allowed_bounded_files": [
+      "STATUS.md",
+      "CLAUDE.md",
+      "CHANGELOG.md",
+      "CLAUDE_SESSION_BOOTSTRAP.txt",
+      ".gitignore",
+      "docs/WEB_HERO_001_AUTHORITY.md"
+    ]
+  },
+  "protected_paths": [
+    "index.html",
+    "styles.css",
+    "script.js",
+    "assets/imagery",
+    "vercel.json",
+    "sitemap.xml",
+    "robots.txt",
+    "site.webmanifest",
+    "404.html"
+  ],
+  "note": "The hero lane is isolated. protected_paths must stay byte-identical to baseline_commit for the whole of WEB-HERO-001; WEB-005 is the only authorized integration gate."
+}

@@ -4,7 +4,7 @@
 **Branch:** `feat/web-hero-001-predata-scene`  
 **Baseline:** accepted canonical `main@677bfa7672ac18c2c808ddaaf235ff12863de443`  
 **Authority-publication HEAD before implementation:** `0e572e9cfd1709a4e3eb6d3ca110390c79cc6668`  
-**Stage:** `WEB-HERO-001A — READY_FOR_CLAUDE_DESKTOP_START`  
+**Stage:** `WEB-HERO-001A — REVIEW_READY` (production scaffold and render benchmark implemented)  
 **Tracking:** parent `MER-97`; active phase `MER-98`  
 **Execution channel:** Claude Code Desktop
 
@@ -23,7 +23,38 @@ All other still-valid website, rights, claim, deployment and safety rules remain
 
 ## Active exact task
 
-`tasks/WEB-HERO-001A_PRODUCTION_SCAFFOLD.md`
+`tasks/WEB-HERO-001A_PRODUCTION_SCAFFOLD.md` — implemented, `REVIEW_READY`, awaiting review.
+
+`WEB-HERO-001B` may start once this scaffold and its benchmark evidence are accepted.
+
+## WEB-HERO-001A outcome
+
+The `hero/` workspace is a reproducible Blender production environment. Configuration under
+`hero/config/` is the source of scene truth: `lane.json` pins the lane boundary and protected
+public-site paths, `scene.json` holds the palette, camera defaults, scene definitions and the AOI
+data-injection interface, and `render_profiles.json` holds the render profiles, the 16:9 aspect
+contract and the GPU preference order.
+
+Blender-Python entrypoints under `hero/scripts/` build a scene from configuration, render a fast
+preview, render a bounded high-quality still, run the whole benchmark in one session and record the
+environment. `validate_hero.py` runs without Blender and is the workspace contract checker.
+
+Measured on this machine — Blender 4.5.10 LTS, embedded Python 3.11.11, Cycles on OptiX with an
+NVIDIA GeForce RTX 4070 Laptop GPU, warm shader cache:
+
+| profile | engine | resolution | samples | device | wall clock |
+| --- | --- | --- | --- | --- | --- |
+| `preview` | EEVEE Next | 1280×720 | 32 | Blender GPU context | 1.68 s |
+| `master` | Cycles | 1920×1080 | 256 + OptiX denoise | OptiX / RTX 4070 | 4.72 s |
+| `evidence_still` | Cycles | 1280×720, 8-bit | 256 + OptiX denoise | OptiX / RTX 4070 | 1.97 s |
+
+The benchmark is production-planning data on a neutral test scene, not a quality target and not
+hero art direction. The first EEVEE render of a cold session cost about 31 s in shader compilation;
+steady-state iteration is the number above.
+
+`hero/assets/manifest.json` declares the rights policy and an empty asset list: the benchmark scene
+is fully procedural, so WEB-HERO-001A introduces no external asset. No scientific layer exists in
+this lane, and the validator fails if one is declared while the lane is pre-data.
 
 Do not implement 001B/001C/001D before the predecessor output required by their contracts exists and the task progression condition is satisfied.
 

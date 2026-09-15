@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.6.1-web-hero-001a-scaffold — 2026-09-15 (WEB-HERO-001A, branch `feat/web-hero-001-predata-scene`)
+
+- established the isolated Blender production workspace under `hero/`: configuration-driven scene and render truth, Blender-Python entrypoints, a rights manifest and a workspace validator;
+- `hero/config/` holds the lane boundary and pinned baseline (`lane.json`), the palette, camera defaults, scene definitions and AOI data-injection interface (`scene.json`), and the render profiles, 16:9 aspect contract and GPU preference order (`render_profiles.json`);
+- three render profiles: `preview` (EEVEE, fast iteration), `master` (Cycles 1920×1080, 256 samples, OptiX denoise, 16-bit, never committed) and `evidence_still` (same Cycles path at reviewable 8-bit size, committed as bounded evidence);
+- truthful render-device selection: walks the configured preference order, requires a backend to actually have a device behind it, falls back to CPU gracefully and records what was used rather than what was requested;
+- `render.engine`, `compute_device_type` and `cycles.denoiser` are dynamic Blender enums that report nothing through `bl_rna`, so they are probed by assignment; reading `enum_items` silently hid Cycles and every GPU backend;
+- `hero/scripts/validate_hero.py` runs without Blender and fails on a missing scaffold, unparseable or inconsistent configuration, a broken aspect/profile contract, an invalid or unlicensed asset entry, a scientific layer declared while pre-data, generated output promoted to source authority, or drift in the protected public-site paths; 68 checks, verified against five deliberate negative cases;
+- benchmarked on Blender 4.5.10 LTS with an NVIDIA GeForce RTX 4070 Laptop GPU: preview 1.68 s, master 4.72 s, evidence still 1.97 s (warm shader cache); evidence in `hero/evidence/`;
+- no external asset introduced, no scientific layer, no public-site, imagery, deployment or DNS change; the site validator still passes at the WEB-001 baseline.
+
 ## v0.6.0-web-001-vnext-foundation — 2026-09-15 (WEB-001, branch `feat/web-001-vnext-foundation`)
 
 - published the repository-local vNext authority (`docs/WEB_VNEXT_AUTHORITY.md`) and the WEB-001 contract (`tasks/WEB-001_VNEXT_FOUNDATION.md`) before feature code;

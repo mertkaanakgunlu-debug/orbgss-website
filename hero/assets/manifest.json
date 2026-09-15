@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "phase": "WEB-HERO-001A",
+  "policy": {
+    "allowed_license_bases": [
+      "public-domain",
+      "us-government-public-domain",
+      "cc0",
+      "cc-by",
+      "cc-by-sa",
+      "orbgss-original"
+    ],
+    "required_fields": [
+      "id",
+      "role",
+      "local_path",
+      "source_url",
+      "publisher",
+      "license",
+      "license_url",
+      "rights_status",
+      "sha256",
+      "notes"
+    ],
+    "rights_status_values": ["cleared", "pending", "rejected"],
+    "publishable_rights_status": ["cleared"],
+    "forbidden_layer_classes": [
+      "dem",
+      "elevation",
+      "thermal",
+      "alteration",
+      "fault",
+      "structure",
+      "geology",
+      "lithology",
+      "prospectivity",
+      "score",
+      "priority"
+    ],
+    "paid_or_unclear_rights": "human_gate_required",
+    "large_source_policy": "Materialize into hero/assets/source/ (ignored) via a recorded fetch; never commit large provider rasters or render sequences."
+  },
+  "assets": [],
+  "notes": "WEB-HERO-001A ships a fully procedural benchmark scene and therefore declares no external asset. Any asset introduced by a later phase must be a complete entry satisfying policy.required_fields, with rights_status 'cleared' before it may be rendered into published evidence."
+}

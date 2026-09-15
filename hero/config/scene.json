@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "phase": "WEB-HERO-001A",
+  "data_state": "pre_data",
+  "color_space_note": "All colour triplets are linear scene-referred RGB, not sRGB hex.",
+  "palette": {
+    "space_deep": [
+      0.0035,
+      0.007,
+      0.014
+    ],
+    "space_horizon": [
+      0.012,
+      0.026,
+      0.044
+    ],
+    "atmosphere_cyan": [
+      0.07,
+      0.42,
+      0.62
+    ],
+    "scan_ice_blue": [
+      0.26,
+      0.76,
+      1.0
+    ],
+    "aoi_teal": [
+      0.045,
+      0.52,
+      0.47
+    ],
+    "neutral_surface": [
+      0.16,
+      0.175,
+      0.195
+    ],
+    "neutral_light": [
+      1.0,
+      0.98,
+      0.95
+    ]
+  },
+  "world": {
+    "background_color_ref": "space_deep",
+    "background_strength": 1.0
+  },
+  "camera_defaults": {
+    "type": "PERSP",
+    "focal_length_mm": 50.0,
+    "sensor_width_mm": 36.0,
+    "clip_start": 0.01,
+    "clip_end": 100000.0
+  },
+  "view_transform": "AgX",
+  "look": "None",
+  "aoi_injection_interface": {
+    "purpose": "Stable configuration key through which WEB-HERO-001C injects accepted AOI geometry and, at WEB-005, accepted rendered scientific layers. Consumers must read AOI geometry only from here.",
+    "classification": "design_fixture",
+    "geometry_source": "none_in_phase_a",
+    "center_lat_deg": 0.0,
+    "center_lon_deg": 0.0,
+    "span_km": 36.0,
+    "corner_order": [
+      "nw",
+      "ne",
+      "se",
+      "sw"
+    ],
+    "surface_offset_m": 250.0,
+    "layer_slots": [],
+    "note": "Phase A declares the interface only and renders no AOI geometry. Values here are neutral design placeholders and carry no measurement meaning."
+  },
+  "scenes": {
+    "benchmark_neutral": {
+      "description": "Minimal neutral pipeline benchmark: camera, primitive geometry, two lights, dark world. Lit to sit in the restrained dark/high-dynamic-range regime the hero scene will actually render in, so the timing is representative. Exists to measure render throughput, not to express hero art direction.",
+      "role": "pipeline_benchmark",
+      "frame": 1,
+      "camera": {
+        "location": [
+          6.2,
+          -6.8,
+          4.4
+        ],
+        "look_at": [
+          0.0,
+          0.0,
+          0.9
+        ],
+        "focal_length_mm": 55.0
+      },
+      "objects": [
+        {
+          "id": "benchmark_sphere",
+          "type": "uv_sphere",
+          "location": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "radius": 1.0,
+          "segments": 96,
+          "rings": 48,
+          "shade_smooth": true,
+          "material": "neutral_dielectric"
+        },
+        {
+          "id": "benchmark_ground",
+          "type": "plane",
+          "location": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "size": 24.0,
+          "shade_smooth": false,
+          "material": "neutral_floor"
+        },
+        {
+          "id": "benchmark_marker",
+          "type": "cube",
+          "location": [
+            2.45,
+            0.55,
+            0.35
+          ],
+          "size": 0.7,
+          "rotation_euler_deg": [
+            0.0,
+            0.0,
+            24.0
+          ],
+          "shade_smooth": false,
+          "material": "accent_emissive"
+        }
+      ],
+      "materials": {
+        "neutral_dielectric": {
+          "base_color_ref": "neutral_surface",
+          "roughness": 0.28,
+          "metallic": 0.0
+        },
+        "neutral_floor": {
+          "base_color_ref": "space_horizon",
+          "roughness": 0.62,
+          "metallic": 0.0
+        },
+        "accent_emissive": {
+          "base_color_ref": "aoi_teal",
+          "roughness": 0.35,
+          "metallic": 0.15,
+          "emission_color_ref": "scan_ice_blue",
+          "emission_strength": 5.0
+        }
+      },
+      "lights": [
+        {
+          "id": "key",
+          "type": "AREA",
+          "location": [
+            4.5,
+            -4.0,
+            6.0
+          ],
+          "look_at": [
+            0.0,
+            0.0,
+            0.9
+          ],
+          "energy": 240.0,
+          "size": 4.0,
+          "color_ref": "neutral_light"
+        },
+        {
+          "id": "rim",
+          "type": "SUN",
+          "location": [
+            -6.0,
+            5.0,
+            4.0
+          ],
+          "look_at": [
+            0.0,
+            0.0,
+            0.9
+          ],
+          "energy": 1.1,
+          "angle_deg": 3.0,
+          "color_ref": "atmosphere_cyan"
+        }
+      ]
+    }
+  }
+}
