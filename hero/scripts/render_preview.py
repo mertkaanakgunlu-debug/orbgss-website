@@ -25,12 +25,14 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Render a fast preview still.")
     parser.add_argument("--scene", default="benchmark_neutral")
     parser.add_argument("--profile", default=default_profile)
+    parser.add_argument("--frame", type=int, default=None)
     parser.add_argument("--out", default=None)
     parser.add_argument("--record", default=None, help="write the render record as JSON")
     args = parser.parse_args(hc.argv_after_double_dash())
 
-    out = Path(args.out) if args.out else hc.RENDERS_DIR / "preview" / (args.scene + ".png")
-    record = render_core.render_still(args.scene, args.profile, out)
+    suffix = "" if args.frame is None else ("_f" + str(args.frame))
+    out = Path(args.out) if args.out else hc.RENDERS_DIR / "preview" / (args.scene + suffix + ".png")
+    record = render_core.render_still(args.scene, args.profile, out, frame=args.frame)
     print(json.dumps(record, indent=2))
 
     if args.record:

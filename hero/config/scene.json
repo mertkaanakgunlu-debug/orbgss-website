@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "phase": "WEB-HERO-001A",
+  "phase": "WEB-HERO-001B",
   "data_state": "pre_data",
   "color_space_note": "All colour triplets are linear scene-referred RGB, not sRGB hex.",
   "palette": {
@@ -38,6 +38,16 @@
       1.0,
       0.98,
       0.95
+    ],
+    "satellite_hull": [
+      0.135,
+      0.14,
+      0.155
+    ],
+    "satellite_panel": [
+      0.018,
+      0.045,
+      0.105
     ]
   },
   "world": {
@@ -53,6 +63,16 @@
   },
   "view_transform": "AgX",
   "look": "None",
+  "world_coordinate_convention": {
+    "purpose": "Stable world-space convention every WEB-HERO-001 phase must share, so Phase C/D can extend the camera path and inject AOI geometry without a scene reset.",
+    "units": "1 Blender unit (BU) = 1000 km",
+    "origin": "Earth centre at world origin (0, 0, 0)",
+    "up_axis": "world +Z is Earth's rotation axis (geographic north)",
+    "reference_orientation": "At frame 1 of hero_earth_orbit, geographic longitude 0 deg / latitude 0 deg sits on world +X. Earth spins about +Z (see the earth object's rotation_keyframes). Longitude increases counter-clockwise viewed from +Z, matching standard right-handed spherical-to-Cartesian conversion.",
+    "earth_radius_km": 6371.0,
+    "earth_radius_bu": 6.371,
+    "note": "WEB-HERO-001C/D must place AOI geometry, scan beams and any further camera moves in this same frame/scale/orientation; do not introduce a second convention."
+  },
   "aoi_injection_interface": {
     "purpose": "Stable configuration key through which WEB-HERO-001C injects accepted AOI geometry and, at WEB-005, accepted rendered scientific layers. Consumers must read AOI geometry only from here.",
     "classification": "design_fixture",
@@ -68,7 +88,7 @@
     ],
     "surface_offset_m": 250.0,
     "layer_slots": [],
-    "note": "Phase A declares the interface only and renders no AOI geometry. Values here are neutral design placeholders and carry no measurement meaning."
+    "note": "Neither Phase A nor Phase B renders AOI geometry. Values here are neutral design placeholders and carry no measurement meaning."
   },
   "scenes": {
     "benchmark_neutral": {
@@ -184,6 +204,156 @@
             0.9
           ],
           "energy": 1.1,
+          "angle_deg": 3.0,
+          "color_ref": "atmosphere_cyan"
+        }
+      ]
+    },
+    "hero_earth_orbit": {
+      "description": "WEB-HERO-001B establishing sequence: true 3D Earth with day/night material and atmosphere shell, a procedurally-modelled Earth-observation satellite entering along a plausible orbital arc, deep-space starfield background. Pre-data: no AOI or scientific layer is rendered here.",
+      "role": "hero_establishing_sequence",
+      "frame": 1,
+      "lighting_reference": {
+        "primary_light_id": "sun"
+      },
+      "world_overrides": {
+        "stars": {
+          "enabled": true,
+          "scale": 260.0,
+          "randomness": 1.0,
+          "point_size": 0.045,
+          "strength": 5.0,
+          "color_ref": "neutral_light"
+        }
+      },
+      "animation": {
+        "frame_start": 1,
+        "frame_end": 120,
+        "frame_rate": 24,
+        "representative_frames": {
+          "establish": 1,
+          "satellite_entrance": 60,
+          "pre_acquisition": 120
+        }
+      },
+      "camera": {
+        "keyframes": [
+          {
+            "frame": 1,
+            "location": [2.0, -46.0, 9.0],
+            "look_at": [-7.0, 0.0, 1.0],
+            "focal_length_mm": 28.0
+          },
+          {
+            "frame": 60,
+            "location": [2.5, -30.0, 7.0],
+            "look_at": [-4.5, 0.0, 0.8],
+            "focal_length_mm": 35.0
+          },
+          {
+            "frame": 120,
+            "location": [3.2, -21.5, 6.0],
+            "look_at": [-4.0, 0.0, 0.7],
+            "focal_length_mm": 33.0
+          }
+        ]
+      },
+      "objects": [
+        {
+          "id": "earth",
+          "type": "uv_sphere",
+          "location": [0.0, 0.0, 0.0],
+          "radius": 6.371,
+          "segments": 256,
+          "rings": 128,
+          "shade_smooth": true,
+          "material": "earth_surface",
+          "rotation_keyframes": [
+            {"frame": 1, "rotation_euler_deg": [0.0, 0.0, 0.0]},
+            {"frame": 120, "rotation_euler_deg": [0.0, 0.0, 3.5]}
+          ]
+        },
+        {
+          "id": "atmosphere",
+          "type": "uv_sphere",
+          "location": [0.0, 0.0, 0.0],
+          "radius": 6.58,
+          "segments": 128,
+          "rings": 64,
+          "shade_smooth": true,
+          "material": "atmosphere_shell"
+        },
+        {
+          "id": "satellite",
+          "type": "satellite",
+          "scale": 1.0,
+          "bus_size": [0.22, 0.14, 0.14],
+          "panel_size": [0.62, 0.17],
+          "dish_radius": 0.11,
+          "bus_material": "satellite_hull",
+          "panel_material": "satellite_panel",
+          "dish_material": "satellite_hull",
+          "track_target_id": "earth",
+          "location_keyframes": [
+            {"frame": 1, "location": [-9.5, -6.0, 3.5]},
+            {"frame": 60, "location": [-4.5, -15.0, 5.0]},
+            {"frame": 120, "location": [-3.2, -9.5, 4.2]}
+          ]
+        }
+      ],
+      "materials": {
+        "earth_surface": {
+          "type": "earth_day_night",
+          "day_texture": "land_ocean_ice_cloud_2048.jpg",
+          "night_texture": "dnb_land_ocean_ice.2012.3600x1800.jpg",
+          "roughness": 0.65,
+          "night_emission_strength": 1.4,
+          "texture_rotation_deg": 115.0,
+          "terminator_night_edge": -0.18,
+          "terminator_day_edge": 0.12
+        },
+        "atmosphere_shell": {
+          "type": "atmosphere_shell",
+          "rim_color_ref": "atmosphere_cyan",
+          "strength": 2.4,
+          "fresnel_ior": 1.15,
+          "falloff_min": 0.25,
+          "falloff_max": 1.0
+        },
+        "satellite_hull": {
+          "base_color_ref": "satellite_hull",
+          "roughness": 0.32,
+          "metallic": 0.75,
+          "emission_color_ref": "scan_ice_blue",
+          "emission_strength": 0.25
+        },
+        "satellite_panel": {
+          "type": "solar_panel",
+          "base_color_ref": "satellite_panel",
+          "grid_color_ref": "scan_ice_blue",
+          "roughness": 0.2,
+          "metallic": 0.55,
+          "cell_scale": 7.0,
+          "grid_line_width": 0.015,
+          "grid_emission_strength": 0.5
+        }
+      },
+      "lights": [
+        {
+          "id": "sun",
+          "type": "SUN",
+          "location": [-30.0, -36.0, 28.0],
+          "look_at": [0.0, 0.0, 0.0],
+          "energy": 4.5,
+          "angle_deg": 0.53,
+          "color_ref": "neutral_light"
+        },
+        {
+          "id": "fill_rim",
+          "type": "SUN",
+          "location": [17.0, 20.0, -16.0],
+          "look_at": [0.0, 0.0, 0.0],
+          "energy": 0.4,
           "angle_deg": 3.0,
           "color_ref": "atmosphere_cyan"
         }

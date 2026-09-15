@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.7.0-web-hero-001b-earth-satellite — 2026-09-15 (WEB-HERO-001B, branch `feat/web-hero-001-predata-scene`)
+
+- accepted the WEB-HERO-001A production scaffold and benchmark at `81a0b89`; implemented WEB-HERO-001B on the same branch;
+- built the `hero_earth_orbit` scene: true 3D Earth (256×128-segment sphere) with a real day/night material, a Fresnel atmosphere shell, a procedural Voronoi starfield, and a procedurally-modelled Earth-observation satellite (bus, twin solar panels, nadir dish, instrument boom) on a keyframed orbital-entrance path;
+- Earth day/night material blends a NASA Blue Marble day/cloud composite against a NASA Black Marble night-lights composite via a `dot(normal, fixed sun direction)` terminator factor computed at shader-build time from the scene's authored sun light — independent of the texture's own longitude placement, so lighting stays stable regardless of how the map is rotated into place;
+- longitude placement uses a Mapping-node U-axis *translation* (Repeat wrap), not a 2D UV rotation — an initial rotation-based approach silently folded the map near the seam and produced unpredictable geography; fixed and documented in `build_scene.py`;
+- satellite is fully procedural (no external geometry asset); a `TRACK_TO` constraint keeps it nadir-pointing at Earth across the whole keyframed path, so no per-frame orientation math is needed as the path is extended in later phases;
+- `scene.json` gained a shared `world_coordinate_convention` (1 BU = 1000 km, Earth centred at the origin, +Z = rotation axis, longitude 0°/latitude 0° on +X at frame 1) for WEB-HERO-001C/D to build on without a scene reset; per-scene `world_overrides` (starfield) so the Phase A benchmark scene renders unchanged; camera/object keyframe schemas; a `satellite` object type;
+- two NASA public-domain Earth composites recorded in `hero/assets/manifest.json` with source URL, publisher, license and SHA-256 (`land_ocean_ice_cloud_2048.jpg`, `dnb_land_ocean_ice.2012.3600x1800.jpg`); no other external asset;
+- three representative Cycles evidence stills committed under `hero/evidence/` (establish / satellite-entrance / pre-acquisition) plus a 7-frame low-cost EEVEE preview sequence (local, not committed) showing the full rotation/entrance arc;
+- no AOI, scan geometry or scientific layer introduced; Phase A validator (81 checks) and benchmark path re-verified green; no public-site, imagery, deployment or DNS change.
+
 ## v0.6.1-web-hero-001a-scaffold — 2026-09-15 (WEB-HERO-001A, branch `feat/web-hero-001-predata-scene`)
 
 - established the isolated Blender production workspace under `hero/`: configuration-driven scene and render truth, Blender-Python entrypoints, a rights manifest and a workspace validator;

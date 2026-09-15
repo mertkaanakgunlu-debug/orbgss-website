@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "phase": "WEB-HERO-001A",
+  "phase": "WEB-HERO-001B",
   "policy": {
     "allowed_license_bases": [
       "public-domain",
@@ -40,6 +40,31 @@
     "paid_or_unclear_rights": "human_gate_required",
     "large_source_policy": "Materialize into hero/assets/source/ (ignored) via a recorded fetch; never commit large provider rasters or render sequences."
   },
-  "assets": [],
-  "notes": "WEB-HERO-001A ships a fully procedural benchmark scene and therefore declares no external asset. Any asset introduced by a later phase must be a complete entry satisfying policy.required_fields, with rights_status 'cleared' before it may be rendered into published evidence."
+  "assets": [
+    {
+      "id": "earth_day_composite",
+      "role": "earth_material_albedo",
+      "local_path": "hero/assets/source/land_ocean_ice_cloud_2048.jpg",
+      "source_url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57735/land_ocean_ice_cloud_2048.jpg",
+      "publisher": "NASA Earth Observatory (Visible Earth, Blue Marble Next Generation series)",
+      "license": "us-government-public-domain",
+      "license_url": "https://earthobservatory.nasa.gov/image-use-policy",
+      "rights_status": "cleared",
+      "sha256": "fb67ac030214c1891994c8f976e7f6c9cd5b0f21586aba8567250781a4fe708e",
+      "notes": "Whole-Earth true-color composite (land, ocean, sea ice, clouds baked in), 2048x1024 equirectangular. Used as the day-side albedo/base-color input and cloud registration reference for the Earth material. Not a measured scientific layer; carries no forbidden layer class. Attribution: NASA Earth Observatory."
+    },
+    {
+      "id": "earth_night_composite",
+      "role": "earth_material_emission",
+      "local_path": "hero/assets/source/dnb_land_ocean_ice.2012.3600x1800.jpg",
+      "source_url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/79000/79765/dnb_land_ocean_ice.2012.3600x1800.jpg",
+      "publisher": "NASA Earth Observatory (Suomi NPP VIIRS Day-Night Band, Earth at Night 2012 / Black Marble series)",
+      "license": "us-government-public-domain",
+      "license_url": "https://earthobservatory.nasa.gov/image-use-policy",
+      "rights_status": "cleared",
+      "sha256": "373e5a08c9f378a2ce6320214a613148e4b1e3946b3f39a516c9093b76cb7124",
+      "notes": "Whole-Earth city-lights composite, 3600x1800 equirectangular. Used as the night-side emission input, blended in only on the unlit hemisphere via a scripted terminator factor. Not a measured scientific layer; carries no forbidden layer class. Attribution: NASA Earth Observatory."
+    }
+  ],
+  "notes": "WEB-HERO-001A shipped a fully procedural benchmark scene with no external asset. WEB-HERO-001B introduces the two Earth composites above for the day/night material; both are NASA public-domain whole-Earth imagery (not measured science-layer output), fetched directly from eoimages.gsfc.nasa.gov and checksummed. The satellite, atmosphere, and starfield in WEB-HERO-001B remain fully procedural and introduce no further external asset."
 }

@@ -28,6 +28,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Render a high-quality still.")
     parser.add_argument("--scene", default="benchmark_neutral")
     parser.add_argument("--profile", default=default_profile)
+    parser.add_argument("--frame", type=int, default=None)
     parser.add_argument("--out", default=None)
     parser.add_argument(
         "--evidence",
@@ -37,14 +38,15 @@ def main() -> None:
     parser.add_argument("--record", default=None, help="write the render record as JSON")
     args = parser.parse_args(hc.argv_after_double_dash())
 
+    suffix = "" if args.frame is None else ("_f" + str(args.frame))
     if args.out:
         out = Path(args.out)
     elif args.evidence:
-        out = hc.EVIDENCE_DIR / (args.scene + "_" + args.profile + ".png")
+        out = hc.EVIDENCE_DIR / (args.scene + "_" + args.profile + suffix + ".png")
     else:
-        out = hc.RENDERS_DIR / "still" / (args.scene + "_" + args.profile + ".png")
+        out = hc.RENDERS_DIR / "still" / (args.scene + "_" + args.profile + suffix + ".png")
 
-    record = render_core.render_still(args.scene, args.profile, out)
+    record = render_core.render_still(args.scene, args.profile, out, frame=args.frame)
     print(json.dumps(record, indent=2))
 
     if args.record:

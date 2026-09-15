@@ -241,12 +241,12 @@ def apply_profile(profile_name: str, render_config=None) -> dict:
     return applied
 
 
-def render_still(scene_id: str, profile_name: str, output_path: Path) -> dict:
+def render_still(scene_id: str, profile_name: str, output_path: Path, frame: int | None = None) -> dict:
     """Build, configure and render one still; return a full evidence record."""
     scene_config = hc.load_scene_config()
     render_config = hc.load_render_config()
 
-    build_scene.build(scene_id, scene_config)
+    build_scene.build(scene_id, scene_config, frame=frame)
     applied = apply_profile(profile_name, render_config)
 
     output_path = Path(output_path)
@@ -267,6 +267,7 @@ def render_still(scene_id: str, profile_name: str, output_path: Path) -> dict:
     record.update(
         {
             "scene": scene_id,
+            "frame": bpy.context.scene.frame_current,
             "wall_clock_seconds": round(elapsed, 3),
             "output_path": hc.relpath(written),
             "output_exists": written.exists(),

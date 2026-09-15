@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "phase": "WEB-HERO-001A",
+  "phase": "WEB-HERO-001B",
   "lane": "WEB-HERO-001",
   "branch": "feat/web-hero-001-predata-scene",
   "baseline_commit": "677bfa7672ac18c2c808ddaaf235ff12863de443",

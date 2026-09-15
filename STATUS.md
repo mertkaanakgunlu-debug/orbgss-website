@@ -4,8 +4,8 @@
 **Branch:** `feat/web-hero-001-predata-scene`  
 **Baseline:** accepted canonical `main@677bfa7672ac18c2c808ddaaf235ff12863de443`  
 **Authority-publication HEAD before implementation:** `0e572e9cfd1709a4e3eb6d3ca110390c79cc6668`  
-**Stage:** `WEB-HERO-001A — REVIEW_READY` (production scaffold and render benchmark implemented)  
-**Tracking:** parent `MER-97`; active phase `MER-98`  
+**Stage:** `WEB-HERO-001B — REVIEW_READY` (Earth/space/satellite/orbit cinematography implemented; WEB-HERO-001A accepted)  
+**Tracking:** parent `MER-97`; active phase `MER-99`  
 **Execution channel:** Claude Code Desktop
 
 ## Branch-specific authority override
@@ -23,9 +23,11 @@ All other still-valid website, rights, claim, deployment and safety rules remain
 
 ## Active exact task
 
-`tasks/WEB-HERO-001A_PRODUCTION_SCAFFOLD.md` — implemented, `REVIEW_READY`, awaiting review.
+`tasks/WEB-HERO-001A_PRODUCTION_SCAFFOLD.md` — **ACCEPTED** at `81a0b892a355a22d24c78193506ea138de1db017`.
 
-`WEB-HERO-001B` may start once this scaffold and its benchmark evidence are accepted.
+`tasks/WEB-HERO-001B_EARTH_SATELLITE_CINEMATOGRAPHY.md` — implemented, `REVIEW_READY`, awaiting review.
+
+`WEB-HERO-001C` may start once this phase's accepted scene state is confirmed.
 
 ## WEB-HERO-001A outcome
 
@@ -56,7 +58,38 @@ steady-state iteration is the number above.
 is fully procedural, so WEB-HERO-001A introduces no external asset. No scientific layer exists in
 this lane, and the validator fails if one is declared while the lane is pre-data.
 
-Do not implement 001B/001C/001D before the predecessor output required by their contracts exists and the task progression condition is satisfied.
+Do not implement 001C/001D before the predecessor output required by their contracts exists and the task progression condition is satisfied.
+
+## WEB-HERO-001B outcome
+
+The `hero_earth_orbit` scene (`hero/config/scene.json`) is a true-3D-geometry establishing sequence:
+Earth (a 256×128-segment sphere), a Fresnel-driven atmosphere shell, a procedural Voronoi
+starfield, and a procedurally-modelled Earth-observation satellite (bus, twin solar panels, a
+nadir dish, an instrument boom) on a keyframed orbital-entrance path. `build_scene.py` gained
+image-textured materials, a compound `satellite` object type, and object/camera keyframe
+animation, all still declarative in `scene.json`.
+
+The Earth material blends a NASA Blue Marble day/cloud composite against a NASA Black Marble
+night-lights composite through a terminator factor — `dot(normal, fixed_sun_direction)` computed
+once at shader-build time from the scene's own authored sun light — so lighting is stable
+regardless of texture placement. Longitude placement uses a Mapping-node **translation** on the
+U axis (Repeat wrap); an initial rotation-based approach silently folded the map near the UV seam
+and was replaced.
+
+A `world_coordinate_convention` block in `scene.json` is now the shared frame for every later
+phase: 1 Blender unit = 1000 km, Earth centred at the world origin, world +Z is Earth's rotation
+axis, and longitude 0°/latitude 0° sits on +X at frame 1 of `hero_earth_orbit`. The satellite's
+`TRACK_TO` constraint keeps it nadir-pointing at Earth across the whole path without per-frame
+orientation math, so Phase C/D can extend the same camera/object path without a scene reset.
+
+Two NASA public-domain Earth composites are recorded in `hero/assets/manifest.json` with source
+URL, publisher, license and SHA-256 (`land_ocean_ice_cloud_2048.jpg`,
+`dnb_land_ocean_ice.2012.3600x1800.jpg`); the satellite, atmosphere and starfield remain fully
+procedural and introduce no further external asset. Three representative Cycles stills
+(establish / satellite-entrance / pre-acquisition) are committed under `hero/evidence/`.
+
+No AOI footprint, scan geometry or scientific layer was introduced. The Phase A benchmark scene
+and validator (81 checks) were re-run clean after these changes.
 
 Phase graph:
 
