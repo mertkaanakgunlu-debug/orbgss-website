@@ -6,7 +6,36 @@
 **Reference/upstream only:** `baran-orbgss/website`  
 **Accepted baseline:** `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4` (WEB-003 accepted/published; accepted WEB-003 implementation head `3670d43bece4ffba657a3d9645cbea20c7e698bf`).  
 **Branch:** `feat/web-004-preview-hardening`  
-**Product state:** `IMPLEMENTED — REVIEW_READY` (CTO start approval given; implemented on `feat/web-004-preview-hardening`. Evidence: `docs/WEB-004_HARDENING_EVIDENCE.md`. Two items routed to Product with the review: homepage LCP 3.2 s against the 2.5 s target, and the score-legend `image-aspect-ratio` deviation.)
+**Product state:** `IMPLEMENTED — REVIEW_READY; Product decisions resolved on MER-92` (CTO start approval given; implemented on `feat/web-004-preview-hardening`. Evidence: `docs/WEB-004_HARDENING_EVIDENCE.md`. The two routed trade-offs and all three gates are resolved — see *Product decisions (MER-92, resolved)* below.)
+
+## Product decisions (MER-92, resolved)
+
+These resolve the items WEB-004 routed with its review. They are recorded against this contract and
+override the corresponding "target"/"pending" language in the budget sections below. **No
+Product/Science semantics changed.**
+
+1. **LCP — accepted bounded deviation.** The 3.2 s homepage LCP measured under the local synthetic
+   mobile profile is an accepted bounded WEB-004 deviation from the ≤ 2.5 s target in
+   *Performance acceptance budgets* §2. **Accepted scientific proof derivatives must not be
+   re-encoded solely to chase 2.5 s.**
+2. **Score legend `image-aspect-ratio` — accepted intentional deviation.** The legend colourbar is
+   published at its intended proportions. **The scientific legend must not be re-proportioned** to
+   satisfy the audit. Best Practices remains at 96, above the ≥ 95 floor.
+3. **WEB-005 hero media budget — accepted as published.** This supersedes the default ceilings in
+   *Performance acceptance budgets* §5:
+
+   | Asset | Ceiling |
+   | --- | --- |
+   | Desktop autoplay WebM | ≤ 3.0 MiB |
+   | MP4 fallback | ≤ 4.5 MiB |
+   | Poster still | ≤ 180 KiB |
+   | Mobile / reduced-data | intentional static/poster fallback, no dual-video download |
+
+   WEB-005 may tighten these; it may not loosen them without Product re-entry.
+4. **`HOSTED_PREVIEW_NOT_RUN — permission unavailable` — accepted under this task.** It does not
+   block WEB-004 acceptance; production launch remains gated later.
+5. **`CONTACT_RELEASE_GATE` — remains open** for pre-WEB-006 launch verification. Route and mailto
+   correctness is verified; mailbox ownership is not, and does not block WEB-004 acceptance.
 
 ## Outcome
 

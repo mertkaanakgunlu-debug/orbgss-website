@@ -296,7 +296,9 @@ attribute cannot exempt it from the provenance checks.
 
 ## 6. WEB-005 hero media budget
 
-Adopted from measurement, and **tighter than the Product default** where the evidence supports it.
+**Status: ACCEPTED by Product on MER-92.** The ceilings below were proposed from WEB-004's
+measurements and are now the binding WEB-005 budget. WEB-005 may tighten them further; it may not
+loosen them without Product re-entry.
 
 Current homepage transfer is 645 KiB, of which the hero poster is 148 KiB at mobile width. Holding
 the homepage at its present Lighthouse Performance of 94 means the hero may not add materially more
@@ -307,9 +309,11 @@ than it does today on a mobile first load.
 | Desktop autoplay WebM | **≤ 3.0 MiB** | tightened from the 4 MiB default; desktop-only, never fetched on mobile |
 | MP4 fallback | **≤ 4.5 MiB** | tightened from 6 MiB; must never be fetched alongside the WebM |
 | Poster still | **≤ 180 KiB** | tightened from 500 KiB; the current 900 px WebP poster is 148 KiB and already carries the hero at mobile width |
-| Mobile / reduced-data | **poster only, no video** | a second encode on mobile would undo §4.3 outright |
+| Mobile / reduced-data | **intentional static/poster fallback, no dual-video download** | a second encode on mobile would undo §4.3 outright |
 
-Hard constraints for WEB-005, from this task's measurements:
+The four ceilings above are the Product-accepted budget. The constraints below are the engineering
+conditions WEB-004 measured under; they are how the budget is met in practice, not additional
+Product policy:
 
 1. **One encode per client, ever.** Mobile and reduced-data clients must not download both encodes.
 2. **The poster must stay the LCP element and must stay preloaded**, with `imagesrcset`/`imagesizes`
@@ -324,18 +328,23 @@ Hard constraints for WEB-005, from this task's measurements:
 
 ## 7. Deliberately not changed
 
-- **`image-aspect-ratio` (Best Practices 96 on `/` and `/pilot/`).** The score legend colourbar is a
-  652 × 28 export displayed as a ~110 × 9 strip. The squash is deliberate design, and because the
-  ramp is a vertically constant gradient it is visually lossless. Fixing the audit would mean either
-  re-proportioning an accepted legend or re-encoding a checksummed proof derivative. Best Practices
-  clears its ≥ 95 floor at 96 on both routes. **Recorded as an accepted deviation, not an oversight.**
-- **LCP 3.2 s on `/` versus the 2.5 s target.** Improved from 6.5 s, and Lighthouse's own LCP
-  discovery and breakdown insights now both pass. The residual is bandwidth contention under
-  simulated Slow-4G, dominated by `priority-800.webp` (249.7 KiB) — an accepted, checksummed
-  scientific derivative WEB-004 may not re-encode. **Routed to Product rather than relaxed:** closing
-  the remaining gap needs either authority to re-export the proof derivatives at web scale (a
-  Science/Product decision, not an implementer one) or explicit acceptance of 3.2 s under this
-  synthetic profile. Nothing was degraded to manufacture a better number.
+The first two items were routed to Product as trade-offs and are now **resolved on MER-92**; both are
+accepted bounded WEB-004 deviations, and both carry a standing instruction not to "fix" them later by
+touching the accepted scientific assets.
+
+- **LCP 3.2 s on `/` versus the 2.5 s target — ACCEPTED (MER-92).** Improved from 6.5 s, and
+  Lighthouse's own LCP discovery and breakdown insights now both pass. The residual is bandwidth
+  contention under simulated Slow-4G, dominated by `priority-800.webp` (249.7 KiB), an accepted
+  checksummed scientific derivative. Product accepted the 3.2 s local-synthetic result as a bounded
+  WEB-004 deviation and directed that **accepted scientific proof derivatives must not be re-encoded
+  solely to chase 2.5 s.** Nothing was degraded to manufacture a better number, and the figure is a
+  local synthetic measurement, not a field metric or a product claim.
+- **`image-aspect-ratio` (Best Practices 96 on `/` and `/pilot/`) — ACCEPTED (MER-92).** The score
+  legend colourbar is a 652 × 28 export displayed as a ~110 × 9 strip. The squash is deliberate
+  design, and because the ramp is a vertically constant gradient it is visually lossless. Best
+  Practices clears its ≥ 95 floor at 96 on both routes. Product accepted this as an intentional
+  deviation and directed that **the scientific legend must not be re-proportioned** to satisfy the
+  audit.
 - **No minification / build step**, per the accepted static architecture.
 - **Structure/geology data gap** remains an explicit public data gap.
 - **Homepage narrative, route structure, palette and information architecture** — WEB-004 is a
@@ -343,9 +352,11 @@ Hard constraints for WEB-005, from this task's measurements:
 
 ## 8. Preview and release gates
 
-**`HOSTED_PREVIEW_NOT_RUN — permission unavailable.`** There is no Vercel CLI on this machine, no
-`~/.vercel` or project `.vercel` link, and no Vercel token in the environment. Per the task, no
-credentials were requested and no account, admin or billing state was touched.
+**`HOSTED_PREVIEW_NOT_RUN — permission unavailable` — ACCEPTED (MER-92).** There is no Vercel CLI on
+this machine, no `~/.vercel` or project `.vercel` link, and no Vercel token in the environment. Per
+the task, no credentials were requested and no account, admin or billing state was touched. Product
+accepted this outcome under the task; it does not block WEB-004 acceptance, and production launch
+remains gated later.
 
 Reproducible local preview:
 
@@ -355,11 +366,12 @@ py -3.14 scripts/validate_site.py && py -3.14 -m http.server 8080
 
 then open `http://localhost:8080/`. (`preview-local.bat` does the same on Windows.)
 
-**`CONTACT_RELEASE_GATE`.** Route and mailto correctness is confirmed: every `mailto:` across all six
-routes and both dictionary languages targets `contact@orbgss.com` and no other recipient, with
-correctly percent-encoded EN and TR subjects. Mailbox **ownership and deliverability cannot be
-proven** from this repository without Google Workspace or admin access, which is out of scope and was
-not attempted. This remains a mandatory pre-WEB-006 / pre-launch gate.
+**`CONTACT_RELEASE_GATE` — REMAINS OPEN (MER-92).** Route and mailto correctness is confirmed: every
+`mailto:` across all six routes and both dictionary languages targets `contact@orbgss.com` and no
+other recipient, with correctly percent-encoded EN and TR subjects. Mailbox **ownership and
+deliverability cannot be proven** from this repository without Google Workspace or admin access,
+which is out of scope and was not attempted. Product confirmed this gate stays open for pre-WEB-006
+launch verification; it does not block WEB-004 acceptance.
 
 ## 9. Explicit confirmations
 

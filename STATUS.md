@@ -2,7 +2,7 @@
 
 **Canonical version:** `v0.9.0-web-004-preview-hardening` — WEB-004 REVIEW_READY
 **Date:** 2026-09-16
-**Stage:** WEB-004 responsive/accessibility/performance hardening implemented on `feat/web-004-preview-hardening` from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`; REVIEW_READY at implementation HEAD `56cb530`, not merged. Awaiting Product review and terminal acceptance.
+**Stage:** WEB-004 responsive/accessibility/performance hardening implemented on `feat/web-004-preview-hardening` from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`; REVIEW_READY at implementation HEAD `56cb530`, not merged. Product decisions resolved on MER-92 (see below); awaiting terminal acceptance/merge.
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
@@ -15,7 +15,7 @@
 **Company:** VirgaSoft
 **Product:** OrbGSS — Orbital Geo-Spatial Solutions
 **Product authority:** OrbGSS Website vNext Product & Execution Authority v1.8 (`docs/WEB_VNEXT_AUTHORITY.md`)
-**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003 accepted/complete); MER-92 (WEB-004 implemented, REVIEW_READY); MER-96 / GEO-WEB-001 resolved
+**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003 accepted/complete); MER-92 (WEB-004 implemented, REVIEW_READY; Product decisions resolved); MER-96 / GEO-WEB-001 resolved
 
 ## Authority
 
@@ -31,21 +31,23 @@ versions and negative tests are in `docs/WEB-004_HARDENING_EVIDENCE.md`.
 - **Inactive evidence layers deferred** behind `data-src`/`data-srcset` and promoted as the section approaches the viewport — 340 KiB off the initial load, switching still instant, provenance still enforced.
 - **Caption contrast is now measured per viewport.** `object-fit: cover` re-crops each proof raster as the viewport changes shape, so the WEB-002 hand-chosen tones fell to 2.84 / 3.53 / 4.21:1 at some widths. The accepted rule is now applied continuously between the same two accepted tones; every caption clears 4.5:1 at 375 / 768 / 1024 / 1440 (worst case 4.58:1). No raster is modified, and the caption remains bare monospace text with no card, box or band.
 - **Accessibility.** Viewport-change reset for the mobile menu and Solutions disclosure; WCAG 2.5.8 touch targets (footer nav, direct email, brand, desktop EN/TR); `/contact/` heading order corrected (route Accessibility 98 → 100); real web-manifest icon. Zero horizontal overflow and zero undersized targets across all six routes at all four widths.
-- **Gates.** `HOSTED_PREVIEW_NOT_RUN - permission unavailable` (no Vercel CLI, project link or token present; no credentials requested, no account state touched), with a reproducible local preview. `CONTACT_RELEASE_GATE` retained: every mailto correctly targets `contact@orbgss.com` in both languages, but mailbox ownership cannot be proven without Workspace access.
-- **Routed to Product, not silently relaxed.** Homepage LCP is 3.2 s against the 2.5 s target; the residual is `assets/proof/priority-800.webp` (249.7 KiB), an accepted checksummed proof derivative WEB-004 may not re-encode. Closing it needs either authority to re-export proof derivatives at web scale or explicit acceptance of 3.2 s under this synthetic profile. Separately, `image-aspect-ratio` still flags the deliberately squashed score legend (Best Practices 96, above its ≥ 95 floor), recorded as an accepted deviation.
+- **Gates.** `HOSTED_PREVIEW_NOT_RUN — permission unavailable` (no Vercel CLI, project link or token present; no credentials requested, no account state touched), with a reproducible local preview — **accepted under the task on MER-92**. `CONTACT_RELEASE_GATE` **remains open** for pre-WEB-006 launch verification: every mailto correctly targets `contact@orbgss.com` in both languages, but mailbox ownership cannot be proven without Workspace access.
+- **Product decisions resolved (MER-92).** Homepage LCP 3.2 s under the local synthetic mobile profile is an **accepted bounded WEB-004 deviation**; accepted scientific proof derivatives must not be re-encoded solely to chase 2.5 s. The score-legend `image-aspect-ratio` finding is an **accepted intentional deviation**; the scientific legend must not be re-proportioned (Best Practices 96, above its ≥ 95 floor). Both are recorded against `tasks/WEB-004_PREVIEW_HARDENING.md`. No Product/Science semantics changed.
 
-### WEB-005 hero media budget (adopted from measurement)
+### WEB-005 hero media budget (ACCEPTED, MER-92)
 
-Tightened from the Product defaults where the evidence supports it:
+Proposed from WEB-004's measurements and accepted by Product; this is now the binding WEB-005 budget.
+WEB-005 may tighten these ceilings; it may not loosen them without Product re-entry.
 
 | Asset | Ceiling |
 | --- | --- |
 | Desktop autoplay WebM | ≤ 3.0 MiB (default was 4 MiB) |
 | MP4 fallback | ≤ 4.5 MiB (default was 6 MiB) |
 | Poster still | ≤ 180 KiB (default was 500 KiB) |
-| Mobile / reduced-data | poster only, no video encode |
+| Mobile / reduced-data | intentional static/poster fallback, no dual-video download |
 
-Hard constraints: one encode per client, ever; the poster stays the preloaded LCP element with
+The four ceilings above are the accepted budget. The engineering conditions WEB-004 measured under —
+how the budget is met in practice, not additional Product policy — are: one encode per client, ever; the poster stays the preloaded LCP element with
 `imagesrcset`/`imagesizes` matching the `<img>`; `prefers-reduced-motion: reduce` gets the static
 poster; the bottom-right caption region must keep ≥ 4.5:1 (today 6.84:1 against the image alone,
 and the hero caption is deliberately outside the runtime tone system because `.hero-shade` sits
@@ -107,15 +109,14 @@ OrbGSS is a geospatial-intelligence platform. Geothermal Exploration is the acti
 
 ## Production blockers
 
-1. `CONTACT_RELEASE_GATE` — confirm `contact@orbgss.com` ownership and deliverability before public launch. Route/mailto correctness is verified; mailbox ownership is not, and cannot be from this repository.
-2. WEB-004 is REVIEW_READY and awaiting Product acceptance; WEB-005 remains incomplete.
-3. `HOSTED_PREVIEW_NOT_RUN` — a hosted Vercel preview still needs to be produced under already-authorized credentials; WEB-004 recorded a reproducible local preview instead.
-4. Product decision outstanding: accept homepage LCP 3.2 s under the synthetic mobile profile, or authorize re-export of the proof derivatives at web scale.
+1. `CONTACT_RELEASE_GATE` (open, MER-92) — confirm `contact@orbgss.com` ownership and deliverability before public launch. Route/mailto correctness is verified; mailbox ownership is not, and cannot be from this repository. Mandatory pre-WEB-006 gate.
+2. WEB-004 is REVIEW_READY and awaiting terminal acceptance/merge; WEB-005 remains incomplete.
+3. `HOSTED_PREVIEW_NOT_RUN` — accepted under the WEB-004 task on MER-92. A hosted Vercel preview still needs to be produced under already-authorized credentials before launch; WEB-004 recorded a reproducible local preview instead.
 5. WEB-006 only: connect `orbgss.com` / `www.orbgss.com` through Squarespace DNS while preserving Google Workspace MX/SPF/DKIM/DMARC and unrelated records.
 
 ## Next canonical task
 
-WEB-004 is implemented and **REVIEW_READY** on `feat/web-004-preview-hardening`. Product performs terminal review and acceptance; two decisions are routed with it (homepage LCP 3.2 s versus the 2.5 s target, and the score-legend `image-aspect-ratio` deviation). After acceptance: WEB-005 final cinematic hero integration, which now has an explicit measured media budget above. WEB-006 production DNS cutover remains deferred behind an explicit CTO human gate.
+WEB-004 is implemented and **REVIEW_READY** on `feat/web-004-preview-hardening`, with its Product decisions resolved on MER-92 (LCP and score-legend deviations accepted; hero budget accepted; `HOSTED_PREVIEW_NOT_RUN` accepted; `CONTACT_RELEASE_GATE` open). Product performs terminal acceptance/merge. After acceptance: WEB-005 final cinematic hero integration, which now has an accepted media budget above. WEB-006 production DNS cutover remains deferred behind an explicit CTO human gate.
 
 ## History
 
@@ -126,4 +127,4 @@ WEB-004 is implemented and **REVIEW_READY** on `feat/web-004-preview-hardening`.
 - WEB-002 (2026-09-15): public-safe GEO-039 proof exports, Kızıldere evidence/prospectivity presentation and provenance/checksum enforcement accepted after one bounded Product review revision; implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`.
 - WEB-003 (2026-09-15): `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/`; cross-route EN/TR, metadata, sitemap/link validation and reuse of accepted Kızıldere proof. Initial implementation `5d99eb811dfbb3396ebade17ff6ab863b5463a35`.
 - WEB-003 bounded Product review revision (2026-09-15): accessibility-label localization guard, truthful Kızıldere pilot social preview and authority/status reconciliation; final implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf`; Product accepted and fast-forwarded canonical main non-destructively.
-- WEB-004 (2026-09-16): responsive/accessibility/performance hardening of the accepted six-route site — homepage Lighthouse Performance 77 → 94, page transfer −53%, measured per-viewport caption tone, viewport-change disclosure reset, WCAG 2.5.8 touch targets, `/contact/` heading order, validator extended to responsive and deferred imagery. `HOSTED_PREVIEW_NOT_RUN` and `CONTACT_RELEASE_GATE` recorded. Implemented on `feat/web-004-preview-hardening` from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`; implementation HEAD `56cb530`; REVIEW_READY, not merged.
+- WEB-004 (2026-09-16): responsive/accessibility/performance hardening of the accepted six-route site — homepage Lighthouse Performance 77 → 94, page transfer −53%, measured per-viewport caption tone, viewport-change disclosure reset, WCAG 2.5.8 touch targets, `/contact/` heading order, validator extended to responsive and deferred imagery. `HOSTED_PREVIEW_NOT_RUN` and `CONTACT_RELEASE_GATE` recorded. Implemented on `feat/web-004-preview-hardening` from accepted `main@f4d77b4144ddff70c309986e6a45b163f62cdcd4`; implementation HEAD `56cb530`; REVIEW_READY, not merged. Product decisions resolved on MER-92: LCP 3.2 s and the score-legend `image-aspect-ratio` finding accepted as bounded intentional deviations (no re-encode of proof derivatives, no re-proportioning of the legend), WEB-005 hero budget accepted, `HOSTED_PREVIEW_NOT_RUN` accepted, `CONTACT_RELEASE_GATE` left open for pre-WEB-006 verification.
