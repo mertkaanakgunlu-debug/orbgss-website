@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "phase": "WEB-HERO-001B",
+  "phase": "WEB-HERO-001C",
   "policy": {
     "allowed_license_bases": [
       "public-domain",
@@ -22,8 +22,14 @@
       "sha256",
       "notes"
     ],
-    "rights_status_values": ["cleared", "pending", "rejected"],
-    "publishable_rights_status": ["cleared"],
+    "rights_status_values": [
+      "cleared",
+      "pending",
+      "rejected"
+    ],
+    "publishable_rights_status": [
+      "cleared"
+    ],
     "forbidden_layer_classes": [
       "dem",
       "elevation",
@@ -66,5 +72,5 @@
       "notes": "Whole-Earth city-lights composite, 3600x1800 equirectangular. Used as the night-side emission input, blended in only on the unlit hemisphere via a scripted terminator factor. Not a measured scientific layer; carries no forbidden layer class. Attribution: NASA Earth Observatory."
     }
   ],
-  "notes": "WEB-HERO-001A shipped a fully procedural benchmark scene with no external asset. WEB-HERO-001B introduces the two Earth composites above for the day/night material; both are NASA public-domain whole-Earth imagery (not measured science-layer output), fetched directly from eoimages.gsfc.nasa.gov and checksummed. The satellite, atmosphere, and starfield in WEB-HERO-001B remain fully procedural and introduce no further external asset."
+  "notes": "WEB-HERO-001A shipped a fully procedural benchmark scene with no external asset. WEB-HERO-001B introduces the two Earth composites above for the day/night material; both are NASA public-domain whole-Earth imagery (not measured science-layer output), fetched directly from eoimages.gsfc.nasa.gov and checksummed. The satellite, atmosphere, and starfield in WEB-HERO-001B remain fully procedural and introduce no further external asset. WEB-HERO-001C adds the surface-conforming AOI acquisition system (footprint, border, corner locks, scan beams and scan sweep) and introduces no new external asset: all of it is generated procedurally from committed configuration by hero/scripts/aoi_system.py, and none of it encodes, derives or displays a scientific quantity."
 }

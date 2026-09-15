@@ -9,6 +9,10 @@ Later phases add scene definitions to scene.json and, where a definition needs
 procedural geometry beyond the primitive vocabulary here, extend ``_add_object``
 rather than hard-coding values in a render script.
 
+Scene inheritance (``extends``) is resolved by ``hero_common.resolve_scene_spec``
+rather than here, so the validator can resolve exactly the same scene without
+importing bpy.
+
 WEB-HERO-001B adds: image-textured materials (``earth_day_night``), a Fresnel
 rim shell (``atmosphere_shell``), a procedural panel-grid material
 (``solar_panel``), a compound procedurally-modelled ``satellite`` object type,
@@ -25,9 +29,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import bmesh  # noqa: E402
 import bpy  # noqa: E402  (Blender-only import, after sys.path bootstrap)
-from mathutils import Vector  # noqa: E402
+from mathutils import Matrix, Vector  # noqa: E402
 
+import aoi_system as ax  # noqa: E402
 import hero_common as hc  # noqa: E402
 
 
@@ -326,7 +332,39 @@ def _build_atmosphere_material(name: str, spec: dict, scene_config: dict, sun_di
     mix.location = (450, 0)
 
     links.new(fresnel.outputs["Fac"], falloff.inputs["Value"])
-    links.new(falloff.outputs["Result"], mix.inputs["Fac"])
+
+    # Optional outer-silhouette fade.
+    #
+    # The Fresnel ramp is monotonic, so opacity is highest exactly at the
+    # shell's own silhouette and the limb ends on a hard geometric line. From
+    # WEB-HERO-001B's distances that line is a sub-pixel sliver and invisible;
+    # from WEB-HERO-001C's approach distances it becomes a straight-edged teal
+    # wedge across the frame. Fading the outermost sliver back to transparent
+    # lets the glow end in air instead of on an edge.
+    #
+    # Off unless a scene asks for it, so the accepted WEB-HERO-001B shell
+    # rebuilds exactly as before.
+    opacity_socket = falloff.outputs["Result"]
+    fade_start = spec.get("silhouette_fade_start")
+    if fade_start is not None:
+        outer_fade = nodes.new("ShaderNodeMapRange")
+        outer_fade.location = (-50, -230)
+        outer_fade.inputs["From Min"].default_value = float(fade_start)
+        outer_fade.inputs["From Max"].default_value = 1.0
+        outer_fade.inputs["To Min"].default_value = 1.0
+        outer_fade.inputs["To Max"].default_value = 0.0
+        outer_fade.clamp = True
+        outer_fade.interpolation_type = "SMOOTHSTEP"
+        links.new(fresnel.outputs["Fac"], outer_fade.inputs["Value"])
+
+        faded = nodes.new("ShaderNodeMath")
+        faded.operation = "MULTIPLY"
+        faded.location = (200, -120)
+        links.new(falloff.outputs["Result"], faded.inputs[0])
+        links.new(outer_fade.outputs["Result"], faded.inputs[1])
+        opacity_socket = faded.outputs["Value"]
+
+    links.new(opacity_socket, mix.inputs["Fac"])
     links.new(transparent.outputs["BSDF"], mix.inputs[1])
     links.new(emission.outputs["Emission"], mix.inputs[2])
     links.new(mix.outputs["Shader"], output.inputs["Surface"])
@@ -397,6 +435,12 @@ def _build_material(name: str, spec: dict, scene_config: dict, sun_direction=(0.
         return _build_atmosphere_material(name, spec, scene_config, sun_direction)
     if kind == "solar_panel":
         return _build_solar_panel_material(name, spec, scene_config)
+    if kind == "aoi_emission":
+        return _build_aoi_emission_material(name, spec, scene_config)
+    if kind == "aoi_scan_fill":
+        return _build_aoi_scan_fill_material(name, spec, scene_config)
+    if kind == "aoi_beam":
+        return _build_aoi_beam_material(name, spec, scene_config)
     raise ValueError("unsupported material type " + repr(kind) + " for " + name)
 
 
@@ -509,11 +553,712 @@ def _build_satellite(spec: dict, materials: dict):
     return root
 
 
-def _add_object(spec: dict, materials: dict):
+# ---------------------------------------------------------------------------
+# AOI acquisition system (WEB-HERO-001C)
+# ---------------------------------------------------------------------------
+
+def _cross(a, b):
+    return (
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
+    )
+
+
+def _rotate_on_sphere(unit, side, angle):
+    """Rotate a unit vector by ``angle`` within the plane it spans with ``side``.
+
+    ``side`` must be a unit vector tangent at ``unit``. The result is exactly a
+    unit vector, so widening a border this way keeps every generated vertex on
+    the sphere instead of lifting it off the surface.
+    """
+    cos_a, sin_a = math.cos(angle), math.sin(angle)
+    return (
+        unit[0] * cos_a + side[0] * sin_a,
+        unit[1] * cos_a + side[1] * sin_a,
+        unit[2] * cos_a + side[2] * sin_a,
+    )
+
+
+def _orient_faces(mesh, outward_of) -> None:
+    """Flip any face whose normal points the wrong way.
+
+    Generated strips and tubes have no inherent winding, and a blended material
+    with back faces hidden renders a wrongly-wound face as nothing at all --
+    geometry that is present, correct and invisible. Rather than hand-tuning
+    each loop's index order, derive the answer: compare every face normal with
+    the direction that face should be looking and reverse the ones that
+    disagree.
+    """
+    bm = bmesh.new()
+    bm.from_mesh(mesh)
+    bm.normal_update()
+    wrong = [
+        face
+        for face in bm.faces
+        if face.normal.dot(outward_of(face.calc_center_median())) < 0.0
+    ]
+    if wrong:
+        bmesh.ops.reverse_faces(bm, faces=wrong)
+    bm.to_mesh(mesh)
+    bm.free()
+    mesh.update()
+
+
+def _radially_outward(point):
+    """Outward for geometry generated on the globe: away from the Earth centre."""
+    return Vector(point)
+
+
+def _tube_outward(point):
+    """Outward for a beam tube: away from its own +Y axis."""
+    return Vector((point[0], 0.0, point[2]))
+
+
+def _mesh_object(name: str, verts, faces, material, uvs=None, outward_of=None):
+    mesh = bpy.data.meshes.new(name)
+    mesh.from_pydata([tuple(v) for v in verts], [], [tuple(f) for f in faces])
+    mesh.update()
+    if outward_of is not None:
+        _orient_faces(mesh, outward_of)
+    if uvs is not None:
+        uv_layer = mesh.uv_layers.new(name="aoi")
+        for loop_index, loop in enumerate(mesh.loops):
+            uv_layer.data[loop_index].uv = uvs[loop.vertex_index]
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    if material:
+        mesh.materials.append(material)
+    # AOI geometry sits a few hundred metres above the surface it describes.
+    # Letting it cast real shadows would print a hard copy of the footprint
+    # onto the Earth beside it, which reads as a modelling error.
+    try:
+        obj.visible_shadow = False
+    except AttributeError:
+        pass
+    return obj
+
+
+def _ribbon_on_sphere(name, units, radius_bu, width_km, earth_radius_km, closed, material):
+    """Build a thin quad strip that follows a polyline across the sphere.
+
+    Both rails are generated by rotating each sample sideways within its own
+    tangent plane, so the ribbon is a band lying *on* the sphere rather than a
+    flat strip stretched over it. Used for the footprint border and the corner
+    locks alike.
+    """
+    half_angle = (float(width_km) / float(earth_radius_km)) / 2.0
+    count = len(units)
+    verts = []
+    for index, point in enumerate(units):
+        if closed:
+            previous = units[(index - 1) % count]
+            following = units[(index + 1) % count]
+        else:
+            previous = units[max(index - 1, 0)]
+            following = units[min(index + 1, count - 1)]
+
+        along = (
+            following[0] - previous[0],
+            following[1] - previous[1],
+            following[2] - previous[2],
+        )
+        radial = sum(a * b for a, b in zip(along, point))
+        along = (
+            along[0] - point[0] * radial,
+            along[1] - point[1] * radial,
+            along[2] - point[2] * radial,
+        )
+        along = ax.normalize(along)
+        side = ax.normalize(_cross(point, along))
+
+        verts.append(ax.scale(_rotate_on_sphere(point, side, -half_angle), radius_bu))
+        verts.append(ax.scale(_rotate_on_sphere(point, side, half_angle), radius_bu))
+
+    faces = []
+    last = count if closed else count - 1
+    for index in range(last):
+        a = 2 * index
+        b = 2 * index + 1
+        c = 2 * ((index + 1) % count)
+        d = 2 * ((index + 1) % count) + 1
+        faces.append((a, b, d, c))
+    return _mesh_object(name, verts, faces, material, outward_of=_radially_outward)
+
+
+def _fill_on_sphere(name, rows, radius_bu, material):
+    """Interior footprint surface, carrying AOI-local (u, v) in its UV layer.
+
+    The UV layer is what makes the scan sweep surface-following: the sweep is a
+    band in this parameter space, painted on a mesh that is itself on the
+    sphere, so it cannot detach from the globe however the camera moves.
+    """
+    height = len(rows)
+    width = len(rows[0])
+    verts, uvs = [], []
+    for j, row in enumerate(rows):
+        for i, unit in enumerate(row):
+            verts.append(ax.scale(unit, radius_bu))
+            uvs.append((i / float(width - 1), j / float(height - 1)))
+
+    faces = []
+    for j in range(height - 1):
+        for i in range(width - 1):
+            a = j * width + i
+            faces.append((a, a + 1, a + width + 1, a + width))
+    return _mesh_object(name, verts, faces, material, uvs=uvs, outward_of=_radially_outward)
+
+
+def _beam_mesh_object(name, root_radius_bu, tip_radius_bu, sides, material):
+    """An open tapered tube spanning y = 0 (source) to y = 1 (target).
+
+    Length 1 along +Y is what lets a Stretch To constraint span the real
+    satellite-to-corner distance at every frame without the beam ever being
+    re-authored: the constraint supplies the aim and the length, so the
+    endpoints stay registered to whatever the AOI is doing.
+    """
+    verts, uvs = [], []
+    for radius, v in ((root_radius_bu, 0.0), (tip_radius_bu, 1.0)):
+        for index in range(sides):
+            angle = 2.0 * math.pi * index / sides
+            verts.append((radius * math.cos(angle), v, radius * math.sin(angle)))
+            uvs.append((index / float(sides), v))
+    faces = [
+        (i, (i + 1) % sides, sides + (i + 1) % sides, sides + i) for i in range(sides)
+    ]
+    return _mesh_object(name, verts, faces, material, uvs=uvs, outward_of=_tube_outward)
+
+
+def _action_fcurves(action):
+    """F-curves of an action across both the legacy and slotted layouts."""
+    curves = list(getattr(action, "fcurves", []) or [])
+    if curves:
+        return curves
+    for layer in getattr(action, "layers", []):
+        for strip in getattr(layer, "strips", []):
+            for channelbag in getattr(strip, "channelbags", []):
+                curves.extend(channelbag.fcurves)
+    return curves
+
+
+def _keyframe_socket(node_tree, socket, keys, interpolation="LINEAR"):
+    """Keyframe a shader socket and force a chosen interpolation.
+
+    Appearance ramps and the scan sweep are authored on material sockets rather
+    than on object transforms, so nothing about the AOI's *position* is ever
+    animated -- only how much of it is visible. Position stays owned by the
+    Earth parent and the beam constraints.
+    """
+    data_path = socket.path_from_id("default_value")
+    for frame, value in keys:
+        socket.default_value = value
+        socket.keyframe_insert(data_path="default_value", frame=int(frame))
+    animation = getattr(node_tree, "animation_data", None)
+    action = getattr(animation, "action", None) if animation else None
+    if not action:
+        return
+    for fcurve in _action_fcurves(action):
+        if fcurve.data_path == data_path:
+            for point in fcurve.keyframe_points:
+                point.interpolation = interpolation
+
+
+def _set_blend_method(material, show_back: bool = True) -> None:
+    """Ask EEVEE for real alpha blending, across 4.x naming.
+
+    ``show_back`` stays on for the beams: letting a viewer see both walls of the
+    tube is what gives a hollow beam its soft, denser-at-the-silhouette falloff
+    instead of a flat cutout.
+    """
+    for attribute, value in (
+        ("surface_render_method", "BLENDED"),
+        ("blend_method", "BLEND"),
+    ):
+        try:
+            setattr(material, attribute, value)
+        except (AttributeError, TypeError):
+            continue
+    try:
+        material.show_transparent_back = show_back
+    except AttributeError:
+        pass
+
+
+def _build_aoi_emission_material(name: str, spec: dict, scene_config: dict):
+    """Flat emissive ribbon material for the border and the corner locks."""
+    material = bpy.data.materials.new(name=name)
+    material.use_nodes = True
+    nt = material.node_tree
+    nodes, links = nt.nodes, nt.links
+    nodes.clear()
+
+    output = nodes.new("ShaderNodeOutputMaterial")
+    output.location = (400, 0)
+    emission = nodes.new("ShaderNodeEmission")
+    emission.location = (150, 0)
+    emission.inputs["Color"].default_value = _rgba(
+        hc.palette_color(scene_config, spec["emission_color_ref"])
+    )
+    emission.inputs["Strength"].default_value = float(spec.get("emission_strength", 8.0))
+    links.new(emission.outputs["Emission"], output.inputs["Surface"])
+    return material
+
+
+def _build_aoi_scan_fill_material(name: str, spec: dict, scene_config: dict):
+    """Neutral interior treatment: a faint cyan glass plus a travelling band.
+
+    Deliberately carries no data. Alpha is built from three scalars -- a base
+    presence, a slightly denser "already swept" region behind the band, and the
+    band itself -- so the footprint communicates scan progress and nothing more.
+    No gradient here encodes a measured quantity, and there is no legend, scale
+    or classification anywhere in it.
+    """
+    material = bpy.data.materials.new(name=name)
+    material.use_nodes = True
+    _set_blend_method(material)
+    nt = material.node_tree
+    nodes, links = nt.nodes, nt.links
+    nodes.clear()
+
+    output = nodes.new("ShaderNodeOutputMaterial")
+    output.location = (1100, 0)
+
+    tex_coord = nodes.new("ShaderNodeTexCoord")
+    tex_coord.location = (-900, 0)
+    separate = nodes.new("ShaderNodeSeparateXYZ")
+    separate.location = (-700, 0)
+    links.new(tex_coord.outputs["UV"], separate.inputs["Vector"])
+
+    axis_socket = "Y" if str(spec.get("axis", "v")).lower() in ("v", "y") else "X"
+
+    sweep = nodes.new("ShaderNodeValue")
+    sweep.name = "aoi_sweep_position"
+    sweep.label = "aoi_sweep_position"
+    sweep.location = (-700, -220)
+    sweep.outputs[0].default_value = -1.0
+
+    delta = nodes.new("ShaderNodeMath")
+    delta.operation = "SUBTRACT"
+    delta.location = (-480, -80)
+    links.new(separate.outputs[axis_socket], delta.inputs[0])
+    links.new(sweep.outputs[0], delta.inputs[1])
+
+    distance = nodes.new("ShaderNodeMath")
+    distance.operation = "ABSOLUTE"
+    distance.location = (-280, -40)
+    links.new(delta.outputs[0], distance.inputs[0])
+
+    band = nodes.new("ShaderNodeMapRange")
+    band.location = (-80, -40)
+    band.interpolation_type = "SMOOTHSTEP"
+    band.clamp = True
+    band.inputs["From Min"].default_value = 0.0
+    band.inputs["From Max"].default_value = float(spec.get("band_width", 0.13))
+    band.inputs["To Min"].default_value = 1.0
+    band.inputs["To Max"].default_value = 0.0
+    links.new(distance.outputs[0], band.inputs["Value"])
+
+    # "Already swept" is the region the band has passed, i.e. negative delta.
+    behind = nodes.new("ShaderNodeMath")
+    behind.operation = "MULTIPLY"
+    behind.location = (-280, -260)
+    behind.inputs[1].default_value = -1.0
+    links.new(delta.outputs[0], behind.inputs[0])
+
+    acquired = nodes.new("ShaderNodeMapRange")
+    acquired.location = (-80, -260)
+    acquired.clamp = True
+    acquired.inputs["From Min"].default_value = 0.0
+    acquired.inputs["From Max"].default_value = 0.02
+    acquired.inputs["To Min"].default_value = 0.0
+    acquired.inputs["To Max"].default_value = 1.0
+    links.new(behind.outputs[0], acquired.inputs["Value"])
+
+    acquired_alpha = nodes.new("ShaderNodeMath")
+    acquired_alpha.operation = "MULTIPLY"
+    acquired_alpha.location = (160, -260)
+    acquired_alpha.inputs[1].default_value = float(spec.get("acquired_alpha", 0.11))
+    links.new(acquired.outputs["Result"], acquired_alpha.inputs[0])
+
+    band_alpha = nodes.new("ShaderNodeMath")
+    band_alpha.operation = "MULTIPLY"
+    band_alpha.location = (160, -40)
+    band_alpha.inputs[1].default_value = float(spec.get("band_alpha", 0.62))
+    links.new(band.outputs["Result"], band_alpha.inputs[0])
+
+    sum_a = nodes.new("ShaderNodeMath")
+    sum_a.operation = "ADD"
+    sum_a.location = (380, -150)
+    links.new(band_alpha.outputs[0], sum_a.inputs[0])
+    links.new(acquired_alpha.outputs[0], sum_a.inputs[1])
+
+    sum_b = nodes.new("ShaderNodeMath")
+    sum_b.operation = "ADD"
+    sum_b.location = (560, -150)
+    sum_b.inputs[1].default_value = float(spec.get("base_alpha", 0.045))
+    links.new(sum_a.outputs[0], sum_b.inputs[0])
+
+    presence = nodes.new("ShaderNodeValue")
+    presence.name = "aoi_presence"
+    presence.label = "aoi_presence"
+    presence.location = (560, -360)
+    presence.outputs[0].default_value = 1.0
+
+    alpha = nodes.new("ShaderNodeMath")
+    alpha.operation = "MULTIPLY"
+    alpha.location = (760, -150)
+    alpha.use_clamp = True
+    links.new(sum_b.outputs[0], alpha.inputs[0])
+    links.new(presence.outputs[0], alpha.inputs[1])
+
+    color = nodes.new("ShaderNodeMixRGB")
+    color.location = (380, 220)
+    color.inputs["Color1"].default_value = _rgba(
+        hc.palette_color(scene_config, spec["base_color_ref"])
+    )
+    color.inputs["Color2"].default_value = _rgba(
+        hc.palette_color(scene_config, spec["band_color_ref"])
+    )
+    links.new(band.outputs["Result"], color.inputs["Fac"])
+
+    strength = nodes.new("ShaderNodeMapRange")
+    strength.location = (380, 40)
+    strength.clamp = True
+    strength.inputs["From Min"].default_value = 0.0
+    strength.inputs["From Max"].default_value = 1.0
+    strength.inputs["To Min"].default_value = float(spec.get("base_emission_strength", 1.1))
+    strength.inputs["To Max"].default_value = float(spec.get("band_emission_strength", 7.0))
+    links.new(band.outputs["Result"], strength.inputs["Value"])
+
+    emission = nodes.new("ShaderNodeEmission")
+    emission.location = (760, 120)
+    links.new(color.outputs["Color"], emission.inputs["Color"])
+    links.new(strength.outputs["Result"], emission.inputs["Strength"])
+
+    transparent = nodes.new("ShaderNodeBsdfTransparent")
+    transparent.location = (760, 320)
+
+    mix = nodes.new("ShaderNodeMixShader")
+    mix.location = (940, 0)
+    links.new(alpha.outputs[0], mix.inputs["Fac"])
+    links.new(transparent.outputs["BSDF"], mix.inputs[1])
+    links.new(emission.outputs["Emission"], mix.inputs[2])
+    links.new(mix.outputs["Shader"], output.inputs["Surface"])
+    return material
+
+
+def _build_aoi_beam_material(name: str, spec: dict, scene_config: dict):
+    """Acquisition beam: near-invisible at the satellite, denser at the ground.
+
+    A beam that is uniformly opaque reads as a solid plastic tube. Ramping
+    alpha along the beam's own length keeps it as a suggestion of directed
+    attention rather than a literal depiction of sensor physics.
+    """
+    material = bpy.data.materials.new(name=name)
+    material.use_nodes = True
+    _set_blend_method(material)
+    nt = material.node_tree
+    nodes, links = nt.nodes, nt.links
+    nodes.clear()
+
+    output = nodes.new("ShaderNodeOutputMaterial")
+    output.location = (700, 0)
+
+    tex_coord = nodes.new("ShaderNodeTexCoord")
+    tex_coord.location = (-600, 0)
+    separate = nodes.new("ShaderNodeSeparateXYZ")
+    separate.location = (-420, 0)
+    links.new(tex_coord.outputs["UV"], separate.inputs["Vector"])
+
+    along = nodes.new("ShaderNodeMapRange")
+    along.location = (-220, 0)
+    along.clamp = True
+    along.interpolation_type = "SMOOTHSTEP"
+    along.inputs["From Min"].default_value = 0.0
+    along.inputs["From Max"].default_value = 1.0
+    along.inputs["To Min"].default_value = float(spec.get("root_alpha", 0.03))
+    along.inputs["To Max"].default_value = float(spec.get("tip_alpha", 0.22))
+    links.new(separate.outputs["Y"], along.inputs["Value"])
+
+    presence = nodes.new("ShaderNodeValue")
+    presence.name = "aoi_presence"
+    presence.label = "aoi_presence"
+    presence.location = (-220, -220)
+    presence.outputs[0].default_value = 0.0
+
+    alpha = nodes.new("ShaderNodeMath")
+    alpha.operation = "MULTIPLY"
+    alpha.location = (40, -80)
+    alpha.use_clamp = True
+    links.new(along.outputs["Result"], alpha.inputs[0])
+    links.new(presence.outputs[0], alpha.inputs[1])
+
+    emission = nodes.new("ShaderNodeEmission")
+    emission.location = (300, 120)
+    emission.inputs["Color"].default_value = _rgba(
+        hc.palette_color(scene_config, spec["emission_color_ref"])
+    )
+    emission.inputs["Strength"].default_value = float(spec.get("emission_strength", 3.4))
+
+    transparent = nodes.new("ShaderNodeBsdfTransparent")
+    transparent.location = (300, 320)
+
+    mix = nodes.new("ShaderNodeMixShader")
+    mix.location = (520, 0)
+    links.new(alpha.outputs[0], mix.inputs["Fac"])
+    links.new(transparent.outputs["BSDF"], mix.inputs[1])
+    links.new(emission.outputs["Emission"], mix.inputs[2])
+    links.new(mix.outputs["Shader"], output.inputs["Surface"])
+    return material
+
+
+def _node_named(material, name):
+    if material is None or not material.use_nodes:
+        return None
+    return material.node_tree.nodes.get(name)
+
+
+def _animate_presence(material, keys) -> None:
+    """Ramp a material's ``aoi_presence`` value node over the given keyframes."""
+    node = _node_named(material, "aoi_presence")
+    if node is None:
+        return
+    _keyframe_socket(material.node_tree, node.outputs[0], keys, interpolation="BEZIER")
+
+
+def _animate_emission_strength(material, base_strength, keys) -> None:
+    if material is None:
+        return
+    node = next(
+        (n for n in material.node_tree.nodes if n.type == "EMISSION"), None
+    )
+    if node is None:
+        return
+    _keyframe_socket(
+        material.node_tree,
+        node.inputs["Strength"],
+        [(frame, base_strength * factor) for frame, factor in keys],
+        interpolation="BEZIER",
+    )
+
+
+def _build_aoi_system(spec: dict, materials: dict, context: dict):
+    """Build the whole surface-conforming AOI acquisition system.
+
+    Everything is generated from the resolved fixture through
+    ``aoi_system.describe``: border, interior, corner locks, per-corner target
+    empties and the satellite beams that lock onto them. The footprint and its
+    targets are parented to the Earth, and the beams reach them through
+    constraints, so a single build serves every frame of the shot and nothing
+    has to be re-registered as the camera or the planet moves.
+    """
+    scene_config = context["scene_config"]
+    scene_spec = context["scene_spec"]
+    fixture_id = context.get("aoi_fixture") or spec.get("fixture")
+
+    description = ax.describe(scene_config, fixture_id, scene_spec)
+    fixture = description["fixture"]
+    radius_bu = description["surface_radius_bu"]
+    earth_radius_km = description["earth_radius_km"]
+    context["aoi_description"] = description
+
+    root = bpy.data.objects.new(spec["id"], None)
+    root.empty_display_size = 0.08
+    bpy.context.collection.objects.link(root)
+
+    parent_id = spec.get("parent_id")
+    if parent_id:
+        parent = context["objects"].get(parent_id)
+        if parent is None:
+            raise KeyError(
+                "AOI system " + spec["id"] + " requires object " + repr(parent_id)
+                + ", which is not defined before it in this scene"
+            )
+        root.parent = parent
+        root.matrix_parent_inverse = Matrix.Identity(4)
+
+    def attach(obj):
+        obj.parent = root
+        obj.matrix_parent_inverse = Matrix.Identity(4)
+        return obj
+
+    # --- interior footprint -------------------------------------------------
+    fill_material = materials.get(spec.get("fill_material"))
+    attach(
+        _fill_on_sphere(
+            spec["id"] + "_fill", description["fill_rows"], radius_bu, fill_material
+        )
+    )
+
+    # --- border ------------------------------------------------------------
+    border_material = materials.get(spec.get("border_material"))
+    attach(
+        _ribbon_on_sphere(
+            spec["id"] + "_border",
+            description["boundary_units"],
+            radius_bu,
+            fixture["border_width_km"],
+            earth_radius_km,
+            True,
+            border_material,
+        )
+    )
+
+    # --- corner locks ------------------------------------------------------
+    lock_material = materials.get(spec.get("corner_lock_material"))
+    lock_radius = ax.surface_radius_bu(
+        fixture, earth_radius_km, extra_offset_m=fixture["corner_lock_offset_m"]
+    )
+    for lock in description["corner_locks"]:
+        attach(
+            _ribbon_on_sphere(
+                spec["id"] + "_lock_" + lock["corner_id"],
+                [lock["arms"][0], lock["apex"], lock["arms"][1]],
+                lock_radius,
+                fixture["corner_lock_width_km"],
+                earth_radius_km,
+                False,
+                lock_material,
+            )
+        )
+
+    # --- per-corner beam targets -------------------------------------------
+    # Real empties rather than baked coordinates: the beams aim at these, the
+    # empties ride the Earth, so a beam endpoint is by construction the AOI
+    # corner at every frame instead of a constant that happens to match on one.
+    targets = []
+    for index, corner_id in enumerate(description["corner_order"]):
+        target = bpy.data.objects.new(spec["id"] + "_target_" + corner_id, None)
+        target.empty_display_type = "PLAIN_AXES"
+        target.empty_display_size = 0.04
+        bpy.context.collection.objects.link(target)
+        target.location = tuple(description["corner_positions_bu"][index])
+        attach(target)
+        targets.append((corner_id, target))
+
+    center_target = bpy.data.objects.new(spec["id"] + "_target_center", None)
+    center_target.empty_display_type = "PLAIN_AXES"
+    center_target.empty_display_size = 0.05
+    bpy.context.collection.objects.link(center_target)
+    center_target.location = tuple(description["center_position_bu"])
+    attach(center_target)
+
+    # --- beams -------------------------------------------------------------
+    beam_spec = spec.get("beams", {})
+    beam_material = materials.get(spec.get("beam_material"))
+    source_id = beam_spec.get("source_object_id")
+    source = context["objects"].get(source_id) if source_id else None
+    if source_id and source is None:
+        raise KeyError(
+            "AOI beams reference source object " + repr(source_id)
+            + ", which this scene does not define"
+        )
+
+    beams = []
+    if source is not None and beam_material is not None:
+        root_radius = float(beam_spec.get("root_radius_km", 9.0)) / ax.KM_PER_BLENDER_UNIT
+        tip_radius = float(beam_spec.get("tip_radius_km", 30.0)) / ax.KM_PER_BLENDER_UNIT
+        sides = int(beam_spec.get("sides", 14))
+        for corner_id, target in targets:
+            beam = _beam_mesh_object(
+                spec["id"] + "_beam_" + corner_id,
+                root_radius,
+                tip_radius,
+                sides,
+                beam_material,
+            )
+            copy_location = beam.constraints.new(type="COPY_LOCATION")
+            copy_location.target = source
+            stretch = beam.constraints.new(type="STRETCH_TO")
+            stretch.target = target
+            stretch.rest_length = 1.0
+            stretch.volume = "NO_VOLUME"
+            beams.append(beam)
+
+    # --- appearance / release timing ---------------------------------------
+    scene_materials = scene_spec.get("materials", {})
+
+    border_cfg = spec.get("border", {})
+    if "appear_start_frame" in border_cfg:
+        _animate_emission_strength(
+            border_material,
+            float(scene_materials.get(spec.get("border_material"), {}).get("emission_strength", 11.0)),
+            [
+                (int(border_cfg["appear_start_frame"]), 0.0),
+                (int(border_cfg["appear_end_frame"]), 1.0),
+            ],
+        )
+
+    lock_cfg = spec.get("corner_locks", {})
+    if "appear_start_frame" in lock_cfg:
+        _animate_emission_strength(
+            lock_material,
+            float(scene_materials.get(spec.get("corner_lock_material"), {}).get("emission_strength", 16.0)),
+            [
+                (int(lock_cfg["appear_start_frame"]), 0.0),
+                (int(lock_cfg["appear_end_frame"]), 1.0),
+            ],
+        )
+
+    fill_cfg = spec.get("fill", {})
+    if "appear_start_frame" in fill_cfg:
+        _animate_presence(
+            fill_material,
+            [
+                (int(fill_cfg["appear_start_frame"]), 0.0),
+                (int(fill_cfg["appear_end_frame"]), 1.0),
+            ],
+        )
+
+    if "appear_start_frame" in beam_spec:
+        keys = [
+            (int(beam_spec["appear_start_frame"]), 0.0),
+            (int(beam_spec["appear_end_frame"]), 1.0),
+        ]
+        if "release_start_frame" in beam_spec:
+            keys.append((int(beam_spec["release_start_frame"]), 1.0))
+            keys.append((int(beam_spec["release_end_frame"]), 0.0))
+        _animate_presence(beam_material, keys)
+
+    # --- scan sweep --------------------------------------------------------
+    sweep_cfg = spec.get("sweep", {})
+    sweep_node = _node_named(fill_material, "aoi_sweep_position")
+    if sweep_node is not None and "start_frame" in sweep_cfg:
+        band = float(
+            scene_materials.get(spec.get("fill_material"), {}).get("band_width", 0.13)
+        )
+        _keyframe_socket(
+            fill_material.node_tree,
+            sweep_node.outputs[0],
+            [
+                (int(sweep_cfg["start_frame"]), -band),
+                (int(sweep_cfg["end_frame"]), 1.0 + band),
+            ],
+            interpolation="LINEAR",
+        )
+
+    print(
+        "[hero] AOI fixture " + repr(description["fixture_id"])
+        + ": centre (" + str(fixture["center_lat_deg"]) + ", " + str(fixture["center_lon_deg"])
+        + "), span " + str(fixture["span_km"]) + " km, "
+        + str(len(description["boundary_units"])) + " border samples, "
+        + str(len(targets)) + " corner targets, " + str(len(beams)) + " beams"
+    )
+    return root
+
+
+def _add_object(spec: dict, materials: dict, context: dict | None = None):
     kind = spec["type"]
 
     if kind == "satellite":
         return _build_satellite(spec, materials)
+
+    if kind == "aoi_system":
+        if context is None:
+            raise ValueError(
+                "object type 'aoi_system' needs the build context; call _add_object from build()"
+            )
+        return _build_aoi_system(spec, materials, context)
 
     location = tuple(spec.get("location", (0.0, 0.0, 0.0)))
 
@@ -782,21 +1527,20 @@ def _build_world(scene_config: dict, scene_spec: dict | None = None) -> None:
     bpy.context.scene.world = world
 
 
-def build(scene_id: str, scene_config=None, frame: int | None = None):
+def build(scene_id: str, scene_config=None, frame: int | None = None, aoi_fixture: str | None = None):
     """Build ``scene_id`` into the current Blender session and return its spec.
 
     ``frame`` overrides which frame the scene is left on after any keyframe
     animation is authored (default: the scene's own ``frame`` field, or 1).
+
+    ``aoi_fixture`` overrides which AOI fixture the scene's AOI system reads
+    from ``aoi_injection_interface``. It exists so the same scene can be built
+    against a different footprint from the command line, which is the whole
+    point of the AOI being configuration-driven.
     """
     scene_config = scene_config or hc.load_scene_config()
     scenes = scene_config.get("scenes", {})
-    if scene_id not in scenes:
-        raise KeyError(
-            "scene " + repr(scene_id) + " is not defined in "
-            + hc.relpath(hc.SCENE_CONFIG)
-            + "; available: " + repr(sorted(scenes))
-        )
-    spec = scenes[scene_id]
+    spec = hc.resolve_scene_spec(scene_id, scenes)
 
     _clear_scene()
     _build_world(scene_config, spec)
@@ -813,8 +1557,15 @@ def build(scene_id: str, scene_config=None, frame: int | None = None):
     }
 
     built_objects = {}
+    context = {
+        "scene_id": scene_id,
+        "scene_config": scene_config,
+        "scene_spec": spec,
+        "objects": built_objects,
+        "aoi_fixture": aoi_fixture,
+    }
     for object_spec in spec.get("objects", []):
-        obj = _add_object(object_spec, materials)
+        obj = _add_object(object_spec, materials, context)
         built_objects[object_spec["id"]] = obj
         _apply_object_animation(obj, object_spec)
 
@@ -849,6 +1600,11 @@ def _main() -> None:
     parser = argparse.ArgumentParser(description="Build a hero scene from configuration.")
     parser.add_argument("--scene", default="benchmark_neutral")
     parser.add_argument("--frame", type=int, default=None)
+    parser.add_argument(
+        "--aoi-fixture",
+        default=None,
+        help="override the AOI fixture named in aoi_injection_interface.active_fixture",
+    )
     parser.add_argument("--save", action="store_true", help="save a working .blend")
     parser.add_argument(
         "--out",
@@ -857,7 +1613,7 @@ def _main() -> None:
     )
     args = parser.parse_args(hc.argv_after_double_dash())
 
-    build(args.scene, frame=args.frame)
+    build(args.scene, frame=args.frame, aoi_fixture=args.aoi_fixture)
     print("[hero] built scene " + args.scene)
 
     if args.save:

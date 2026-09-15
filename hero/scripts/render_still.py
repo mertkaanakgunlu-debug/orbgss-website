@@ -31,6 +31,11 @@ def main() -> None:
     parser.add_argument("--frame", type=int, default=None)
     parser.add_argument("--out", default=None)
     parser.add_argument(
+        "--aoi-fixture",
+        default=None,
+        help="override the AOI fixture named in aoi_injection_interface.active_fixture",
+    )
+    parser.add_argument(
         "--evidence",
         action="store_true",
         help="write into hero/evidence/ as a bounded, committed review artifact",
@@ -46,7 +51,9 @@ def main() -> None:
     else:
         out = hc.RENDERS_DIR / "still" / (args.scene + "_" + args.profile + suffix + ".png")
 
-    record = render_core.render_still(args.scene, args.profile, out, frame=args.frame)
+    record = render_core.render_still(
+        args.scene, args.profile, out, frame=args.frame, aoi_fixture=args.aoi_fixture
+    )
     print(json.dumps(record, indent=2))
 
     if args.record:

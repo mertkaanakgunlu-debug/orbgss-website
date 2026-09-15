@@ -8,7 +8,17 @@ Canonical authority: `docs/WEB_HERO_001_AUTHORITY.md` and the linked Drive CURRE
 
 `WEB-HERO-001` is pre-data. Build the scene, Earth, satellite, orbit, AOI geometry, scan system and continuous animatic here. Do not integrate the live homepage or fabricate scientific layers.
 
-`WEB-HERO-001A` established the scaffold below. There is no Earth, satellite or AOI geometry yet — only a neutral scene used to benchmark the pipeline.
+`WEB-HERO-001A` established the scaffold below. `WEB-HERO-001B` added the Earth, atmosphere, satellite, starfield and establishing camera move. `WEB-HERO-001C` added the surface-conforming AOI acquisition system described under [AOI system](#aoi-system).
+
+Scenes, in the order they were built:
+
+| scene | phase | frames | what it is |
+| --- | --- | --- | --- |
+| `benchmark_neutral` | 001A | 1 | neutral pipeline benchmark; measures throughput, expresses no art direction |
+| `hero_earth_orbit` | 001B | 1–120 | Earth, atmosphere, satellite, starfield, establishing move |
+| `hero_aoi_acquisition` | 001C | 1–240 | `extends` the above, continues the same move into acquisition and regional approach, adds the AOI system |
+
+`hero_aoi_acquisition` inherits `hero_earth_orbit` through `extends` rather than copying it, so the accepted Earth/satellite/camera system has exactly one definition. Frames 1–120 reuse the 001B camera keyframes verbatim.
 
 ## Isolation rule
 
@@ -25,7 +35,8 @@ hero/
     scene.json            palette, camera defaults, scene definitions, AOI injection interface
     render_profiles.json  render profiles, aspect contract, device preference order
   scripts/
-    hero_common.py        paths, config loading, hashing (no bpy; importable by plain Python)
+    hero_common.py        paths, config loading, scene inheritance, hashing (no bpy)
+    aoi_system.py         AOI coordinate math and sampling (no bpy; shared by builder and validator)
     build_scene.py        Blender: build a scene from scene.json
     render_core.py        Blender: profile application + truthful device selection
     render_preview.py     Blender: fast iteration render entrypoint
@@ -33,6 +44,9 @@ hero/
     run_benchmark.py      Blender: all benchmark profiles in one session
     probe_env.py          Blender: record version, Python, render devices
     validate_hero.py      plain Python: workspace contract validation
+    audit_aoi.py          Blender: measure built AOI geometry in world space, per frame
+    compare_renders.py    Blender: pixel-difference two renders (reproducibility evidence)
+    contact_sheet.py      Blender: tile frames into one reviewable sheet
   assets/
     manifest.json         asset rights/provenance/checksum record
     source/               materialized source assets (ignored)
@@ -81,6 +95,74 @@ To inspect a scene interactively, build a working `.blend` and open it:
 
 The working `.blend` is generated output, not source authority: rebuild it rather than committing it.
 
+## AOI system
+
+The AOI is configuration-driven and surface-conforming. It is generated entirely from
+`aoi_injection_interface` in `scene.json`; no footprint coordinate is modelled by hand.
+
+`hero/scripts/aoi_system.py` owns every coordinate conversion and holds no `bpy` import, so
+the validator checks the same numbers the renderer uses without launching Blender.
+
+**Geometry.** Corners come from the spherical destination formula applied to the configured
+centre, span and bearing. Edges and the interior are sampled by slerp between unit vectors and
+scaled by one radius, so conformance to the sphere is true by construction rather than by
+tuning — measured worst-case radial deviation is sub-metre, and that residual is single-precision
+transform error, not approximation. Border and corner-lock ribbons are widened by rotating each
+sample *within its own tangent plane*, which keeps both rails on the sphere.
+
+**Registration.** The AOI is parented to the Earth, so footprint, corner locks and per-corner
+target empties ride the globe's rotation. Beams are not keyframed: each beam is a unit-length
+tapered tube with a Copy Location constraint on the satellite and a Stretch To constraint on its
+corner empty. A beam endpoint is therefore *derived* from the AOI at every frame rather than being
+a constant that happens to match on one. The validator rejects any literal coordinate inside an
+`aoi_system` spec for exactly this reason.
+
+**Scan sweep.** The interior mesh carries AOI-local `(u, v)` in its UV layer, and the sweep is a
+band travelling through that parameter space on a mesh that is itself on the sphere. It cannot
+detach from the globe however the camera moves.
+
+**Configurability.** `active_fixture` selects a fixture; `--aoi-fixture` overrides it on any
+build or render entrypoint. Two design fixtures ship, deliberately differing in centre,
+hemisphere, span, bearing and sampling density:
+
+```powershell
+& $env:BLENDER -b -P hero/scripts/render_preview.py -- --scene hero_aoi_acquisition --aoi-fixture design_secondary --frame 130
+& $env:BLENDER -b -P hero/scripts/audit_aoi.py -- --scene hero_aoi_acquisition --aoi-fixture design_secondary
+```
+
+**Pre-data.** Both fixtures are neutral design placeholders carrying no measurement meaning. The
+footprint interior shows only a faint cyan wash, a slightly denser already-swept region and the
+sweep band. Nothing in it encodes a measured quantity, and there is no legend, scale or
+classification anywhere in the scene.
+
+## Geometry audit
+
+`validate_hero.py` checks the AOI *contract* from configuration. `audit_aoi.py` checks the other
+half — that the geometry Blender actually evaluates, after parenting, Earth rotation, satellite
+animation and the beam constraints, still sits where the configuration says:
+
+```powershell
+& $env:BLENDER -b -P hero/scripts/audit_aoi.py -- --scene hero_aoi_acquisition --out hero/evidence/aoi_geometry_audit_design_primary.json
+```
+
+It reports, per frame: worst radial deviation of every AOI vertex from the configured sphere,
+each beam's tip-to-corner and root-to-satellite error, measured footprint edge lengths, surface
+clearance and sweep position. Its tolerances are an absolute floor plus a relative term sized to
+single-precision transform error at planetary scale — an absolute sub-metre bound would be testing
+float32, not the implementation, and the tolerances still sit three or more orders of magnitude
+below any real registration defect.
+
+## Reproducibility of renders
+
+The Cycles + OptiX-denoise GPU path is **not** bit-reproducible on this machine: two renders of
+one unchanged scene, from the same commit, produce different file hashes. A checksum therefore
+cannot answer "did this change alter an earlier phase's render?".
+
+Measure instead. `compare_renders.py` reports pixel differences in 8-bit channel levels; compare
+a rebuild-versus-committed difference against the renderer's own noise floor (one unchanged scene
+rendered twice). `hero/evidence/phase_ab_reproducibility.json` records that check for
+WEB-HERO-001C. Do not replace it with a checksum comparison.
+
 ## Render profiles
 
 | profile | role | engine | resolution | samples | committed |
@@ -98,6 +180,13 @@ Blender's `render.engine`, `compute_device_type` and `cycles.denoiser` are dynam
 ## Validation
 
 `py -3.14 hero/scripts/validate_hero.py` fails on a missing scaffold, unparseable or inconsistent configuration, a broken aspect or profile contract, a structurally invalid rights manifest, a scientific layer declared while the lane is pre-data, generated output promoted to source authority, and any drift in the protected public-site paths.
+
+It also enforces the WEB-HERO-001C AOI contract: every generated point on the configured sphere,
+a surface offset small enough to be a z-fighting guard rather than an altitude, four uniquely
+named corners, footprint edges measuring the configured span, boundary sampling dense enough that
+a drawn chord stays within 50 m of the arc it replaces, beams that target the AOI system instead
+of a fixed point, no literal coordinate inside an `aoi_system` spec, and at least two fixtures
+that resolve to genuinely different footprints.
 
 Run it before and after every change in this lane.
 

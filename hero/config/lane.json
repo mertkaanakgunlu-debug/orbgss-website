@@ -1,12 +1,14 @@
 {
   "schema_version": 1,
-  "phase": "WEB-HERO-001B",
+  "phase": "WEB-HERO-001C",
   "lane": "WEB-HERO-001",
   "branch": "feat/web-hero-001-predata-scene",
   "baseline_commit": "677bfa7672ac18c2c808ddaaf235ff12863de443",
   "data_state": "pre_data",
   "write_surface": {
-    "allowed_prefixes": ["hero/"],
+    "allowed_prefixes": [
+      "hero/"
+    ],
     "allowed_bounded_files": [
       "STATUS.md",
       "CLAUDE.md",
