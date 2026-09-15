@@ -4,8 +4,9 @@
 **Canonical repository:** `mertkaanakgunlu-debug/orbgss-website`.  
 **Reference/upstream only:** `baran-orbgss/website`.  
 **Accepted WEB-001 head:** `677bfa7672ac18c2c808ddaaf235ff12863de443`.  
+**Accepted WEB-002 implementation head:** `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`.  
 **Current tracking:** Linear MER-90 — WEB-002 — Evidence-to-Intelligence Product Proof & Geothermal Pilot Experience.  
-**Status:** WEB-001 accepted; independent repository migration complete; WEB-002 implementation reached `REVIEW_READY` at `854c37f6321689c03aeaaa8f2c049bee7a2e09cc` and is now `IN_PROGRESS — PRODUCT_REVIEW_REVISION_REQUIRED`. Product review found bounded conformant defects only; no new Product/Science decision and no second CTO start gate are required. MER-96 / GEO-WEB-001 is resolved. Canonical package: `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`; exact contract: `tasks/WEB-002_PRODUCT_PROOF.md`; exact review findings are published on Linear MER-90. Website implementation in this workstream proceeds directly through Claude Code Desktop under Product authority; E&D is reserved for the post-Control-Plane semi-automated/headless Claude execution flow. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for everything they cover that is not restated here (imagery rules, palette, on-image labels, logo, claim discipline).
+**Status:** WEB-001 and WEB-002 are accepted/complete. WEB-002 passed Product terminal review after one bounded conformant revision; no Product/Science semantic change was required. MER-96 / GEO-WEB-001 is resolved. Canonical package: `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`; exact implementation contract: `tasks/WEB-002_PRODUCT_PROOF.md`. Website implementation in this workstream proceeds directly through Claude Code Desktop under Product authority; E&D is reserved for the post-Control-Plane semi-automated/headless Claude execution flow. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for everything they cover that is not restated here (imagery rules, palette, on-image labels, logo, claim discipline).
 
 ## 1. Brand hierarchy
 
@@ -113,8 +114,7 @@ This supersedes the `Home → Solutions → About → Partner With Us` order rec
 - Publication alone never starts a new WEB task; each new task requires deliberate CTO start approval.
 - Current OrbGSS website vNext implementation proceeds directly through **Claude Code Desktop** in this Product project. Product publishes authority; CTO dispatches the short task/continuation prompt to Claude Desktop; Claude Desktop owns routine implementation, tests, evidence and bounded conformant revision through `REVIEW_READY`.
 - **Execution & Delivery is not the dispatch/revision bridge for this current website workstream.** E&D remains reserved for the post-Control-Plane semi-automated/headless Claude Code communication and execution model.
-- WEB-002 already received start approval. The MER-96 Science dependency is resolved; Claude Code Desktop continues on the same branch without a second CTO start gate.
-- Product review at implementation HEAD `854c37f6321689c03aeaaa8f2c049bee7a2e09cc` found only bounded conformant defects already required by the existing task: scientific raster rendering must not be visually transformed, same-ground framing must remain consistent, all mandatory warning semantics must be visibly covered, and stale repository/public fallback copy must be reconciled. Exact findings are on MER-90; this does not alter Product/Science semantics or scope.
+- WEB-002 received deliberate start approval, resolved MER-96, reached `REVIEW_READY`, completed one bounded Product review revision, and is accepted at implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`. The accepted revision preserves governed scientific rendering, one-ground framing, mandatory warning coverage and truthful fallback/provenance copy.
 - Product re-enters only for a genuine new Product/Science/high-risk semantic decision, scope/architecture/UX-policy/dependency/security change, or other STOP condition defined by the exact task.
 
 ## 10. Task sequence
@@ -124,7 +124,8 @@ WEB-001 → WEB-002 → WEB-003 → WEB-004 → WEB-005 → WEB-006
 ```
 
 - **WEB-001** — information architecture, visual foundation, homepage shell — **ACCEPTED / COMPLETE** at `677bfa7672ac18c2c808ddaaf235ff12863de443`.
-- **WEB-002** — real evidence / product-proof imagery and geothermal proof experience — exact contract: `tasks/WEB-002_PRODUCT_PROOF.md`; **IN_PROGRESS / PRODUCT_REVIEW_REVISION_REQUIRED** after implementation `854c37f6321689c03aeaaa8f2c049bee7a2e09cc`.
-- **WEB-003, WEB-004** — blocked behind WEB-002 under the published dependency chain.
+- **WEB-002** — real evidence / product-proof imagery and geothermal proof experience — **ACCEPTED / COMPLETE** at implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; exact contract: `tasks/WEB-002_PRODUCT_PROOF.md`.
+- **WEB-003** — public-site depth, credibility, conversion and bilingual content — next planned task; not started until deliberate CTO approval.
+- **WEB-004** — responsive, accessibility, performance and hosted preview acceptance — blocked behind WEB-003.
 - **WEB-005** — cinematic Earth/satellite hero (motion, WebM/MP4). Deferred; the current hero remains a static poster designed to be replaced without changing surrounding architecture.
 - **WEB-006** — production DNS cutover (`orbgss.com` via Squarespace → Vercel). Deferred; no DNS or production-domain change before then. Google Workspace MX/SPF/DKIM/DMARC are never touched by ordinary website work.
