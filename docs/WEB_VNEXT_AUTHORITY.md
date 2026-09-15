@@ -5,7 +5,7 @@
 **Reference/upstream only:** `baran-orbgss/website`.  
 **Accepted WEB-001 head:** `677bfa7672ac18c2c808ddaaf235ff12863de443`.  
 **Current tracking:** Linear MER-90 — WEB-002 — Evidence-to-Intelligence Product Proof & Geothermal Pilot Experience.  
-**Status:** WEB-001 accepted; independent repository migration complete; WEB-002 was deliberately started, correctly stopped before feature code for the Science/public-safe asset dependency, and is now `IN_PROGRESS — EXECUTION_CONTINUATION_READY`. MER-96 / GEO-WEB-001 is resolved. Canonical package: `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`; exact resumed contract: `tasks/WEB-002_PRODUCT_PROOF.md`. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for everything they cover that is not restated here (imagery rules, palette, on-image labels, logo, claim discipline).
+**Status:** WEB-001 accepted; independent repository migration complete; WEB-002 was deliberately started, correctly stopped before feature code for the Science/public-safe asset dependency, and is now `IN_PROGRESS — CLAUDE_DESKTOP_CONTINUATION_READY`. MER-96 / GEO-WEB-001 is resolved. Canonical package: `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`; exact resumed contract: `tasks/WEB-002_PRODUCT_PROOF.md`. Website implementation in this workstream proceeds directly through Claude Code Desktop under Product authority; E&D is reserved for the post-Control-Plane semi-automated/headless Claude execution flow. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for everything they cover that is not restated here (imagery rules, palette, on-image labels, logo, claim discipline).
 
 ## 1. Brand hierarchy
 
@@ -111,8 +111,10 @@ This supersedes the `Home → Solutions → About → Partner With Us` order rec
 - No analytics, auth, CRM, backend, billing or production deployment inside website tasks unless a task says so.
 - Each task publishes its contract under `tasks/` before implementation code is written.
 - Publication alone never starts a new WEB task; each new task requires deliberate CTO start approval.
-- WEB-002 already received start approval. The MER-96 Science dependency is resolved; implementation resumes on the same branch without a second CTO start gate.
-- After this Product reconciliation, routine implementation, export materialization, provenance recording, visual polish, tests and bounded fixes remain E&D/implementer-owned until `REVIEW_READY`, unless a genuine new Product/Science/high-risk decision is required.
+- Current OrbGSS website vNext implementation proceeds directly through **Claude Code Desktop** in this Product project. Product publishes authority; CTO dispatches the short task/continuation prompt to Claude Desktop; Claude Desktop owns routine implementation, tests, evidence and bounded conformant revision through `REVIEW_READY`.
+- **Execution & Delivery is not the dispatch/revision bridge for this current website workstream.** E&D remains reserved for the post-Control-Plane semi-automated/headless Claude Code communication and execution model.
+- WEB-002 already received start approval. The MER-96 Science dependency is resolved; Claude Code Desktop resumes on the same branch without a second CTO start gate.
+- Product re-enters only for a genuine new Product/Science/high-risk semantic decision, scope/architecture/UX-policy/dependency/security change, or other STOP condition defined by the exact task.
 
 ## 10. Task sequence
 
@@ -121,7 +123,7 @@ WEB-001 → WEB-002 → WEB-003 → WEB-004 → WEB-005 → WEB-006
 ```
 
 - **WEB-001** — information architecture, visual foundation, homepage shell — **ACCEPTED / COMPLETE** at `677bfa7672ac18c2c808ddaaf235ff12863de443`.
-- **WEB-002** — real evidence / product-proof imagery and geothermal proof experience — exact contract: `tasks/WEB-002_PRODUCT_PROOF.md`; **IN_PROGRESS / EXECUTION_CONTINUATION_READY** after MER-96 resolution.
+- **WEB-002** — real evidence / product-proof imagery and geothermal proof experience — exact contract: `tasks/WEB-002_PRODUCT_PROOF.md`; **IN_PROGRESS / CLAUDE_DESKTOP_CONTINUATION_READY** after MER-96 resolution.
 - **WEB-003, WEB-004** — blocked behind WEB-002 under the published dependency chain.
 - **WEB-005** — cinematic Earth/satellite hero (motion, WebM/MP4). Deferred; the current hero remains a static poster designed to be replaced without changing surrounding architecture.
 - **WEB-006** — production DNS cutover (`orbgss.com` via Squarespace → Vercel). Deferred; no DNS or production-domain change before then. Google Workspace MX/SPF/DKIM/DMARC are never touched by ordinary website work.
