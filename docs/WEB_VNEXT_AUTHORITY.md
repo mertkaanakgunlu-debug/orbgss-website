@@ -1,11 +1,11 @@
 # OrbGSS website vNext — repository-local authority
 
-**Source of truth:** CURRENT — OrbGSS Website vNext Product & Execution Authority v1.3 (product-owned).  
+**Source of truth:** CURRENT — OrbGSS Website vNext Product & Execution Authority v1.4 (product-owned).  
 **Canonical repository:** `mertkaanakgunlu-debug/orbgss-website`.  
 **Reference/upstream only:** `baran-orbgss/website`.  
 **Accepted WEB-001 head:** `677bfa7672ac18c2c808ddaaf235ff12863de443`.  
 **Current tracking:** Linear MER-90 — WEB-002 — Evidence-to-Intelligence Product Proof & Geothermal Pilot Experience.  
-**Status:** WEB-001 accepted; independent repository migration complete; WEB-002 authority published on `feat/web-002-product-proof`; implementation requires deliberate CTO start approval. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for everything they cover that is not restated here (imagery rules, palette, on-image labels, logo, claim discipline).
+**Status:** WEB-001 accepted; independent repository migration complete; WEB-002 was deliberately started and stopped before feature code at `WAITING_DOMAIN_DECISION — Science & Geospatial public-safe asset/pointer required`. Cross-domain request: Linear MER-96 / `docs/WEB-002_SCIENCE_ASSET_REQUEST.md`. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for everything they cover that is not restated here (imagery rules, palette, on-image labels, logo, claim discipline).
 
 ## 1. Brand hierarchy
 
@@ -47,7 +47,7 @@ Prohibited: SaaS card grids, icon walls, dense feature tables, fake GIS dashboar
 
 ## 4. Narrative: evidence to intelligence
 
-Homepage story order (WEB-001 onward):
+Homepage story order:
 
 1. Hero
 2. 01 — Platform / Observe
@@ -61,20 +61,36 @@ Homepage story order (WEB-001 onward):
 
 Each numbered story section keeps the beam → visual rhythm. The story is what the sequence communicates; the gallery is how it is shown.
 
-## 5. Scientific and public-claim boundaries
+## 5. WEB-002 Science alignment
+
+Accepted Science authority already defines the active MVP score. Website work must present that authority, not reinvent it.
+
+- Active profile: `mvp_remote_sensing_priority_v1`.
+- Public meaning: **Remote-Sensing Relative Priority — Experimental Baseline**.
+- It is a deterministic 0–100 within-AOI screening/ranking surface.
+- It is **not** probability, Full Prospectivity, reserve estimate, discovery likelihood, drilling-success likelihood, or a calibrated cross-AOI score.
+- Mandatory numeric evidence is the accepted remote-sensing core: THM-01 thermal plus ALT-01/ALT-02 broad spectral alteration proxies under ADR-0033.
+- Sentinel alteration must never be described as mineral/kaolinite identification or proof of hydrothermal alteration.
+- NASADEM elevation/slope/hillshade are context/display layers only; no universal geothermal-favourability direction is assigned.
+- Structural/geological evidence is optional support and score-invariant. When authoritative public-safe structural/geological context is unavailable, the website must show an explicit optional-support/data-gap state rather than fabricate faults or lithology.
+
+Canonical Science pointers are ADR-0033, GEO-037 / MER-32, GEO-039 / MER-40 and GEO-042 / MER-50. Exact WEB-002 presentation and asset requirements are governed by `tasks/WEB-002_PRODUCT_PROOF.md` and `docs/WEB-002_SCIENCE_ASSET_REQUEST.md`.
+
+## 6. Scientific and public-claim boundaries
 
 - Do not fabricate DEM, thermal, alteration, geological, fault or score outputs. Temporary atmospheric imagery must never be labelled as one of those.
-- Real evidence / product-proof visuals are owned by WEB-002. Each real public visual must have a traceable accepted/public-safe source pointer or be explicitly marked as a design mockup that cannot be confused with measured evidence.
-- Scientific meaning remains owned by canonical Science authority. Product presentation must not redefine CRS/grid/units/NoData/mask, resampling, feature eligibility, validation semantics, uncertainty or score interpretation.
-- Never publish unsupported customer counts, enterprise partners, revenue, ROI, exploration accuracy, AI/model-performance claims, false production deployments, or claims that OrbGSS replaces field investigation.
+- Real evidence / product-proof visuals are owned by WEB-002 and require exact accepted/public-safe source pointers, provenance/rights and truthful labels.
+- Scientific meaning remains owned by canonical Science authority. Product presentation must not redefine CRS/grid/units/NoData/mask, resampling, feature eligibility, validation semantics, uncertainty, score interpretation, weights or thresholds.
+- Do not publish paid/closed/restricted MTA data without separate explicit authority.
+- Never publish unsupported customer counts, enterprise partners, revenue, ROI, exploration accuracy, AI/model-performance claims, false production deployments, validation/discovery/reserve/drilling-success claims, or claims that OrbGSS replaces field investigation.
 - Trust language is restrained and truthful: traceable provenance, explicit data gaps, evidence-based outputs, decision support, field investigation remains necessary.
-- Imagery provenance rules in `IMAGERY_RIGHTS.md` and `assets/imagery/sources.json` are unchanged and mandatory.
+- Imagery provenance rules in `IMAGERY_RIGHTS.md` and `assets/imagery/sources.json` remain mandatory.
 
-## 6. Language
+## 7. Language
 
 EN is the default, TR is the second language, both served from the `I18N` dictionary in `script.js`. A visible string is not done until both languages exist. Turkish is professional, natural Turkish, not literal translation.
 
-## 7. Navigation (vNext)
+## 8. Navigation (vNext)
 
 Desktop, right-aligned, in this order:
 
@@ -86,22 +102,23 @@ Desktop, right-aligned, in this order:
 
 This supersedes the `Home → Solutions → About → Partner With Us` order recorded in `docs/DESIGN_AUTHORITY.md` and `CLAUDE.md`.
 
-## 8. Execution rules
+## 9. Execution rules
 
 - **No feature work on `main`.** All vNext work lands on feature branches and is reviewed before merge/acceptance.
 - Static HTML + CSS + vanilla JavaScript remains the architecture. A framework or dependency change requires Product approval.
 - No analytics, auth, CRM, backend, billing or production deployment inside website tasks unless a task says so.
 - Each task publishes its contract under `tasks/` before implementation code is written.
-- Publication alone never starts implementation; each WEB task requires deliberate CTO start approval.
+- Publication alone never starts a new WEB task; each new task requires deliberate CTO start approval.
+- WEB-002 has already received start approval. Once MER-96 resolves the Science asset dependency, WEB-002 resumes on the same branch without a second CTO start gate.
 
-## 9. Task sequence
+## 10. Task sequence
 
 ```text
 WEB-001 → WEB-002 → WEB-003 → WEB-004 → WEB-005 → WEB-006
 ```
 
 - **WEB-001** — information architecture, visual foundation, homepage shell — **ACCEPTED / COMPLETE** at `677bfa7672ac18c2c808ddaaf235ff12863de443`.
-- **WEB-002** — real evidence / product-proof imagery and geothermal proof experience — exact contract: `tasks/WEB-002_PRODUCT_PROOF.md`; **READY_FOR_CTO_APPROVAL**.
-- **WEB-003, WEB-004** — subsequent vNext tasks as defined by the Product authority.
-- **WEB-005** — cinematic Earth/satellite hero (motion, WebM/MP4). **Deferred; the current hero remains a static poster designed to be replaced without changing surrounding architecture.**
-- **WEB-006** — production DNS cutover (`orbgss.com` via Squarespace → Vercel). **Deferred; no DNS or production-domain change before then. Google Workspace MX/SPF/DKIM/DMARC are never touched by ordinary website work.**
+- **WEB-002** — real evidence / product-proof imagery and geothermal proof experience — exact contract: `tasks/WEB-002_PRODUCT_PROOF.md`; **WAITING_DOMAIN_DECISION** on MER-96 public-safe Science asset package.
+- **WEB-003, WEB-004** — blocked behind WEB-002 under the published dependency chain.
+- **WEB-005** — cinematic Earth/satellite hero (motion, WebM/MP4). Deferred; the current hero remains a static poster designed to be replaced without changing surrounding architecture.
+- **WEB-006** — production DNS cutover (`orbgss.com` via Squarespace → Vercel). Deferred; no DNS or production-domain change before then. Google Workspace MX/SPF/DKIM/DMARC are never touched by ordinary website work.
