@@ -1,11 +1,12 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v0.7.0-web-002-product-proof` (branch `feat/web-002-product-proof`, REVIEW_READY, not merged)
+**Canonical version:** `v0.7.1-web-002-review-revision` — WEB-002 accepted
 **Date:** 2026-09-15
-**Stage:** WEB-002 product proof implemented and revised after Product review — story panels 01–06 carry real OrbGSS cartographic exports of the Kızıldere pilot AOI, or an explicit data gap; awaiting review
+**Stage:** WEB-002 product proof accepted after bounded Product review revision; WEB-003 is next planned task and is not started
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
-**Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website (accepted `main`: `677bfa7`; WEB-002 on `feat/web-002-product-proof`)
+**Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
+**Accepted WEB-002 implementation HEAD:** `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`
 **Reference/upstream only:** https://github.com/baran-orbgss/website
 **Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)
 **Registrar / DNS:** Squarespace
@@ -13,13 +14,13 @@
 **Company:** VirgaSoft
 **Product:** OrbGSS — Orbital Geo-Spatial Solutions
 **Product authority:** OrbGSS Website vNext Product & Execution Authority v1.5 (`docs/WEB_VNEXT_AUTHORITY.md`)
-**Tracking:** Linear MER-90 (WEB-002); MER-96 / GEO-WEB-001 resolved; Product review revision applied on top of implementation `854c37f`
+**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-96 / GEO-WEB-001 resolved
 
 ## Authority
 
-`docs/WEB_VNEXT_AUTHORITY.md` is the repository-local summary of the product-owned *OrbGSS Website vNext Product & Execution Authority v1.2*. Where it disagrees with `docs/DESIGN_AUTHORITY.md` or `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`, it wins for vNext work. The active task contract is `tasks/WEB-001_VNEXT_FOUNDATION.md`.
+`docs/WEB_VNEXT_AUTHORITY.md` is the repository-local summary of the product-owned *OrbGSS Website vNext Product & Execution Authority v1.5*. Where it disagrees with `docs/DESIGN_AUTHORITY.md` or `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`, it wins for vNext work. WEB-002 is terminally accepted under `tasks/WEB-002_PRODUCT_PROOF.md`; the next planned contract is WEB-003 and must not be started without deliberate CTO approval.
 
-## Current state (WEB-002)
+## Current state (WEB-002 accepted)
 
 The homepage tells the evidence-to-intelligence story on one real area of interest. The rhythm is
 unchanged — dark technical beam → large full-width visual panel — but every story panel now shows
@@ -82,14 +83,13 @@ OrbGSS is a geospatial-intelligence platform. Geothermal Exploration is the firs
 ## Production blockers
 
 1. Confirm `contact@orbgss.com` before public launch.
-2. WEB-001 accepted at `677bfa7`; no feature work on `main`.
-3. WEB-002 review and merge.
-4. Vercel preview from the GitHub repository (explicit authorization for the Vercel write).
-5. WEB-006 only: connect `orbgss.com` / `www.orbgss.com` through Squarespace DNS, preserving Google Workspace MX/SPF/DKIM/DMARC.
+2. WEB-003, WEB-004 and WEB-005 remain incomplete.
+3. Vercel preview/acceptance is owned by WEB-004.
+4. WEB-006 only: connect `orbgss.com` / `www.orbgss.com` through Squarespace DNS, preserving Google Workspace MX/SPF/DKIM/DMARC.
 
 ## Next canonical task
 
-WEB-002 is REVIEW_READY on `feat/web-002-product-proof`. After review and merge: `WEB-003` (site depth). WEB-005 (cinematic hero) and WEB-006 (DNS cutover) remain deferred. Do not start WEB-003 on this branch.
+WEB-002 is **ACCEPTED / COMPLETE** at implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`. The next planned task is WEB-003 (public-site depth, credibility, conversion and bilingual content). Publication/preparation may occur under Product ownership, but implementation does not start without deliberate CTO approval. WEB-005 (cinematic hero) and WEB-006 (DNS cutover) remain deferred.
 
 ## History
 
@@ -99,3 +99,4 @@ WEB-002 is REVIEW_READY on `feat/web-002-product-proof`. After review and merge:
 - WEB-001 (2026-09-15): vNext authority published; homepage shell, story sections, pilot ledger, company/trust, contact; navigation and hero renewed; validator extended. Accepted at `677bfa7`.
 - WEB-002 (2026-09-15): Science package MER-96 resolved; seven GEO-039 proof exports materialized and published with checksummed provenance; evidence layer switch; structure/geology data-gap state; validator now verifies proof provenance.
 - WEB-002 review revision (2026-09-15): removed CSS colour/contrast/opacity transforms from the scientific rasters and the score ramp; unified AOI framing across all story panels; restored THM-01 warning semantics in EN/TR and in the static HTML; reconciled the no-JS footer attribution and the two asset-class policies; validator now enforces visible warning coverage.
+- WEB-002 terminal Product acceptance (2026-09-15): accepted implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; no new Science/Product semantics introduced.
