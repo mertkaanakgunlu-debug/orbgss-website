@@ -12,7 +12,7 @@ Collection 2 Level-2 archive (anonymous, read-only). The pixels are USGS
 products; only the crop, contrast stretch and JPEG encoding are OrbGSS work.
 
 Usage:
-    python scripts/build_imagery.py                 # build all four scenes
+    python scripts/build_imagery.py                 # build every recorded scene
     python scripts/build_imagery.py crater-lake-2023
     python scripts/build_imagery.py --scale 3 --out preview/   # quick 90 m previews
 
@@ -172,7 +172,10 @@ def main() -> int:
     args = parser.parse_args()
 
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    scenes = manifest["scenes"]
+    # GEO-WEB-002: the Kizildere AOI natural-colour context master is built by this same
+    # pipeline from the same ``production`` grammar, but it lives in its own package block
+    # because it is published for WEB-005 rather than placed on the homepage today.
+    scenes = manifest["scenes"] + manifest.get("geo_web_002", {}).get("context_scenes", [])
     if args.scenes:
         scenes = [s for s in scenes if s["id"] in args.scenes]
         unknown = set(args.scenes) - {s["id"] for s in scenes}

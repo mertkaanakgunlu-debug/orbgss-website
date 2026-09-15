@@ -538,11 +538,131 @@ def main() -> int:
             if f"<loc>{url}</loc>" not in sitemap_text:
                 fail(f"sitemap.xml is missing {url!r}", errors)
 
+    # ------------------------------------------------------------------
+    # GEO-WEB-002 / MER-102: the final homepage visual master package. These assets are published
+    # for WEB-005 and are deliberately not placed on any route yet, so the checks here are about
+    # the publication record itself — every shipped file recorded, checksummed and byte-sized;
+    # every asset declaring its role, rights, attribution, warning and maximum safe rendered size;
+    # and no derivative wider than the size its own record says is honest.
+    # ------------------------------------------------------------------
+    package = manifest.get("geo_web_002", {})
+    package_paths: set[str] = set()
+    if package:
+        for key in ("task", "state", "consumer", "package_document", "presentation_authority",
+                    "science_authority", "scoring_identity", "rule", "resolution_rule",
+                    "context_scenes", "assets"):
+            if not package.get(key):
+                fail(f"geo_web_002 package missing field: {key}", errors)
+        doc = str(package.get("package_document", ""))
+        if doc and not (ROOT / doc).exists():
+            fail(f"geo_web_002 package_document does not exist: {doc}", errors)
+
+        for asset in package.get("assets", []):
+            aid = asset.get("id", "<unknown>")
+            for key in ("id", "homepage_act", "public_role", "scientific_state", "asset_class",
+                        "public_label", "derivation", "max_safe_rendered_px", "rights_basis",
+                        "attribution_requirement", "mandatory_warning", "derivatives"):
+                if not asset.get(key):
+                    fail(f"geo_web_002 asset {aid!r} missing field: {key}", errors)
+            if asset.get("public_role") not in {"context", "evidence", "derived score"}:
+                fail(f"geo_web_002 asset {aid!r} must state whether it is context, evidence or "
+                     f"a derived score, not {asset.get('public_role')!r}", errors)
+            if not asset.get("derivation", {}).get("no_upscale"):
+                fail(f"geo_web_002 asset {aid!r} does not declare derivation.no_upscale", errors)
+
+            # Class B assets are cartographic exports: master pointer and master checksum are the
+            # provenance, exactly as for the accepted WEB-002 proof assets.
+            if str(asset.get("asset_class", "")).startswith("B"):
+                export = asset.get("export", {})
+                for key in ("export_id", "export_manifest", "master_file", "master_sha256",
+                            "master_dimensions", "renderer_revision", "plan_sha256"):
+                    if not export.get(key):
+                        fail(f"geo_web_002 asset {aid!r} missing export.{key}", errors)
+                master = str(export.get("master_sha256", ""))
+                if not re.fullmatch(r"[0-9a-f]{64}", master):
+                    fail(f"geo_web_002 asset {aid!r} master_sha256 is not a sha256 digest", errors)
+                for key in ("layer_ids", "source_project", "grid", "style_id"):
+                    if not asset.get(key):
+                        fail(f"geo_web_002 asset {aid!r} missing field: {key}", errors)
+            else:
+                master = asset.get("master", {})
+                for key in ("file", "format", "dimensions", "bytes", "sha256"):
+                    if not master.get(key):
+                        fail(f"geo_web_002 asset {aid!r} missing master.{key}", errors)
+                master_file = str(master.get("file", ""))
+                master_path = ROOT / master_file
+                if not master_file or not master_path.exists():
+                    fail(f"geo_web_002 asset {aid!r} master file is missing: {master_file}", errors)
+                else:
+                    # A class-A master ships in this repository, so its checksum is verifiable
+                    # here — unlike a class-B cartographic master, which stays in the Science
+                    # repository and is pinned by its own export manifest.
+                    actual_master = sha256_of(master_path)
+                    if str(master.get("sha256", "")) != actual_master:
+                        fail(f"geo_web_002 asset {aid!r} master checksum mismatch for "
+                             f"{master_file}", errors)
+                    if master.get("bytes") not in (None, master_path.stat().st_size):
+                        fail(f"geo_web_002 asset {aid!r} master byte size mismatch for "
+                             f"{master_file}", errors)
+
+            safe = asset.get("max_safe_rendered_px", {})
+            for key in ("device_px", "basis"):
+                if not safe.get(key):
+                    fail(f"geo_web_002 asset {aid!r} missing max_safe_rendered_px.{key}", errors)
+            ceiling = safe.get("device_px")
+
+            for deriv in asset.get("derivatives", []):
+                rel = str(deriv.get("path", ""))
+                if not rel:
+                    fail(f"geo_web_002 asset {aid!r} has a derivative without a path", errors)
+                    continue
+                package_paths.add(rel)
+                for key in ("role", "width", "height", "format", "operation", "bytes", "sha256"):
+                    if deriv.get(key) in (None, ""):
+                        fail(f"geo_web_002 derivative {rel} missing field: {key}", errors)
+                path = ROOT / rel
+                if not path.exists():
+                    fail(f"geo_web_002 derivative missing from repository: {rel}", errors)
+                    continue
+                recorded = str(deriv.get("sha256", ""))
+                actual = sha256_of(path)
+                if recorded != actual:
+                    fail(f"geo_web_002 derivative checksum mismatch for {rel}: "
+                         f"manifest {recorded[:12]}… != file {actual[:12]}…", errors)
+                if deriv.get("bytes") not in (None, path.stat().st_size):
+                    fail(f"geo_web_002 derivative byte size mismatch for {rel}", errors)
+                # The whole point of the package: never ship a derivative wider than the size the
+                # asset itself declares honest, or the softness WEB-005 must avoid is baked in.
+                if isinstance(ceiling, int) and deriv.get("role", "").startswith(("panel", "act2")):
+                    if int(deriv.get("width", 0)) > ceiling:
+                        fail(f"geo_web_002 derivative {rel} is {deriv.get('width')} px wide but "
+                             f"{aid!r} declares a {ceiling} px ceiling", errors)
+
+        # The Act-2 context scene is rebuilt by scripts/build_imagery.py from its own production
+        # block, so its derivative list must stay identical to the one published in the asset
+        # record; two divergent copies of the same provenance would be worse than one.
+        for scene in package.get("context_scenes", []):
+            sid = scene.get("id", "<unknown>")
+            for key in ("id", "role", "location", "coordinates", "acquired", "sensor",
+                        "source_data", "local_file", "production"):
+                if not scene.get(key):
+                    fail(f"geo_web_002 context scene {sid!r} missing field: {key}", errors)
+            local = str(scene.get("local_file", ""))
+            if local and not (ROOT / local).exists():
+                fail(f"geo_web_002 context master is missing: {local}", errors)
+            linked = [a for a in package.get("assets", []) if a.get("context_scene_id") == sid]
+            for asset in linked:
+                if asset.get("derivatives") != scene.get("derivatives"):
+                    fail(f"geo_web_002 context scene {sid!r} and asset {asset.get('id')!r} "
+                         f"publish different derivative records", errors)
+
     print("OrbGSS site validation")
     print(f"  scenes: {len(scenes)}")
     print(f"  html images: {len(parser.img_srcs)}")
     print(f"  routes: {len(route_parsers)}")
     print(f"  i18n keys referenced site-wide: {len(all_i18n_keys)}")
+    print(f"  geo-web-002 package assets: {len(package.get('assets', []))} "
+          f"({len(package_paths)} files)")
     print(f"  warnings: {len(warnings)}")
     for item in warnings:
         print(f"WARN: {item}")

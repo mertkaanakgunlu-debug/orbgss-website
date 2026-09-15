@@ -1,6 +1,6 @@
 {
-  "version": "0.7-web-002-product-proof",
-  "policy": "This manifest covers two distinct asset classes. (1) Landsat gallery imagery under 'scenes': self-hosted OrbGSS natural-color composites generated from USGS Landsat Collection 2 Level-2 surface-reflectance products (public domain). Each scene's 'production' block pins the exact product identifiers, crop and stretch used; scripts/build_imagery.py reproduces the asset. NASA Earth Observatory pages are kept only as the reference that motivated each scene choice; no NASA-rendered pixels are served. Only the hero is still placed on the homepage. (2) WEB-002 product-proof imagery under 'web_002.proof_assets': OrbGSS cartographic exports of the accepted Kızıldere MVP project, materialized through the accepted GEO-039 Workbench export path and cropped/resized for web delivery only. These are scientific outputs, not photography: they are never re-coloured, re-projected, re-classified or value-changed, they carry mandatory warnings in visible page copy, and no raw provider raster or paid/closed/restricted data is redistributed. The two classes have different sources, different rights bases and different handling rules; do not describe one with the other's wording.",
+  "version": "0.8-geo-web-002-final-visual-masters",
+  "policy": "This manifest covers two distinct asset classes. (1) Landsat gallery imagery under 'scenes': self-hosted OrbGSS natural-color composites generated from USGS Landsat Collection 2 Level-2 surface-reflectance products (public domain). Each scene's 'production' block pins the exact product identifiers, crop and stretch used; scripts/build_imagery.py reproduces the asset. NASA Earth Observatory pages are kept only as the reference that motivated each scene choice; no NASA-rendered pixels are served. Only the hero is still placed on the homepage. (2) WEB-002 product-proof imagery under 'web_002.proof_assets': OrbGSS cartographic exports of the accepted Kızıldere MVP project, materialized through the accepted GEO-039 Workbench export path and cropped/resized for web delivery only. These are scientific outputs, not photography: they are never re-coloured, re-projected, re-classified or value-changed, they carry mandatory warnings in visible page copy, and no raw provider raster or paid/closed/restricted data is redistributed. The two classes have different sources, different rights bases and different handling rules; do not describe one with the other's wording. (3) GEO-WEB-002 final homepage visual masters under 'geo_web_002': the package the locked four-act final homepage needs, published for WEB-005 and not yet placed on any route. Its 'context_scenes' entry is class (1) and is built by the same scripts/build_imagery.py production grammar; its 'assets' entries cover both classes and each one records its role, source/export identity, master and derivative dimensions and checksums, rights basis, attribution requirement, mandatory warning and the maximum size at which it may honestly be rendered. No asset in that package is ever enlarged past the native pixel density of its source.",
   "scenes": [
     {
       "id": "crater-lake-2023",
@@ -884,6 +884,815 @@
           ],
           "note": "The mandatory warning for this asset is carried in visible page copy under this i18n key, in the static HTML as well as the dictionary, so it survives with JavaScript disabled. scripts/validate_site.py enforces every term in both languages."
         }
+      }
+    ]
+  },
+  "geo_web_002": {
+    "task": "GEO-WEB-002 / MER-102",
+    "state": "published",
+    "consumer": "WEB-005 / MER-93",
+    "package_document": "docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md",
+    "presentation_authority": "docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md",
+    "publication_boundary": "docs/WEB-002_SCIENCE_ASSET_PACKAGE.md",
+    "science_authority": {
+      "package": "docs/WEB-002_SCIENCE_ASSET_PACKAGE.md",
+      "release": "mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8",
+      "tag": "v1.0.0",
+      "decisions": [
+        "ADR-0033",
+        "GEO-037 / MER-32",
+        "GEO-039 / MER-40",
+        "GEO-042 / MER-50"
+      ]
+    },
+    "scoring_identity": {
+      "project": "kizildere_mvp_v2",
+      "profile_id": "mvp_remote_sensing_priority_v1",
+      "family_weighting_id": "remote_sensing_equal_family_v1",
+      "accepted_run_identity": "8716e89324ff5566859f470f207d5a1f0ab651c19d9c7e9dba3087960a63cf3c",
+      "mandatory_inputs": [
+        "thm-thm01",
+        "alt-alt01",
+        "alt-alt02"
+      ],
+      "public_label": "Remote-Sensing Relative Priority — Experimental Baseline",
+      "value_range": [
+        0,
+        100
+      ],
+      "value_semantics": "dimensionless_relative_priority_0_100",
+      "is_probability": false,
+      "is_full_prospectivity": false
+    },
+    "rule": "GEO-WEB-002 publishes the final homepage visual masters for the locked four-act composition. It changes no scientific method, scoring, weighting, CRS, grid, unit, NoData, mask, resampling or validation semantics, and it introduces no new evidence family. Act-2 context is an OrbGSS natural-colour Landsat composite (asset class A). Acts 3 and 4 are OrbGSS cartographic exports of the accepted kizildere_mvp_v2 project through the accepted GEO-039 Workbench path (asset class B). No raw provider raster and no paid, closed or restricted data is redistributed.",
+    "resolution_rule": "No asset in this package is enlarged beyond the native pixel density of its source. Class-A context is native 30 m Landsat surface reflectance. Class-B cartographic masters render a 1200 x 1200 cell, 30 m project grid; every derivative is a presentation crop of the rendered map panel downscaled to at most that native cell count, so no derivative invents resolution. Each asset records max_safe_rendered_px: the largest CSS/render width at which it stays at or below 1 device pixel per native cell on a 1x display, and the 2x figure WEB-005 should design against.",
+    "context_scenes": [
+      {
+        "id": "kizildere-aoi-context-2025",
+        "role": "geo-web-002-act2-context",
+        "location": "Kızıldere — Büyük Menderes graben, Denizli, Türkiye",
+        "coordinates": "37.9794° N, 28.7907° E",
+        "acquired": "2025-05-05",
+        "sensor": "Landsat 8 OLI",
+        "source_data": "U.S. Geological Survey Landsat",
+        "local_file": "assets/imagery/kizildere-aoi-context-2025.jpg",
+        "production": {
+          "product_ids": [
+            "LC08_L2SP_179034_20250505_02_T1"
+          ],
+          "center_lat": 37.9794,
+          "center_lon": 28.7907,
+          "anchor_x": 0.5,
+          "anchor_y": 0.5,
+          "width_px": 2400,
+          "height_px": 1500,
+          "stretch_percentiles": [
+            1.0,
+            99.0
+          ],
+          "gamma": 1.65,
+          "saturation": 1.2,
+          "render": {
+            "crs": "EPSG:32635",
+            "bounds_utm": [
+              621268.9,
+              4182542.0,
+              693268.9,
+              4227542.0
+            ],
+            "bounds_wgs84": [
+              28.3771,
+              37.7822,
+              29.2064,
+              38.1751
+            ],
+            "coverage": 1.0,
+            "size_px": [
+              2400,
+              1500
+            ],
+            "rendered_on": "2026-09-16",
+            "jpeg_quality": 82,
+            "pipeline": "scripts/build_imagery.py"
+          }
+        },
+        "derivatives": [
+          {
+            "path": "assets/imagery/kizildere-aoi-context-2025-2400.webp",
+            "role": "act2-context-responsive",
+            "width": 2400,
+            "height": 1500,
+            "format": "image/webp",
+            "operation": "WebP quality 76 re-encode of assets/imagery/kizildere-aoi-context-2025.jpg at native 2400 px; no resize, crop, colour, tone or gamma change",
+            "bytes": 867942,
+            "sha256": "77cac4d8f8d5a1a1a3d1db62b052b73817888aa3e2dac695336f0ebee22bc8b0"
+          },
+          {
+            "path": "assets/imagery/kizildere-aoi-context-2025-1800.webp",
+            "role": "act2-context-responsive",
+            "width": 1800,
+            "height": 1125,
+            "format": "image/webp",
+            "operation": "lanczos3 downscale of assets/imagery/kizildere-aoi-context-2025.jpg to 1800 px, then WebP quality 76; no crop, no colour, tone or gamma change",
+            "bytes": 587504,
+            "sha256": "9ce7b96ade034f83c2e7ae2a48fa82babd1f2575334bd3fe63c9d258bc43589f"
+          },
+          {
+            "path": "assets/imagery/kizildere-aoi-context-2025-1200.webp",
+            "role": "act2-context-responsive",
+            "width": 1200,
+            "height": 750,
+            "format": "image/webp",
+            "operation": "lanczos3 downscale of assets/imagery/kizildere-aoi-context-2025.jpg to 1200 px, then WebP quality 76; no crop, no colour, tone or gamma change",
+            "bytes": 300384,
+            "sha256": "6d687a756409340c41cf438382bc16d7b11dfbe9ef0c02e24ce68e190ee56fd1"
+          },
+          {
+            "path": "assets/imagery/kizildere-aoi-context-2025-900.webp",
+            "role": "act2-context-responsive",
+            "width": 900,
+            "height": 562,
+            "format": "image/webp",
+            "operation": "lanczos3 downscale of assets/imagery/kizildere-aoi-context-2025.jpg to 900 px, then WebP quality 76; no crop, no colour, tone or gamma change",
+            "bytes": 176920,
+            "sha256": "0efb480c74864b571a9e300b66fbbd1be290d70bfbca0c3173399dc63167579a"
+          }
+        ]
+      }
+    ],
+    "assets": [
+      {
+        "id": "act2-context",
+        "homepage_act": "Act 2 — real AOI / Earth-observation context",
+        "public_role": "context",
+        "scientific_state": "context",
+        "asset_class": "A — OrbGSS natural-colour Landsat composite",
+        "public_label": "Kızıldere — Büyük Menderes graben, Denizli, Türkiye",
+        "context_scene_id": "kizildere-aoi-context-2025",
+        "source": {
+          "data": "USGS Landsat Collection 2 Level-2 Science Products (surface reflectance, OLI bands 4/3/2)",
+          "product_ids": [
+            "LC08_L2SP_179034_20250505_02_T1"
+          ],
+          "acquired": "2025-05-05",
+          "sensor": "Landsat 8 OLI",
+          "wrs2_path_row": "179/034",
+          "scene_cloud_cover_percent": 0.9,
+          "access": "Microsoft Planetary Computer STAC API, collection 'landsat-c2-l2', anonymous read",
+          "stac": "https://planetarycomputer.microsoft.com/api/stac/v1",
+          "pipeline": "scripts/build_imagery.py"
+        },
+        "master": {
+          "file": "assets/imagery/kizildere-aoi-context-2025.jpg",
+          "format": "image/jpeg",
+          "dimensions": [
+            2400,
+            1500
+          ],
+          "crs": "EPSG:32635",
+          "resolution_m": 30,
+          "extent_km": "72 x 45",
+          "bounds_utm": [
+            621268.9,
+            4182542.0,
+            693268.9,
+            4227542.0
+          ],
+          "bounds_wgs84": [
+            28.3771,
+            37.7822,
+            29.2064,
+            38.1751
+          ],
+          "valid_coverage": 1.0,
+          "bytes": 1183575,
+          "sha256": "9d4f93298d11b31ec7317e72bfd0485fe7bf8a724188108abdc48c8a630197a4"
+        },
+        "aoi_relationship": "The frame is centred on the accepted 36 x 36 km kizildere_mvp_v2 AOI (centre 37.9794° N, 28.7907° E, EPSG:32635) and extends it to 72 x 45 km so the pilot area is shown inside its regional setting. The AOI occupies the middle half of the frame horizontally and all but 4.5 km of it vertically.",
+        "derivation": {
+          "method": "Crop of a fixed 30 m frame in the scene's own UTM grid, USGS surface-reflectance scaling, a recorded percentile stretch, gamma and mild luminance-preserving saturation, then progressive JPEG; the responsive WebP candidates are downscale and re-encode only.",
+          "stretch_percentiles": [
+            1.0,
+            99.0
+          ],
+          "gamma": 1.65,
+          "saturation": 1.2,
+          "jpeg_quality": 82,
+          "webp_quality": 76,
+          "no_upscale": true
+        },
+        "max_safe_rendered_px": {
+          "device_px": 2400,
+          "css_width_1x": 2400,
+          "css_width_2x": 1200,
+          "basis": "Native 30 m Landsat surface reflectance. The master is built at exactly the delivered pixel count, so nothing is upscaled at or below 2400 device pixels.",
+          "note": "Meets the >= 2000 px Act-2 presentation target at native resolution. The 2400 px candidate is the heaviest file in the package; WEB-005 should choose srcset candidates against the WEB-004 transfer budget rather than always serving the widest one."
+        },
+        "rights_basis": "USGS Landsat data are in the public domain, permission is not required and there are no restrictions on use or redistribution. Only the crop, stretch and encoding are OrbGSS work; the pixels are USGS products.",
+        "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
+        "mandatory_warning": "Earth-observation context only. This is a natural-colour photographic composite of the area, not analytical evidence, not a scored input, and not the acquisition date of any THM or ALT evidence layer.",
+        "derivatives": [
+          {
+            "path": "assets/imagery/kizildere-aoi-context-2025-2400.webp",
+            "role": "act2-context-responsive",
+            "width": 2400,
+            "height": 1500,
+            "format": "image/webp",
+            "operation": "WebP quality 76 re-encode of assets/imagery/kizildere-aoi-context-2025.jpg at native 2400 px; no resize, crop, colour, tone or gamma change",
+            "bytes": 867942,
+            "sha256": "77cac4d8f8d5a1a1a3d1db62b052b73817888aa3e2dac695336f0ebee22bc8b0"
+          },
+          {
+            "path": "assets/imagery/kizildere-aoi-context-2025-1800.webp",
+            "role": "act2-context-responsive",
+            "width": 1800,
+            "height": 1125,
+            "format": "image/webp",
+            "operation": "lanczos3 downscale of assets/imagery/kizildere-aoi-context-2025.jpg to 1800 px, then WebP quality 76; no crop, no colour, tone or gamma change",
+            "bytes": 587504,
+            "sha256": "9ce7b96ade034f83c2e7ae2a48fa82babd1f2575334bd3fe63c9d258bc43589f"
+          },
+          {
+            "path": "assets/imagery/kizildere-aoi-context-2025-1200.webp",
+            "role": "act2-context-responsive",
+            "width": 1200,
+            "height": 750,
+            "format": "image/webp",
+            "operation": "lanczos3 downscale of assets/imagery/kizildere-aoi-context-2025.jpg to 1200 px, then WebP quality 76; no crop, no colour, tone or gamma change",
+            "bytes": 300384,
+            "sha256": "6d687a756409340c41cf438382bc16d7b11dfbe9ef0c02e24ce68e190ee56fd1"
+          },
+          {
+            "path": "assets/imagery/kizildere-aoi-context-2025-900.webp",
+            "role": "act2-context-responsive",
+            "width": 900,
+            "height": 562,
+            "format": "image/webp",
+            "operation": "lanczos3 downscale of assets/imagery/kizildere-aoi-context-2025.jpg to 900 px, then WebP quality 76; no crop, no colour, tone or gamma change",
+            "bytes": 176920,
+            "sha256": "0efb480c74864b571a9e300b66fbbd1be290d70bfbca0c3173399dc63167579a"
+          }
+        ]
+      },
+      {
+        "id": "terrain",
+        "homepage_act": "Act 3 — compact evidence section (Terrain / Topography card)",
+        "public_role": "context",
+        "scientific_state": "context",
+        "asset_class": "B — OrbGSS GEO-039 cartographic export",
+        "public_label": "Elevation — NASADEM context",
+        "layer_ids": [
+          "top-dem"
+        ],
+        "source_project": "kizildere_mvp_v2",
+        "grid": {
+          "crs": "EPSG:32635",
+          "resolution_m": 30,
+          "width": 1200,
+          "height": 1200,
+          "extent_km": "36 x 36"
+        },
+        "aoi_centre_wgs84": "37.9794° N, 28.7907° E",
+        "style_id": "dem_batlow_terrain",
+        "units": "m",
+        "derivation": {
+          "method": "presentation crop of the rendered map panel; the widest derivative is that crop itself with no resampling at all, the card derivative is a Lanczos downscale of the same crop",
+          "map_crop_box_px": [
+            179,
+            186,
+            1428,
+            1435
+          ],
+          "legend_crop_box_px": [
+            1552,
+            170,
+            2284,
+            292
+          ],
+          "format": "WebP, quality 82 (panels); lossless PNG (legend)",
+          "no_upscale": true,
+          "note": "Crop, downscale and encode only. No re-colouring, re-projection, re-classification or value change, and no CSS colour/contrast/opacity transform may be applied to the served raster."
+        },
+        "max_safe_rendered_px": {
+          "device_px": 1249,
+          "native_grid_cells": 1200,
+          "css_width_1x": 1249,
+          "css_width_2x": 624,
+          "basis": "The accepted project grid is 1200 x 1200 cells at 30 m; the GEO-039 renderer draws that panel at 1249 px on its A4/200 dpi page. 1249 device pixels is therefore the maximum honest rendered width. Beyond it the browser upscales scientific content, which WEB-005 must avoid with a contained composition.",
+          "note": "Comfortably meets the >= 1200 px evidence-card presentation target."
+        },
+        "rights_basis": "Derived OrbGSS cartographic export only; no raw provider raster is redistributed and no third-party licence is restated or widened. No MTA paid, closed or restricted data.",
+        "attribution_requirement": "Attribution is rendered inside the master export's own sources line and must be carried into public use: NASADEM elevation via nasa_earthdata, Landsat thermal via usgs_m2m, Sentinel-2 alteration proxies via cdse_stac, and Fabio Crameri's Scientific colour maps v8.0 (MIT, doi:10.5281/zenodo.8035877) for the palettes.",
+        "mandatory_warning": "Context/display only. Terrain is not a scored predictor and carries no universal geothermal-favourability direction.",
+        "derivatives": [
+          {
+            "path": "assets/proof/final/terrain-1249.webp",
+            "role": "panel-native-1249",
+            "width": 1249,
+            "height": 1249,
+            "format": "image/webp",
+            "operation": "presentation crop [179, 186, 1428, 1435] of the rendered map panel, WebP quality 82; crop and encode only, no resampling",
+            "bytes": 41698,
+            "sha256": "7d9c6cc14c4fcb97ab7ecd7a6be5e083bbf1cf4b63b341eae530ead7a645dc59"
+          },
+          {
+            "path": "assets/proof/final/terrain-800.webp",
+            "role": "panel-800",
+            "width": 800,
+            "height": 800,
+            "format": "image/webp",
+            "operation": "presentation crop [179, 186, 1428, 1435] of the rendered map panel (1249 px), lanczos3 downscale to 800 px, WebP quality 82; crop and downscale only",
+            "bytes": 23674,
+            "sha256": "c608219ec0248647e5d5bf9ad96fa4d4f2342dae91dde8871db7bffc935bbdeb"
+          },
+          {
+            "path": "assets/proof/final/terrain-legend.png",
+            "role": "in-frame-legend",
+            "width": 732,
+            "height": 122,
+            "format": "image/png",
+            "operation": "presentation crop [1552, 170, 2284, 292] of the master's governed legend block at native resolution, lossless PNG; no resize, recolour or relabel",
+            "bytes": 9189,
+            "sha256": "ca56f442159057b87ff9985ad6c1ec640d79b330fcb6dc7f7632203179b5d268"
+          }
+        ],
+        "export": {
+          "mechanism": "GEO-039 Workbench cartographic export (PNG master)",
+          "export_id": "20260915T104731Z-00fae5eb",
+          "export_manifest": "geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260915T104731Z-00fae5eb/export_manifest.json",
+          "master_file": "geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260915T104731Z-00fae5eb/map.png",
+          "master_sha256": "8fc9403a022f28a6e5d56443ad16e5b2390a676fd2cd9cf2e50285eae2be6ca1",
+          "master_bytes": 1018062,
+          "master_dimensions": [
+            2338,
+            1654
+          ],
+          "master_format": "image/png",
+          "rendered_title": "Elevation - NASADEM context",
+          "renderer_revision": "geo039-cartographic-renderer-v1",
+          "plan_sha256": "00fae5eb6962af61a14000688e3c8a9945a0bcd50760ff426248dda970d61152",
+          "config_hash": "c6eac56027d3118280d2a454bdcacf5b01ddb0d733ab23dacbf348b6a50b777c",
+          "attribution": [
+            "Elevation: nasa_earthdata",
+            "Palette: batlow, Fabio Crameri, Scientific colour maps v8.0 (MIT), doi:10.5281/zenodo.8035877"
+          ]
+        },
+        "map_panel_px": [
+          1249,
+          1249
+        ]
+      },
+      {
+        "id": "thm01",
+        "homepage_act": "Act 3 — compact evidence section (Thermal card)",
+        "public_role": "evidence",
+        "scientific_state": "evidence",
+        "asset_class": "B — OrbGSS GEO-039 cartographic export",
+        "public_label": "THM-01 Thermal Anomaly",
+        "layer_ids": [
+          "thm-thm01"
+        ],
+        "source_project": "kizildere_mvp_v2",
+        "grid": {
+          "crs": "EPSG:32635",
+          "resolution_m": 30,
+          "width": 1200,
+          "height": 1200,
+          "extent_km": "36 x 36"
+        },
+        "aoi_centre_wgs84": "37.9794° N, 28.7907° E",
+        "style_id": "thm01_vik_diverging",
+        "scoring_role": "mandatory score input",
+        "derivation": {
+          "method": "presentation crop of the rendered map panel; the widest derivative is that crop itself with no resampling at all, the card derivative is a Lanczos downscale of the same crop",
+          "map_crop_box_px": [
+            179,
+            186,
+            1428,
+            1435
+          ],
+          "legend_crop_box_px": [
+            1552,
+            170,
+            2284,
+            292
+          ],
+          "format": "WebP, quality 82 (panels); lossless PNG (legend)",
+          "no_upscale": true,
+          "note": "Crop, downscale and encode only. No re-colouring, re-projection, re-classification or value change, and no CSS colour/contrast/opacity transform may be applied to the served raster."
+        },
+        "max_safe_rendered_px": {
+          "device_px": 1249,
+          "native_grid_cells": 1200,
+          "css_width_1x": 1249,
+          "css_width_2x": 624,
+          "basis": "The accepted project grid is 1200 x 1200 cells at 30 m; the GEO-039 renderer draws that panel at 1249 px on its A4/200 dpi page. 1249 device pixels is therefore the maximum honest rendered width. Beyond it the browser upscales scientific content, which WEB-005 must avoid with a contained composition.",
+          "note": "Comfortably meets the >= 1200 px evidence-card presentation target."
+        },
+        "rights_basis": "Derived OrbGSS cartographic export only; no raw provider raster is redistributed and no third-party licence is restated or widened. No MTA paid, closed or restricted data.",
+        "attribution_requirement": "Attribution is rendered inside the master export's own sources line and must be carried into public use: NASADEM elevation via nasa_earthdata, Landsat thermal via usgs_m2m, Sentinel-2 alteration proxies via cdse_stac, and Fabio Crameri's Scientific colour maps v8.0 (MIT, doi:10.5281/zenodo.8035877) for the palettes.",
+        "temporal_semantics": "Accepted Landsat-derived thermal evidence family, used exactly as persisted. The governing GEO-037/GEO-039 closeouts do not duplicate individual acquisition dates; public copy must not invent one.",
+        "mandatory_warning": "Evidence layer only. Do not describe it as geothermal probability, reserve, discovery, or drilling-success evidence.",
+        "derivatives": [
+          {
+            "path": "assets/proof/final/thm01-1249.webp",
+            "role": "panel-native-1249",
+            "width": 1249,
+            "height": 1249,
+            "format": "image/webp",
+            "operation": "presentation crop [179, 186, 1428, 1435] of the rendered map panel, WebP quality 82; crop and encode only, no resampling",
+            "bytes": 251574,
+            "sha256": "0f1176c9ba6b5e8da6b2c0439f2444be335107f0abdc31cfc4c3c515f75587e6"
+          },
+          {
+            "path": "assets/proof/final/thm01-800.webp",
+            "role": "panel-800",
+            "width": 800,
+            "height": 800,
+            "format": "image/webp",
+            "operation": "presentation crop [179, 186, 1428, 1435] of the rendered map panel (1249 px), lanczos3 downscale to 800 px, WebP quality 82; crop and downscale only",
+            "bytes": 132468,
+            "sha256": "27d986785889dd900ed1a97eb438f773df28c3f97c89b6929011936cf141a870"
+          },
+          {
+            "path": "assets/proof/final/thm01-legend.png",
+            "role": "in-frame-legend",
+            "width": 732,
+            "height": 122,
+            "format": "image/png",
+            "operation": "presentation crop [1552, 170, 2284, 292] of the master's governed legend block at native resolution, lossless PNG; no resize, recolour or relabel",
+            "bytes": 8062,
+            "sha256": "fe53c651d6e94d1075f8eceb8079d3a26c7320f24d6244b5b9d79267e25005b3"
+          }
+        ],
+        "export": {
+          "mechanism": "GEO-039 Workbench cartographic export (PNG master)",
+          "export_id": "20260915T104733Z-cfba9119",
+          "export_manifest": "geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260915T104733Z-cfba9119/export_manifest.json",
+          "master_file": "geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260915T104733Z-cfba9119/map.png",
+          "master_sha256": "fe789994c29a9a87a3e08a29af5663e7c922f07c6e3016027fb1f5d2ef505dac",
+          "master_bytes": 2251165,
+          "master_dimensions": [
+            2338,
+            1654
+          ],
+          "master_format": "image/png",
+          "rendered_title": "THM-01 Thermal Anomaly",
+          "renderer_revision": "geo039-cartographic-renderer-v1",
+          "plan_sha256": "cfba9119b126568215b95dd010bbd11698cd24cb5da72743f6e0d6584dd90322",
+          "config_hash": "c6eac56027d3118280d2a454bdcacf5b01ddb0d733ab23dacbf348b6a50b777c",
+          "attribution": [
+            "THM-01 Thermal Anomaly: usgs_m2m",
+            "Palette: vik, Fabio Crameri, Scientific colour maps v8.0 (MIT), doi:10.5281/zenodo.8035877"
+          ]
+        },
+        "map_panel_px": [
+          1249,
+          1249
+        ]
+      },
+      {
+        "id": "alt01",
+        "homepage_act": "Act 3 — compact evidence section (Alteration card, recommended)",
+        "public_role": "evidence",
+        "scientific_state": "evidence",
+        "asset_class": "B — OrbGSS GEO-039 cartographic export",
+        "public_label": "ALT-01 Alteration Proxy — clay/hydroxyl",
+        "layer_ids": [
+          "alt-alt01"
+        ],
+        "source_project": "kizildere_mvp_v2",
+        "grid": {
+          "crs": "EPSG:32635",
+          "resolution_m": 30,
+          "width": 1200,
+          "height": 1200,
+          "extent_km": "36 x 36"
+        },
+        "aoi_centre_wgs84": "37.9794° N, 28.7907° E",
+        "style_id": "alt_batlow_sequential",
+        "scoring_role": "mandatory score input",
+        "derivation": {
+          "method": "presentation crop of the rendered map panel; the widest derivative is that crop itself with no resampling at all, the card derivative is a Lanczos downscale of the same crop",
+          "map_crop_box_px": [
+            179,
+            186,
+            1428,
+            1435
+          ],
+          "legend_crop_box_px": [
+            1552,
+            170,
+            2284,
+            292
+          ],
+          "format": "WebP, quality 82 (panels); lossless PNG (legend)",
+          "no_upscale": true,
+          "note": "Crop, downscale and encode only. No re-colouring, re-projection, re-classification or value change, and no CSS colour/contrast/opacity transform may be applied to the served raster."
+        },
+        "max_safe_rendered_px": {
+          "device_px": 1249,
+          "native_grid_cells": 1200,
+          "css_width_1x": 1249,
+          "css_width_2x": 624,
+          "basis": "The accepted project grid is 1200 x 1200 cells at 30 m; the GEO-039 renderer draws that panel at 1249 px on its A4/200 dpi page. 1249 device pixels is therefore the maximum honest rendered width. Beyond it the browser upscales scientific content, which WEB-005 must avoid with a contained composition.",
+          "note": "Comfortably meets the >= 1200 px evidence-card presentation target."
+        },
+        "legibility_note": "The only registry-approved style for this layer normalizes linearly over the layer's full value range, and the data carry a long high-value tail, so about 87% of valid cells render in the lowest fifth of the batlow ramp: the map reads as a dark field with bright anomalies. That is the accepted scientific rendering and there is no alternative approved style, so WEB-005 must not re-stretch, re-normalize or CSS-adjust it. Present it at card scale with its legend, and let THM-01 carry the visually dominant evidence card.",
+        "rights_basis": "Derived OrbGSS cartographic export only; no raw provider raster is redistributed and no third-party licence is restated or widened. No MTA paid, closed or restricted data.",
+        "attribution_requirement": "Attribution is rendered inside the master export's own sources line and must be carried into public use: NASADEM elevation via nasa_earthdata, Landsat thermal via usgs_m2m, Sentinel-2 alteration proxies via cdse_stac, and Fabio Crameri's Scientific colour maps v8.0 (MIT, doi:10.5281/zenodo.8035877) for the palettes.",
+        "mandatory_warning": "Broad Sentinel-2 spectral alteration proxy; not mineral/kaolinite identification and not proof of hydrothermal alteration.",
+        "derivatives": [
+          {
+            "path": "assets/proof/final/alt01-1249.webp",
+            "role": "panel-native-1249",
+            "width": 1249,
+            "height": 1249,
+            "format": "image/webp",
+            "operation": "presentation crop [179, 186, 1428, 1435] of the rendered map panel, WebP quality 82; crop and encode only, no resampling",
+            "bytes": 393032,
+            "sha256": "d8e9b9d7ba1bb3d96eb059682cffe8a6aa9349e1d99bdf67b63ad1298a079f1b"
+          },
+          {
+            "path": "assets/proof/final/alt01-800.webp",
+            "role": "panel-800",
+            "width": 800,
+            "height": 800,
+            "format": "image/webp",
+            "operation": "presentation crop [179, 186, 1428, 1435] of the rendered map panel (1249 px), lanczos3 downscale to 800 px, WebP quality 82; crop and downscale only",
+            "bytes": 202354,
+            "sha256": "6e0be10cd8137f33b96bbc7e8ba2f2789199a3e744b739e463a06acab2a2131e"
+          },
+          {
+            "path": "assets/proof/final/alt01-legend.png",
+            "role": "in-frame-legend",
+            "width": 732,
+            "height": 122,
+            "format": "image/png",
+            "operation": "presentation crop [1552, 170, 2284, 292] of the master's governed legend block at native resolution, lossless PNG; no resize, recolour or relabel",
+            "bytes": 13248,
+            "sha256": "776f90d4a62cc864281fedcd71802ba35e896a4c283d2f5e6a27315d8260fe69"
+          }
+        ],
+        "export": {
+          "mechanism": "GEO-039 Workbench cartographic export (PNG master)",
+          "export_id": "20260915T104801Z-eb1bc414",
+          "export_manifest": "geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260915T104801Z-eb1bc414/export_manifest.json",
+          "master_file": "geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260915T104801Z-eb1bc414/map.png",
+          "master_sha256": "80fd75303100728ca6fd935b56167f17f0fd68b0b719b9306e1fac9ed5b5adf8",
+          "master_bytes": 1158724,
+          "master_dimensions": [
+            2338,
+            1654
+          ],
+          "master_format": "image/png",
+          "rendered_title": "ALT-01 Alteration Proxy (clay, hydroxyl)",
+          "renderer_revision": "geo039-cartographic-renderer-v1",
+          "plan_sha256": "eb1bc414e55ad30e4eefddf60857ecb2186b87166b98b516855baed0fdaa1c67",
+          "config_hash": "c6eac56027d3118280d2a454bdcacf5b01ddb0d733ab23dacbf348b6a50b777c",
+          "attribution": [
+            "ALT-01 Alteration Proxy (clay/hydroxyl): cdse_stac",
+            "Palette: batlow, Fabio Crameri, Scientific colour maps v8.0 (MIT), doi:10.5281/zenodo.8035877"
+          ]
+        },
+        "map_panel_px": [
+          1249,
+          1249
+        ]
+      },
+      {
+        "id": "alt02",
+        "homepage_act": "Act 3 — compact evidence section (alternate alteration card)",
+        "public_role": "evidence",
+        "scientific_state": "evidence",
+        "asset_class": "B — OrbGSS GEO-039 cartographic export",
+        "public_label": "ALT-02 Alteration Proxy — ferric/iron",
+        "layer_ids": [
+          "alt-alt02"
+        ],
+        "source_project": "kizildere_mvp_v2",
+        "grid": {
+          "crs": "EPSG:32635",
+          "resolution_m": 30,
+          "width": 1200,
+          "height": 1200,
+          "extent_km": "36 x 36"
+        },
+        "aoi_centre_wgs84": "37.9794° N, 28.7907° E",
+        "style_id": "alt_batlow_sequential",
+        "scoring_role": "mandatory score input",
+        "derivation": {
+          "method": "presentation crop of the rendered map panel; the widest derivative is that crop itself with no resampling at all, the card derivative is a Lanczos downscale of the same crop",
+          "map_crop_box_px": [
+            179,
+            186,
+            1428,
+            1435
+          ],
+          "legend_crop_box_px": [
+            1552,
+            170,
+            2284,
+            292
+          ],
+          "format": "WebP, quality 82 (panels); lossless PNG (legend)",
+          "no_upscale": true,
+          "note": "Crop, downscale and encode only. No re-colouring, re-projection, re-classification or value change, and no CSS colour/contrast/opacity transform may be applied to the served raster."
+        },
+        "max_safe_rendered_px": {
+          "device_px": 1249,
+          "native_grid_cells": 1200,
+          "css_width_1x": 1249,
+          "css_width_2x": 624,
+          "basis": "The accepted project grid is 1200 x 1200 cells at 30 m; the GEO-039 renderer draws that panel at 1249 px on its A4/200 dpi page. 1249 device pixels is therefore the maximum honest rendered width. Beyond it the browser upscales scientific content, which WEB-005 must avoid with a contained composition.",
+          "note": "Comfortably meets the >= 1200 px evidence-card presentation target."
+        },
+        "legibility_note": "Same governed style and the same distribution as ALT-01: about 88% of valid cells render in the lowest fifth of the ramp. Published so both accepted alteration proxies are available to Product; ALT-01 is the recommended single alteration card. Showing both is allowed, never re-stretched, and never implying mineral identification.",
+        "rights_basis": "Derived OrbGSS cartographic export only; no raw provider raster is redistributed and no third-party licence is restated or widened. No MTA paid, closed or restricted data.",
+        "attribution_requirement": "Attribution is rendered inside the master export's own sources line and must be carried into public use: NASADEM elevation via nasa_earthdata, Landsat thermal via usgs_m2m, Sentinel-2 alteration proxies via cdse_stac, and Fabio Crameri's Scientific colour maps v8.0 (MIT, doi:10.5281/zenodo.8035877) for the palettes.",
+        "mandatory_warning": "Broad Sentinel-2 spectral alteration proxy; not mineral identification and not proof of hydrothermal alteration.",
+        "derivatives": [
+          {
+            "path": "assets/proof/final/alt02-1249.webp",
+            "role": "panel-native-1249",
+            "width": 1249,
+            "height": 1249,
+            "format": "image/webp",
+            "operation": "presentation crop [179, 186, 1428, 1435] of the rendered map panel, WebP quality 82; crop and encode only, no resampling",
+            "bytes": 381046,
+            "sha256": "5fc048e589d5b5361c257cb9883cccadc15aafc3cf8c0a5a2bf8be9734556981"
+          },
+          {
+            "path": "assets/proof/final/alt02-800.webp",
+            "role": "panel-800",
+            "width": 800,
+            "height": 800,
+            "format": "image/webp",
+            "operation": "presentation crop [179, 186, 1428, 1435] of the rendered map panel (1249 px), lanczos3 downscale to 800 px, WebP quality 82; crop and downscale only",
+            "bytes": 194992,
+            "sha256": "855c0976a32881e4425f1f9bc1e513c14ce651e1d0b11abd91f210c0f11a650c"
+          },
+          {
+            "path": "assets/proof/final/alt02-legend.png",
+            "role": "in-frame-legend",
+            "width": 732,
+            "height": 122,
+            "format": "image/png",
+            "operation": "presentation crop [1552, 170, 2284, 292] of the master's governed legend block at native resolution, lossless PNG; no resize, recolour or relabel",
+            "bytes": 12594,
+            "sha256": "bc6cb0d2a5a36c48c982a67e7ab3c39c682497e2ad2a0cb452c9487f60311f61"
+          }
+        ],
+        "export": {
+          "mechanism": "GEO-039 Workbench cartographic export (PNG master)",
+          "export_id": "20260915T104804Z-1f837163",
+          "export_manifest": "geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260915T104804Z-1f837163/export_manifest.json",
+          "master_file": "geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260915T104804Z-1f837163/map.png",
+          "master_sha256": "b3d1824de39293af4b10a56beb04f4e7bb28988cf86cafb30024da66b528f950",
+          "master_bytes": 617803,
+          "master_dimensions": [
+            2338,
+            1654
+          ],
+          "master_format": "image/png",
+          "rendered_title": "ALT-02 Alteration Proxy (ferric, iron)",
+          "renderer_revision": "geo039-cartographic-renderer-v1",
+          "plan_sha256": "1f837163ca6f834142b0f0865cfa3e45fe9254827af726345dbfa3398a774595",
+          "config_hash": "c6eac56027d3118280d2a454bdcacf5b01ddb0d733ab23dacbf348b6a50b777c",
+          "attribution": [
+            "ALT-02 Alteration Proxy (ferric/iron): cdse_stac",
+            "Palette: batlow, Fabio Crameri, Scientific colour maps v8.0 (MIT), doi:10.5281/zenodo.8035877"
+          ]
+        },
+        "map_panel_px": [
+          1249,
+          1249
+        ]
+      },
+      {
+        "id": "priority",
+        "homepage_act": "Act 4 — priority/result climax",
+        "public_role": "derived score",
+        "scientific_state": "derived score",
+        "asset_class": "B — OrbGSS GEO-039 cartographic export",
+        "public_label": "Remote-Sensing Relative Priority — Experimental Baseline",
+        "layer_ids": [
+          "score-mvp-remote-sensing-priority"
+        ],
+        "source_project": "kizildere_mvp_v2",
+        "grid": {
+          "crs": "EPSG:32635",
+          "resolution_m": 30,
+          "width": 1200,
+          "height": 1200,
+          "extent_km": "36 x 36"
+        },
+        "aoi_centre_wgs84": "37.9794° N, 28.7907° E",
+        "style_id": "score_priority_batlow_0_100",
+        "scoring_identity": {
+          "profile_id": "mvp_remote_sensing_priority_v1",
+          "profile_display_name": "Remote-Sensing Relative Priority — Experimental Baseline",
+          "family_weighting_id": "remote_sensing_equal_family_v1",
+          "accepted_run_identity": "8716e89324ff5566859f470f207d5a1f0ab651c19d9c7e9dba3087960a63cf3c",
+          "mandatory_inputs": [
+            "thm-thm01",
+            "alt-alt01",
+            "alt-alt02"
+          ],
+          "value_range": [
+            0,
+            100
+          ],
+          "value_semantics": "dimensionless_relative_priority_0_100",
+          "is_probability": false,
+          "is_full_prospectivity": false
+        },
+        "derivation": {
+          "method": "presentation crop of the rendered map panel; the widest derivative is that crop itself with no resampling at all, the card derivative is a Lanczos downscale of the same crop",
+          "map_crop_box_px": [
+            179,
+            186,
+            1428,
+            1435
+          ],
+          "legend_crop_box_px": [
+            1552,
+            170,
+            2284,
+            292
+          ],
+          "format": "WebP, quality 82 (panels); lossless PNG (legend)",
+          "no_upscale": true,
+          "note": "Crop, downscale and encode only. No re-colouring, re-projection, re-classification or value change, and no CSS colour/contrast/opacity transform may be applied to the served raster."
+        },
+        "max_safe_rendered_px": {
+          "device_px": 1249,
+          "native_grid_cells": 1200,
+          "css_width_1x": 1249,
+          "css_width_2x": 624,
+          "basis": "The accepted project grid is 1200 x 1200 cells at 30 m; the GEO-039 renderer draws that panel at 1249 px on its A4/200 dpi page. 1249 device pixels is therefore the maximum honest rendered width. Beyond it the browser upscales scientific content, which WEB-005 must avoid with a contained composition.",
+          "note": "DOES NOT reach the >= 2000 px Act-4 presentation target, and cannot: the accepted score raster is 1200 x 1200 cells at 30 m and the accepted renderer draws it at 1249 px. Nothing in the accepted export path can deliver more real information, and upscaling would invent resolution. WEB-005 must give Act 4 a contained composition of at most 1249 device pixels on its long axis rather than a stretched full-bleed raster."
+        },
+        "rights_basis": "Derived OrbGSS cartographic export only; no raw provider raster is redistributed and no third-party licence is restated or widened. No MTA paid, closed or restricted data.",
+        "attribution_requirement": "Attribution is rendered inside the master export's own sources line and must be carried into public use: NASADEM elevation via nasa_earthdata, Landsat thermal via usgs_m2m, Sentinel-2 alteration proxies via cdse_stac, and Fabio Crameri's Scientific colour maps v8.0 (MIT, doi:10.5281/zenodo.8035877) for the palettes.",
+        "mandatory_warning": "AOI-relative experimental screening only. Not probability, reserve/resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a calibrated cross-AOI score.",
+        "derivatives": [
+          {
+            "path": "assets/proof/final/priority-1249.webp",
+            "role": "panel-native-1249",
+            "width": 1249,
+            "height": 1249,
+            "format": "image/webp",
+            "operation": "presentation crop [179, 186, 1428, 1435] of the rendered map panel, WebP quality 82; crop and encode only, no resampling",
+            "bytes": 702856,
+            "sha256": "137e1150dedcc873ad7f2a56b3bbe06659ee905230c56bcbfffa40be78a011a1"
+          },
+          {
+            "path": "assets/proof/final/priority-800.webp",
+            "role": "panel-800",
+            "width": 800,
+            "height": 800,
+            "format": "image/webp",
+            "operation": "presentation crop [179, 186, 1428, 1435] of the rendered map panel (1249 px), lanczos3 downscale to 800 px, WebP quality 82; crop and downscale only",
+            "bytes": 300646,
+            "sha256": "444356f044c1ffc0276345d05d4d738f09cc233f48399fd3f41473295696a2d4"
+          },
+          {
+            "path": "assets/proof/final/priority-legend.png",
+            "role": "in-frame-legend",
+            "width": 732,
+            "height": 122,
+            "format": "image/png",
+            "operation": "presentation crop [1552, 170, 2284, 292] of the master's governed legend block at native resolution, lossless PNG; no resize, recolour or relabel",
+            "bytes": 12887,
+            "sha256": "aaf3c8cb1cb69be1178b1277d7166dd189650eb3463aa6d6e83e33e039ce51d4"
+          }
+        ],
+        "export": {
+          "mechanism": "GEO-039 Workbench cartographic export (PNG master)",
+          "export_id": "20260915T104736Z-55609249",
+          "export_manifest": "geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260915T104736Z-55609249/export_manifest.json",
+          "master_file": "geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260915T104736Z-55609249/map.png",
+          "master_sha256": "4791435a1b1c1d19a18337997eaf51dfb468ed022349771e1007c6da026aa2ad",
+          "master_bytes": 3634791,
+          "master_dimensions": [
+            2338,
+            1654
+          ],
+          "master_format": "image/png",
+          "rendered_title": "Remote-Sensing Relative Priority - Experimental Baseline",
+          "renderer_revision": "geo039-cartographic-renderer-v1",
+          "plan_sha256": "55609249d111db29817f71283b2f608559c87b611cf704800906790afa3fb581",
+          "config_hash": "c6eac56027d3118280d2a454bdcacf5b01ddb0d733ab23dacbf348b6a50b777c",
+          "attribution": [
+            "Remote-Sensing Relative Priority (0-100) — Experimental: Remote-Sensing Relative Priority — Experimental Baseline from alt-alt01, alt-alt02, thm-thm01; cdse_stac, usgs_m2m",
+            "Palette: batlow, Fabio Crameri, Scientific colour maps v8.0 (MIT), doi:10.5281/zenodo.8035877"
+          ]
+        },
+        "map_panel_px": [
+          1249,
+          1249
+        ]
       }
     ]
   }

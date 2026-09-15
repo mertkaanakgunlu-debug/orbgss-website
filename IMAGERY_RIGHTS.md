@@ -1,4 +1,4 @@
-# OrbGSS imagery rights and provenance — v0.7
+# OrbGSS imagery rights and provenance — v0.8
 
 ## Two asset classes
 
@@ -11,8 +11,8 @@ the other's wording.
 | What it is | Natural-colour photographic composites of a landscape | Cartographic renderings of scientific analysis output |
 | Source | USGS Landsat Collection 2 Level-2 surface reflectance (public domain) | OrbGSS cartographic exports of the accepted `kizildere_mvp_v2` project |
 | Produced by | `scripts/build_imagery.py` (crop / stretch / encode) | The accepted GEO-039 Workbench cartographic export path |
-| Recorded in | `sources.json` → `scenes` | `sources.json` → `web_002.proof_assets` |
-| Where used | The hero poster only | Story panels 01–06 |
+| Recorded in | `sources.json` → `scenes`, and → `geo_web_002.context_scenes` | `sources.json` → `web_002.proof_assets`, and → `geo_web_002.assets` |
+| Where used | The hero poster today; the Act-2 Kızıldere context master is published for WEB-005 | Story panels 01–06 today; the Act-3/Act-4 masters are published for WEB-005 |
 | Permitted edits | Crop, contrast stretch, gamma, saturation, encoding | Crop and resize for presentation **only** — never re-colour, re-project, re-classify or change values, and no CSS colour/contrast/opacity transform on the served raster |
 | Extra duties | USGS acknowledgement in the footer | Mandatory scientific warnings in visible EN/TR page copy; checksummed provenance |
 
@@ -75,6 +75,17 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Production source product: `LC09_L2SP_001075_20240104_02_T1` (path 001 row 075, Tier 1)
 - Reference page: https://science.nasa.gov/earth/earth-observatory/copper-mining-at-chuquicamata-152368/
 
+### Kızıldere AOI context — GEO-WEB-002 Act 2
+- Location: Kızıldere — Büyük Menderes graben, Denizli, Türkiye
+- Coordinates displayed: 37.9794° N, 28.7907° E (accepted `kizildere_mvp_v2` AOI centre)
+- Acquisition: 5 May 2025
+- Sensor: Landsat 8 OLI
+- Production source product: `LC08_L2SP_179034_20250505_02_T1` (path 179 row 034, Tier 1, 0.90 % cloud)
+- Rendered frame: EPSG:32635, 30 m, 2400 × 1500 px = 72 × 45 km, 100 % valid coverage
+- No NASA Earth Observatory reference page: the scene was selected directly from the USGS Collection 2
+  archive through the Planetary Computer STAC mirror on visual/contextual criteria only.
+- Published for WEB-005 under `docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md`; not yet placed on any route.
+
 ### Ili River Delta / Lake Balkhash — environmental
 - Location: Ili River Delta & Lake Balkhash, Kazakhstan
 - Coordinates displayed: 45.0600° N, 74.5200° E
@@ -111,6 +122,31 @@ Mandatory scientific warnings from the package are carried on the page as visibl
 to each panel. `04 Structure` publishes no asset: no public-safe fault or lithology master is
 authorized, and that gap is score-invariant under ADR-0033 / GEO-037.
 
+## GEO-WEB-002 — final homepage visual master package (2026-09-16)
+
+`docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md` publishes the visual masters the locked four-act final
+homepage needs, for WEB-005 to bind after Science acceptance. Nothing in that package is placed on a public
+route yet. It adds one class-A asset and five class-B assets; the rights bases above are unchanged.
+
+**Class A — Act 2.** `assets/imagery/kizildere-aoi-context-2025.jpg` plus four responsive WebP candidates
+(2400 / 1800 / 1200 / 900). Same rule as every other gallery scene: public-domain USGS Landsat pixels, with
+only the crop, stretch and encoding as OrbGSS work, and the USGS acknowledgement carried in the footer.
+
+**Class B — Acts 3 and 4.** `assets/proof/final/` carries `terrain`, `thm01`, `alt01`, `alt02` and
+`priority`, each as a native-resolution map-panel crop (1249 px), an 800 px card derivative and a lossless
+legend crop. Same rule as `assets/proof/`: derived OrbGSS cartographic exports only, no raw provider raster,
+no restated or widened third-party licence, no MTA paid/closed/restricted data. The exports' own attribution
+(NASADEM via `nasa_earthdata`, Landsat thermal via `usgs_m2m`, Sentinel-2 alteration via `cdse_stac`, Fabio
+Crameri's Scientific colour maps v8.0, MIT) must be carried into public use, and each asset's mandatory
+scientific warning must appear as visible EN/TR copy wherever the asset is shown.
+
+The legend crops exist so a necessary legend can sit **inside** the map frame instead of becoming a detached
+homepage colour bar. They are native-resolution crops of the master's own governed legend: no resize,
+recolour or relabel.
+
+Structure and geology are still absent from this package. No public-safe fault or lithology master is
+authorized and the gap remains score-invariant.
+
 ## WEB-001 placement (2026-09-15, superseded by WEB-002)
 
 WEB-001 reused the four scenes as temporary gallery material across the story panels. WEB-002 has
@@ -124,6 +160,12 @@ are unchanged, and the acknowledgement stays in the footer while the hero uses L
 ## Resolution note
 
 The composites are native 30 m Landsat surface reflectance. 15 m pan-sharpened Level-1 products for these acquisitions are only obtainable through USGS EarthExplorer / Machine-to-Machine access, which requires an account that was not authorized for this work. If sharper hero imagery is wanted later, that is the path; the provenance model above stays the same.
+
+Class B has its own, harder ceiling: the accepted `kizildere_mvp_v2` grid is 1200 × 1200 cells at 30 m, and
+the accepted GEO-039 renderer draws that panel at 1249 px. 1249 device pixels is therefore the maximum
+honest rendered width for any cartographic asset, and no derivative in this repository exceeds it. Widening
+one would invent resolution, so a larger presentation must be answered with a contained composition instead.
+Each GEO-WEB-002 asset records its own `max_safe_rendered_px`.
 
 ## Deployment gate
 
