@@ -129,3 +129,11 @@ WEB-001 → WEB-002 → WEB-003 → WEB-004 → WEB-005 → WEB-006
 - **WEB-004** — responsive, accessibility, performance and hosted preview acceptance — blocked behind WEB-003.
 - **WEB-005** — cinematic Earth/satellite hero (motion, WebM/MP4). Deferred; the current hero remains a static poster designed to be replaced without changing surrounding architecture.
 - **WEB-006** — production DNS cutover (`orbgss.com` via Squarespace → Vercel). Deferred; no DNS or production-domain change before then. Google Workspace MX/SPF/DKIM/DMARC are never touched by ordinary website work.
+
+## 11. Future public visual composition authority — 2026-09-15
+
+`docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` records the latest Product decision for the later public-facing composition and palette direction. It does not retroactively change the accepted WEB-002 implementation and does not change the active WEB-HERO-001A scope.
+
+The preferred later public sequence is **Hero → Real AOI satellite image → one 3-card Evidence panel → one large Score/Prospectivity result map**. Current WEB-002 scientific/technical palettes remain proof-valid but are intentionally not treated as the final public-facing palettes; later restyling must preserve the accepted scientific meaning exactly.
+
+Where an older visual-sequence concept conflicts with this later public-composition decision, the dedicated public visual authority wins for future layout work. Existing accepted implementation remains historical/accepted evidence until a later task explicitly changes it.
