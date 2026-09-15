@@ -4,9 +4,10 @@
 **Blocked by:** `MER-99 / WEB-HERO-001B`  
 **Authority:** `docs/WEB_HERO_001_AUTHORITY.md` + Drive CURRENT Hero Visual & Production Authority v1.0  
 **Branch:** `feat/web-hero-001-predata-scene`  
-**State:** `REVIEW_READY`  
+**State:** `ACCEPTED / TERMINAL_PRODUCT_ACCEPTANCE`  
 **Predecessor:** `WEB-HERO-001B` accepted at `e35bb168f9b08300fac23bfc4148c3bbfa2a9874`  
-**Implementation HEAD:** `9a79a03e742d007b8abba2e4c6ec572e20df0155`
+**Implementation HEAD:** `9a79a03e742d007b8abba2e4c6ec572e20df0155`  
+**Accepted remote HEAD:** `6593a80899720f8c7461aaa99ade0e5e63a3ea42`
 
 ## Outcome
 
@@ -96,18 +97,36 @@ Phase C is complete only when:
 7. Review stills/video contain no fake scientific layer content.
 8. Phase A/B build and render paths remain reproducible and green.
 
+## Terminal Product acceptance — 2026-09-16
+
+Accepted canonical branch: `feat/web-hero-001-predata-scene`.
+
+Accepted exact remote HEAD: `6593a80899720f8c7461aaa99ade0e5e63a3ea42`.
+
+Implementation commit: `9a79a03e742d007b8abba2e4c6ec572e20df0155`.
+
+Product verification confirmed the task-local contract:
+
+- `hero_aoi_acquisition` extends the accepted Phase B scene and reuses the same camera path through frame 120 before continuing the same move to the regional approach;
+- both primary and secondary design fixtures pass built-scene world-space audits with sphere conformance, beam-tip/root registration, persistent footprint identity and monotonic sweep travel;
+- primary fixture worst measured radial deviation is 0.6769 m and worst beam-tip error is 2.235 m; secondary fixture worst measured radial deviation is 0.90121 m and worst beam-tip error is 2.5372 m;
+- the second fixture changes hemisphere, centre, span, bearing and sampling density without code restructuring, proving the AOI is configuration-driven rather than hand-modelled for one shot;
+- Phase A/B render rebuild differences remain at or below the measured Cycles+OptiX renderer noise floor; earlier accepted scene definitions remain reproducible;
+- no fabricated scientific layer, public-site integration, deployment or DNS change was introduced.
+
+Known limitations are accepted as Phase-D quality-gate inputs rather than Phase-C blockers: the 2048 px Phase-B Earth albedo softens at closest approach, the atmosphere shell may need further visual refinement at regional scale, and EEVEE beam sorting is not authoritative for final review; Cycles remains the quality surface.
+
+No further WEB-HERO-001C revision is required. `WEB-HERO-001D` may be unblocked for deliberate CTO start from this accepted acquisition system.
+
 ## Verification / evidence
 
-Report at `REVIEW_READY`:
+Accepted evidence includes:
 
-- exact branch/HEAD and changed paths;
-- AOI configuration schema/example(s);
-- validation command/results including sphere-distance/tolerance checks;
-- representative global, acquisition and closer regional stills showing curvature;
-- short preview showing beam lock + scan sweep + beginning of approach;
-- evidence that a second AOI config works without code restructuring;
-- render settings/tool versions and relevant evidence hashes/pointers;
-- confirmation that no fake science or public-site integration was introduced.
+- `hero/evidence/aoi_geometry_audit_design_primary.json`;
+- `hero/evidence/aoi_geometry_audit_design_secondary.json`;
+- `hero/evidence/phase_ab_reproducibility.json`;
+- committed Cycles evidence stills/contact-sheet/fixture-comparison artifacts under `hero/evidence/`;
+- `validate_hero.py` Phase-C contract expansion and negative-regression proof recorded in the implementation publication.
 
 ## STOP / route
 
@@ -121,4 +140,4 @@ Routine geometry math, coordinate conversion implementation, sampling density tu
 
 ## Branch policy
 
-Continue on `feat/web-hero-001-predata-scene`; no main work or force push. Terminal state `REVIEW_READY`. `WEB-HERO-001D` begins from this phase's accepted acquisition system.
+Continue on `feat/web-hero-001-predata-scene`; no main work or force push. Terminal state for Phase C is `ACCEPTED / TERMINAL_PRODUCT_ACCEPTANCE`. `WEB-HERO-001D` may proceed only after deliberate CTO start under its own task authority.
