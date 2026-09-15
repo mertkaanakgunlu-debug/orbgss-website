@@ -1,23 +1,24 @@
 # OrbGSS website vNext — repository-local authority
 
-**Source of truth:** CURRENT — OrbGSS Website vNext Product & Execution Authority v1.7 (product-owned).  
+**Source of truth:** CURRENT — OrbGSS Website vNext Product & Execution Authority v1.8 (product-owned).  
 **Canonical repository:** `mertkaanakgunlu-debug/orbgss-website`.  
 **Reference/upstream only:** `baran-orbgss/website`.  
 **Accepted WEB-001 head:** `677bfa7672ac18c2c808ddaaf235ff12863de443`.  
 **Accepted WEB-002 implementation head:** `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`.  
-**Current tracking:** Linear MER-90 — WEB-002 — Evidence-to-Intelligence Product Proof & Geothermal Pilot Experience; MER-91 — WEB-003 — Public-Site Depth, Credibility, Conversion & Bilingual Content.  
-**Status:** WEB-001 and WEB-002 are accepted/complete. WEB-002 passed Product terminal review after one bounded conformant revision; no Product/Science semantic change was required. MER-96 / GEO-WEB-001 is resolved. WEB-003 (public-site depth) received deliberate CTO start approval, is implemented on `feat/web-003-public-site-depth`, reached `REVIEW_READY`, and is completing one bounded Product review revision under MER-91; no Product/Science semantic change is required there either. Canonical package: `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`; exact WEB-002 implementation contract: `tasks/WEB-002_PRODUCT_PROOF.md`; exact WEB-003 implementation contract: `tasks/WEB-003_PUBLIC_SITE_DEPTH.md`. Website implementation in this workstream proceeds directly through Claude Code Desktop under Product authority; E&D is reserved for the post-Control-Plane semi-automated/headless Claude execution flow. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for everything they cover that is not restated here (imagery rules, palette, on-image labels, logo, claim discipline).
+**Accepted WEB-003 implementation head:** `3670d43bece4ffba657a3d9645cbea20c7e698bf`.  
+**Current tracking:** Linear MER-90 — WEB-002 accepted/complete; MER-91 — WEB-003 accepted/complete; MER-92 — WEB-004 next / not started.  
+**Status:** WEB-001, WEB-002 and WEB-003 are accepted/complete. WEB-003 reached `REVIEW_READY`, completed one bounded conformant Product review revision, and was terminally accepted at `3670d43bece4ffba657a3d9645cbea20c7e698bf`; no Product/Science semantic change was required. Exact WEB-002 contract: `tasks/WEB-002_PRODUCT_PROOF.md`; exact WEB-003 contract: `tasks/WEB-003_PUBLIC_SITE_DEPTH.md`. Website implementation in this workstream proceeds directly through Claude Code Desktop under Product authority; E&D is reserved for the post-Control-Plane semi-automated/headless Claude execution flow. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for non-superseded imagery, palette, on-image label, logo and claim-discipline rules.
 
 ## 1. Brand hierarchy
 
 - **OrbGSS** (Orbital Geo-Spatial Solutions) is the primary public brand.
-- **VirgaSoft** is the secondary parent attribution only ("Built by VirgaSoft"). It never leads.
+- **VirgaSoft** is secondary parent attribution only (`Built by VirgaSoft`). It never leads.
 
 ## 2. Positioning
 
 OrbGSS is a geospatial-intelligence platform. It turns Earth observation and geoscience data into evidence-backed spatial priorities that help teams decide where to investigate next.
 
-Application maturity is explicit and must stay visible in copy:
+Application maturity is explicit:
 
 | Application | Public status |
 | --- | --- |
@@ -25,98 +26,86 @@ Application maturity is explicit and must stay visible in copy:
 | Mineral Exploration | expansion direction |
 | Environmental & Land Intelligence | expansion direction |
 
-Never imply that expansion directions are production-ready. Never position OrbGSS as geothermal-only.
+Never imply expansion directions are production-ready. Never position OrbGSS as geothermal-only.
 
-## 3. Presentation grammar: the gallery
+## 3. Presentation grammar
 
-The existing large-image gallery rhythm is a brand asset and survives vNext:
+Canonical principle: **“Gallery is the presentation grammar. Evidence-to-intelligence is the story.”**
 
-```text
-HERO (image-led, overlay copy allowed)
-DARK TECHNICAL BEAM → LARGE FULL-WIDTH VISUAL PANEL
-DARK TECHNICAL BEAM → LARGE FULL-WIDTH VISUAL PANEL
-…
-TRUST / COMPANY / CONTACT
-FOOTER
-```
+Preserve the near-black/deep-navy ground, soft-white type, restrained cyan accent, large EO/product visuals, technical/editorial tone, coordinate/metadata language, wide desktop composition and restrained interaction.
 
-Canonical principle: **"Gallery is the presentation grammar. Evidence-to-intelligence is the story."**
+Prohibited unless later explicitly superseded by Product authority: generic SaaS card walls, icon walls, fake GIS dashboards, sci-fi HUD chrome, neon overload, stock imagery, scroll-jacking and invented scientific outputs.
 
-Preserve: near-black / deep navy ground, soft-white type, restrained cyan accent, full-width cinematic imagery, dark separator beams, technical/editorial tone, coordinate/metadata language, wide desktop composition, restrained interaction. A secondary monospace treatment is allowed for coordinates, evidence labels, metadata and technical descriptors.
+## 4. Accepted public site structure
 
-Prohibited: SaaS card grids, icon walls, dense feature tables, fake GIS dashboards, sci-fi HUD chrome, neon-heavy startup visuals, `How it works` sections, decorative pins/globes, scroll-jacking.
+Canonical public routes after WEB-003:
 
-## 4. Narrative: evidence to intelligence
+- `/` — accepted evidence-to-intelligence homepage;
+- `/platform/` — public workflow and decision-support framing;
+- `/solutions/` — application portfolio and maturity;
+- `/pilot/` — Kızıldere first-application proof;
+- `/company/` — OrbGSS/VirgaSoft company context;
+- `/contact/` — restrained mailto-based contact/partnership path.
 
-Homepage story order:
+Navigation order remains:
 
-1. Hero
-2. 01 — Platform / Observe
-3. 02 — Terrain
-4. 03 — Evidence
-5. 04 — Structure
-6. 05 — Priority
-7. 06 — Geothermal (first active application)
-8. Trust / Company / Contact
-9. Footer
+`Platform` → `Solutions ⌄` → `Pilot` → `Company` → `Contact` → `EN | TR`
 
-Each numbered story section keeps the beam → visual rhythm. The story is what the sequence communicates; the gallery is how it is shown.
+Solutions remains an accessible disclosure for Geothermal Exploration, Mineral Exploration and Environmental & Land Intelligence. All routes/links are real; no placeholder navigation.
 
-## 5. WEB-002 Science alignment
+## 5. Science alignment
 
-Accepted Science authority already defines the active MVP score. Website work must present that authority, not reinvent it.
+Accepted Science authority defines the active MVP score; website work presents it and does not reinvent it.
 
 - Active profile: `mvp_remote_sensing_priority_v1`.
 - Public meaning: **Remote-Sensing Relative Priority — Experimental Baseline**.
-- It is a deterministic 0–100 within-AOI screening/ranking surface.
-- It is **not** probability, Full Prospectivity, reserve estimate, discovery likelihood, drilling-success likelihood, or a calibrated cross-AOI score.
-- Mandatory numeric evidence is the accepted remote-sensing core: THM-01 thermal plus ALT-01/ALT-02 broad spectral alteration proxies under ADR-0033.
-- Sentinel alteration must never be described as mineral/kaolinite identification or proof of hydrothermal alteration.
-- NASADEM elevation/slope/hillshade are context/display layers only; no universal geothermal-favourability direction is assigned.
-- Structural/geological evidence is optional support and score-invariant. For WEB-002, the accepted public package returns Structure and Geology as explicit `DATA_GAP / optional support / score-invariant` states rather than authorizing public fault/lithology masters.
+- Deterministic 0–100 within-AOI screening/ranking surface.
+- Not probability, Full Prospectivity, reserve/resource estimation, discovery likelihood, drilling-success likelihood or calibrated cross-AOI score.
+- Numeric evidence core: THM-01 thermal + ALT-01/ALT-02 broad spectral alteration proxies under accepted Science authority.
+- Sentinel alteration is never mineral/kaolinite identification or proof of hydrothermal alteration.
+- NASADEM terrain is context/display, not a scored geothermal-favourability predictor.
+- Structural/geological evidence is optional support and score-invariant; the current public Kızıldere proof exposes structure/geology as an explicit data gap.
 
-Canonical Science pointers are ADR-0033, GEO-037 / MER-32, GEO-039 / MER-40 and GEO-042 / MER-50. Exact WEB-002 presentation and asset requirements are governed by `tasks/WEB-002_PRODUCT_PROOF.md` and `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`.
+Canonical Science pointers remain ADR-0033, GEO-037 / MER-32, GEO-039 / MER-40 and GEO-042 / MER-50. Public-safe WEB-002 asset authority remains `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`.
 
-The public-safe package authorizes derived website masters for Observe/AOI, NASADEM Terrain, THM-01, ALT-01, ALT-02, the accepted `mvp_remote_sensing_priority_v1` output, and Kızıldere first-application proof through the already-accepted GEO-039 Workbench PNG export path. Generated file SHA-256 values come from each materialized `export_manifest.json`; they must not be invented or copied from unrelated evidence.
+## 6. Scientific/public-claim boundaries
 
-## 6. Scientific and public-claim boundaries
+- Do not fabricate DEM, thermal, alteration, geology, fault or score outputs.
+- Scientific visuals require accepted/public-safe source pointers, provenance/rights and truthful labels.
+- Product presentation must not redefine CRS/grid/units/NoData/mask, resampling, feature eligibility, validation semantics, uncertainty, score interpretation, weights or thresholds.
+- No paid/closed/restricted MTA data without separate explicit authority.
+- No unsupported customer/partner counts, revenue, traction, ROI, accuracy, AI-performance, production deployment, field validation, discovery, reserve/resource or drilling-success claims.
+- OrbGSS remains decision support; field investigation remains necessary.
+- `IMAGERY_RIGHTS.md` and `assets/imagery/sources.json` provenance rules remain mandatory.
 
-- Do not fabricate DEM, thermal, alteration, geological, fault or score outputs. Temporary atmospheric imagery must never be labelled as one of those.
-- Real evidence / product-proof visuals are owned by WEB-002 and require exact accepted/public-safe source pointers, provenance/rights and truthful labels.
-- Scientific meaning remains owned by canonical Science authority. Product presentation must not redefine CRS/grid/units/NoData/mask, resampling, feature eligibility, validation semantics, uncertainty, score interpretation, weights or thresholds.
-- Do not publish paid/closed/restricted MTA data without separate explicit authority.
-- Never publish unsupported customer counts, enterprise partners, revenue, ROI, exploration accuracy, AI/model-performance claims, false production deployments, validation/discovery/reserve/drilling-success claims, or claims that OrbGSS replaces field investigation.
-- Trust language is restrained and truthful: traceable provenance, explicit data gaps, evidence-based outputs, decision support, field investigation remains necessary.
-- Imagery provenance rules in `IMAGERY_RIGHTS.md` and `assets/imagery/sources.json` remain mandatory.
+## 7. Language and accessibility
 
-## 7. Language
+EN is default; TR is second language through the shared `I18N` dictionary in `script.js`. Visible copy and human-readable accessibility text are not complete until both languages exist. Language choice persists across canonical routes. Keyboard/focus behavior, disclosure semantics and mobile usability are mandatory.
 
-EN is the default, TR is the second language, both served from the `I18N` dictionary in `script.js`. A visible string is not done until both languages exist. Turkish is professional, natural Turkish, not literal translation.
+The WEB-003 validator additionally enforces that human-readable `aria-label` values on canonical routes are bound to `data-i18n-aria-label` and that all referenced i18n keys resolve in both languages.
 
-## 8. Navigation (vNext)
+## 8. Accepted WEB-003 result
 
-Desktop, right-aligned, in this order:
+WEB-003 added real static destinations for Platform, Solutions, Pilot, Company and Contact; route-specific canonical/OG metadata; sitemap coverage; cross-route language persistence; site-wide internal-link/fragment validation; and reuse of accepted WEB-002 Kızıldere proof assets on `/pilot/`.
 
-`Platform` → `Solutions ⌄` → `Pilot` → `Company` → `Contact` → `|` → `EN | TR`
+The Product review revision closed three bounded findings before acceptance:
 
-- Solutions is an accessible disclosure listing Geothermal Exploration, Mineral Exploration, Environmental & Land Intelligence.
-- Every visible destination resolves to a real section anchor. No placeholder links to unrelated sections.
-- Keyboard/disclosure behaviour (focus states, Escape, arrow keys, mobile tap expansion) is preserved.
+1. localized the two accessibility labels that had escaped the i18n system and added validator enforcement;
+2. replaced the location-mismatched Crater Lake `/pilot/` Open Graph preview with the accepted/self-hosted Kızıldere `assets/proof/geothermal-1400.webp` derivative;
+3. reconciled repository authority/status pointers.
 
-This supersedes the `Home → Solutions → About → Partner With Us` order recorded in `docs/DESIGN_AUTHORITY.md` and `CLAUDE.md`.
+Accepted WEB-003 implementation HEAD: `3670d43bece4ffba657a3d9645cbea20c7e698bf`.
 
 ## 9. Execution rules
 
-- **No feature work on `main`.** All vNext work lands on feature branches and is reviewed before merge/acceptance.
-- Static HTML + CSS + vanilla JavaScript remains the architecture. A framework or dependency change requires Product approval.
-- No analytics, auth, CRM, backend, billing or production deployment inside website tasks unless a task says so.
-- Each task publishes its contract under `tasks/` before implementation code is written.
-- Publication alone never starts a new WEB task; each new task requires deliberate CTO start approval.
-- Current OrbGSS website vNext implementation proceeds directly through **Claude Code Desktop** in this Product project. Product publishes authority; CTO dispatches the short task/continuation prompt to Claude Desktop; Claude Desktop owns routine implementation, tests, evidence and bounded conformant revision through `REVIEW_READY`.
-- **Execution & Delivery is not the dispatch/revision bridge for this current website workstream.** E&D remains reserved for the post-Control-Plane semi-automated/headless Claude Code communication and execution model.
-- WEB-002 received deliberate start approval, resolved MER-96, reached `REVIEW_READY`, completed one bounded Product review revision, and is accepted at implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`. The accepted revision preserves governed scientific rendering, one-ground framing, mandatory warning coverage and truthful fallback/provenance copy.
-- WEB-003 received deliberate start approval, reached `REVIEW_READY`, and is completing one bounded Product review revision under MER-91 (EN/TR accessibility-text parity, truthful `/pilot/` social-preview imagery, this authority/status reconciliation); no new Product/Science semantics introduced.
-- Product re-enters only for a genuine new Product/Science/high-risk semantic decision, scope/architecture/UX-policy/dependency/security change, or other STOP condition defined by the exact task.
+- **No feature work on `main`.** Product acceptance/publication updates may advance `main` non-destructively after terminal review.
+- Static HTML + CSS + vanilla JavaScript remains the architecture. Framework/dependency changes require Product approval.
+- No analytics, auth, CRM, backend, billing or production DNS inside ordinary website tasks unless the exact task says so.
+- Each WEB task publishes its exact contract under `tasks/` before implementation.
+- Publication alone never starts implementation; each new WEB task requires deliberate CTO start approval.
+- The current website workstream executes directly through **Claude Code Desktop**. Product publishes authority; CTO dispatches the short task prompt; Claude Desktop owns routine implementation, tests, evidence and bounded conformant revision through `REVIEW_READY`.
+- **Execution & Delivery is not the dispatch/revision bridge for this website workstream.** E&D remains reserved for post-Control-Plane semi-automated/headless Claude Code execution.
+- Product re-enters only for genuine Product/Science/high-risk semantic decisions, scope/architecture/UX-policy/dependency/security changes or exact task STOP conditions.
 
 ## 10. Task sequence
 
@@ -124,9 +113,13 @@ This supersedes the `Home → Solutions → About → Partner With Us` order rec
 WEB-001 → WEB-002 → WEB-003 → WEB-004 → WEB-005 → WEB-006
 ```
 
-- **WEB-001** — information architecture, visual foundation, homepage shell — **ACCEPTED / COMPLETE** at `677bfa7672ac18c2c808ddaaf235ff12863de443`.
-- **WEB-002** — real evidence / product-proof imagery and geothermal proof experience — **ACCEPTED / COMPLETE** at implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; exact contract: `tasks/WEB-002_PRODUCT_PROOF.md`.
-- **WEB-003** — public-site depth, credibility, conversion and bilingual content — implemented on `feat/web-003-public-site-depth`; **REVIEW_READY**, completing one bounded Product review revision under MER-91; exact contract: `tasks/WEB-003_PUBLIC_SITE_DEPTH.md`.
-- **WEB-004** — responsive, accessibility, performance and hosted preview acceptance — blocked behind WEB-003.
-- **WEB-005** — cinematic Earth/satellite hero (motion, WebM/MP4). Deferred; the current hero remains a static poster designed to be replaced without changing surrounding architecture.
-- **WEB-006** — production DNS cutover (`orbgss.com` via Squarespace → Vercel). Deferred; no DNS or production-domain change before then. Google Workspace MX/SPF/DKIM/DMARC are never touched by ordinary website work.
+- **WEB-001** — foundation/homepage shell — **ACCEPTED / COMPLETE** at `677bfa7672ac18c2c808ddaaf235ff12863de443`.
+- **WEB-002** — product-proof/geothermal proof — **ACCEPTED / COMPLETE** at implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`.
+- **WEB-003** — public-site depth/credibility/conversion/bilingual content — **ACCEPTED / COMPLETE** at implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf`.
+- **WEB-004** — responsive, accessibility, performance and hosted preview acceptance — next; exact task publication may proceed under Product ownership, but implementation requires deliberate CTO approval.
+- **WEB-005** — final cinematic hero integration/release candidate — deferred behind WEB-004 and deliberate CTO approval.
+- **WEB-006** — production domain cutover (`orbgss.com` via Squarespace → Vercel) — deferred; explicit CTO human gate required for DNS writes.
+
+## 11. Later public-visual authority
+
+The later R7 public visual/palette decision remains valid: final public-facing outputs may be restyled/recomposed only when scientific meaning and Science invariants remain unchanged. Its intended downstream public narrative is cinematic hero → one high-quality real AOI/EO image → compact evidence presentation → large final priority/result map, with structural evidence shown only when genuinely public-safe. WEB-004 is a hardening/acceptance task and must not silently redesign the accepted WEB-003 site to implement that later narrative. Final hero/public-layout integration belongs downstream authority.
