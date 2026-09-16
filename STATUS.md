@@ -4,8 +4,8 @@
 **Branch:** `feat/web-hero-001-predata-scene`  
 **Baseline:** accepted canonical `main@677bfa7672ac18c2c808ddaaf235ff12863de443`  
 **Authority-publication HEAD before implementation:** `0e572e9cfd1709a4e3eb6d3ca110390c79cc6668`  
-**Stage:** `WEB-HERO-001C — REVIEW_READY` (surface-conforming AOI acquisition and scan system implemented; WEB-HERO-001A accepted, WEB-HERO-001B accepted)  
-**Tracking:** parent `MER-97`; active phase `MER-100`  
+**Stage:** `WEB-HERO-001D — REVIEW_READY` (continuous pre-data animatic assembled and quality gate closed; WEB-HERO-001A/B/C accepted)  
+**Tracking:** parent `MER-97`; active phase `MER-101`  
 **Execution channel:** Claude Code Desktop
 
 ## Branch-specific authority override
@@ -27,9 +27,62 @@ All other still-valid website, rights, claim, deployment and safety rules remain
 
 `tasks/WEB-HERO-001B_EARTH_SATELLITE_CINEMATOGRAPHY.md` — **ACCEPTED** at `e35bb168f9b08300fac23bfc4148c3bbfa2a9874`.
 
-`tasks/WEB-HERO-001C_AOI_SCAN_SYSTEM.md` — implemented, `REVIEW_READY`, awaiting review.
+`tasks/WEB-HERO-001C_AOI_SCAN_SYSTEM.md` — **ACCEPTED / TERMINAL_PRODUCT_ACCEPTANCE** at `6593a80`.
 
-`WEB-HERO-001D` may start once this phase's accepted acquisition system is confirmed. Do not start it before then.
+`tasks/WEB-HERO-001D_PREDATA_ANIMATIC_GATE.md` — implemented, `REVIEW_READY`, awaiting review.
+
+WEB-HERO-001D is the last phase of the pre-data lane. Nothing further starts on this branch without
+a new published task. Acceptance of this phase makes the scene an input to the later real-data hero
+phase and the `WEB-005` integration and release gate; it does **not** authorize live hero
+integration, production media packaging, deployment or DNS work.
+
+## WEB-HERO-001D outcome
+
+`hero_predata_animatic` is the assembled pre-data sequence: **Earth establish, satellite entrance,
+AOI acquisition and scan, continuous camera approach, stable regional AOI hold**, 240 frames at
+24 fps (10.0 s), as one scene and one uncut camera move. It `extends` the accepted Phase-C scene, so
+the Earth, satellite, starfield and the whole surface-conforming AOI system are consumed rather than
+redesigned; the three accepted scene definitions are byte-identical in `scene.json` to the versions
+accepted at `6593a80`.
+
+Phase D did three kinds of work.
+
+**Assembly and timing.** Frames 1-96 replay the three accepted Phase-B establish camera states
+verbatim, re-timed onto a beat map that starts acquisition earlier so the sequence can end on a real
+1.7 s regional hold. That hold is where the later phase injects real layers.
+
+**Closing the accepted Phase-C quality gate.** The 2048 px albedo was replaced by the 8192 px member
+of the same already-cleared NASA Visible Earth record, dropping texture magnification at the
+closest approach from about 14x to 3.9x. The atmosphere was rebuilt from the physical parameter that
+actually governs limb brightness - the perigee altitude of each view ray - and made additive rather
+than a mix, so it no longer ends on a hard edge and no longer paints over the sky at regional
+scale. Beam and footprint appearance were judged on Cycles, not EEVEE.
+
+**Making the cinematography claims measurable.** The camera path is derived from the AOI by
+`hero/scripts/shot_plan.py` from a committed `shot_intent`, and the validator re-derives it and
+fails on drift. The camera's aim is held by a keyframed Track To constraint on the AOI centre rather
+than by hand-matched keyframes, so registration is exact between keys and not only at them.
+`hero/scripts/audit_shot.py` measures the evaluated camera every frame and turns the continuity
+contract into eight numbers, all passing: AOI centre lock 0.0 frame widths, worst apparent-size
+reversal -0.000276, worst orientation step 0.215 deg/frame, camera jerk ratio 0.137, lens rate
+0.206 mm/frame, cut ratio 2.48, zero frames with the AOI out of shot, headline-safe occupancy 0.0.
+
+Phase-C geometry validation re-run on the new scene stays green: worst radial deviation 0.726 m,
+worst beam tip error 2.249 m, beam root error 0.0 m, footprint edge spread 0.019 km. The secondary
+fixture passes unchanged. `validate_hero.py` grew 117 to 151 checks and was verified against eight
+deliberate regressions, all caught.
+
+Reproducibility of the accepted phases was proven by extracting the Phase-C tree whole from
+`6593a80` and rendering it in the same session as the current tree, with an
+accepted-versus-accepted control: every difference sits at the renderer's own noise floor.
+
+Evidence under `hero/evidence/`: six Cycles stills at the named beats, a 16-frame Cycles continuity
+sheet, both AOI geometry audits, the shot audit, the shot-plan framing report, the reproducibility
+record and the animatic pointer with its SHA-256. The 4.8 MB animatic itself stays out of Git by
+lane policy.
+
+No fabricated scientific layer, no real-data visualization, no homepage integration, no production
+media packaging, no deployment and no DNS change.
 
 ## WEB-HERO-001A outcome
 
