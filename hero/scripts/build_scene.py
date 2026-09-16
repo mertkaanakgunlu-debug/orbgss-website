@@ -35,6 +35,8 @@ from mathutils import Matrix, Vector  # noqa: E402
 
 import aoi_system as ax  # noqa: E402
 import hero_common as hc  # noqa: E402
+import orbit_plan as op  # noqa: E402
+import satellite_model as sm  # noqa: E402
 
 
 def _clear_scene() -> None:
@@ -74,6 +76,19 @@ def _smooth_fcurves(obj) -> None:
     if not obj.animation_data or not obj.animation_data.action:
         return
     for fcurve in obj.animation_data.action.fcurves:
+        for point in fcurve.keyframe_points:
+            point.interpolation = "BEZIER"
+            point.handle_left_type = "AUTO_CLAMPED"
+            point.handle_right_type = "AUTO_CLAMPED"
+
+
+def _smooth_data_fcurves(datablock) -> None:
+    """Bezier / auto-clamped smoothing for keys on a data-block (camera lens and shift)."""
+    animation = getattr(datablock, "animation_data", None)
+    action = getattr(animation, "action", None) if animation else None
+    if not action:
+        return
+    for fcurve in _action_fcurves(action):
         for point in fcurve.keyframe_points:
             point.interpolation = "BEZIER"
             point.handle_left_type = "AUTO_CLAMPED"
@@ -249,7 +264,8 @@ def _build_earth_material(name: str, spec: dict, scene_config: dict, sun_directi
     links.new(mapping.outputs["Vector"], day_tex_node.inputs["Vector"])
     links.new(mapping.outputs["Vector"], night_tex_node.inputs["Vector"])
 
-    links.new(day_tex_node.outputs["Color"], bsdf.inputs["Base Color"])
+    albedo_socket = _earth_albedo_layers(nt, spec, scene_config, mapping, day_tex_node, interpolation)
+    links.new(albedo_socket, bsdf.inputs["Base Color"])
     links.new(night_tex_node.outputs["Color"], emission.inputs["Color"])
 
     links.new(geometry.outputs["Normal"], dot.inputs[0])
@@ -261,6 +277,202 @@ def _build_earth_material(name: str, spec: dict, scene_config: dict, sun_directi
     links.new(emission.outputs["Emission"], mix_shader.inputs[2])
     links.new(mix_shader.outputs["Shader"], output.inputs["Surface"])
     return material
+
+
+def _earth_albedo_layers(nt, spec: dict, scene_config: dict, mapping, day_tex_node, interpolation):
+    """WEB-005A R2 albedo stack: global basemap -> regional 500 m detail window -> cloud layer.
+
+    The mapped UV is an equirectangular coordinate (u = lon/360 + 0.5, v = lat/180 + 0.5), so a
+    longitude/latitude window converts directly into a second texture lookup: inside the window
+    the detail crop is sampled through its own normalized coordinates, and a feathered mask in
+    degrees blends the two so the resolution step never shows as an edge. The cloud composite is
+    a separate greyscale map mixed toward a near-white on top, which is exactly how the accepted
+    land_ocean_ice_cloud composite was itself assembled -- so the global look is preserved while
+    the land underneath gains four to sixteen times the texel density where the camera goes.
+
+    Every stage is optional and absent from the accepted scenes, which therefore rebuild exactly
+    as reviewed.
+    """
+    nodes, links = nt.nodes, nt.links
+    current = day_tex_node.outputs["Color"]
+
+    window = spec.get("detail_window")
+    detail_file = spec.get("detail_texture")
+    if window and detail_file:
+        lon0, lon1 = float(window["lon0"]), float(window["lon1"])
+        lat0, lat1 = float(window["lat0"]), float(window["lat1"])
+        feather = float(window.get("feather_deg", 2.0))
+
+        separate = nodes.new("ShaderNodeSeparateXYZ")
+        separate.location = (-300, 900)
+        links.new(mapping.outputs["Vector"], separate.inputs["Vector"])
+
+        u_wrapped = nodes.new("ShaderNodeMath")
+        u_wrapped.operation = "WRAP"
+        u_wrapped.location = (-120, 980)
+        u_wrapped.inputs[1].default_value = 0.0
+        u_wrapped.inputs[2].default_value = 1.0
+        links.new(separate.outputs["X"], u_wrapped.inputs[0])
+
+        lon = nodes.new("ShaderNodeMapRange")
+        lon.location = (60, 980)
+        lon.inputs["From Min"].default_value = 0.0
+        lon.inputs["From Max"].default_value = 1.0
+        lon.inputs["To Min"].default_value = -180.0
+        lon.inputs["To Max"].default_value = 180.0
+        lon.clamp = False
+        links.new(u_wrapped.outputs[0], lon.inputs["Value"])
+
+        lat = nodes.new("ShaderNodeMapRange")
+        lat.location = (60, 780)
+        lat.inputs["From Min"].default_value = 0.0
+        lat.inputs["From Max"].default_value = 1.0
+        lat.inputs["To Min"].default_value = -90.0
+        lat.inputs["To Max"].default_value = 90.0
+        lat.clamp = False
+        links.new(separate.outputs["Y"], lat.inputs["Value"])
+
+        def _edge(value_socket, low, high, y):
+            a = nodes.new("ShaderNodeMath")
+            a.operation = "SUBTRACT"
+            a.location = (260, y)
+            a.inputs[1].default_value = low
+            links.new(value_socket, a.inputs[0])
+            b = nodes.new("ShaderNodeMath")
+            b.operation = "SUBTRACT"
+            b.location = (260, y - 120)
+            b.inputs[0].default_value = high
+            links.new(value_socket, b.inputs[1])
+            m = nodes.new("ShaderNodeMath")
+            m.operation = "MINIMUM"
+            m.location = (440, y - 60)
+            links.new(a.outputs[0], m.inputs[0])
+            links.new(b.outputs[0], m.inputs[1])
+            return m.outputs[0]
+
+        edge_lon = _edge(lon.outputs["Result"], lon0, lon1, 1000)
+        edge_lat = _edge(lat.outputs["Result"], lat0, lat1, 760)
+        edge = nodes.new("ShaderNodeMath")
+        edge.operation = "MINIMUM"
+        edge.location = (620, 880)
+        links.new(edge_lon, edge.inputs[0])
+        links.new(edge_lat, edge.inputs[1])
+
+        mask = nodes.new("ShaderNodeMapRange")
+        mask.location = (800, 880)
+        mask.interpolation_type = "SMOOTHSTEP"
+        mask.clamp = True
+        mask.inputs["From Min"].default_value = 0.0
+        mask.inputs["From Max"].default_value = max(1e-3, feather)
+        mask.inputs["To Min"].default_value = 0.0
+        mask.inputs["To Max"].default_value = 1.0
+        links.new(edge.outputs[0], mask.inputs["Value"])
+
+        u_detail = nodes.new("ShaderNodeMapRange")
+        u_detail.location = (260, 560)
+        u_detail.inputs["From Min"].default_value = lon0
+        u_detail.inputs["From Max"].default_value = lon1
+        u_detail.inputs["To Min"].default_value = 0.0
+        u_detail.inputs["To Max"].default_value = 1.0
+        u_detail.clamp = True
+        links.new(lon.outputs["Result"], u_detail.inputs["Value"])
+        v_detail = nodes.new("ShaderNodeMapRange")
+        v_detail.location = (260, 380)
+        v_detail.inputs["From Min"].default_value = lat0
+        v_detail.inputs["From Max"].default_value = lat1
+        v_detail.inputs["To Min"].default_value = 0.0
+        v_detail.inputs["To Max"].default_value = 1.0
+        v_detail.clamp = True
+        links.new(lat.outputs["Result"], v_detail.inputs["Value"])
+        combine = nodes.new("ShaderNodeCombineXYZ")
+        combine.location = (440, 470)
+        links.new(u_detail.outputs["Result"], combine.inputs["X"])
+        links.new(v_detail.outputs["Result"], combine.inputs["Y"])
+
+        detail_node = nodes.new("ShaderNodeTexImage")
+        detail_node.location = (620, 470)
+        detail_node.image = _load_image(detail_file)
+        detail_node.extension = "EXTEND"
+        if interpolation:
+            try:
+                detail_node.interpolation = interpolation
+            except TypeError:
+                pass
+        links.new(combine.outputs["Vector"], detail_node.inputs["Vector"])
+
+        blend = nodes.new("ShaderNodeMixRGB")
+        blend.location = (1000, 600)
+        blend.blend_type = "MIX"
+        links.new(mask.outputs["Result"], blend.inputs["Fac"])
+        links.new(current, blend.inputs["Color1"])
+        links.new(detail_node.outputs["Color"], blend.inputs["Color2"])
+        current = blend.outputs["Color"]
+
+    sea = spec.get("sea_tint")
+    if sea:
+        # Optional: pull open water toward the accepted darker navy. The mask is derived from
+        # the albedo itself (blue dominance), so no geography is painted by hand.
+        separate_rgb = nodes.new("ShaderNodeSeparateColor")
+        separate_rgb.location = (1000, 300)
+        links.new(current, separate_rgb.inputs["Color"])
+        rg = nodes.new("ShaderNodeMath")
+        rg.operation = "MAXIMUM"
+        rg.location = (1180, 300)
+        links.new(separate_rgb.outputs[0], rg.inputs[0])
+        links.new(separate_rgb.outputs[1], rg.inputs[1])
+        blue_excess = nodes.new("ShaderNodeMath")
+        blue_excess.operation = "SUBTRACT"
+        blue_excess.location = (1360, 300)
+        links.new(separate_rgb.outputs[2], blue_excess.inputs[0])
+        links.new(rg.outputs[0], blue_excess.inputs[1])
+        sea_mask = nodes.new("ShaderNodeMapRange")
+        sea_mask.location = (1540, 300)
+        sea_mask.interpolation_type = "SMOOTHSTEP"
+        sea_mask.clamp = True
+        sea_mask.inputs["From Min"].default_value = float(sea.get("mask_start", 0.02))
+        sea_mask.inputs["From Max"].default_value = float(sea.get("mask_end", 0.12))
+        sea_mask.inputs["To Min"].default_value = 0.0
+        sea_mask.inputs["To Max"].default_value = float(sea.get("amount", 0.5))
+        links.new(blue_excess.outputs[0], sea_mask.inputs["Value"])
+        tinted = nodes.new("ShaderNodeMixRGB")
+        tinted.location = (1540, 100)
+        tinted.blend_type = "MULTIPLY"
+        tinted.inputs["Fac"].default_value = 1.0
+        tinted.inputs["Color2"].default_value = _rgba(hc.palette_color(scene_config, sea["tint_color_ref"]))
+        links.new(current, tinted.inputs["Color1"])
+        sea_mix = nodes.new("ShaderNodeMixRGB")
+        sea_mix.location = (1740, 200)
+        links.new(sea_mask.outputs["Result"], sea_mix.inputs["Fac"])
+        links.new(current, sea_mix.inputs["Color1"])
+        links.new(tinted.outputs["Color"], sea_mix.inputs["Color2"])
+        current = sea_mix.outputs["Color"]
+
+    cloud_file = spec.get("cloud_texture")
+    if cloud_file:
+        cloud_node = nodes.new("ShaderNodeTexImage")
+        cloud_node.location = (1000, -200)
+        cloud_node.image = _load_image(cloud_file)
+        try:
+            cloud_node.image.colorspace_settings.name = "Non-Color"
+        except TypeError:
+            pass
+        links.new(mapping.outputs["Vector"], cloud_node.inputs["Vector"])
+        cloud_amount = nodes.new("ShaderNodeMath")
+        cloud_amount.operation = "MULTIPLY"
+        cloud_amount.location = (1200, -200)
+        cloud_amount.use_clamp = True
+        cloud_amount.inputs[1].default_value = float(spec.get("cloud_strength", 1.0))
+        links.new(cloud_node.outputs["Color"], cloud_amount.inputs[0])
+        cloud_mix = nodes.new("ShaderNodeMixRGB")
+        cloud_mix.location = (1400, -100)
+        cloud_mix.inputs["Color2"].default_value = _rgba(
+            hc.palette_color(scene_config, spec.get("cloud_color_ref", "neutral_light"))
+        )
+        links.new(cloud_amount.outputs[0], cloud_mix.inputs["Fac"])
+        links.new(current, cloud_mix.inputs["Color1"])
+        current = cloud_mix.outputs["Color"]
+
+    return current
 
 
 def _build_atmosphere_material(name: str, spec: dict, scene_config: dict, sun_direction):
@@ -775,6 +987,20 @@ def _build_material(name: str, spec: dict, scene_config: dict, sun_direction=(0.
         return _build_aoi_scan_fill_material(name, spec, scene_config)
     if kind == "aoi_beam":
         return _build_aoi_beam_material(name, spec, scene_config)
+    # WEB-005A R2 vocabulary: the generic EO satellite, its orbital trail, and the glow/draw
+    # treatments that give the acquisition frame a visible lock event.
+    if kind == "mli":
+        return sm.build_mli_material(name, spec, scene_config)
+    if kind == "surface":
+        return sm.build_surface_material(name, spec, scene_config)
+    if kind == "solar_cells":
+        return sm.build_solar_cell_material(name, spec, scene_config)
+    if kind == "orbit_trail":
+        return sm.build_trail_material(name, spec, scene_config)
+    if kind == "aoi_glow_ribbon":
+        return _build_aoi_glow_ribbon_material(name, spec, scene_config)
+    if kind == "aoi_lock_draw":
+        return _build_aoi_lock_draw_material(name, spec, scene_config)
     raise ValueError("unsupported material type " + repr(kind) + " for " + name)
 
 
@@ -984,6 +1210,7 @@ def _ribbon_on_sphere(name, units, radius_bu, width_km, earth_radius_km, closed,
     half_angle = (float(width_km) / float(earth_radius_km)) / 2.0
     count = len(units)
     verts = []
+    uvs = []
     for index, point in enumerate(units):
         if closed:
             previous = units[(index - 1) % count]
@@ -1008,6 +1235,10 @@ def _ribbon_on_sphere(name, units, radius_bu, width_km, earth_radius_km, closed,
 
         verts.append(ax.scale(_rotate_on_sphere(point, side, -half_angle), radius_bu))
         verts.append(ax.scale(_rotate_on_sphere(point, side, half_angle), radius_bu))
+        # u runs along the strip, v across it: what a glow falloff or a draw-in mask reads.
+        along_u = index / float(max(1, count - 1))
+        uvs.append((along_u, 0.0))
+        uvs.append((along_u, 1.0))
 
     faces = []
     last = count if closed else count - 1
@@ -1017,7 +1248,7 @@ def _ribbon_on_sphere(name, units, radius_bu, width_km, earth_radius_km, closed,
         c = 2 * ((index + 1) % count)
         d = 2 * ((index + 1) % count) + 1
         faces.append((a, b, d, c))
-    return _mesh_object(name, verts, faces, material, outward_of=_radially_outward)
+    return _mesh_object(name, verts, faces, material, uvs=uvs, outward_of=_radially_outward)
 
 
 def _fill_on_sphere(name, rows, radius_bu, material):
@@ -1346,6 +1577,159 @@ def _build_aoi_beam_material(name: str, spec: dict, scene_config: dict):
     return material
 
 
+def _build_aoi_glow_ribbon_material(name: str, spec: dict, scene_config: dict):
+    """Soft emissive halo for the frame: a wider ribbon whose alpha falls off across its width.
+
+    The crisp border keeps its own thin ribbon; this one sits beside it and gives the "controlled
+    outer glow" the R2 lock asks for at every distance, because it is geometry on the sphere
+    rather than a screen-space blur that would change size with the camera.
+    """
+    material = bpy.data.materials.new(name=name)
+    material.use_nodes = True
+    _set_blend_method(material, show_back=False)
+    nt = material.node_tree
+    nodes, links = nt.nodes, nt.links
+    nodes.clear()
+    output = nodes.new("ShaderNodeOutputMaterial")
+    output.location = (800, 0)
+
+    tex_coord = nodes.new("ShaderNodeTexCoord")
+    tex_coord.location = (-700, 0)
+    separate = nodes.new("ShaderNodeSeparateXYZ")
+    separate.location = (-500, 0)
+    links.new(tex_coord.outputs["UV"], separate.inputs["Vector"])
+    centred = nodes.new("ShaderNodeMath")
+    centred.operation = "SUBTRACT"
+    centred.location = (-320, 0)
+    centred.inputs[1].default_value = 0.5
+    links.new(separate.outputs["Y"], centred.inputs[0])
+    distance = nodes.new("ShaderNodeMath")
+    distance.operation = "ABSOLUTE"
+    distance.location = (-140, 0)
+    links.new(centred.outputs[0], distance.inputs[0])
+    falloff = nodes.new("ShaderNodeMapRange")
+    falloff.location = (40, 0)
+    falloff.interpolation_type = "SMOOTHSTEP"
+    falloff.clamp = True
+    falloff.inputs["From Min"].default_value = float(spec.get("core_fraction", 0.0))
+    falloff.inputs["From Max"].default_value = 0.5
+    falloff.inputs["To Min"].default_value = 1.0
+    falloff.inputs["To Max"].default_value = 0.0
+    links.new(distance.outputs[0], falloff.inputs["Value"])
+    shaped = nodes.new("ShaderNodeMath")
+    shaped.operation = "POWER"
+    shaped.location = (220, 0)
+    shaped.inputs[1].default_value = float(spec.get("falloff_power", 1.6))
+    links.new(falloff.outputs["Result"], shaped.inputs[0])
+
+    presence = nodes.new("ShaderNodeValue")
+    presence.name = "aoi_presence"
+    presence.label = "aoi_presence"
+    presence.location = (220, -220)
+    presence.outputs[0].default_value = 1.0
+    alpha = nodes.new("ShaderNodeMath")
+    alpha.operation = "MULTIPLY"
+    alpha.location = (400, -100)
+    alpha.use_clamp = True
+    links.new(shaped.outputs[0], alpha.inputs[0])
+    links.new(presence.outputs[0], alpha.inputs[1])
+    alpha_scaled = nodes.new("ShaderNodeMath")
+    alpha_scaled.operation = "MULTIPLY"
+    alpha_scaled.location = (560, -100)
+    alpha_scaled.inputs[1].default_value = float(spec.get("alpha", 0.35))
+    links.new(alpha.outputs[0], alpha_scaled.inputs[0])
+
+    emission = nodes.new("ShaderNodeEmission")
+    emission.location = (400, 150)
+    emission.inputs["Color"].default_value = _rgba(
+        hc.palette_color(scene_config, spec["emission_color_ref"])
+    )
+    emission.inputs["Strength"].default_value = float(spec.get("emission_strength", 3.0))
+    transparent = nodes.new("ShaderNodeBsdfTransparent")
+    transparent.location = (400, 320)
+    mix = nodes.new("ShaderNodeMixShader")
+    mix.location = (620, 60)
+    links.new(alpha_scaled.outputs[0], mix.inputs["Fac"])
+    links.new(transparent.outputs["BSDF"], mix.inputs[1])
+    links.new(emission.outputs["Emission"], mix.inputs[2])
+    links.new(mix.outputs["Shader"], output.inputs["Surface"])
+    return material
+
+
+def _build_aoi_lock_draw_material(name: str, spec: dict, scene_config: dict):
+    """Corner-lock bracket that draws itself in from the corner outward.
+
+    The lock ribbon runs arm -> apex -> arm, so its U is 0 at one arm tip, 0.5 at the corner and
+    1 at the other tip. A keyframed ``aoi_lock_draw`` value d reveals |u - 0.5| <= d / 2, which is
+    the two arms growing out of the corner: the registration marks resolve into place instead of
+    fading up as a finished glyph.
+    """
+    material = bpy.data.materials.new(name=name)
+    material.use_nodes = True
+    _set_blend_method(material, show_back=False)
+    nt = material.node_tree
+    nodes, links = nt.nodes, nt.links
+    nodes.clear()
+    output = nodes.new("ShaderNodeOutputMaterial")
+    output.location = (800, 0)
+
+    tex_coord = nodes.new("ShaderNodeTexCoord")
+    tex_coord.location = (-700, 0)
+    separate = nodes.new("ShaderNodeSeparateXYZ")
+    separate.location = (-500, 0)
+    links.new(tex_coord.outputs["UV"], separate.inputs["Vector"])
+    centred = nodes.new("ShaderNodeMath")
+    centred.operation = "SUBTRACT"
+    centred.location = (-320, 0)
+    centred.inputs[1].default_value = 0.5
+    links.new(separate.outputs["X"], centred.inputs[0])
+    distance = nodes.new("ShaderNodeMath")
+    distance.operation = "ABSOLUTE"
+    distance.location = (-140, 0)
+    links.new(centred.outputs[0], distance.inputs[0])
+    doubled = nodes.new("ShaderNodeMath")
+    doubled.operation = "MULTIPLY"
+    doubled.location = (40, 0)
+    doubled.inputs[1].default_value = 2.0
+    links.new(distance.outputs[0], doubled.inputs[0])
+
+    draw = nodes.new("ShaderNodeValue")
+    draw.name = "aoi_lock_draw"
+    draw.label = "aoi_lock_draw"
+    draw.location = (40, -200)
+    draw.outputs[0].default_value = 1.0
+    reveal = nodes.new("ShaderNodeMath")
+    reveal.operation = "SUBTRACT"
+    reveal.location = (220, -100)
+    links.new(draw.outputs[0], reveal.inputs[0])
+    links.new(doubled.outputs[0], reveal.inputs[1])
+    edge = nodes.new("ShaderNodeMapRange")
+    edge.location = (400, -100)
+    edge.interpolation_type = "SMOOTHSTEP"
+    edge.clamp = True
+    edge.inputs["From Min"].default_value = -0.04
+    edge.inputs["From Max"].default_value = 0.04
+    edge.inputs["To Min"].default_value = 0.0
+    edge.inputs["To Max"].default_value = 1.0
+    links.new(reveal.outputs[0], edge.inputs["Value"])
+
+    emission = nodes.new("ShaderNodeEmission")
+    emission.location = (400, 150)
+    emission.inputs["Color"].default_value = _rgba(
+        hc.palette_color(scene_config, spec["emission_color_ref"])
+    )
+    emission.inputs["Strength"].default_value = float(spec.get("emission_strength", 8.0))
+    transparent = nodes.new("ShaderNodeBsdfTransparent")
+    transparent.location = (400, 320)
+    mix = nodes.new("ShaderNodeMixShader")
+    mix.location = (620, 60)
+    links.new(edge.outputs["Result"], mix.inputs["Fac"])
+    links.new(transparent.outputs["BSDF"], mix.inputs[1])
+    links.new(emission.outputs["Emission"], mix.inputs[2])
+    links.new(mix.outputs["Shader"], output.inputs["Surface"])
+    return material
+
+
 def _node_named(material, name):
     if material is None or not material.use_nodes:
         return None
@@ -1438,6 +1822,27 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
         )
     )
 
+    # --- border glow (WEB-005A R2) ----------------------------------------
+    # A second, wider ribbon just beneath the crisp border carrying the soft halo. Geometry on
+    # the sphere, so the glow scales with the frame at every camera distance.
+    glow_cfg = spec.get("border_glow", {})
+    glow_material = materials.get(glow_cfg.get("material"))
+    if glow_material is not None:
+        glow_radius = ax.surface_radius_bu(
+            fixture, earth_radius_km, extra_offset_m=float(glow_cfg.get("offset_m", -60.0))
+        )
+        attach(
+            _ribbon_on_sphere(
+                spec["id"] + "_border_glow",
+                description["boundary_units"],
+                glow_radius,
+                float(glow_cfg.get("width_km", 12.0)),
+                earth_radius_km,
+                True,
+                glow_material,
+            )
+        )
+
     # --- corner locks ------------------------------------------------------
     lock_material = materials.get(spec.get("corner_lock_material"))
     lock_radius = ax.surface_radius_bu(
@@ -1493,21 +1898,48 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
         root_radius = float(beam_spec.get("root_radius_km", 9.0)) / ax.KM_PER_BLENDER_UNIT
         tip_radius = float(beam_spec.get("tip_radius_km", 30.0)) / ax.KM_PER_BLENDER_UNIT
         sides = int(beam_spec.get("sides", 14))
-        for corner_id, target in targets:
-            beam = _beam_mesh_object(
-                spec["id"] + "_beam_" + corner_id,
-                root_radius,
-                tip_radius,
-                sides,
-                beam_material,
-            )
+        beam_targets = list(targets)
+        target_mode = str(beam_spec.get("target", "corners"))
+        if target_mode == "center":
+            beam_targets = [("center", center_target)]
+        elif target_mode == "corners_and_center":
+            beam_targets = list(targets) + [("center", center_target)]
+
+        def _constrained_beam(name, root_r, tip_r, material, target):
+            beam = _beam_mesh_object(name, root_r, tip_r, sides, material)
             copy_location = beam.constraints.new(type="COPY_LOCATION")
             copy_location.target = source
             stretch = beam.constraints.new(type="STRETCH_TO")
             stretch.target = target
             stretch.rest_length = 1.0
             stretch.volume = "NO_VOLUME"
-            beams.append(beam)
+            return beam
+
+        for corner_id, target in beam_targets:
+            beams.append(_constrained_beam(
+                spec["id"] + "_beam_" + corner_id, root_radius, tip_radius, beam_material, target
+            ))
+            # WEB-005A R2 sensing lines: each thin core line carries a wider, fainter glow tube
+            # around it, so the satellite-target link is legible at review size without ever
+            # becoming a slab.
+            glow_material = materials.get(beam_spec.get("glow_material"))
+            if glow_material is not None:
+                factor = float(beam_spec.get("glow_radius_factor", 4.0))
+                beams.append(_constrained_beam(
+                    spec["id"] + "_beamglow_" + corner_id, root_radius * factor,
+                    tip_radius * factor, glow_material, target
+                ))
+
+        # Optional secondary support: one broad, very faint cone to the centre.
+        cone_cfg = beam_spec.get("cone")
+        cone_material = materials.get((cone_cfg or {}).get("material"))
+        if cone_cfg and cone_material is not None:
+            beams.append(_constrained_beam(
+                spec["id"] + "_cone",
+                float(cone_cfg.get("root_radius_km", 2.0)) / ax.KM_PER_BLENDER_UNIT,
+                float(cone_cfg.get("tip_radius_km", 200.0)) / ax.KM_PER_BLENDER_UNIT,
+                cone_material, center_target,
+            ))
 
     # --- appearance / release timing ---------------------------------------
     scene_materials = scene_spec.get("materials", {})
@@ -1566,6 +1998,35 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
             keys.append((int(beam_spec["release_start_frame"]), 1.0))
             keys.append((int(beam_spec["release_end_frame"]), 0.0))
         _animate_presence(beam_material, keys)
+        _animate_presence(materials.get(beam_spec.get("glow_material")), keys)
+        cone_cfg = beam_spec.get("cone") or {}
+        _animate_presence(materials.get(cone_cfg.get("material")), keys)
+
+    # border glow follows the border's own appearance/emphasis ramps
+    glow_cfg = spec.get("border_glow", {})
+    glow_material = materials.get(glow_cfg.get("material"))
+    if glow_material is not None and "appear_start_frame" in border_cfg:
+        glow_base = float(scene_materials.get(glow_cfg.get("material"), {}).get("emission_strength", 3.0))
+        _animate_emission_strength(
+            glow_material, glow_base,
+            [
+                (int(border_cfg["appear_start_frame"]), 0.0),
+                (int(border_cfg["appear_end_frame"]), 1.0),
+            ] + _extra_keys(border_cfg, "emphasis"),
+        )
+
+    # corner locks: draw-in from the corner outward (R2 lock event)
+    draw_node = _node_named(lock_material, "aoi_lock_draw")
+    if draw_node is not None and "draw_start_frame" in lock_cfg:
+        _keyframe_socket(
+            lock_material.node_tree,
+            draw_node.outputs[0],
+            [
+                (int(lock_cfg["draw_start_frame"]), 0.0),
+                (int(lock_cfg["draw_end_frame"]), 1.0),
+            ],
+            interpolation="BEZIER",
+        )
 
     # --- scan sweep --------------------------------------------------------
     sweep_cfg = spec.get("sweep", {})
@@ -1599,6 +2060,16 @@ def _add_object(spec: dict, materials: dict, context: dict | None = None):
 
     if kind == "satellite":
         return _build_satellite(spec, materials)
+
+    if kind == "eo_satellite":
+        if context is None:
+            raise ValueError("object type 'eo_satellite' needs the build context")
+        return sm.build_eo_satellite(spec, materials, context)
+
+    if kind == "orbit_trail":
+        if context is None:
+            raise ValueError("object type 'orbit_trail' needs the build context")
+        return sm.build_orbit_trail(spec, materials, context)
 
     if kind == "aoi_system":
         if context is None:
@@ -1688,6 +2159,101 @@ def _apply_object_animation(obj, spec: dict) -> None:
         obj.keyframe_insert(data_path="rotation_euler", frame=frame)
 
     _smooth_fcurves(obj)
+
+
+def _apply_aim(obj, aim_spec: dict) -> None:
+    """Blend a second Track To toward another target with keyframed influence.
+
+    The satellite's base attitude is nadir (its track target is the Earth). During acquisition
+    it slews toward the footprint centre and back -- the attitude an agile EO platform actually
+    takes for an off-nadir collect -- and the influence ramp is what makes that a motion rather
+    than a snap.
+    """
+    target = bpy.data.objects.get(aim_spec["target_id"])
+    if target is None:
+        raise KeyError("aim target " + repr(aim_spec["target_id"]) + " is not built")
+    constraint = obj.constraints.new(type="TRACK_TO")
+    constraint.name = "aim"
+    constraint.target = target
+    constraint.track_axis = "TRACK_NEGATIVE_Z"
+    constraint.up_axis = "UP_Y"
+    keys = aim_spec.get("influence_keyframes", [])
+    if not keys:
+        constraint.influence = float(aim_spec.get("influence", 1.0))
+        return
+    for key in sorted(keys, key=lambda k: int(k["frame"])):
+        constraint.influence = float(key["value"])
+        constraint.keyframe_insert(data_path="influence", frame=int(key["frame"]))
+    animation = obj.animation_data
+    action = animation.action if animation else None
+    if action:
+        for fcurve in _action_fcurves(action):
+            if fcurve.data_path.endswith('constraints["aim"].influence'):
+                for point in fcurve.keyframe_points:
+                    point.interpolation = "BEZIER"
+                    point.handle_left_type = "AUTO_CLAMPED"
+                    point.handle_right_type = "AUTO_CLAMPED"
+
+
+def _apply_array_drive(object_id: str, pivot_spec: dict, lights: dict) -> None:
+    """Point a solar-array pivot at a light about its own wing axis (a solar array drive)."""
+    pivot = bpy.data.objects.get(object_id + "_array_" + pivot_spec["side"])
+    target = lights.get(pivot_spec.get("target_id", "sun")) or bpy.data.objects.get(pivot_spec.get("target_id", "sun"))
+    if pivot is None or target is None:
+        return
+    constraint = pivot.constraints.new(type="LOCKED_TRACK")
+    constraint.target = target
+    constraint.track_axis = pivot_spec.get("track_axis", "TRACK_Z")
+    constraint.lock_axis = pivot_spec.get("lock_axis", "LOCK_X")
+
+
+def _apply_post_processing(post: dict | None) -> None:
+    """Compositor glare (bloom) so emissive acquisition elements carry a controlled halo.
+
+    Threshold sits above anything sunlit on the planet, so only the emissive frame, lines and
+    highlights bloom; the Earth itself is untouched.
+    """
+    scene = bpy.context.scene
+    if not post or not post.get("glare"):
+        scene.use_nodes = False
+        return
+    glare_spec = post["glare"]
+    scene.use_nodes = True
+    tree = scene.node_tree
+    for node in list(tree.nodes):
+        tree.nodes.remove(node)
+    render_layers = tree.nodes.new("CompositorNodeRLayers")
+    render_layers.location = (-400, 0)
+    glare = tree.nodes.new("CompositorNodeGlare")
+    glare.location = (0, 0)
+    glare.glare_type = str(glare_spec.get("type", "BLOOM"))
+    try:
+        glare.quality = str(glare_spec.get("quality", "HIGH"))
+    except TypeError:
+        pass
+    for name, key, default in (
+        ("Threshold", "threshold", 1.6),
+        ("Strength", "strength", 0.3),
+        ("Size", "size", 6),
+        ("Saturation", "saturation", 1.0),
+    ):
+        if name in glare.inputs:
+            value = glare_spec.get(key, default)
+            try:
+                glare.inputs[name].default_value = type(glare.inputs[name].default_value)(value)
+            except (TypeError, ValueError):
+                pass
+        elif hasattr(glare, key):
+            try:
+                setattr(glare, key, glare_spec.get(key, default))
+            except (TypeError, ValueError):
+                pass
+    if "Tint" in glare.inputs and glare_spec.get("tint"):
+        glare.inputs["Tint"].default_value = (*[float(c) for c in glare_spec["tint"]], 1.0)
+    composite = tree.nodes.new("CompositorNodeComposite")
+    composite.location = (400, 0)
+    tree.links.new(render_layers.outputs["Image"], glare.inputs["Image"])
+    tree.links.new(glare.outputs["Image"], composite.inputs["Image"])
 
 
 def _apply_track_to(obj, target) -> None:
@@ -1806,6 +2372,16 @@ def _add_camera(spec: dict, scene_config: dict):
             camera_object.keyframe_insert(data_path="location", frame=frame)
             camera_object.keyframe_insert(data_path="rotation_euler", frame=frame)
         _smooth_fcurves(camera_object)
+        # WEB-005A R2: lens shift moves the frame without moving the aim. The AOI track
+        # constraint keeps the footprint on the optical axis; the shift decides where in the
+        # frame that axis lands, so the target can sit right of centre while the lock holds.
+        for kf in sorted(spec.get("shift_keyframes", []), key=lambda k: int(k["frame"])):
+            frame = int(kf["frame"])
+            camera_data.shift_x = float(kf.get("shift_x", 0.0))
+            camera_data.shift_y = float(kf.get("shift_y", 0.0))
+            camera_data.keyframe_insert(data_path="shift_x", frame=frame)
+            camera_data.keyframe_insert(data_path="shift_y", frame=frame)
+        _smooth_data_fcurves(camera_data)
     else:
         camera_object.location = tuple(spec.get("location", (0.0, -10.0, 2.0)))
         camera_object.rotation_euler = _look_at_euler(
@@ -1989,10 +2565,30 @@ def build(scene_id: str, scene_config=None, frame: int | None = None, aoi_fixtur
                     "object " + object_spec["id"] + " tracks undefined object " + track_id
                 )
             _apply_track_to(built_objects[object_spec["id"]], built_objects[track_id])
+        aim = object_spec.get("aim")
+        if aim:
+            _apply_aim(built_objects[object_spec["id"]], aim)
 
+    lights = {}
     for light_spec in spec.get("lights", []):
-        _add_light(light_spec, scene_config)
+        lights[light_spec["id"]] = _add_light(light_spec, scene_config)
     _add_camera(spec.get("camera", {}), scene_config)
+
+    # Solar array drives need the sun object, so they are wired after the lights exist.
+    for object_spec in spec.get("objects", []):
+        for pivot_spec in object_spec.get("array_drive", []):
+            _apply_array_drive(object_spec["id"], pivot_spec, lights)
+
+    isolation = spec.get("lighting_isolation")
+    if isolation:
+        sm.isolate_satellite_lighting(
+            lights.get(isolation.get("sun_id", "sun")),
+            isolation.get("satellite_ids", []),
+            built_objects,
+            isolation,
+        )
+
+    _apply_post_processing(spec.get("post_processing"))
 
     target_frame = frame if frame is not None else int(spec.get("frame", 1))
     bpy.context.scene.frame_set(target_frame)

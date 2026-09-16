@@ -758,6 +758,108 @@ def main() -> int:
         fail("index.html declares hero media but the manifest has no web_005.hero_media record",
              errors)
 
+    # ------------------------------------------------------------------
+    # WEB-005A R2 hero handoff (A-HERO-06 / A-HERO-14). The page-layer result must be coupled to
+    # the acquired target region by measured geometry, not by eye: the anchor the markup carries
+    # has to match the shot audit of the shipped sequence's last frame, the poster/video
+    # object-position it assumes has to be the one styles.css applies, and the panel has to carry
+    # the exact public label, the mandatory warning as a .beam-note, and the accepted priority
+    # derivative at a CSS width inside its own ceiling. A small detached card with none of that
+    # is precisely what Product rejected.
+    # ------------------------------------------------------------------
+    home = route_html.get("", "")
+    anchor_match = re.search(r"data-hero-anchor='([^']+)'", home)
+    if not anchor_match:
+        fail("index.html hero declares no data-hero-anchor; the handoff cannot be coupled to the "
+             "acquired frame", errors)
+    else:
+        try:
+            anchor = json.loads(anchor_match.group(1))
+        except json.JSONDecodeError as error:
+            anchor = None
+            fail(f"data-hero-anchor is not valid JSON: {error}", errors)
+        audit_path = ROOT / "hero" / "evidence" / "shot_audit_production.json"
+        if anchor is not None and not audit_path.exists():
+            fail("hero/evidence/shot_audit_production.json is missing; the handoff anchor has "
+                 "nothing to be checked against", errors)
+        elif anchor is not None:
+            audit = json.loads(audit_path.read_text(encoding="utf-8"))
+            measured = audit.get("handoff_anchor", {})
+            for key in ("x", "y", "extent"):
+                got = anchor.get(key)
+                want = measured.get(key)
+                if not isinstance(got, (int, float)) or not isinstance(want, (int, float)):
+                    fail(f"handoff anchor {key} missing in markup or audit", errors)
+                elif abs(float(got) - float(want)) > 0.006:
+                    fail(f"handoff anchor {key} = {got} drifts from the audited last frame "
+                         f"({want}); re-run the shot audit and update data-hero-anchor", errors)
+            box_got = anchor.get("box")
+            box_want = measured.get("box")
+            if not (isinstance(box_got, list) and isinstance(box_want, list) and len(box_got) == 4
+                    and len(box_want) == 4
+                    and all(abs(float(a) - float(b)) <= 0.006 for a, b in zip(box_got, box_want))):
+                fail(f"handoff anchor box {box_got} drifts from the audited frame bounds {box_want}",
+                     errors)
+            fixture_span = 420.0
+            aoi_span = 36.0
+            if abs(float(anchor.get("aoi", 0)) - aoi_span / fixture_span) > 0.002:
+                fail("handoff anchor 'aoi' must be the 36 km analysis AOI as a fraction of the "
+                     "420 km acquisition frame", errors)
+            if list(anchor.get("frame", [])) != [1920, 1080]:
+                fail("handoff anchor frame size must be the delivered 1920 x 1080", errors)
+            css_text = (ROOT / "styles.css").read_text(encoding="utf-8")
+            position = re.search(r"\.hero-poster,\.hero-video\{[^}]*object-position:center (\d+)%", css_text)
+            if not position:
+                fail("styles.css no longer declares the hero object-position the anchor assumes", errors)
+            elif abs(float(anchor.get("position", -1)) - int(position.group(1)) / 100.0) > 1e-6:
+                fail(f"handoff anchor position {anchor.get('position')} does not match the CSS "
+                     f"object-position ({position.group(1)}%)", errors)
+            img_max = re.search(r"--handoff-img:clamp\((\d+)px,[^,]+,(\d+)px\)", css_text)
+            if not img_max:
+                fail("styles.css declares no --handoff-img clamp for the hero result panel", errors)
+            elif int(img_max.group(2)) * 2 > 1249:
+                fail(f"hero result panel may reach {img_max.group(2)} CSS px, over the 1249 device "
+                     f"pixel ceiling at 2x", errors)
+
+    handoff = re.search(r'<figure class="hero-handoff" data-hero-handoff hidden>(.*?)</figure>', home, re.S)
+    if not handoff:
+        fail("index.html has no data-hero-handoff figure", errors)
+    else:
+        body = handoff.group(1)
+        if 'data-i18n="label.priority"' not in body:
+            fail("hero handoff does not carry the exact public label (label.priority)", errors)
+        if not re.search(r'class="[^"]*beam-note[^"]*"[^>]*data-i18n="act\.priority\.note"', body):
+            fail("hero handoff does not carry the mandatory priority warning as a .beam-note", errors)
+        priority_paths = {
+            str(d.get("path", "")) for a in manifest.get("geo_web_002", {}).get("assets", [])
+            if a.get("id") == "priority" for d in a.get("derivatives", [])
+        }
+        srcs = set(re.findall(r'src="([^"]+)"', body)) | {
+            c.strip().split()[0] for group in re.findall(r'srcset="([^"]+)"', body) for c in group.split(",")
+        }
+        if not (srcs & priority_paths):
+            fail("hero handoff does not show an accepted priority derivative", errors)
+        if "priority-legend" not in body:
+            fail("hero handoff shows the priority map without its own in-frame legend", errors)
+        if 'data-i18n="hero.handoff.meta"' not in body:
+            fail("hero handoff does not state the 36 km analysis AOI against the 420 km frame", errors)
+    if "data-hero-target" not in home or "hero-target-marker" not in home:
+        fail("index.html has no registration marker for the analysis AOI inside the acquired frame",
+             errors)
+
+    # Sensing lines are attention, not physics (A-HERO-04): the hero's own copy may not claim an
+    # instrument. Checked on the dictionary in both languages and on the static markup.
+    physics = ("radar", "lidar", "hyperspectral", "multispectral", "spectrometer", "swath",
+               "wavelength", "backscatter", "radiometer", "sar ")
+    script_text = (ROOT / "script.js").read_text(encoding="utf-8")
+    hero_strings = re.findall(r"'((?:hero\.|scene\.hero\.|alt\.hero)[a-zA-Z.]*)':\s*'((?:[^'\\]|\\.)*)'", script_text)
+    hero_copy = " ".join(v.lower() for _, v in hero_strings)
+    hero_markup = re.search(r'<section class="hero".*?</section>', home, re.S)
+    hero_copy += " " + (hero_markup.group(0).lower() if hero_markup else "")
+    for term in physics:
+        if term in hero_copy:
+            fail(f"hero copy claims sensing physics: {term.strip()!r}", errors)
+
     # sitemap.xml must list every canonical public route.
     sitemap_path = ROOT / "sitemap.xml"
     if sitemap_path.exists():

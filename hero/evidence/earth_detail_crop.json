@@ -1,0 +1,33 @@
+{
+  "task": "WEB-005A R2 / MER-107",
+  "derived_from": "hero/assets/source/world.topo.bathy.200407.3x21600x21600.C1.jpg",
+  "source_sha256": "ee8490ab1eb35d620d8d1ad8e69b3234c0b050e4eddb80e7232a2d165e475aa0",
+  "tile": "C1",
+  "tile_origin_lon_lat": [
+    0.0,
+    90.0
+  ],
+  "texels_per_degree": 240.0,
+  "window_deg": {
+    "lon0": 12.0,
+    "lon1": 46.0,
+    "lat0": 27.0,
+    "lat1": 50.0
+  },
+  "texel_rectangle": {
+    "x0": 2880,
+    "x1": 11040,
+    "y0": 9600,
+    "y1": 15120
+  },
+  "crop_size": [
+    8160,
+    5520
+  ],
+  "metres_per_texel_at_equator": 463.8333333333333,
+  "operation": "axis-aligned sub-rectangle copy; no resampling, no colour change, PNG (lossless) output",
+  "output": "hero/assets/source/world.topo.bathy.200407.C1.crop.png",
+  "output_sha256": "0e819ee7fb6e0efcfe51c28f4b052ae9216c39f2386e3556686a0efd47059882",
+  "output_bytes": 56247989,
+  "blender_version": "4.5.10 LTS"
+}

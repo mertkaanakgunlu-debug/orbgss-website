@@ -17,7 +17,7 @@ Before changing code, read in this order:
 Then inspect `index.html`, `styles.css`, `script.js`, and run the site validator before editing.
 
 Hero production work also reads `hero/README.md` and `hero/config/lane.json`, and is validated by
-`py -3.14 hero/scripts/validate_hero.py`. Blender 4.5 LTS is local production tooling, never a
+`py -3.14 hero/scripts/validate_hero.py`. The production satellite pass and the camera are both derived from intents in `hero/config/scene.json` (`orbit_intent`, `shot_intent`); edit the intent and re-derive, never type keyframes. Blender 4.5 LTS is local production tooling, never a
 site runtime dependency.
 
 ## Repository intent
@@ -70,7 +70,7 @@ If a requested change conflicts with these rules, stop and ask for explicit desi
 
 ## Branching
 
-No feature work on `main`. vNext tasks (WEB-001 → WEB-006) land on feature branches and are reviewed before merge. WEB-001 is accepted at `677bfa7`; WEB-002 is accepted (implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`, merged to `main`); WEB-003 and WEB-004 are accepted; GEO-WEB-002 is Science-accepted at `ea693c29762279131fbed005e832c5ff2dca587b`. WEB-HERO-001D is terminally accepted at evidence HEAD `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`. WEB-005 / MER-93 (cinematic hero + four-act homepage release candidate) is on `feat/web-005-cinematic-hero`. Production DNS cutover is WEB-006 / MER-95 and remains a separate human CTO gate.
+No feature work on `main`. vNext tasks (WEB-001 → WEB-006) land on feature branches and are reviewed before merge. WEB-001 is accepted at `677bfa7`; WEB-002 is accepted (implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`, merged to `main`); WEB-003 and WEB-004 are accepted; GEO-WEB-002 is Science-accepted at `ea693c29762279131fbed005e832c5ff2dca587b`. WEB-HERO-001D is terminally accepted at evidence HEAD `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`. WEB-005 / MER-93 (cinematic hero + four-act homepage release candidate) is terminally accepted at `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`. WEB-005A / MER-107 (hero visual fidelity, Product R2 visual lock) is on `feat/web-005a-hero-visual-fidelity` under `tasks/WEB-005A_HERO_VISUAL_FIDELITY.md` and `docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md`; the `ffa2f29` checkpoint was rejected visually and is retained as before-evidence. Production DNS cutover is WEB-006 / MER-95 and remains a separate human CTO gate.
 
 ## Deployment safety
 

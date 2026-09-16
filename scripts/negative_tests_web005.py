@@ -155,6 +155,80 @@ case("scientific layer smuggled into an accepted pre-data scene", SCENE, science
      hero, "accepted pre-data scenes still declare no scientific layer")
 
 
+# ---- WEB-005A R2: the visual-fidelity contract has to fail loudly too ----------------------
+def faint_lines(t):
+    d = json.loads(t)
+    d["scenes"]["hero_production_kizildere"]["materials"]["aoi_beam"]["tip_alpha"] = 0.05
+    return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+
+
+case("sensing lines faded to near-invisible", SCENE, faint_lines,
+     hero, "sensing-line core is legible")
+
+
+def slab_lines(t):
+    d = json.loads(t)
+    aoi = next(o for o in d["scenes"]["hero_production_kizildere"]["objects"] if o["id"] == "aoi")
+    aoi["beams"]["tip_radius_km"] = 90.0
+    return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+
+
+case("sensing lines thickened into a slab", SCENE, slab_lines,
+     hero, "sensing-line core is thin")
+
+
+def sensor_claim(t):
+    d = json.loads(t)
+    sat = next(o for o in d["scenes"]["hero_production_kizildere"]["objects"] if o["id"] == "satellite")
+    sat["note"] = sat.get("note", "") + " Depicts a radar swath."
+    return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+
+
+case("production scene claims sensing physics", SCENE, sensor_claim,
+     hero, "makes no sensing-physics claim")
+
+
+def orbit_drift(t):
+    d = json.loads(t)
+    sat = next(o for o in d["scenes"]["hero_production_kizildere"]["objects"] if o["id"] == "satellite")
+    sat["location_keyframes"][3]["location"][0] += 0.05
+    return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+
+
+case("satellite keyframe typed off its derived orbit", SCENE, orbit_drift,
+     hero, "match their orbit derivation")
+
+
+def lock_pulse_removed(t):
+    d = json.loads(t)
+    aoi = next(o for o in d["scenes"]["hero_production_kizildere"]["objects"] if o["id"] == "aoi")
+    aoi["border"]["emphasis"] = [[124, 1.0], [276, 1.0]]
+    return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+
+
+case("target frame lock intensification removed", SCENE, lock_pulse_removed,
+     hero, "visible lock intensification")
+
+
+def anchor_drift(t):
+    return t.replace('"x":0.72', '"x":0.62', 1)
+
+
+case("handoff anchor moved away from the audited frame", INDEX, anchor_drift,
+     site, "drifts from the audited last frame")
+
+
+case("handoff loses the exact public label", INDEX,
+     lambda t: t.replace('<span class="hero-handoff-label" data-i18n="label.priority">',
+                         '<span class="hero-handoff-label">', 1),
+     site, "exact public label")
+
+
+case("handoff warning detached from the mandatory-warning class", INDEX,
+     lambda t: t.replace('class="hero-handoff-note beam-note"', 'class="hero-handoff-note"', 1),
+     site, "mandatory priority warning")
+
+
 def main() -> int:
     # The baseline may legitimately be red while the hero media is still being produced, so the
     # test is not "mutation fails" but "mutation introduces THIS error, which the baseline lacks".

@@ -1,8 +1,8 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v1.0.0-rc1-web-005-cinematic-hero` — WEB-005 REVIEW_READY (release candidate)
+**Canonical version:** `v1.0.0-rc2-web-005a-hero-visual-fidelity` — WEB-005A R2 REVIEW_READY (release candidate)
 **Date:** 2026-09-16
-**Stage:** WEB-005 / MER-93 is `REVIEW_READY` on `feat/web-005-cinematic-hero`, awaiting Product terminal exact-head acceptance. It consumes the accepted WEB-HERO-001D cinematic system (`e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`) and the accepted GEO-WEB-002 visual master package (`ea693c29762279131fbed005e832c5ff2dca587b`) and produces the pre-launch homepage release candidate: four-act homepage, production hero media, truthful fallbacks. Evidence: `tasks/WEB-005_REVIEW_EVIDENCE.md`. **Not merged to `main`. Nothing deployed. No DNS touched. WEB-006 has not begun.**
+**Stage:** WEB-005A / MER-107 (hero visual fidelity, Product R2 visual lock) is `REVIEW_READY` on `feat/web-005a-hero-visual-fidelity`, awaiting Product terminal exact-head acceptance. It revises the accepted WEB-005 / MER-93 hero (`main@00af0f232a8d7d77f5ca61d758461ff7316ba151`) after Product rejected the `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` checkpoint visually: derived orbital pass, volumetric generic EO satellite, readable cyan sensing lines, a target-frame lock event, a recomposed approach, a NASA Blue Marble 500 m regional albedo, and a page-layer analytical handoff coupled to the acquired frame. Evidence: `tasks/WEB-005A_HERO_FIDELITY_EVIDENCE.md`. **Not merged to `main`. Nothing deployed. No DNS touched. WEB-005B and WEB-006 have not begun.**
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
@@ -10,17 +10,19 @@
 **Accepted WEB-003 implementation HEAD:** `3670d43bece4ffba657a3d9645cbea20c7e698bf`
 **Accepted WEB-004 implementation HEAD:** `56cb53039b85a852110c737505bc2ae2282acb08`
 **Accepted GEO-WEB-002 implementation HEAD:** `ea693c29762279131fbed005e832c5ff2dca587b`
+**Accepted WEB-005 terminal acceptance:** `main@00af0f232a8d7d77f5ca61d758461ff7316ba151` (`tasks/WEB-005_TERMINAL_PRODUCT_ACCEPTANCE.md`)
+**WEB-005A rejected checkpoint (before-evidence):** `ffa2f2944ca5992afb9e9891b42745a9bd1105ad`
+**WEB-005A implementation HEAD (REVIEW_READY):** `<!-- WEB005A_HEAD -->`
 **Reference/upstream only:** https://github.com/baran-orbgss/website
 **Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)
 **Registrar / DNS:** Squarespace
 **Hosting target:** Vercel
 **Company:** VirgaSoft
 **Product:** OrbGSS — Orbital Geo-Spatial Solutions
-**Product authority:** OrbGSS Website vNext Product & Execution Authority v1.8 (`docs/WEB_VNEXT_AUTHORITY.md`); current Drive Product authority has precedence where newer.
+**Product authority:** OrbGSS Website vNext Product & Execution Authority v1.8 (`docs/WEB_VNEXT_AUTHORITY.md`); `docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md` (R2 visual lock) where newer.
 **Accepted WEB-HERO-001D evidence HEAD:** `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e` (terminal Product acceptance published at `573f4f1`)
 **WEB-005 execution baseline:** `main@d2421a772f2e4cfa38c85dd5ee71a419c5160838`
-**WEB-005 implementation HEAD (REVIEW_READY):** `0e3b878280a5c4b4198c223153178f89137bd01c`
-**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003 accepted/complete); MER-92 (WEB-004 Product-accepted/complete); MER-102 / GEO-WEB-002 (Science-accepted/complete); MER-101 / WEB-HERO-001D (terminally accepted); MER-93 / WEB-005 (REVIEW_READY); MER-96 / GEO-WEB-001 resolved
+**Tracking:** MER-90 (WEB-002 accepted); MER-91 (WEB-003 accepted); MER-92 (WEB-004 accepted); MER-102 / GEO-WEB-002 (Science-accepted); MER-101 / WEB-HERO-001D (terminally accepted); MER-93 / WEB-005 (terminally accepted); **MER-107 / WEB-005A (REVIEW_READY, R2)**; MER-96 / GEO-WEB-001 resolved
 
 ## Authority
 
@@ -28,7 +30,32 @@
 
 `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` locks the final four-act homepage story for WEB-005 and supersedes the repeated full-width proof-scene rhythm where they conflict; it does not supersede accepted Science semantics, WEB-002 provenance constraints, WEB-004 performance/accessibility decisions or the accepted route architecture. GEO-WEB-002 / MER-102 is the Science & Geospatial publication dependency it named. It is terminally accepted under `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md` at implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`. Product may bind the package into WEB-005 while preserving its exact labels, warnings, provenance and maximum-safe-render constraints.
 
-## Current state (WEB-005, REVIEW_READY)
+## Current state (WEB-005A R2, REVIEW_READY)
+
+WEB-005A revises only the hero's rendered media, the hero production configuration that generates it,
+and the page-layer handoff. The four-act homepage and every accepted scientific asset, label and
+warning are unchanged and re-verified.
+
+- **Satellite.** A procedural, OrbGSS-original generic EO platform (`hero/scripts/satellite_model.py`)
+  replaces the accepted placeholder in the production scene: volumetric bus in MLI, instrument deck,
+  three-segment arrays with real thickness, dish, star trackers, thruster; no operational spacecraft
+  or sensor identity. Its pass is derived from an `orbit_intent` like the camera is from its
+  `shot_intent`: it emerges from behind the left limb, sits lower-left of the target through the
+  whole acquisition beat at 10.2 % of the frame width, and never becomes a foreground fly-by.
+- **Sensing FX and lock.** Four thin cyan core lines (#7FEFFF) with glow sheaths (#3CCBFF) connect
+  satellite and footprint corners by constraint; the #98F5FF frame carries a halo ribbon, pulses
+  2.6× at the lock while the corner locks draw in, and settles again for the handoff. The validator
+  holds the lines inside a checkable envelope and rejects sensing-physics vocabulary.
+- **Earth.** Same model, lighting and atmosphere; the albedo is now NASA Blue Marble Next Generation
+  (21600 × 10800) with a lossless 500 m regional window under the target and the same cloud layer the
+  accepted composite was built from. Upscaling at the hold: 5.87× → 0.56× (`hero/evidence/texel_coverage.json`).
+- **Handoff.** The page places a registration marker at the audited position of the 36 km analysis
+  AOI inside the rendered 420 km frame, draws leader lines, and reveals the accepted priority
+  derivative (≤ 440 CSS px, byte-exact, with its in-frame legend, exact label and mandatory warning)
+  coupled below the frame. `data-hero-anchor` must match `hero/evidence/shot_audit_production.json`.
+- **Gates.** Site validator PASS 0 warnings; hero validator PASS; negative tests 20/20; shot audit 13/13.
+
+## Current state (WEB-005, ACCEPTED)
 
 The homepage is now the locked four-act story from `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md`:
 **Act 1 cinematic acquisition hero → Act 2 real Kızıldere EO context → Act 3 compact evidence trio →
@@ -180,7 +207,7 @@ OrbGSS is a geospatial-intelligence platform. Geothermal Exploration is the acti
 ## Production blockers
 
 1. `CONTACT_RELEASE_GATE` (open, MER-92) — confirm `contact@orbgss.com` ownership and deliverability before public launch. Route/mailto correctness is verified; mailbox ownership requires Workspace/account evidence. Mandatory pre-WEB-006 gate.
-2. WEB-005 is implemented and `REVIEW_READY` at the HEAD recorded in `tasks/WEB-005_REVIEW_EVIDENCE.md`, pending Product terminal exact-head acceptance and publication to `main`. It is not merged and not deployed.
+2. WEB-005 is terminally accepted. WEB-005A / MER-107 is `REVIEW_READY` at the HEAD recorded in `tasks/WEB-005A_HERO_FIDELITY_EVIDENCE.md`, pending Product terminal exact-head acceptance and publication to `main`. It is not merged and not deployed. WEB-005B (Acts 2–4 polish) follows under the same visual-direction authority and has not begun.
 3. `HOSTED_PREVIEW_NOT_RUN` was accepted under WEB-004. A hosted Vercel preview still needs to be produced under already-authorized credentials before launch; WEB-004 recorded a reproducible local preview instead.
 4. WEB-006 only: connect `orbgss.com` / `www.orbgss.com` through Squarespace DNS while preserving Google Workspace MX/SPF/DKIM/DMARC and unrelated records.
 
@@ -190,7 +217,7 @@ GEO-WEB-002 / MER-102 is **ACCEPTED / COMPLETE** at implementation HEAD `ea693c2
 
 WEB-004 is **PRODUCT_ACCEPTED / COMPLETE** under MER-92 at implementation HEAD `56cb53039b85a852110c737505bc2ae2282acb08` with acceptance publication `716104d677fea5021787b581470a436ed708f3a3`.
 
-WEB-005 / MER-93 is **REVIEW_READY** on `feat/web-005-cinematic-hero` under `tasks/WEB-005_CINEMATIC_HERO.md`, with the full evidence package in `tasks/WEB-005_REVIEW_EVIDENCE.md`. Product performs terminal exact-head acceptance and publication to `main`.
+WEB-005 / MER-93 is **terminally accepted** (`tasks/WEB-005_TERMINAL_PRODUCT_ACCEPTANCE.md`). WEB-005A / MER-107 is **REVIEW_READY** on `feat/web-005a-hero-visual-fidelity` under `tasks/WEB-005A_HERO_VISUAL_FIDELITY.md`, with the full evidence package in `tasks/WEB-005A_HERO_FIDELITY_EVIDENCE.md`. Product performs terminal exact-head acceptance and publication to `main`; WEB-005B follows.
 
 WEB-006 / MER-95 production DNS cutover remains deferred behind its explicit CTO human gate and **may not begin from this publication alone**.
 
@@ -204,4 +231,6 @@ WEB-006 / MER-95 production DNS cutover remains deferred behind its explicit CTO
 - WEB-003 (2026-09-15): `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/`; cross-route EN/TR, metadata, sitemap/link validation and reuse of accepted Kızıldere proof. Initial implementation `5d99eb811dfbb3396ebade17ff6ab863b5463a35`.
 - WEB-003 bounded Product review revision (2026-09-15): accessibility-label localization guard, truthful Kızıldere pilot social preview and authority/status reconciliation; final implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf`; Product accepted and fast-forwarded canonical main non-destructively.
 - WEB-004 (2026-09-16): responsive/accessibility/performance hardening accepted under MER-92; implementation HEAD `56cb53039b85a852110c737505bc2ae2282acb08`; acceptance publication `716104d677fea5021787b581470a436ed708f3a3`. `HOSTED_PREVIEW_NOT_RUN` accepted; `CONTACT_RELEASE_GATE` remains open for launch verification.
+- WEB-005 (2026-09-16): four-act homepage, production cinematic hero and truthful fallbacks; terminally accepted at `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`.
+- WEB-005A (2026-09-16): hero visual fidelity. Checkpoint `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` (circular orbit, thinned frame, single boresight, resolved tail, bitrate investigation) was technically green but visually rejected; R2 delivered the Product visual lock — derived orbital pass, volumetric generic EO satellite, readable sensing lines, lock event, recomposed approach, NASA BMNG 500 m regional albedo, coupled page-layer analytical handoff — `REVIEW_READY`.
 - GEO-WEB-002 (2026-09-16): final homepage visual master package for the locked four-act composition — Kızıldere Act-2 natural-colour Landsat context master at native 30 m (2400 × 1500 px), and renderer-native `terrain` / `thm01` / `alt01` / `alt02` / `priority` cartographic panels, card derivatives and in-frame legend crops from the accepted GEO-039 exports; per-asset provenance, checksums, rights, warnings and maximum safe rendered size published. Act-4 ≥2000 px target is not honestly achievable under accepted science and the task-authorized 1249-device-pixel contained-composition fallback is accepted. Implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`; terminal Science acceptance `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md`.

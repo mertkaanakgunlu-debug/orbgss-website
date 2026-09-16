@@ -107,7 +107,7 @@
       HTML inside the motion-safe region the shot was measured against, never baked into a frame.
       The poster is the LCP element and the only hero image fetched on first paint.
     -->
-    <section class="hero" id="hero" aria-labelledby="hero-title" data-hero-slot="cinematic" data-label-tone="light" data-label-tone-locked data-act="1">
+    <section class="hero" id="hero" aria-labelledby="hero-title" data-hero-slot="cinematic" data-label-tone="light" data-label-tone-locked data-act="1" data-hero-anchor='{"frame":[1920,1080],"position":0.52,"x":0.72,"y":0.6867,"extent":0.3728,"box":[0.5184,0.5074,0.8912,0.8211],"aoi":0.0857}'>
       <div class="hero-visual" data-visual-slot="hero" data-visual-status="cinematic-hero">
         <img
           class="panel-image hero-poster"
@@ -154,27 +154,53 @@
       </div>
 
       <!--
-        The real-data/result handoff. The accepted hero sequence ends on a stable regional hold;
-        this is what it hands off to. It is deliberately a page element and not a video frame:
-        the priority raster is a governed class-B export, and a lossy encode would alter its
-        colours and values. Shipping it as its own checksummed file keeps the pixels exact and
-        keeps acquisition imagery visibly separate from analytical result.
-        Rendered at most 168 CSS px here — far inside the accepted 1249 device-pixel ceiling.
+        The real-data/result handoff (WEB-005A R2). The rendered sequence ends on the acquired
+        420 km regional frame with the accepted 36 x 36 km analysis AOI at its centre. What the page
+        hands off to is composited here and never baked into the video: a registration marker at the
+        analysis AOI's audited screen position inside the rendered frame, leader lines from it, and
+        the accepted priority derivative -- byte-exact, with the export's own legend inside its
+        frame -- as the payoff panel coupled to the target region. data-hero-anchor carries the
+        audited last-frame geometry (hero/evidence/shot_audit_production.json: AOI centre and frame
+        bounds as fractions of the 1920 x 1080 frame, y from the bottom) and the poster/video
+        object-position, which script.js maps through the cover-fit at every size. The priority
+        raster renders at most 440 CSS px here -- 880 device px at 2x, inside the accepted 1249 px
+        ceiling -- and is not recoloured, filtered or cropped.
       -->
+      <div class="hero-target" data-hero-target hidden aria-hidden="true">
+        <span class="hero-target-marker"></span>
+        <svg class="hero-target-leaders" aria-hidden="true" focusable="false"><line class="hero-target-leader" x1="0" y1="0" x2="0" y2="0" /><line class="hero-target-leader" x1="0" y1="0" x2="0" y2="0" /></svg>
+      </div>
       <figure class="hero-handoff" data-hero-handoff hidden>
-        <img
-          class="hero-handoff-image"
-          src="assets/proof/final/priority-800.webp"
-          alt="Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area"
-          data-i18n-alt="alt.priority"
-          loading="lazy"
-          decoding="async"
-          width="800"
-          height="800"
-        />
+        <div class="hero-handoff-frame">
+          <img
+            class="hero-handoff-image"
+            src="assets/proof/final/priority-800.webp"
+            srcset="assets/proof/final/priority-800.webp 800w, assets/proof/final/priority-1249.webp 1249w"
+            sizes="(min-width: 981px) min(26vw, 440px), 62px"
+            alt="Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area"
+            data-i18n-alt="alt.priority"
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="800"
+          />
+          <img
+            class="hero-handoff-legend"
+            src="assets/proof/final/priority-legend.png"
+            alt="Colour scale for the relative priority map, running from 0 at the dark end to 100 at the pale end"
+            data-i18n-alt="alt.priorityLegend"
+            loading="eager"
+            fetchpriority="low"
+            decoding="async"
+            width="732"
+            height="122"
+          />
+        </div>
         <figcaption class="hero-handoff-copy">
           <span class="hero-handoff-kicker mono" data-i18n="hero.handoff.kicker">04 · Result</span>
           <span class="hero-handoff-label" data-i18n="label.priority">Remote-Sensing Relative Priority — Experimental Baseline</span>
+          <span class="hero-handoff-meta mono" data-i18n="hero.handoff.meta">36 × 36 km analysis AOI · inside the 420 km acquisition frame</span>
+          <span class="hero-handoff-note beam-note" data-i18n="act.priority.note">AOI-relative experimental screening only. Not probability, reserve/resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a calibrated cross-AOI score.</span>
           <a class="text-link hero-handoff-link" href="#priority"><span data-i18n="hero.handoff.cta">See how it was derived</span> <span aria-hidden="true">↓</span></a>
         </figcaption>
       </figure>

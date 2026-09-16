@@ -63,6 +63,66 @@
       0.2,
       0.66,
       0.95
+    ],
+    "beam_core": [
+      0.212,
+      0.863,
+      1.0
+    ],
+    "beam_glow": [
+      0.045,
+      0.597,
+      1.0
+    ],
+    "aoi_frame": [
+      0.314,
+      0.913,
+      1.0
+    ],
+    "satellite_mli_gold": [
+      0.78,
+      0.5,
+      0.17
+    ],
+    "satellite_structure": [
+      0.028,
+      0.03,
+      0.034
+    ],
+    "satellite_radiator": [
+      0.8,
+      0.82,
+      0.85
+    ],
+    "satellite_cells": [
+      0.02,
+      0.06,
+      0.2
+    ],
+    "satellite_frame": [
+      0.05,
+      0.052,
+      0.058
+    ],
+    "satellite_silver": [
+      0.74,
+      0.75,
+      0.77
+    ],
+    "satellite_optics": [
+      0.003,
+      0.003,
+      0.004
+    ],
+    "satellite_busbar": [
+      0.55,
+      0.62,
+      0.72
+    ],
+    "sea_navy": [
+      0.5,
+      0.58,
+      0.88
     ]
   },
   "world": {
@@ -1259,7 +1319,7 @@
     },
     "hero_production_kizildere": {
       "extends": "hero_predata_animatic",
-      "description": "WEB-005A production hero. Consumes the accepted WEB-HERO-001D continuous animatic for the camera path and world, over the real accepted Kizildere regional frame. This revision reworks visual fidelity and motion only: a real circular orbit for the satellite, a thinner and more densely sampled AOI frame, a single restrained boresight in place of four corner cones, a narrow pushbroom scan line, and an ending that resolves. No scientific layer is baked into any frame, and no accepted geometry, public label or claim changes.",
+      "description": "WEB-005A R2 production hero. Consumes the accepted WEB-HERO-001D world, camera establish and surface-conforming AOI system over the real accepted Kizildere regional frame, and revises the visual treatment to the Product R2 lock: a volumetric generic EO satellite on a derived orbital pass that emerges around the limb and sits lower-left of the target through acquisition; thin cyan sensing lines with a glow sheath connecting satellite and footprint; a crisp target frame with a controlled halo, corner locks that draw in, and a visible lock pulse; a recomposed approach with the target right of centre; and a higher-resolution rights-safe Earth albedo with a 500 m regional detail window. No scientific layer is baked into any frame, and no accepted geometry, public label or claim changes.",
       "role": "hero_production",
       "frame": 276,
       "animation": {
@@ -1268,11 +1328,11 @@
         "frame_rate": 24,
         "representative_frames": {
           "establish": 24,
-          "satellite_entrance": 68,
-          "acquisition_lock": 150,
-          "scan_sweep": 172,
-          "mid_approach": 200,
-          "regional_hold": 236,
+          "satellite_entrance": 72,
+          "acquisition_lock": 146,
+          "scan_sweep": 176,
+          "mid_approach": 208,
+          "regional_hold": 240,
           "result_handoff": 276
         },
         "beats": {
@@ -1281,31 +1341,31 @@
             96
           ],
           "satellite_entrance": [
-            56,
+            30,
             116
           ],
           "aoi_acquisition": [
-            96,
-            150
+            100,
+            160
           ],
           "scan_sweep": [
-            146,
-            198
+            150,
+            204
           ],
           "camera_approach": [
             96,
-            214
+            240
           ],
           "satellite_release": [
-            172,
-            194
+            166,
+            214
           ],
           "regional_hold": [
-            200,
+            214,
             276
           ]
         },
-        "continuity_note": "One scene, one world, one camera, no cut. WEB-005A re-times the acquisition beats and gives the tail a resolution -- scan completes, boresight retires, corner locks resolve, frame firms and settles -- so the shot ends on a finished state rather than stopping mid-hold."
+        "continuity_note": "One scene, one world, one camera, no cut. R2 re-times the beats around a visible lock event at frame 134-158 while the satellite is lower-left of the target, keeps the sensing lines connected through the early approach, and ends on a settled, resolved hold that the page hands off from at frame 236."
       },
       "camera": {
         "keyframes": [
@@ -1354,16 +1414,16 @@
           {
             "frame": 136,
             "location": [
-              3.1179,
-              -15.31,
-              2.9482
+              3.1768,
+              -15.5989,
+              3.0039
             ],
             "look_at": [
               0.6782,
               -4.976,
               3.9207
             ],
-            "focal_length_mm": 38.0
+            "focal_length_mm": 34.0
           },
           {
             "frame": 164,
@@ -1377,14 +1437,14 @@
               -4.9658,
               3.9207
             ],
-            "focal_length_mm": 40.0
+            "focal_length_mm": 38.0
           },
           {
             "frame": 192,
             "location": [
-              1.8812,
-              -8.4644,
-              3.3623
+              1.861,
+              -8.3734,
+              3.3261
             ],
             "look_at": [
               0.821,
@@ -1396,44 +1456,44 @@
           {
             "frame": 214,
             "location": [
-              1.7336,
-              -7.4285,
-              3.2714
+              1.6918,
+              -7.2495,
+              3.1926
             ],
             "look_at": [
               0.8769,
               -4.9449,
               3.9207
             ],
-            "focal_length_mm": 43.0
+            "focal_length_mm": 44.0
           },
           {
             "frame": 240,
             "location": [
-              1.6274,
-              -6.6334,
-              3.2176
+              1.5735,
+              -6.4137,
+              3.111
             ],
             "look_at": [
               0.9428,
               -4.9327,
               3.9207
             ],
-            "focal_length_mm": 44.0
+            "focal_length_mm": 47.0
           },
           {
             "frame": 276,
             "location": [
-              1.6956,
-              -6.5059,
-              3.2557
+              1.6343,
+              -6.2707,
+              3.138
             ],
             "look_at": [
               1.0119,
               -4.919,
               3.9207
             ],
-            "focal_length_mm": 44.0
+            "focal_length_mm": 48.0
           }
         ],
         "shot_intent": [
@@ -1485,10 +1545,10 @@
           {
             "frame": 136,
             "mode": "aoi_relative",
-            "radius_bu": 15.9,
+            "radius_bu": 16.2,
             "offset_deg": 27.5,
             "bearing_deg": 172.0,
-            "focal_length_mm": 38.0
+            "focal_length_mm": 34.0
           },
           {
             "frame": 164,
@@ -1496,12 +1556,12 @@
             "radius_bu": 11.6,
             "offset_deg": 22.0,
             "bearing_deg": 171.0,
-            "focal_length_mm": 40.0
+            "focal_length_mm": 38.0
           },
           {
             "frame": 192,
             "mode": "aoi_relative",
-            "radius_bu": 9.3,
+            "radius_bu": 9.2,
             "offset_deg": 17.0,
             "bearing_deg": 170.0,
             "focal_length_mm": 41.0
@@ -1509,27 +1569,27 @@
           {
             "frame": 214,
             "mode": "aoi_relative",
-            "radius_bu": 8.3,
+            "radius_bu": 8.1,
             "offset_deg": 15.0,
             "bearing_deg": 169.0,
-            "focal_length_mm": 43.0
+            "focal_length_mm": 44.0
           },
           {
             "frame": 240,
             "mode": "aoi_relative",
-            "radius_bu": 7.55,
+            "radius_bu": 7.3,
             "offset_deg": 13.0,
             "bearing_deg": 168.0,
-            "focal_length_mm": 44.0
+            "focal_length_mm": 47.0
           },
           {
             "frame": 276,
             "mode": "aoi_relative",
-            "radius_bu": 7.47,
+            "radius_bu": 7.2,
             "offset_deg": 12.4,
             "bearing_deg": 167.4,
-            "focal_length_mm": 44.0,
-            "note": "Continuation of the accepted frame-240 state to rest; no new motion direction."
+            "focal_length_mm": 48.0,
+            "note": "Continuation of the frame-240 state to rest; the hold closes slightly so the regional frame fills about a third of the width."
           }
         ],
         "composition": {
@@ -1541,7 +1601,19 @@
             "samples": 28
           },
           "headline_safe_through_frame": 96,
-          "note": "Website copy is never baked into the render, so what the opening owes the later integration task is empty sky. This rectangle is a left-aligned headline and CTA column, 33 percent of the frame width by 62 percent of its height; shot_plan.py casts a ray through a 28x28 grid of it at every establish keyframe and reports the frame as failed if any ray hits the Earth. It was measured, not guessed: the region was widened until the planet first intruded, then stepped back to the last width that stays completely clear through frame 96."
+          "note": "Website copy is never baked into the render, so what the opening owes the later integration task is empty sky. This rectangle is a left-aligned headline and CTA column, 33 percent of the frame width by 62 percent of its height; shot_plan.py casts a ray through a 28x28 grid of it at every establish keyframe and reports the frame as failed if any ray hits the Earth. It was measured, not guessed: the region was widened until the planet first intruded, then stepped back to the last width that stays completely clear through frame 96.",
+          "acquisition_beat": [
+            116,
+            160
+          ],
+          "satellite_readability": {
+            "min_width_fraction": 0.08,
+            "max_width_fraction": 0.22,
+            "anchor_frame": 146,
+            "note": "At the primary acquisition frame the satellite must span at least 7.5 percent of the frame width (about 108 px at 1440 CSS px) so body and arrays read as a 3D platform, and never more than 20 percent anywhere in the visible pass, so it cannot become the foreground fly-by the rejected checkpoint's predecessor produced."
+          },
+          "aoi_anchor_note": "After the handover the AOI sits at the shifted anchor, not frame centre; audit_shot.py checks the lock against (0.5 - shift_x, 0.5 - shift_y * width/height) per frame.",
+          "acquisition_beat_note": "The primary acquisition beat: sensing lines connect at 116-132, the frame locks at 134-158, and the satellite holds lower-left of the target, fully in frame, through 160 before it climbs out of shot. The audit gates clipping, side and overlap over exactly this window."
         },
         "track": {
           "target_id": "aoi_target_center",
@@ -1560,40 +1632,87 @@
             }
           ],
           "note": "Unchanged accepted precision lock, held through the extended rest."
-        }
+        },
+        "shift_keyframes": [
+          {
+            "frame": 96,
+            "shift_x": 0.0,
+            "shift_y": 0.0
+          },
+          {
+            "frame": 136,
+            "shift_x": -0.16,
+            "shift_y": -0.06
+          },
+          {
+            "frame": 200,
+            "shift_x": -0.22,
+            "shift_y": -0.105
+          },
+          {
+            "frame": 276,
+            "shift_x": -0.22,
+            "shift_y": -0.105
+          }
+        ],
+        "shift_note": "Lens shift, not a re-aim: the AOI track constraint holds the footprint on the optical axis and the shift places that axis in the upper right of the frame (x = 0.5 - shift_x = 0.72, y = 0.5 - shift_y * 16/9 = 0.69 from the bottom), so the Earth stays right-dominant, the headline column on the left stays clear, and the page-layer result panel has the lower right to land in, directly under the acquired frame. Zero through the accepted establish."
       },
       "objects": [
         {
           "id": "aoi",
           "fixture": "kizildere_regional",
           "border": {
-            "appear_start_frame": 96,
-            "appear_end_frame": 126,
+            "appear_start_frame": 100,
+            "appear_end_frame": 124,
             "emphasis": [
               [
-                196,
+                124,
                 1.0
               ],
               [
-                224,
-                1.36
+                134,
+                1.0
               ],
               [
-                248,
-                1.06
+                142,
+                2.6
+              ],
+              [
+                158,
+                1.15
+              ],
+              [
+                232,
+                1.15
+              ],
+              [
+                246,
+                1.9
+              ],
+              [
+                262,
+                1.25
               ],
               [
                 276,
-                1.06
+                1.25
               ]
             ]
           },
           "fill": {
-            "appear_start_frame": 104,
+            "appear_start_frame": 108,
             "appear_end_frame": 132,
             "settle": [
               [
-                232,
+                140,
+                1.0
+              ],
+              [
+                146,
+                1.6
+              ],
+              [
+                160,
                 1.0
               ],
               [
@@ -1603,19 +1722,33 @@
             ]
           },
           "corner_locks": {
-            "appear_start_frame": 204,
-            "appear_end_frame": 234,
+            "appear_start_frame": 128,
+            "appear_end_frame": 140,
+            "draw_start_frame": 132,
+            "draw_end_frame": 150,
             "emphasis": [
               [
-                234,
+                150,
                 1.0
               ],
               [
-                250,
-                1.24
+                156,
+                1.5
               ],
               [
-                266,
+                170,
+                1.0
+              ],
+              [
+                236,
+                1.0
+              ],
+              [
+                248,
+                1.45
+              ],
+              [
+                264,
                 1.0
               ],
               [
@@ -1626,20 +1759,32 @@
           },
           "beams": {
             "source_object_id": "satellite",
-            "target": "center",
-            "root_radius_km": 2.0,
-            "tip_radius_km": 172.0,
-            "sides": 48,
-            "appear_start_frame": 124,
-            "appear_end_frame": 150,
-            "release_start_frame": 172,
-            "release_end_frame": 194
+            "target": "corners",
+            "root_radius_km": 2.2,
+            "tip_radius_km": 3.6,
+            "sides": 24,
+            "glow_material": "aoi_beam_glow",
+            "glow_radius_factor": 4.5,
+            "cone": {
+              "material": "aoi_cone",
+              "root_radius_km": 2.0,
+              "tip_radius_km": 210.0
+            },
+            "appear_start_frame": 116,
+            "appear_end_frame": 132,
+            "release_start_frame": 192,
+            "release_end_frame": 214
           },
           "sweep": {
-            "start_frame": 146,
-            "end_frame": 198
+            "start_frame": 150,
+            "end_frame": 204
           },
-          "note": "One persistent AOI system parented to the Earth, so the footprint, its corner locks and the beam target stay registered through Earth rotation and the whole camera move. WEB-005A: a single boresight replaces the four corner cones, the scan is a narrow pushbroom line rather than a wash, and the corner locks resolve after the scan so the shot ends on an acquired state instead of a pause."
+          "note": "One persistent AOI system parented to the Earth, so the footprint, its corner locks and the sensing-line targets stay registered through Earth rotation and the whole camera move. R2: four thin core lines to the corners, each inside a fainter glow sheath, plus one very faint support cone to the centre; a crisp border with a soft halo ribbon; corner locks that draw in from the corners; and a lock pulse at 134-158 with a second, gentler settle at 232-262 for the handoff.",
+          "border_glow": {
+            "material": "aoi_glow",
+            "width_km": 11.0,
+            "offset_m": -60.0
+          }
         },
         {
           "id": "earth",
@@ -1684,111 +1829,524 @@
             {
               "frame": 1,
               "location": [
-                -1.0736,
-                5.1466,
-                -4.736
+                -5.3994,
+                4.7279,
+                1.1668
               ]
             },
             {
-              "frame": 50,
+              "frame": 11,
               "location": [
-                -3.3619,
-                -0.3396,
-                -6.2171
+                -5.8438,
+                4.0484,
+                1.5258
               ]
             },
             {
-              "frame": 96,
+              "frame": 21,
               "location": [
-                -3.0181,
-                -5.8004,
-                -2.7049
+                -6.2012,
+                3.3085,
+                1.862
               ]
             },
             {
-              "frame": 126,
+              "frame": 31,
               "location": [
-                -0.9713,
-                -6.7971,
-                1.7104
+                -6.466,
+                2.5193,
+                2.1705
               ]
             },
             {
-              "frame": 150,
+              "frame": 41,
               "location": [
-                0.521,
-                -5.7963,
-                4.0251
+                -6.6345,
+                1.6926,
+                2.4466
               ]
             },
             {
-              "frame": 176,
+              "frame": 51,
               "location": [
-                1.8107,
-                -4.0088,
-                5.5426
+                -6.7041,
+                0.8406,
+                2.6862
               ]
             },
             {
-              "frame": 200,
+              "frame": 61,
               "location": [
-                2.6017,
-                -2.314,
-                6.1601
+                -6.6737,
+                -0.0239,
+                2.8858
               ]
             },
             {
-              "frame": 236,
+              "frame": 71,
               "location": [
-                3.4202,
-                0.6627,
-                6.159
+                -6.5439,
+                -0.8881,
+                3.0424
+              ]
+            },
+            {
+              "frame": 81,
+              "location": [
+                -6.3165,
+                -1.739,
+                3.1536
+              ]
+            },
+            {
+              "frame": 91,
+              "location": [
+                -5.9949,
+                -2.564,
+                3.2178
+              ]
+            },
+            {
+              "frame": 101,
+              "location": [
+                -5.584,
+                -3.3507,
+                3.2341
+              ]
+            },
+            {
+              "frame": 111,
+              "location": [
+                -5.0898,
+                -4.0875,
+                3.2021
+              ]
+            },
+            {
+              "frame": 121,
+              "location": [
+                -4.5197,
+                -4.7634,
+                3.1224
+              ]
+            },
+            {
+              "frame": 131,
+              "location": [
+                -3.8823,
+                -5.3683,
+                2.9961
+              ]
+            },
+            {
+              "frame": 141,
+              "location": [
+                -3.187,
+                -5.8931,
+                2.8252
+              ]
+            },
+            {
+              "frame": 151,
+              "location": [
+                -2.4442,
+                -6.3301,
+                2.6122
+              ]
+            },
+            {
+              "frame": 161,
+              "location": [
+                -1.6649,
+                -6.6727,
+                2.3602
+              ]
+            },
+            {
+              "frame": 171,
+              "location": [
+                -0.8608,
+                -6.9159,
+                2.073
+              ]
+            },
+            {
+              "frame": 181,
+              "location": [
+                -0.0439,
+                -7.0559,
+                1.7549
+              ]
+            },
+            {
+              "frame": 191,
+              "location": [
+                0.7737,
+                -7.0908,
+                1.4107
+              ]
+            },
+            {
+              "frame": 201,
+              "location": [
+                1.5797,
+                -7.0199,
+                1.0455
+              ]
+            },
+            {
+              "frame": 211,
+              "location": [
+                2.3622,
+                -6.8444,
+                0.6646
+              ]
+            },
+            {
+              "frame": 221,
+              "location": [
+                3.1095,
+                -6.5669,
+                0.2738
+              ]
+            },
+            {
+              "frame": 231,
+              "location": [
+                3.8104,
+                -6.1914,
+                -0.121
+              ]
+            },
+            {
+              "frame": 241,
+              "location": [
+                4.4545,
+                -5.7237,
+                -0.514
+              ]
+            },
+            {
+              "frame": 251,
+              "location": [
+                5.0322,
+                -5.1706,
+                -0.8994
+              ]
+            },
+            {
+              "frame": 261,
+              "location": [
+                5.5349,
+                -4.5405,
+                -1.2714
+              ]
+            },
+            {
+              "frame": 271,
+              "location": [
+                5.9551,
+                -3.8427,
+                -1.6244
               ]
             },
             {
               "frame": 276,
               "location": [
-                3.608,
-                3.071,
-                5.2556
+                6.1322,
+                -3.4716,
+                -1.7921
               ]
             }
           ],
-          "note": "WEB-005A: one circular 705 km orbit through the AOI centre -- every key lies on the same circle, so the radius is constant and the motion reads as orbital rather than as a hand-typed wander. The pass was solved against the accepted camera path, not eyeballed: occluded by the Earth until frame ~44, limb crossing at ~50, overhead the AOI at 150, out of frame by ~190 and behind the Earth again from ~236, so the camera's descent to the regional hold never exposes the model at close range. Peak on-screen size 87 px."
+          "note": "WEB-005A R2 generic EO platform (hero/scripts/satellite_model.py): volumetric bus in MLI with structural end frames and a radiator, a nadir instrument deck with two apertures, two three-segment arrays with real thickness on yokes, a small dish, star trackers and a thruster. Rights-clean by construction and the signature of no operational spacecraft. Hero-scale, like the accepted model: the 0.85 BU wingspan is chosen for legibility.",
+          "type": "eo_satellite",
+          "wingspan_bu": 1.0,
+          "visual_extent_bu": 1.0,
+          "proportions": {
+            "bus_x": 0.15,
+            "bus_y": 0.11,
+            "bus_z": 0.13,
+            "instrument_radius": 0.032,
+            "instrument_length": 0.075,
+            "panel_segments": 3,
+            "panel_segment_length": 0.115,
+            "panel_width": 0.12,
+            "panel_thickness": 0.006,
+            "panel_gap": 0.006,
+            "yoke_length": 0.05,
+            "dish_radius": 0.03
+          },
+          "hull_material": "sat_mli",
+          "structure_material": "sat_structure",
+          "radiator_material": "sat_radiator",
+          "panel_material": "sat_cells",
+          "panel_frame_material": "sat_panel_frame",
+          "antenna_material": "sat_antenna",
+          "optics_material": "sat_optics",
+          "track_target_id": "earth",
+          "aim": {
+            "target_id": "aoi_target_center",
+            "influence_keyframes": [
+              {
+                "frame": 110,
+                "value": 0.0
+              },
+              {
+                "frame": 134,
+                "value": 1.0
+              },
+              {
+                "frame": 196,
+                "value": 1.0
+              },
+              {
+                "frame": 218,
+                "value": 0.0
+              }
+            ],
+            "note": "Off-nadir slew toward the footprint for the collect, back to nadir after release."
+          },
+          "array_drive": [
+            {
+              "side": "pos",
+              "target_id": "sun",
+              "track_axis": "TRACK_Z",
+              "lock_axis": "LOCK_X"
+            },
+            {
+              "side": "neg",
+              "target_id": "sun",
+              "track_axis": "TRACK_Z",
+              "lock_axis": "LOCK_X"
+            }
+          ],
+          "orbit_intent": {
+            "altitude_km": 900.0,
+            "anchor_frame": 146,
+            "anchor_lat_deg": 22.0,
+            "anchor_lon_deg": -4.0,
+            "heading_deg": 105.0,
+            "rate_deg_per_frame": 0.7,
+            "keyframe_frames": [
+              1,
+              11,
+              21,
+              31,
+              41,
+              51,
+              61,
+              71,
+              81,
+              91,
+              101,
+              111,
+              121,
+              131,
+              141,
+              151,
+              161,
+              171,
+              181,
+              191,
+              201,
+              211,
+              221,
+              231,
+              241,
+              251,
+              261,
+              271,
+              276
+            ],
+            "note": "One circular 900 km orbit, derived: over 22 N 4 W at frame 146 heading 105, moving 0.7 degrees of arc per frame. Solved with hero/scripts/orbit_plan.py against the camera and the page's cover-fit crop: hidden at the open, emerges from behind the LEFT limb at mid-height near frame 34 (inside the vertical band a wide hero still shows), rides the limb against the atmosphere glow, swings down into the lower-left through the lock beat without clipping, exits bottom-left after 166 while the sensing lines stay connected, and is behind the planet through the hold. The angular rate is time-compressed for the shot, as every hero orbit is."
+          },
+          "yaw_deg": 62.0,
+          "yaw_note": "Yaw about nadir so the array axis crosses the line of sight during the pass; with the arrays perpendicular to the orbit plane the wings pointed straight at the camera and the platform collapsed to a dot at review size."
+        },
+        {
+          "id": "orbit_trail",
+          "type": "orbit_trail",
+          "follow_object_id": "satellite",
+          "width_km": 5.0,
+          "samples": 720,
+          "material": "trail",
+          "presence_keyframes": [
+            [
+              1,
+              1.0
+            ],
+            [
+              200,
+              1.0
+            ],
+            [
+              222,
+              0.0
+            ]
+          ],
+          "note": "Subtle orbital trail: a ribbon on the derived orbit circle showing a fading window of arc behind the satellite. Secondary by construction (thin, faint, fades before the hold) and occluded by the planet exactly where the satellite is."
         }
       ],
       "materials": {
         "aoi_border": {
           "type": "aoi_emission",
-          "emission_color_ref": "aoi_border_cyan",
-          "emission_strength": 2.6
+          "emission_color_ref": "aoi_frame",
+          "emission_strength": 5.0
         },
         "aoi_lock": {
-          "type": "aoi_emission",
-          "emission_color_ref": "scan_ice_blue",
-          "emission_strength": 6.0
+          "type": "aoi_lock_draw",
+          "emission_color_ref": "aoi_frame",
+          "emission_strength": 9.0
         },
         "aoi_fill": {
           "type": "aoi_scan_fill",
           "base_color_ref": "aoi_fill_teal",
-          "band_color_ref": "scan_ice_blue",
-          "base_alpha": 0.022,
-          "acquired_alpha": 0.062,
-          "band_alpha": 0.3,
+          "band_color_ref": "beam_core",
+          "base_alpha": 0.02,
+          "acquired_alpha": 0.055,
+          "band_alpha": 0.35,
           "base_emission_strength": 1.0,
-          "band_emission_strength": 4.6,
-          "band_width": 0.03,
+          "band_emission_strength": 5.0,
+          "band_width": 0.035,
           "axis": "v"
         },
         "aoi_beam": {
           "type": "aoi_beam",
-          "emission_color_ref": "beam_ice",
-          "emission_strength": 0.85,
-          "root_alpha": 0.002,
-          "tip_alpha": 0.016
+          "emission_color_ref": "beam_core",
+          "emission_strength": 7.0,
+          "root_alpha": 0.92,
+          "tip_alpha": 0.5,
+          "note": "Sensing-line core: thin, crisp, visibly connected root to target; tapers toward the footprint but never below half opacity."
+        },
+        "earth_surface": {
+          "day_texture": "world.topo.bathy.200407.3x21600x10800.jpg",
+          "day_texture_interpolation": "Cubic",
+          "detail_texture": "world.topo.bathy.200407.C1.crop.png",
+          "detail_window": {
+            "lon0": 12.0,
+            "lon1": 46.0,
+            "lat0": 27.0,
+            "lat1": 50.0,
+            "feather_deg": 2.5
+          },
+          "cloud_texture": "cloud_combined_8192.tif",
+          "cloud_strength": 1.0,
+          "cloud_color_ref": "neutral_light",
+          "sea_tint": {
+            "tint_color_ref": "sea_navy",
+            "amount": 0.55,
+            "mask_start": 0.03,
+            "mask_end": 0.14
+          },
+          "note": "R2 albedo stack. Global: NASA Blue Marble Next Generation July 2004 with topography and bathymetry, 21600 x 10800 (about 1.9 km per texel at the equator, 1.5 km at the AOI). Regional: a lossless 8160 x 5520 crop of the 500 m C1 tile of the same dataset covering lon 12-46 E, lat 27-50 N, blended in over a 2.5 degree feather. Clouds: the NASA Blue Marble 8192 cloud composite mixed on top, which is how the accepted land_ocean_ice_cloud texture was itself built, so the global look carries over. sea_tint pulls open water toward the accepted darker navy from an albedo-derived mask. Presentation only: none of it is a measured layer and none of it moves the accepted target registration."
+        },
+        "aoi_glow": {
+          "type": "aoi_glow_ribbon",
+          "emission_color_ref": "beam_glow",
+          "emission_strength": 2.2,
+          "alpha": 0.5,
+          "falloff_power": 1.8,
+          "core_fraction": 0.0
+        },
+        "aoi_beam_glow": {
+          "type": "aoi_beam",
+          "emission_color_ref": "beam_glow",
+          "emission_strength": 3.0,
+          "root_alpha": 0.14,
+          "tip_alpha": 0.05
+        },
+        "aoi_cone": {
+          "type": "aoi_beam",
+          "emission_color_ref": "beam_glow",
+          "emission_strength": 1.2,
+          "root_alpha": 0.0,
+          "tip_alpha": 0.028,
+          "note": "Secondary support only: a broad, very faint volume under the lines."
+        },
+        "trail": {
+          "type": "orbit_trail",
+          "emission_color_ref": "beam_glow",
+          "emission_strength": 2.5,
+          "alpha": 0.5,
+          "window_turns": 0.1,
+          "head_gap_turns": 0.004
+        },
+        "sat_mli": {
+          "type": "mli",
+          "base_color_ref": "satellite_mli_gold",
+          "roughness": 0.38,
+          "metallic": 0.5,
+          "specular": 0.7,
+          "crinkle_scale": 70.0,
+          "crinkle_strength": 0.16,
+          "crinkle_distance": 0.015
+        },
+        "sat_structure": {
+          "type": "surface",
+          "base_color_ref": "satellite_structure",
+          "roughness": 0.45,
+          "metallic": 0.2
+        },
+        "sat_radiator": {
+          "type": "surface",
+          "base_color_ref": "satellite_radiator",
+          "roughness": 0.5,
+          "metallic": 0.0
+        },
+        "sat_cells": {
+          "type": "solar_cells",
+          "base_color_ref": "satellite_cells",
+          "grid_color_ref": "satellite_busbar",
+          "roughness": 0.16,
+          "metallic": 0.3,
+          "coat_weight": 0.7,
+          "cells_across": 6.0,
+          "cells_along": 14.0,
+          "grid_line_width": 0.035,
+          "grid_emission_strength": 0.12
+        },
+        "sat_panel_frame": {
+          "type": "surface",
+          "base_color_ref": "satellite_frame",
+          "roughness": 0.42,
+          "metallic": 0.3
+        },
+        "sat_antenna": {
+          "type": "surface",
+          "base_color_ref": "satellite_silver",
+          "roughness": 0.22,
+          "metallic": 1.0
+        },
+        "sat_optics": {
+          "type": "surface",
+          "base_color_ref": "satellite_optics",
+          "roughness": 0.05,
+          "metallic": 0.0,
+          "coat_weight": 0.8,
+          "coat_roughness": 0.03
+        }
+      },
+      "lighting_isolation": {
+        "sun_id": "sun",
+        "satellite_ids": [
+          "satellite"
+        ],
+        "satellite_sun_gain": 1.0,
+        "note": "Cycles light linking: the primary sun keeps lighting everything but the satellite and only the planet blocks it; a duplicate sun lights only the satellite with its own parts as blockers. The body self-shadows (volumetric read) and never prints a shadow on the Earth."
+      },
+      "post_processing": {
+        "glare": {
+          "type": "BLOOM",
+          "threshold": 1.8,
+          "strength": 0.26,
+          "size": 7,
+          "saturation": 0.9,
+          "note": "Controlled halo for the emissive frame, corner locks and sensing lines. The threshold sits above anything sunlit on the planet."
         }
       }
     }
   },
-  "data_state_note": "WEB-005 is the authorized integration gate. The four accepted WEB-HERO-001 scenes stay pre-data and unedited; the production scene binds accepted GEO-WEB-002 geometry and declares -- but does not bake -- the accepted result layer, which is composited in the page over the render so its governed pixels are never re-encoded."
+  "data_state_note": "WEB-005 is the authorized integration gate. The four accepted WEB-HERO-001 scenes stay pre-data and unedited; the production scene binds accepted GEO-WEB-002 geometry and declares -- but does not bake -- the accepted result layer, which is composited in the page over the render so its governed pixels are never re-encoded. WEB-005A R2 revises only the production scene's visual treatment, camera composition, satellite and Earth albedo sources.",
+  "palette_note": "beam_core, beam_glow and aoi_frame are the Product R2 hero FX lock (#7FEFFF, #3CCBFF, #98F5FF) converted from sRGB to linear."
 }

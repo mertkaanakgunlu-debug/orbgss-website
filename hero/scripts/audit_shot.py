@@ -38,6 +38,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import bpy  # noqa: E402
+from bpy_extras.object_utils import world_to_camera_view  # noqa: E402
 from mathutils import Vector  # noqa: E402
 
 import aoi_system as ax  # noqa: E402
@@ -72,15 +73,49 @@ def _basis(matrix):
 
 
 def _project(point, matrix, lens_mm, sensor_mm, resolution):
-    right, up, forward = _basis(matrix)
-    offset = Vector(point) - matrix.translation
-    depth = offset.dot(forward)
-    if depth <= 1e-9:
+    """Frame coordinates of a world point through the evaluated camera, lens shift included.
+
+    WEB-005A R2 composes with lens shift, so the projection goes through Blender's own
+    ``world_to_camera_view`` instead of a hand-rolled pinhole -- that is the same transform the
+    renderer applies, shift and sensor fit included.
+    """
+    scene = bpy.context.scene
+    camera = scene.camera
+    co = world_to_camera_view(scene, camera, Vector(point))
+    if co.z <= 1e-9:
         return None
-    fov_x, fov_y = sp.field_of_view(lens_mm, sensor_mm, resolution)
-    x = 0.5 + 0.5 * (offset.dot(right) / depth) / math.tan(fov_x / 2.0)
-    y = 0.5 + 0.5 * (offset.dot(up) / depth) / math.tan(fov_y / 2.0)
-    return (x, y)
+    return (co.x, co.y)
+
+
+def _anchor(camera_data, resolution):
+    """Where the optical axis lands in the frame for the current lens shift."""
+    width, height = resolution
+    return (0.5 - float(camera_data.shift_x), 0.5 - float(camera_data.shift_y) * (width / float(height)))
+
+
+def _earth_occludes(depsgraph, origin, point, earth):
+    """True when the segment camera -> point passes through the planet.
+
+    Analytic against the Earth sphere (centre at the world origin, radius from the evaluated
+    object) rather than a scene ray cast: the transparent atmosphere shell surrounds the planet
+    and would be the first surface any ray hits, which is not an occlusion.
+    """
+    if earth is None:
+        return False
+    radius = float(max(earth.evaluated_get(depsgraph).dimensions) / 2.0)
+    origin_v = Vector(origin)
+    direction = Vector(point) - origin_v
+    distance = direction.length
+    if distance < 1e-9:
+        return False
+    direction.normalize()
+    b = 2.0 * origin_v.dot(direction)
+    c = origin_v.dot(origin_v) - radius * radius
+    disc = b * b - 4.0 * c
+    if disc < 0.0:
+        return False
+    t_near = (-b - math.sqrt(disc)) / 2.0
+    return 0.0 < t_near < distance
 
 
 def _in_frame(screen):
@@ -107,6 +142,10 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
     sensor_mm = float(scene_config.get("camera_defaults", {}).get("sensor_width_mm", 36.0))
 
     aoi_spec = sp._aoi_spec(spec)
+    satellite_spec = next(
+        (o for o in spec.get("objects", []) if o.get("id") == aoi_spec.get("beams", {}).get("source_object_id", "satellite")),
+        {},
+    )
     description = ax.describe(scene_config, fixture_id or aoi_spec.get("fixture"), spec)
     corner_ids = list(description["corner_order"])
     prefix = aoi_spec["id"]
@@ -151,6 +190,12 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
         corner_screen = [
             _project(position, matrix, lens, sensor_mm, resolution) for position in corner_world
         ]
+        corner_box = None
+        if all(point is not None for point in corner_screen):
+            corner_box = [
+                round(min(p[0] for p in corner_screen), 5), round(min(p[1] for p in corner_screen), 5),
+                round(max(p[0] for p in corner_screen), 5), round(max(p[1] for p in corner_screen), 5),
+            ]
 
         # Apparent footprint size and orientation, straight off the projected
         # corners: the two things a scale or registration discontinuity moves.
@@ -165,8 +210,27 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
                 math.atan2(second[1] - first[1], second[0] - first[0])
             )
 
-        satellite_world = satellite.evaluated_get(depsgraph).matrix_world.translation.copy()
+        satellite_evaluated = satellite.evaluated_get(depsgraph)
+        satellite_matrix = satellite_evaluated.matrix_world.copy()
+        satellite_world = satellite_matrix.translation.copy()
+        # The generic EO platform hangs its parts from a body empty that adds the yaw about nadir;
+        # the wing axis lives there, so that is the matrix the tips are read from when it exists.
+        body = bpy.data.objects.get(satellite.name + "_body")
+        if body is not None:
+            satellite_matrix = body.evaluated_get(depsgraph).matrix_world.copy()
         satellite_screen = _project(satellite_world, matrix, lens, sensor_mm, resolution)
+        # On-screen width: the projected span of the array axis (local X), which is the widest
+        # silhouette the platform presents. Wingspan comes from the spec when it declares one.
+        half_span = 0.5 * float(satellite_spec.get("wingspan_bu", satellite_spec.get("visual_extent_bu", 0.0)))
+        tips = [
+            _project(satellite_matrix @ Vector((sign * half_span, 0.0, 0.0)), matrix, lens, sensor_mm, resolution)
+            for sign in (-1.0, 1.0)
+        ]
+        satellite_width = None
+        if all(tip is not None for tip in tips) and half_span > 0.0:
+            satellite_width = math.hypot(tips[1][0] - tips[0][0], (tips[1][1] - tips[0][1]) * resolution[1] / resolution[0])
+        satellite_occluded = _earth_occludes(depsgraph, location, satellite_world, earth)
+        anchor = _anchor(evaluated_camera.data, resolution)
 
         entry = {
             "frame": int(frame),
@@ -184,10 +248,16 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
             "aoi_screen_y": round(centre_screen[1], 5) if centre_screen else None,
             "aoi_screen_extent": round(extent, 6) if extent is not None else None,
             "aoi_screen_orientation_deg": round(orientation, 4) if orientation is not None else None,
+            "aoi_screen_box": corner_box,
             "aoi_in_frame": _in_frame(centre_screen),
             "satellite_screen_x": round(satellite_screen[0], 5) if satellite_screen else None,
             "satellite_screen_y": round(satellite_screen[1], 5) if satellite_screen else None,
             "satellite_in_frame": _in_frame(satellite_screen),
+            "satellite_occluded": bool(satellite_occluded),
+            "satellite_visible": _in_frame(satellite_screen) and not satellite_occluded,
+            "satellite_width_fraction": round(satellite_width, 5) if satellite_width is not None else None,
+            "anchor_x": round(anchor[0], 5),
+            "anchor_y": round(anchor[1], 5),
         }
 
         if headline_region and (headline_through is None or frame <= int(headline_through)):
@@ -215,9 +285,11 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
     max_lens_step = max(lens_steps) if lens_steps else 0.0
 
     locked = [e for e in per_frame if handover_frame is None or e["frame"] >= handover_frame]
+    # The lock is against the authored anchor: frame centre for an unshifted camera, and
+    # (0.5 - shift_x, 0.5 - shift_y * w/h) when the shot composes with lens shift.
     centre_error = max(
         (
-            math.hypot(e["aoi_screen_x"] - 0.5, e["aoi_screen_y"] - 0.5)
+            math.hypot(e["aoi_screen_x"] - e["anchor_x"], e["aoi_screen_y"] - e["anchor_y"])
             for e in locked
             if e["aoi_screen_x"] is not None
         ),
@@ -288,8 +360,89 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
         ),
     ]
 
-    satellite_frames = [e["frame"] for e in per_frame if e["satellite_in_frame"]]
+    # ---- WEB-005A R2 readability and composition gates ------------------
+    composition = camera_composition or {}
+    beat = composition.get("acquisition_beat")
+    readability = composition.get("satellite_readability", {})
+    if beat:
+        beat_frames = [e for e in per_frame if int(beat[0]) <= e["frame"] <= int(beat[1])]
+        # "no clipping": the whole silhouette stays inside the frame -- centre in frame with a
+        # half-width margin on every side, and never hidden behind the planet.
+        clipped = [
+            e["frame"] for e in beat_frames
+            if not e["satellite_visible"]
+            or e["satellite_width_fraction"] is None
+            or e["satellite_screen_x"] - 0.5 * e["satellite_width_fraction"] < 0.0
+            or e["satellite_screen_x"] + 0.5 * e["satellite_width_fraction"] > 1.0
+            or e["satellite_screen_y"] - 0.5 * e["satellite_width_fraction"] * resolution[0] / resolution[1] < 0.0
+            or e["satellite_screen_y"] + 0.5 * e["satellite_width_fraction"] * resolution[0] / resolution[1] > 1.0
+        ]
+        checks.append(_series_check(
+            not clipped,
+            "satellite stays fully in frame and unoccluded through the acquisition beat",
+            clipped[:12], [], "frames clipped, hidden or out of frame",
+        ))
+        # Lower-left of the target, Earth right-dominant: through the beat the satellite sits
+        # left of and below the AOI anchor.
+        wrong_side = [
+            e["frame"] for e in beat_frames
+            if e["satellite_screen_x"] is None or e["aoi_screen_x"] is None
+            or e["satellite_screen_x"] >= e["aoi_screen_x"] or e["satellite_screen_y"] >= e["aoi_screen_y"]
+        ]
+        checks.append(_series_check(
+            not wrong_side,
+            "satellite sits lower-left of the target through the acquisition beat",
+            wrong_side[:12], [], "frames not lower-left",
+        ))
+        # The lines must never be drawn through the footprint: keep the satellite clear of the
+        # projected frame by at least one footprint extent.
+        too_close = [
+            e["frame"] for e in beat_frames
+            if e["aoi_screen_extent"] is not None and e["satellite_screen_x"] is not None
+            and math.hypot(e["satellite_screen_x"] - e["aoi_screen_x"], e["satellite_screen_y"] - e["aoi_screen_y"])
+            < 1.0 * e["aoi_screen_extent"]
+        ]
+        checks.append(_series_check(
+            not too_close,
+            "satellite never overlaps the target frame during the acquisition beat",
+            too_close[:12], [], "frames overlapping",
+        ))
+    if readability:
+        anchor_frame = int(readability.get("anchor_frame", beat[0] if beat else per_frame[0]["frame"]))
+        at_anchor = next((e for e in per_frame if e["frame"] == anchor_frame), None)
+        width_at_anchor = (at_anchor or {}).get("satellite_width_fraction")
+        min_fraction = float(readability.get("min_width_fraction", 0.0))
+        max_fraction = float(readability.get("max_width_fraction", 1.0))
+        checks.append(_series_check(
+            width_at_anchor is not None and width_at_anchor >= min_fraction,
+            "satellite is readable at the primary acquisition frame",
+            width_at_anchor, min_fraction, "fraction of frame width",
+        ))
+        largest = max(
+            (e["satellite_width_fraction"] for e in per_frame
+             if e["satellite_visible"] and e["satellite_width_fraction"] is not None),
+            default=0.0,
+        )
+        checks.append(_series_check(
+            largest <= max_fraction,
+            "satellite never becomes a foreground fly-by",
+            round(largest, 5), max_fraction, "fraction of frame width",
+        ))
+
+    satellite_frames = [e["frame"] for e in per_frame if e["satellite_visible"]]
+    emergence = min(satellite_frames) if satellite_frames else None
+    last = per_frame[-1]
+    handoff_anchor = {
+        "frame": last["frame"],
+        "x": last["aoi_screen_x"],
+        "y": last["aoi_screen_y"],
+        "extent": last["aoi_screen_extent"],
+        "box": last["aoi_screen_box"],
+        "note": ("Screen geometry of the acquired frame on the last frame, as fractions of the frame "
+                 "with y from the bottom: the page-layer handoff is placed from these numbers."),
+    }
     return {
+        "handoff_anchor": handoff_anchor,
         "scene": scene_id,
         "fixture": description["fixture_id"],
         "resolution": list(resolution),
@@ -307,8 +460,13 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
             ],
             "aoi_screen_extent": [extents[0], extents[-1]] if extents else None,
             "mean_camera_speed_bu_per_frame": round(mean_speed, 6),
-            "satellite_in_frame_from": min(satellite_frames) if satellite_frames else None,
+            "satellite_in_frame_from": emergence,
             "satellite_in_frame_until": max(satellite_frames) if satellite_frames else None,
+            "satellite_width_fraction_at_anchor": next(
+                (e["satellite_width_fraction"] for e in per_frame
+                 if e["frame"] == int((camera_composition or {}).get("satellite_readability", {}).get("anchor_frame", -1))),
+                None,
+            ),
             "headline_safe_worst_occupancy": round(headline_worst, 6),
         },
         "thresholds": {

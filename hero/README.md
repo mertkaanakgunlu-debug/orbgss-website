@@ -6,7 +6,7 @@ Canonical authority: `docs/WEB_HERO_001_AUTHORITY.md` and the linked Drive CURRE
 
 ## Current state
 
-`WEB-HERO-001` is pre-data. Build the scene, Earth, satellite, orbit, AOI geometry, scan system and continuous animatic here. Do not integrate the live homepage or fabricate scientific layers.
+`WEB-HERO-001` was pre-data and is accepted. `WEB-005` bound the accepted Kızıldere regional frame and shipped the production hero; `WEB-005A R2` revised its visual treatment (see [WEB-005A R2: the production hero](#web-005a-r2-the-production-hero)). No scientific layer is baked into any frame.
 
 `WEB-HERO-001A` established the scaffold below. `WEB-HERO-001B` added the Earth, atmosphere, satellite, starfield and establishing camera move. `WEB-HERO-001C` added the surface-conforming AOI acquisition system described under [AOI system](#aoi-system). `WEB-HERO-001D` assembled all of it into the continuous animatic described under [The continuous animatic](#the-continuous-animatic).
 
@@ -53,6 +53,10 @@ hero/
     render_animatic.py    Blender: whole frame range from one build, as video or stills
     compare_renders.py    Blender: pixel-difference two renders (reproducibility evidence)
     contact_sheet.py      Blender: tile frames into one reviewable sheet
+    orbit_plan.py         plain Python: derive satellite keyframes from an orbit intent; plan a pass against the camera
+    satellite_model.py    Blender: procedural generic EO satellite, orbital trail, satellite light isolation
+    materialize_earth_detail.py  Blender: cut the 500 m regional detail window from a Blue Marble tile
+    encode_production_media.py   Blender: WebM / MP4 / poster inside the accepted media envelope
   assets/
     manifest.json         asset rights/provenance/checksum record
     source/               materialized source assets (ignored)
@@ -273,6 +277,78 @@ of frame. There is no setting that wins all three, so the approach was tuned aga
 than against how a render happened to look. At the hold: 1 179 km altitude, 1 963 km slant range,
 44 mm, AOI at 26.1 % of frame width, 59.9° incidence, limb crossing the top edge, 3.9× texture
 magnification. `shot_plan.py --analyze` reports all of these per keyframe.
+
+## WEB-005A R2: the production hero
+
+`hero_production_kizildere` is the scene the site ships. WEB-005A R2 revised its visual treatment
+after Product rejected the first checkpoint; the world, the accepted establish and the AOI system
+are unchanged, and everything below is configuration in `scene.json` translated by the builder.
+
+### The satellite is derived, and volumetric
+
+The accepted placeholder (a bus, two flat panels and a cone) is still used by the four accepted
+scenes. The production scene uses `eo_satellite` from `hero/scripts/satellite_model.py`: a
+bevelled bus in crinkled MLI with structural end frames and a radiator, a nadir instrument deck
+with two apertures, two three-segment arrays with real thickness on yokes with pale backs, a spun
+parabolic dish with feed and mount, star trackers and a thruster. It is procedural and OrbGSS
+original, so it is rights-clean by construction and the signature of no operational spacecraft.
+`wingspan_bu` is hero scale, chosen for legibility; `yaw_deg` turns the array axis across the
+line of sight, because a wing axis normal to the orbit plane pointed straight at the camera and
+collapsed the platform to a dot at review size.
+
+Its pass is stated as an `orbit_intent` -- altitude, a sub-satellite anchor at an anchor frame, a
+heading and an angular rate -- and `hero/scripts/orbit_plan.py` derives the committed
+`location_keyframes` from it, exactly as `shot_plan.py` derives the camera. The validator
+re-derives and fails on drift. `orbit_plan.py --analyze` plans a pass against the camera path
+(screen position, occlusion by the planet, distance, on-screen size per frame) so the four
+requirements the R2 lock names -- hidden at the open, emerging around the limb, lower-left and
+unclipped through the acquisition beat, never a foreground fly-by -- are searched for, not tuned
+by eye. The `orbit_trail` object is a ribbon on the same derived circle showing a fading window
+of arc behind the satellite, so it cannot disagree with the pass it decorates.
+
+Self-shadowing is what makes a body read as volumetric, and a hero-scale body must never print
+its shadow on the planet. `lighting_isolation` uses Cycles light linking: the primary sun keeps
+lighting everything but the satellite with only the planet as a blocker, and a duplicate sun
+lights only the satellite with its own parts as blockers.
+
+### Lens shift, not a re-aim
+
+The AOI track constraint keeps the footprint on the optical axis. `camera.shift_keyframes` move
+where that axis lands in the frame (`x = 0.5 - shift_x`, `y = 0.5 - shift_y * 16/9`), so the
+target sits upper-right with the Earth right-dominant and the headline column clear, and the
+page-layer result has the lower right to land in. `audit_shot.py` projects through Blender's own
+`world_to_camera_view`, so the lock is checked against the shifted anchor per frame, and it now
+also reports satellite width, occlusion and side against the declared `acquisition_beat` and
+`satellite_readability` bounds, plus a `handoff_anchor` (AOI centre, extent and frame bounds on
+the last frame) that the page's `data-hero-anchor` must match.
+
+### Sensing lines and the lock event
+
+`beams.target: corners` draws four thin core lines (`aoi_beam`, #7FEFFF) from the satellite to
+the footprint corners, each inside a wider, fainter glow tube (`aoi_beam_glow`, #3CCBFF), with one
+very faint support cone to the centre. Endpoints are still derived by constraint, so the lines
+stay connected to satellite and footprint at every frame, including after the satellite has left
+the frame. The border carries a soft halo ribbon (`aoi_glow_ribbon`), the corner locks draw in
+from their corners (`aoi_lock_draw`, keyed by `draw_start_frame`/`draw_end_frame`), and the
+`emphasis` ramps give the frame a lock pulse at 134-158 and a gentler settle at 232-262 that the
+page hands off from. A compositor bloom (`post_processing.glare`) adds a controlled halo above a
+threshold nothing sunlit on the planet reaches. The validator holds the lines inside a checkable
+envelope: thin (core tip radius <= 8 km), legible (core alpha and emission floors), a glow that
+stays a sheath, a cone that stays secondary, and no sensing-physics vocabulary anywhere in the
+production configuration.
+
+### Earth albedo stack
+
+`earth_surface` layers three cleared NASA sources: the Blue Marble Next Generation July 2004
+global composite with topography and bathymetry (21600 x 10800, about 1.5 km per texel at the
+AOI) as the albedo, a lossless 8160 x 5520 crop of the 500 m C1 tile of the same dataset cut by
+`hero/scripts/materialize_earth_detail.py` for longitude 12-46 E / latitude 27-50 N and blended in
+over a 2.5 degree feather, and the Blue Marble 8192 cloud composite mixed on top -- which is how
+the accepted `land_ocean_ice_cloud` texture was itself assembled, so the global look carries
+over. `sea_tint` pulls open water toward the accepted darker navy from an albedo-derived mask.
+`hero/evidence/earth_detail_crop.json` records the exact texel rectangle and checksums. None of
+it is a measured layer and none of it moves the accepted target registration; the validator
+checks every texture against the manifest and the detail window against the crop record.
 
 ## Geometry audit
 

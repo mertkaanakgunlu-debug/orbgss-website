@@ -1860,12 +1860,12 @@
     ]
   },
   "web_005": {
-    "task": "WEB-005 / MER-93",
+    "task": "WEB-005 / MER-93; revised under WEB-005A / MER-107",
     "state": "review_ready",
-    "authority": "tasks/WEB-005_CINEMATIC_HERO.md",
-    "presentation_authority": "docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md",
+    "authority": "tasks/WEB-005_CINEMATIC_HERO.md; tasks/WEB-005A_HERO_VISUAL_FIDELITY.md",
+    "presentation_authority": "docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md; docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md",
     "asset_class": "C - rendered cinematic hero media",
-    "rights_basis": "OrbGSS-generated 3D render from the accepted WEB-HERO-001 production lane. The only external material is the NASA Earth Observatory Blue Marble albedo and night-lights composites, which are public domain and are recorded with checksums in hero/assets/manifest.json. No paid, closed or restricted data, and no third-party licence is restated or widened.",
+    "rights_basis": "OrbGSS-generated 3D render from the accepted WEB-HERO-001 production lane. The only external material is NASA Earth Observatory whole-Earth imagery, public domain under NASA media usage guidelines and recorded with checksums in hero/assets/manifest.json: the Blue Marble Next Generation July 2004 global composite with topography and bathymetry, a lossless OrbGSS crop of its 500 m C1 tile as the regional detail window, the Blue Marble cloud composite and the Earth-at-Night composite. The satellite is a procedural OrbGSS original. No paid, closed or restricted data, no NASA insignia, no endorsement implied, and no third-party licence is restated or widened.",
     "truthfulness_requirement": "This is a RENDER, not sensor imagery, and the homepage caption must say so. The EN/TR strings scene.hero.kind carry 'Rendered orbital sequence - not sensor imagery' and are not optional.",
     "scientific_content": "none",
     "scientific_content_note": "No scientific raster is baked into any frame. Lossy video encoding subsamples chroma and quantises values, which is exactly the colour/value change the accepted GEO-WEB-002 package forbids for class-B assets. The real-data result handoff is composited in the page from the accepted checksummed derivative instead - see hero/config/scene.json -> aoi_injection_interface.layer_slots[result_priority].render_surface.",
@@ -1885,7 +1885,17 @@
         1920,
         1080
       ],
-      "supersampling_note": "Rendered at 2304 x 1296 and delivered at 1920 x 1080. The downscale removes edge aliasing and averages sampling noise, so the encoder receives a cleaner signal."
+      "supersampling_note": "Rendered at 2304 x 1296 and delivered at 1920 x 1080. The downscale removes edge aliasing and averages sampling noise, so the encoder receives a cleaner signal.",
+      "revision_head_note": "WEB-005A R2: same scene id, revised visual treatment; see hero/config/scene.json -> scenes.hero_production_kizildere.description.",
+      "earth_albedo": {
+        "global": "hero/assets/source/world.topo.bathy.200407.3x21600x10800.jpg (NASA BMNG, 21600 x 10800)",
+        "regional_detail": "hero/assets/source/world.topo.bathy.200407.C1.crop.png (8160 x 5520 lossless crop of the NASA BMNG 500 m C1 tile, lon 12-46 E / lat 27-50 N)",
+        "clouds": "hero/assets/source/cloud_combined_8192.tif (NASA Blue Marble clouds, 8192 x 4096)",
+        "manifest": "hero/assets/manifest.json",
+        "crop_record": "hero/evidence/earth_detail_crop.json"
+      },
+      "satellite": "procedural generic EO platform, hero/scripts/satellite_model.py; no external asset, no specific spacecraft or sensor identity",
+      "shot_audit": "hero/evidence/shot_audit_production.json"
     },
     "envelope": {
       "webm_max_bytes": 3145728,
@@ -1952,6 +1962,12 @@
         "sha256": "dd3ef9cbe50fa2d26552b1ef7a0583e4e74e4ea02bce9428d751ba547cee8338"
       }
     ],
-    "revision": "WEB-005A hero visual fidelity and motion refinement"
+    "revision": "WEB-005A R2 hero visual fidelity: derived orbital pass, volumetric generic EO satellite, thin cyan sensing lines, target-frame lock event, recomposed approach, NASA BMNG 500 m regional albedo, coupled page-layer analytical handoff",
+    "handoff": {
+      "surface": "html_overlay",
+      "anchor_source": "hero/evidence/shot_audit_production.json -> handoff_anchor (audited last-frame geometry of the acquired 420 km regional frame); index.html carries it as data-hero-anchor and scripts/validate_site.py checks the two agree",
+      "analysis_aoi_marker": "36 x 36 km accepted analysis AOI drawn at its true position inside the rendered 420 km regional frame (36/420 of the frame extent)",
+      "payoff": "accepted geo_web_002 priority derivative (priority-800 / priority-1249) with its own in-frame legend, at most 440 CSS px wide (880 device px at 2x, inside the 1249 px ceiling), coupled to the marker by leader lines; exact public label and mandatory warning as visible EN/TR copy"
+    }
   }
 }

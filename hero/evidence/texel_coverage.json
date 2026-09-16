@@ -1,0 +1,64 @@
+{
+  "task": "WEB-005A R2 / MER-107 \u2014 A-HERO-11 source-resolution evidence",
+  "scene": "hero_production_kizildere",
+  "hold_keyframe": 276,
+  "aoi_latitude_deg": 37.9794,
+  "frame_width_at_aoi_km": 1261.0,
+  "camera_altitude_km": 828.98,
+  "aoi_slant_range_km": 1681.38,
+  "render_width_px": 1920,
+  "delivered_width_px": 1920,
+  "metres_per_delivered_pixel": 656.8,
+  "metres_per_render_pixel": 656.8,
+  "textures": [
+    {
+      "label": "rejected checkpoint ffa2f29 (land_ocean_ice_cloud_8192)",
+      "asset": "earth_day_composite_8k",
+      "role": "global albedo, whole frame",
+      "dimensions": null,
+      "metres_per_texel_east_west_at_aoi": 3856.0,
+      "metres_per_texel_north_south": 4892.0,
+      "source_texels_across_frame_width": 327.0,
+      "magnification_at_delivered_width": 5.871,
+      "magnification_at_render_width": 5.871,
+      "upscaled_on_screen": true
+    },
+    {
+      "label": "R2 global (BMNG 21600 x 10800)",
+      "asset": "earth_bmng_global_2km",
+      "role": "global albedo outside the detail window",
+      "dimensions": [
+        21600,
+        10800
+      ],
+      "metres_per_texel_east_west_at_aoi": 1462.4,
+      "metres_per_texel_north_south": 1855.3,
+      "source_texels_across_frame_width": 862.0,
+      "magnification_at_delivered_width": 2.227,
+      "magnification_at_render_width": 2.227,
+      "upscaled_on_screen": true
+    },
+    {
+      "label": "R2 regional detail window (BMNG C1 crop)",
+      "asset": "earth_bmng_detail_crop",
+      "role": "albedo under the target: lon 12.0-46.0 E, lat 27.0-50.0 N",
+      "dimensions": [
+        8160,
+        5520
+      ],
+      "metres_per_texel_east_west_at_aoi": 365.6,
+      "metres_per_texel_north_south": 463.8,
+      "source_texels_across_frame_width": 3449.0,
+      "magnification_at_delivered_width": 0.557,
+      "magnification_at_render_width": 0.557,
+      "upscaled_on_screen": false
+    }
+  ],
+  "improvement": {
+    "before_magnification": 5.871,
+    "after_magnification_under_target": 0.557,
+    "linear_texel_density_gain": 10.54,
+    "note": "Magnification above 1.0 means the albedo is upscaled on screen. The rejected checkpoint upscaled its source about 5.9x at the delivered width; under the target the R2 detail window is sampled at 0.56x, i.e. the frame now sees more source texels than delivered pixels."
+  },
+  "method": "Frame width at the AOI from shot_plan.analyze on the last camera keyframe; texel size from each texture's equirectangular dimensions with the east-west size scaled by cos(latitude); magnification = metres per texel / metres per delivered pixel. The active texture under the target is the detail window wherever the frame lies inside it, which it does at the hold by construction."
+}

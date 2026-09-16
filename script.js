@@ -85,6 +85,7 @@ const I18N = {
     'alt.priority': 'Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area',
     'alt.geothermal': 'Relative priority surface over shaded NASADEM relief across the Kızıldere geothermal pilot area',
     'hero.handoff.kicker': '04 · Result',
+    'hero.handoff.meta': '36 × 36 km analysis AOI · inside the 420 km acquisition frame',
     'hero.handoff.cta': 'See how it was derived',
     'act.context.kicker': '02 · The place',
     'act.context.title': 'A real area, before any analysis.',
@@ -326,6 +327,7 @@ const I18N = {
     'alt.priority': 'Kızıldere ilgi alanının göreli öncelik haritası; zemini alan içinde 0 ile 100 arasında sıralar',
     'alt.geothermal': 'Kızıldere jeotermal pilot alanında gölgelendirilmiş NASADEM rölyefi üzerindeki göreli öncelik yüzeyi',
     'hero.handoff.kicker': '04 · Sonuç',
+    'hero.handoff.meta': '36 × 36 km analiz alanı · 420 km veri alım çerçevesinin içinde',
     'hero.handoff.cta': 'Nasıl türetildiğini görün',
     'act.context.kicker': '02 · Alan',
     'act.context.title': 'Herhangi bir analizden önce, gerçek bir alan.',
@@ -889,19 +891,145 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
 
   const video = hero.querySelector('.hero-video');
   const handoff = hero.querySelector('[data-hero-handoff]');
+  const target = hero.querySelector('[data-hero-target]');
 
-  /* Frame 240 of 276 at 24 fps. WEB-005A moved this from frame 200: the hold now has a resolve in
-     it -- the scan completes, the boresight retires, the corner locks land and the frame firms --
-     and revealing the result three seconds before that finishes made the handoff read as an
-     interruption rather than the payoff. It now lands as the lock settles. */
-  const HOLD_SECONDS = 240 / 24;
+  /* Frame 236 of 276 at 24 fps: the second, gentler lock settle. WEB-005A R2 reveals the page-layer
+     result as that settle lands, so the acquired frame, its marker and the result panel resolve as
+     one event rather than the result arriving over a stalled hold. */
+  const HOLD_SECONDS = 236 / 24;
+
+  /* ---- audited geometry of the last frame -> page coordinates --------------------------- */
+  /* The poster is the last rendered frame and the video ends on it, so one anchor serves every
+     state. Fractions of the 1920 x 1080 frame with y measured from the bottom, exactly as
+     hero/evidence/shot_audit_production.json reports them; the cover-fit below reproduces what
+     object-fit: cover / object-position: center 52% does to that frame at any hero size. */
+  let anchor = null;
+  try { anchor = JSON.parse(hero.getAttribute('data-hero-anchor') || 'null'); } catch (e) { anchor = null; }
+  const desktopLayout = window.matchMedia('(min-width: 981px)');
+
+  function frameGeometry() {
+    const W = hero.clientWidth;
+    const H = hero.clientHeight;
+    const fw = anchor.frame[0];
+    const fh = anchor.frame[1];
+    const s = Math.max(W / fw, H / fh);
+    const rw = fw * s;
+    const rh = fh * s;
+    const ox = (W - rw) * 0.5;
+    const oy = (H - rh) * anchor.position;
+    const toPage = (x, y) => [ox + x * rw, oy + (1 - y) * rh];
+    const [mx, my] = toPage(anchor.x, anchor.y);
+    const [bx0, by1] = toPage(anchor.box[0], anchor.box[1]);
+    const [bx1, by0] = toPage(anchor.box[2], anchor.box[3]);
+    const frameWidth = anchor.extent * rw;
+    const marker = Math.max(30, Math.round(anchor.aoi * frameWidth));
+    return { W, H, mx, my, marker, frameBottom: by1, frameTop: by0, frameLeft: bx0, frameRight: bx1 };
+  }
+
+  function rightEdge(selector) {
+    const heroRect = hero.getBoundingClientRect();
+    let right = 0;
+    hero.querySelectorAll(selector).forEach((node) => {
+      const rect = node.getBoundingClientRect();
+      if (rect.width > 0) right = Math.max(right, rect.right - heroRect.left);
+    });
+    return right;
+  }
+
+  /* Place the marker, the panel and the leaders. The panel sits bottom-right above the caption,
+     as large as the space allows: it may never cover the marker, and it may never cover the
+     headline column. If a wide panel cannot satisfy both it stacks, then shrinks, and on a
+     viewport where nothing fits it falls back to the strip the small-screen layout uses. */
+  function layoutHandoff() {
+    if (!anchor || !target || !handoff) return;
+    if (!desktopLayout.matches) {
+      hero.style.removeProperty('--handoff-img');
+      handoff.style.top = '';
+      handoff.style.bottom = '';
+      handoff.classList.remove('is-stacked');
+      return;
+    }
+    const g = frameGeometry();
+    const markerEl = target.querySelector('.hero-target-marker');
+    markerEl.style.left = g.mx + 'px';
+    markerEl.style.top = g.my + 'px';
+    markerEl.style.width = g.marker + 'px';
+    markerEl.style.height = g.marker + 'px';
+
+    const pad = parseFloat(getComputedStyle(hero).paddingLeft) || parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pad')) || 48;
+    const copyRight = rightEdge('.hero-content h1, .hero-content .hero-copy, .hero-content .hero-actions, .hero-content .eyebrow');
+    const caption = hero.querySelector('.scene-label');
+    const captionTop = caption ? caption.getBoundingClientRect().top - hero.getBoundingClientRect().top : g.H - 90;
+    const markerBottom = g.my + g.marker / 2;
+
+    const preferred = Math.min(440, Math.max(240, Math.round(window.innerWidth * 0.26)));
+    const sizes = [preferred, 320, 260, 220];
+    let placed = false;
+    handoff.style.bottom = '';
+    for (let i = 0; i < sizes.length && !placed; i += 1) {
+      for (let stacked = 0; stacked < 2 && !placed; stacked += 1) {
+        hero.style.setProperty('--handoff-img', sizes[i] + 'px');
+        handoff.classList.toggle('is-stacked', stacked === 1);
+        const pw = handoff.offsetWidth;
+        const ph = handoff.offsetHeight;
+        const left = g.W - pad - pw;
+        const top = captionTop - 16 - ph;
+        if (left >= copyRight + 20 && top >= markerBottom + 28) {
+          handoff.style.top = top + 'px';
+          handoff.style.bottom = 'auto';
+          placed = true;
+        }
+      }
+    }
+    if (!placed) {
+      hero.style.setProperty('--handoff-img', '200px');
+      handoff.classList.add('is-stacked');
+      handoff.style.top = Math.max(markerBottom + 28, captionTop - 16 - handoff.offsetHeight) + 'px';
+      handoff.style.bottom = 'auto';
+    }
+
+    /* leaders: marker's lower corners -> the panel frame's upper corners */
+    const heroRect = hero.getBoundingClientRect();
+    const frame = handoff.querySelector('.hero-handoff-frame');
+    const fr = frame.getBoundingClientRect();
+    const fx0 = fr.left - heroRect.left;
+    const fx1 = fr.right - heroRect.left;
+    const fy = fr.top - heroRect.top;
+    const lines = target.querySelectorAll('.hero-target-leader');
+    const ends = [[g.mx - g.marker / 2, g.my + g.marker / 2, fx0, fy], [g.mx + g.marker / 2, g.my + g.marker / 2, fx1, fy]];
+    lines.forEach((line, index) => {
+      const [x1, y1, x2, y2] = ends[index];
+      line.setAttribute('x1', x1.toFixed(1));
+      line.setAttribute('y1', y1.toFixed(1));
+      line.setAttribute('x2', x2.toFixed(1));
+      line.setAttribute('y2', y2.toFixed(1));
+      const length = Math.hypot(x2 - x1, y2 - y1);
+      line.style.strokeDasharray = length.toFixed(1);
+      if (!target.classList.contains('is-visible')) line.style.strokeDashoffset = length.toFixed(1);
+    });
+  }
 
   function revealHandoff() {
     if (!handoff || !handoff.hidden) return;
     handoff.hidden = false;
-    /* Two frames: one for the element to exist, one for the transition to have a start value. */
-    requestAnimationFrame(() => requestAnimationFrame(() => handoff.classList.add('is-visible')));
+    if (target) target.hidden = false;
+    layoutHandoff();
+    /* Two frames: one for the elements to exist, one for the transitions to have a start value. */
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (target) {
+        target.classList.add('is-visible');
+        target.querySelectorAll('.hero-target-leader').forEach((line) => { line.style.strokeDashoffset = '0'; });
+      }
+      handoff.classList.add('is-visible');
+    }));
   }
+
+  let layoutTimer = null;
+  window.addEventListener('resize', () => {
+    if (!handoff || handoff.hidden) return;
+    window.clearTimeout(layoutTimer);
+    layoutTimer = window.setTimeout(layoutHandoff, 120);
+  });
 
   function settleStatic(reason) {
     hero.setAttribute('data-hero-state', 'static');

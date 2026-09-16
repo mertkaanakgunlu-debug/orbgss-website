@@ -325,6 +325,7 @@ def main() -> None:
 
     record = {
         "task": "WEB-005 / MER-93",
+        "revision": "WEB-005A R2 / MER-107 hero visual fidelity",
         "scene": args.scene,
         "profile": args.profile,
         "consumed_hero_evidence_head": "e95fdcac7cac82e597d40dab4cdc96ce1a6b319e",

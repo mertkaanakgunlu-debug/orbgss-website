@@ -23,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import aoi_system as aoi  # noqa: E402
 import hero_common as hc  # noqa: E402
+import orbit_plan  # noqa: E402
 import shot_plan  # noqa: E402
 
 MAX_TRACKED_BYTES = 4 * 1024 * 1024
@@ -988,6 +989,240 @@ def check_continuous_sequence(report: Report, scene_config) -> None:
                     )
 
 
+# WEB-005A R2 sensing-FX envelope (A-HERO-04). The core line must be thin enough never to read as
+# a slab and opaque enough to be legible at review size; the glow sheath must stay a sheath.
+FX_MAX_CORE_TIP_RADIUS_KM = 8.0
+FX_MIN_CORE_ROOT_ALPHA = 0.6
+FX_MIN_CORE_TIP_ALPHA = 0.35
+FX_MIN_CORE_EMISSION = 3.0
+FX_MAX_GLOW_ROOT_ALPHA = 0.3
+FX_MAX_CONE_TIP_ALPHA = 0.06
+# Sensing lines are attention, not physics: no copy anywhere in the hero configuration may claim
+# an instrument. Tokens are matched whole, lower-cased.
+SENSOR_PHYSICS_CLAIMS = {
+    "radar", "lidar", "sar", "hyperspectral", "multispectral", "spectrometer", "swath",
+    "wavelength", "backscatter", "radiometer", "microwave", "thermal-infrared", "resolution-m",
+}
+
+
+def check_r2_visual_contract(report: Report, scene_config, manifest) -> None:
+    """WEB-005A R2: derived orbit, readable satellite, legible-but-restrained sensing FX, lock event.
+
+    Like the camera, the satellite's committed keyframes must match their intent; like the AOI, the
+    acquisition FX must sit inside a checkable envelope; and the production scene must actually
+    carry the elements the R2 lock names -- a volumetric satellite type, a border halo, a lock
+    draw-in, a lock pulse -- rather than the accepted placeholders. Whether it *looks* right is
+    decided by the stills and the audit; what configuration can prove is checked here.
+    """
+    report.section("WEB-005A R2 visual-fidelity contract")
+    scenes = (scene_config or {}).get("scenes", {})
+    production = [sid for sid, spec in scenes.items() if spec.get("role") == "hero_production"]
+    if not production:
+        report.check(False, "a production hero scene exists")
+        return
+    for scene_id in sorted(production):
+        spec = hc.resolve_scene_spec(scene_id, scenes)
+        label = "scene " + scene_id + " "
+        objects = {o.get("id"): o for o in spec.get("objects", [])}
+        materials = spec.get("materials", {})
+
+        # --- satellite: volumetric type, derived orbit, readability gates ---------------------
+        satellite = objects.get("satellite", {})
+        report.check(
+            satellite.get("type") == "eo_satellite",
+            label + "satellite is the volumetric generic EO platform, not the accepted placeholder",
+            repr(satellite.get("type")),
+        )
+        intent = satellite.get("orbit_intent")
+        report.check(bool(intent), label + "satellite pass is stated as an orbit intent")
+        if intent:
+            try:
+                derived = orbit_plan.derive(scene_config, scene_id)
+                committed = sorted(satellite.get("location_keyframes", []), key=lambda k: int(k["frame"]))
+                drift = 0.0
+                if len(derived) != len(committed):
+                    drift = float("inf")
+                else:
+                    for a, b in zip(committed, derived):
+                        if int(a["frame"]) != int(b["frame"]):
+                            drift = float("inf")
+                            break
+                        for x, y in zip(a["location"], b["location"]):
+                            drift = max(drift, abs(float(x) - float(y)))
+                report.check(
+                    drift <= 1.0e-3,
+                    label + "committed satellite keyframes match their orbit derivation",
+                    "worst component drift " + str(drift) + " BU",
+                )
+                radius_bu = orbit_plan.orbit_basis(scene_config, spec, intent)[2]
+                radii = [
+                    math.sqrt(sum(float(c) * float(c) for c in k["location"]))
+                    for k in satellite.get("location_keyframes", [])
+                ]
+                report.check(
+                    bool(radii) and max(abs(r - radius_bu) for r in radii) <= 1.0e-3,
+                    label + "every satellite keyframe lies on one circular orbit",
+                    "radii " + repr([round(r, 4) for r in radii[:6]]) + " vs " + str(round(radius_bu, 4)),
+                )
+                altitude = float(intent.get("altitude_km", 0.0))
+                report.check(
+                    300.0 <= altitude <= 1200.0,
+                    label + "orbit altitude is a low-Earth EO altitude",
+                    str(altitude) + " km",
+                )
+            except (KeyError, ValueError, SystemExit) as error:
+                report.check(False, label + "orbit intent derives", str(error))
+        readability = spec.get("camera", {}).get("composition", {}).get("satellite_readability", {})
+        report.check(
+            0.05 <= float(readability.get("min_width_fraction", 0.0)) <= 0.15
+            and 0.15 <= float(readability.get("max_width_fraction", 1.0)) <= 0.3,
+            label + "declares satellite readability bounds the shot audit enforces",
+            repr(readability),
+        )
+        report.check(
+            bool(spec.get("camera", {}).get("composition", {}).get("acquisition_beat")),
+            label + "declares the acquisition beat the shot audit gates",
+        )
+        report.check(
+            bool(spec.get("lighting_isolation")),
+            label + "isolates satellite lighting so a hero-scale body never shadows the planet",
+        )
+        for token in ("specific", "landsat", "sentinel", "worldview", "spot", "pleiades", "terrasar", "modis"):
+            pass
+        identity = [
+            key for key, value in satellite.items()
+            if isinstance(value, str) and any(
+                name in value.lower() for name in ("landsat", "sentinel", "worldview", "pleiades", "terrasar", "spot ", "modis", "viirs")
+            )
+        ]
+        report.check(
+            not identity,
+            label + "satellite spec claims no specific operational spacecraft or sensor",
+            repr(identity),
+        )
+
+        # --- sensing FX envelope -------------------------------------------------------------
+        aoi_spec = next((o for o in spec.get("objects", []) if o.get("type") == "aoi_system"), {})
+        beams = aoi_spec.get("beams", {})
+        core = materials.get(aoi_spec.get("beam_material"), {})
+        report.check(
+            beams.get("target") == "corners",
+            label + "sensing lines target the footprint corners (a frustum, not one cone)",
+            repr(beams.get("target")),
+        )
+        report.check(
+            float(beams.get("tip_radius_km", 99.0)) <= FX_MAX_CORE_TIP_RADIUS_KM
+            and float(beams.get("root_radius_km", 99.0)) <= FX_MAX_CORE_TIP_RADIUS_KM,
+            label + "sensing-line core is thin (no slab)",
+            "radii " + str(beams.get("root_radius_km")) + " -> " + str(beams.get("tip_radius_km")) + " km",
+        )
+        report.check(
+            float(core.get("root_alpha", 0.0)) >= FX_MIN_CORE_ROOT_ALPHA
+            and float(core.get("tip_alpha", 0.0)) >= FX_MIN_CORE_TIP_ALPHA
+            and float(core.get("emission_strength", 0.0)) >= FX_MIN_CORE_EMISSION,
+            label + "sensing-line core is legible (alpha and emission above the floor)",
+            "root " + str(core.get("root_alpha")) + " tip " + str(core.get("tip_alpha"))
+            + " emission " + str(core.get("emission_strength")),
+        )
+        glow = materials.get(beams.get("glow_material"), {})
+        report.check(
+            bool(glow) and float(glow.get("root_alpha", 1.0)) <= FX_MAX_GLOW_ROOT_ALPHA,
+            label + "sensing-line glow is a sheath, not a second slab",
+            repr(glow.get("root_alpha")),
+        )
+        cone = materials.get((beams.get("cone") or {}).get("material"), {})
+        report.check(
+            not beams.get("cone") or float(cone.get("tip_alpha", 1.0)) <= FX_MAX_CONE_TIP_ALPHA,
+            label + "support cone stays secondary",
+            repr(cone.get("tip_alpha")),
+        )
+        for ref in ("beam_core", "beam_glow", "aoi_frame"):
+            report.check(ref in scene_config.get("palette", {}), label + "palette carries the R2 FX colour " + ref)
+        report.check(
+            core.get("emission_color_ref") == "beam_core" and glow.get("emission_color_ref") == "beam_glow",
+            label + "sensing lines use the locked core/glow colours",
+        )
+
+        # --- lock event ------------------------------------------------------------------
+        border_cfg = aoi_spec.get("border", {})
+        lock_cfg = aoi_spec.get("corner_locks", {})
+        report.check(
+            bool(aoi_spec.get("border_glow")) and materials.get(aoi_spec["border_glow"].get("material"), {}).get("type") == "aoi_glow_ribbon",
+            label + "target frame carries a controlled halo ribbon",
+        )
+        emphasis = border_cfg.get("emphasis", [])
+        peak = max((float(f) for _, f in emphasis), default=1.0)
+        report.check(
+            peak >= 1.8,
+            label + "target frame has a visible lock intensification",
+            "peak emphasis " + str(peak),
+        )
+        report.check(
+            "draw_start_frame" in lock_cfg and "draw_end_frame" in lock_cfg
+            and materials.get(aoi_spec.get("corner_lock_material"), {}).get("type") == "aoi_lock_draw",
+            label + "corner locks draw into place",
+        )
+        beat = spec.get("camera", {}).get("composition", {}).get("acquisition_beat") or [0, 0]
+        report.check(
+            int(beat[0]) <= int(lock_cfg.get("draw_start_frame", -1)) <= int(beat[1]),
+            label + "lock event lands inside the acquisition beat",
+            "draw at " + str(lock_cfg.get("draw_start_frame")) + " beat " + repr(beat),
+        )
+        report.check(
+            int(beams.get("appear_start_frame", 999)) <= int(lock_cfg.get("draw_start_frame", 0)),
+            label + "sensing lines connect before the frame locks",
+        )
+
+        # --- no sensor-physics claim anywhere in the production configuration --------------
+        text_blobs = [json.dumps(spec)]
+        found = sorted(
+            token for token in SENSOR_PHYSICS_CLAIMS
+            if re.search(r"(?<![a-z0-9-])" + re.escape(token) + r"(?![a-z0-9-])", " ".join(text_blobs).lower())
+        )
+        report.check(not found, label + "makes no sensing-physics claim", repr(found))
+
+        # --- Earth albedo provenance (A-HERO-11) -------------------------------------------
+        earth = materials.get("earth_surface", {})
+        assets = {a.get("local_path", "").split("/")[-1]: a for a in (manifest or {}).get("assets", [])}
+        for key in ("day_texture", "detail_texture", "cloud_texture", "night_texture"):
+            filename = earth.get(key)
+            if not filename:
+                continue
+            asset = assets.get(filename)
+            report.check(
+                asset is not None and asset.get("rights_status") == "cleared" and bool(HEX64.match(str(asset.get("sha256", "")))),
+                label + "Earth " + key + " is a cleared, checksummed manifest asset",
+                repr(filename),
+            )
+            if asset is not None:
+                path = hc.REPO_ROOT / asset["local_path"]
+                report.check(
+                    path.is_file() and hc.sha256_file(path) == asset["sha256"],
+                    label + "Earth " + key + " on disk matches its recorded SHA-256",
+                    repr(filename),
+                )
+        window = earth.get("detail_window")
+        if window and earth.get("detail_texture"):
+            asset = assets.get(earth["detail_texture"], {})
+            recorded = asset.get("window", {})
+            report.check(
+                all(abs(float(window[k]) - float(recorded.get(k, 1e9))) < 1e-6 for k in ("lon0", "lon1", "lat0", "lat1")),
+                label + "detail window in the material matches the crop's recorded window",
+                repr(window) + " vs " + repr(recorded),
+            )
+            fixture = aoi.resolve_fixture(scene_config, aoi_spec.get("fixture"))
+            report.check(
+                float(window["lon0"]) < float(fixture["center_lon_deg"]) < float(window["lon1"])
+                and float(window["lat0"]) < float(fixture["center_lat_deg"]) < float(window["lat1"]),
+                label + "detail window contains the accepted target centre",
+            )
+            report.check(
+                bool(asset.get("derived_from")) and asset.get("derived_from") in {a.get("id") for a in (manifest or {}).get("assets", [])},
+                label + "detail crop records the manifest asset it was cut from",
+                repr(asset.get("derived_from")),
+            )
+
+
 def check_manifest(report: Report, manifest) -> None:
     report.section("asset rights manifest")
     if not manifest:
@@ -1223,6 +1458,7 @@ def main() -> int:
     check_pre_data_boundary(report, loaded.get("scene"), loaded.get("manifest"))
     check_aoi_system(report, loaded.get("scene"))
     check_continuous_sequence(report, loaded.get("scene"))
+    check_r2_visual_contract(report, loaded.get("scene"), loaded.get("manifest"))
     check_manifest(report, loaded.get("manifest"))
     check_generated_output_policy(report)
     check_lane_isolation(report, loaded.get("lane"))
