@@ -63,6 +63,23 @@ Supersampling, denoising, render-sample changes, encoder preset tuning and other
 
 If launch-quality fidelity is demonstrably impossible inside an existing ceiling, do not silently relax the ceiling. Publish exact before/after quality and byte evidence and return `WAITING_DOMAIN_DECISION` for that trade-off only.
 
+### Earth-source-resolution clarification — Product R1
+
+A demonstrated shortage of source texels in the cinematic Earth albedo/basemap is **not** a Product STOP by itself. WEB-005A explicitly authorizes replacing or augmenting the current cinematic Earth texture with a materially higher-resolution rights-safe Earth texture when needed to remove visible upscaling/softness in approved shots.
+
+This is a presentation/source-fidelity change, not a scientific-data change, provided all of the following remain true:
+
+- the asset is used only as cinematic Earth/context texture and is not presented as an OrbGSS analytical raster or a sensor-specific observation;
+- the exact source URL/record, provider, usage-rights basis and materialized checksum are recorded in the existing asset manifest/provenance system;
+- no NASA logo/insignia/identifier is introduced and no wording implies NASA endorsement;
+- any third-party-copyrighted material or unclear-rights derivative is rejected;
+- geography/orientation remain truthful enough for the cinematic context and the accepted Kızıldere/AOI registration is not redefined by the texture;
+- the existing media byte ceilings remain unchanged unless separate measured Product approval is requested.
+
+NASA Visible Earth / Blue Marble high-resolution imagery is an authorized candidate source **only after the exact selected asset record is verified against NASA media-use guidance and its own record for third-party restrictions**. The implementer may download/materialize such an asset as ordinary task-local production work and must record provenance/checksum. No additional Product approval is required merely because the texture has higher source resolution.
+
+Therefore a prior `BLOCKED_ON_SOURCE_RESOLUTION` disposition based solely on needing a rights-safe higher-resolution cinematic Earth texture is superseded by this clarification. If no conforming rights-safe source can be verified, or the chosen asset would add a new scientific/public claim, then route back.
+
 ## 4. Explicitly out of scope
 
 - homepage Act 2/3/4 redesign beyond bounded hero-handoff integration;
@@ -124,6 +141,10 @@ Provide Product/CTO with before/after stills at:
 
 and a short full-sequence screen/video capture. A public preview URL is not required.
 
+### A-HERO-11 — source-resolution / upscaling gate
+
+For the production Earth texture used by the approved regional/acquisition shots, evidence must record source dimensions and a reproducible estimate of effective source texel coverage at the softest approved hold. If the previous material-upscaling defect is addressed through a higher-resolution source, demonstrate the before/after effective texel ratio or equivalent objective evidence and show that the new asset passes the provenance/rights checks above.
+
 ## 6. Required evidence
 
 At `REVIEW_READY` provide:
@@ -131,10 +152,12 @@ At `REVIEW_READY` provide:
 - exact branch and final HEAD;
 - changed-path inventory;
 - exact source/provenance for the satellite model/asset;
+- exact source/provenance/dimensions/checksum for any replacement Earth texture;
 - motion/orbit/framing audit;
 - four before/after still pairs;
 - complete hero playback video/screen capture pointer;
 - target geometry/registration evidence;
+- source-resolution/upscaling evidence for the Earth texture;
 - production media metrics/hashes;
 - site/hero/negative-test results;
 - fallback matrix;
@@ -148,12 +171,12 @@ Return `WAITING_DOMAIN_DECISION` only if completion requires:
 - changing accepted Product behavior or four-act hierarchy;
 - changing scientific/data semantics;
 - claiming a specific sensor/platform or actual sensing physics;
-- using a paid/unclear-rights satellite asset;
+- using a paid/unclear-rights satellite or Earth asset;
 - relaxing media ceilings as a Product trade-off;
 - production deploy/domain/DNS work;
 - credentials/payment/legal/commercial action;
 - destructive/irreversible action.
 
-Render iteration, encoder tuning, Blender/tool issues, CSS/JS bugs, validator repair, bounded scene refactors and evidence defects remain implementation-owned.
+Render iteration, encoder tuning, Blender/tool issues, rights-safe higher-resolution cinematic Earth-texture materialization, CSS/JS bugs, validator repair, bounded scene refactors and evidence defects remain implementation-owned.
 
 **Terminal implementation state:** `REVIEW_READY`.
