@@ -1,0 +1,1680 @@
+{
+  "schema_version": 1,
+  "phase": "WEB-005",
+  "data_state": "accepted_data",
+  "color_space_note": "All colour triplets are linear scene-referred RGB, not sRGB hex.",
+  "palette": {
+    "space_deep": [
+      0.0035,
+      0.007,
+      0.014
+    ],
+    "space_horizon": [
+      0.012,
+      0.026,
+      0.044
+    ],
+    "atmosphere_cyan": [
+      0.07,
+      0.42,
+      0.62
+    ],
+    "scan_ice_blue": [
+      0.26,
+      0.76,
+      1.0
+    ],
+    "aoi_teal": [
+      0.045,
+      0.52,
+      0.47
+    ],
+    "neutral_surface": [
+      0.16,
+      0.175,
+      0.195
+    ],
+    "neutral_light": [
+      1.0,
+      0.98,
+      0.95
+    ],
+    "satellite_hull": [
+      0.135,
+      0.14,
+      0.155
+    ],
+    "satellite_panel": [
+      0.018,
+      0.045,
+      0.105
+    ],
+    "aoi_border_cyan": [
+      0.1,
+      0.72,
+      0.92
+    ],
+    "aoi_fill_teal": [
+      0.03,
+      0.4,
+      0.44
+    ],
+    "beam_ice": [
+      0.2,
+      0.66,
+      0.95
+    ]
+  },
+  "world": {
+    "background_color_ref": "space_deep",
+    "background_strength": 1.0
+  },
+  "camera_defaults": {
+    "type": "PERSP",
+    "focal_length_mm": 50.0,
+    "sensor_width_mm": 36.0,
+    "clip_start": 0.01,
+    "clip_end": 100000.0
+  },
+  "view_transform": "AgX",
+  "look": "None",
+  "world_coordinate_convention": {
+    "purpose": "Stable world-space convention every WEB-HERO-001 phase must share, so Phase C/D can extend the camera path and inject AOI geometry without a scene reset.",
+    "units": "1 Blender unit (BU) = 1000 km",
+    "origin": "Earth centre at world origin (0, 0, 0)",
+    "up_axis": "world +Z is Earth's rotation axis (geographic north)",
+    "reference_orientation": "At frame 1 of hero_earth_orbit, geographic longitude 0 deg / latitude 0 deg sits on world +X. Earth spins about +Z (see the earth object's rotation_keyframes). Longitude increases counter-clockwise viewed from +Z, matching standard right-handed spherical-to-Cartesian conversion.",
+    "earth_radius_km": 6371.0,
+    "earth_radius_bu": 6.371,
+    "note": "WEB-HERO-001C/D must place AOI geometry, scan beams and any further camera moves in this same frame/scale/orientation; do not introduce a second convention."
+  },
+  "aoi_injection_interface": {
+    "purpose": "Single configuration surface for AOI geometry. WEB-HERO-001C reads footprint geometry only from here, and WEB-005 replaces the design fixtures below with accepted AOI geometry and rendered scientific layers without touching scene or builder code.",
+    "classification": "mixed",
+    "geometry_source": "configured_design_fixture",
+    "consumer": "hero/scripts/aoi_system.py",
+    "texture_longitude_offset_deg": 115.0,
+    "texture_longitude_offset_note": "Fallback longitude offset aligning configured coordinates with the Earth equirectangular texture. A scene that defines an earth_day_night material overrides this with that material's texture_rotation_deg, so the AOI follows any re-framing of the globe instead of drifting off its configured coordinates.",
+    "corner_order": [
+      "nw",
+      "ne",
+      "se",
+      "sw"
+    ],
+    "schema": {
+      "center_lat_deg": "required. Footprint centre latitude, degrees north.",
+      "center_lon_deg": "required. Footprint centre longitude, degrees east.",
+      "span_km": "required. Edge length of the square footprint, kilometres of surface arc.",
+      "bearing_deg": "optional, default 0. Rotation of the footprint about its own surface normal.",
+      "surface_offset_m": "optional, default 250. Anti-z-fighting offset above the Earth radius; visual only.",
+      "edge_samples": "optional, default 48. Slerp samples per footprint edge; controls how finely the border follows curvature.",
+      "fill_grid": "optional, default 24. Interior grid resolution per axis; also the AOI-local (u, v) sweep parameter space.",
+      "border_width_km": "optional, default 14. Width of the border ribbon, kilometres of surface arc.",
+      "corner_lock_arm_km": "optional, default 70. Length of each corner-lock arm along the adjacent edge.",
+      "corner_lock_width_km": "optional, default 9. Width of the corner-lock arm ribbon.",
+      "corner_lock_offset_m": "optional, default 400. Extra radial offset for corner locks so they read above the border."
+    },
+    "active_fixture": "design_primary",
+    "fixtures": {
+      "design_primary": {
+        "label": "Design fixture A",
+        "center_lat_deg": 38.0,
+        "center_lon_deg": 29.0,
+        "span_km": 420.0,
+        "bearing_deg": 0.0,
+        "surface_offset_m": 250.0,
+        "edge_samples": 48,
+        "fill_grid": 24,
+        "border_width_km": 9.0,
+        "corner_lock_arm_km": 85.0,
+        "corner_lock_width_km": 15.0,
+        "corner_lock_offset_m": 90.0,
+        "note": "Design placeholder with no measurement meaning. The deliberately round coordinates and span were chosen only so the footprint sits on the lit, camera-facing hemisphere at this phase's shot scale; they name no site, survey or project and carry no scientific claim.",
+        "classification": "design_fixture"
+      },
+      "design_secondary": {
+        "label": "Design fixture B",
+        "center_lat_deg": -10.0,
+        "center_lon_deg": 18.0,
+        "span_km": 700.0,
+        "bearing_deg": 25.0,
+        "surface_offset_m": 250.0,
+        "edge_samples": 64,
+        "fill_grid": 28,
+        "border_width_km": 13.0,
+        "corner_lock_arm_km": 140.0,
+        "corner_lock_width_km": 22.0,
+        "corner_lock_offset_m": 90.0,
+        "note": "Second design placeholder, also carrying no measurement meaning. It exists to prove configurability: a different centre, span, bearing and sampling density must flow through the same code path with no scene or builder change. Southern hemisphere and rotated on purpose, so a hand-modelled footprint could not pass for it.",
+        "classification": "design_fixture"
+      },
+      "kizildere_regional": {
+        "label": "Kizildere regional acquisition frame",
+        "classification": "production_regional_frame",
+        "geometry_source": "accepted_geo_web_002_aoi_centre",
+        "center_lat_deg": 37.9794,
+        "center_lon_deg": 28.7907,
+        "span_km": 420.0,
+        "bearing_deg": 0.0,
+        "surface_offset_m": 250.0,
+        "edge_samples": 48,
+        "fill_grid": 24,
+        "border_width_km": 9.0,
+        "corner_lock_arm_km": 85.0,
+        "corner_lock_width_km": 15.0,
+        "corner_lock_offset_m": 90.0,
+        "centre_provenance": "assets/imagery/sources.json -> geo_web_002.context_scenes[kizildere-aoi-context-2025]",
+        "is_analysis_aoi": false,
+        "note": "Production framing for the hero acquisition shot. The centre is the real accepted Kizildere pilot centre (37.9794 N, 28.7907 E), so the hero targets the real pilot area instead of a placeholder. The 420 km span is the REGIONAL ACQUISITION FRAME the accepted WEB-HERO-001D camera path was derived against -- it is a framing extent and carries no measurement meaning. The accepted analysis AOI is 36 x 36 km and is never claimed to be this box: is_analysis_aoi is false, and public copy states the 36 km extent separately."
+      }
+    },
+    "layer_slots": [
+      {
+        "id": "result_priority",
+        "beat": "post_hold_result_handoff",
+        "accepted_asset": "geo_web_002.assets[priority]",
+        "asset_class": "B - OrbGSS GEO-039 cartographic export",
+        "public_label": "Remote-Sensing Relative Priority - Experimental Baseline",
+        "scoring_profile_id": "mvp_remote_sensing_priority_v1",
+        "value_semantics": "dimensionless_relative_priority_0_100",
+        "mandatory_warning": "AOI-relative experimental screening only. Not probability, reserve/resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a calibrated cross-AOI score.",
+        "render_surface": "html_overlay",
+        "render_surface_reason": "A governed class-B raster must not be recoloured, value-transformed or re-encoded. Lossy video compression would do all three, so the accepted derivative is shipped as its exact checksummed file and composited over the video in the page instead of baked into a frame. This also keeps acquisition imagery and analytical result visibly distinct.",
+        "delivered_file": "assets/proof/final/priority-800.webp",
+        "delivered_sha256_ref": "geo_web_002.assets[priority].derivatives[panel-800].sha256",
+        "max_safe_rendered_px": 1249
+      }
+    ],
+    "note": "WEB-005 integration. The two design fixtures are untouched and still carry no measurement meaning. layer_slots now declares the one accepted result layer the hero hands off to, including the surface it is rendered on; nothing scientific is baked into the render.",
+    "classification_note": "The two design fixtures below stay exactly as accepted at WEB-HERO-001D and remain classified design_fixture. WEB-005 adds one production fixture carrying real accepted geometry; each fixture now declares its own classification."
+  },
+  "scenes": {
+    "benchmark_neutral": {
+      "description": "Minimal neutral pipeline benchmark: camera, primitive geometry, two lights, dark world. Lit to sit in the restrained dark/high-dynamic-range regime the hero scene will actually render in, so the timing is representative. Exists to measure render throughput, not to express hero art direction.",
+      "role": "pipeline_benchmark",
+      "frame": 1,
+      "camera": {
+        "location": [
+          6.2,
+          -6.8,
+          4.4
+        ],
+        "look_at": [
+          0.0,
+          0.0,
+          0.9
+        ],
+        "focal_length_mm": 55.0
+      },
+      "objects": [
+        {
+          "id": "benchmark_sphere",
+          "type": "uv_sphere",
+          "location": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "radius": 1.0,
+          "segments": 96,
+          "rings": 48,
+          "shade_smooth": true,
+          "material": "neutral_dielectric"
+        },
+        {
+          "id": "benchmark_ground",
+          "type": "plane",
+          "location": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "size": 24.0,
+          "shade_smooth": false,
+          "material": "neutral_floor"
+        },
+        {
+          "id": "benchmark_marker",
+          "type": "cube",
+          "location": [
+            2.45,
+            0.55,
+            0.35
+          ],
+          "size": 0.7,
+          "rotation_euler_deg": [
+            0.0,
+            0.0,
+            24.0
+          ],
+          "shade_smooth": false,
+          "material": "accent_emissive"
+        }
+      ],
+      "materials": {
+        "neutral_dielectric": {
+          "base_color_ref": "neutral_surface",
+          "roughness": 0.28,
+          "metallic": 0.0
+        },
+        "neutral_floor": {
+          "base_color_ref": "space_horizon",
+          "roughness": 0.62,
+          "metallic": 0.0
+        },
+        "accent_emissive": {
+          "base_color_ref": "aoi_teal",
+          "roughness": 0.35,
+          "metallic": 0.15,
+          "emission_color_ref": "scan_ice_blue",
+          "emission_strength": 5.0
+        }
+      },
+      "lights": [
+        {
+          "id": "key",
+          "type": "AREA",
+          "location": [
+            4.5,
+            -4.0,
+            6.0
+          ],
+          "look_at": [
+            0.0,
+            0.0,
+            0.9
+          ],
+          "energy": 240.0,
+          "size": 4.0,
+          "color_ref": "neutral_light"
+        },
+        {
+          "id": "rim",
+          "type": "SUN",
+          "location": [
+            -6.0,
+            5.0,
+            4.0
+          ],
+          "look_at": [
+            0.0,
+            0.0,
+            0.9
+          ],
+          "energy": 1.1,
+          "angle_deg": 3.0,
+          "color_ref": "atmosphere_cyan"
+        }
+      ]
+    },
+    "hero_earth_orbit": {
+      "description": "WEB-HERO-001B establishing sequence: true 3D Earth with day/night material and atmosphere shell, a procedurally-modelled Earth-observation satellite entering along a plausible orbital arc, deep-space starfield background. Pre-data: no AOI or scientific layer is rendered here.",
+      "role": "hero_establishing_sequence",
+      "frame": 1,
+      "lighting_reference": {
+        "primary_light_id": "sun"
+      },
+      "world_overrides": {
+        "stars": {
+          "enabled": true,
+          "scale": 190.0,
+          "point_size": 0.05,
+          "strength": 4.0,
+          "color_ref": "neutral_light"
+        }
+      },
+      "animation": {
+        "frame_start": 1,
+        "frame_end": 120,
+        "frame_rate": 24,
+        "representative_frames": {
+          "establish": 1,
+          "satellite_entrance": 60,
+          "pre_acquisition": 120
+        }
+      },
+      "camera": {
+        "keyframes": [
+          {
+            "frame": 1,
+            "location": [
+              2.0,
+              -46.0,
+              9.0
+            ],
+            "look_at": [
+              -7.0,
+              0.0,
+              1.0
+            ],
+            "focal_length_mm": 28.0
+          },
+          {
+            "frame": 60,
+            "location": [
+              2.5,
+              -30.0,
+              7.0
+            ],
+            "look_at": [
+              -4.5,
+              0.0,
+              0.8
+            ],
+            "focal_length_mm": 35.0
+          },
+          {
+            "frame": 120,
+            "location": [
+              3.2,
+              -21.5,
+              6.0
+            ],
+            "look_at": [
+              -4.0,
+              0.0,
+              0.7
+            ],
+            "focal_length_mm": 33.0
+          }
+        ]
+      },
+      "objects": [
+        {
+          "id": "earth",
+          "type": "uv_sphere",
+          "location": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 6.371,
+          "segments": 256,
+          "rings": 128,
+          "shade_smooth": true,
+          "material": "earth_surface",
+          "rotation_keyframes": [
+            {
+              "frame": 1,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "frame": 120,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                3.5
+              ]
+            }
+          ]
+        },
+        {
+          "id": "atmosphere",
+          "type": "uv_sphere",
+          "location": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "radius": 6.58,
+          "segments": 128,
+          "rings": 64,
+          "shade_smooth": true,
+          "material": "atmosphere_shell"
+        },
+        {
+          "id": "satellite",
+          "type": "satellite",
+          "scale": 1.0,
+          "bus_size": [
+            0.22,
+            0.14,
+            0.14
+          ],
+          "panel_size": [
+            0.62,
+            0.17
+          ],
+          "dish_radius": 0.11,
+          "bus_material": "satellite_hull",
+          "panel_material": "satellite_panel",
+          "dish_material": "satellite_hull",
+          "track_target_id": "earth",
+          "location_keyframes": [
+            {
+              "frame": 1,
+              "location": [
+                -9.5,
+                -6.0,
+                3.5
+              ]
+            },
+            {
+              "frame": 60,
+              "location": [
+                -4.5,
+                -15.0,
+                5.0
+              ]
+            },
+            {
+              "frame": 120,
+              "location": [
+                -3.2,
+                -9.5,
+                4.2
+              ]
+            }
+          ]
+        }
+      ],
+      "materials": {
+        "earth_surface": {
+          "type": "earth_day_night",
+          "day_texture": "land_ocean_ice_cloud_2048.jpg",
+          "night_texture": "dnb_land_ocean_ice.2012.3600x1800.jpg",
+          "roughness": 0.65,
+          "night_emission_strength": 1.4,
+          "texture_rotation_deg": 115.0,
+          "terminator_night_edge": -0.18,
+          "terminator_day_edge": 0.12
+        },
+        "atmosphere_shell": {
+          "type": "atmosphere_shell",
+          "rim_color_ref": "atmosphere_cyan",
+          "strength": 1.5,
+          "night_hint": 0.12,
+          "fresnel_ior": 1.08,
+          "falloff_min": 0.45,
+          "falloff_max": 1.0
+        },
+        "satellite_hull": {
+          "base_color_ref": "satellite_hull",
+          "roughness": 0.28,
+          "metallic": 0.8,
+          "emission_color_ref": "scan_ice_blue",
+          "emission_strength": 0.25,
+          "rim_light_color_ref": "neutral_light",
+          "rim_light_strength": 1.4,
+          "rim_light_ior": 2.2,
+          "rim_light_falloff_min": 0.55
+        },
+        "satellite_panel": {
+          "type": "solar_panel",
+          "base_color_ref": "satellite_panel",
+          "grid_color_ref": "scan_ice_blue",
+          "roughness": 0.18,
+          "metallic": 0.6,
+          "cell_scale": 4.0,
+          "grid_line_width": 0.02,
+          "grid_emission_strength": 0.7,
+          "rim_light_color_ref": "neutral_light",
+          "rim_light_strength": 1.1,
+          "rim_light_ior": 2.2,
+          "rim_light_falloff_min": 0.55
+        }
+      },
+      "lights": [
+        {
+          "id": "sun",
+          "type": "SUN",
+          "location": [
+            -30.0,
+            -36.0,
+            28.0
+          ],
+          "look_at": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "energy": 4.5,
+          "angle_deg": 0.53,
+          "color_ref": "neutral_light"
+        },
+        {
+          "id": "fill_rim",
+          "type": "SUN",
+          "location": [
+            17.0,
+            20.0,
+            -16.0
+          ],
+          "look_at": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "energy": 0.4,
+          "angle_deg": 3.0,
+          "color_ref": "atmosphere_cyan"
+        }
+      ]
+    },
+    "hero_aoi_acquisition": {
+      "extends": "hero_earth_orbit",
+      "description": "WEB-HERO-001C acquisition sequence. Inherits the accepted WEB-HERO-001B Earth, atmosphere, satellite, starfield and lighting unchanged, then extends the single continuous camera move from global establish through acquisition into regional approach and adds the surface-conforming AOI system. Pre-data: the footprint interior carries a neutral cyan scan treatment only and no scientific layer.",
+      "role": "hero_acquisition_sequence",
+      "frame": 205,
+      "animation": {
+        "frame_start": 1,
+        "frame_end": 240,
+        "frame_rate": 24,
+        "representative_frames": {
+          "establish": 1,
+          "pre_acquisition": 120,
+          "global_acquisition": 150,
+          "beam_lock": 170,
+          "scan_sweep": 205,
+          "regional_approach": 240
+        },
+        "continuity_note": "Frames 1-120 reuse the WEB-HERO-001B camera keyframes verbatim, so this shot continues the accepted establish rather than restating it. The AOI is one object system present for the whole range; it is never recentred, re-parented or rebuilt, and the move from global to regional is camera motion only."
+      },
+      "camera": {
+        "keyframes": [
+          {
+            "frame": 1,
+            "location": [
+              2.0,
+              -46.0,
+              9.0
+            ],
+            "look_at": [
+              -7.0,
+              0.0,
+              1.0
+            ],
+            "focal_length_mm": 28.0
+          },
+          {
+            "frame": 60,
+            "location": [
+              2.5,
+              -30.0,
+              7.0
+            ],
+            "look_at": [
+              -4.5,
+              0.0,
+              0.8
+            ],
+            "focal_length_mm": 35.0
+          },
+          {
+            "frame": 120,
+            "location": [
+              3.2,
+              -21.5,
+              6.0
+            ],
+            "look_at": [
+              -4.0,
+              0.0,
+              0.7
+            ],
+            "focal_length_mm": 33.0
+          },
+          {
+            "frame": 170,
+            "location": [
+              3.1831,
+              -12.4684,
+              2.3959
+            ],
+            "look_at": [
+              0.7829,
+              -4.9592,
+              3.9225
+            ],
+            "focal_length_mm": 38.0
+          },
+          {
+            "frame": 205,
+            "location": [
+              2.4906,
+              -9.23,
+              2.8711
+            ],
+            "look_at": [
+              0.8718,
+              -4.9443,
+              3.9225
+            ],
+            "focal_length_mm": 40.0
+          },
+          {
+            "frame": 240,
+            "location": [
+              1.7038,
+              -6.9066,
+              3.4156
+            ],
+            "look_at": [
+              0.9605,
+              -4.9279,
+              3.9225
+            ],
+            "focal_length_mm": 44.0
+          }
+        ]
+      },
+      "objects": [
+        {
+          "id": "earth",
+          "rotation_keyframes": [
+            {
+              "frame": 1,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "frame": 120,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                3.5
+              ]
+            },
+            {
+              "frame": 240,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                7.03
+              ]
+            }
+          ]
+        },
+        {
+          "id": "satellite",
+          "location_keyframes": [
+            {
+              "frame": 1,
+              "location": [
+                -9.5,
+                -6.0,
+                3.5
+              ]
+            },
+            {
+              "frame": 60,
+              "location": [
+                -4.5,
+                -15.0,
+                5.0
+              ]
+            },
+            {
+              "frame": 120,
+              "location": [
+                -3.2,
+                -9.5,
+                4.2
+              ]
+            },
+            {
+              "frame": 170,
+              "location": [
+                -0.7477,
+                -8.124,
+                4.0668
+              ]
+            },
+            {
+              "frame": 205,
+              "location": [
+                -0.1043,
+                -7.779,
+                4.0997
+              ]
+            },
+            {
+              "frame": 240,
+              "location": [
+                0.4356,
+                -7.4288,
+                4.1326
+              ]
+            }
+          ]
+        },
+        {
+          "id": "aoi",
+          "type": "aoi_system",
+          "fixture": "design_primary",
+          "parent_id": "earth",
+          "border_material": "aoi_border",
+          "fill_material": "aoi_fill",
+          "corner_lock_material": "aoi_lock",
+          "beam_material": "aoi_beam",
+          "border": {
+            "appear_start_frame": 118,
+            "appear_end_frame": 140
+          },
+          "fill": {
+            "appear_start_frame": 124,
+            "appear_end_frame": 146
+          },
+          "corner_locks": {
+            "appear_start_frame": 144,
+            "appear_end_frame": 162
+          },
+          "beams": {
+            "source_object_id": "satellite",
+            "target": "corners",
+            "root_radius_km": 3.0,
+            "tip_radius_km": 10.0,
+            "sides": 14,
+            "appear_start_frame": 128,
+            "appear_end_frame": 154,
+            "release_start_frame": 222,
+            "release_end_frame": 240
+          },
+          "sweep": {
+            "start_frame": 156,
+            "end_frame": 220
+          },
+          "note": "One persistent AOI system parented to the Earth, so the footprint, its corner locks and the beam target points stay registered through Earth rotation and the whole camera move."
+        }
+      ],
+      "materials": {
+        "aoi_border": {
+          "type": "aoi_emission",
+          "emission_color_ref": "aoi_border_cyan",
+          "emission_strength": 1.9
+        },
+        "aoi_lock": {
+          "type": "aoi_emission",
+          "emission_color_ref": "scan_ice_blue",
+          "emission_strength": 3.0
+        },
+        "aoi_fill": {
+          "type": "aoi_scan_fill",
+          "base_color_ref": "aoi_fill_teal",
+          "band_color_ref": "scan_ice_blue",
+          "base_alpha": 0.035,
+          "acquired_alpha": 0.075,
+          "band_alpha": 0.45,
+          "base_emission_strength": 1.2,
+          "band_emission_strength": 3.2,
+          "band_width": 0.13,
+          "axis": "v"
+        },
+        "aoi_beam": {
+          "type": "aoi_beam",
+          "emission_color_ref": "beam_ice",
+          "emission_strength": 2.0,
+          "root_alpha": 0.012,
+          "tip_alpha": 0.1
+        },
+        "atmosphere_shell": {
+          "type": "atmosphere_shell",
+          "rim_color_ref": "atmosphere_cyan",
+          "strength": 1.25,
+          "night_hint": 0.12,
+          "fresnel_ior": 1.045,
+          "falloff_min": 0.4,
+          "falloff_max": 1.0,
+          "silhouette_fade_start": 0.93
+        }
+      }
+    },
+    "hero_predata_animatic": {
+      "extends": "hero_aoi_acquisition",
+      "description": "WEB-HERO-001D continuous pre-data animatic. Inherits the accepted Phase-B Earth, satellite and starfield and the accepted Phase-C surface-conforming AOI acquisition system unchanged, and assembles them into one uninterrupted 240-frame move: Earth establish, satellite entrance, AOI acquisition and scan, continuous camera approach, stable regional AOI hold. Phase-D work is assembly, timing and the three accepted Phase-C quality-gate items only: an 8192 px albedo for closest-approach sharpness, an additive perigee-altitude atmosphere replacing the Fresnel hoop, and a constraint-locked camera aim. The inherited atmosphere_shell material is left defined and unreferenced on purpose, so the accepted Phase-C shell is visibly untouched rather than edited in place. Pre-data: no scientific layer exists anywhere in it.",
+      "role": "hero_predata_animatic",
+      "frame": 240,
+      "animation": {
+        "frame_start": 1,
+        "frame_end": 240,
+        "frame_rate": 24,
+        "representative_frames": {
+          "establish": 24,
+          "satellite_entrance": 78,
+          "acquisition_lock": 140,
+          "scan_sweep": 170,
+          "mid_approach": 200,
+          "regional_hold": 236
+        },
+        "beats": {
+          "earth_establish": [
+            1,
+            96
+          ],
+          "satellite_entrance": [
+            40,
+            104
+          ],
+          "aoi_acquisition": [
+            90,
+            138
+          ],
+          "scan_sweep": [
+            134,
+            192
+          ],
+          "camera_approach": [
+            96,
+            214
+          ],
+          "satellite_release": [
+            146,
+            166
+          ],
+          "regional_hold": [
+            200,
+            240
+          ]
+        },
+        "continuity_note": "One scene, one world, one camera, no cut. Frames 1-96 replay the three accepted Phase-B establish camera states verbatim, re-timed onto this beat map so acquisition can start earlier and the shot can end on a real hold; every keyframe from 136 on is derived from the AOI itself by hero/scripts/shot_plan.py rather than typed by eye. The AOI is one object system present for the whole range, never recentred, re-parented or rebuilt."
+      },
+      "camera": {
+        "composition": {
+          "headline_safe_region": {
+            "x0": 0.05,
+            "y0": 0.16,
+            "x1": 0.38,
+            "y1": 0.78,
+            "samples": 28
+          },
+          "headline_safe_through_frame": 96,
+          "note": "Website copy is never baked into the render, so what the opening owes the later integration task is empty sky. This rectangle is a left-aligned headline and CTA column, 33 percent of the frame width by 62 percent of its height; shot_plan.py casts a ray through a 28x28 grid of it at every establish keyframe and reports the frame as failed if any ray hits the Earth. It was measured, not guessed: the region was widened until the planet first intruded, then stepped back to the last width that stays completely clear through frame 96."
+        },
+        "track": {
+          "target_id": "aoi_target_center",
+          "influence_keyframes": [
+            {
+              "frame": 96,
+              "value": 0.0
+            },
+            {
+              "frame": 136,
+              "value": 1.0
+            },
+            {
+              "frame": 240,
+              "value": 1.0
+            }
+          ],
+          "note": "Precision lock, not a redirect. The derived keyframes from 136 on already aim at the AOI centre, so the constraint changes nothing at a key; it removes the drift that appears between keys because the footprint travels an arc on a rotating planet while an interpolated camera aims along a chord."
+        },
+        "shot_intent": [
+          {
+            "frame": 1,
+            "mode": "world",
+            "location": [
+              2.0,
+              -46.0,
+              9.0
+            ],
+            "look_at": [
+              -7.0,
+              0.0,
+              1.0
+            ],
+            "focal_length_mm": 28.0
+          },
+          {
+            "frame": 52,
+            "mode": "world",
+            "location": [
+              2.5,
+              -30.0,
+              7.0
+            ],
+            "look_at": [
+              -4.5,
+              0.0,
+              0.8
+            ],
+            "focal_length_mm": 35.0
+          },
+          {
+            "frame": 96,
+            "mode": "world",
+            "location": [
+              3.2,
+              -21.5,
+              6.0
+            ],
+            "look_at": [
+              -4.0,
+              0.0,
+              0.7
+            ],
+            "focal_length_mm": 33.0
+          },
+          {
+            "frame": 136,
+            "mode": "aoi_relative",
+            "radius_bu": 15.9,
+            "offset_deg": 27.5,
+            "bearing_deg": 172.0,
+            "focal_length_mm": 38.0
+          },
+          {
+            "frame": 164,
+            "mode": "aoi_relative",
+            "radius_bu": 11.6,
+            "offset_deg": 22.0,
+            "bearing_deg": 171.0,
+            "focal_length_mm": 40.0
+          },
+          {
+            "frame": 192,
+            "mode": "aoi_relative",
+            "radius_bu": 9.3,
+            "offset_deg": 17.0,
+            "bearing_deg": 170.0,
+            "focal_length_mm": 41.0
+          },
+          {
+            "frame": 214,
+            "mode": "aoi_relative",
+            "radius_bu": 8.3,
+            "offset_deg": 15.0,
+            "bearing_deg": 169.0,
+            "focal_length_mm": 43.0
+          },
+          {
+            "frame": 240,
+            "mode": "aoi_relative",
+            "radius_bu": 7.55,
+            "offset_deg": 13.0,
+            "bearing_deg": 168.0,
+            "focal_length_mm": 44.0
+          }
+        ],
+        "keyframes": [
+          {
+            "frame": 1,
+            "location": [
+              2.0,
+              -46.0,
+              9.0
+            ],
+            "look_at": [
+              -7.0,
+              0.0,
+              1.0
+            ],
+            "focal_length_mm": 28.0
+          },
+          {
+            "frame": 52,
+            "location": [
+              2.5,
+              -30.0,
+              7.0
+            ],
+            "look_at": [
+              -4.5,
+              0.0,
+              0.8
+            ],
+            "focal_length_mm": 35.0
+          },
+          {
+            "frame": 96,
+            "location": [
+              3.2,
+              -21.5,
+              6.0
+            ],
+            "look_at": [
+              -4.0,
+              0.0,
+              0.7
+            ],
+            "focal_length_mm": 33.0
+          },
+          {
+            "frame": 136,
+            "location": [
+              3.1737,
+              -15.2975,
+              2.9538
+            ],
+            "look_at": [
+              0.6962,
+              -4.9721,
+              3.9225
+            ],
+            "focal_length_mm": 38.0
+          },
+          {
+            "frame": 164,
+            "location": [
+              2.3715,
+              -10.8831,
+              3.2396
+            ],
+            "look_at": [
+              0.7676,
+              -4.9616,
+              3.9225
+            ],
+            "focal_length_mm": 40.0
+          },
+          {
+            "frame": 192,
+            "location": [
+              1.9119,
+              -8.4563,
+              3.3654
+            ],
+            "look_at": [
+              0.8388,
+              -4.95,
+              3.9225
+            ],
+            "focal_length_mm": 41.0
+          },
+          {
+            "frame": 214,
+            "location": [
+              1.7605,
+              -7.4209,
+              3.2742
+            ],
+            "look_at": [
+              0.8947,
+              -4.9403,
+              3.9225
+            ],
+            "focal_length_mm": 43.0
+          },
+          {
+            "frame": 240,
+            "location": [
+              1.6514,
+              -6.6262,
+              3.22
+            ],
+            "look_at": [
+              0.9606,
+              -4.9279,
+              3.9225
+            ],
+            "focal_length_mm": 44.0
+          }
+        ]
+      },
+      "objects": [
+        {
+          "id": "earth",
+          "rotation_keyframes": [
+            {
+              "frame": 1,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "frame": 96,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                2.794
+              ]
+            },
+            {
+              "frame": 240,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                7.03
+              ]
+            }
+          ]
+        },
+        {
+          "id": "atmosphere",
+          "material": "atmosphere_limb",
+          "cast_shadow": false,
+          "radius": 6.85,
+          "segments": 256,
+          "rings": 128
+        },
+        {
+          "id": "satellite",
+          "location_keyframes": [
+            {
+              "frame": 1,
+              "location": [
+                -9.5,
+                -6.0,
+                3.5
+              ]
+            },
+            {
+              "frame": 52,
+              "location": [
+                -4.5,
+                -15.0,
+                5.0
+              ]
+            },
+            {
+              "frame": 96,
+              "location": [
+                -3.2,
+                -9.5,
+                4.2
+              ]
+            },
+            {
+              "frame": 136,
+              "location": [
+                -0.7477,
+                -8.124,
+                4.0668
+              ]
+            },
+            {
+              "frame": 176,
+              "location": [
+                -0.1043,
+                -7.779,
+                4.0997
+              ]
+            },
+            {
+              "frame": 210,
+              "location": [
+                0.4356,
+                -7.4288,
+                4.1326
+              ]
+            },
+            {
+              "frame": 240,
+              "location": [
+                0.912,
+                -7.1198,
+                4.1616
+              ]
+            }
+          ]
+        },
+        {
+          "id": "aoi",
+          "border": {
+            "appear_start_frame": 90,
+            "appear_end_frame": 112
+          },
+          "fill": {
+            "appear_start_frame": 98,
+            "appear_end_frame": 122
+          },
+          "corner_locks": {
+            "appear_start_frame": 116,
+            "appear_end_frame": 138
+          },
+          "beams": {
+            "appear_start_frame": 102,
+            "appear_end_frame": 128,
+            "release_start_frame": 146,
+            "release_end_frame": 166,
+            "root_radius_km": 4.0,
+            "tip_radius_km": 14.0
+          },
+          "sweep": {
+            "start_frame": 134,
+            "end_frame": 192
+          }
+        }
+      ],
+      "materials": {
+        "earth_surface": {
+          "day_texture": "land_ocean_ice_cloud_8192.tif",
+          "day_texture_interpolation": "Cubic"
+        },
+        "atmosphere_limb": {
+          "type": "atmosphere_shell",
+          "profile": "limb_airmass",
+          "rim_color_ref": "atmosphere_cyan",
+          "strength": 0.045,
+          "night_hint": 0.03,
+          "scale_height_km": 55.0,
+          "note": "Single shell at 6.85 BU, 479 km of headroom above the surface. The glow is driven by the perigee altitude of each view ray and decays with a 55 km scale height, so it is already about two parts in ten thousand at the shell boundary and the shell has no visible edge. grazing_exponent confines on-disc haze to near-grazing sightlines."
+        },
+        "aoi_beam": {
+          "type": "aoi_beam",
+          "emission_color_ref": "beam_ice",
+          "emission_strength": 3.2,
+          "root_alpha": 0.02,
+          "tip_alpha": 0.2
+        }
+      }
+    },
+    "hero_production_kizildere": {
+      "extends": "hero_predata_animatic",
+      "description": "WEB-005 production hero. Consumes the accepted WEB-HERO-001D continuous animatic unchanged for frames 1-240 -- same world, same camera states, same AOI system, same beats -- and swaps the design fixture for the real accepted Kizildere regional frame. Frames 241-276 add no new motion: they continue the accepted final easing to a complete standstill so the shot ends on a still frame that doubles as the poster and as the surface the page composites the accepted result handoff onto. No scientific layer is baked into any frame.",
+      "role": "hero_production",
+      "frame": 276,
+      "animation": {
+        "frame_start": 1,
+        "frame_end": 276,
+        "frame_rate": 24,
+        "representative_frames": {
+          "establish": 24,
+          "satellite_entrance": 78,
+          "acquisition_lock": 140,
+          "scan_sweep": 170,
+          "mid_approach": 200,
+          "regional_hold": 236,
+          "result_handoff": 276
+        },
+        "beats": {
+          "earth_establish": [
+            1,
+            96
+          ],
+          "satellite_entrance": [
+            40,
+            104
+          ],
+          "aoi_acquisition": [
+            90,
+            138
+          ],
+          "scan_sweep": [
+            134,
+            192
+          ],
+          "camera_approach": [
+            96,
+            214
+          ],
+          "satellite_release": [
+            146,
+            166
+          ],
+          "regional_hold": [
+            200,
+            276
+          ]
+        },
+        "continuity_note": "Still one scene, one world, one camera, no cut. Frames 1-240 are the accepted Phase-D beat map verbatim; the regional hold is extended to frame 276 so the move comes to rest instead of being cut off mid-settle."
+      },
+      "camera": {
+        "keyframes": [
+          {
+            "frame": 1,
+            "location": [
+              2.0,
+              -46.0,
+              9.0
+            ],
+            "look_at": [
+              -7.0,
+              0.0,
+              1.0
+            ],
+            "focal_length_mm": 28.0
+          },
+          {
+            "frame": 52,
+            "location": [
+              2.5,
+              -30.0,
+              7.0
+            ],
+            "look_at": [
+              -4.5,
+              0.0,
+              0.8
+            ],
+            "focal_length_mm": 35.0
+          },
+          {
+            "frame": 96,
+            "location": [
+              3.2,
+              -21.5,
+              6.0
+            ],
+            "look_at": [
+              -4.0,
+              0.0,
+              0.7
+            ],
+            "focal_length_mm": 33.0
+          },
+          {
+            "frame": 136,
+            "location": [
+              3.1179,
+              -15.31,
+              2.9482
+            ],
+            "look_at": [
+              0.6782,
+              -4.976,
+              3.9207
+            ],
+            "focal_length_mm": 38.0
+          },
+          {
+            "frame": 164,
+            "location": [
+              2.332,
+              -10.8928,
+              3.2356
+            ],
+            "look_at": [
+              0.7497,
+              -4.9658,
+              3.9207
+            ],
+            "focal_length_mm": 40.0
+          },
+          {
+            "frame": 192,
+            "location": [
+              1.8812,
+              -8.4644,
+              3.3623
+            ],
+            "look_at": [
+              0.821,
+              -4.9545,
+              3.9207
+            ],
+            "focal_length_mm": 41.0
+          },
+          {
+            "frame": 214,
+            "location": [
+              1.7336,
+              -7.4285,
+              3.2714
+            ],
+            "look_at": [
+              0.8769,
+              -4.9449,
+              3.9207
+            ],
+            "focal_length_mm": 43.0
+          },
+          {
+            "frame": 240,
+            "location": [
+              1.6274,
+              -6.6334,
+              3.2176
+            ],
+            "look_at": [
+              0.9428,
+              -4.9327,
+              3.9207
+            ],
+            "focal_length_mm": 44.0
+          },
+          {
+            "frame": 276,
+            "location": [
+              1.6956,
+              -6.5059,
+              3.2557
+            ],
+            "look_at": [
+              1.0119,
+              -4.919,
+              3.9207
+            ],
+            "focal_length_mm": 44.0
+          }
+        ],
+        "shot_intent": [
+          {
+            "frame": 1,
+            "mode": "world",
+            "location": [
+              2.0,
+              -46.0,
+              9.0
+            ],
+            "look_at": [
+              -7.0,
+              0.0,
+              1.0
+            ],
+            "focal_length_mm": 28.0
+          },
+          {
+            "frame": 52,
+            "mode": "world",
+            "location": [
+              2.5,
+              -30.0,
+              7.0
+            ],
+            "look_at": [
+              -4.5,
+              0.0,
+              0.8
+            ],
+            "focal_length_mm": 35.0
+          },
+          {
+            "frame": 96,
+            "mode": "world",
+            "location": [
+              3.2,
+              -21.5,
+              6.0
+            ],
+            "look_at": [
+              -4.0,
+              0.0,
+              0.7
+            ],
+            "focal_length_mm": 33.0
+          },
+          {
+            "frame": 136,
+            "mode": "aoi_relative",
+            "radius_bu": 15.9,
+            "offset_deg": 27.5,
+            "bearing_deg": 172.0,
+            "focal_length_mm": 38.0
+          },
+          {
+            "frame": 164,
+            "mode": "aoi_relative",
+            "radius_bu": 11.6,
+            "offset_deg": 22.0,
+            "bearing_deg": 171.0,
+            "focal_length_mm": 40.0
+          },
+          {
+            "frame": 192,
+            "mode": "aoi_relative",
+            "radius_bu": 9.3,
+            "offset_deg": 17.0,
+            "bearing_deg": 170.0,
+            "focal_length_mm": 41.0
+          },
+          {
+            "frame": 214,
+            "mode": "aoi_relative",
+            "radius_bu": 8.3,
+            "offset_deg": 15.0,
+            "bearing_deg": 169.0,
+            "focal_length_mm": 43.0
+          },
+          {
+            "frame": 240,
+            "mode": "aoi_relative",
+            "radius_bu": 7.55,
+            "offset_deg": 13.0,
+            "bearing_deg": 168.0,
+            "focal_length_mm": 44.0
+          },
+          {
+            "frame": 276,
+            "mode": "aoi_relative",
+            "radius_bu": 7.47,
+            "offset_deg": 12.4,
+            "bearing_deg": 167.4,
+            "focal_length_mm": 44.0,
+            "note": "Continuation of the accepted frame-240 state to rest; no new motion direction."
+          }
+        ],
+        "composition": {
+          "headline_safe_region": {
+            "x0": 0.05,
+            "y0": 0.16,
+            "x1": 0.38,
+            "y1": 0.78,
+            "samples": 28
+          },
+          "headline_safe_through_frame": 96,
+          "note": "Website copy is never baked into the render, so what the opening owes the later integration task is empty sky. This rectangle is a left-aligned headline and CTA column, 33 percent of the frame width by 62 percent of its height; shot_plan.py casts a ray through a 28x28 grid of it at every establish keyframe and reports the frame as failed if any ray hits the Earth. It was measured, not guessed: the region was widened until the planet first intruded, then stepped back to the last width that stays completely clear through frame 96."
+        },
+        "track": {
+          "target_id": "aoi_target_center",
+          "influence_keyframes": [
+            {
+              "frame": 96,
+              "value": 0.0
+            },
+            {
+              "frame": 136,
+              "value": 1.0
+            },
+            {
+              "frame": 276,
+              "value": 1.0
+            }
+          ],
+          "note": "Unchanged accepted precision lock, held through the extended rest."
+        }
+      },
+      "objects": [
+        {
+          "id": "aoi",
+          "fixture": "kizildere_regional"
+        },
+        {
+          "id": "earth",
+          "rotation_keyframes": [
+            {
+              "frame": 1,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "frame": 96,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                2.794
+              ]
+            },
+            {
+              "frame": 240,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                7.03
+              ]
+            },
+            {
+              "frame": 276,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                7.834
+              ]
+            }
+          ]
+        },
+        {
+          "id": "satellite",
+          "location_keyframes": [
+            {
+              "frame": 1,
+              "location": [
+                -9.5,
+                -6.0,
+                3.5
+              ]
+            },
+            {
+              "frame": 52,
+              "location": [
+                -4.5,
+                -15.0,
+                5.0
+              ]
+            },
+            {
+              "frame": 96,
+              "location": [
+                -3.2,
+                -9.5,
+                4.2
+              ]
+            },
+            {
+              "frame": 136,
+              "location": [
+                -0.7477,
+                -8.124,
+                4.0668
+              ]
+            },
+            {
+              "frame": 176,
+              "location": [
+                -0.1043,
+                -7.779,
+                4.0997
+              ]
+            },
+            {
+              "frame": 210,
+              "location": [
+                0.4356,
+                -7.4288,
+                4.1326
+              ]
+            },
+            {
+              "frame": 240,
+              "location": [
+                0.912,
+                -7.1198,
+                4.1616
+              ]
+            },
+            {
+              "frame": 276,
+              "location": [
+                1.4835,
+                -6.749,
+                4.1964
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "data_state_note": "WEB-005 is the authorized integration gate. The four accepted WEB-HERO-001 scenes stay pre-data and unedited; the production scene binds accepted GEO-WEB-002 geometry and declares -- but does not bake -- the accepted result layer, which is composited in the page over the render so its governed pixels are never re-encoded."
+}

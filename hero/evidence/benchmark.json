@@ -1,0 +1,166 @@
+{
+  "generated_utc": "2026-09-15T21:42:27+00:00",
+  "phase": "WEB-HERO-001B",
+  "scene": "benchmark_neutral",
+  "purpose": "Production planning benchmark for the hero pipeline on this machine. Not a quality target; supersede it whenever the scene or hardware changes.",
+  "environment": {
+    "blender": {
+      "version": "4.5.10 LTS",
+      "build_hash": "6dc0b208d1b5",
+      "build_date": "2026-05-19",
+      "binary_path": "C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe"
+    },
+    "python": {
+      "version": "3.11.11",
+      "full_version": "3.11.11 (main, May 31 2025, 09:35:27) [MSC v.1929 64 bit (AMD64)]"
+    },
+    "host": {
+      "platform": "Windows-10-10.0.26200-SP0",
+      "machine": "AMD64",
+      "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel"
+    },
+    "engines_resolved": {
+      "EEVEE": "BLENDER_EEVEE_NEXT",
+      "CYCLES": "CYCLES"
+    },
+    "cycles_device_inventory": {
+      "cycles_addon": true,
+      "settable_backends": [
+        "OPTIX",
+        "CUDA",
+        "HIP",
+        "ONEAPI"
+      ],
+      "backends_with_devices": [
+        "OPTIX",
+        "CUDA"
+      ],
+      "devices": [
+        {
+          "name": "Intel Core i9-14900HX",
+          "type": "CPU"
+        },
+        {
+          "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "type": "CUDA"
+        },
+        {
+          "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+          "type": "OPTIX"
+        }
+      ]
+    },
+    "cycles_device_selection": {
+      "requested_gpu": true,
+      "backend": "OPTIX",
+      "scene_device": "GPU",
+      "gpu_active": true,
+      "enabled_devices": [
+        "NVIDIA GeForce RTX 4070 Laptop GPU"
+      ],
+      "fallback_reason": null
+    }
+  },
+  "runs": [
+    {
+      "profile": "preview",
+      "role": "fast_iteration",
+      "logical_engine": "EEVEE",
+      "engine": "BLENDER_EEVEE_NEXT",
+      "resolution": [
+        1280,
+        720
+      ],
+      "resolution_percentage": 100,
+      "samples": 32,
+      "denoise": false,
+      "denoiser": null,
+      "device": {
+        "requested_gpu": true,
+        "backend": "EEVEE_GPU_CONTEXT",
+        "scene_device": "GPU",
+        "gpu_active": true,
+        "enabled_devices": [
+          "blender gpu context"
+        ],
+        "fallback_reason": null,
+        "note": "EEVEE always rasterizes through Blender's own GPU context; it does not use the Cycles device preference."
+      },
+      "scene": "benchmark_neutral",
+      "frame": 1,
+      "wall_clock_seconds": 1.636,
+      "output_path": "hero/renders/benchmark/benchmark_neutral_preview.png",
+      "output_exists": true,
+      "output_bytes": 895993,
+      "sha256": "f2286684156278d489d28e13cf8533fdd92297f1d5281275df2ac0fbcd0ce9e6",
+      "blender_version": "4.5.10 LTS",
+      "python_version": "3.11.11"
+    },
+    {
+      "profile": "master",
+      "role": "high_quality",
+      "logical_engine": "CYCLES",
+      "engine": "CYCLES",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "resolution_percentage": 100,
+      "samples": 256,
+      "denoise": true,
+      "denoiser": "OPTIX",
+      "device": {
+        "requested_gpu": true,
+        "backend": "OPTIX",
+        "scene_device": "GPU",
+        "gpu_active": true,
+        "enabled_devices": [
+          "NVIDIA GeForce RTX 4070 Laptop GPU"
+        ],
+        "fallback_reason": null
+      },
+      "scene": "benchmark_neutral",
+      "frame": 1,
+      "wall_clock_seconds": 5.155,
+      "output_path": "hero/renders/benchmark/benchmark_neutral_master.png",
+      "output_exists": true,
+      "output_bytes": 6132842,
+      "sha256": "e9866f0c829cf58706ff3fe97ef5977cb3acbd055645c2668636579771c7a0d9",
+      "blender_version": "4.5.10 LTS",
+      "python_version": "3.11.11"
+    },
+    {
+      "profile": "evidence_still",
+      "role": "bounded_evidence",
+      "logical_engine": "CYCLES",
+      "engine": "CYCLES",
+      "resolution": [
+        1280,
+        720
+      ],
+      "resolution_percentage": 100,
+      "samples": 256,
+      "denoise": true,
+      "denoiser": "OPTIX",
+      "device": {
+        "requested_gpu": true,
+        "backend": "OPTIX",
+        "scene_device": "GPU",
+        "gpu_active": true,
+        "enabled_devices": [
+          "NVIDIA GeForce RTX 4070 Laptop GPU"
+        ],
+        "fallback_reason": null
+      },
+      "scene": "benchmark_neutral",
+      "frame": 1,
+      "wall_clock_seconds": 2.1,
+      "output_path": "hero/evidence/benchmark_neutral_evidence_still.png",
+      "output_exists": true,
+      "output_bytes": 864434,
+      "sha256": "00a08435782009a03d6a71b80338f7bc288a8922fb9dcfd2c77dce644e34a2d0",
+      "blender_version": "4.5.10 LTS",
+      "python_version": "3.11.11"
+    }
+  ]
+}

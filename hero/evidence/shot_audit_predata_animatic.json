@@ -1,0 +1,948 @@
+{
+  "scene": "hero_predata_animatic",
+  "fixture": "design_primary",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "frame_range": [
+    1,
+    240
+  ],
+  "frames_audited": 240,
+  "handover_frame": 136,
+  "summary": {
+    "camera_radius_bu": [
+      46.91482,
+      7.54997
+    ],
+    "camera_altitude_km": [
+      40543.82,
+      1178.97
+    ],
+    "focal_length_mm": [
+      28.0,
+      44.0
+    ],
+    "aoi_slant_range_km": [
+      41337.81,
+      1963.45
+    ],
+    "aoi_screen_extent": [
+      0.054443,
+      0.288317
+    ],
+    "mean_camera_speed_bu_per_frame": 0.169963,
+    "satellite_in_frame_from": 1,
+    "satellite_in_frame_until": 162,
+    "headline_safe_worst_occupancy": 0.0
+  },
+  "thresholds": {
+    "aoi_centre_tolerance": 0.02,
+    "aoi_scale_reversal_tolerance": 0.0015,
+    "aoi_orientation_step_deg": 2.0,
+    "camera_jerk_ratio": 0.35,
+    "lens_rate_mm_per_frame": 0.6,
+    "camera_cut_ratio": 4.0
+  },
+  "checks": [
+    {
+      "check": "aoi stays locked to frame centre after handover",
+      "passed": true,
+      "measured": 0.0,
+      "threshold": 0.02,
+      "unit": "fraction of frame"
+    },
+    {
+      "check": "aoi apparent size never reverses",
+      "passed": true,
+      "measured": -0.000276,
+      "threshold": 0.0015,
+      "unit": "fraction of frame per frame"
+    },
+    {
+      "check": "aoi screen orientation changes continuously",
+      "passed": true,
+      "measured": 0.2154,
+      "threshold": 2.0,
+      "unit": "degrees per frame"
+    },
+    {
+      "check": "camera speed changes without a jerk",
+      "passed": true,
+      "measured": 0.1369,
+      "threshold": 0.35,
+      "unit": "max speed step / mean speed"
+    },
+    {
+      "check": "focal length ramps without a snap",
+      "passed": true,
+      "measured": 0.2058,
+      "threshold": 0.6,
+      "unit": "mm per frame"
+    },
+    {
+      "check": "no hidden cut in the camera path",
+      "passed": true,
+      "measured": 2.48446,
+      "threshold": 4.0,
+      "unit": "max step / mean step"
+    },
+    {
+      "check": "aoi stays in frame from handover to the end",
+      "passed": true,
+      "measured": 0,
+      "threshold": 0,
+      "unit": "frames out of frame"
+    },
+    {
+      "check": "headline-safe region stays clear of the Earth through the establish",
+      "passed": true,
+      "measured": 0.0,
+      "threshold": 0.0,
+      "unit": "occupancy fraction"
+    }
+  ],
+  "passed": true,
+  "frames": [
+    {
+      "frame": 1,
+      "camera_location": [
+        2.0,
+        -46.0,
+        9.0
+      ],
+      "camera_radius_bu": 46.91482,
+      "camera_altitude_km": 40543.82,
+      "focal_length_mm": 28.0,
+      "earth_rotation_z_deg": 0.0,
+      "aoi_slant_range_km": 41337.81,
+      "aoi_screen_x": 0.61911,
+      "aoi_screen_y": 0.56153,
+      "aoi_screen_extent": 0.012428,
+      "aoi_screen_orientation_deg": -1.4893,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.43291,
+      "satellite_screen_y": 0.55142,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.011862
+    },
+    {
+      "frame": 8,
+      "camera_location": [
+        2.00941,
+        -45.45804,
+        8.91989
+      ],
+      "camera_radius_bu": 46.36848,
+      "camera_altitude_km": 39997.48,
+      "focal_length_mm": 28.3594,
+      "earth_rotation_z_deg": 0.02219,
+      "aoi_slant_range_km": 40791.0,
+      "aoi_screen_x": 0.62015,
+      "aoi_screen_y": 0.56379,
+      "aoi_screen_extent": 0.012753,
+      "aoi_screen_orientation_deg": -1.4814,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.43008,
+      "satellite_screen_y": 0.55383,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.160481
+    },
+    {
+      "frame": 16,
+      "camera_location": [
+        2.04321,
+        -43.71224,
+        8.66758
+      ],
+      "camera_radius_bu": 44.61011,
+      "camera_altitude_km": 38239.11,
+      "focal_length_mm": 29.4604,
+      "earth_rotation_z_deg": 0.09898,
+      "aoi_slant_range_km": 39030.61,
+      "aoi_screen_x": 0.62342,
+      "aoi_screen_y": 0.57125,
+      "aoi_screen_extent": 0.013836,
+      "aoi_screen_orientation_deg": -1.4611,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.4206,
+      "satellite_screen_y": 0.56194,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.289573
+    },
+    {
+      "frame": 24,
+      "camera_location": [
+        2.10161,
+        -41.09337,
+        8.30174
+      ],
+      "camera_radius_bu": 41.97619,
+      "camera_altitude_km": 35605.19,
+      "focal_length_mm": 30.9869,
+      "earth_rotation_z_deg": 0.22582,
+      "aoi_slant_range_km": 36392.37,
+      "aoi_screen_x": 0.62806,
+      "aoi_screen_y": 0.58299,
+      "aoi_screen_extent": 0.015597,
+      "aoi_screen_orientation_deg": -1.4441,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.40451,
+      "satellite_screen_y": 0.57524,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.375228
+    },
+    {
+      "frame": 32,
+      "camera_location": [
+        2.18463,
+        -37.94416,
+        7.88281
+      ],
+      "camera_radius_bu": 38.81585,
+      "camera_altitude_km": 32444.85,
+      "focal_length_mm": 32.6148,
+      "earth_rotation_z_deg": 0.3977,
+      "aoi_slant_range_km": 33224.33,
+      "aoi_screen_x": 0.63315,
+      "aoi_screen_y": 0.59772,
+      "aoi_screen_extent": 0.017979,
+      "aoi_screen_orientation_deg": -1.4455,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.38082,
+      "satellite_screen_y": 0.59288,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.417446
+    },
+    {
+      "frame": 40,
+      "camera_location": [
+        2.29229,
+        -34.60732,
+        7.47126
+      ],
+      "camera_radius_bu": 35.47874,
+      "camera_altitude_km": 29107.74,
+      "focal_length_mm": 34.0197,
+      "earth_rotation_z_deg": 0.60963,
+      "aoi_slant_range_km": 29874.66,
+      "aoi_screen_x": 0.63788,
+      "aoi_screen_y": 0.61328,
+      "aoi_screen_extent": 0.020875,
+      "aoi_screen_orientation_deg": -1.4829,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.3487,
+      "satellite_screen_y": 0.61249,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.416266
+    },
+    {
+      "frame": 48,
+      "camera_location": [
+        2.4246,
+        -31.4256,
+        7.12753
+      ],
+      "camera_radius_bu": 32.31483,
+      "camera_altitude_km": 25943.83,
+      "focal_length_mm": 34.8776,
+      "earth_rotation_z_deg": 0.8566,
+      "aoi_slant_range_km": 26691.68,
+      "aoi_screen_x": 0.64166,
+      "aoi_screen_y": 0.62621,
+      "aoi_screen_extent": 0.02402,
+      "aoi_screen_orientation_deg": -1.5807,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.31174,
+      "satellite_screen_y": 0.6281,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.37187
+    },
+    {
+      "frame": 56,
+      "camera_location": [
+        2.58117,
+        -28.73172,
+        6.90918
+      ],
+      "camera_radius_bu": 29.6633,
+      "camera_altitude_km": 23292.3,
+      "focal_length_mm": 34.9534,
+      "earth_rotation_z_deg": 1.1336,
+      "aoi_slant_range_km": 24013.27,
+      "aoi_screen_x": 0.64485,
+      "aoi_screen_y": 0.63224,
+      "aoi_screen_extent": 0.026912,
+      "aoi_screen_orientation_deg": -1.7751,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.2858,
+      "satellite_screen_y": 0.63015,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.2942
+    },
+    {
+      "frame": 64,
+      "camera_location": [
+        2.75234,
+        -26.62888,
+        6.80679
+      ],
+      "camera_radius_bu": 27.62254,
+      "camera_altitude_km": 21251.54,
+      "focal_length_mm": 34.6349,
+      "earth_rotation_z_deg": 1.43564,
+      "aoi_slant_range_km": 21940.73,
+      "aoi_screen_x": 0.64939,
+      "aoi_screen_y": 0.63198,
+      "aoi_screen_extent": 0.029436,
+      "aoi_screen_orientation_deg": -2.0729,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.27764,
+      "satellite_screen_y": 0.62022,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.228558
+    },
+    {
+      "frame": 72,
+      "camera_location": [
+        2.91916,
+        -24.99066,
+        6.74397
+      ],
+      "camera_radius_bu": 26.04872,
+      "camera_altitude_km": 19677.72,
+      "focal_length_mm": 34.136,
+      "earth_rotation_z_deg": 1.7577,
+      "aoi_slant_range_km": 20337.4,
+      "aoi_screen_x": 0.65407,
+      "aoi_screen_y": 0.62968,
+      "aoi_screen_extent": 0.031584,
+      "aoi_screen_orientation_deg": -2.4067,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.28725,
+      "satellite_screen_y": 0.60903,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.180195
+    },
+    {
+      "frame": 80,
+      "camera_location": [
+        3.06228,
+        -23.68069,
+        6.64143
+      ],
+      "camera_radius_bu": 24.7843,
+      "camera_altitude_km": 18413.3,
+      "focal_length_mm": 33.6011,
+      "earth_rotation_z_deg": 2.09478,
+      "aoi_slant_range_km": 19053.81,
+      "aoi_screen_x": 0.65735,
+      "aoi_screen_y": 0.63085,
+      "aoi_screen_extent": 0.033397,
+      "aoi_screen_orientation_deg": -2.664,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.30835,
+      "satellite_screen_y": 0.60712,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.149524
+    },
+    {
+      "frame": 88,
+      "camera_location": [
+        3.16235,
+        -22.5626,
+        6.41987
+      ],
+      "camera_radius_bu": 23.67036,
+      "camera_altitude_km": 17299.36,
+      "focal_length_mm": 33.1743,
+      "earth_rotation_z_deg": 2.44188,
+      "aoi_slant_range_km": 17939.51,
+      "aoi_screen_x": 0.6578,
+      "aoi_screen_y": 0.64188,
+      "aoi_screen_extent": 0.035028,
+      "aoi_screen_orientation_deg": -2.6984,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.33106,
+      "satellite_screen_y": 0.62115,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.139204
+    },
+    {
+      "frame": 96,
+      "camera_location": [
+        3.2,
+        -21.5,
+        6.0
+      ],
+      "camera_radius_bu": 22.54972,
+      "camera_altitude_km": 16178.72,
+      "focal_length_mm": 33.0,
+      "earth_rotation_z_deg": 2.794,
+      "aoi_slant_range_km": 16847.58,
+      "aoi_screen_x": 0.6538,
+      "aoi_screen_y": 0.67057,
+      "aoi_screen_extent": 0.036732,
+      "aoi_screen_orientation_deg": -2.3552,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.34632,
+      "satellite_screen_y": 0.65727,
+      "satellite_in_frame": true,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      },
+      "camera_speed_bu_per_frame": 0.152861
+    },
+    {
+      "frame": 104,
+      "camera_location": [
+        3.19979,
+        -20.38092,
+        5.3341
+      ],
+      "camera_radius_bu": 21.309,
+      "camera_altitude_km": 14938.0,
+      "focal_length_mm": 33.3517,
+      "earth_rotation_z_deg": 3.1466,
+      "aoi_slant_range_km": 15676.83,
+      "aoi_screen_x": 0.62387,
+      "aoi_screen_y": 0.65967,
+      "aoi_screen_extent": 0.038457,
+      "aoi_screen_orientation_deg": -1.4811,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.32994,
+      "satellite_screen_y": 0.65606,
+      "satellite_in_frame": true,
+      "camera_speed_bu_per_frame": 0.173899
+    },
+    {
+      "frame": 112,
+      "camera_location": [
+        3.19832,
+        -19.19105,
+        4.53501
+      ],
+      "camera_radius_bu": 19.97729,
+      "camera_altitude_km": 13606.29,
+      "focal_length_mm": 34.2552,
+      "earth_rotation_z_deg": 3.49702,
+      "aoi_slant_range_km": 14452.08,
+      "aoi_screen_x": 0.57118,
+      "aoi_screen_y": 0.59026,
+      "aoi_screen_extent": 0.040496,
+      "aoi_screen_orientation_deg": -0.4922,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.28603,
+      "satellite_screen_y": 0.59971,
+      "satellite_in_frame": true,
+      "camera_speed_bu_per_frame": 0.183621
+    },
+    {
+      "frame": 120,
+      "camera_location": [
+        3.19432,
+        -17.94046,
+        3.76424
+      ],
+      "camera_radius_bu": 18.60735,
+      "camera_altitude_km": 12236.35,
+      "focal_length_mm": 35.4828,
+      "earth_rotation_z_deg": 3.8431,
+      "aoi_slant_range_km": 13208.31,
+      "aoi_screen_x": 0.5261,
+      "aoi_screen_y": 0.52844,
+      "aoi_screen_extent": 0.043558,
+      "aoi_screen_orientation_deg": 0.1567,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.2457,
+      "satellite_screen_y": 0.55935,
+      "satellite_in_frame": true,
+      "camera_speed_bu_per_frame": 0.181871
+    },
+    {
+      "frame": 128,
+      "camera_location": [
+        3.18653,
+        -16.63925,
+        3.18333
+      ],
+      "camera_radius_bu": 17.23811,
+      "camera_altitude_km": 10867.11,
+      "focal_length_mm": 36.8069,
+      "earth_rotation_z_deg": 4.18265,
+      "aoi_slant_range_km": 11951.57,
+      "aoi_screen_x": 0.50381,
+      "aoi_screen_y": 0.50287,
+      "aoi_screen_extent": 0.048068,
+      "aoi_screen_orientation_deg": 0.5263,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.22447,
+      "satellite_screen_y": 0.56432,
+      "satellite_in_frame": true,
+      "camera_speed_bu_per_frame": 0.173451
+    },
+    {
+      "frame": 136,
+      "camera_location": [
+        3.1737,
+        -15.2975,
+        2.9538
+      ],
+      "camera_radius_bu": 15.90003,
+      "camera_altitude_km": 9529.03,
+      "focal_length_mm": 38.0,
+      "earth_rotation_z_deg": 4.51349,
+      "aoi_slant_range_km": 10658.33,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.054443,
+      "aoi_screen_orientation_deg": 0.8799,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.21124,
+      "satellite_screen_y": 0.59256,
+      "satellite_in_frame": true,
+      "camera_speed_bu_per_frame": 0.170092
+    },
+    {
+      "frame": 144,
+      "camera_location": [
+        3.05774,
+        -13.93591,
+        2.99246
+      ],
+      "camera_radius_bu": 14.57787,
+      "camera_altitude_km": 8206.87,
+      "focal_length_mm": 38.8844,
+      "earth_rotation_z_deg": 4.83344,
+      "aoi_slant_range_km": 9308.18,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.063436,
+      "aoi_screen_orientation_deg": 1.1233,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.18106,
+      "satellite_screen_y": 0.62119,
+      "satellite_in_frame": true,
+      "camera_speed_bu_per_frame": 0.170921
+    },
+    {
+      "frame": 152,
+      "camera_location": [
+        2.80415,
+        -12.61769,
+        3.08391
+      ],
+      "camera_radius_bu": 13.28833,
+      "camera_altitude_km": 6917.33,
+      "focal_length_mm": 39.4823,
+      "earth_rotation_z_deg": 5.14032,
+      "aoi_slant_range_km": 7963.54,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.074975,
+      "aoi_screen_orientation_deg": 1.2164,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.12453,
+      "satellite_screen_y": 0.65949,
+      "satellite_in_frame": true,
+      "camera_speed_bu_per_frame": 0.162808
+    },
+    {
+      "frame": 160,
+      "camera_location": [
+        2.507,
+        -11.41663,
+        3.19137
+      ],
+      "camera_radius_bu": 12.11649,
+      "camera_altitude_km": 5745.49,
+      "focal_length_mm": 39.8659,
+      "earth_rotation_z_deg": 5.43195,
+      "aoi_slant_range_km": 6719.61,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.089378,
+      "aoi_screen_orientation_deg": 1.1972,
+      "aoi_in_frame": true,
+      "satellite_screen_x": 0.03299,
+      "satellite_screen_y": 0.71311,
+      "satellite_in_frame": true,
+      "camera_speed_bu_per_frame": 0.143277
+    },
+    {
+      "frame": 168,
+      "camera_location": [
+        2.2579,
+        -10.4042,
+        3.27897
+      ],
+      "camera_radius_bu": 11.13989,
+      "camera_altitude_km": 4768.89,
+      "focal_length_mm": 40.1085,
+      "earth_rotation_z_deg": 5.70615,
+      "aoi_slant_range_km": 5671.72,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.106021,
+      "aoi_screen_orientation_deg": 1.1815,
+      "aoi_in_frame": true,
+      "satellite_screen_x": -0.10076,
+      "satellite_screen_y": 0.78968,
+      "satellite_in_frame": false,
+      "camera_speed_bu_per_frame": 0.11446
+    },
+    {
+      "frame": 176,
+      "camera_location": [
+        2.09127,
+        -9.59796,
+        3.33231
+      ],
+      "camera_radius_bu": 10.37298,
+      "camera_altitude_km": 4001.98,
+      "focal_length_mm": 40.3029,
+      "earth_rotation_z_deg": 5.96074,
+      "aoi_slant_range_km": 4847.1,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.12378,
+      "aoi_screen_orientation_deg": 1.2752,
+      "aoi_in_frame": true,
+      "satellite_screen_x": -0.27698,
+      "satellite_screen_y": 0.89873,
+      "satellite_in_frame": false,
+      "camera_speed_bu_per_frame": 0.08962
+    },
+    {
+      "frame": 184,
+      "camera_location": [
+        1.98435,
+        -8.96156,
+        3.35846
+      ],
+      "camera_radius_bu": 9.77377,
+      "camera_altitude_km": 3402.77,
+      "focal_length_mm": 40.5621,
+      "earth_rotation_z_deg": 6.19355,
+      "aoi_slant_range_km": 4204.88,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.142218,
+      "aoi_screen_orientation_deg": 1.4979,
+      "aoi_in_frame": true,
+      "satellite_screen_x": -0.492,
+      "satellite_screen_y": 1.05698,
+      "satellite_in_frame": false,
+      "camera_speed_bu_per_frame": 0.070329
+    },
+    {
+      "frame": 192,
+      "camera_location": [
+        1.9119,
+        -8.4563,
+        3.3654
+      ],
+      "camera_radius_bu": 9.30002,
+      "camera_altitude_km": 2929.02,
+      "focal_length_mm": 41.0,
+      "earth_rotation_z_deg": 6.40239,
+      "aoi_slant_range_km": 3701.21,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.161279,
+      "aoi_screen_orientation_deg": 1.8401,
+      "aoi_in_frame": true,
+      "satellite_screen_x": -0.74622,
+      "satellite_screen_y": 1.29037,
+      "satellite_in_frame": false,
+      "camera_speed_bu_per_frame": 0.056424
+    },
+    {
+      "frame": 200,
+      "camera_location": [
+        1.85233,
+        -8.04318,
+        3.34688
+      ],
+      "camera_radius_bu": 8.90649,
+      "camera_altitude_km": 2535.49,
+      "focal_length_mm": 41.6796,
+      "earth_rotation_z_deg": 6.58507,
+      "aoi_slant_range_km": 3294.86,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.180604,
+      "aoi_screen_orientation_deg": 2.3096,
+      "aoi_in_frame": true,
+      "satellite_screen_x": -1.04166,
+      "satellite_screen_y": 1.66009,
+      "satellite_in_frame": false,
+      "camera_speed_bu_per_frame": 0.047866
+    },
+    {
+      "frame": 208,
+      "camera_location": [
+        1.79874,
+        -7.68202,
+        3.30609
+      ],
+      "camera_radius_bu": 8.55448,
+      "camera_altitude_km": 2183.48,
+      "focal_length_mm": 42.4613,
+      "earth_rotation_z_deg": 6.73943,
+      "aoi_slant_range_km": 2946.86,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.199758,
+      "aoi_screen_orientation_deg": 2.9819,
+      "aoi_in_frame": true,
+      "satellite_screen_x": -1.38616,
+      "satellite_screen_y": 2.26939,
+      "satellite_in_frame": false,
+      "camera_speed_bu_per_frame": 0.044334
+    },
+    {
+      "frame": 216,
+      "camera_location": [
+        1.74789,
+        -7.33265,
+        3.26511
+      ],
+      "camera_radius_bu": 8.21485,
+      "camera_altitude_km": 1843.85,
+      "focal_length_mm": 43.1552,
+      "earth_rotation_z_deg": 6.86329,
+      "aoi_slant_range_km": 2616.21,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.220512,
+      "aoi_screen_orientation_deg": 3.9801,
+      "aoi_in_frame": true,
+      "satellite_screen_x": -1.86517,
+      "satellite_screen_y": 3.33674,
+      "satellite_in_frame": false,
+      "camera_speed_bu_per_frame": 0.044816
+    },
+    {
+      "frame": 224,
+      "camera_location": [
+        1.70056,
+        -6.99229,
+        3.23813
+      ],
+      "camera_radius_bu": 7.8911,
+      "camera_altitude_km": 1520.1,
+      "focal_length_mm": 43.6374,
+      "earth_rotation_z_deg": 6.95445,
+      "aoi_slant_range_km": 2298.32,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.244197,
+      "aoi_screen_orientation_deg": 5.4526,
+      "aoi_in_frame": true,
+      "satellite_screen_x": -2.78895,
+      "satellite_screen_y": 5.48145,
+      "satellite_in_frame": false,
+      "camera_speed_bu_per_frame": 0.039042
+    },
+    {
+      "frame": 232,
+      "camera_location": [
+        1.66526,
+        -6.73075,
+        3.22405
+      ],
+      "camera_radius_bu": 7.64661,
+      "camera_altitude_km": 1275.61,
+      "focal_length_mm": 43.9126,
+      "earth_rotation_z_deg": 7.01075,
+      "aoi_slant_range_km": 2058.16,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.273089,
+      "aoi_screen_orientation_deg": 7.1234,
+      "aoi_in_frame": true,
+      "satellite_screen_x": -4.44643,
+      "satellite_screen_y": 9.41088,
+      "satellite_in_frame": false,
+      "camera_speed_bu_per_frame": 0.023487
+    },
+    {
+      "frame": 240,
+      "camera_location": [
+        1.6514,
+        -6.6262,
+        3.22
+      ],
+      "camera_radius_bu": 7.54997,
+      "camera_altitude_km": 1178.97,
+      "focal_length_mm": 44.0,
+      "earth_rotation_z_deg": 7.03,
+      "aoi_slant_range_km": 1963.45,
+      "aoi_screen_x": 0.5,
+      "aoi_screen_y": 0.5,
+      "aoi_screen_extent": 0.288317,
+      "aoi_screen_orientation_deg": 7.9825,
+      "aoi_in_frame": true,
+      "satellite_screen_x": -5.75698,
+      "satellite_screen_y": 12.54676,
+      "satellite_in_frame": false,
+      "camera_speed_bu_per_frame": null
+    }
+  ],
+  "frames_note": "every eighth frame plus frame 1; all checks above were computed over the full per-frame series, not this sample"
+}

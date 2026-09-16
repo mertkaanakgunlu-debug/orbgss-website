@@ -1,0 +1,50 @@
+{
+  "profile": "preview",
+  "role": "fast_iteration",
+  "logical_engine": "EEVEE",
+  "engine": "BLENDER_EEVEE_NEXT",
+  "resolution": [
+    1280,
+    720
+  ],
+  "resolution_percentage": 100,
+  "samples": 32,
+  "denoise": false,
+  "denoiser": null,
+  "device": {
+    "requested_gpu": true,
+    "backend": "EEVEE_GPU_CONTEXT",
+    "scene_device": "GPU",
+    "gpu_active": true,
+    "enabled_devices": [
+      "blender gpu context"
+    ],
+    "fallback_reason": null,
+    "note": "EEVEE always rasterizes through Blender's own GPU context; it does not use the Cycles device preference."
+  },
+  "scene": "hero_predata_animatic",
+  "aoi_fixture": null,
+  "frame_start": 1,
+  "frame_end": 240,
+  "frame_step": 1,
+  "frames_rendered": 240,
+  "frame_rate": 24,
+  "duration_seconds": 10.0,
+  "video": {
+    "container": "MPEG4",
+    "codec": "H264",
+    "constant_rate_factor": "HIGH",
+    "preset": "GOOD",
+    "gop_size": 12
+  },
+  "wall_clock_seconds": 63.818,
+  "seconds_per_frame": 0.2659,
+  "output_path": "hero/renders/animatic/hero_predata_animatic_preview0001-0240.mp4",
+  "output_exists": true,
+  "output_bytes": 5032871,
+  "sha256": "07b4091887e4a2f1a26b397ed237e86474a6e3fee10b5eeebaf96202a712dba6",
+  "blender_version": "4.5.10 LTS",
+  "python_version": "3.11.11",
+  "artifact_class": "review_animatic",
+  "note": "Review artifact for continuity judgement. Production container, bitrate, poster frame and reduced-motion packaging are deliberately out of scope here and belong to the later hero/WEB-005 media task."
+}

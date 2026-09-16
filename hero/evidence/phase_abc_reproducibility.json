@@ -1,0 +1,148 @@
+{
+  "comparisons": {
+    "noise_floor_benchmark_neutral": {
+      "a": "hero/renders/still/d_bench.png",
+      "b": "hero/renders/still/d_benchb.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 1.0,
+      "mean_channel_delta_8bit": 0.00086,
+      "channels_differing_by_more_than_one_level": 148,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.00535
+    },
+    "accepted_vs_current_benchmark_neutral": {
+      "a": "C:/Temp/claude/C--Projects-website-orbgss/c57ef287-51b8-49d6-a67c-67c180c4c914/scratchpad/accepted_c/out_bench.png",
+      "b": "hero/renders/still/d_bench.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 1.0,
+      "mean_channel_delta_8bit": 0.000847,
+      "channels_differing_by_more_than_one_level": 145,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.00524
+    },
+    "noise_floor_hero_earth_orbit_f1": {
+      "a": "hero/renders/still/d_establish.png",
+      "b": "hero/renders/still/d_establishb.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 5.0,
+      "mean_channel_delta_8bit": 0.002813,
+      "channels_differing_by_more_than_one_level": 1197,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.04329
+    },
+    "accepted_vs_current_hero_earth_orbit_f1": {
+      "a": "C:/Temp/claude/C--Projects-website-orbgss/c57ef287-51b8-49d6-a67c-67c180c4c914/scratchpad/accepted_c/out_establish.png",
+      "b": "hero/renders/still/d_establish.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 5.0,
+      "mean_channel_delta_8bit": 0.002862,
+      "channels_differing_by_more_than_one_level": 1160,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.04196
+    },
+    "noise_floor_hero_earth_orbit_f120_accepted_vs_accepted": {
+      "a": "C:/Temp/claude/C--Projects-website-orbgss/c57ef287-51b8-49d6-a67c-67c180c4c914/scratchpad/accepted_c/out_pre.png",
+      "b": "C:/Temp/claude/C--Projects-website-orbgss/c57ef287-51b8-49d6-a67c-67c180c4c914/scratchpad/accepted_c/out_pre_b.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 9.0,
+      "mean_channel_delta_8bit": 0.011643,
+      "channels_differing_by_more_than_one_level": 2379,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.08605
+    },
+    "noise_floor_hero_earth_orbit_f120_current_vs_current": {
+      "a": "hero/renders/still/d_pre.png",
+      "b": "hero/renders/still/d_pre_c.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 9.0,
+      "mean_channel_delta_8bit": 0.011878,
+      "channels_differing_by_more_than_one_level": 2421,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.08757
+    },
+    "accepted_vs_current_hero_earth_orbit_f120": {
+      "a": "C:/Temp/claude/C--Projects-website-orbgss/c57ef287-51b8-49d6-a67c-67c180c4c914/scratchpad/accepted_c/out_pre.png",
+      "b": "hero/renders/still/d_pre.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 9.0,
+      "mean_channel_delta_8bit": 0.011859,
+      "channels_differing_by_more_than_one_level": 2395,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.08662
+    },
+    "noise_floor_hero_aoi_acquisition_f240": {
+      "a": "hero/renders/still/d_c240.png",
+      "b": "hero/renders/still/d_c240b.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 1.0,
+      "mean_channel_delta_8bit": 0.00453,
+      "channels_differing_by_more_than_one_level": 207,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.00749
+    },
+    "accepted_vs_current_hero_aoi_acquisition_f240": {
+      "a": "C:/Temp/claude/C--Projects-website-orbgss/c57ef287-51b8-49d6-a67c-67c180c4c914/scratchpad/accepted_c/out_c240.png",
+      "b": "hero/renders/still/d_c240.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 1.0,
+      "mean_channel_delta_8bit": 0.004493,
+      "channels_differing_by_more_than_one_level": 196,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.00709
+    },
+    "committed_evidence_vs_current_hero_earth_orbit_f120": {
+      "a": "hero/renders/still/d_pre.png",
+      "b": "hero/evidence/hero_earth_orbit_pre_acquisition_f120.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 4.0,
+      "mean_channel_delta_8bit": 0.005621,
+      "channels_differing_by_more_than_one_level": 1038,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.03754
+    },
+    "committed_evidence_vs_current_hero_aoi_acquisition_f240": {
+      "a": "hero/renders/still/d_c240.png",
+      "b": "hero/evidence/hero_aoi_acquisition_regional_approach_f240.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 1.0,
+      "mean_channel_delta_8bit": 0.004508,
+      "channels_differing_by_more_than_one_level": 200,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.00723
+    }
+  },
+  "note": "WEB-HERO-001D reproducibility check for the accepted WEB-HERO-001A/B/C render paths. Phase D extended build_scene.py with a limb_airmass atmosphere profile, an optional day-texture interpolation override, an optional per-object cast_shadow switch and a camera AOI track lock. Each is entered only when a scene spec asks for it, and only hero_predata_animatic does. This record measures that claim rather than asserting it.\n\nMethod. The Cycles plus OptiX GPU path is not bit-reproducible on this machine, so a checksum cannot answer the question, and a difference against a PNG committed in an earlier session confounds a code change with the renderer own session-to-session variation. The accepted Phase-C tree was therefore extracted whole from 6593a80899720f8c7461aaa99ade0e5e63a3ea42 into a scratch workspace, given the same source textures, and rendered in the same session as the current tree. An accepted_vs_current pair then differs in exactly one thing: the Phase-D builder changes.\n\nNoise floor. A single repeat render underestimates the floor. hero_earth_orbit frame 120 first measured 3.0 / 0.012 percent from one repeat pair, which made the accepted_vs_current result look like a regression at 9.0 / 0.087 percent. Rendering that frame three times per tree and cross-comparing every pairing showed the real floor is 9.0 / 0.086 percent, including accepted_vs_accepted at 9.0 / 0.086 percent -- the accepted tree disagreeing with itself by exactly the amount it disagrees with the current tree. The low reading was the outlier, not the high one. The accepted_vs_accepted control is retained below because it is what makes the result conclusive: no comparison involving the Phase-D tree differs from the accepted tree by more than the accepted tree differs from itself.\n\nResult. Every accepted phase rebuilds unchanged. The three accepted scene definitions are also byte-identical in scene.json between that commit and this one; the only scene.json changes are the added hero_predata_animatic entry and the phase field. The committed_evidence_vs_current pairs are retained for continuity with the WEB-HERO-001C record."
+}

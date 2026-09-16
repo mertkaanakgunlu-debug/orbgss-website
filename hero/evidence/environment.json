@@ -1,0 +1,58 @@
+{
+  "blender": {
+    "version": "4.5.10 LTS",
+    "build_hash": "6dc0b208d1b5",
+    "build_date": "2026-05-19",
+    "binary_path": "C:\\Program Files\\Blender Foundation\\Blender 4.5\\blender.exe"
+  },
+  "python": {
+    "version": "3.11.11",
+    "full_version": "3.11.11 (main, May 31 2025, 09:35:27) [MSC v.1929 64 bit (AMD64)]"
+  },
+  "host": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel"
+  },
+  "engines_resolved": {
+    "EEVEE": "BLENDER_EEVEE_NEXT",
+    "CYCLES": "CYCLES"
+  },
+  "cycles_device_inventory": {
+    "cycles_addon": true,
+    "settable_backends": [
+      "OPTIX",
+      "CUDA",
+      "HIP",
+      "ONEAPI"
+    ],
+    "backends_with_devices": [
+      "OPTIX",
+      "CUDA"
+    ],
+    "devices": [
+      {
+        "name": "Intel Core i9-14900HX",
+        "type": "CPU"
+      },
+      {
+        "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+        "type": "CUDA"
+      },
+      {
+        "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+        "type": "OPTIX"
+      }
+    ]
+  },
+  "cycles_device_selection": {
+    "requested_gpu": true,
+    "backend": "OPTIX",
+    "scene_device": "GPU",
+    "gpu_active": true,
+    "enabled_devices": [
+      "NVIDIA GeForce RTX 4070 Laptop GPU"
+    ],
+    "fallback_reason": null
+  }
+}

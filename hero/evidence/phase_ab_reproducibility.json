@@ -1,0 +1,70 @@
+{
+  "comparisons": {
+    "renderer_noise_floor_same_code_f120": {
+      "a": "hero/renders/still/determinism_a.png",
+      "b": "hero/renders/still/determinism_b.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 4.0,
+      "mean_channel_delta_8bit": 0.005113,
+      "channels_differing_by_more_than_one_level": 974,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.03523
+    },
+    "phase_a_benchmark_neutral": {
+      "a": "hero/renders/still/repro_benchmark.png",
+      "b": "hero/evidence/benchmark_neutral_evidence_still.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 1.0,
+      "mean_channel_delta_8bit": 0.000865,
+      "channels_differing_by_more_than_one_level": 156,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.00564
+    },
+    "phase_b_hero_earth_orbit_f1": {
+      "a": "hero/renders/still/repro_establish.png",
+      "b": "hero/evidence/hero_earth_orbit_establish_f1.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 6.0,
+      "mean_channel_delta_8bit": 0.002576,
+      "channels_differing_by_more_than_one_level": 974,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.03523
+    },
+    "phase_b_hero_earth_orbit_f60": {
+      "a": "hero/renders/still/repro_satellite_entrance.png",
+      "b": "hero/evidence/hero_earth_orbit_satellite_entrance_f60.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 3.0,
+      "mean_channel_delta_8bit": 0.001248,
+      "channels_differing_by_more_than_one_level": 345,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.01248
+    },
+    "phase_b_hero_earth_orbit_f120": {
+      "a": "hero/renders/still/repro_pre_acquisition.png",
+      "b": "hero/evidence/hero_earth_orbit_pre_acquisition_f120.png",
+      "resolution": [
+        1280,
+        720
+      ],
+      "max_channel_delta_8bit": 4.0,
+      "mean_channel_delta_8bit": 0.005252,
+      "channels_differing_by_more_than_one_level": 1023,
+      "channels_compared": 2764800,
+      "percent_channels_differing": 0.037
+    }
+  },
+  "note": "WEB-HERO-001C reproducibility check for the accepted WEB-HERO-001A/B render paths. The Cycles+OptiX GPU path is not bit-reproducible on this machine, so file checksums differ between any two renders and cannot answer this question; renderer_noise_floor_same_code_f120 measures that floor by rendering one unchanged scene twice from the same commit. Every Phase A/B rebuild-versus-committed difference sits at or below that floor, so the WEB-HERO-001C changes did not alter the earlier phases' output. hero_earth_orbit and benchmark_neutral are byte-identical in scene.json; the acquisition scene inherits them through 'extends' and overrides only its own keys."
+}

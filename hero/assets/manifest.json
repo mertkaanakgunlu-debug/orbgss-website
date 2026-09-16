@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "phase": "WEB-HERO-001D",
+  "policy": {
+    "allowed_license_bases": [
+      "public-domain",
+      "us-government-public-domain",
+      "cc0",
+      "cc-by",
+      "cc-by-sa",
+      "orbgss-original"
+    ],
+    "required_fields": [
+      "id",
+      "role",
+      "local_path",
+      "source_url",
+      "publisher",
+      "license",
+      "license_url",
+      "rights_status",
+      "sha256",
+      "notes"
+    ],
+    "rights_status_values": [
+      "cleared",
+      "pending",
+      "rejected"
+    ],
+    "publishable_rights_status": [
+      "cleared"
+    ],
+    "forbidden_layer_classes": [
+      "dem",
+      "elevation",
+      "thermal",
+      "alteration",
+      "fault",
+      "structure",
+      "geology",
+      "lithology",
+      "prospectivity",
+      "score",
+      "priority"
+    ],
+    "paid_or_unclear_rights": "human_gate_required",
+    "large_source_policy": "Materialize into hero/assets/source/ (ignored) via a recorded fetch; never commit large provider rasters or render sequences."
+  },
+  "assets": [
+    {
+      "id": "earth_day_composite",
+      "role": "earth_material_albedo",
+      "local_path": "hero/assets/source/land_ocean_ice_cloud_2048.jpg",
+      "source_url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57735/land_ocean_ice_cloud_2048.jpg",
+      "publisher": "NASA Earth Observatory (Visible Earth, Blue Marble Next Generation series)",
+      "license": "us-government-public-domain",
+      "license_url": "https://earthobservatory.nasa.gov/image-use-policy",
+      "rights_status": "cleared",
+      "sha256": "fb67ac030214c1891994c8f976e7f6c9cd5b0f21586aba8567250781a4fe708e",
+      "notes": "Whole-Earth true-color composite (land, ocean, sea ice, clouds baked in), 2048x1024 equirectangular. Used as the day-side albedo/base-color input and cloud registration reference for the Earth material. Not a measured scientific layer; carries no forbidden layer class. Attribution: NASA Earth Observatory."
+    },
+    {
+      "id": "earth_day_composite_8k",
+      "role": "earth_material_albedo",
+      "local_path": "hero/assets/source/land_ocean_ice_cloud_8192.tif",
+      "source_url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57735/land_ocean_ice_cloud_8192.tif",
+      "publisher": "NASA Earth Observatory (Visible Earth, Blue Marble Next Generation series)",
+      "license": "us-government-public-domain",
+      "license_url": "https://earthobservatory.nasa.gov/image-use-policy",
+      "rights_status": "cleared",
+      "sha256": "edd98f81cae53b4a4aceb65aa1dd41eaadf590149a8b41d21c1de51489b586a3",
+      "notes": "The 8192x4096 member of the same NASA Visible Earth image record (57735) as earth_day_composite, fetched from the same host under the same public-domain policy. Same scene, same clouds, same equirectangular 2:1 projection and same geography at four times the linear resolution, so the accepted world-coordinate convention and the AOI's configured longitude offset carry over unchanged; only sampling density differs. Introduced for WEB-HERO-001D because the 2048 px asset magnifies about fourteen times at the regional approach and visibly softens. Not a measured scientific layer; carries no forbidden layer class. Attribution: NASA Earth Observatory."
+    },
+    {
+      "id": "earth_night_composite",
+      "role": "earth_material_emission",
+      "local_path": "hero/assets/source/dnb_land_ocean_ice.2012.3600x1800.jpg",
+      "source_url": "https://eoimages.gsfc.nasa.gov/images/imagerecords/79000/79765/dnb_land_ocean_ice.2012.3600x1800.jpg",
+      "publisher": "NASA Earth Observatory (Suomi NPP VIIRS Day-Night Band, Earth at Night 2012 / Black Marble series)",
+      "license": "us-government-public-domain",
+      "license_url": "https://earthobservatory.nasa.gov/image-use-policy",
+      "rights_status": "cleared",
+      "sha256": "373e5a08c9f378a2ce6320214a613148e4b1e3946b3f39a516c9093b76cb7124",
+      "notes": "Whole-Earth city-lights composite, 3600x1800 equirectangular. Used as the night-side emission input, blended in only on the unlit hemisphere via a scripted terminator factor. Not a measured scientific layer; carries no forbidden layer class. Attribution: NASA Earth Observatory."
+    }
+  ],
+  "notes": "WEB-HERO-001A shipped a fully procedural benchmark scene with no external asset. WEB-HERO-001B introduces the two Earth composites above for the day/night material; both are NASA public-domain whole-Earth imagery (not measured science-layer output), fetched directly from eoimages.gsfc.nasa.gov and checksummed. The satellite, atmosphere, and starfield in WEB-HERO-001B remain fully procedural and introduce no further external asset. WEB-HERO-001C adds the surface-conforming AOI acquisition system (footprint, border, corner locks, scan beams and scan sweep) and introduces no new external asset: all of it is generated procedurally from committed configuration by hero/scripts/aoi_system.py, and none of it encodes, derives or displays a scientific quantity. WEB-HERO-001D introduces no new class of external material: it adds the 8192 px member of the already-cleared NASA Visible Earth Blue Marble record as the Earth albedo for the closest-approach sharpness gate, and keeps the 2048 px asset recorded because the accepted Phase-B and Phase-C scenes still reference it and must stay reproducible. The refined two-shell atmosphere limb, the constraint-locked camera and every AOI element remain fully procedural, generated from committed configuration, and none of them encodes, derives or displays a scientific quantity."
+}

@@ -1,0 +1,697 @@
+{
+  "scene": "hero_predata_animatic",
+  "fixture": "design_primary",
+  "fixture_config": {
+    "center_lat_deg": 38.0,
+    "center_lon_deg": 29.0,
+    "span_km": 420.0,
+    "bearing_deg": 0.0,
+    "surface_offset_m": 250.0,
+    "edge_samples": 48,
+    "fill_grid": 24
+  },
+  "classification": "design_fixture",
+  "earth_radius_km": 6371.0,
+  "surface_radius_bu": 6.37125,
+  "corner_lock_radius_bu": 6.37134,
+  "longitude_offset_deg": 115.0,
+  "corner_geographic": [
+    [
+      39.86326,
+      26.5397
+    ],
+    [
+      39.86326,
+      31.4603
+    ],
+    [
+      36.08805,
+      31.33682
+    ],
+    [
+      36.08805,
+      26.66318
+    ]
+  ],
+  "boundary_sample_count": 192,
+  "boundary_sample_spacing_km": 8.7484,
+  "max_chord_sagitta_km": 0.001502,
+  "tolerances": {
+    "radius_m": 6.371,
+    "beam_endpoint_m": 20.26319,
+    "basis": "absolute floor plus a relative term sized to single-precision transform error at planetary scale; see the module header"
+  },
+  "summary": {
+    "max_radius_deviation_m": 0.72639,
+    "max_beam_tip_error_m": 2.2492,
+    "max_beam_root_error_m": 0.0,
+    "footprint_edge_spread_km": 0.0191
+  },
+  "checks": {
+    "aoi_on_configured_sphere": true,
+    "beam_tips_registered_to_corners": true,
+    "beam_roots_registered_to_satellite": true,
+    "footprint_identity_preserved": true,
+    "sweep_travels_monotonically": true
+  },
+  "passed": true,
+  "frames": [
+    {
+      "frame": 1,
+      "earth_rotation_z_deg": 0.0,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.38872,
+      "max_radius_deviation_object": "aoi_border",
+      "surface_clearance_m": 250.04,
+      "footprint_chord_sagitta_km": 6.9207,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.37125,
+        "ne": 6.3712499,
+        "se": 6.3712501,
+        "sw": 6.3712501
+      },
+      "footprint_edges_km": [
+        419.9324,
+        419.9282,
+        419.93,
+        419.9285
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.2533,
+          "root_to_satellite_m": 0.0,
+          "length_km": 9712.864
+        },
+        "ne": {
+          "tip_to_corner_m": 0.4768,
+          "root_to_satellite_m": 0.0,
+          "length_km": 10131.593
+        },
+        "se": {
+          "tip_to_corner_m": 1.1199,
+          "root_to_satellite_m": 0.0,
+          "length_km": 10110.063
+        },
+        "sw": {
+          "tip_to_corner_m": 0.7898,
+          "root_to_satellite_m": 0.0,
+          "length_km": 9690.404
+        }
+      },
+      "satellite_world": [
+        -9.5,
+        -6.0,
+        3.5
+      ],
+      "sweep_position": -0.13
+    },
+    {
+      "frame": 24,
+      "earth_rotation_z_deg": 0.2258,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.65585,
+      "max_radius_deviation_object": "aoi_border",
+      "surface_clearance_m": 250.193,
+      "footprint_chord_sagitta_km": 6.9209,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.3712503,
+        "ne": 6.37125,
+        "se": 6.3712503,
+        "sw": 6.3712501
+      },
+      "footprint_edges_km": [
+        419.9275,
+        419.9319,
+        419.9293,
+        419.9288
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.9225,
+          "root_to_satellite_m": 0.0,
+          "length_km": 9394.615
+        },
+        "ne": {
+          "tip_to_corner_m": 1.3709,
+          "root_to_satellite_m": 0.0,
+          "length_km": 9768.674
+        },
+        "se": {
+          "tip_to_corner_m": 0.5623,
+          "root_to_satellite_m": 0.0,
+          "length_km": 9663.921
+        },
+        "sw": {
+          "tip_to_corner_m": 1.2771,
+          "root_to_satellite_m": 0.0,
+          "length_km": 9285.645
+        }
+      },
+      "satellite_world": [
+        -7.83249,
+        -9.84035,
+        4.14006
+      ],
+      "sweep_position": -0.13
+    },
+    {
+      "frame": 90,
+      "earth_rotation_z_deg": 2.5296,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.66521,
+      "max_radius_deviation_object": "aoi_fill",
+      "surface_clearance_m": 249.824,
+      "footprint_chord_sagitta_km": 6.9209,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.3712497,
+        "ne": 6.3712497,
+        "se": 6.3712499,
+        "sw": 6.3712499
+      },
+      "footprint_edges_km": [
+        419.9226,
+        419.9307,
+        419.9277,
+        419.9191
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.9992,
+          "root_to_satellite_m": 0.0,
+          "length_km": 6531.46
+        },
+        "ne": {
+          "tip_to_corner_m": 0.1788,
+          "root_to_satellite_m": 0.0,
+          "length_km": 6815.746
+        },
+        "se": {
+          "tip_to_corner_m": 0.4768,
+          "root_to_satellite_m": 0.0,
+          "length_km": 6650.451
+        },
+        "sw": {
+          "tip_to_corner_m": 0.835,
+          "root_to_satellite_m": 0.0,
+          "length_km": 6358.777
+        }
+      },
+      "satellite_world": [
+        -3.376,
+        -10.24077,
+        4.28528
+      ],
+      "sweep_position": -0.13
+    },
+    {
+      "frame": 110,
+      "earth_rotation_z_deg": 3.4097,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.71081,
+      "max_radius_deviation_object": "aoi_border",
+      "surface_clearance_m": 250.283,
+      "footprint_chord_sagitta_km": 6.921,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.3712501,
+        "ne": 6.3712502,
+        "se": 6.3712503,
+        "sw": 6.3712505
+      },
+      "footprint_edges_km": [
+        419.9312,
+        419.9292,
+        419.9269,
+        419.9242
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.0298,
+          "root_to_satellite_m": 0.0,
+          "length_km": 4630.135
+        },
+        "ne": {
+          "tip_to_corner_m": 0.1788,
+          "root_to_satellite_m": 0.0,
+          "length_km": 4938.53
+        },
+        "se": {
+          "tip_to_corner_m": 0.4768,
+          "root_to_satellite_m": 0.0,
+          "length_km": 4785.558
+        },
+        "sw": {
+          "tip_to_corner_m": 0.4851,
+          "root_to_satellite_m": 0.0,
+          "length_km": 4466.613
+        }
+      },
+      "satellite_world": [
+        -2.43641,
+        -8.51467,
+        4.10338
+      ],
+      "sweep_position": -0.13
+    },
+    {
+      "frame": 128,
+      "earth_rotation_z_deg": 4.1826,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.62077,
+      "max_radius_deviation_object": "aoi_fill",
+      "surface_clearance_m": 250.211,
+      "footprint_chord_sagitta_km": 6.9205,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.37125,
+        "ne": 6.3712502,
+        "se": 6.3712502,
+        "sw": 6.3712503
+      },
+      "footprint_edges_km": [
+        419.9292,
+        419.9258,
+        419.9278,
+        419.9285
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.5364,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3694.742
+        },
+        "ne": {
+          "tip_to_corner_m": 0.2384,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3952.065
+        },
+        "se": {
+          "tip_to_corner_m": 0.6743,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3771.616
+        },
+        "sw": {
+          "tip_to_corner_m": 0.3576,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3501.055
+        }
+      },
+      "satellite_world": [
+        -1.19465,
+        -8.15556,
+        4.06787
+      ],
+      "sweep_position": -0.13
+    },
+    {
+      "frame": 140,
+      "earth_rotation_z_deg": 4.675,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.61646,
+      "max_radius_deviation_object": "aoi_border",
+      "surface_clearance_m": 250.111,
+      "footprint_chord_sagitta_km": 6.9211,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.3712501,
+        "ne": 6.3712499,
+        "se": 6.3712502,
+        "sw": 6.3712503
+      },
+      "footprint_edges_km": [
+        419.9299,
+        419.9299,
+        419.9276,
+        419.9268
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.1788,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3427.874
+        },
+        "ne": {
+          "tip_to_corner_m": 0.2384,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3641.249
+        },
+        "se": {
+          "tip_to_corner_m": 0.4805,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3442.846
+        },
+        "sw": {
+          "tip_to_corner_m": 0.9902,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3216.337
+        }
+      },
+      "satellite_world": [
+        -0.58045,
+        -8.10487,
+        4.06735
+      ],
+      "sweep_position": 0.00034
+    },
+    {
+      "frame": 160,
+      "earth_rotation_z_deg": 5.4319,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.72639,
+      "max_radius_deviation_object": "aoi_border",
+      "surface_clearance_m": 249.969,
+      "footprint_chord_sagitta_km": 6.921,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.3712496,
+        "ne": 6.3712497,
+        "se": 6.3712503,
+        "sw": 6.3712503
+      },
+      "footprint_edges_km": [
+        419.9216,
+        419.9204,
+        419.9281,
+        419.9288
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.7749,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3185.804
+        },
+        "ne": {
+          "tip_to_corner_m": 0.7633,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3376.621
+        },
+        "se": {
+          "tip_to_corner_m": 0.3576,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3173.156
+        },
+        "sw": {
+          "tip_to_corner_m": 0.6977,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2969.293
+        }
+      },
+      "satellite_world": [
+        -0.19238,
+        -7.94159,
+        4.08222
+      ],
+      "sweep_position": 0.43483
+    },
+    {
+      "frame": 170,
+      "earth_rotation_z_deg": 5.7717,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.67961,
+      "max_radius_deviation_object": "aoi_fill",
+      "surface_clearance_m": 250.074,
+      "footprint_chord_sagitta_km": 6.921,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.3712501,
+        "ne": 6.3712499,
+        "se": 6.3712502,
+        "sw": 6.3712501
+      },
+      "footprint_edges_km": [
+        419.9197,
+        419.9216,
+        419.9328,
+        419.9302
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 1.0133,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3084.22
+        },
+        "ne": {
+          "tip_to_corner_m": 0.8345,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3277.892
+        },
+        "se": {
+          "tip_to_corner_m": 0.5331,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3077.534
+        },
+        "sw": {
+          "tip_to_corner_m": 0.1192,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2870.375
+        }
+      },
+      "satellite_world": [
+        -0.13881,
+        -7.83946,
+        4.09326
+      ],
+      "sweep_position": 0.65207
+    },
+    {
+      "frame": 192,
+      "earth_rotation_z_deg": 6.4024,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.60477,
+      "max_radius_deviation_object": "aoi_border",
+      "surface_clearance_m": 250.1,
+      "footprint_chord_sagitta_km": 6.921,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.3712499,
+        "ne": 6.3712501,
+        "se": 6.3712502,
+        "sw": 6.3712502
+      },
+      "footprint_edges_km": [
+        419.9177,
+        419.9303,
+        419.9321,
+        419.9215
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.1788,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2846.129
+        },
+        "ne": {
+          "tip_to_corner_m": 0.4768,
+          "root_to_satellite_m": 0.0,
+          "length_km": 3030.832
+        },
+        "se": {
+          "tip_to_corner_m": 0.1192,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2832.295
+        },
+        "sw": {
+          "tip_to_corner_m": 0.9405,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2633.706
+        }
+      },
+      "satellite_world": [
+        0.086,
+        -7.62771,
+        4.11447
+      ],
+      "sweep_position": 1.13
+    },
+    {
+      "frame": 200,
+      "earth_rotation_z_deg": 6.5851,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.72639,
+      "max_radius_deviation_object": "aoi_border",
+      "surface_clearance_m": 250.061,
+      "footprint_chord_sagitta_km": 6.9207,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.3712499,
+        "ne": 6.3712499,
+        "se": 6.3712502,
+        "sw": 6.3712502
+      },
+      "footprint_edges_km": [
+        419.9272,
+        419.9321,
+        419.9312,
+        419.9269
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 1.1921,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2745.332
+        },
+        "ne": {
+          "tip_to_corner_m": 0.0,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2917.716
+        },
+        "se": {
+          "tip_to_corner_m": 0.642,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2717.28
+        },
+        "sw": {
+          "tip_to_corner_m": 1.198,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2531.282
+        }
+      },
+      "satellite_world": [
+        0.22768,
+        -7.54699,
+        4.12183
+      ],
+      "sweep_position": 1.13
+    },
+    {
+      "frame": 220,
+      "earth_rotation_z_deg": 6.9131,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.67026,
+      "max_radius_deviation_object": "aoi_border",
+      "surface_clearance_m": 250.028,
+      "footprint_chord_sagitta_km": 6.9209,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.37125,
+        "ne": 6.37125,
+        "se": 6.3712499,
+        "sw": 6.3712503
+      },
+      "footprint_edges_km": [
+        419.9366,
+        419.9263,
+        419.9213,
+        419.9277
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.0,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2454.5
+        },
+        "ne": {
+          "tip_to_corner_m": 0.596,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2577.101
+        },
+        "se": {
+          "tip_to_corner_m": 0.8596,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2370.533
+        },
+        "sw": {
+          "tip_to_corner_m": 0.0,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2236.637
+        }
+      },
+      "satellite_world": [
+        0.65746,
+        -7.29025,
+        4.1455
+      ],
+      "sweep_position": 1.13
+    },
+    {
+      "frame": 236,
+      "earth_rotation_z_deg": 7.0251,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.69832,
+      "max_radius_deviation_object": "aoi_fill",
+      "surface_clearance_m": 250.083,
+      "footprint_chord_sagitta_km": 6.921,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.37125,
+        "ne": 6.3712501,
+        "se": 6.3712502,
+        "sw": 6.3712501
+      },
+      "footprint_edges_km": [
+        419.9353,
+        419.9339,
+        419.9321,
+        419.9323
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.0,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2300.496
+        },
+        "ne": {
+          "tip_to_corner_m": 1.6214,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2386.636
+        },
+        "se": {
+          "tip_to_corner_m": 0.2666,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2177.824
+        },
+        "sw": {
+          "tip_to_corner_m": 0.983,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2083.066
+        }
+      },
+      "satellite_world": [
+        0.89908,
+        -7.12874,
+        4.16075
+      ],
+      "sweep_position": 1.13
+    },
+    {
+      "frame": 240,
+      "earth_rotation_z_deg": 7.03,
+      "aoi_vertices_measured": 1033,
+      "max_radius_deviation_m": 0.6609,
+      "max_radius_deviation_object": "aoi_fill",
+      "surface_clearance_m": 249.987,
+      "footprint_chord_sagitta_km": 6.9208,
+      "corner_geocentric_radius_bu": {
+        "nw": 6.3712497,
+        "ne": 6.37125,
+        "se": 6.37125,
+        "sw": 6.3712502
+      },
+      "footprint_edges_km": [
+        419.9256,
+        419.9368,
+        419.9332,
+        419.9248
+      ],
+      "beams": {
+        "nw": {
+          "tip_to_corner_m": 0.0,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2292.645
+        },
+        "ne": {
+          "tip_to_corner_m": 2.2492,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2376.635
+        },
+        "se": {
+          "tip_to_corner_m": 0.4915,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2167.746
+        },
+        "sw": {
+          "tip_to_corner_m": 0.7539,
+          "root_to_satellite_m": 0.0,
+          "length_km": 2075.317
+        }
+      },
+      "satellite_world": [
+        0.912,
+        -7.1198,
+        4.1616
+      ],
+      "sweep_position": 1.13
+    }
+  ]
+}

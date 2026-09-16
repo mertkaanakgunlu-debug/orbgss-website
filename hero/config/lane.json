@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "phase": "WEB-005",
+  "lane": "WEB-HERO-001 -> WEB-005",
+  "branch": "feat/web-005-cinematic-hero",
+  "mode": "integration",
+  "integration_task": "WEB-005 / MER-93",
+  "integration_authority": "tasks/WEB-005_CINEMATIC_HERO.md",
+  "consumed_hero_evidence_head": "e95fdcac7cac82e597d40dab4cdc96ce1a6b319e",
+  "consumed_hero_implementation_head": "93e17f6293aeb8bdc882dfd28221ed786b772df1",
+  "baseline_commit": "d2421a772f2e4cfa38c85dd5ee71a419c5160838",
+  "data_state": "accepted_data",
+  "write_surface": {
+    "allowed_prefixes": [
+      "hero/",
+      "assets/hero/"
+    ],
+    "allowed_bounded_files": [
+      "STATUS.md",
+      "CLAUDE.md",
+      "CHANGELOG.md",
+      "CLAUDE_SESSION_BOOTSTRAP.txt",
+      ".gitignore",
+      "docs/WEB_HERO_001_AUTHORITY.md"
+    ]
+  },
+  "protected_paths": [
+    "index.html",
+    "styles.css",
+    "script.js",
+    "assets/imagery",
+    "vercel.json",
+    "sitemap.xml",
+    "robots.txt",
+    "site.webmanifest",
+    "404.html"
+  ],
+  "integration_write_surface": [
+    "index.html",
+    "styles.css",
+    "script.js",
+    "assets/imagery/sources.json",
+    "site.webmanifest",
+    "vercel.json"
+  ],
+  "integration_reference_allowlist": [
+    "hero/config/scene.json",
+    "hero/README.md",
+    "hero/evidence/production_media.json",
+    "hero/evidence/visual_quality_inventory.json"
+  ],
+  "note": "WEB-HERO-001 ran isolated: protected_paths had to stay byte-identical to the pinned WEB-001 baseline for the whole lane, and WEB-005 was named as the only authorized integration gate. That gate is now open. The pin moves to the WEB-005 execution baseline, the mode becomes integration, and the boundary changes shape rather than disappearing: public-site changes must stay inside integration_write_surface, and only the allowlisted hero files may name a public-site path. Everything the hero lane was forbidden to do that WEB-005 does not own -- deployment, DNS, routes, backends -- stays forbidden."
+}
