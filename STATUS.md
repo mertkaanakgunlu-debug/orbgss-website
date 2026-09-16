@@ -1,8 +1,8 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v0.9.1-geo-web-002-final-visual-masters` — GEO-WEB-002 ACCEPTED / COMPLETE
+**Canonical version:** `v1.0.0-rc1-web-005-cinematic-hero` — WEB-005 REVIEW_READY (release candidate)
 **Date:** 2026-09-16
-**Stage:** GEO-WEB-002 / MER-102 final homepage visual master package is terminally Science-accepted at implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`; acceptance record `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md`. WEB-004 is already Product-accepted / complete under MER-92 with acceptance publication `716104d677fea5021787b581470a436ed708f3a3`. GEO-WEB-002 is resolved for Product binding; WEB-005 does not auto-start.
+**Stage:** WEB-005 / MER-93 is `REVIEW_READY` on `feat/web-005-cinematic-hero`, awaiting Product terminal exact-head acceptance. It consumes the accepted WEB-HERO-001D cinematic system (`e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`) and the accepted GEO-WEB-002 visual master package (`ea693c29762279131fbed005e832c5ff2dca587b`) and produces the pre-launch homepage release candidate: four-act homepage, production hero media, truthful fallbacks. Evidence: `tasks/WEB-005_REVIEW_EVIDENCE.md`. **Not merged to `main`. Nothing deployed. No DNS touched. WEB-006 has not begun.**
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
@@ -17,13 +17,48 @@
 **Company:** VirgaSoft
 **Product:** OrbGSS — Orbital Geo-Spatial Solutions
 **Product authority:** OrbGSS Website vNext Product & Execution Authority v1.8 (`docs/WEB_VNEXT_AUTHORITY.md`); current Drive Product authority has precedence where newer.
-**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003 accepted/complete); MER-92 (WEB-004 Product-accepted/complete); MER-102 / GEO-WEB-002 (Science-accepted/complete); MER-96 / GEO-WEB-001 resolved
+**Accepted WEB-HERO-001D evidence HEAD:** `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e` (terminal Product acceptance published at `573f4f1`)
+**WEB-005 execution baseline:** `main@d2421a772f2e4cfa38c85dd5ee71a419c5160838`
+**Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003 accepted/complete); MER-92 (WEB-004 Product-accepted/complete); MER-102 / GEO-WEB-002 (Science-accepted/complete); MER-101 / WEB-HERO-001D (terminally accepted); MER-93 / WEB-005 (REVIEW_READY); MER-96 / GEO-WEB-001 resolved
 
 ## Authority
 
 `docs/WEB_VNEXT_AUTHORITY.md` is the repository-local summary of the product-owned *OrbGSS Website vNext Product & Execution Authority*. Where it disagrees with newer canonical Drive Product authority, the current Drive authority wins. WEB-002 is terminally accepted under `tasks/WEB-002_PRODUCT_PROOF.md`. WEB-003 is terminally accepted under `tasks/WEB-003_PUBLIC_SITE_DEPTH.md` at implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf` after one bounded Product review revision. WEB-004 is terminally Product-accepted under MER-92 at implementation HEAD `56cb53039b85a852110c737505bc2ae2282acb08`; canonical acceptance publication is `716104d677fea5021787b581470a436ed708f3a3` and acceptance record is `docs/WEB-004_PRODUCT_ACCEPTANCE.md`.
 
 `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` locks the final four-act homepage story for WEB-005 and supersedes the repeated full-width proof-scene rhythm where they conflict; it does not supersede accepted Science semantics, WEB-002 provenance constraints, WEB-004 performance/accessibility decisions or the accepted route architecture. GEO-WEB-002 / MER-102 is the Science & Geospatial publication dependency it named. It is terminally accepted under `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md` at implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`. Product may bind the package into WEB-005 while preserving its exact labels, warnings, provenance and maximum-safe-render constraints.
+
+## Current state (WEB-005, REVIEW_READY)
+
+The homepage is now the locked four-act story from `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md`:
+**Act 1 cinematic acquisition hero → Act 2 real Kızıldere EO context → Act 3 compact evidence trio →
+Act 4 priority/result climax**, followed by the subordinate pilot ledger, company/trust and contact
+sections. The WEB-001/002 six-scene `beam → full-width raster` gallery is gone, and
+`scripts/validate_site.py` now fails the build if it returns.
+
+- **Act 1** is the accepted WEB-HERO-001D sequence, re-rendered against the real accepted Kızıldere
+  pilot centre and packaged as production WebM / MP4 / poster. It is a **render**, and its caption
+  says so in both languages: `Rendered orbital sequence — not sensor imagery`.
+- **The real-data/result handoff is a page element, not a video frame.** A governed class-B raster
+  inside a lossy encode would have its colours and values changed by chroma subsampling and
+  quantisation, which the accepted package forbids — so the accepted priority derivative is shipped
+  as its own checksummed file and composited over the hero instead. The hero scene's
+  `aoi_injection_interface.layer_slots` records that decision as `render_surface: html_overlay`, and
+  `hero/scripts/validate_hero.py` enforces it.
+- **Safe display density is measured, not asserted.** Across a 360–3840 CSS px viewport sweep of the
+  built page, the widest render of each scientific visual is: Act-2 context 1199 CSS px (2398 device
+  px at 2×, ceiling 2400), each evidence card 624 (1248, ceiling 1249), the Act-4 priority map 623
+  (1246, ceiling 1249), the in-frame legend 248 against a 732 px native crop. Nothing is upscaled at
+  any width or density. Each figure is recorded in `geo_web_002.assets[].web_005_placement.rendered`
+  and re-checked by the validator.
+- **Act 4 is deliberately contained.** The accepted score raster is 1200 × 1200 cells at 30 m drawn
+  at 1249 px and *cannot* reach the ≥ 2000 px Act-4 presentation target from accepted science. The
+  composition carries the weight instead of the raster being stretched, and the export's own legend
+  sits inside the map frame — there is no detached homepage colour bar.
+- **Structure/geology stays an explicit, subordinate data gap.** Not fabricated, not promoted to an
+  act, and stated as score-invariant.
+
+Remaining gates are unchanged and are **not** WEB-005's to close: `CONTACT_RELEASE_GATE`,
+`HOSTED_PREVIEW_NOT_RUN`, and the WEB-006 production DNS cutover human gate.
 
 ## Current state (GEO-WEB-002, ACCEPTED / COMPLETE)
 
@@ -144,7 +179,7 @@ OrbGSS is a geospatial-intelligence platform. Geothermal Exploration is the acti
 ## Production blockers
 
 1. `CONTACT_RELEASE_GATE` (open, MER-92) — confirm `contact@orbgss.com` ownership and deliverability before public launch. Route/mailto correctness is verified; mailbox ownership requires Workspace/account evidence. Mandatory pre-WEB-006 gate.
-2. WEB-005 remains incomplete. GEO-WEB-002 is resolved; WEB-005 remains subject to its other canonical dependency/dependencies, including the accepted WEB-HERO-001 sequence, and deliberate CTO start approval.
+2. WEB-005 is implemented and `REVIEW_READY` at the HEAD recorded in `tasks/WEB-005_REVIEW_EVIDENCE.md`, pending Product terminal exact-head acceptance and publication to `main`. It is not merged and not deployed.
 3. `HOSTED_PREVIEW_NOT_RUN` was accepted under WEB-004. A hosted Vercel preview still needs to be produced under already-authorized credentials before launch; WEB-004 recorded a reproducible local preview instead.
 4. WEB-006 only: connect `orbgss.com` / `www.orbgss.com` through Squarespace DNS while preserving Google Workspace MX/SPF/DKIM/DMARC and unrelated records.
 
@@ -154,7 +189,9 @@ GEO-WEB-002 / MER-102 is **ACCEPTED / COMPLETE** at implementation HEAD `ea693c2
 
 WEB-004 is **PRODUCT_ACCEPTED / COMPLETE** under MER-92 at implementation HEAD `56cb53039b85a852110c737505bc2ae2282acb08` with acceptance publication `716104d677fea5021787b581470a436ed708f3a3`.
 
-WEB-005 remains a deliberate CTO-start task and must also satisfy the remaining WEB-HERO-001 dependency chain. WEB-006 production DNS cutover remains deferred behind its explicit CTO human gate.
+WEB-005 / MER-93 is **REVIEW_READY** on `feat/web-005-cinematic-hero` under `tasks/WEB-005_CINEMATIC_HERO.md`, with the full evidence package in `tasks/WEB-005_REVIEW_EVIDENCE.md`. Product performs terminal exact-head acceptance and publication to `main`.
+
+WEB-006 / MER-95 production DNS cutover remains deferred behind its explicit CTO human gate and **may not begin from this publication alone**.
 
 ## History
 

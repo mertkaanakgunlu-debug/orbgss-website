@@ -1,8 +1,8 @@
-# OrbGSS imagery rights and provenance — v0.8
+# OrbGSS imagery rights and provenance — v0.9
 
-## Two asset classes
+## Three asset classes
 
-OrbGSS serves only self-hosted imagery, and the site now publishes **two distinct classes** with
+OrbGSS serves only self-hosted imagery, and the site now publishes **three distinct classes** with
 different sources, different rights bases and different handling rules. Do not describe one with
 the other's wording.
 
@@ -12,7 +12,7 @@ the other's wording.
 | Source | USGS Landsat Collection 2 Level-2 surface reflectance (public domain) | OrbGSS cartographic exports of the accepted `kizildere_mvp_v2` project |
 | Produced by | `scripts/build_imagery.py` (crop / stretch / encode) | The accepted GEO-039 Workbench cartographic export path |
 | Recorded in | `sources.json` → `scenes`, and → `geo_web_002.context_scenes` | `sources.json` → `web_002.proof_assets`, and → `geo_web_002.assets` |
-| Where used | The hero poster today; the Act-2 Kızıldere context master is published for WEB-005 | Story panels 01–06 today; the Act-3/Act-4 masters are published for WEB-005 |
+| Where used | Act 2 of the homepage (the Kızıldere context master); the older gallery scenes are retired | Acts 3 and 4 of the homepage, and the deeper `/pilot/` route |
 | Permitted edits | Crop, contrast stretch, gamma, saturation, encoding | Crop and resize for presentation **only** — never re-colour, re-project, re-classify or change values, and no CSS colour/contrast/opacity transform on the served raster |
 | Extra duties | USGS acknowledgement in the footer | Mandatory scientific warnings in visible EN/TR page copy; checksummed provenance |
 
@@ -147,15 +147,38 @@ recolour or relabel.
 Structure and geology are still absent from this package. No public-safe fault or lithology master is
 authorized and the gap remains score-invariant.
 
-## WEB-001 placement (2026-09-15, superseded by WEB-002)
+## WEB-001 placement (2026-09-15, superseded by WEB-002, then by WEB-005)
 
-WEB-001 reused the four scenes as temporary gallery material across the story panels. WEB-002 has
-now replaced every story slot with product proof, so only Crater Lake remains placed, as the hero
-poster (`web_vnext_placement.status: "hero-poster"`; WEB-005 replaces the hero visual). Yellowstone,
-Chuquicamata and the Ili Delta are marked `retired-from-homepage`: they keep their files, full
-provenance and reuse rights in `assets/imagery/sources.json` and remain available for later use,
-but nothing on the homepage references them. Rights, source products and the USGS acknowledgement
-are unchanged, and the acknowledgement stays in the footer while the hero uses Landsat imagery.
+WEB-001 reused the four Landsat scenes as temporary gallery material across the story panels.
+WEB-002 replaced every story slot with product proof, leaving only Crater Lake placed as the hero
+poster. **WEB-005 retires that too:** the homepage hero is now the rendered cinematic acquisition
+sequence, and Act 2 uses the accepted Kızıldere context master instead. All four original scenes
+are now `retired-from-homepage`. They keep their files, full provenance and reuse rights in
+`assets/imagery/sources.json` and remain available for later use; nothing on any route references
+them. The USGS acknowledgement stays in the footer, because Act 2 is Landsat-derived.
+
+## Class C — WEB-005 rendered hero media (2026-09-16)
+
+A third class joined the site with WEB-005, and it must not be described as either of the others.
+
+| | **C — rendered cinematic hero** |
+| --- | --- |
+| What it is | A 3D render of Earth from orbit with an acquisition frame over the pilot region. **Not sensor imagery.** |
+| Files | `assets/hero/orbgss-hero.webm`, `assets/hero/orbgss-hero.mp4`, `assets/hero/hero-poster-1600.webp`, `assets/hero/hero-poster-900.webp` |
+| Produced by | The accepted WEB-HERO-001 Blender production lane (`hero/`), scene `hero_production_kizildere`, carried forward from `feat/web-hero-001-predata-scene@e95fdcac7cac82e597d40dab4cdc96ce1a6b319e` |
+| Recorded in | `sources.json` → `web_005.hero_media`; render and encode evidence in `hero/evidence/production_media.json` |
+| Underlying texture rights | NASA Earth Observatory Blue Marble albedo and night-lights composites, public domain, recorded with checksums in `hero/assets/manifest.json` |
+| Permitted edits | Re-render or re-encode from the accepted scene definition. The scene is configuration, so a change is a config change with a diff, not a retouch. |
+| Extra duties | The caption must say it is a render. `scene.hero.kind` carries "Rendered orbital sequence — not sensor imagery" in EN and TR, and that wording is not optional. |
+
+The honesty rule for class C is the mirror of the one for class B. Class B must never be made to
+look prettier than the science; class C must never be allowed to look like measurement. It shows
+where OrbGSS is pointed, not what any instrument recorded.
+
+**No scientific raster is baked into class C.** The hero's real-data result handoff is a page
+element carrying the accepted class-B derivative as its own checksummed file. A governed raster
+inside a lossy video encode would have its colours and values changed by chroma subsampling and
+quantisation, which the accepted package forbids — so the encoder never sees one.
 
 ## Resolution note
 

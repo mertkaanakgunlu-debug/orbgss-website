@@ -37,7 +37,7 @@ const I18N = {
     'hero.eyebrow': 'Earth data. Evidence. Priority.',
     'hero.title': 'Know where to look next.',
     'hero.copy': 'OrbGSS turns Earth observation and geoscience data into evidence-backed spatial priorities that help teams decide where to investigate next.',
-    'hero.cta': 'Explore the Platform',
+    'hero.cta': 'See the pilot area',
     'hero.secondary': 'Partner With Us',
     'story.observe.title': 'Observe',
     'story.observe.statement': 'Every OrbGSS analysis starts from one area of interest. The Kızıldere pilot AOI is a 36 × 36 km frame on a fixed 30 m grid, and every layer that follows is registered to exactly this ground.',
@@ -84,6 +84,42 @@ const I18N = {
     'alt.alt02': 'Sequential map of the ferric iron spectral alteration proxy across the Kızıldere area of interest',
     'alt.priority': 'Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area',
     'alt.geothermal': 'Relative priority surface over shaded NASADEM relief across the Kızıldere geothermal pilot area',
+    'hero.handoff.kicker': '04 · Result',
+    'hero.handoff.cta': 'See how it was derived',
+    'act.context.kicker': '02 · The place',
+    'act.context.title': 'A real area, before any analysis.',
+    'act.context.copy': 'Kızıldere sits in the Büyük Menderes graben in Denizli, Türkiye. This is the area as Landsat 8 photographed it — the ground the whole pilot is registered to, before a single layer is derived from it.',
+    'act.context.note': 'Earth-observation context only. This is a natural-colour photographic composite of the area, not analytical evidence, not a scored input, and not the acquisition date of any THM or ALT evidence layer.',
+    'act.context.meta': 'Landsat 8 OLI · 2025-05-05 · 30 m · natural colour',
+    'act.evidence.kicker': '03 · The evidence',
+    'act.evidence.title': 'Three layers over the same ground.',
+    'act.evidence.copy': 'Relief for context, one Landsat thermal anomaly and one Sentinel-2 alteration proxy as evidence. Same area of interest, same 30 m grid, same story stage — which is what makes them comparable at all.',
+    'act.evidence.listLabel': 'Evidence layers',
+    'act.evidence.terrain.role': 'Context',
+    'act.evidence.thermal.role': 'Evidence',
+    'act.evidence.thermal.note': 'Evidence layer only. Do not describe it as geothermal probability, reserve, discovery, or drilling-success evidence.',
+    'act.evidence.alteration.role': 'Evidence',
+    'act.evidence.alteration.note': 'Broad Sentinel-2 spectral alteration proxy; not mineral/kaolinite identification and not proof of hydrothermal alteration.',
+    'act.evidence.gapLabel': 'Data gap',
+    'act.evidence.gap': 'Structural and geological evidence would sharpen interpretation here. OrbGSS has no public-safe fault or lithology layer for this baseline, so the gap is stated rather than filled — it is optional support and does not change the priority result.',
+    'act.evidence.deeper': 'How the layers are built',
+    'act.priority.kicker': '04 · The result',
+    'act.priority.title': 'Where to look first.',
+    'act.priority.copy': 'The thermal and alteration evidence is combined into one ranking surface across the area of interest, 0 to 100, so a team can order the ground instead of guessing at it. High values mean “look here before there” — inside this area, for this baseline.',
+    'act.priority.note': 'AOI-relative experimental screening only. Not probability, reserve/resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a calibrated cross-AOI score.',
+    'act.priority.meta': 'mvp_remote_sensing_priority_v1 · EPSG:32635 · 30 m · 36 × 36 km',
+    'act.priority.deeper': 'Read the pilot method',
+    'scene.hero.place': 'Kızıldere — Büyük Menderes graben, Denizli, Türkiye',
+    'scene.hero.coords': '37.9794° N, 28.7907° E',
+    'scene.hero.kind': 'Rendered orbital sequence — not sensor imagery',
+    'scene.context.place': 'Kızıldere — Büyük Menderes graben, Denizli, Türkiye',
+    'scene.context.coords': '37.9794° N, 28.7907° E',
+    'scene.context.kind': 'Natural-color composite',
+    'scene.priority.place': 'Kızıldere — Büyük Menderes graben, Denizli, Türkiye',
+    'scene.priority.coords': '37.9794° N, 28.7907° E',
+    'alt.hero': 'Rendered view from orbit of the eastern Mediterranean and western Türkiye, with a bright square acquisition frame locked over the Kızıldere pilot region',
+    'alt.context': 'Natural-colour Landsat 8 view of the Büyük Menderes graben around Kızıldere, showing the valley floor, irrigated fields and the ridges on either side',
+    'alt.priorityLegend': 'Colour scale for the relative priority map, running from 0 at the dark end to 100 at the pale end',
     'pilot.kicker': 'Pilot',
     'pilot.title': 'Geothermal first.',
     'pilot.copy': 'Geothermal exploration is where OrbGSS is applied first. Mineral exploration and environmental & land intelligence follow the same evidence-to-priority workflow and are expansion directions, not finished products.',
@@ -242,7 +278,7 @@ const I18N = {
     'hero.eyebrow': 'Dünya verisi. Kanıt. Öncelik.',
     'hero.title': 'Sırada nereye bakacağınızı bilin.',
     'hero.copy': 'OrbGSS, yer gözlem ve yer bilimi verilerini kanıta dayalı mekânsal önceliklere dönüştürür; ekiplerin sırada nerenin inceleneceğine karar vermesine yardımcı olur.',
-    'hero.cta': 'Platformu Keşfedin',
+    'hero.cta': 'Pilot alanı görün',
     'hero.secondary': 'İş Birliği Kurun',
     'story.observe.title': 'Gözlem',
     'story.observe.statement': 'Her OrbGSS analizi tek bir ilgi alanından başlar. Kızıldere pilot alanı, sabit 30 m ızgara üzerinde 36 × 36 km’lik bir çerçevedir; sonrasında gelen her katman tam olarak bu zemine oturur.',
@@ -289,6 +325,42 @@ const I18N = {
     'alt.alt02': 'Kızıldere ilgi alanı boyunca ferrik demir spektral alterasyon vekilinin sıralı haritası',
     'alt.priority': 'Kızıldere ilgi alanının göreli öncelik haritası; zemini alan içinde 0 ile 100 arasında sıralar',
     'alt.geothermal': 'Kızıldere jeotermal pilot alanında gölgelendirilmiş NASADEM rölyefi üzerindeki göreli öncelik yüzeyi',
+    'hero.handoff.kicker': '04 · Sonuç',
+    'hero.handoff.cta': 'Nasıl türetildiğini görün',
+    'act.context.kicker': '02 · Alan',
+    'act.context.title': 'Herhangi bir analizden önce, gerçek bir alan.',
+    'act.context.copy': 'Kızıldere, Denizli, Türkiye’deki Büyük Menderes grabeninde yer alır. Bu, alanın Landsat 8 tarafından görüntülenmiş hâlidir — tek bir katman türetilmeden önce, pilot çalışmanın tamamının üzerine oturduğu zemin.',
+    'act.context.note': 'Yalnızca Yer gözlem bağlamı. Bu, alanın doğal renkli fotografik bileşimidir; analitik kanıt değildir, skorlanan bir girdi değildir ve herhangi bir THM ya da ALT kanıt katmanının görüntüleme tarihi değildir.',
+    'act.context.meta': 'Landsat 8 OLI · 2025-05-05 · 30 m · doğal renk',
+    'act.evidence.kicker': '03 · Kanıt',
+    'act.evidence.title': 'Aynı zemin üzerinde üç katman.',
+    'act.evidence.copy': 'Bağlam için rölyef, kanıt olarak bir Landsat termal anomalisi ve bir Sentinel-2 alterasyon vekili. Aynı ilgi alanı, aynı 30 m ızgara, aynı anlatı aşaması — bunları karşılaştırılabilir kılan da budur.',
+    'act.evidence.listLabel': 'Kanıt katmanları',
+    'act.evidence.terrain.role': 'Bağlam',
+    'act.evidence.thermal.role': 'Kanıt',
+    'act.evidence.thermal.note': 'Yalnızca kanıt katmanı. Jeotermal olasılık, rezerv, keşif ya da sondaj başarısı kanıtı olarak tanımlanmamalıdır.',
+    'act.evidence.alteration.role': 'Kanıt',
+    'act.evidence.alteration.note': 'Geniş bantlı Sentinel-2 spektral alterasyon vekili; mineral/kaolinit tanımlaması değildir ve hidrotermal alterasyon kanıtı değildir.',
+    'act.evidence.gapLabel': 'Veri boşluğu',
+    'act.evidence.gap': 'Yapısal ve jeolojik kanıt burada yorumu keskinleştirirdi. OrbGSS bu temel sürüm için kamuya açık kullanıma uygun bir fay veya litoloji katmanına sahip değildir; bu nedenle boşluk doldurulmak yerine açıkça belirtilir — isteğe bağlı destektir ve öncelik sonucunu değiştirmez.',
+    'act.evidence.deeper': 'Katmanlar nasıl üretiliyor',
+    'act.priority.kicker': '04 · Sonuç',
+    'act.priority.title': 'Önce nereye bakmalı.',
+    'act.priority.copy': 'Termal ve alterasyon kanıtı, ilgi alanı genelinde 0–100 aralığında tek bir sıralama yüzeyinde birleştirilir; böylece bir ekip zemini tahmin etmek yerine sıralayabilir. Yüksek değerler, bu alan içinde ve bu temel sürüm için “önce şuraya bak” anlamına gelir.',
+    'act.priority.note': 'Yalnızca alan içi deneysel ön eleme. Olasılık, rezerv veya kaynak tahmini, keşif olasılığı, sondaj başarısı olasılığı, Tam Prospektivite ya da alanlar arası kalibre edilmiş bir skor değildir.',
+    'act.priority.meta': 'mvp_remote_sensing_priority_v1 · EPSG:32635 · 30 m · 36 × 36 km',
+    'act.priority.deeper': 'Pilot yöntemini okuyun',
+    'scene.hero.place': 'Kızıldere — Büyük Menderes grabeni, Denizli, Türkiye',
+    'scene.hero.coords': '37.9794° K, 28.7907° D',
+    'scene.hero.kind': 'Görselleştirilmiş yörünge sekansı — sensör görüntüsü değildir',
+    'scene.context.place': 'Kızıldere — Büyük Menderes grabeni, Denizli, Türkiye',
+    'scene.context.coords': '37.9794° K, 28.7907° D',
+    'scene.context.kind': 'Doğal renkli bileşim',
+    'scene.priority.place': 'Kızıldere — Büyük Menderes grabeni, Denizli, Türkiye',
+    'scene.priority.coords': '37.9794° K, 28.7907° D',
+    'alt.hero': 'Doğu Akdeniz ve batı Türkiye’nin yörüngeden görselleştirilmiş görünümü; Kızıldere pilot bölgesinin üzerine kilitlenmiş parlak kare bir veri alım çerçevesi ile',
+    'alt.context': 'Kızıldere çevresindeki Büyük Menderes grabeninin doğal renkli Landsat 8 görünümü; vadi tabanı, sulanan tarlalar ve iki yandaki sırtlar görülüyor',
+    'alt.priorityLegend': 'Göreli öncelik haritasının renk ölçeği; koyu uçta 0 değerinden açık uçta 100 değerine uzanır',
     'pilot.kicker': 'Pilot',
     'pilot.title': 'Önce jeotermal.',
     'pilot.copy': 'OrbGSS ilk olarak jeotermal aramada uygulanıyor. Maden arama ile çevre ve arazi zekâsı aynı kanıttan önceliğe iş akışını izler; bunlar tamamlanmış ürünler değil, genişleme yönleridir.',
@@ -645,89 +717,10 @@ applyLanguage(readStoredLang());
 /* Graceful failure for self-hosted imagery: hide a scene that fails    */
 /* to load so the dark panel background shows, never a broken glyph.    */
 /* ------------------------------------------------------------------ */
-document.querySelectorAll('.panel-image, .story-panel > img, .layer-pane > img').forEach((image) => {
+document.querySelectorAll('.panel-image, .story-panel > img, .evidence-card img').forEach((image) => {
   image.addEventListener('error', () => {
     image.style.visibility = 'hidden';
   }, { once: true });
-});
-
-/* ------------------------------------------------------------------ */
-/* WEB-002 evidence layer switch                                        */
-/* One tablist per switchable panel. Each tab shows one accepted        */
-/* evidence export of the same AOI; the caption travels with its pane,  */
-/* so the visible label can never drift from the layer on screen.       */
-/* Without JavaScript the first pane stays visible and the others stay  */
-/* hidden, which is still a truthful single-layer panel.                */
-/* ------------------------------------------------------------------ */
-/* WEB-004: promote a deferred layer's data-src/data-srcset to the real attributes. The inactive
-   evidence layers ship deferred so they do not compete with the hero during the initial load;
-   this runs when the switch is approaching the viewport, well before anyone can press a tab. */
-function promoteDeferredImages(root) {
-  root.querySelectorAll('img[data-src]').forEach((image) => {
-    const srcset = image.getAttribute('data-srcset');
-    if (srcset) {
-      image.setAttribute('srcset', srcset);
-      image.removeAttribute('data-srcset');
-    }
-    image.setAttribute('src', image.getAttribute('data-src'));
-    image.removeAttribute('data-src');
-  });
-}
-
-document.querySelectorAll('.layer-switch[role="tablist"]').forEach((tablist) => {
-  const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
-  if (tabs.length < 2) return;
-  const panes = tabs.map((tab) => document.getElementById(tab.getAttribute('aria-controls')));
-  if (panes.some((pane) => !pane)) return;
-
-  const stack = tablist.closest('.story-panel') || tablist.parentElement;
-  if (typeof IntersectionObserver === 'function') {
-    const loader = new IntersectionObserver((entries, self) => {
-      if (!entries.some((entry) => entry.isIntersecting)) return;
-      promoteDeferredImages(stack);
-      self.disconnect();
-    }, { rootMargin: '600px 0px' });
-    loader.observe(stack);
-  } else {
-    promoteDeferredImages(stack);
-  }
-
-  function select(index, { focus = false } = {}) {
-    tabs.forEach((tab, i) => {
-      const active = i === index;
-      tab.classList.toggle('is-active', active);
-      tab.setAttribute('aria-selected', active ? 'true' : 'false');
-      tab.tabIndex = active ? 0 : -1;
-      panes[i].classList.toggle('is-active', active);
-      panes[i].setAttribute('aria-hidden', active ? 'false' : 'true');
-    });
-    if (focus) tabs[index].focus();
-  }
-
-  // Defensive: a reader who reaches the switch before the observer fired must still get a layer.
-  // This is deliberately on the interaction handlers rather than inside select(), because select()
-  // also runs once at start-up to adopt the authored state — promoting there would fetch the
-  // deferred layers during the initial load and undo the deferral entirely.
-  tablist.addEventListener('pointerdown', () => promoteDeferredImages(stack));
-  tablist.addEventListener('focusin', () => promoteDeferredImages(stack));
-
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => { promoteDeferredImages(stack); select(index); });
-    tab.addEventListener('keydown', (event) => {
-      const last = tabs.length - 1;
-      let next = null;
-      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = index === last ? 0 : index + 1;
-      else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = index === 0 ? last : index - 1;
-      else if (event.key === 'Home') next = 0;
-      else if (event.key === 'End') next = last;
-      if (next === null) return;
-      event.preventDefault();
-      promoteDeferredImages(stack);
-      select(next, { focus: true });
-    });
-  });
-
-  select(Math.max(0, tabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true')));
 });
 
 /* ------------------------------------------------------------------ */
@@ -807,6 +800,11 @@ function backdropLuminance(label, image) {
 }
 
 function tunePanel(panel) {
+  /* WEB-005: a panel whose caption sits over a protection gradient has an authored tone, not a
+     measured one. Measuring would read the raster underneath and miss the gradient on top, which
+     is how you end up choosing dark text for a deliberately darkened corner. Only panels whose
+     caption sits directly on untreated imagery — the accepted /pilot/ proof panels — are tuned. */
+  if (panel.hasAttribute('data-label-tone-locked')) return;
   const label = panel.querySelector('.scene-label');
   const image = panel.querySelector('img');
   if (!label || !image) return;
@@ -862,3 +860,137 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   window.addEventListener('resize', scheduleCaptionTones);
   scheduleCaptionTones();
 }
+
+/* ------------------------------------------------------------------ */
+/* WEB-005 cinematic hero                                              */
+/*                                                                      */
+/* The hero ships as a poster image with an empty <video> beside it.    */
+/* Nothing about the video is declared in HTML except the two candidate */
+/* URLs, because an <video> with <source> children starts fetching as   */
+/* soon as it is parsed and that is a decision this file should own,    */
+/* not the markup:                                                      */
+/*                                                                      */
+/*   - reduced motion, small screens, Save-Data and slow connections    */
+/*     never attach a source at all, so they cost zero video bytes and  */
+/*     get the poster as an intentional still hero rather than a        */
+/*     degraded one;                                                    */
+/*   - everyone else gets exactly ONE encode, chosen by canPlayType,    */
+/*     so no browser is ever asked to download both;                    */
+/*   - with JavaScript off, the poster is the hero.                     */
+/*                                                                      */
+/* The accepted sequence ends on a stable regional hold. What it hands  */
+/* off to is the result element below it, which is revealed when the    */
+/* hold is reached — or immediately, in every static state, so that a   */
+/* visitor who never sees the motion still sees the answer.             */
+/* ------------------------------------------------------------------ */
+(function cinematicHero() {
+  const hero = document.querySelector('.hero[data-hero-slot="cinematic"]');
+  if (!hero) return;
+
+  const video = hero.querySelector('.hero-video');
+  const handoff = hero.querySelector('[data-hero-handoff]');
+
+  /* Frame 200 of 276 at 24 fps: the first frame of the accepted regional-hold beat. */
+  const HOLD_SECONDS = 200 / 24;
+
+  function revealHandoff() {
+    if (!handoff || !handoff.hidden) return;
+    handoff.hidden = false;
+    /* Two frames: one for the element to exist, one for the transition to have a start value. */
+    requestAnimationFrame(() => requestAnimationFrame(() => handoff.classList.add('is-visible')));
+  }
+
+  function settleStatic(reason) {
+    hero.setAttribute('data-hero-state', 'static');
+    if (hero.dataset.heroReason !== reason) hero.dataset.heroReason = reason;
+    revealHandoff();
+  }
+
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
+  const saveData = connection.saveData === true;
+  const slowNetwork = typeof connection.effectiveType === 'string'
+    && /^(slow-2g|2g|3g)$/.test(connection.effectiveType);
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  /* A phone-sized viewport is the reduced-data case in practice, and the hero reads as a still
+     composition there anyway once the copy takes most of the frame. */
+  const smallScreen = window.matchMedia('(max-width: 780px)');
+
+  if (!video || typeof video.canPlayType !== 'function') return settleStatic('unsupported');
+  if (reduceMotion.matches) return settleStatic('reduced-motion');
+  if (smallScreen.matches) return settleStatic('small-screen');
+  if (saveData) return settleStatic('save-data');
+  if (slowNetwork) return settleStatic('slow-network');
+
+  const candidates = [
+    { src: video.getAttribute('data-hero-webm'), type: 'video/webm', probe: 'video/webm; codecs="vp9"' },
+    { src: video.getAttribute('data-hero-mp4'), type: 'video/mp4', probe: 'video/mp4; codecs="avc1.4d4028"' },
+    { src: video.getAttribute('data-hero-mp4'), type: 'video/mp4', probe: 'video/mp4' },
+  ];
+  const chosen = candidates.find((c) => c.src && video.canPlayType(c.probe) === 'probably')
+    || candidates.find((c) => c.src && video.canPlayType(c.probe));
+  if (!chosen) return settleStatic('no-playable-encode');
+
+  let started = false;
+  function start() {
+    if (started) return;
+    started = true;
+
+    video.addEventListener('timeupdate', function onTime() {
+      if (video.currentTime >= HOLD_SECONDS) {
+        video.removeEventListener('timeupdate', onTime);
+        revealHandoff();
+      }
+    });
+    /* The last rendered frame is the poster frame, so ending on it is a settle, not a stop. */
+    video.addEventListener('ended', () => {
+      hero.setAttribute('data-hero-state', 'held');
+      revealHandoff();
+    });
+    video.addEventListener('playing', () => {
+      hero.setAttribute('data-hero-state', 'playing');
+    }, { once: true });
+    video.addEventListener('error', () => settleStatic('encode-error'), { once: true });
+
+    video.muted = true;
+    video.loop = false;
+    video.setAttribute('src', chosen.src);
+    video.load();
+
+    const attempt = video.play();
+    if (attempt && typeof attempt.catch === 'function') {
+      /* Autoplay refused by policy is a normal outcome, not a failure: fall back to the poster
+         and hand off straight away rather than leaving a blank frame or nagging the visitor. */
+      attempt.catch(() => settleStatic('autoplay-blocked'));
+    }
+  }
+
+  /* Never compete with the poster: the poster is the LCP element. */
+  function startWhenIdle() {
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
+  }
+
+  if (typeof IntersectionObserver === 'function') {
+    const observer = new IntersectionObserver((entries, self) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      self.disconnect();
+      startWhenIdle();
+    }, { rootMargin: '0px' });
+    observer.observe(hero);
+  } else {
+    startWhenIdle();
+  }
+
+  /* A visitor who turns reduced motion on mid-visit gets the still hero from that point. */
+  const onMotionChange = () => {
+    if (!reduceMotion.matches) return;
+    if (!video.paused) video.pause();
+    settleStatic('reduced-motion');
+  };
+  if (typeof reduceMotion.addEventListener === 'function') {
+    reduceMotion.addEventListener('change', onMotionChange);
+  }
+
+  /* Belt and braces: however playback goes, the result must not stay hidden. */
+  window.setTimeout(revealHandoff, 15000);
+})();

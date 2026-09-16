@@ -19,18 +19,22 @@
 
   <link rel="icon" href="assets/mark.svg" type="image/svg+xml" />
   <link rel="manifest" href="site.webmanifest" />
-  <meta property="og:image" content="https://orbgss.com/assets/imagery/crater-lake-2023.jpg" />
+  <meta property="og:image" content="https://orbgss.com/assets/hero/hero-poster-1600.webp" />
   <!--
     WEB-004: the hero image is the LCP element, and it used to be discovered only after styles.css
     had been fetched and parsed. Preloading the same candidate set the <img> below declares lets
     the browser start it during the initial HTML scan; imagesrcset/imagesizes must stay identical
     to that img's srcset/sizes or the browser downloads the poster twice.
+    WEB-005: the LCP element is now the cinematic hero's poster frame. The video itself is never
+    preloaded and never eagerly fetched — script.js attaches its sources only after the poster has
+    painted, and only where motion and data policy allow, so the poster is the only hero image
+    request on first paint and mobile/reduced-data never pays for an encode at all.
   -->
   <link
     rel="preload"
     as="image"
-    href="assets/imagery/crater-lake-2023.jpg"
-    imagesrcset="assets/imagery/crater-lake-2023-900.webp 900w, assets/imagery/crater-lake-2023-1400.webp 1400w, assets/imagery/crater-lake-2023-1800.webp 1800w"
+    href="assets/hero/hero-poster-1600.webp"
+    imagesrcset="assets/hero/hero-poster-900.webp 900w, assets/hero/hero-poster-1600.webp 1600w"
     imagesizes="100vw"
     fetchpriority="high"
   />
@@ -77,311 +81,298 @@
 
   <main id="main">
     <!--
-      HERO — WEB-001 static poster.
-      WEB-005 replaces only the visual layer (.hero-visual) with the cinematic Earth/satellite hero.
-      The copy block (.hero-content), the scene label and everything below stay as they are.
+      WEB-005 FOUR-ACT HOMEPAGE (docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md).
+
+      Hero -> real AOI context -> compact evidence trio -> priority/result climax. The WEB-001/002
+      six-scene "dark beam + full-width raster" gallery is gone: it gave every scientific state
+      equal weight and stretched correct cartography until it read as soft texture. Each act now
+      owns its own composition, and each explanation sits against the visual it describes.
+
+      Every scientific visual here is an accepted GEO-WEB-002 asset, shipped as the exact
+      checksummed derivative recorded in assets/imagery/sources.json -> geo_web_002. None of them
+      is recoloured, re-stretched, reprojected or rendered above the max_safe_rendered_px its own
+      record declares honest, and none is baked into the hero video, where lossy encoding would
+      change the governed pixels. Science semantics come from the accepted package and are not
+      reinterpreted here.
     -->
-    <section class="hero image-panel" aria-labelledby="hero-title" data-hero-slot="static-poster">
-      <div class="hero-visual" data-visual-slot="hero" data-visual-status="deferred-web-005">
-        <!--
-          WEB-004: the JPEG stays as the src fallback and as the Open Graph poster; every
-          srcset-capable browser takes one of the recorded WebP derivatives instead, so a 375 px
-          phone fetches ~148 KiB rather than the full 553 KiB composite. The derivatives are
-          resize-and-encode only and are checksummed in assets/imagery/sources.json.
-        -->
+
+    <!--
+      ACT 1 — CINEMATIC ACQUISITION HERO.
+      The visual is the accepted WEB-HERO-001D pre-data sequence (Earth establish -> satellite
+      entrance -> AOI acquisition/scan -> continuous approach -> stable regional hold), rendered
+      against the real Kızıldere regional frame and carried forward from
+      feat/web-hero-001-predata-scene@e95fdcac7cac82e597d40dab4cdc96ce1a6b319e.
+
+      It is a RENDER, not sensor imagery, and says so in its own caption. Headline copy stays in
+      HTML inside the motion-safe region the shot was measured against, never baked into a frame.
+      The poster is the LCP element and the only hero image fetched on first paint.
+    -->
+    <section class="hero" id="hero" aria-labelledby="hero-title" data-hero-slot="cinematic" data-label-tone="light" data-label-tone-locked data-act="1">
+      <div class="hero-visual" data-visual-slot="hero" data-visual-status="cinematic-hero">
         <img
-          class="panel-image hero-image"
-          src="assets/imagery/crater-lake-2023.jpg"
-          srcset="assets/imagery/crater-lake-2023-900.webp 900w, assets/imagery/crater-lake-2023-1400.webp 1400w, assets/imagery/crater-lake-2023-1800.webp 1800w"
+          class="panel-image hero-poster"
+          src="assets/hero/hero-poster-1600.webp"
+          srcset="assets/hero/hero-poster-900.webp 900w, assets/hero/hero-poster-1600.webp 1600w"
           sizes="100vw"
-          alt="Satellite view of Crater Lake and the surrounding landscape in Oregon, United States"
-          data-i18n-alt="alt.crater"
+          alt="Rendered view from orbit of the eastern Mediterranean and western Türkiye, with a bright square acquisition frame locked over the Kızıldere pilot region"
+          data-i18n-alt="alt.hero"
           fetchpriority="high"
           decoding="async"
-          width="1800"
-          height="1125"
+          width="1920"
+          height="1080"
         />
+        <!--
+          preload="none" and no <source> children on purpose. script.js attaches the encodes only
+          when the visitor is not on a reduced-motion, reduced-data or small-screen profile, so
+          exactly one encode is ever fetched and often none is. With JavaScript disabled the
+          poster is the hero, which is an intentional state rather than a failure.
+        -->
+        <video
+          class="hero-video"
+          data-hero-webm="assets/hero/orbgss-hero.webm"
+          data-hero-mp4="assets/hero/orbgss-hero.mp4"
+          width="1920"
+          height="1080"
+          muted
+          playsinline
+          disablepictureinpicture
+          preload="none"
+          aria-hidden="true"
+          tabindex="-1"
+        ></video>
         <div class="hero-shade" aria-hidden="true"></div>
       </div>
+
       <div class="hero-content">
         <p class="eyebrow mono" data-i18n="hero.eyebrow">Earth data. Evidence. Priority.</p>
         <h1 id="hero-title" data-i18n="hero.title">Know where to look next.</h1>
         <p class="hero-copy" data-i18n="hero.copy">OrbGSS turns Earth observation and geoscience data into evidence-backed spatial priorities that help teams decide where to investigate next.</p>
         <div class="hero-actions">
-          <a class="button" href="#platform"><span data-i18n="hero.cta">Explore the Platform</span> <span aria-hidden="true">↓</span></a>
+          <a class="button" href="#context"><span data-i18n="hero.cta">See the pilot area</span> <span aria-hidden="true">↓</span></a>
           <a class="text-link" href="mailto:contact@orbgss.com?subject=OrbGSS%20Partnership%20Inquiry" data-i18n-href="mail.partner"><span data-i18n="hero.secondary">Partner With Us</span> <span aria-hidden="true">→</span></a>
         </div>
       </div>
+
+      <!--
+        The real-data/result handoff. The accepted hero sequence ends on a stable regional hold;
+        this is what it hands off to. It is deliberately a page element and not a video frame:
+        the priority raster is a governed class-B export, and a lossy encode would alter its
+        colours and values. Shipping it as its own checksummed file keeps the pixels exact and
+        keeps acquisition imagery visibly separate from analytical result.
+        Rendered at most 168 CSS px here — far inside the accepted 1249 device-pixel ceiling.
+      -->
+      <figure class="hero-handoff" data-hero-handoff hidden>
+        <img
+          class="hero-handoff-image"
+          src="assets/proof/final/priority-800.webp"
+          alt="Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area"
+          data-i18n-alt="alt.priority"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="800"
+        />
+        <figcaption class="hero-handoff-copy">
+          <span class="hero-handoff-kicker mono" data-i18n="hero.handoff.kicker">04 · Result</span>
+          <span class="hero-handoff-label" data-i18n="label.priority">Remote-Sensing Relative Priority — Experimental Baseline</span>
+          <a class="text-link hero-handoff-link" href="#priority"><span data-i18n="hero.handoff.cta">See how it was derived</span> <span aria-hidden="true">↓</span></a>
+        </figcaption>
+      </figure>
+
       <p class="scene-label">
-        <span data-i18n="scene.crater.place">Crater Lake, Oregon, USA</span>
-        <span data-i18n="scene.crater.coords">42.9443° N, 122.1353° W</span>
+        <span data-i18n="scene.hero.place">Kızıldere — Büyük Menderes graben, Denizli, Türkiye</span>
+        <span data-i18n="scene.hero.coords">37.9794° N, 28.7907° E</span>
+        <span class="scene-kind" data-i18n="scene.hero.kind">Rendered orbital sequence — not sensor imagery</span>
       </p>
     </section>
 
     <!--
-      STORY SECTIONS 01–06 (WEB-002 product proof).
-      Each section = dark technical beam + full-width visual panel.
-      Panels marked data-visual-status="product-proof" carry real OrbGSS cartographic exports
-      materialized through the accepted GEO-039 Workbench export path from the persisted
-      kizildere_mvp_v2 project. Every panel shows the SAME 36 x 36 km AOI on the same 30 m grid.
-      Provenance, export id, master checksum and derivative checksums live in
-      assets/imagery/sources.json (proof_assets). Mandatory scientific warnings from
-      docs/WEB-002_SCIENCE_ASSET_PACKAGE.md are carried in visible copy as .beam-note.
-      Slot 04 (structure) is a deliberate data-gap state: no fault/lithology asset is authorized,
-      and the gap is score-invariant. Never fabricate one.
+      ACT 2 — REAL KIZILDERE AOI CONTEXT.
+      One strong natural-colour Landsat view so the viewer knows the analysis belongs to a real
+      place. Composition is a tightly coupled split, not another full-width panel: copy sits
+      beside the image it describes. Contained at 1200 CSS px, which is the accepted 2x figure for
+      a 2400 px native master, so nothing is upscaled at any density.
+      This act is CONTEXT. It is not evidence, not a scored input, and its acquisition date is not
+      the acquisition date of any THM or ALT evidence layer.
     -->
-
-    <section id="platform" class="story-section" aria-labelledby="observe-title">
-      <div class="story-beam">
-        <div class="beam-head">
-          <span class="beam-index mono">01</span>
-          <h2 id="observe-title" data-i18n="story.observe.title">Observe</h2>
-        </div>
-        <div class="beam-body">
-          <p class="beam-statement" data-i18n="story.observe.statement">Every OrbGSS analysis starts from one area of interest. The Kızıldere pilot AOI is a 36 × 36 km frame on a fixed 30 m grid, and every layer that follows is registered to exactly this ground.</p>
-          <p class="beam-note" data-i18n="story.observe.note">Source and AOI context only — not validation evidence.</p>
-        </div>
-        <p class="beam-meta mono" data-i18n="story.observe.meta">AOI · EPSG:32635 · 30 m · 36 × 36 km</p>
+    <section id="context" class="act act-context" aria-labelledby="context-title" data-act="2">
+      <div class="act-copy">
+        <p class="kicker mono" data-i18n="act.context.kicker">02 · The place</p>
+        <h2 id="context-title" data-i18n="act.context.title">A real area, before any analysis.</h2>
+        <p class="act-statement" data-i18n="act.context.copy">Kızıldere sits in the Büyük Menderes graben in Denizli, Türkiye. This is the area as Landsat 8 photographed it — the ground the whole pilot is registered to, before a single layer is derived from it.</p>
+        <p class="act-note beam-note" data-i18n="act.context.note">Earth-observation context only. This is a natural-colour photographic composite of the area, not analytical evidence, not a scored input, and not the acquisition date of any THM or ALT evidence layer.</p>
+        <p class="act-meta mono" data-i18n="act.context.meta">Landsat 8 OLI · 2025-05-05 · 30 m · natural colour</p>
       </div>
-      <figure class="story-panel" data-visual-slot="observe" data-visual-status="product-proof" data-label-tone="light">
+      <figure class="act-figure" data-visual-slot="context" data-visual-status="eo-context" data-label-tone="light" data-label-tone-locked>
         <img
-          src="assets/proof/observe-1400.webp"
-          srcset="assets/proof/observe-800.webp 800w, assets/proof/observe-1400.webp 1400w"
-          sizes="100vw"
-          alt="Greyscale elevation map of the 36 by 36 kilometre Kızıldere project area of interest, showing ridges and valleys across the pilot grid"
-          data-i18n-alt="alt.observe"
+          class="panel-image"
+          src="assets/imagery/kizildere-aoi-context-2025-1200.webp"
+          srcset="assets/imagery/kizildere-aoi-context-2025-900.webp 900w, assets/imagery/kizildere-aoi-context-2025-1200.webp 1200w, assets/imagery/kizildere-aoi-context-2025-1800.webp 1800w, assets/imagery/kizildere-aoi-context-2025-2400.webp 2400w"
+          sizes="(min-width: 1100px) 50vw, 100vw"
+          alt="Natural-colour Landsat 8 view of the Büyük Menderes graben around Kızıldere, showing the valley floor, irrigated fields and the ridges on either side"
+          data-i18n-alt="alt.context"
           loading="lazy"
-          fetchpriority="low"
           decoding="async"
-          width="1400"
-          height="1400"
+          width="1200"
+          height="750"
         />
         <figcaption class="scene-label">
-          <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
-          <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
-          <span class="scene-kind" data-i18n="label.observe">Kızıldere AOI — accepted MVP project context</span>
+          <span data-i18n="scene.context.place">Kızıldere — Büyük Menderes graben, Denizli, Türkiye</span>
+          <span data-i18n="scene.context.coords">37.9794° N, 28.7907° E</span>
+          <span class="scene-kind" data-i18n="scene.context.kind">Natural-color composite</span>
         </figcaption>
       </figure>
     </section>
 
-    <section id="terrain" class="story-section" aria-labelledby="terrain-title">
-      <div class="story-beam">
-        <div class="beam-head">
-          <span class="beam-index mono">02</span>
-          <h2 id="terrain-title" data-i18n="story.terrain.title">Terrain</h2>
-        </div>
-        <div class="beam-body">
-          <p class="beam-statement" data-i18n="story.terrain.statement">Elevation gives the area its physical shape. NASADEM terrain is carried as display context, so every later signal can be read against real relief.</p>
-          <p class="beam-note" data-i18n="story.terrain.note">Context and display only. Terrain is not a scored predictor and carries no universal geothermal-favourability direction.</p>
-        </div>
-        <p class="beam-meta mono" data-i18n="story.terrain.meta">Context · NASADEM elevation · metres</p>
+    <!--
+      ACT 3 — COMPACT EVIDENCE TRIO.
+      The one deliberate three-card composition on the site, and the replacement for four separate
+      full-width scenes. Terrain is context; THM-01 and ALT-01 are the evidence layers. All three
+      are the same 36 x 36 km AOI on the same 30 m grid, so they visibly belong together.
+      Structure/geology stays an explicit, subordinate data gap — it is score-invariant and is not
+      fabricated, and it no longer consumes a whole empty scene.
+    -->
+    <section id="evidence" class="act act-evidence" aria-labelledby="evidence-title" data-act="3">
+      <div class="act-copy act-copy-wide">
+        <p class="kicker mono" data-i18n="act.evidence.kicker">03 · The evidence</p>
+        <h2 id="evidence-title" data-i18n="act.evidence.title">Three layers over the same ground.</h2>
+        <p class="act-statement" data-i18n="act.evidence.copy">Relief for context, one Landsat thermal anomaly and one Sentinel-2 alteration proxy as evidence. Same area of interest, same 30 m grid, same story stage — which is what makes them comparable at all.</p>
       </div>
-      <figure class="story-panel" data-visual-slot="terrain" data-visual-status="product-proof" data-label-tone="light">
-        <img
-          src="assets/proof/terrain-1400.webp"
-          srcset="assets/proof/terrain-800.webp 800w, assets/proof/terrain-1400.webp 1400w"
-          sizes="100vw"
-          alt="Colour elevation map of the Kızıldere area of interest, with low ground in dark blue and high ridges in pale yellow"
-          data-i18n-alt="alt.terrain"
-          loading="lazy"
-          fetchpriority="low"
-          decoding="async"
-          width="1400"
-          height="1400"
-        />
-        <figcaption class="scene-label">
-          <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
-          <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
-          <span class="scene-kind" data-i18n="label.terrain">Elevation — NASADEM context</span>
-        </figcaption>
-      </figure>
-    </section>
 
-    <section id="evidence" class="story-section" aria-labelledby="evidence-title">
-      <div class="story-beam">
-        <div class="beam-head">
-          <span class="beam-index mono">03</span>
-          <h2 id="evidence-title" data-i18n="story.evidence.title">Evidence</h2>
-        </div>
-        <div class="beam-body">
-          <p class="beam-statement" data-i18n="story.evidence.statement">Three accepted remote-sensing layers describe the same ground: one Landsat thermal anomaly and two Sentinel-2 spectral alteration proxies. Switch between them to see what each one contributes.</p>
-          <p class="beam-note" data-i18n="story.evidence.note">Evidence layers only — candidate and unvalidated. THM-01 is thermal evidence, not geothermal probability, reserve or resource, discovery or drilling-success evidence. ALT-01 and ALT-02 are broad spectral alteration proxies, never mineral or kaolinite identification, and not proof of hydrothermal alteration.</p>
-        </div>
-        <p class="beam-meta mono" data-i18n="story.evidence.meta">Evidence · THM-01 / ALT-01 / ALT-02</p>
-      </div>
-      <figure class="story-panel has-switch" data-visual-slot="evidence" data-visual-status="product-proof">
-        <div class="layer-switch" role="tablist" aria-label="Evidence layer" data-i18n-aria-label="evidence.switchLabel">
-          <button type="button" class="layer-tab is-active mono" role="tab" id="tab-thm01" aria-controls="pane-thm01" aria-selected="true">THM-01</button>
-          <button type="button" class="layer-tab mono" role="tab" id="tab-alt01" aria-controls="pane-alt01" aria-selected="false" tabindex="-1">ALT-01</button>
-          <button type="button" class="layer-tab mono" role="tab" id="tab-alt02" aria-controls="pane-alt02" aria-selected="false" tabindex="-1">ALT-02</button>
-        </div>
-        <!--
-          WEB-004: the two layers that are not on screen carry data-src/data-srcset instead of
-          src/srcset, and script.js promotes them as the evidence section comes into view. They
-          used to be fetched during the initial page load — 340 KiB of rasters nobody was looking
-          at yet, competing with the hero for bandwidth and costing the homepage six Lighthouse
-          performance points. They are still fetched before the reader can reach the switch, so
-          changing layer stays instant. Without JavaScript the inactive panes are permanently
-          hidden, so not fetching them is the truthful behaviour. They remain recorded,
-          checksummed proof assets, and the validator reads data-src/data-srcset too.
-        -->
-        <div class="layer-stack">
-          <div class="layer-pane is-active" role="tabpanel" id="pane-thm01" aria-labelledby="tab-thm01" aria-hidden="false" data-label-tone="dark">
+      <ul class="evidence-trio" aria-label="Evidence layers" data-i18n-aria-label="act.evidence.listLabel">
+        <li class="evidence-card" id="terrain" data-visual-slot="terrain" data-visual-status="product-proof">
+          <figure>
             <img
-              src="assets/proof/thm01-1400.webp"
-              srcset="assets/proof/thm01-800.webp 800w, assets/proof/thm01-1400.webp 1400w"
-              sizes="100vw"
+              class="panel-image"
+              src="assets/proof/final/terrain-800.webp"
+              srcset="assets/proof/final/terrain-800.webp 800w, assets/proof/final/terrain-1249.webp 1249w"
+              sizes="(min-width: 1100px) 28vw, (min-width: 700px) 44vw, 92vw"
+              alt="Colour elevation map of the Kızıldere area of interest, with low ground in dark blue and high ridges in pale yellow"
+              data-i18n-alt="alt.terrain"
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="800"
+            />
+            <figcaption>
+              <span class="evidence-label" data-i18n="label.terrain">Elevation — NASADEM context</span>
+              <span class="evidence-role mono" data-i18n="act.evidence.terrain.role">Context</span>
+              <span class="evidence-note beam-note" data-i18n="story.terrain.note">Context and display only. Terrain is not a scored predictor and carries no universal geothermal-favourability direction.</span>
+            </figcaption>
+          </figure>
+        </li>
+        <li class="evidence-card" id="thermal" data-visual-slot="thermal" data-visual-status="product-proof">
+          <figure>
+            <img
+              class="panel-image"
+              src="assets/proof/final/thm01-800.webp"
+              srcset="assets/proof/final/thm01-800.webp 800w, assets/proof/final/thm01-1249.webp 1249w"
+              sizes="(min-width: 1100px) 28vw, (min-width: 700px) 44vw, 92vw"
               alt="Diverging thermal anomaly map of the Kızıldere area of interest, with cooler ground in blue and warmer ground in red"
               data-i18n-alt="alt.thm01"
               loading="lazy"
-              fetchpriority="low"
               decoding="async"
-              width="1400"
-              height="1400"
+              width="800"
+              height="800"
             />
-            <div class="scene-label">
-              <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
-              <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
-              <span class="scene-kind" data-i18n="label.thm01">THM-01 Thermal Anomaly</span>
-            </div>
-          </div>
-          <div class="layer-pane" role="tabpanel" id="pane-alt01" aria-labelledby="tab-alt01" aria-hidden="true" data-label-tone="light">
+            <figcaption>
+              <span class="evidence-label" data-i18n="label.thm01">THM-01 Thermal Anomaly</span>
+              <span class="evidence-role mono" data-i18n="act.evidence.thermal.role">Evidence</span>
+              <span class="evidence-note beam-note" data-i18n="act.evidence.thermal.note">Evidence layer only. Do not describe it as geothermal probability, reserve, discovery, or drilling-success evidence.</span>
+            </figcaption>
+          </figure>
+        </li>
+        <li class="evidence-card" id="alteration" data-visual-slot="alteration" data-visual-status="product-proof">
+          <figure>
             <img
-              data-src="assets/proof/alt01-1400.webp"
-              data-srcset="assets/proof/alt01-800.webp 800w, assets/proof/alt01-1400.webp 1400w"
-              sizes="100vw"
+              class="panel-image"
+              src="assets/proof/final/alt01-800.webp"
+              srcset="assets/proof/final/alt01-800.webp 800w, assets/proof/final/alt01-1249.webp 1249w"
+              sizes="(min-width: 1100px) 28vw, (min-width: 700px) 44vw, 92vw"
               alt="Sequential map of the clay and hydroxyl spectral alteration proxy across the Kızıldere area of interest"
               data-i18n-alt="alt.alt01"
               loading="lazy"
-              fetchpriority="low"
               decoding="async"
-              width="1400"
-              height="1400"
+              width="800"
+              height="800"
             />
-            <div class="scene-label">
-              <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
-              <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
-              <span class="scene-kind" data-i18n="label.alt01">ALT-01 Alteration Proxy — clay/hydroxyl</span>
-            </div>
-          </div>
-          <div class="layer-pane" role="tabpanel" id="pane-alt02" aria-labelledby="tab-alt02" aria-hidden="true" data-label-tone="light">
-            <img
-              data-src="assets/proof/alt02-1400.webp"
-              data-srcset="assets/proof/alt02-800.webp 800w, assets/proof/alt02-1400.webp 1400w"
-              sizes="100vw"
-              alt="Sequential map of the ferric iron spectral alteration proxy across the Kızıldere area of interest"
-              data-i18n-alt="alt.alt02"
-              loading="lazy"
-              fetchpriority="low"
-              decoding="async"
-              width="1400"
-              height="1400"
-            />
-            <div class="scene-label">
-              <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
-              <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
-              <span class="scene-kind" data-i18n="label.alt02">ALT-02 Alteration Proxy — ferric/iron</span>
-            </div>
-          </div>
-        </div>
-      </figure>
+            <figcaption>
+              <span class="evidence-label" data-i18n="label.alt01">ALT-01 Alteration Proxy — clay/hydroxyl</span>
+              <span class="evidence-role mono" data-i18n="act.evidence.alteration.role">Evidence</span>
+              <span class="evidence-note beam-note" data-i18n="act.evidence.alteration.note">Broad Sentinel-2 spectral alteration proxy; not mineral/kaolinite identification and not proof of hydrothermal alteration.</span>
+            </figcaption>
+          </figure>
+        </li>
+      </ul>
+
+      <p class="act-footnote" id="structure">
+        <span class="mono" data-i18n="act.evidence.gapLabel">Data gap</span>
+        <span data-i18n="act.evidence.gap">Structural and geological evidence would sharpen interpretation here. OrbGSS has no public-safe fault or lithology layer for this baseline, so the gap is stated rather than filled — it is optional support and does not change the priority result.</span>
+        <a class="text-link" href="/pilot/"><span data-i18n="act.evidence.deeper">How the layers are built</span> <span aria-hidden="true">→</span></a>
+      </p>
     </section>
 
-    <section id="structure" class="story-section" aria-labelledby="structure-title">
-      <div class="story-beam">
-        <div class="beam-head">
-          <span class="beam-index mono">04</span>
-          <h2 id="structure-title" data-i18n="story.structure.title">Structure</h2>
-        </div>
-        <div class="beam-body">
-          <p class="beam-statement" data-i18n="story.structure.statement">Structural and geological context would sharpen interpretation here. For this baseline OrbGSS has no public-safe fault or lithology layer, so the page shows the gap rather than filling it.</p>
-          <p class="beam-note" data-i18n="story.structure.note">Structure and geology are optional support and score-invariant. Their absence does not change the remote-sensing priority baseline.</p>
-        </div>
-        <p class="beam-meta mono" data-i18n="story.structure.meta">Optional support · Not published</p>
+    <!--
+      ACT 4 — PRIORITY / RESULT CLIMAX.
+      The analytical answer to the hero's promise. Deliberately CONTAINED rather than full-bleed:
+      the accepted score raster is 1200 x 1200 cells at 30 m drawn at 1249 px, so 1249 device
+      pixels is the widest honest render. The figure is capped at 624 CSS px, which stays inside
+      that ceiling even on a 2x display, and sizes/srcset make the browser pick accordingly.
+      The legend is the master's own governed legend, placed INSIDE the map frame — never a
+      detached decorative colour bar on the page.
+    -->
+    <section id="priority" class="act act-priority" aria-labelledby="priority-title" data-act="4">
+      <div class="act-copy">
+        <p class="kicker mono" data-i18n="act.priority.kicker">04 · The result</p>
+        <h2 id="priority-title" data-i18n="act.priority.title">Where to look first.</h2>
+        <p class="act-statement" data-i18n="act.priority.copy">The thermal and alteration evidence is combined into one ranking surface across the area of interest, 0 to 100, so a team can order the ground instead of guessing at it. High values mean "look here before there" — inside this area, for this baseline.</p>
+        <p class="act-note beam-note" data-i18n="act.priority.note">AOI-relative experimental screening only. Not probability, reserve/resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a calibrated cross-AOI score.</p>
+        <p class="act-meta mono" data-i18n="act.priority.meta">mvp_remote_sensing_priority_v1 · EPSG:32635 · 30 m · 36 × 36 km</p>
+        <a class="text-link" href="/pilot/"><span data-i18n="act.priority.deeper">Read the pilot method</span> <span aria-hidden="true">→</span></a>
       </div>
-      <div class="story-panel data-gap" data-visual-slot="structure" data-visual-status="data-gap">
-        <div class="gap-inner">
-          <p class="gap-mark mono" data-i18n="structure.gapMark">Data gap</p>
-          <p class="gap-copy" data-i18n="structure.gapCopy">No fault or lithology layer is published for this area. Nothing is drawn here on purpose: an invented structural line would look like evidence and would not be.</p>
-          <p class="gap-meta mono" data-i18n="structure.gapMeta">Structural context — optional support / data gap</p>
-        </div>
-      </div>
-    </section>
 
-    <section id="priority" class="story-section" aria-labelledby="priority-title">
-      <div class="story-beam">
-        <div class="beam-head">
-          <span class="beam-index mono">05</span>
-          <h2 id="priority-title" data-i18n="story.priority.title">Priority</h2>
+      <figure class="act-figure act-figure-contained" data-visual-slot="priority" data-visual-status="product-proof">
+        <div class="priority-frame">
+          <img
+            class="panel-image"
+            src="assets/proof/final/priority-800.webp"
+            srcset="assets/proof/final/priority-800.webp 800w, assets/proof/final/priority-1249.webp 1249w"
+            sizes="(min-width: 1100px) 624px, (min-width: 700px) 60vw, 90vw"
+            alt="Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area"
+            data-i18n-alt="alt.priority"
+            loading="lazy"
+            decoding="async"
+            width="800"
+            height="800"
+          />
+          <!--
+            The export's own legend, cropped losslessly from the master at native resolution and
+            placed inside the map frame. It is not recoloured or redrawn; it sits on its own light
+            plate because that is the background it was rendered against.
+
+            Deliberately NOT loading="lazy". Measured in the browser, this image stayed unloaded
+            even while sitting in the middle of the viewport — small, absolutely positioned inside
+            an overflow-hidden frame is a shape the lazy heuristic handles badly. A legend that
+            sometimes does not paint makes the map unreadable, and it is 13 KiB, so it is fetched
+            eagerly at low priority instead: no competition with the hero poster's LCP, no chance
+            of a map without its scale.
+          -->
+          <img
+            class="priority-legend"
+            src="assets/proof/final/priority-legend.png"
+            alt="Colour scale for the relative priority map, running from 0 at the dark end to 100 at the pale end"
+            data-i18n-alt="alt.priorityLegend"
+            loading="eager"
+            fetchpriority="low"
+            decoding="async"
+            width="732"
+            height="122"
+          />
         </div>
-        <div class="beam-body">
-          <p class="beam-statement" data-i18n="story.priority.statement">The thermal and alteration evidence is integrated into one within-AOI ranking surface, 0 to 100, so a team can order where to look first.</p>
-          <p class="beam-note" data-i18n="story.priority.note">AOI-relative experimental screening only. Not probability, reserve or resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a score calibrated across areas.</p>
-        </div>
-        <div class="beam-meta mono">
-          <p class="beam-meta-line" data-i18n="story.priority.meta">Score · mvp_remote_sensing_priority_v1</p>
-          <span class="scale-strip">
-            <img src="assets/proof/priority-scale.png" alt="" aria-hidden="true" loading="lazy" fetchpriority="low" decoding="async" width="652" height="28" />
-            <span class="scale-ends"><span>0</span><span>100</span></span>
-          </span>
-        </div>
-      </div>
-      <figure class="story-panel" data-visual-slot="priority" data-visual-status="product-proof" data-label-tone="dark">
-        <img
-          src="assets/proof/priority-1400.webp"
-          srcset="assets/proof/priority-800.webp 800w, assets/proof/priority-1400.webp 1400w"
-          sizes="100vw"
-          alt="Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area"
-          data-i18n-alt="alt.priority"
-          loading="lazy"
-          fetchpriority="low"
-          decoding="async"
-          width="1400"
-          height="1400"
-        />
         <figcaption class="scene-label">
-          <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
-          <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
+          <span data-i18n="scene.priority.place">Kızıldere — Büyük Menderes graben, Denizli, Türkiye</span>
+          <span data-i18n="scene.priority.coords">37.9794° N, 28.7907° E</span>
           <span class="scene-kind" data-i18n="label.priority">Remote-Sensing Relative Priority — Experimental Baseline</span>
-        </figcaption>
-      </figure>
-    </section>
-
-    <section id="geothermal" class="story-section" aria-labelledby="geothermal-title">
-      <div class="story-beam">
-        <div class="beam-head">
-          <span class="beam-index mono">06</span>
-          <h2 id="geothermal-title" data-i18n="story.geothermal.title">Geothermal</h2>
-        </div>
-        <div class="beam-body">
-          <p class="beam-statement" data-i18n="story.geothermal.statement">Kızıldere is the first geothermal application of that baseline: the priority surface over NASADEM relief, in an active pilot area in Denizli, Türkiye.</p>
-          <p class="beam-note" data-i18n="story.geothermal.note">First-application proof, not field validation, discovery, reserve or resource, drilling-target or drilling-success proof.</p>
-        </div>
-        <div class="beam-meta mono">
-          <p class="beam-meta-line" data-i18n="story.geothermal.meta">First application · Kızıldere pilot</p>
-          <span class="scale-strip">
-            <img src="assets/proof/geothermal-scale.png" alt="" aria-hidden="true" loading="lazy" fetchpriority="low" decoding="async" width="652" height="28" />
-            <span class="scale-ends"><span>0</span><span>100</span></span>
-          </span>
-        </div>
-      </div>
-      <figure class="story-panel" data-visual-slot="geothermal" data-visual-status="product-proof" data-label-tone="light">
-        <img
-          src="assets/proof/geothermal-1400.webp"
-          srcset="assets/proof/geothermal-800.webp 800w, assets/proof/geothermal-1400.webp 1400w"
-          sizes="100vw"
-          alt="Relative priority surface over shaded NASADEM relief across the Kızıldere geothermal pilot area"
-          data-i18n-alt="alt.geothermal"
-          loading="lazy"
-          fetchpriority="low"
-          decoding="async"
-          width="1400"
-          height="1400"
-        />
-        <figcaption class="scene-label">
-          <span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span>
-          <span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span>
-          <span class="scene-kind" data-i18n="label.geothermal">Kızıldere — first geothermal application of the experimental remote-sensing baseline</span>
         </figcaption>
       </figure>
     </section>

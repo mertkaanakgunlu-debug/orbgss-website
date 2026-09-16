@@ -1,5 +1,78 @@
 # Changelog
 
+## v1.0.0-rc1-web-005-cinematic-hero — 2026-09-16 (WEB-005, MER-93, branch `feat/web-005-cinematic-hero`)
+
+The pre-launch homepage release candidate. Consumes the accepted WEB-HERO-001D cinematic system
+(`e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`) and the accepted GEO-WEB-002 visual master package, and
+replaces the intermediate six-scene homepage with the locked four-act narrative. No new science, no
+new routes, no deployment. Full measurements in `tasks/WEB-005_REVIEW_EVIDENCE.md`.
+
+- **The homepage is now four acts:** cinematic acquisition hero → real Kızıldere EO context → a
+  compact three-card evidence trio → the priority/result climax. The WEB-001/002
+  `dark beam → full-width raster` rhythm is gone. It gave every scientific state equal weight and
+  stretched correct cartography until it read as texture; each act now owns a different composition,
+  and every explanation sits against the visual it describes instead of being inferred from scroll
+  position. `scripts/validate_site.py` fails the build if the old components, act count or act order
+  come back, or if the evidence act ever holds anything but three cards.
+- **The hero is the accepted WEB-HERO-001D sequence, re-rendered against the real pilot region.** The
+  design fixture that "names no site" is replaced by the real accepted Kızıldere centre
+  (37.9794 N, 28.7907 E) through the `aoi_injection_interface` that was built for exactly this, as a
+  configuration change. The camera was re-derived rather than retyped — an 8 km centre shift moves a
+  camera 1179 km up by about 25 m — and frames 241–276 add no new motion, only the accepted final
+  easing continued to a standstill so the shot ends on the frame that becomes the poster.
+- **The hero's 420 km footprint is a regional acquisition frame, not the analysis AOI.** The accepted
+  analysis AOI is 36 × 36 km. The fixture declares `is_analysis_aoi: false`, the hero validator fails
+  without that disclaimer, and public copy states the 36 km extent separately.
+- **No scientific raster is baked into the video, deliberately.** VP9 and H.264 ship 4:2:0 chroma at
+  a lossy bitrate, and the priority surface is read *by colour* against a governed `batlow` ramp — so
+  encoding it would quantise and subsample precisely the channel its meaning lives in. The video
+  carries the acquisition only; the result handoff is a page element shipping the exact checksummed
+  accepted derivative. The hero scene records this as `render_surface: "html_overlay"` with its
+  reason, and `validate_hero.py` enforces it. It also gives the viewer what the task asks for —
+  acquisition imagery and analytical result are visibly different kinds of thing.
+- **The hero says it is a render.** `Rendered orbital sequence — not sensor imagery`, in EN and TR, in
+  the caption, non-optional. `IMAGERY_RIGHTS.md` gains a third asset class for it: class B must never
+  be made prettier than the science, and class C must never be allowed to look like measurement.
+- **Safe display density is measured, not asserted — and the measurement caught a real violation.**
+  Across a 360 → 3840 CSS px sweep of the built page, an uncapped evidence card reached **767 CSS px
+  on a 2560 px display, 1534 device pixels** against a raster whose honest ceiling is 1249 — browser
+  upscaling of scientific content that the `sizes` attribute alone would never have revealed. Cards
+  are now capped at 624 px. Final worst cases: Act-2 context 1199 CSS px (2398 device px at 2×,
+  ceiling 2400), each evidence card 624 (1248, ceiling 1249), the priority map 623 (1246, ceiling
+  1249), the in-frame legend 248 against a 732 px native crop. Every figure is recorded in
+  `geo_web_002.assets[].web_005_placement.rendered`, and the validator now recomputes
+  `max_css_width × dpr ≤ device_px` so a later layout change cannot quietly widen a scientific visual.
+- **Act 4 is contained because it must be.** The accepted score raster is 1200 × 1200 cells at 30 m
+  drawn at 1249 px and cannot reach the ≥ 2000 px Act-4 target from accepted science. The composition
+  carries the weight instead of the raster being stretched, and the export's own governed legend sits
+  *inside* the map frame — no detached homepage colour bar, and the validator checks for one.
+- **One encode per visitor, and often none.** The hero ships a poster `<img>` and an empty `<video>`
+  whose candidates live in `data-` attributes: a `<source>` child starts fetching during parse, and
+  with two declared a browser can fetch both. `script.js` decides instead. Verified end-to-end with
+  stubbed conditions: `prefers-reduced-motion`, `saveData`, `effectiveType` ∈ {slow-2g, 2g, 3g} and
+  viewports ≤ 780 px each produce an intentional still hero with **zero video bytes**, and a refused
+  autoplay settles to the poster rather than leaving a blank frame. Reduced motion is honoured
+  mid-visit, and a 15 s timer guarantees the analytical result is never hidden behind a video that
+  failed.
+- **Structure/geology remains an explicit, subordinate data gap** — a short footnote under Act 3,
+  stated as score-invariant, not fabricated and not promoted into an act.
+- **Mandatory warnings are now checked per route that shows the asset**, in both languages and in
+  static HTML, rather than on the homepage only — which matters now that the WEB-002 proof assets
+  live on `/pilot/` and no longer on the homepage.
+- **Dead code removed:** the evidence layer switch (markup, ~90 lines of JS, CSS) is gone from every
+  page along with the detached score scale strip.
+- **Validators extended:** hero workspace 151 → 184 checks; the site validator gains the four-act
+  contract, the package-placement and safe-density checks, the hero media contract and the
+  per-route warning rule. The hero lane's isolation rule became a lane *boundary* — WEB-005 was
+  always named as its one authorized integration gate, so the pin moves to the WEB-005 baseline and
+  the rule becomes "public-site changes stay inside the declared integration write surface".
+- **EN/TR parity complete**, including accessible names, `alt` text and `<html lang>`; 23 focusables
+  in DOM order with no missing focus ring; landmarks and heading order clean; all six canonical
+  routes plus `/404.html` return 200 with no broken imagery; no horizontal overflow at any width.
+- No merge to `main`, no deployment, no Vercel or domain change, no DNS/MX/SPF/DKIM/DMARC change, no
+  analytics or backend, no framework or dependency, no new route, no new public claim, and no
+  WEB-006 work.
+
 ## v0.9.0-web-004-preview-hardening — 2026-09-16 (WEB-004, MER-92, branch `feat/web-004-preview-hardening`)
 
 Hardening and acceptance of the accepted six-route site. No redesign, no new routes, no change to

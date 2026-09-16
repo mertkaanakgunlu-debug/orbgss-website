@@ -50,16 +50,32 @@ ROUTES = {
 def canonical_url(route: str) -> str:
     return f"https://orbgss.com/{route + '/' if route else ''}"
 
-# WEB-001 vNext structure: story anchors, the pilot ledger and the trust/contact zone.
+# WEB-005 four-act structure: the act anchors, the evidence trio, the data-gap note, the pilot
+# ledger and the trust/contact zone. The WEB-001/002 six-scene gallery anchors (observe/platform,
+# geothermal as separate full-width scenes) are deliberately gone.
 REQUIRED_SECTION_IDS = {
-    "platform", "terrain", "evidence", "structure", "priority", "geothermal",
+    "hero", "context", "evidence", "terrain", "thermal", "alteration", "structure", "priority",
     "pilot", "solutions", "mineral", "environment", "company", "contact",
 }
+# WEB-005: the homepage's primary visual hierarchy is exactly these four acts, in this order.
+REQUIRED_ACTS = ["1", "2", "3", "4"]
+REQUIRED_ACT_SECTION_IDS = ["hero", "context", "evidence", "priority"]
 PROHIBITED_COPY = ["how it works"]
 # Temporary gallery panels must never be labelled as scientific outputs (WEB-001 acceptance 9).
 REQUIRED_TEMP_PANEL_STATUS = "temporary-gallery"
 # WEB-002: a story slot is real product proof, an explicit data gap, or still temporary gallery.
-ALLOWED_PANEL_STATUS = {REQUIRED_TEMP_PANEL_STATUS, "product-proof", "data-gap"}
+# WEB-005 adds the cinematic hero and the class-A Earth-observation context act.
+ALLOWED_PANEL_STATUS = {
+    REQUIRED_TEMP_PANEL_STATUS, "product-proof", "data-gap", "cinematic-hero", "eo-context",
+}
+# WEB-005: the exact visual slots the four-act homepage publishes, in order, after the hero.
+EXPECTED_HOMEPAGE_SLOTS = ["context", "terrain", "thermal", "alteration", "priority"]
+# WEB-005 hero media envelope, inherited from WEB-004 and not relaxed here.
+HERO_MEDIA_CEILINGS = {
+    "hero-webm": 3.0 * 1024 * 1024,
+    "hero-mp4": 4.5 * 1024 * 1024,
+    "hero-poster": 180 * 1024,
+}
 # WEB-002 claim discipline: wording that would overstate the accepted MVP score if it ever
 # appeared in visible homepage copy. The accepted profile is an AOI-relative screening surface.
 PROHIBITED_SCORE_COPY = [
@@ -90,6 +106,15 @@ class SiteParser(HTMLParser):
         self.text: list[str] = []
         self.claim_text: list[str] = []
         self.visual_slots: list[tuple[str, str]] = []
+        # WEB-005: data-act on each major act section, in document order, and the evidence cards
+        # inside the one permitted card composition.
+        self.acts: list[str] = []
+        self.evidence_cards = 0
+        # <video> elements and the hero media URLs they declare, so the media envelope and the
+        # "never download both encodes" rule can be checked from the markup.
+        self.video_count = 0
+        self.eager_video_sources: list[str] = []
+        self.hero_media: dict[str, str] = {}
         # Static text carried by each data-i18n element, so warning coverage can be proved for a
         # reader with JavaScript disabled, not just for the dictionary.
         self.i18n_text: dict[str, str] = {}
@@ -125,6 +150,22 @@ class SiteParser(HTMLParser):
             self.ids.add(str(data["id"]))
         if data.get("data-visual-slot"):
             self.visual_slots.append((str(data["data-visual-slot"]), str(data.get("data-visual-status") or "")))
+        if data.get("data-act"):
+            self.acts.append(str(data["data-act"]))
+        if tag == "li" and "evidence-card" in str(data.get("class") or "").split():
+            self.evidence_cards += 1
+        # WEB-005 hero media. The encodes are attached by script.js at runtime, so the markup
+        # carries them as data- attributes; a <source> child or a src here would mean the browser
+        # starts fetching video during parse, which is exactly what the media contract forbids.
+        if tag == "video":
+            self.video_count += 1
+            for attr in ("data-hero-webm", "data-hero-mp4"):
+                if data.get(attr):
+                    self.hero_media[attr] = str(data[attr])
+            if data.get("src"):
+                self.eager_video_sources.append(str(data["src"]))
+        if tag == "source" and data.get("src") and "video" in str(data.get("type") or ""):
+            self.eager_video_sources.append(str(data["src"]))
         if tag == "img" and data.get("src"):
             self.img_srcs.append(str(data["src"]))
         # WEB-004: a deferred layer (data-src, promoted by script.js when the section is reached)
@@ -257,10 +298,23 @@ def main() -> int:
             if deriv.get("bytes") not in (None, path.stat().st_size):
                 fail(f"scene derivative byte size mismatch for {rel}", errors)
 
+    # WEB-005 Act 2 publishes the accepted GEO-WEB-002 natural-colour context master, which is
+    # recorded under geo_web_002 rather than in the four locked WEB-001 scenes. It carries the
+    # same record shape and is checksummed by the package block further down, so it is valid
+    # provenance for an <img> here too.
+    package_context_paths: set[str] = set()
+    for group in ("context_scenes", "assets"):
+        for entry in manifest.get("geo_web_002", {}).get(group, []):
+            if entry.get("local_file"):
+                package_context_paths.add(str(entry["local_file"]))
+            for deriv in entry.get("derivatives", []):
+                if deriv.get("path"):
+                    package_context_paths.add(str(deriv["path"]))
+
     manifest_html_paths = {
         src for src in parser.img_srcs + parser.img_srcsets if src.startswith("assets/imagery/")
     }
-    extra = manifest_html_paths - scene_paths - scene_derivative_paths
+    extra = manifest_html_paths - scene_paths - scene_derivative_paths - package_context_paths
     if extra:
         fail(f"HTML imagery paths missing from provenance manifest: {sorted(extra)}", errors)
 
@@ -269,15 +323,37 @@ def main() -> int:
         if href.startswith("#") and len(href) > 1 and href[1:] not in parser.ids:
             fail(f"broken internal fragment link: {href}", errors)
 
-    # Every story panel is a declared visual slot; temporary panels carry the temporary status so
+    # Every panel is a declared visual slot; temporary panels carry the temporary status so
     # WEB-002 can find them and so nobody silently promotes a gallery image to an evidence output.
     story_slots = [slot for slot in parser.visual_slots if slot[0] != "hero"]
-    expected_slots = ["observe", "terrain", "evidence", "structure", "priority", "geothermal"]
-    if [slot for slot, _ in story_slots] != expected_slots:
-        fail(f"story visual slots out of order or missing: {[slot for slot, _ in story_slots]}", errors)
-    for slot, status in story_slots:
+    if [slot for slot, _ in story_slots] != EXPECTED_HOMEPAGE_SLOTS:
+        fail(f"homepage visual slots out of order or missing: "
+             f"{[slot for slot, _ in story_slots]} != {EXPECTED_HOMEPAGE_SLOTS}", errors)
+    for slot, status in parser.visual_slots:
         if status not in ALLOWED_PANEL_STATUS:
             fail(f"visual slot {slot!r} has unknown data-visual-status {status!r}", errors)
+
+    # ------------------------------------------------------------------
+    # WEB-005: the homepage's primary visual hierarchy is exactly four major acts, in the locked
+    # order Hero -> real AOI context -> compact evidence trio -> priority/result climax. This is
+    # the check that keeps a fifth full-width scene, or a reordering, from creeping back in: the
+    # superseded six-scene gallery is precisely what happens when nothing enforces the count.
+    # ------------------------------------------------------------------
+    if parser.acts != REQUIRED_ACTS:
+        fail(f"homepage must publish exactly four acts in order; found {parser.acts}", errors)
+    for section_id in REQUIRED_ACT_SECTION_IDS:
+        if section_id not in parser.ids:
+            fail(f"missing act anchor: #{section_id}", errors)
+    # Act 3 is the ONE deliberate card composition on the site, and it is exactly three evidence
+    # cards. Four would be a card wall; two would not be the accepted composition.
+    if parser.evidence_cards != 3:
+        fail(f"the evidence act must hold exactly three cards, found {parser.evidence_cards}",
+             errors)
+    # The superseded rhythm, named so it cannot come back by accident.
+    for retired in ("story-section", "story-beam", "layer-switch"):
+        if f'class="{retired}' in html or f' {retired}"' in html:
+            fail(f"superseded WEB-001/002 homepage component {retired!r} is back on the homepage",
+                 errors)
 
     # ------------------------------------------------------------------
     # WEB-002 product proof: every scientific visual on the page must be an
@@ -359,50 +435,15 @@ def main() -> int:
             return const_values.get(const_ref.group(1))
         return None
 
-    for asset in proof_assets:
-        aid = asset.get("id", "<unknown>")
-        coverage = asset.get("visible_warning")
-        if not coverage:
-            fail(f"proof asset {aid!r} has no visible_warning record; every mandatory warning "
-                 f"must be bound to visible page copy", errors)
-            continue
-        key = str(coverage.get("i18n_key", ""))
-        if not key:
-            fail(f"proof asset {aid!r} visible_warning has no i18n_key", errors)
-            continue
-        static_text = parser.i18n_text.get(key)
-        if static_text is None:
-            fail(f"proof asset {aid!r} warning key {key!r} is not rendered by index.html", errors)
-            continue
-        for lang in ("en", "tr"):
-            value = dictionary_value(lang, key)
-            if value is None:
-                fail(f"warning key {key!r} is missing from the {lang!r} dictionary", errors)
-                continue
-            for term in coverage.get(f"required_terms_{lang}", []):
-                if term not in value:
-                    fail(f"proof asset {aid!r}: {lang} warning lost required wording {term!r}",
-                         errors)
-        for term in coverage.get("required_terms_en", []):
-            if term not in static_text:
-                fail(f"proof asset {aid!r}: static HTML warning under {key!r} lost required "
-                     f"wording {term!r} (no-JS readers would not see it)", errors)
-
-    # Nothing scientific may be shown that is not recorded above.
-    html_proof_paths = {src for src in parser.img_srcs if src.startswith("assets/proof/")}
-    unrecorded = html_proof_paths - proof_paths
-    if unrecorded:
-        fail(f"HTML proof imagery missing from web_002.proof_assets: {sorted(unrecorded)}", errors)
+    # The warning-coverage check needs every route's parse, so it runs further down, once
+    # route_parsers exists — a mandatory warning has to be visible wherever its asset is shown,
+    # which after WEB-005 is no longer always the homepage.
 
     # Data-gap slots are declared, so an absent layer can never be quietly filled later.
     gap_slots = {str(gap.get("homepage_slot")) for gap in web002.get("data_gaps", [])}
     for slot, status in story_slots:
         if status == "data-gap" and slot not in gap_slots:
             fail(f"slot {slot!r} is marked data-gap but has no web_002.data_gaps record", errors)
-        if status == "product-proof" and not any(
-            asset.get("homepage_slot") == slot for asset in proof_assets
-        ):
-            fail(f"slot {slot!r} is marked product-proof but has no proof asset", errors)
 
     claim_text = " ".join(parser.claim_text).lower()
     for phrase in PROHIBITED_SCORE_COPY:
@@ -500,14 +541,135 @@ def main() -> int:
             if dictionary_value(lang, key) is None:
                 fail(f"i18n key {key!r} is missing from the {lang!r} dictionary", errors)
 
-    # Reused WEB-002 proof imagery on any deeper route must still be recorded provenance —
-    # extends the index.html-only provenance check above across every public page.
+    # ------------------------------------------------------------------
+    # Scientific imagery provenance, site-wide. Every scientific raster on any public route must
+    # be a recorded derivative — of the accepted WEB-002 proof package, or of the accepted
+    # GEO-WEB-002 final visual master package that WEB-005 binds. Both carry the same discipline
+    # (export id, master checksum, per-derivative checksum), so both are valid provenance; what
+    # is not valid is a scientific-looking file that belongs to neither.
+    # ------------------------------------------------------------------
+    package_derivative_paths: set[str] = set()
+    for asset in manifest.get("geo_web_002", {}).get("assets", []):
+        for deriv in asset.get("derivatives", []):
+            if deriv.get("path"):
+                package_derivative_paths.add(str(deriv["path"]))
+    recorded_science_paths = proof_paths | package_derivative_paths
+
+    def science_srcs(route_parser: SiteParser) -> set[str]:
+        srcs = route_parser.img_srcs + route_parser.img_srcsets
+        return {s.lstrip("/") for s in srcs if s.lstrip("/").startswith("assets/proof/")}
+
     all_proof_srcs: set[str] = set()
     for route_parser in route_parsers.values():
-        all_proof_srcs |= {src.lstrip("/") for src in route_parser.img_srcs if src.lstrip("/").startswith("assets/proof/")}
-    unrecorded_site_wide = all_proof_srcs - proof_paths
+        all_proof_srcs |= science_srcs(route_parser)
+    unrecorded_site_wide = all_proof_srcs - recorded_science_paths
     if unrecorded_site_wide:
-        fail(f"proof imagery referenced outside web_002.proof_assets: {sorted(unrecorded_site_wide)}", errors)
+        fail(f"scientific imagery referenced with no provenance record in web_002.proof_assets "
+             f"or geo_web_002.assets: {sorted(unrecorded_site_wide)}", errors)
+
+    # ------------------------------------------------------------------
+    # Mandatory scientific warnings must be visible on EVERY route that shows the asset, in both
+    # languages, and in the static HTML as well as the dictionary — so they survive with
+    # JavaScript disabled and cannot be quietly dropped by a later copy edit. Before WEB-005 this
+    # was an index.html check; the homepage is no longer the only place these assets appear, and
+    # an asset shown on /pilot/ with its warning left behind on the homepage would be worse than
+    # the original gap.
+    # ------------------------------------------------------------------
+    def check_warning_coverage(label: str, aid: str, coverage: dict, where: list[str]) -> None:
+        key = str(coverage.get("i18n_key", ""))
+        if not key:
+            fail(f"{label} {aid!r} visible_warning has no i18n_key", errors)
+            return
+        for lang in ("en", "tr"):
+            value = dictionary_value(lang, key)
+            if value is None:
+                fail(f"warning key {key!r} is missing from the {lang!r} dictionary", errors)
+                continue
+            for term in coverage.get(f"required_terms_{lang}", []):
+                if term not in value:
+                    fail(f"{label} {aid!r}: {lang} warning lost required wording {term!r}", errors)
+        for route in where:
+            static_text = route_parsers[route].i18n_text.get(key)
+            if static_text is None:
+                fail(f"{label} {aid!r} is shown on {ROUTES[route]} but its warning key {key!r} "
+                     f"is not rendered there", errors)
+                continue
+            for term in coverage.get("required_terms_en", []):
+                if term not in static_text:
+                    fail(f"{label} {aid!r}: static HTML warning under {key!r} lost required "
+                         f"wording {term!r} on {ROUTES[route]} (no-JS readers would not see it)",
+                         errors)
+
+    for asset in proof_assets:
+        aid = asset.get("id", "<unknown>")
+        coverage = asset.get("visible_warning")
+        if not coverage:
+            fail(f"proof asset {aid!r} has no visible_warning record; every mandatory warning "
+                 f"must be bound to visible page copy", errors)
+            continue
+        own = {str(d.get("path", "")) for d in asset.get("derivatives", [])}
+        shown_on = [r for r, rp in route_parsers.items() if science_srcs(rp) & own]
+        check_warning_coverage("proof asset", aid, coverage, shown_on)
+
+    # ------------------------------------------------------------------
+    # WEB-005: what the homepage actually binds from the accepted GEO-WEB-002 package. Placement
+    # is where a publication record stops being paperwork: an asset may only appear on a route if
+    # it declares that placement, carries its mandatory warning as visible copy there, and is
+    # given a CSS width that keeps it at or under the device-pixel ceiling its own record calls
+    # honest — including on a 2x display, which is where "looks crisp on my laptop" quietly
+    # becomes browser upscaling.
+    # ------------------------------------------------------------------
+    def all_srcs(route_parser: SiteParser) -> set[str]:
+        return {s.lstrip("/") for s in route_parser.img_srcs + route_parser.img_srcsets}
+
+    for asset in manifest.get("geo_web_002", {}).get("assets", []):
+        aid = asset.get("id", "<unknown>")
+        own = {str(d.get("path", "")) for d in asset.get("derivatives", [])}
+        if asset.get("master", {}).get("file"):
+            own.add(str(asset["master"]["file"]))
+        # The Act-2 context master lives under assets/imagery/, not assets/proof/, so placement
+        # is resolved against every image a route publishes rather than the proof prefix alone.
+        shown_on = [r for r, rp in route_parsers.items() if all_srcs(rp) & own]
+        placement = asset.get("web_005_placement")
+        if not shown_on:
+            if placement and placement.get("status") == "placed":
+                fail(f"geo_web_002 asset {aid!r} claims a WEB-005 placement but appears on no "
+                     f"route", errors)
+            continue
+        if not placement:
+            fail(f"geo_web_002 asset {aid!r} is published on {[ROUTES[r] for r in shown_on]} "
+                 f"with no web_005_placement record", errors)
+            continue
+        for key in ("status", "act", "homepage_slot", "visible_warning", "rendered"):
+            if not placement.get(key):
+                fail(f"geo_web_002 asset {aid!r} web_005_placement missing field: {key}", errors)
+        if placement.get("visible_warning"):
+            check_warning_coverage("geo_web_002 asset", aid, placement["visible_warning"],
+                                   shown_on)
+        # The safe-density decision, checked rather than asserted.
+        ceiling = asset.get("max_safe_rendered_px", {}).get("device_px")
+        rendered = placement.get("rendered", {})
+        for field in ("max_css_width", "device_pixel_ratio_considered", "selected_derivative"):
+            if rendered.get(field) in (None, ""):
+                fail(f"geo_web_002 asset {aid!r} web_005_placement.rendered missing {field}",
+                     errors)
+        css_width = rendered.get("max_css_width")
+        dpr = rendered.get("device_pixel_ratio_considered")
+        if isinstance(ceiling, int) and isinstance(css_width, int) and isinstance(dpr, (int, float)):
+            if css_width * dpr > ceiling:
+                fail(f"geo_web_002 asset {aid!r} is laid out at {css_width} CSS px, which is "
+                     f"{int(css_width * dpr)} device px at {dpr}x and exceeds its declared "
+                     f"{ceiling} px ceiling", errors)
+        selected = str(rendered.get("selected_derivative", ""))
+        if selected and selected not in own:
+            fail(f"geo_web_002 asset {aid!r} names a selected derivative that is not its own: "
+                 f"{selected}", errors)
+        # A detached homepage colour bar is exactly what the presentation authority prohibits.
+        if asset.get("id") == "priority" and "" in shown_on:
+            home = route_html[""]
+            if 'class="scale-strip"' in home:
+                fail("a detached scientific scale strip is back on the homepage; a necessary "
+                     "legend belongs inside its own visual frame", errors)
 
     # Claim discipline and the card/icon-grid guard apply to every public route, not just the
     # homepage (which was already scanned above, with its beam-note exclusion).
@@ -528,6 +690,73 @@ def main() -> int:
         suspicious_route = re.findall(r'class="[^"]*\b(?:card-grid|feature-grid|icon-grid)\b[^"]*"', text, flags=re.I)
         if suspicious_route:
             fail(f"{label}: generic card/icon grid class detected; conflicts with locked design", errors)
+
+    # ------------------------------------------------------------------
+    # WEB-005 hero media contract. The ceilings are WEB-004's and are not relaxed here. Two things
+    # beyond size matter and are checkable from the markup and the manifest:
+    #   - no browser may be made to download both encodes, so neither a <source> child nor a src
+    #     attribute may appear on the hero video — the encodes are attached at runtime, one only;
+    #   - every shipped media file is recorded with codec, dimensions, rate, duration, bytes and
+    #     SHA-256, recomputed here, exactly like every raster on the site.
+    # ------------------------------------------------------------------
+    hero_media = manifest.get("web_005", {}).get("hero_media", [])
+    if parser.eager_video_sources:
+        fail(f"hero video declares eager sources {parser.eager_video_sources}; a <source> child "
+             f"or src attribute makes the browser fetch an encode during parse, and with both "
+             f"encodes declared it can fetch both", errors)
+    if hero_media:
+        media_by_role = {str(m.get("role", "")): m for m in hero_media}
+        for role, ceiling in HERO_MEDIA_CEILINGS.items():
+            if role not in media_by_role:
+                fail(f"web_005.hero_media has no {role!r} record", errors)
+        for media in hero_media:
+            role = str(media.get("role", "<unknown>"))
+            rel = str(media.get("path", ""))
+            required = ["role", "path", "container", "codec", "width", "height",
+                        "frame_rate", "duration_seconds", "bytes", "sha256"]
+            # A poster is a still: frame rate and duration are meaningless for it. Every poster
+            # candidate is a poster, including the narrow one a phone is served.
+            is_poster = role.startswith("hero-poster")
+            if is_poster:
+                required = [k for k in required if k not in ("frame_rate", "duration_seconds")]
+            for key in required:
+                if media.get(key) in (None, ""):
+                    fail(f"hero media {role!r} missing field: {key}", errors)
+            path = ROOT / rel
+            if not rel or not path.exists():
+                fail(f"hero media missing from repository: {rel}", errors)
+                continue
+            actual = sha256_of(path)
+            if str(media.get("sha256", "")) != actual:
+                fail(f"hero media checksum mismatch for {rel}: "
+                     f"manifest {str(media.get('sha256',''))[:12]}… != file {actual[:12]}…",
+                     errors)
+            size = path.stat().st_size
+            if media.get("bytes") not in (None, size):
+                fail(f"hero media byte size mismatch for {rel}", errors)
+            # Every poster candidate is held to the poster ceiling, not just the widest one:
+            # a phone that is served an oversized poster is exactly the case the budget exists for.
+            ceiling = HERO_MEDIA_CEILINGS.get(
+                role, HERO_MEDIA_CEILINGS["hero-poster"] if is_poster else None)
+            if ceiling is not None and size > ceiling:
+                fail(f"hero media {rel} is {size / 1048576:.2f} MiB, over the "
+                     f"{ceiling / 1048576:.2f} MiB ceiling for {role!r}", errors)
+        # Everything the markup points at must be one of those recorded files.
+        recorded_media = {str(m.get("path", "")) for m in hero_media}
+        for attr, url in parser.hero_media.items():
+            if url.lstrip("/") not in recorded_media:
+                fail(f"hero {attr} points at {url!r}, which has no web_005.hero_media record",
+                     errors)
+        # The poster is real shipped imagery and the LCP element; it is checked like any other.
+        poster_paths = {src.lstrip("/") for src in parser.img_srcs + parser.img_srcsets
+                        if src.lstrip("/").startswith("assets/hero/")}
+        unrecorded_poster = poster_paths - recorded_media
+        if unrecorded_poster:
+            fail(f"hero imagery missing from web_005.hero_media: {sorted(unrecorded_poster)}",
+                 errors)
+    elif parser.hero_media:
+        fail("index.html declares hero media but the manifest has no web_005.hero_media record",
+             errors)
 
     # sitemap.xml must list every canonical public route.
     sitemap_path = ROOT / "sitemap.xml"

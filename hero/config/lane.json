@@ -8,6 +8,8 @@
   "integration_authority": "tasks/WEB-005_CINEMATIC_HERO.md",
   "consumed_hero_evidence_head": "e95fdcac7cac82e597d40dab4cdc96ce1a6b319e",
   "consumed_hero_implementation_head": "93e17f6293aeb8bdc882dfd28221ed786b772df1",
+  "consumed_hero_acceptance_record": "573f4f10cbe397e8f3bdf6611deea5cd2660dcae:tasks/WEB-HERO-001D_TERMINAL_PRODUCT_ACCEPTANCE.md",
+  "consumed_hero_acceptance_note": "The task authority cites this record at e95fdca, where the path does not exist; it was published one documentation-only commit later on the same branch. Pointer defect only - nothing about what was accepted changes. See docs/WEB-HERO-001D_ACCEPTANCE_POINTER_CORRECTION.md.",
   "baseline_commit": "d2421a772f2e4cfa38c85dd5ee71a419c5160838",
   "data_state": "accepted_data",
   "write_surface": {

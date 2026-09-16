@@ -16,6 +16,10 @@ Before changing code, read in this order:
 
 Then inspect `index.html`, `styles.css`, `script.js`, and run the site validator before editing.
 
+Hero production work also reads `hero/README.md` and `hero/config/lane.json`, and is validated by
+`py -3.14 hero/scripts/validate_hero.py`. Blender 4.5 LTS is local production tooling, never a
+site runtime dependency.
+
 ## Repository intent
 
 This repository contains the public OrbGSS product landing page. It is intentionally a small static site: semantic HTML, CSS and minimal vanilla JavaScript. Do not introduce React, Next.js, Tailwind, a component framework, package manager dependencies, animation libraries or a CMS merely for convenience. A stack migration requires explicit approval.
@@ -27,10 +31,14 @@ These are requirements, not suggestions:
 - The page is image-led and extremely restrained.
 - Full-width real Earth-observation imagery dominates the page.
 - Hero text may overlay the first image; story panels after the hero are clean.
-- Story copy appears on dark full-width technical beams between images (index, title, one or two sentences, monospace descriptor). The homepage sequence is Hero → 01 Observe → 02 Terrain → 03 Evidence → 04 Structure → 05 Priority → 06 Geothermal → Pilot ledger → Company/Trust → Contact → Footer (WEB-001).
-- Each image carries its location and coordinates directly on the image, bottom-right, as bare monospace text (no card, box, band or background container). The third line names what the layer is: the accepted public label on a product-proof panel, `Natural-color composite` on gallery imagery. Sensor and acquisition date stay in the manifest and are not shown on the homepage. There is no separate metadata strip below any image. Caption tone (`data-label-tone`) is chosen per panel from the measured luminance under the caption, because the cartographic exports are pale where the satellite photography was dark.
-- Story panels 01–06 are product proof (WEB-002): real OrbGSS cartographic exports of the Kızıldere pilot AOI, materialized through the accepted GEO-039 Workbench export path and recorded in `assets/imagery/sources.json` under `web_002.proof_assets` with export id, master SHA-256 and per-derivative SHA-256. Never add a scientific visual without that record; the validator recomputes the checksums.
-- `04 Structure` is a deliberate data-gap panel with no image. No public-safe fault or lithology master is authorized, and the gap is score-invariant. Do not fill it.
+- The homepage has exactly **four major visual acts**, in this order: Act 1 cinematic acquisition hero → Act 2 real Kızıldere EO context → Act 3 compact three-card evidence trio → Act 4 priority/result climax (WEB-005, `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md`). Supporting pilot-ledger, company/trust and contact sections follow and must stay visually subordinate. The WEB-001/002 six-scene `dark beam → full-width raster` gallery is superseded and must not return; `scripts/validate_site.py` fails if it does.
+- Each act owns a different composition on purpose — full-bleed hero, coupled split, card trio, contained figure. Do not collapse them back into one repeated template. Act 3 is the single permitted card composition on the whole site: exactly three cards, never a feature grid.
+- The dark technical beam grammar survives on the deep routes (`/platform/`, `/pilot/`, …), not as a repeated homepage rhythm.
+- Each image carries its location and coordinates directly on the image, bottom-right, as bare monospace text (no card, box, band or background container). The third line names what the layer is: the accepted public label on a product-proof panel, `Natural-color composite` on gallery imagery, and `Rendered orbital sequence — not sensor imagery` on the cinematic hero, which is a render and must always say so. Sensor and acquisition date stay in the manifest and are not shown on the homepage. There is no separate metadata strip below any image. Caption tone (`data-label-tone`) is chosen per panel from the measured luminance under the caption, because the cartographic exports are pale where the satellite photography was dark.
+- Every scientific visual is product proof: a real OrbGSS cartographic export of the Kızıldere pilot AOI, materialized through the accepted GEO-039 Workbench export path and recorded in `assets/imagery/sources.json` — under `web_002.proof_assets` (WEB-002) or `geo_web_002.assets` (the accepted final master package the homepage now binds), with export id, master SHA-256 and per-derivative SHA-256. Never add a scientific visual without that record; the validator recomputes the checksums.
+- No class-B scientific raster may be baked into the hero video, or into any other lossy encode. Lossy compression changes governed colours and values. Ship the accepted derivative as its own checksummed file and composite it in the page.
+- Class-B assets have a hard honest-render ceiling of **1249 device pixels** on the long axis (a 1200 × 1200 cell grid at 30 m drawn at 1249 px). Design against 624 CSS px so a 2× display still fits. Answer a bigger presentation with a contained composition, never a stretch. Each asset records its own `max_safe_rendered_px` and `web_005_placement.rendered`, and the validator checks the layout against them.
+- Structure/geology is a deliberate data gap. No public-safe fault or lithology master is authorized, and the gap is score-invariant. Since WEB-005 it is a short subordinate footnote under Act 3 rather than a full scene. Do not fill it, and do not promote it back into an act.
 - The published score is `mvp_remote_sensing_priority_v1`, public label **Remote-Sensing Relative Priority — Experimental Baseline**: a deterministic 0–100 within-AOI screening surface. Never call it probability, Full Prospectivity, a reserve/resource estimate, discovery or drilling-success likelihood, or a cross-AOI calibrated score. Every proof panel carries its mandatory scientific warning as visible EN/TR copy.
 - Desktop navigation is right-aligned in exactly this order: Platform → Solutions (dropdown: Geothermal Exploration, Mineral Exploration, Environmental & Land Intelligence) → Pilot → Company → Contact → EN | TR. Every item resolves to a real anchor; no flags in the language switch.
 - The homepage is bilingual (English default, Turkish) via the lightweight client-side dictionary in `script.js`. Every new visible string needs both languages.
@@ -62,7 +70,7 @@ If a requested change conflicts with these rules, stop and ask for explicit desi
 
 ## Branching
 
-No feature work on `main`. vNext tasks (WEB-001 → WEB-006) land on feature branches and are reviewed before merge. WEB-001 is accepted at `677bfa7`; WEB-002 is accepted (implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`, merged to `main`); WEB-003 is REVIEW_READY on `feat/web-003-public-site-depth`. The cinematic hero is WEB-005; production DNS cutover is WEB-006.
+No feature work on `main`. vNext tasks (WEB-001 → WEB-006) land on feature branches and are reviewed before merge. WEB-001 is accepted at `677bfa7`; WEB-002 is accepted (implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`, merged to `main`); WEB-003 and WEB-004 are accepted; GEO-WEB-002 is Science-accepted at `ea693c29762279131fbed005e832c5ff2dca587b`. WEB-HERO-001D is terminally accepted at evidence HEAD `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`. WEB-005 / MER-93 (cinematic hero + four-act homepage release candidate) is on `feat/web-005-cinematic-hero`. Production DNS cutover is WEB-006 / MER-95 and remains a separate human CTO gate.
 
 ## Deployment safety
 

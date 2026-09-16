@@ -86,8 +86,9 @@ def _neutral_color_management(scene) -> None:
 
 
 def build_sequencer_scene(frames, rate: int, width: int, height: int):
-    scene = bpy.data.scenes.new("web005_encode")
-    bpy.context.window.scene = scene
+    # Blender runs headless here, so bpy.context.window is None and there is no window whose scene
+    # could be switched. Configure the context scene itself instead of creating a second one.
+    scene = bpy.context.scene
     scene.render.resolution_x = width
     scene.render.resolution_y = height
     scene.render.resolution_percentage = 100
@@ -97,8 +98,11 @@ def build_sequencer_scene(frames, rate: int, width: int, height: int):
     scene.frame_end = len(frames)
     _neutral_color_management(scene)
 
-    scene.sequence_editor_create()
-    strip = scene.sequence_editor.sequences.new_image(
+    editor = scene.sequence_editor_create()
+    # Blender 4.5 exposes this collection as `sequences`; later versions renamed it to `strips`.
+    # Ask for whichever exists rather than pinning the encoder to one Blender release.
+    collection = getattr(editor, "strips", None) or editor.sequences
+    strip = collection.new_image(
         name="hero", filepath=str(frames[0]), channel=1, frame_start=1,
     )
     for path in frames[1:]:
@@ -206,7 +210,7 @@ def write_poster(source: Path, out_path: Path, width: int, height: int,
                  ceiling: int = POSTER_CEILING) -> dict:
     """The poster is the LCP element, so it gets the same treatment as the encodes: find the
     highest quality that fits, rather than picking a number and hoping."""
-    scene = bpy.data.scenes.new("web005_poster_" + str(width))
+    scene = bpy.context.scene
     _neutral_color_management(scene)
     settings = scene.render.image_settings
     settings.file_format = "WEBP"
@@ -260,6 +264,10 @@ def main() -> None:
     parser.add_argument("--out-dir", default="assets/hero")
     parser.add_argument("--stem", default="orbgss-hero")
     parser.add_argument("--record", default="hero/evidence/production_media.json")
+    parser.add_argument("--width", type=int, default=None,
+                        help="override the delivered encode width (the profile's render width "
+                             "is the default; a smaller delivery buys bitrate per pixel)")
+    parser.add_argument("--height", type=int, default=None)
     args = parser.parse_args(hc.argv_after_double_dash())
 
     scene_config = hc.load_scene_config()
@@ -269,8 +277,8 @@ def main() -> None:
 
     render_config = hc.load_render_config()
     profile = render_config["profiles"][args.profile]
-    width = int(profile["resolution_x"])
-    height = int(profile["resolution_y"])
+    width = int(args.width or profile["resolution_x"])
+    height = int(args.height or profile["resolution_y"])
 
     frames_dir = hc.REPO_ROOT / args.frames_dir
     frames = frame_sequence(frames_dir, args.scene, args.profile)
@@ -299,6 +307,7 @@ def main() -> None:
     # a visitor sees before playback is the same composition playback settles into. Starting on
     # frame 1 would show a distant Earth that the copy does not describe.
     poster_source = frames[-1]
+    encode_scene.render.image_settings.file_format = "PNG"
     media.append(write_poster(poster_source, out_dir / "hero-poster-1600.webp", 1600, 900))
     media.append(write_poster(poster_source, out_dir / "hero-poster-900.webp", 900, 506))
 
@@ -320,6 +329,8 @@ def main() -> None:
             "note": "The stills already carry the render view transform; the encoder must not "
                     "apply it a second time.",
         },
+        "render_resolution": [int(profile["resolution_x"]), int(profile["resolution_y"])],
+        "delivered_resolution": [width, height],
         "blender_version": bpy.app.version_string,
         "python_version": sys.version.split()[0],
         "media": media,
