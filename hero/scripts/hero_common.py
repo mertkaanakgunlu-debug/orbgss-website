@@ -104,7 +104,7 @@ def resolve_scene_spec(scene_id: str, scenes: dict, _seen=None) -> dict:
     if scene_id not in scenes:
         raise KeyError(
             "scene " + repr(scene_id) + " is not defined in "
-            + hc.relpath(hc.SCENE_CONFIG)
+            + relpath(SCENE_CONFIG)
             + "; available: " + repr(sorted(scenes))
         )
     _seen = _seen or []

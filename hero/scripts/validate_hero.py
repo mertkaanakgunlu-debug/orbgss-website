@@ -23,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import aoi_system as aoi  # noqa: E402
 import hero_common as hc  # noqa: E402
+import shot_plan  # noqa: E402
 
 MAX_TRACKED_BYTES = 4 * 1024 * 1024
 
@@ -583,6 +584,239 @@ def check_pre_data_boundary(report: Report, scene_config, manifest) -> None:
         )
 
 
+def check_continuous_sequence(report: Report, scene_config) -> None:
+    """WEB-HERO-001D: the pre-data animatic must be one continuous shot.
+
+    Everything here is a *structural* claim that can be settled from
+    configuration alone, without Blender and without rendering. The visual
+    claims -- does the move feel premium, does the limb read as air -- belong
+    to the stills and the animatic, and the numerical motion claims belong to
+    ``audit_shot.py``, which measures the evaluated camera.
+
+    What configuration can prove is that the shot is not secretly two shots:
+    one scene, one AOI system present across the whole range, one monotonic
+    camera path, and beats that are actually ordered the way the narrative
+    claims.
+    """
+    report.section("continuous pre-data sequence")
+    scenes = (scene_config or {}).get("scenes", {})
+    animatic_ids = [
+        scene_id
+        for scene_id, spec in scenes.items()
+        if spec.get("role") == "hero_predata_animatic"
+    ]
+    if not animatic_ids:
+        return
+
+    for scene_id in sorted(animatic_ids):
+        spec = hc.resolve_scene_spec(scene_id, scenes)
+        label = "scene " + scene_id + " "
+
+        animation = spec.get("animation", {})
+        start = int(animation.get("frame_start", 0))
+        end = int(animation.get("frame_end", 0))
+        rate = int(animation.get("frame_rate", 0))
+        duration = (end - start + 1) / rate if rate else 0.0
+        report.check(
+            end > start and rate > 0,
+            label + "declares a frame range and rate",
+            "start " + str(start) + " end " + str(end) + " rate " + str(rate),
+        )
+        # The task envelope: the pre-data portion has to fit inside an
+        # approximately 8-12 second complete hero without forcing rushed
+        # motion, and has to leave the later layer reveal somewhere to live.
+        report.check(
+            6.0 <= duration <= 12.0,
+            label + "duration fits the hero envelope",
+            str(round(duration, 3)) + " s",
+        )
+
+        # One AOI system, present for the whole range. Two would be a cut
+        # dressed up as a move.
+        aoi_objects = [o for o in spec.get("objects", []) if o.get("type") == "aoi_system"]
+        report.check(
+            len(aoi_objects) == 1,
+            label + "carries exactly one AOI system",
+            str(len(aoi_objects)) + " found",
+        )
+
+        beats = animation.get("beats", {})
+        # Narrative order, which is the order the beats must *start* in. The
+        # approach begins while acquisition is still resolving and runs under
+        # the scan, so these overlap heavily; only their starts are ordered.
+        required_beats = (
+            "earth_establish",
+            "satellite_entrance",
+            "aoi_acquisition",
+            "camera_approach",
+            "scan_sweep",
+            "regional_hold",
+        )
+        missing = [beat for beat in required_beats if beat not in beats]
+        report.check(
+            not missing,
+            label + "declares the full narrative beat map",
+            "missing " + repr(missing),
+        )
+
+        if not missing:
+            ordered = all(
+                beats[a][0] <= beats[b][0]
+                for a, b in zip(required_beats, required_beats[1:])
+            )
+            report.check(ordered, label + "beats start in narrative order")
+            in_range = all(
+                start <= beats[beat][0] <= beats[beat][1] <= end for beat in required_beats
+            )
+            report.check(in_range, label + "every beat lies inside the frame range")
+            # A hold that is shorter than this is a stop, not a hold: the later
+            # phase has to be able to reveal real layers into it.
+            hold = beats["regional_hold"]
+            hold_seconds = (hold[1] - hold[0]) / rate if rate else 0.0
+            report.check(
+                hold_seconds >= 1.0,
+                label + "ends on a regional hold long enough to receive data",
+                str(round(hold_seconds, 3)) + " s",
+            )
+            # Overlapping establish and approach is what makes it one move
+            # rather than two shots joined end to end.
+            report.check(
+                beats["camera_approach"][0] <= beats["earth_establish"][1],
+                label + "camera approach begins before the establish ends",
+            )
+
+        camera = spec.get("camera", {})
+        keyframes = sorted(camera.get("keyframes", []), key=lambda k: int(k["frame"]))
+        report.check(
+            len(keyframes) >= 4, label + "authors a multi-keyframe camera path"
+        )
+        if keyframes:
+            report.check(
+                int(keyframes[0]["frame"]) == start and int(keyframes[-1]["frame"]) == end,
+                label + "camera path spans the whole frame range",
+            )
+            radii = [
+                math.sqrt(sum(component * component for component in k["location"]))
+                for k in keyframes
+            ]
+            report.check(
+                all(b <= a + 1e-9 for a, b in zip(radii, radii[1:])),
+                label + "camera closes monotonically, never backing off",
+                "radii " + repr([round(r, 3) for r in radii]),
+            )
+            # Focal length is checked only from the AOI handover onward. The
+            # establish before it replays accepted Phase-B camera states
+            # verbatim, and those ease the lens back once (35 mm to 33 mm) as
+            # part of a move Product already accepted; re-authoring them to
+            # satisfy a checker here would change accepted work. That the lens
+            # never *snaps* anywhere in the shot is a rate question, and
+            # audit_shot.py measures it on the evaluated camera.
+            handover = min(
+                (
+                    int(k["frame"])
+                    for k in camera.get("track", {}).get("influence_keyframes", [])
+                    if float(k["value"]) >= 1.0
+                ),
+                default=start,
+            )
+            lenses = [
+                float(k["focal_length_mm"]) for k in keyframes if int(k["frame"]) >= handover
+            ]
+            report.check(
+                all(b >= a - 1e-9 for a, b in zip(lenses, lenses[1:])),
+                label + "focal length never reverses during the approach",
+                "lenses from frame " + str(handover) + " " + repr(lenses),
+            )
+
+        # Intent and authored keyframes must agree, or the committed path is no
+        # longer the one the shot plan describes and the derivation is a story.
+        intent = camera.get("shot_intent")
+        report.check(bool(intent), label + "records the shot intent it was derived from")
+        if intent and keyframes:
+            derived = shot_plan.derive(scene_config, scene_id)
+            drift = 0.0
+            for authored, expected in zip(keyframes, derived):
+                if int(authored["frame"]) != int(expected["frame"]):
+                    drift = float("inf")
+                    break
+                for a, b in zip(authored["location"], expected["location"]):
+                    drift = max(drift, abs(float(a) - float(b)))
+                for a, b in zip(authored["look_at"], expected["look_at"]):
+                    drift = max(drift, abs(float(a) - float(b)))
+            report.check(
+                drift <= 1.0e-3,
+                label + "authored camera keyframes match their derivation",
+                "worst component drift " + str(drift) + " BU",
+            )
+
+        composition = camera.get("composition", {})
+        region = composition.get("headline_safe_region")
+        report.check(
+            isinstance(region, dict),
+            label + "reserves a headline-safe region for later HTML copy",
+        )
+        if isinstance(region, dict) and keyframes:
+            through = int(composition.get("headline_safe_through_frame", start))
+            defaults = scene_config.get("camera_defaults", {})
+            sensor = float(defaults.get("sensor_width_mm", 36.0))
+            radius_bu = aoi.earth_radius_km(scene_config) / aoi.KM_PER_BLENDER_UNIT
+            worst = 0.0
+            for keyframe in keyframes:
+                if int(keyframe["frame"]) > through:
+                    continue
+                metrics = shot_plan._headline_safe_metrics(
+                    tuple(keyframe["location"]), tuple(keyframe["look_at"]),
+                    float(keyframe["focal_length_mm"]), radius_bu, sensor,
+                    (1920, 1080), region,
+                )
+                worst = max(worst, metrics["occupancy"])
+            report.check(
+                worst == 0.0,
+                label + "keeps the headline-safe region clear of the Earth",
+                "worst occupancy " + str(worst),
+            )
+
+        # An atmosphere refined for this phase must not have been refined into
+        # an occluder: the whole point of the additive limb profile is that air
+        # adds light rather than painting over what is behind it.
+        for name, material in spec.get("materials", {}).items():
+            if material.get("type") != "atmosphere_shell":
+                continue
+            if not material.get("profile"):
+                continue
+            report.check(
+                material["profile"] in ("limb_airmass", "soft_band"),
+                label + "atmosphere " + name + " uses a known limb profile",
+                repr(material["profile"]),
+            )
+            if material["profile"] == "limb_airmass":
+                height = float(material.get("scale_height_km", 55.0))
+                report.check(
+                    5.0 <= height <= 200.0,
+                    label + "atmosphere " + name + " has a physical scale height",
+                    str(height) + " km",
+                )
+                shell = next(
+                    (
+                        o for o in spec.get("objects", [])
+                        if o.get("material") == name and o.get("radius")
+                    ),
+                    None,
+                )
+                if shell:
+                    radius_km = aoi.earth_radius_km(scene_config)
+                    headroom_km = float(shell["radius"]) * aoi.KM_PER_BLENDER_UNIT - radius_km
+                    # Below a few scale heights the exponential has not decayed
+                    # and the shell silhouette becomes a visible edge again --
+                    # the exact defect this phase removed.
+                    report.check(
+                        headroom_km >= 5.0 * height,
+                        label + "atmosphere " + name + " shell clears its own falloff",
+                        str(round(headroom_km, 1)) + " km headroom vs "
+                        + str(round(5.0 * height, 1)) + " km needed",
+                    )
+
+
 def check_manifest(report: Report, manifest) -> None:
     report.section("asset rights manifest")
     if not manifest:
@@ -779,6 +1013,7 @@ def main() -> int:
     check_scene_config(report, loaded.get("scene"), loaded.get("render"))
     check_pre_data_boundary(report, loaded.get("scene"), loaded.get("manifest"))
     check_aoi_system(report, loaded.get("scene"))
+    check_continuous_sequence(report, loaded.get("scene"))
     check_manifest(report, loaded.get("manifest"))
     check_generated_output_policy(report)
     check_lane_isolation(report, loaded.get("lane"))

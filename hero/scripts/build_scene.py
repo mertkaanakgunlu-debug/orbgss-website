@@ -194,6 +194,16 @@ def _build_earth_material(name: str, spec: dict, scene_config: dict, sun_directi
     day_tex_node = nodes.new("ShaderNodeTexImage")
     day_tex_node.location = (-150, 300)
     day_tex_node.image = _load_image(spec["day_texture"])
+    # At the regional approach the albedo is magnified several times over, so
+    # the reconstruction filter is visible. Cubic keeps magnified detail
+    # rounded instead of showing bilinear diamonds; the default is kept when a
+    # scene does not ask, so accepted phases rebuild unchanged.
+    interpolation = spec.get("day_texture_interpolation")
+    if interpolation:
+        try:
+            day_tex_node.interpolation = interpolation
+        except TypeError:
+            print("[hero] texture interpolation " + interpolation + " unavailable; default kept")
 
     night_tex_node = nodes.new("ShaderNodeTexImage")
     night_tex_node.location = (-150, -300)
@@ -319,6 +329,330 @@ def _build_atmosphere_material(name: str, spec: dict, scene_config: dict, sun_di
     fresnel = nodes.new("ShaderNodeFresnel")
     fresnel.location = (-250, 0)
     fresnel.inputs["IOR"].default_value = float(spec.get("fresnel_ior", 1.2))
+
+    if str(spec.get("profile", "")) == "limb_airmass":
+        # WEB-HERO-001D atmosphere.
+        #
+        # Every earlier version of this shell drove its brightness from the
+        # Fresnel factor, which is a property of the *shell surface*, not of
+        # the air a view ray travels through. That is why it kept producing
+        # graphics rather than atmosphere: monotonic Fresnel is brightest
+        # exactly at the shell silhouette, so the glow ended on a hard
+        # geometric line -- the hoop this phase had to remove -- and shaping it
+        # into a band only moved that line and added a second one wherever a
+        # second shell began.
+        #
+        # The quantity that actually governs limb brightness is how high above
+        # the surface the line of sight passes: its perigee. That is
+        # recoverable in the shader. The camera position is the shading point
+        # plus its incoming vector times the view distance, and the perigee
+        # radius of the ray through that point is
+        #
+        #     h = sqrt(|C|^2 - (C . d)^2),   d = -Incoming
+        #
+        # from which the glow is
+        #
+        #     glow = exp(-max(0, h - R) / H) * (min(h, R) / R)^k
+        #
+        # The first factor decays the glow exponentially with altitude above
+        # the limb, so it reaches zero well inside the shell own silhouette and
+        # the shell has no visible edge at any distance. The second confines
+        # on-disc haze to near-grazing sightlines, so the planet is hazy at its
+        # horizon and clean at nadir, the way it is from orbit.
+        #
+        # It is combined with Add Shader rather than Mix Shader because air
+        # does not occlude what is behind it, it adds light. A mix made the
+        # shell paint a solid band across the sky once the camera was low
+        # enough to see it nearly edge-on, which is exactly the
+        # regional-approach case this phase had to fix.
+        # The planet radius is scene truth, not a material parameter: read it
+        # from world_coordinate_convention so the shell can never disagree with
+        # the globe it wraps.
+        radius_bu = float(
+            spec.get(
+                "earth_radius_bu",
+                ax.earth_radius_km(scene_config) / ax.KM_PER_BLENDER_UNIT,
+            )
+        )
+        scale_height_km = float(spec.get("scale_height_km", 55.0))
+        scale_height_bu = scale_height_km / ax.KM_PER_BLENDER_UNIT
+        # Tangent-path air mass through an exponential atmosphere, the standard
+        # sqrt(2 pi R / H). Derived rather than authored so it cannot drift away
+        # from the scale height it belongs to.
+        max_airmass = float(
+            spec.get(
+                "max_airmass",
+                math.sqrt(2.0 * math.pi * radius_bu * ax.KM_PER_BLENDER_UNIT / scale_height_km),
+            )
+        )
+
+        view_distance = nodes.new("ShaderNodeCameraData")
+        view_distance.location = (-900, -150)
+
+        incoming_scaled = nodes.new("ShaderNodeVectorMath")
+        incoming_scaled.operation = "SCALE"
+        incoming_scaled.location = (-700, -150)
+        links.new(geometry.outputs["Incoming"], incoming_scaled.inputs[0])
+        links.new(view_distance.outputs["View Distance"], incoming_scaled.inputs["Scale"])
+
+        camera_position = nodes.new("ShaderNodeVectorMath")
+        camera_position.operation = "ADD"
+        camera_position.location = (-520, -150)
+        links.new(geometry.outputs["Position"], camera_position.inputs[0])
+        links.new(incoming_scaled.outputs["Vector"], camera_position.inputs[1])
+
+        view_direction = nodes.new("ShaderNodeVectorMath")
+        view_direction.operation = "SCALE"
+        view_direction.location = (-700, -330)
+        view_direction.inputs["Scale"].default_value = -1.0
+        links.new(geometry.outputs["Incoming"], view_direction.inputs[0])
+
+        along = nodes.new("ShaderNodeVectorMath")
+        along.operation = "DOT_PRODUCT"
+        along.location = (-330, -250)
+        links.new(camera_position.outputs["Vector"], along.inputs[0])
+        links.new(view_direction.outputs["Vector"], along.inputs[1])
+
+        along_squared = nodes.new("ShaderNodeMath")
+        along_squared.operation = "MULTIPLY"
+        along_squared.location = (-150, -320)
+        links.new(along.outputs["Value"], along_squared.inputs[0])
+        links.new(along.outputs["Value"], along_squared.inputs[1])
+
+        camera_squared = nodes.new("ShaderNodeVectorMath")
+        camera_squared.operation = "DOT_PRODUCT"
+        camera_squared.location = (-330, -430)
+        links.new(camera_position.outputs["Vector"], camera_squared.inputs[0])
+        links.new(camera_position.outputs["Vector"], camera_squared.inputs[1])
+
+        perigee_squared = nodes.new("ShaderNodeMath")
+        perigee_squared.operation = "SUBTRACT"
+        perigee_squared.location = (30, -380)
+        links.new(camera_squared.outputs["Value"], perigee_squared.inputs[0])
+        links.new(along_squared.outputs["Value"], perigee_squared.inputs[1])
+
+        non_negative = nodes.new("ShaderNodeMath")
+        non_negative.operation = "MAXIMUM"
+        non_negative.location = (190, -380)
+        non_negative.inputs[1].default_value = 0.0
+        links.new(perigee_squared.outputs["Value"], non_negative.inputs[0])
+
+        perigee = nodes.new("ShaderNodeMath")
+        perigee.operation = "SQRT"
+        perigee.location = (350, -380)
+        links.new(non_negative.outputs["Value"], perigee.inputs[0])
+
+        # Outward term: exp(-max(0, h - R) / H).
+        above = nodes.new("ShaderNodeMath")
+        above.operation = "SUBTRACT"
+        above.location = (520, -260)
+        above.inputs[1].default_value = radius_bu
+        links.new(perigee.outputs["Value"], above.inputs[0])
+
+        above_clamped = nodes.new("ShaderNodeMath")
+        above_clamped.operation = "MAXIMUM"
+        above_clamped.location = (680, -260)
+        above_clamped.inputs[1].default_value = 0.0
+        links.new(above.outputs["Value"], above_clamped.inputs[0])
+
+        decay = nodes.new("ShaderNodeMath")
+        decay.operation = "DIVIDE"
+        decay.location = (840, -260)
+        decay.inputs[1].default_value = max(1e-6, scale_height_bu)
+        links.new(above_clamped.outputs["Value"], decay.inputs[0])
+
+        negated = nodes.new("ShaderNodeMath")
+        negated.operation = "MULTIPLY"
+        negated.location = (1000, -260)
+        negated.inputs[1].default_value = -1.0
+        links.new(decay.outputs["Value"], negated.inputs[0])
+
+        outward = nodes.new("ShaderNodeMath")
+        outward.operation = "EXPONENT"
+        outward.location = (1160, -260)
+        links.new(negated.outputs["Value"], outward.inputs[0])
+
+        # Inward term: the relative air mass along the sightline.
+        #
+        # A sightline with incidence i through an exponential atmosphere
+        # traverses roughly 1 / cos(i) times as much air as one straight down,
+        # saturating at the tangent value sqrt(2 pi R / H) -- about 27 air
+        # masses for this planet and scale height. Since sin(i) = h / R for a
+        # ray that reaches the surface, cos(i) falls straight out of the
+        # perigee we already have, and one expression then covers the whole
+        # frame: a faint even tint at nadir, thickening smoothly toward the
+        # horizon, saturating at the limb, decaying exponentially above it.
+        #
+        # This is why the brightness parameter is per air mass rather than a
+        # free gain. Tuning a gain is how the previous profile ended up washing
+        # the planet out: it had no notion of how much air a ray had crossed.
+        capped = nodes.new("ShaderNodeMath")
+        capped.operation = "MINIMUM"
+        capped.location = (520, -520)
+        capped.inputs[1].default_value = radius_bu
+        links.new(perigee.outputs["Value"], capped.inputs[0])
+
+        normalized = nodes.new("ShaderNodeMath")
+        normalized.operation = "DIVIDE"
+        normalized.location = (680, -520)
+        normalized.inputs[1].default_value = radius_bu
+        links.new(capped.outputs["Value"], normalized.inputs[0])
+
+        sine_squared = nodes.new("ShaderNodeMath")
+        sine_squared.operation = "MULTIPLY"
+        sine_squared.location = (840, -520)
+        links.new(normalized.outputs["Value"], sine_squared.inputs[0])
+        links.new(normalized.outputs["Value"], sine_squared.inputs[1])
+
+        cosine_squared = nodes.new("ShaderNodeMath")
+        cosine_squared.operation = "SUBTRACT"
+        cosine_squared.location = (1000, -520)
+        cosine_squared.inputs[0].default_value = 1.0
+        links.new(sine_squared.outputs["Value"], cosine_squared.inputs[1])
+
+        cosine_floor = nodes.new("ShaderNodeMath")
+        cosine_floor.operation = "MAXIMUM"
+        cosine_floor.location = (1160, -520)
+        cosine_floor.inputs[1].default_value = 1.0e-6
+        links.new(cosine_squared.outputs["Value"], cosine_floor.inputs[0])
+
+        cosine = nodes.new("ShaderNodeMath")
+        cosine.operation = "SQRT"
+        cosine.location = (1320, -520)
+        links.new(cosine_floor.outputs["Value"], cosine.inputs[0])
+
+        secant = nodes.new("ShaderNodeMath")
+        secant.operation = "DIVIDE"
+        secant.location = (1480, -520)
+        secant.inputs[0].default_value = 1.0
+        links.new(cosine.outputs["Value"], secant.inputs[1])
+
+        inward = nodes.new("ShaderNodeMath")
+        inward.operation = "MINIMUM"
+        inward.location = (1640, -520)
+        inward.inputs[1].default_value = max_airmass
+        links.new(secant.outputs["Value"], inward.inputs[0])
+
+        airmass = nodes.new("ShaderNodeMath")
+        airmass.operation = "MULTIPLY"
+        airmass.location = (1800, -380)
+        links.new(outward.outputs["Value"], airmass.inputs[0])
+        links.new(inward.outputs["Value"], airmass.inputs[1])
+
+        # A closed shell is crossed twice by a limb ray and once by a ray that
+        # ends on the planet, so letting both faces emit would double the limb
+        # alone. The saturating air-mass term above already stands for the
+        # whole tangent path, so the back face is suppressed instead.
+        front_only = nodes.new("ShaderNodeMath")
+        front_only.operation = "SUBTRACT"
+        front_only.location = (1800, -600)
+        front_only.inputs[0].default_value = 1.0
+        links.new(geometry.outputs["Backfacing"], front_only.inputs[1])
+
+        single_pass = nodes.new("ShaderNodeMath")
+        single_pass.operation = "MULTIPLY"
+        single_pass.location = (1960, -460)
+        links.new(airmass.outputs["Value"], single_pass.inputs[0])
+        links.new(front_only.outputs["Value"], single_pass.inputs[1])
+        airmass = single_pass
+
+        # day_gate already carries strength * the day/night falloff.
+        shaped = nodes.new("ShaderNodeMath")
+        shaped.operation = "MULTIPLY"
+        shaped.location = (1480, -180)
+        links.new(day_gate.outputs["Value"], shaped.inputs[0])
+        links.new(airmass.outputs["Value"], shaped.inputs[1])
+        links.new(shaped.outputs["Value"], emission.inputs["Strength"])
+
+        add = nodes.new("ShaderNodeAddShader")
+        add.location = (1640, 0)
+        links.new(transparent.outputs["BSDF"], add.inputs[0])
+        links.new(emission.outputs["Emission"], add.inputs[1])
+        links.new(add.outputs["Shader"], output.inputs["Surface"])
+        try:
+            material.blend_method = "BLEND"
+            material.show_transparent_back = True
+        except (AttributeError, TypeError):
+            pass
+        return material
+
+    if str(spec.get("profile", "")) == "soft_band":
+        # WEB-HERO-001D limb profile.
+        #
+        # Two things were wrong with the inherited shell at Phase-D distances.
+        #
+        # First, its opacity is monotonic in the Fresnel factor, so it is
+        # *brightest* exactly at its own silhouette and ends on a hard
+        # geometric line. That is what made the accepted Phase-B/C atmosphere
+        # read as a bright hoop drawn around the planet. Real limb brightness
+        # peaks a little inside the top of the atmosphere and decays to nothing
+        # at it, so opacity here is a band in Fresnel space -- a smoothstep up
+        # followed by a smoothstep back down to zero before grazing -- and the
+        # shell therefore ends in air.
+        #
+        # Second, and worse close in, a Mix Shader between Transparent and
+        # Emission *replaces* what is behind the shell. Seen nearly edge-on
+        # from low altitude a shell covers a large part of the frame, so the
+        # glow stopped being a glow and became a solid teal band painted over
+        # the sky and the planet. Air does not occlude; it adds. So the two
+        # shaders are combined with Add Shader instead: the shell stays fully
+        # transmissive at every angle and only ever contributes light.
+        #
+        # Only taken when a scene asks for it, so the accepted Phase-B and
+        # Phase-C atmosphere shells rebuild exactly as reviewed.
+        rise = nodes.new("ShaderNodeMapRange")
+        rise.location = (-50, 90)
+        rise.interpolation_type = "SMOOTHSTEP"
+        rise.clamp = True
+        rise.inputs["From Min"].default_value = float(spec.get("band_rise_start", 0.05))
+        rise.inputs["From Max"].default_value = float(spec.get("band_rise_end", 0.5))
+        rise.inputs["To Min"].default_value = 0.0
+        rise.inputs["To Max"].default_value = 1.0
+        links.new(fresnel.outputs["Fac"], rise.inputs["Value"])
+
+        fade = nodes.new("ShaderNodeMapRange")
+        fade.location = (-50, -160)
+        fade.interpolation_type = "SMOOTHSTEP"
+        fade.clamp = True
+        fade.inputs["From Min"].default_value = float(spec.get("band_fade_start", 0.75))
+        fade.inputs["From Max"].default_value = float(spec.get("band_fade_end", 1.0))
+        fade.inputs["To Min"].default_value = 1.0
+        fade.inputs["To Max"].default_value = 0.0
+        links.new(fresnel.outputs["Fac"], fade.inputs["Value"])
+
+        band = nodes.new("ShaderNodeMath")
+        band.operation = "MULTIPLY"
+        band.location = (170, -30)
+        links.new(rise.outputs["Result"], band.inputs[0])
+        links.new(fade.outputs["Result"], band.inputs[1])
+
+        floor_glow = nodes.new("ShaderNodeMath")
+        floor_glow.operation = "ADD"
+        floor_glow.location = (300, -30)
+        floor_glow.use_clamp = True
+        floor_glow.inputs[1].default_value = float(spec.get("base_glow", 0.0))
+        links.new(band.outputs["Value"], floor_glow.inputs[0])
+
+        # day_gate already carries strength * day/night falloff; the band then
+        # shapes it across the limb.
+        shaped = nodes.new("ShaderNodeMath")
+        shaped.operation = "MULTIPLY"
+        shaped.location = (450, 200)
+        links.new(day_gate.outputs["Value"], shaped.inputs[0])
+        links.new(floor_glow.outputs["Value"], shaped.inputs[1])
+        links.new(shaped.outputs["Value"], emission.inputs["Strength"])
+
+        add = nodes.new("ShaderNodeAddShader")
+        add.location = (600, 0)
+        links.new(transparent.outputs["BSDF"], add.inputs[0])
+        links.new(emission.outputs["Emission"], add.inputs[1])
+        links.new(add.outputs["Shader"], output.inputs["Surface"])
+        try:
+            material.blend_method = "BLEND"
+            material.show_transparent_back = True
+        except (AttributeError, TypeError):
+            pass
+        return material
 
     falloff = nodes.new("ShaderNodeMapRange")
     falloff.location = (-50, 0)
@@ -1297,6 +1631,14 @@ def _add_object(spec: dict, materials: dict, context: dict | None = None):
                 "object " + spec["id"] + " references undefined material " + material_name
             )
         obj.data.materials.append(materials[material_name])
+
+    # A nested transparent envelope is lighting decoration, not an occluder;
+    # letting one cast shadow rays darkens the very limb it is meant to lift.
+    if spec.get("cast_shadow") is False:
+        try:
+            obj.visible_shadow = False
+        except AttributeError:
+            pass
     return obj
 
 
@@ -1364,6 +1706,61 @@ def _add_light(spec: dict, scene_config: dict):
     return light_object
 
 
+def _apply_camera_track(camera_object, track_spec):
+    """Lock the camera's aim to a scene object through a blended Track To.
+
+    WEB-HERO-001D needs two different things from one continuous camera. The
+    establish is composed by hand -- the planet deliberately sits off-axis so a
+    headline has somewhere to live -- while everything from acquisition onward
+    must stay exactly registered to a footprint that is riding a rotating
+    planet.
+
+    Authored look-at keyframes alone can only be correct *at* a keyframe: the
+    AOI travels along an arc between keys while an interpolated camera aims
+    along a chord, so the footprint drifts in frame in between. A Track To
+    constraint removes that residual by construction, the same way the Phase-C
+    beams derive their endpoints instead of baking them.
+
+    The constraint's influence is itself keyframed, so the establish keeps its
+    authored composition at influence 0 and the shot hands over to the lock
+    before acquisition. The derived keyframes on the far side of the handover
+    already aim at the AOI centre, so the blend has nothing to correct and
+    cannot swing the camera -- it only holds the aim exact between keys.
+    """
+    if not track_spec:
+        return None
+    target_name = track_spec["target_id"]
+    target = bpy.data.objects.get(target_name)
+    if target is None:
+        raise KeyError(
+            "camera tracks " + repr(target_name) + ", which this scene does not build"
+        )
+    constraint = camera_object.constraints.new(type="TRACK_TO")
+    constraint.name = "aoi_lock"
+    constraint.target = target
+    constraint.track_axis = "TRACK_NEGATIVE_Z"
+    constraint.up_axis = "UP_Y"
+
+    keys = track_spec.get("influence_keyframes")
+    if not keys:
+        constraint.influence = float(track_spec.get("influence", 1.0))
+        return constraint
+
+    for key in sorted(keys, key=lambda k: int(k["frame"])):
+        constraint.influence = float(key["value"])
+        constraint.keyframe_insert(data_path="influence", frame=int(key["frame"]))
+    animation = camera_object.animation_data
+    action = animation.action if animation else None
+    if action:
+        for fcurve in _action_fcurves(action):
+            if fcurve.data_path.endswith('constraints["aoi_lock"].influence'):
+                for point in fcurve.keyframe_points:
+                    point.interpolation = "BEZIER"
+                    point.handle_left_type = "AUTO_CLAMPED"
+                    point.handle_right_type = "AUTO_CLAMPED"
+    return constraint
+
+
 def _add_camera(spec: dict, scene_config: dict):
     defaults = scene_config.get("camera_defaults", {})
     camera_data = bpy.data.cameras.new(name="hero_camera")
@@ -1378,6 +1775,8 @@ def _add_camera(spec: dict, scene_config: dict):
     camera_object = bpy.data.objects.new(name="hero_camera", object_data=camera_data)
     bpy.context.collection.objects.link(camera_object)
     bpy.context.scene.camera = camera_object
+
+    _apply_camera_track(camera_object, spec.get("track"))
 
     keyframes = spec.get("keyframes")
     if keyframes:

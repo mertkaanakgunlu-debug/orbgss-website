@@ -1,0 +1,256 @@
+{
+  "scene": "hero_predata_animatic",
+  "fixture": "design_primary",
+  "resolution": [
+    1920,
+    1080
+  ],
+  "sensor_width_mm": 36.0,
+  "aoi_span_km": 420.0,
+  "keyframes": [
+    {
+      "frame": 1,
+      "focal_length_mm": 28.0,
+      "fov_x_deg": 65.4705,
+      "fov_y_deg": 39.7607,
+      "camera_radius_bu": 46.91482,
+      "camera_altitude_km": 40543.82,
+      "aoi_slant_range_km": 41337.82,
+      "frame_width_at_aoi_km": 53148.62,
+      "aoi_fraction_of_frame_width": 0.0079,
+      "aoi_screen": {
+        "in_frame": true,
+        "behind_camera": false,
+        "x": 0.61911,
+        "y": 0.56153,
+        "distance_bu": 41.33781636081014
+      },
+      "earth_disc_half_angle_deg": 7.8048,
+      "optical_axis_to_earth_centre_deg": 8.5511,
+      "limb_in_frame": false,
+      "limb_crosses_frame_edge": true,
+      "limb_clearance_deg": 35.6655,
+      "earth_fills_frame": false,
+      "aoi_incidence_deg": 30.9827,
+      "earth_metres_per_render_pixel": 27681.57,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      }
+    },
+    {
+      "frame": 52,
+      "focal_length_mm": 35.0,
+      "fov_x_deg": 54.4322,
+      "fov_y_deg": 32.2688,
+      "camera_radius_bu": 30.90712,
+      "camera_altitude_km": 24536.12,
+      "aoi_slant_range_km": 25271.95,
+      "frame_width_at_aoi_km": 25994.0,
+      "aoi_fraction_of_frame_width": 0.01616,
+      "aoi_screen": {
+        "in_frame": true,
+        "behind_camera": false,
+        "x": 0.64491,
+        "y": 0.63019,
+        "distance_bu": 25.27194806737096
+      },
+      "earth_disc_half_angle_deg": 11.8959,
+      "optical_axis_to_earth_centre_deg": 8.3566,
+      "limb_in_frame": false,
+      "limb_crosses_frame_edge": true,
+      "limb_clearance_deg": 27.0041,
+      "earth_fills_frame": false,
+      "aoi_incidence_deg": 31.0158,
+      "earth_metres_per_render_pixel": 13538.54,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      }
+    },
+    {
+      "frame": 96,
+      "focal_length_mm": 33.0,
+      "fov_x_deg": 57.2209,
+      "fov_y_deg": 34.1139,
+      "camera_radius_bu": 22.54972,
+      "camera_altitude_km": 16178.72,
+      "aoi_slant_range_km": 16847.58,
+      "frame_width_at_aoi_km": 18379.17,
+      "aoi_fraction_of_frame_width": 0.02285,
+      "aoi_screen": {
+        "in_frame": true,
+        "behind_camera": false,
+        "x": 0.6538,
+        "y": 0.67057,
+        "distance_bu": 16.8475759772148
+      },
+      "earth_disc_half_angle_deg": 16.4113,
+      "optical_axis_to_earth_centre_deg": 9.9987,
+      "limb_in_frame": false,
+      "limb_crosses_frame_edge": true,
+      "limb_clearance_deg": 25.6268,
+      "earth_fills_frame": false,
+      "aoi_incidence_deg": 30.9795,
+      "earth_metres_per_render_pixel": 9572.49,
+      "headline_safe": {
+        "region": {
+          "x0": 0.05,
+          "y0": 0.16,
+          "x1": 0.38,
+          "y1": 0.78
+        },
+        "samples": 784,
+        "earth_hits": 0,
+        "occupancy": 0.0,
+        "clear": true
+      }
+    },
+    {
+      "frame": 136,
+      "focal_length_mm": 38.0,
+      "fov_x_deg": 50.6924,
+      "fov_y_deg": 29.8394,
+      "camera_radius_bu": 15.90003,
+      "camera_altitude_km": 9529.03,
+      "aoi_slant_range_km": 10662.56,
+      "frame_width_at_aoi_km": 10101.37,
+      "aoi_fraction_of_frame_width": 0.04158,
+      "aoi_screen": {
+        "in_frame": true,
+        "behind_camera": false,
+        "x": 0.5,
+        "y": 0.50001,
+        "distance_bu": 10.662559597493292
+      },
+      "earth_disc_half_angle_deg": 23.6214,
+      "optical_axis_to_earth_centre_deg": 16.0162,
+      "limb_in_frame": true,
+      "limb_crosses_frame_edge": true,
+      "limb_clearance_deg": 20.918,
+      "earth_fills_frame": false,
+      "aoi_incidence_deg": 43.5166,
+      "earth_metres_per_render_pixel": 5261.13
+    },
+    {
+      "frame": 164,
+      "focal_length_mm": 40.0,
+      "fov_x_deg": 48.4555,
+      "fov_y_deg": 28.4093,
+      "camera_radius_bu": 11.60004,
+      "camera_altitude_km": 5229.04,
+      "aoi_slant_range_km": 6172.78,
+      "frame_width_at_aoi_km": 5555.5,
+      "aoi_fraction_of_frame_width": 0.0756,
+      "aoi_screen": {
+        "in_frame": true,
+        "behind_camera": false,
+        "x": 0.5,
+        "y": 0.50001,
+        "distance_bu": 6.17278012101042
+      },
+      "earth_disc_half_angle_deg": 33.3137,
+      "optical_axis_to_earth_centre_deg": 22.7457,
+      "limb_in_frame": true,
+      "limb_crosses_frame_edge": true,
+      "limb_clearance_deg": 16.7397,
+      "earth_fills_frame": false,
+      "aoi_incidence_deg": 44.7458,
+      "earth_metres_per_render_pixel": 2893.49
+    },
+    {
+      "frame": 192,
+      "focal_length_mm": 41.0,
+      "fov_x_deg": 47.4053,
+      "fov_y_deg": 27.7434,
+      "camera_radius_bu": 9.30002,
+      "camera_altitude_km": 2929.02,
+      "aoi_slant_range_km": 3708.87,
+      "frame_width_at_aoi_km": 3256.57,
+      "aoi_fraction_of_frame_width": 0.12897,
+      "aoi_screen": {
+        "in_frame": true,
+        "behind_camera": false,
+        "x": 0.50001,
+        "y": 0.50002,
+        "distance_bu": 3.7088690273605214
+      },
+      "earth_disc_half_angle_deg": 43.2397,
+      "optical_axis_to_earth_centre_deg": 30.148,
+      "limb_in_frame": true,
+      "limb_crosses_frame_edge": true,
+      "limb_clearance_deg": 13.6433,
+      "earth_fills_frame": false,
+      "aoi_incidence_deg": 47.1485,
+      "earth_metres_per_render_pixel": 1696.13
+    },
+    {
+      "frame": 214,
+      "focal_length_mm": 43.0,
+      "fov_x_deg": 45.4288,
+      "fov_y_deg": 26.4996,
+      "camera_radius_bu": 8.29997,
+      "camera_altitude_km": 1928.97,
+      "aoi_slant_range_km": 2706.21,
+      "frame_width_at_aoi_km": 2265.66,
+      "aoi_fraction_of_frame_width": 0.18538,
+      "aoi_screen": {
+        "in_frame": true,
+        "behind_camera": false,
+        "x": 0.5,
+        "y": 0.50002,
+        "distance_bu": 2.7062103402387803
+      },
+      "earth_disc_half_angle_deg": 50.1382,
+      "optical_axis_to_earth_centre_deg": 37.5404,
+      "limb_in_frame": true,
+      "limb_crosses_frame_edge": true,
+      "limb_clearance_deg": 13.0565,
+      "earth_fills_frame": false,
+      "aoi_incidence_deg": 52.5405,
+      "earth_metres_per_render_pixel": 1180.03
+    },
+    {
+      "frame": 240,
+      "focal_length_mm": 44.0,
+      "fov_x_deg": 44.498,
+      "fov_y_deg": 25.9179,
+      "camera_radius_bu": 7.54997,
+      "camera_altitude_km": 1178.97,
+      "aoi_slant_range_km": 1963.45,
+      "frame_width_at_aoi_km": 1606.46,
+      "aoi_fraction_of_frame_width": 0.26144,
+      "aoi_screen": {
+        "in_frame": true,
+        "behind_camera": false,
+        "x": 0.49998,
+        "y": 0.50002,
+        "distance_bu": 1.963452278411899
+      },
+      "earth_disc_half_angle_deg": 57.5483,
+      "optical_axis_to_earth_centre_deg": 46.8818,
+      "limb_in_frame": true,
+      "limb_crosses_frame_edge": true,
+      "limb_clearance_deg": 14.4774,
+      "earth_fills_frame": false,
+      "aoi_incidence_deg": 59.8824,
+      "earth_metres_per_render_pixel": 836.7
+    }
+  ]
+}
