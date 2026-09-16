@@ -103,7 +103,7 @@ def build_sequencer_scene(frames, rate: int, width: int, height: int):
     # Ask for whichever exists rather than pinning the encoder to one Blender release.
     collection = getattr(editor, "strips", None) or editor.sequences
     strip = collection.new_image(
-        name="hero", filepath=str(frames[0]), channel=1, frame_start=1,
+        name="hero", filepath=str(frames[0]), channel=1, frame_start=1, fit_method="FIT",
     )
     for path in frames[1:]:
         strip.elements.append(path.name)
@@ -111,7 +111,7 @@ def build_sequencer_scene(frames, rate: int, width: int, height: int):
     return scene
 
 
-def encode_once(scene, spec: dict, kbps: int, out_path: Path) -> Path:
+def encode_once(scene, spec: dict, kbps: int, out_path: Path, crf: str = "NONE") -> Path:
     settings = scene.render.image_settings
     settings.file_format = "FFMPEG"
     ffmpeg = scene.render.ffmpeg
@@ -119,7 +119,15 @@ def encode_once(scene, spec: dict, kbps: int, out_path: Path) -> Path:
     ffmpeg.codec = spec["codec"]
     # Explicit bitrate, not a quality preset: the contract is a byte budget, so the knob has to be
     # the one that moves bytes predictably enough to converge.
-    ffmpeg.constant_rate_factor = "NONE"
+    # Constrained quality when a CRF preset is given: the encoder is allowed to spend fewer bits on
+    # the empty opening and more on the detailed close, instead of pouring a constant rate into both.
+    # This shot's complexity varies enormously from frame 1 to frame 276, which is exactly where
+    # target-bitrate CBR wastes the budget.
+    ffmpeg.constant_rate_factor = crf
+    # GOOD, not BEST, and the reason is measured rather than assumed. libvpx-vp9's "best" deadline
+    # took roughly 20 minutes per attempt here -- and the bitrate search needs several attempts --
+    # for a quality difference the format's own maintainers describe as negligible over "good".
+    # The sharpness in this revision comes from supersampling the source, not from the deadline.
     ffmpeg.ffmpeg_preset = "GOOD"
     ffmpeg.gopsize = 24
     ffmpeg.video_bitrate = int(kbps)
@@ -228,7 +236,7 @@ def write_poster(source: Path, out_path: Path, width: int, height: int,
         size = out_path.stat().st_size
         search.append({"quality": quality, "bytes": size, "kib": round(size / 1024, 1)})
         print("[web005] poster " + str(width) + " q" + str(quality) + " -> "
-              + str(round(size / 1024, 1)) + " KiB")
+              + str(round(size / 1024, 1)) + " KiB", flush=True)
         if size <= ceiling:
             chosen = quality
             break
@@ -286,6 +294,10 @@ def main() -> None:
     if len(frames) != expected:
         raise SystemExit("expected " + str(expected) + " rendered frames in "
                          + str(frames_dir) + ", found " + str(len(frames)))
+    if (width, height) != (int(profile["resolution_x"]), int(profile["resolution_y"])):
+        print("[web005] supersampling: rendered at "
+              + str(profile["resolution_x"]) + "x" + str(profile["resolution_y"])
+              + ", delivering " + str(width) + "x" + str(height))
 
     out_dir = hc.REPO_ROOT / args.out_dir
     encode_scene = build_sequencer_scene(frames, rate, width, height)

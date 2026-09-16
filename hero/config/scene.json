@@ -157,15 +157,15 @@
         "span_km": 420.0,
         "bearing_deg": 0.0,
         "surface_offset_m": 250.0,
-        "edge_samples": 48,
-        "fill_grid": 24,
-        "border_width_km": 9.0,
-        "corner_lock_arm_km": 85.0,
-        "corner_lock_width_km": 15.0,
-        "corner_lock_offset_m": 90.0,
+        "edge_samples": 112,
+        "fill_grid": 32,
+        "border_width_km": 2.6,
+        "corner_lock_arm_km": 52.0,
+        "corner_lock_width_km": 5.4,
+        "corner_lock_offset_m": 140.0,
         "centre_provenance": "assets/imagery/sources.json -> geo_web_002.context_scenes[kizildere-aoi-context-2025]",
         "is_analysis_aoi": false,
-        "note": "Production framing for the hero acquisition shot. The centre is the real accepted Kizildere pilot centre (37.9794 N, 28.7907 E), so the hero targets the real pilot area instead of a placeholder. The 420 km span is the REGIONAL ACQUISITION FRAME the accepted WEB-HERO-001D camera path was derived against -- it is a framing extent and carries no measurement meaning. The accepted analysis AOI is 36 x 36 km and is never claimed to be this box: is_analysis_aoi is false, and public copy states the 36 km extent separately."
+        "note": "Production framing for the hero acquisition shot. The centre is the real accepted Kizildere pilot centre (37.9794 N, 28.7907 E), so the hero targets the real pilot area instead of a placeholder. The 420 km span is the REGIONAL ACQUISITION FRAME the accepted WEB-HERO-001D camera path was derived against -- it is a framing extent and carries no measurement meaning. The accepted analysis AOI is 36 x 36 km and is never claimed to be this box: is_analysis_aoi is false, and public copy states the 36 km extent separately. WEB-005A thinned the border and corner locks and raised the edge sampling for render fidelity; the centre, span, bearing and surface offset -- everything that carries geometric meaning -- are unchanged."
       }
     },
     "layer_slots": [
@@ -1259,7 +1259,7 @@
     },
     "hero_production_kizildere": {
       "extends": "hero_predata_animatic",
-      "description": "WEB-005 production hero. Consumes the accepted WEB-HERO-001D continuous animatic unchanged for frames 1-240 -- same world, same camera states, same AOI system, same beats -- and swaps the design fixture for the real accepted Kizildere regional frame. Frames 241-276 add no new motion: they continue the accepted final easing to a complete standstill so the shot ends on a still frame that doubles as the poster and as the surface the page composites the accepted result handoff onto. No scientific layer is baked into any frame.",
+      "description": "WEB-005A production hero. Consumes the accepted WEB-HERO-001D continuous animatic for the camera path and world, over the real accepted Kizildere regional frame. This revision reworks visual fidelity and motion only: a real circular orbit for the satellite, a thinner and more densely sampled AOI frame, a single restrained boresight in place of four corner cones, a narrow pushbroom scan line, and an ending that resolves. No scientific layer is baked into any frame, and no accepted geometry, public label or claim changes.",
       "role": "hero_production",
       "frame": 276,
       "animation": {
@@ -1268,9 +1268,9 @@
         "frame_rate": 24,
         "representative_frames": {
           "establish": 24,
-          "satellite_entrance": 78,
-          "acquisition_lock": 140,
-          "scan_sweep": 170,
+          "satellite_entrance": 68,
+          "acquisition_lock": 150,
+          "scan_sweep": 172,
           "mid_approach": 200,
           "regional_hold": 236,
           "result_handoff": 276
@@ -1281,31 +1281,31 @@
             96
           ],
           "satellite_entrance": [
-            40,
-            104
+            56,
+            116
           ],
           "aoi_acquisition": [
-            90,
-            138
+            96,
+            150
           ],
           "scan_sweep": [
-            134,
-            192
+            146,
+            198
           ],
           "camera_approach": [
             96,
             214
           ],
           "satellite_release": [
-            146,
-            166
+            172,
+            194
           ],
           "regional_hold": [
             200,
             276
           ]
         },
-        "continuity_note": "Still one scene, one world, one camera, no cut. Frames 1-240 are the accepted Phase-D beat map verbatim; the regional hold is extended to frame 276 so the move comes to rest instead of being cut off mid-settle."
+        "continuity_note": "One scene, one world, one camera, no cut. WEB-005A re-times the acquisition beats and gives the tail a resolution -- scan completes, boresight retires, corner locks resolve, frame firms and settles -- so the shot ends on a finished state rather than stopping mid-hold."
       },
       "camera": {
         "keyframes": [
@@ -1565,7 +1565,81 @@
       "objects": [
         {
           "id": "aoi",
-          "fixture": "kizildere_regional"
+          "fixture": "kizildere_regional",
+          "border": {
+            "appear_start_frame": 96,
+            "appear_end_frame": 126,
+            "emphasis": [
+              [
+                196,
+                1.0
+              ],
+              [
+                224,
+                1.36
+              ],
+              [
+                248,
+                1.06
+              ],
+              [
+                276,
+                1.06
+              ]
+            ]
+          },
+          "fill": {
+            "appear_start_frame": 104,
+            "appear_end_frame": 132,
+            "settle": [
+              [
+                232,
+                1.0
+              ],
+              [
+                276,
+                1.0
+              ]
+            ]
+          },
+          "corner_locks": {
+            "appear_start_frame": 204,
+            "appear_end_frame": 234,
+            "emphasis": [
+              [
+                234,
+                1.0
+              ],
+              [
+                250,
+                1.24
+              ],
+              [
+                266,
+                1.0
+              ],
+              [
+                276,
+                1.0
+              ]
+            ]
+          },
+          "beams": {
+            "source_object_id": "satellite",
+            "target": "center",
+            "root_radius_km": 2.0,
+            "tip_radius_km": 172.0,
+            "sides": 48,
+            "appear_start_frame": 124,
+            "appear_end_frame": 150,
+            "release_start_frame": 172,
+            "release_end_frame": 194
+          },
+          "sweep": {
+            "start_frame": 146,
+            "end_frame": 198
+          },
+          "note": "One persistent AOI system parented to the Earth, so the footprint, its corner locks and the beam target stay registered through Earth rotation and the whole camera move. WEB-005A: a single boresight replaces the four corner cones, the scan is a narrow pushbroom line rather than a wash, and the corner locks resolve after the scan so the shot ends on an acquired state instead of a pause."
         },
         {
           "id": "earth",
@@ -1610,70 +1684,110 @@
             {
               "frame": 1,
               "location": [
-                -9.5,
-                -6.0,
-                3.5
+                -1.0736,
+                5.1466,
+                -4.736
               ]
             },
             {
-              "frame": 52,
+              "frame": 50,
               "location": [
-                -4.5,
-                -15.0,
-                5.0
+                -3.3619,
+                -0.3396,
+                -6.2171
               ]
             },
             {
               "frame": 96,
               "location": [
-                -3.2,
-                -9.5,
-                4.2
+                -3.0181,
+                -5.8004,
+                -2.7049
               ]
             },
             {
-              "frame": 136,
+              "frame": 126,
               "location": [
-                -0.7477,
-                -8.124,
-                4.0668
+                -0.9713,
+                -6.7971,
+                1.7104
+              ]
+            },
+            {
+              "frame": 150,
+              "location": [
+                0.521,
+                -5.7963,
+                4.0251
               ]
             },
             {
               "frame": 176,
               "location": [
-                -0.1043,
-                -7.779,
-                4.0997
+                1.8107,
+                -4.0088,
+                5.5426
               ]
             },
             {
-              "frame": 210,
+              "frame": 200,
               "location": [
-                0.4356,
-                -7.4288,
-                4.1326
+                2.6017,
+                -2.314,
+                6.1601
               ]
             },
             {
-              "frame": 240,
+              "frame": 236,
               "location": [
-                0.912,
-                -7.1198,
-                4.1616
+                3.4202,
+                0.6627,
+                6.159
               ]
             },
             {
               "frame": 276,
               "location": [
-                1.4835,
-                -6.749,
-                4.1964
+                3.608,
+                3.071,
+                5.2556
               ]
             }
-          ]
+          ],
+          "note": "WEB-005A: one circular 705 km orbit through the AOI centre -- every key lies on the same circle, so the radius is constant and the motion reads as orbital rather than as a hand-typed wander. The pass was solved against the accepted camera path, not eyeballed: occluded by the Earth until frame ~44, limb crossing at ~50, overhead the AOI at 150, out of frame by ~190 and behind the Earth again from ~236, so the camera's descent to the regional hold never exposes the model at close range. Peak on-screen size 87 px."
         }
-      ]
+      ],
+      "materials": {
+        "aoi_border": {
+          "type": "aoi_emission",
+          "emission_color_ref": "aoi_border_cyan",
+          "emission_strength": 2.6
+        },
+        "aoi_lock": {
+          "type": "aoi_emission",
+          "emission_color_ref": "scan_ice_blue",
+          "emission_strength": 6.0
+        },
+        "aoi_fill": {
+          "type": "aoi_scan_fill",
+          "base_color_ref": "aoi_fill_teal",
+          "band_color_ref": "scan_ice_blue",
+          "base_alpha": 0.022,
+          "acquired_alpha": 0.062,
+          "band_alpha": 0.3,
+          "base_emission_strength": 1.0,
+          "band_emission_strength": 4.6,
+          "band_width": 0.03,
+          "axis": "v"
+        },
+        "aoi_beam": {
+          "type": "aoi_beam",
+          "emission_color_ref": "beam_ice",
+          "emission_strength": 0.85,
+          "root_alpha": 0.002,
+          "tip_alpha": 0.016
+        }
+      }
     }
   },
   "data_state_note": "WEB-005 is the authorized integration gate. The four accepted WEB-HERO-001 scenes stay pre-data and unedited; the production scene binds accepted GEO-WEB-002 geometry and declares -- but does not bake -- the accepted result layer, which is composited in the page over the render so its governed pixels are never re-encoded."

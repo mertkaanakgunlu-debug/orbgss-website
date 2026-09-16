@@ -16,8 +16,8 @@
     "note": "The stills already carry the render view transform; the encoder must not apply it a second time."
   },
   "render_resolution": [
-    1920,
-    1080
+    2304,
+    1296
   ],
   "delivered_resolution": [
     1920,
@@ -32,30 +32,30 @@
       "container": "WebM",
       "mime_type": "video/webm",
       "codec": "VP9",
-      "video_bitrate_kbps": 1418,
-      "bytes": 2935742,
-      "mib": 2.8,
+      "video_bitrate_kbps": 1448,
+      "bytes": 2899684,
+      "mib": 2.765,
       "ceiling_mib": 3.0,
       "within_ceiling": true,
-      "sha256": "fa0561103bedf3c743bc11fdeeb742c883917088b62fa3365ed2a3ad417de21a",
+      "sha256": "d86fdfc3ddf02011ed8fdfebd54a244b7ac804bec7a20199b8f2131b81d859a5",
       "bitrate_search": [
         {
           "attempt": 1,
           "video_bitrate_kbps": 1900,
-          "bytes": 3708978,
-          "mib": 3.537,
+          "bytes": 3631903,
+          "mib": 3.464,
           "ceiling_mib": 3.0,
           "within_ceiling": false,
-          "wall_clock_seconds": 130.62
+          "wall_clock_seconds": 103.05
         },
         {
           "attempt": 2,
-          "video_bitrate_kbps": 1418,
-          "bytes": 2935742,
-          "mib": 2.8,
+          "video_bitrate_kbps": 1448,
+          "bytes": 2899684,
+          "mib": 2.765,
           "ceiling_mib": 3.0,
           "within_ceiling": true,
-          "wall_clock_seconds": 97.31
+          "wall_clock_seconds": 98.95
         }
       ],
       "width": 1920,
@@ -71,20 +71,20 @@
       "mime_type": "video/mp4",
       "codec": "H.264",
       "video_bitrate_kbps": 2800,
-      "bytes": 3679039,
-      "mib": 3.509,
+      "bytes": 3692178,
+      "mib": 3.521,
       "ceiling_mib": 4.5,
       "within_ceiling": true,
-      "sha256": "40bb37ee18a343267d08ed05ea69c507341fa5b52ee585db74768ed183c134ab",
+      "sha256": "333b182b54a9c7a73b1c062558a71ab6fbd03a3ef216697d99da01b74f8943b8",
       "bitrate_search": [
         {
           "attempt": 1,
           "video_bitrate_kbps": 2800,
-          "bytes": 3679039,
-          "mib": 3.509,
+          "bytes": 3692178,
+          "mib": 3.521,
           "ceiling_mib": 4.5,
           "within_ceiling": true,
-          "wall_clock_seconds": 30.82
+          "wall_clock_seconds": 37.06
         }
       ],
       "width": 1920,
@@ -102,17 +102,17 @@
       "quality": 88,
       "width": 1600,
       "height": 900,
-      "bytes": 83534,
-      "kib": 81.6,
+      "bytes": 84908,
+      "kib": 82.9,
       "ceiling_kib": 180.0,
       "within_ceiling": true,
       "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f276.png",
-      "sha256": "8fc3779a326f80fa1463e09dfa31c3da61eda97a01807a211f24b0c5170b2e52",
+      "sha256": "5f86d27df4db675b5a70e1035017144cc49f1738ab818e51dfaf55a1d618b98d",
       "quality_search": [
         {
           "quality": 88,
-          "bytes": 83534,
-          "kib": 81.6
+          "bytes": 84908,
+          "kib": 82.9
         }
       ]
     },
@@ -125,17 +125,17 @@
       "quality": 88,
       "width": 900,
       "height": 506,
-      "bytes": 40396,
-      "kib": 39.4,
+      "bytes": 41224,
+      "kib": 40.3,
       "ceiling_kib": 180.0,
       "within_ceiling": true,
       "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f276.png",
-      "sha256": "15b6abb86eede88e508a09cc912914a8a4219db1c7ea36c8c4f79100031d4849",
+      "sha256": "dd3ef9cbe50fa2d26552b1ef7a0583e4e74e4ea02bce9428d751ba547cee8338",
       "quality_search": [
         {
           "quality": 88,
-          "bytes": 40396,
-          "kib": 39.4
+          "bytes": 41224,
+          "kib": 40.3
         }
       ]
     }

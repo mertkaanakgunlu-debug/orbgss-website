@@ -499,6 +499,13 @@ def check_aoi_scene_wiring(report: Report, scene_config, descriptions) -> None:
                 "; ".join(literal),
             )
 
+            ramps = _ramp_offenders(obj)
+            report.check(
+                not ramps,
+                label + " AOI animation ramps are well-formed [frame, factor] pairs",
+                "; ".join(ramps),
+            )
+
             sweep = obj.get("sweep", {})
             report.check(
                 int(sweep.get("end_frame", 0)) > int(sweep.get("start_frame", 0)),
@@ -507,17 +514,56 @@ def check_aoi_scene_wiring(report: Report, scene_config, descriptions) -> None:
             )
 
 
+# Keys whose lists are animation ramps -- [[frame, factor], ...] -- rather than geometry. They are
+# exempt from the coordinate scan below but not unchecked: _ramp_offenders proves their shape, so
+# the exemption cannot be used to smuggle a hand-typed position through a timing field.
+AOI_RAMP_KEYS = ("emphasis", "settle")
+
+
+def _ramp_offenders(spec, path="aoi"):
+    """Check that every animation ramp really is [[frame, factor], ...] and nothing else."""
+    offenders = []
+    if isinstance(spec, dict):
+        for key, value in spec.items():
+            where = path + "." + str(key)
+            if key not in AOI_RAMP_KEYS:
+                offenders.extend(_ramp_offenders(value, where))
+                continue
+            if not isinstance(value, list) or not value:
+                offenders.append(where + " is not a ramp: " + repr(value))
+                continue
+            for index, pair in enumerate(value):
+                at = where + "[" + str(index) + "]"
+                ok_shape = (
+                    isinstance(pair, list) and len(pair) == 2
+                    and isinstance(pair[0], int) and not isinstance(pair[0], bool)
+                    and isinstance(pair[1], (int, float)) and not isinstance(pair[1], bool)
+                )
+                if not ok_shape:
+                    offenders.append(at + " is not [frame, factor]: " + repr(pair))
+                    continue
+                frame, factor = pair
+                if frame < 1:
+                    offenders.append(at + " frame out of range: " + repr(frame))
+                if not 0.0 <= float(factor) <= 8.0:
+                    offenders.append(at + " factor out of range: " + repr(factor))
+    return offenders
+
+
 def _literal_coordinates(spec, path="aoi"):
     """Find numeric triples/lists in an AOI spec that look like baked geometry.
 
-    An aoi_system spec should contain only scalars, frame numbers and names --
+    An aoi_system spec should contain only scalars, frame numbers, names and animation ramps --
     its positions come from the fixture. A list of numbers in here is a
     coordinate someone typed, which is exactly the failure mode this phase is
-    meant to eliminate.
+    meant to eliminate. Ramp keys are skipped here because their pairs are frames and
+    multipliers, never positions; ``_ramp_offenders`` proves that separately.
     """
     offenders = []
     if isinstance(spec, dict):
         for key, value in spec.items():
+            if key in AOI_RAMP_KEYS:
+                continue
             offenders.extend(_literal_coordinates(value, path + "." + str(key)))
     elif isinstance(spec, list):
         numeric = [item for item in spec if isinstance(item, (int, float))]

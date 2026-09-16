@@ -890,8 +890,11 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   const video = hero.querySelector('.hero-video');
   const handoff = hero.querySelector('[data-hero-handoff]');
 
-  /* Frame 200 of 276 at 24 fps: the first frame of the accepted regional-hold beat. */
-  const HOLD_SECONDS = 200 / 24;
+  /* Frame 240 of 276 at 24 fps. WEB-005A moved this from frame 200: the hold now has a resolve in
+     it -- the scan completes, the boresight retires, the corner locks land and the frame firms --
+     and revealing the result three seconds before that finishes made the handoff read as an
+     interruption rather than the payoff. It now lands as the lock settles. */
+  const HOLD_SECONDS = 240 / 24;
 
   function revealHandoff() {
     if (!handoff || !handoff.hidden) return;

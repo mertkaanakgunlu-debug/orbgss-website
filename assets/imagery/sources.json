@@ -1874,13 +1874,18 @@
       "scene": "hero_production_kizildere",
       "render_profile": "production",
       "render_resolution": [
-        1920,
-        1080
+        2304,
+        1296
       ],
       "frames": 276,
       "renderer": "Blender 4.5.10 LTS / Cycles / OptiX",
       "encoder": "Blender 4.5.10 LTS bundled FFmpeg",
-      "evidence_record": "hero/evidence/production_media.json"
+      "evidence_record": "hero/evidence/production_media.json",
+      "delivered_resolution": [
+        1920,
+        1080
+      ],
+      "supersampling_note": "Rendered at 2304 x 1296 and delivered at 1920 x 1080. The downscale removes edge aliasing and averages sampling noise, so the encoder receives a cleaner signal."
     },
     "envelope": {
       "webm_max_bytes": 3145728,
@@ -1901,9 +1906,9 @@
         "frame_rate": 24,
         "frame_count": 276,
         "duration_seconds": 11.5,
-        "video_bitrate_kbps": 1418,
-        "bytes": 2935742,
-        "sha256": "fa0561103bedf3c743bc11fdeeb742c883917088b62fa3365ed2a3ad417de21a"
+        "video_bitrate_kbps": 1448,
+        "bytes": 2899684,
+        "sha256": "d86fdfc3ddf02011ed8fdfebd54a244b7ac804bec7a20199b8f2131b81d859a5"
       },
       {
         "role": "hero-mp4",
@@ -1917,8 +1922,8 @@
         "frame_count": 276,
         "duration_seconds": 11.5,
         "video_bitrate_kbps": 2800,
-        "bytes": 3679039,
-        "sha256": "40bb37ee18a343267d08ed05ea69c507341fa5b52ee585db74768ed183c134ab"
+        "bytes": 3692178,
+        "sha256": "333b182b54a9c7a73b1c062558a71ab6fbd03a3ef216697d99da01b74f8943b8"
       },
       {
         "role": "hero-poster",
@@ -1930,8 +1935,8 @@
         "height": 900,
         "quality": 88,
         "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f276.png",
-        "bytes": 83534,
-        "sha256": "8fc3779a326f80fa1463e09dfa31c3da61eda97a01807a211f24b0c5170b2e52"
+        "bytes": 84908,
+        "sha256": "5f86d27df4db675b5a70e1035017144cc49f1738ab818e51dfaf55a1d618b98d"
       },
       {
         "role": "hero-poster-narrow",
@@ -1943,9 +1948,10 @@
         "height": 506,
         "quality": 88,
         "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f276.png",
-        "bytes": 40396,
-        "sha256": "15b6abb86eede88e508a09cc912914a8a4219db1c7ea36c8c4f79100031d4849"
+        "bytes": 41224,
+        "sha256": "dd3ef9cbe50fa2d26552b1ef7a0583e4e74e4ea02bce9428d751ba547cee8338"
       }
-    ]
+    ],
+    "revision": "WEB-005A hero visual fidelity and motion refinement"
   }
 }

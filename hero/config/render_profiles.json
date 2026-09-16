@@ -81,10 +81,10 @@
     "production": {
       "role": "production_media",
       "engine": "CYCLES",
-      "resolution_x": 1920,
-      "resolution_y": 1080,
+      "resolution_x": 2304,
+      "resolution_y": 1296,
       "resolution_percentage": 100,
-      "samples": 192,
+      "samples": 128,
       "adaptive_threshold": 0.01,
       "max_bounces": 8,
       "denoise": true,
@@ -97,7 +97,7 @@
       "compression": 15,
       "prefer_gpu": true,
       "publish_evidence": false,
-      "note": "WEB-005 production hero frames. Same Cycles path as master at 8-bit depth, which is what the video encoders consume anyway; 192 adaptive samples with the OptiX denoiser holds the master look across a 276-frame range at a cost that fits one sitting. Frames are intermediate and stay out of Git; the shipped artefacts are the encodes."
+      "note": "WEB-005A production hero frames. Rendered at 2304 x 1296 and delivered at 1920 x 1080 or below: supersampling removes the edge aliasing and sampling noise the accepted build fed straight into a bitrate-starved encoder, and a cleaner source both looks sharper and compresses better. 128 adaptive samples is not a reduction in quality per delivered pixel -- the 1.44x downscale averages that many samples back up. Frames are intermediate and stay out of Git."
     }
   },
   "default_preview_profile": "preview",

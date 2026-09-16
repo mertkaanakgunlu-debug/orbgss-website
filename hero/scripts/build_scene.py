@@ -1512,6 +1512,19 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
     # --- appearance / release timing ---------------------------------------
     scene_materials = scene_spec.get("materials", {})
 
+    def _extra_keys(cfg, key_name):
+        """Optional post-appearance ramp, authored in configuration as [[frame, factor], ...].
+
+        An appear ramp alone can only say "this is here now". A shot needs to be able to say "this
+        is resolved" as well, which is a second gesture after the first: the frame firming up once
+        the scan has finished, the corner locks settling once they have landed. Without it the tail
+        of the shot has nothing to do and reads as a pause rather than an ending.
+        """
+        extra = cfg.get(key_name)
+        if not extra:
+            return []
+        return [(int(frame), float(factor)) for frame, factor in extra]
+
     border_cfg = spec.get("border", {})
     if "appear_start_frame" in border_cfg:
         _animate_emission_strength(
@@ -1520,7 +1533,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
             [
                 (int(border_cfg["appear_start_frame"]), 0.0),
                 (int(border_cfg["appear_end_frame"]), 1.0),
-            ],
+            ] + _extra_keys(border_cfg, "emphasis"),
         )
 
     lock_cfg = spec.get("corner_locks", {})
@@ -1531,7 +1544,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
             [
                 (int(lock_cfg["appear_start_frame"]), 0.0),
                 (int(lock_cfg["appear_end_frame"]), 1.0),
-            ],
+            ] + _extra_keys(lock_cfg, "emphasis"),
         )
 
     fill_cfg = spec.get("fill", {})
@@ -1541,7 +1554,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
             [
                 (int(fill_cfg["appear_start_frame"]), 0.0),
                 (int(fill_cfg["appear_end_frame"]), 1.0),
-            ],
+            ] + _extra_keys(fill_cfg, "settle"),
         )
 
     if "appear_start_frame" in beam_spec:
