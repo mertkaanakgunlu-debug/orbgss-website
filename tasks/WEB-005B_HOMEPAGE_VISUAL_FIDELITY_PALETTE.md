@@ -5,34 +5,38 @@
 **Canonical baseline:** `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`  
 **Implementation branch:** `feat/web-005b-homepage-visual-fidelity`  
 **Product visual authority:** `docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md` on `docs/web-005-polish-authority`  
-**Dependency:** may start after WEB-005A is stable enough that homepage hero integration contracts will not churn; terminal acceptance requires no unresolved Science palette dependency.
+**Dependency:** start after WEB-005A R2 is stable enough that hero-handoff contracts will not churn; terminal acceptance requires no unresolved Science palette dependency.
 
 ## 1. Outcome
 
-Raise the non-hero homepage acts to the same launch-quality visual bar as the refined hero and establish a reusable public presentation palette system for website/application outputs without changing scientific meaning.
+Raise Acts 2–4 to the same launch-quality visual bar as the refined hero and establish a reusable public presentation palette system for website/application outputs without changing scientific meaning.
 
-The outcome covers:
+Current-site review confirms that the structure is correct but the visual presentation is too technical/report-like compared with the accepted reference direction. WEB-005B owns the non-hero visual correction:
 
 1. Act 2 real Kızıldere EO context quality;
-2. Act 3 compact evidence-trio presentation;
-3. Act 4 priority/result climax presentation;
-4. reusable Product-owned brand/UI and acquisition-FX palette tokens;
+2. Act 3 compact evidence-trio visual coherence and energy;
+3. Act 4 priority/result visual dominance;
+4. reusable Product-owned brand/UI/acquisition palette tokens;
 5. Science-approved analytical palette bindings where governed value-to-colour mappings are changed.
+
+The CTO-provided analytical reference image is a **visual/style reference only**: vivid analytical surface, strong relief/contour depth, luminous cyan target frame and clear visual hierarchy. It is not a source asset and must not be copied into production.
 
 ## 2. Act 2 — real Kızıldere context
 
-The current real Kızıldere image is provenance-valid but visually reads too much like a technical raster. Replace or re-present it, within accepted public-safe provenance, so the section clearly communicates “the real place before analysis.”
+The current real Kızıldere image is provenance-valid but visually reads like a processed/technical raster. Replace or re-present it, within accepted public-safe provenance, so it clearly communicates “the real place before analysis.”
 
 Required qualities:
 
-- natural Earth-observation / geographic appearance;
+- natural-colour / photographic EO appearance;
 - trustworthy terrain, settlement/agricultural and land/water relationships;
-- no synthetic-looking thematic palette;
+- neutral/restrained processing;
+- visibly closer to a real Earth-observation image than to THM/ALT/thematic output;
+- enough local contrast to read relief and spatial context;
 - no ungoverned basemap/provider substitution;
 - no aggressive browser upscaling;
-- context-only meaning remains explicit and separate from THM/ALT acquisition dates or evidence semantics.
+- context-only meaning stays explicit and separate from analytical evidence semantics.
 
-A different rights-safe/public-safe derivative may be selected if it is canonically tied to the same Kızıldere context role and provenance is complete.
+If the current master cannot produce the desired natural read without semantic/provenance ambiguity, use another accepted/public-safe derivative tied to the same Kızıldere context role and record full provenance.
 
 ## 3. Act 3 — compact evidence trio
 
@@ -42,27 +46,40 @@ Preserve exactly:
 2. THM-01 Thermal Anomaly;
 3. ALT-01 Alteration Proxy.
 
-Improve presentation through layout, framing, typography, in-frame legend treatment, surrounding contrast, spacing and controlled emphasis. The three cards should read as one coherent analytical stage rather than three disconnected technical exports.
+The current three-card implementation is technically correct but visually too flat and report-like. Improve the composition so the three images read as one coherent analytical stage:
+
+- more image-led card proportions;
+- stronger surrounding contrast / framing;
+- consistent metadata/legend treatment;
+- reduced low-value text clutter;
+- greater visual energy and hierarchy;
+- responsive scaling without unsafe upscaling;
+- vividness through presentation shell until Science palette authority permits raster recolouring.
 
 Structure/Geology remains optional support / DATA_GAP / score-invariant and must not reappear as a major homepage act.
 
-Governed raster pixels must not be recoloured or semantically transformed without Science authority.
+Governed raster pixels must not be recoloured or semantically transformed without accepted Science authority.
 
 ## 4. Act 4 — priority/result climax
 
-Preserve the exact public label and meaning:
+Preserve exact public label and meaning:
 
 **Remote-Sensing Relative Priority — Experimental Baseline**
 
 It remains an AOI-relative 0–100 screening/ranking result, not probability, Full Prospectivity, reserve/resource, discovery likelihood or drilling-success likelihood.
 
-Presentation should become the strongest analytical visual on the page through scale, framing, typography and a compact integrated legend. Do not use detached decorative colour bars.
+The current result presentation is too small/contained relative to its role. Final Act 4 must become the strongest analytical visual on the page through:
 
-The governed result pixels remain authoritative. Any new value-to-colour mapping requires Science acceptance.
+- substantially more visual area than any single evidence card;
+- clean negative space and framing;
+- integrated truthful legend;
+- strong title/metadata hierarchy;
+- controlled cyan framing/glow in surrounding UI where useful;
+- Science-approved vivid analytical palette once GEO-WEB-003 permits it.
+
+Do not use detached decorative colour bars. Governed result pixels remain authoritative; any new value-to-colour mapping requires Science acceptance.
 
 ## 5. Product-owned palette system
-
-Implement reusable tokens for the accepted Product palette:
 
 ### Brand/UI
 
@@ -76,24 +93,24 @@ Implement reusable tokens for the accepted Product palette:
 - `--orb-cyan`: `#73E7FF`
 - `--orb-cyan-glow`: `#8AF1FF`
 
-### Acquisition / hero FX
+### Acquisition / non-scientific framing FX
 
 - beam core: `#7FEFFF`
 - beam glow: `#3CCBFF`
 - target frame: `#98F5FF`
 
-These may be used in surrounding UI and non-scientific acquisition visualization without Science approval.
+These may be used in surrounding UI, target framing and non-scientific acquisition visualization without Science approval.
 
 ## 6. Analytical palette direction and Science boundary
 
-Desired application/public families are:
+Desired public/application families remain:
 
 - Terrain/elevation: muted relief / earth-safe sequential treatment;
 - Thermal anomaly: perceptually ordered dark-purple → magenta/red → warm-yellow;
 - Alteration proxy: distinct teal → green → yellow;
-- Priority/result: controlled perceptually ordered palette that preserves ranking semantics and avoids probability-like good/bad coding.
+- Priority/result: controlled ordered palette with stronger contrast/energy than the current proof render, while preserving ranking semantics and avoiding probability-like red/green good/bad coding.
 
-This task does **not** authorize changing governed value-to-colour mappings by itself. If the implementation wants to recolour THM-01, ALT-01, terrain or priority raster pixels, it must consume the separate Science acceptance for the public analytical palette authority. Until then, improve vividness through presentation shell, not scientific pixel remapping.
+This task does **not** authorize governed pixel recolouring by itself. Consume GEO-WEB-003 / MER-108 before changing scientific value-to-colour mappings. Until then improve presentation shell only.
 
 ## 7. Responsive / accessibility invariants
 
@@ -110,44 +127,40 @@ Preserve:
 ## 8. Acceptance tests
 
 ### B-VIS-01 — Act 2 context semantics
-
-Act 2 uses a provenance-safe real EO context image and is explicitly identifiable as context-only, not analytical evidence. Visual review must show a more natural/geographic presentation than the current technical-raster-like state.
+Act 2 uses a provenance-safe real EO context image and is explicitly context-only, not analytical evidence. Human review must show a materially more natural/geographic read than the current technical-raster-like checkpoint.
 
 ### B-VIS-02 — Act 2 provenance/rights
-
 Source, derivative, dimensions, rights/public-safe basis and SHA-256 are recorded and validator-checkable.
 
 ### B-VIS-03 — evidence-trio cardinality
-
 Homepage contains exactly the three accepted evidence cards and no standalone Structure/Geology major act.
 
 ### B-VIS-04 — governed-pixel protection
-
-A validator or checksum/provenance assertion proves that governed scientific assets are not silently recoloured/reclassified/value-transformed unless a cited Science palette authority explicitly permits it.
+Validator/checksum/provenance assertion proves scientific assets are not silently recoloured/reclassified/value-transformed unless cited Science authority explicitly permits it.
 
 ### B-VIS-05 — palette-token contract
-
-Brand/UI/acquisition palette tokens are defined once and used consistently. A regression test must detect drift of locked Product tokens where practical.
+Brand/UI/acquisition palette tokens are defined once and used consistently. Regression test detects locked-token drift where practical.
 
 ### B-VIS-06 — priority semantics
-
-The exact public label and AOI-relative non-probability warning remain present in EN/TR. Tests must fail on prohibited probability/prospectivity reinterpretation.
+Exact public label and AOI-relative non-probability warning remain present in EN/TR; tests fail on prohibited probability/prospectivity reinterpretation.
 
 ### B-VIS-07 — safe-density sweep
-
-At representative and wide viewports, major scientific visuals remain within accepted safe rendered device-pixel ceilings. Evidence records source/master, selected derivative and actual rendered size.
+Major scientific visuals remain inside accepted rendered device-pixel ceilings across representative/wide viewports. Evidence records source/master, selected derivative and actual rendered size.
 
 ### B-VIS-08 — legend discipline
-
-No detached decorative homepage scientific colour bar/scale strip. Necessary legends are integrated inside or directly coupled to the relevant visual.
+No detached decorative homepage scientific colour bar/scale strip. Necessary legends are integrated in/directly coupled to the relevant visual.
 
 ### B-VIS-09 — responsive/accessibility regression
-
-375 / 768 / 1024 / 1440 screenshots plus DOM/validator evidence confirm no overflow, clipped copy, inaccessible controls or localization regressions.
+375 / 768 / 1024 / 1440 screenshots plus DOM/validator evidence confirm no overflow, clipped copy, inaccessible controls or localization regression.
 
 ### B-VIS-10 — human visual gate
+Provide before/after screenshots for Acts 2, 3 and 4 at desktop and representative responsive widths. Public preview URL not required.
 
-Provide before/after screenshots for Acts 2, 3 and 4 at desktop and representative responsive widths. Product/CTO visual acceptance may use screenshots; a public preview URL is not required.
+### B-VIS-11 — visual-hierarchy gate
+At 1440-class desktop, Act 4 must clearly dominate any single evidence card, and Act 3 must read as one coherent analytical stage rather than three isolated report exports. Human review compares against the CTO-provided analytical reference for energy/hierarchy only, not pixel imitation.
+
+### B-VIS-12 — natural-context separation gate
+A first-time viewer must be able to distinguish Act 2 natural EO context from Act 3 analytical rasters without reading the captions. Human review evidence must demonstrate this separation.
 
 ## 9. Required evidence
 
@@ -157,17 +170,18 @@ At `REVIEW_READY` provide:
 - Act 2 source/provenance package and before/after evidence;
 - Act 3 and Act 4 before/after screenshots;
 - final Product palette token record;
-- any consumed Science palette authority pointer;
+- consumed Science palette authority pointer where applicable;
 - governed-pixel checksum/provenance evidence;
 - safe-density measurements;
 - EN/TR/accessibility/route validator results;
+- B-VIS-01..B-VIS-12 matrix;
 - negative-test results for new invariants where practical;
 - explicit semantic non-change statement;
 - explicit `NOT RUN` for any genuinely unavailable check.
 
 ## 10. Out of scope
 
-- hero Blender/motion redesign except bounded integration with the accepted WEB-005A output;
+- hero Blender/motion redesign except bounded integration with accepted WEB-005A output;
 - new scientific method, thresholds, score meaning or evidence eligibility;
 - unapproved scientific recolouring;
 - paid/closed/restricted data;
