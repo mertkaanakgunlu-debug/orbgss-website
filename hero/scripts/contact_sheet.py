@@ -62,6 +62,11 @@ def build_sheet(paths, out_path: Path, columns: int, tile_width: int, gap: int, 
     sheet.file_format = "PNG"
     hc.ensure_dir(out_path.parent)
     scene = bpy.context.scene
+    # The tiles are finished, display-referred renders. Saving them through the scene's default
+    # view transform would tone-map them a second time and darken every tile, so the sheet is
+    # written through Standard/None -- the same rule the production encoder applies.
+    scene.view_settings.view_transform = "Standard"
+    scene.view_settings.look = "None"
     scene.render.image_settings.file_format = "PNG"
     scene.render.image_settings.color_depth = "8"
     scene.render.image_settings.color_mode = "RGB"

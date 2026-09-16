@@ -1,5 +1,6 @@
 {
   "task": "WEB-005 / MER-93",
+  "revision": "WEB-005A R2 / MER-107 hero visual fidelity",
   "scene": "hero_production_kizildere",
   "profile": "production",
   "consumed_hero_evidence_head": "e95fdcac7cac82e597d40dab4cdc96ce1a6b319e",
@@ -32,30 +33,30 @@
       "container": "WebM",
       "mime_type": "video/webm",
       "codec": "VP9",
-      "video_bitrate_kbps": 1448,
-      "bytes": 2899684,
-      "mib": 2.765,
+      "video_bitrate_kbps": 1385,
+      "bytes": 2955795,
+      "mib": 2.819,
       "ceiling_mib": 3.0,
       "within_ceiling": true,
-      "sha256": "d86fdfc3ddf02011ed8fdfebd54a244b7ac804bec7a20199b8f2131b81d859a5",
+      "sha256": "0ef4b223290015aea31349884c226f8116ef34b8c8655ac8abe73936ce613c81",
       "bitrate_search": [
         {
           "attempt": 1,
           "video_bitrate_kbps": 1900,
-          "bytes": 3631903,
-          "mib": 3.464,
+          "bytes": 3797350,
+          "mib": 3.621,
           "ceiling_mib": 3.0,
           "within_ceiling": false,
-          "wall_clock_seconds": 103.05
+          "wall_clock_seconds": 113.75
         },
         {
           "attempt": 2,
-          "video_bitrate_kbps": 1448,
-          "bytes": 2899684,
-          "mib": 2.765,
+          "video_bitrate_kbps": 1385,
+          "bytes": 2955795,
+          "mib": 2.819,
           "ceiling_mib": 3.0,
           "within_ceiling": true,
-          "wall_clock_seconds": 98.95
+          "wall_clock_seconds": 97.57
         }
       ],
       "width": 1920,
@@ -71,20 +72,20 @@
       "mime_type": "video/mp4",
       "codec": "H.264",
       "video_bitrate_kbps": 2800,
-      "bytes": 3692178,
-      "mib": 3.521,
+      "bytes": 3856456,
+      "mib": 3.678,
       "ceiling_mib": 4.5,
       "within_ceiling": true,
-      "sha256": "333b182b54a9c7a73b1c062558a71ab6fbd03a3ef216697d99da01b74f8943b8",
+      "sha256": "5b7f6877c5b5bf5caadac1514962452e7c5edf4c5be1808035a8b3c4309ae416",
       "bitrate_search": [
         {
           "attempt": 1,
           "video_bitrate_kbps": 2800,
-          "bytes": 3692178,
-          "mib": 3.521,
+          "bytes": 3856456,
+          "mib": 3.678,
           "ceiling_mib": 4.5,
           "within_ceiling": true,
-          "wall_clock_seconds": 37.06
+          "wall_clock_seconds": 36.94
         }
       ],
       "width": 1920,
@@ -102,17 +103,17 @@
       "quality": 88,
       "width": 1600,
       "height": 900,
-      "bytes": 84908,
-      "kib": 82.9,
+      "bytes": 101112,
+      "kib": 98.7,
       "ceiling_kib": 180.0,
       "within_ceiling": true,
       "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f276.png",
-      "sha256": "5f86d27df4db675b5a70e1035017144cc49f1738ab818e51dfaf55a1d618b98d",
+      "sha256": "70105cd3ebe74823330dff33b99253bc3d4e1ec36ceb63a7a16c9ea0a514b161",
       "quality_search": [
         {
           "quality": 88,
-          "bytes": 84908,
-          "kib": 82.9
+          "bytes": 101112,
+          "kib": 98.7
         }
       ]
     },
@@ -125,17 +126,17 @@
       "quality": 88,
       "width": 900,
       "height": 506,
-      "bytes": 41224,
-      "kib": 40.3,
+      "bytes": 44864,
+      "kib": 43.8,
       "ceiling_kib": 180.0,
       "within_ceiling": true,
       "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f276.png",
-      "sha256": "dd3ef9cbe50fa2d26552b1ef7a0583e4e74e4ea02bce9428d751ba547cee8338",
+      "sha256": "c3bdcd3bde5e18c21630a828c80a2a7c1527ce98ad132a61f160382311c5a1f2",
       "quality_search": [
         {
           "quality": 88,
-          "bytes": 41224,
-          "kib": 40.3
+          "bytes": 44864,
+          "kib": 43.8
         }
       ]
     }

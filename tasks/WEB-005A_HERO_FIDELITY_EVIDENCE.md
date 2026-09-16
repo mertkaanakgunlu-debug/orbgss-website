@@ -179,7 +179,16 @@ missing. Governed pixels are never in the video.
 ## 8. Production media (A-HERO-07)
 
 <!-- media-table-start -->
-Pending encode — filled at publication.
+Rendered at **2304 × 1296** (Cycles, OptiX, 128 adaptive samples, compositor bloom) and delivered at 1920 × 1080; encoded through Blender 4.5.10 LTS's bundled FFmpeg with the bitrate search recorded in `hero/evidence/production_media.json`. The poster is the last frame.
+
+| File | Container / codec | Dimensions | Rate · frames · duration | Bitrate | Size / ceiling | SHA-256 |
+| --- | --- | --- | --- | --- | --- | --- |
+| `assets/hero/orbgss-hero.webm` | WebM / VP9 | 1920 × 1080 | 24 fps · 276 frames · 11.5 s | 1385 kbps | **2.819 MiB** / 3.0 MiB | `0ef4b223290015aea31349884c226f8116ef34b8c8655ac8abe73936ce613c81` |
+| `assets/hero/orbgss-hero.mp4` | MP4 / H.264 | 1920 × 1080 | 24 fps · 276 frames · 11.5 s | 2800 kbps | **3.678 MiB** / 4.5 MiB | `5b7f6877c5b5bf5caadac1514962452e7c5edf4c5be1808035a8b3c4309ae416` |
+| `assets/hero/hero-poster-1600.webp` | WebP q88 | 1600 × 900 | — | — | **98.7 KiB** / 180 KiB | `70105cd3ebe74823330dff33b99253bc3d4e1ec36ceb63a7a16c9ea0a514b161` |
+| `assets/hero/hero-poster-900.webp` | WebP q88 | 900 × 506 | — | — | **43.8 KiB** / 180 KiB | `c3bdcd3bde5e18c21630a828c80a2a7c1527ce98ad132a61f160382311c5a1f2` |
+
+Bitrate search (WebM): 1900 kbps → 3.621 MiB; 1385 kbps → 2.819 MiB.
 <!-- media-table-end -->
 
 ## 9. Fallback matrix (A-HERO-08)
@@ -209,9 +218,13 @@ and the R2 production frames (after):
 | Final handoff | `4_final_handoff_before.webp` (f276) | `4_final_handoff_after.webp` (f276) |
 
 Full sequence: the shipped `assets/hero/orbgss-hero.webm` / `.mp4` are the capture; a 24-frame contact
-sheet is at `hero/evidence/web005a_r2/sequence_contact_sheet.webp`, and page captures at 1440 /
-768 / 375 CSS px with the handoff revealed are `page_1440_handoff.png`, `page_768.png`,
-`page_375.png` in the same folder.
+sheet (frames 1 → 276, 1960 × 1676) is at `hero/evidence/web005a_r2/sequence_contact_sheet.png`. Page
+captures (headless Edge against the local static server) are in the same folder: `page_1440_handoff.png`
+(1440 × 900, reduced-motion static state, so the last-frame poster, the analysis-AOI marker, the leaders
+and the result panel are all revealed deterministically), `page_768.png` and `page_375.png` (strip
+layout). The playback path was verified live in the browser pane: the sequence plays once, reaches
+`held`, and the marker, leaders and panel are revealed at the same audited geometry (marker at
+1003 × 195 CSS px, panel 614 × 354 CSS px at 1440 × 900).
 
 ## 11. A-HERO-01 … A-HERO-14 matrix
 
