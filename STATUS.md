@@ -19,6 +19,7 @@
 **Product authority:** OrbGSS Website vNext Product & Execution Authority v1.8 (`docs/WEB_VNEXT_AUTHORITY.md`); current Drive Product authority has precedence where newer.
 **Accepted WEB-HERO-001D evidence HEAD:** `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e` (terminal Product acceptance published at `573f4f1`)
 **WEB-005 execution baseline:** `main@d2421a772f2e4cfa38c85dd5ee71a419c5160838`
+**WEB-005 implementation HEAD (REVIEW_READY):** `0e3b878280a5c4b4198c223153178f89137bd01c`
 **Tracking:** Linear MER-90 (WEB-002 accepted/complete); MER-91 (WEB-003 accepted/complete); MER-92 (WEB-004 Product-accepted/complete); MER-102 / GEO-WEB-002 (Science-accepted/complete); MER-101 / WEB-HERO-001D (terminally accepted); MER-93 / WEB-005 (REVIEW_READY); MER-96 / GEO-WEB-001 resolved
 
 ## Authority
