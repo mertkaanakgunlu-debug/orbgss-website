@@ -8,7 +8,7 @@
 **Branch:** `feat/web-005a-hero-visual-fidelity`
 **Rejected review checkpoint (retained as before-evidence):** `ffa2f2944ca5992afb9e9891b42745a9bd1105ad`
 **State:** `REVIEW_READY` (R2)
-**Final HEAD:** see §1 — recorded at publication.
+**Final implementation HEAD:** `b285c90cf685f6ca9da61c41302ae496d7e8169b` (this evidence publication follows it as a documentation-only commit)
 
 This document has two parts. **Part A** is the R2 revision Product asked for after rejecting the
 `ffa2f294…` checkpoint. **Part B** is the original checkpoint's evidence, kept verbatim below the
@@ -25,7 +25,7 @@ useful and is carried forward rather than restarted.
 | | |
 | --- | --- |
 | Branch | `feat/web-005a-hero-visual-fidelity` |
-| Final implementation HEAD | `<!-- HEAD -->` |
+| Final implementation HEAD | `b285c90cf685f6ca9da61c41302ae496d7e8169b` |
 | Baseline | `main@00af0f232a8d7d77f5ca61d758461ff7316ba151` |
 | Rejected checkpoint (before) | `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` |
 | Product visual references | two CTO-supplied images, composition/energy only; not copied, not shipped, not in the repository |
