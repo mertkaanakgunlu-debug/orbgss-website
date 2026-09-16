@@ -1,182 +1,217 @@
 # WEB-005A — Hero Visual Fidelity, Orbital Choreography & Launch-Quality Motion
 
-**State:** EXECUTION_AUTHORIZED / IN PROGRESS  
+**State:** REVISION_REQUIRED / IN PROGRESS  
 **Parent:** WEB-005 / MER-93 — terminally accepted  
 **Canonical baseline:** `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`  
 **Implementation branch:** `feat/web-005a-hero-visual-fidelity`  
+**Rejected review checkpoint:** `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` — technically green, visually not accepted  
 **Product visual authority:** `docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md` on `docs/web-005-polish-authority`  
 **Launch dependency:** must be terminally accepted before WEB-006.
 
 ## 1. Outcome
 
-Raise the accepted WEB-005 homepage hero from structurally correct to launch-quality cinematic fidelity without changing the four-act homepage architecture or any accepted scientific/public semantics.
+Raise the accepted WEB-005 homepage hero to launch-quality cinematic fidelity without changing the four-act homepage architecture or accepted scientific/public semantics.
 
-This is one bounded outcome: a visibly premium orbital-acquisition sequence whose satellite, camera path, sensing visualization, target frame, render fidelity and final handoff all read as intentional and finished.
+The current `ffa2f294...` checkpoint is preserved as useful technical/before evidence, but Product visual review rejected it because the Earth treatment is stronger than the rest of the hero: the satellite is too hard to read, the acquisition relationship is too weak, the target frame lacks a clear activation moment, and the final result handoff does not deliver the intended cinematic climax.
 
-The task incorporates the current bounded hero refinement already underway on `feat/web-005a-hero-visual-fidelity`; do not restart completed conformant work merely because this authority was published after execution began.
+This revision is one bounded outcome. Do not restart conformant geometry, fallback, media-budget, validator or provenance work. Continue the same branch and revise only what is needed to meet this contract.
 
-## 2. Required product behavior
+The CTO will provide two visual reference images with the execution prompt. They are **composition/style references only**, not source assets. Do not copy or ship them.
 
-The final sequence must preserve the accepted story while improving its visual execution:
+## 2. Required product behavior — R2 visual lock
 
-Earth establish → generic EO satellite emerges around the Earth limb → readable orbital arc → acquisition attitude → restrained cyan sensing visualization → crisp target-frame activation → continuous regional approach → stable hold → intentional governed result/evidence handoff.
+The final sequence must read clearly, at normal desktop viewing size, as:
 
-### Satellite
+Earth establish → generic EO satellite emerges around the Earth limb → readable orbital arc → lower-left/left-lower acquisition composition → visible cyan sensing lines to the target → luminous target-frame lock → continuous approach to the same target → resolved governed analytical reveal.
 
-Use a rights-safe generic Earth-observation 3D satellite, or an in-repository model with equivalent visual quality. It must have enough real geometry/material response to avoid a flat-cutout silhouette: volumetric body, readable solar panels with thickness, material separation and restrained EO-platform detail.
+### 2.1 Earth
 
-It must not be represented as a specific operational spacecraft or specific sensor unless separate authority exists.
+Preserve the accepted strong Earth model, lighting, atmosphere and overall global look. Replace/augment the cinematic Earth texture with a materially higher-resolution rights-safe source if needed to remove visible regional softness.
 
-### Motion / camera
+### 2.2 Satellite
 
-The satellite path must read as an orbital pass, not a foreground fly-by or arbitrary spline. It should emerge from the Earth-limb context, remain visually subordinate to the Earth, pass through an intentional acquisition composition and leave the viewer with a coherent sense of orbital motion.
+Use a rights-safe generic Earth-observation 3D satellite, or an in-repository model of equivalent quality. It must have enough real geometry/material response to avoid a flat-cutout or bright-speck read:
 
-Ordinary implementation strategy and exact keyframe solving are implementer-owned. The path may be numerically derived against the camera/framing rather than eyeballed.
+- volumetric body;
+- solar panels with visible thickness / panel segmentation;
+- physically coherent material separation/highlights;
+- restrained antenna/sensor-housing detail;
+- believable attitude relative to the target;
+- no claim or visual identity of a specific operational spacecraft/sensor.
 
-### Sensing FX
+During the acquisition beat, the satellite must be unmistakably readable as a 3D EO platform without becoming the dominant object over Earth.
 
-Use the accepted cyan acquisition language from the Product visual authority. The effect must be thin, controlled and coherent with the satellite-target relationship. A soft cone/boresight, narrow scan band or restrained beam lines are conformant.
+### 2.3 Orbital choreography
 
-Rejected: thick fuzzy white slabs, noisy particles, game-like lasers, opaque geometry that obscures the Earth, or claims that the visualization is actual instrument physics.
+The visible pass must approximate the accepted visual-reference reading:
 
-### Target frame
+- satellite emerges from behind/around the Earth limb;
+- the orbital arc is visibly understandable in screen space;
+- acquisition composition places the satellite toward the lower-left / left-lower area relative to the Earth while Earth remains right-dominant;
+- the satellite does not clip the frame during the intentional acquisition beat;
+- optional orbital trail remains subtle and secondary;
+- the satellite exit may leave frame later, but not before the viewer has clearly understood satellite → target relationship.
 
-The target outline/corner locks must be crisp and premium: thin border, controlled glow, clean registration language. Preserve accepted target registration/world geometry; do not silently move the accepted Kızıldere centre or redefine the analysis AOI.
+Numerical orbit solving remains implementation-owned. Physical plausibility and visual readability are both required.
 
-### Ending / handoff
+### 2.4 Sensing FX
 
-The final state must feel deliberately resolved, not like playback simply stopped. Registration/lock timing, camera settle and page-layer handoff should converge into a clear climax.
+The prior nearly invisible cone is not acceptable. Acquisition FX must be restrained **and clearly readable**.
 
-Governed scientific rasters/results remain page-layer/HTML handoff where lossy video would alter scientific colour meaning.
+Preferred direction:
 
-## 3. Media and fidelity contract
+- two or more thin cyan sensing lines, or an equivalently readable restrained multi-line/boresight treatment;
+- beam core `#7FEFFF`;
+- outer glow `#3CCBFF`;
+- lines remain visibly connected to satellite and target/footprint;
+- lines may taper/soften near target but cannot disappear at normal desktop viewing;
+- a low-opacity cone may support the lines but must not become the primary read.
 
-Preserve the accepted delivery behavior:
+Rejected:
 
-- WebM target/ceiling remains `<= 3.0 MiB` unless Product explicitly revises it after measured evidence;
-- MP4 fallback remains `<= 4.5 MiB`;
-- poster remains `<= 180 KiB`;
+- thick/fuzzy white slabs;
+- opaque cones obscuring Earth;
+- nearly invisible acquisition FX;
+- noisy particles;
+- game-like lasers;
+- wording or metadata claiming literal sensor physics.
+
+### 2.5 Target frame / lock event
+
+The target outline/corner locks must be crisp and premium and must have a visible acquisition event:
+
+- thin crisp cyan core;
+- controlled emissive halo/glow;
+- corner locks/registration marks visually resolve into place;
+- brief intensification/pulse at acquisition is conformant;
+- target remains registered to the accepted world/AOI geometry;
+- no thick blurred/smeared outline;
+- no silent move of Kızıldere centre or analysis AOI.
+
+### 2.6 Camera approach
+
+The camera continues toward the same target continuously. Preserve AOI identity/orientation/registration. The transition must not feel like generic map zoom or an unrelated cut; it should feel like the orbital acquisition naturally resolving into the regional target.
+
+### 2.7 Final analytical handoff
+
+The final state must feel deliberately resolved and visually substantial.
+
+A small detached floating result card alone is not sufficient. Preferred behavior:
+
+- target frame/corner locks intensify and settle;
+- the regional target fills a meaningful portion of the composition;
+- governed analytical content appears **inside, clipped to, or immediately coupled to the target region** as a page-layer/HTML overlay;
+- the result is large enough to read as the product payoff;
+- HTML headline/CTA remains separate from rendered media;
+- governed raster pixels are not baked into lossy video where colour semantics would be altered;
+- any visible analytical label/warning remains exact and truthful.
+
+The final handoff may tease the accepted priority/result surface while Act 4 remains the full analytical climax later on the page.
+
+## 3. Media / source-fidelity contract
+
+Preserve:
+
+- WebM `<= 3.0 MiB`;
+- MP4 `<= 4.5 MiB`;
+- poster `<= 180 KiB`;
 - no dual-video download;
-- mobile/reduced-motion/reduced-data intentional static/fallback behavior remains intact.
+- mobile/reduced-motion/reduced-data intentional static/fallback behavior.
 
-Supersampling, denoising, render-sample changes, encoder preset tuning and other conformant quality work are implementer-owned.
+The earlier bitrate investigation is accepted evidence: regional softness is source-resolution dominated, not primarily encoder-limited. Do not reopen bitrate experiments unless a new measured reason appears.
 
-If launch-quality fidelity is demonstrably impossible inside an existing ceiling, do not silently relax the ceiling. Publish exact before/after quality and byte evidence and return `WAITING_DOMAIN_DECISION` for that trade-off only.
+### Earth source-resolution authority
 
-### Earth-source-resolution clarification — Product R1
+WEB-005A may replace/augment the cinematic Earth albedo/basemap with a materially higher-resolution rights-safe source when needed. Record exact source/record, provider, usage-rights basis, dimensions and SHA-256. Reject unclear-rights third-party derivatives. Do not introduce endorsement language or provider branding. Preserve geographic orientation and accepted target registration.
 
-A demonstrated shortage of source texels in the cinematic Earth albedo/basemap is **not** a Product STOP by itself. WEB-005A explicitly authorizes replacing or augmenting the current cinematic Earth texture with a materially higher-resolution rights-safe Earth texture when needed to remove visible upscaling/softness in approved shots.
-
-This is a presentation/source-fidelity change, not a scientific-data change, provided all of the following remain true:
-
-- the asset is used only as cinematic Earth/context texture and is not presented as an OrbGSS analytical raster or a sensor-specific observation;
-- the exact source URL/record, provider, usage-rights basis and materialized checksum are recorded in the existing asset manifest/provenance system;
-- no NASA logo/insignia/identifier is introduced and no wording implies NASA endorsement;
-- any third-party-copyrighted material or unclear-rights derivative is rejected;
-- geography/orientation remain truthful enough for the cinematic context and the accepted Kızıldere/AOI registration is not redefined by the texture;
-- the existing media byte ceilings remain unchanged unless separate measured Product approval is requested.
-
-NASA Visible Earth / Blue Marble high-resolution imagery is an authorized candidate source **only after the exact selected asset record is verified against NASA media-use guidance and its own record for third-party restrictions**. The implementer may download/materialize such an asset as ordinary task-local production work and must record provenance/checksum. No additional Product approval is required merely because the texture has higher source resolution.
-
-Therefore a prior `BLOCKED_ON_SOURCE_RESOLUTION` disposition based solely on needing a rights-safe higher-resolution cinematic Earth texture is superseded by this clarification. If no conforming rights-safe source can be verified, or the chosen asset would add a new scientific/public claim, then route back.
+A previous `BLOCKED_ON_SOURCE_RESOLUTION` disposition is superseded. Rights-safe higher-resolution Earth-texture materialization is implementation-owned.
 
 ## 4. Explicitly out of scope
 
-- homepage Act 2/3/4 redesign beyond bounded hero-handoff integration;
-- analytical raster recolouring or new palette semantics;
+- full Act 2/3/4 redesign beyond bounded hero-handoff integration;
+- analytical raster recolouring/new palette semantics without Science authority;
 - new scientific claims or sensing-physics claims;
 - framework/runtime migration;
-- production deploy, Vercel production alias, DNS/domain work;
+- production deploy/Vercel production alias/DNS/domain work;
 - WEB-006 execution;
 - destructive Git/history operations.
 
 ## 5. Acceptance tests
 
-The implementation must encode and execute the following checks. Test file decomposition is implementer-owned.
-
-### A-HERO-01 — accepted geometry continuity
-
-Existing accepted Earth/world/AOI registration invariants remain green. A changed visual treatment must not move the governed target registration.
+### A-HERO-01 — geometry continuity
+Existing Earth/world/AOI registration invariants remain green. Visual treatment must not move governed target registration.
 
 ### A-HERO-02 — orbital-path audit
-
-Machine-readable or generated evidence demonstrates that the satellite path used for the production scene is coherent with the intended orbital solution and does not produce the previously rejected foreground blow-up/fly-by behavior. Camera-relative framing and on-screen satellite size must remain intentional through the visible pass.
+Evidence demonstrates a coherent orbital solution and no foreground blow-up/fly-by regression. Camera-relative framing and on-screen satellite size remain intentional through the visible acquisition pass.
 
 ### A-HERO-03 — generic-satellite provenance
-
-Any external satellite asset has recorded rights/provenance and is safe for public commercial presentation. The model/metadata must not claim a specific spacecraft/sensor identity.
+Any external satellite asset has public-commercial-safe provenance/rights recorded; model/metadata does not claim a specific spacecraft/sensor identity.
 
 ### A-HERO-04 — sensing-FX negative gate
-
-Validation/evidence must make it possible to reject at least these regressions: thick/opaque acquisition slabs, governed scientific raster baked into the hero render, or a public configuration that labels the visualization as actual sensor physics.
+Tests/evidence can reject thick/opaque slabs, governed raster baked into hero video, actual-sensor-physics claims, and acquisition FX so faint that the satellite-target link is not legible at review size.
 
 ### A-HERO-05 — target-frame quality gate
-
-Production evidence at the acquisition/regional frames shows a thin, crisp target frame/corner-lock treatment without the previous thick blurred/smeared appearance. Registration remains numerically valid.
+Acquisition/regional evidence shows a thin crisp frame with controlled glow and a visible lock/activation event; registration remains numerically valid.
 
 ### A-HERO-06 — resolved ending
-
-Playback evidence proves the sequence reaches an intentional final state and the governed page-layer handoff occurs at the intended hold/resolve point rather than appearing as an accidental stalled frame.
+Playback evidence proves a deliberate final resolve and governed page-layer handoff rather than accidental stalled playback.
 
 ### A-HERO-07 — production media integrity
-
-For WebM, MP4 and poster record dimensions, codec/container, frame rate where applicable, duration, exact bytes and SHA-256; validators enforce accepted ceilings and manifest consistency.
+Record dimensions, codec/container, frame rate, duration, exact bytes and SHA-256 for WebM/MP4/posters; validators enforce ceilings/manifest consistency.
 
 ### A-HERO-08 — fallback/network behavior
-
-Verify desktop motion-allowed playback plus reduced-motion, Save-Data/slow-network and representative mobile fallback. No case may require both hero video encodes to download.
+Verify desktop motion plus reduced-motion, Save-Data/slow-network and representative mobile fallback. No case downloads both hero video encodes.
 
 ### A-HERO-09 — regression suite
-
-Site + hero validators remain green after conformant updates. New invariant checks must include deliberate negative cases where practical so the new gate is proved capable of failing.
+Site + hero validators remain green; new invariant checks include deliberate negative cases where practical.
 
 ### A-HERO-10 — human visual gate
+Provide before/after stills at satellite entrance, acquisition/scan, regional hold and final handoff plus a short full-sequence capture. Public preview URL is not required.
 
-Provide Product/CTO with before/after stills at:
+### A-HERO-11 — source-resolution/upscaling gate
+Record Earth source dimensions and reproducible effective source-texel coverage at the softest approved hold. Demonstrate material reduction of previous upscaling or equivalent objective improvement together with rights/provenance checks.
 
-1. satellite entrance;
-2. acquisition/scan moment;
-3. regional hold;
-4. final handoff/end state;
+### A-HERO-12 — satellite readability gate
+At the primary acquisition frame, visual evidence must show the satellite body and solar-panel silhouette clearly enough to be recognized as a 3D EO platform at normal 1440-class viewing. A tiny bright speck or unreadable silhouette fails.
 
-and a short full-sequence screen/video capture. A public preview URL is not required.
+### A-HERO-13 — reference-composition gate
+Human evidence must show the intended reference-A hierarchy: Earth dominant right, satellite lower-left/left-lower during acquisition, readable satellite-target linkage, and luminous target frame. Exact pixel mimicry is not required; composition/energy/readability are.
 
-### A-HERO-11 — source-resolution / upscaling gate
+### A-HERO-14 — analytical-handoff gate
+Final-state evidence must show governed analytical content in/directly coupled to the acquired target region and visually substantial enough to read as the payoff. A small detached result card as the sole payoff fails.
 
-For the production Earth texture used by the approved regional/acquisition shots, evidence must record source dimensions and a reproducible estimate of effective source texel coverage at the softest approved hold. If the previous material-upscaling defect is addressed through a higher-resolution source, demonstrate the before/after effective texel ratio or equivalent objective evidence and show that the new asset passes the provenance/rights checks above.
+## 6. Required evidence at REVIEW_READY
 
-## 6. Required evidence
-
-At `REVIEW_READY` provide:
-
-- exact branch and final HEAD;
+- exact branch/final HEAD;
 - changed-path inventory;
-- exact source/provenance for the satellite model/asset;
-- exact source/provenance/dimensions/checksum for any replacement Earth texture;
+- rejected checkpoint `ffa2f294...` retained as before evidence;
+- exact satellite model/asset provenance;
+- exact replacement Earth texture source/provenance/dimensions/checksum if used;
 - motion/orbit/framing audit;
 - four before/after still pairs;
-- complete hero playback video/screen capture pointer;
-- target geometry/registration evidence;
-- source-resolution/upscaling evidence for the Earth texture;
+- full hero screen/video capture;
+- target registration evidence;
+- Earth source-resolution/upscaling evidence;
 - production media metrics/hashes;
+- A-HERO-01..A-HERO-14 result matrix;
 - site/hero/negative-test results;
 - fallback matrix;
-- explicit confirmation that scientific/public semantics are unchanged;
+- explicit scientific/public semantic non-change statement;
 - explicit `NOT RUN` for any genuinely unavailable check.
 
 ## 7. STOP conditions
 
 Return `WAITING_DOMAIN_DECISION` only if completion requires:
 
-- changing accepted Product behavior or four-act hierarchy;
+- changing four-act hierarchy/product behavior outside this authority;
 - changing scientific/data semantics;
-- claiming a specific sensor/platform or actual sensing physics;
-- using a paid/unclear-rights satellite or Earth asset;
-- relaxing media ceilings as a Product trade-off;
-- production deploy/domain/DNS work;
+- claiming specific sensor/platform or literal sensing physics;
+- using paid/unclear-rights satellite or Earth assets;
+- relaxing media ceilings;
+- production deploy/domain/DNS;
 - credentials/payment/legal/commercial action;
 - destructive/irreversible action.
 
-Render iteration, encoder tuning, Blender/tool issues, rights-safe higher-resolution cinematic Earth-texture materialization, CSS/JS bugs, validator repair, bounded scene refactors and evidence defects remain implementation-owned.
+Render iteration, encoder tuning, Blender/tool issues, rights-safe Earth-texture materialization, 3D satellite modelling/integration, CSS/JS hero-handoff fixes, validator repair, bounded scene refactors and evidence defects remain implementation-owned.
 
 **Terminal implementation state:** `REVIEW_READY`.
