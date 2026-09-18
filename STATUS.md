@@ -13,7 +13,7 @@
 **Accepted WEB-005 terminal acceptance:** `main@00af0f232a8d7d77f5ca61d758461ff7316ba151` (`tasks/WEB-005_TERMINAL_PRODUCT_ACCEPTANCE.md`)
 **WEB-005A rejected checkpoint (before-evidence):** `ffa2f2944ca5992afb9e9891b42745a9bd1105ad`
 **WEB-005A R2 package (superseded, did not pass the human visual gate):** `a6897828d6e35595ea5a9a39a1e812b0fcbbfb35` (implementation `b285c90cf685f6ca9da61c41302ae496d7e8169b`)
-**WEB-005A R3 implementation HEAD (REVIEW_READY):** `{{IMPL_HEAD}}`
+**WEB-005A R3 implementation HEAD (REVIEW_READY):** `37152222c33fdc09265ba022ce45828c8d002723`
 **Reference/upstream only:** https://github.com/baran-orbgss/website
 **Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)
 **Registrar / DNS:** Squarespace

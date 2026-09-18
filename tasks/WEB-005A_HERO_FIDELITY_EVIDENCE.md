@@ -9,7 +9,7 @@
 **Rejected review checkpoint (retained as before-evidence):** `ffa2f2944ca5992afb9e9891b42745a9bd1105ad`
 **Superseded R2 package (retained as before-evidence; did not pass the human visual gate):** `a6897828d6e35595ea5a9a39a1e812b0fcbbfb35`
 **State:** `REVIEW_READY` (R3)
-**Final implementation HEAD:** `{{IMPL_HEAD}}` (this evidence publication follows it as a documentation-only commit)
+**Final implementation HEAD:** `37152222c33fdc09265ba022ce45828c8d002723` (this evidence publication follows it as a documentation-only commit)
 
 This document has three parts. **Part A** is the R3 revision: the current implementation state and
 the only part under review. **Part B** is the R2 package, which was technically green, was pushed at
@@ -27,7 +27,7 @@ evidence, kept for the same reason.
 | | |
 | --- | --- |
 | Branch | `feat/web-005a-hero-visual-fidelity` |
-| Final implementation HEAD | `{{IMPL_HEAD}}` |
+| Final implementation HEAD | `37152222c33fdc09265ba022ce45828c8d002723` |
 | Baseline | `main@00af0f232a8d7d77f5ca61d758461ff7316ba151` |
 | Superseded R2 package (did not pass the human visual gate) | `a6897828d6e35595ea5a9a39a1e812b0fcbbfb35` (implementation `b285c90cf685f6ca9da61c41302ae496d7e8169b`) — Part B |
 | Rejected first checkpoint | `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` — Part C |
