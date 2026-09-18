@@ -296,24 +296,23 @@ def _earth_albedo_layers(nt, spec: dict, scene_config: dict, mapping, day_tex_no
     nodes, links = nt.nodes, nt.links
     current = day_tex_node.outputs["Color"]
 
-    window = spec.get("detail_window")
-    detail_file = spec.get("detail_texture")
-    if window and detail_file:
-        lon0, lon1 = float(window["lon0"]), float(window["lon1"])
-        lat0, lat1 = float(window["lat0"]), float(window["lat1"])
-        feather = float(window.get("feather_deg", 2.0))
+    # --- shared geographic coordinate nodes (longitude / latitude in degrees) ---------------
+    # The mapped UV is equirectangular, so longitude and latitude are two Map Range nodes away.
+    # Built once, lazily, and shared by every window below.
+    geo = {}
 
+    def _geographic():
+        if geo:
+            return geo["lon"], geo["lat"]
         separate = nodes.new("ShaderNodeSeparateXYZ")
         separate.location = (-300, 900)
         links.new(mapping.outputs["Vector"], separate.inputs["Vector"])
-
         u_wrapped = nodes.new("ShaderNodeMath")
         u_wrapped.operation = "WRAP"
         u_wrapped.location = (-120, 980)
         u_wrapped.inputs[1].default_value = 0.0
         u_wrapped.inputs[2].default_value = 1.0
         links.new(separate.outputs["X"], u_wrapped.inputs[0])
-
         lon = nodes.new("ShaderNodeMapRange")
         lon.location = (60, 980)
         lon.inputs["From Min"].default_value = 0.0
@@ -322,7 +321,6 @@ def _earth_albedo_layers(nt, spec: dict, scene_config: dict, mapping, day_tex_no
         lon.inputs["To Max"].default_value = 180.0
         lon.clamp = False
         links.new(u_wrapped.outputs[0], lon.inputs["Value"])
-
         lat = nodes.new("ShaderNodeMapRange")
         lat.location = (60, 780)
         lat.inputs["From Min"].default_value = 0.0
@@ -331,35 +329,38 @@ def _earth_albedo_layers(nt, spec: dict, scene_config: dict, mapping, day_tex_no
         lat.inputs["To Max"].default_value = 90.0
         lat.clamp = False
         links.new(separate.outputs["Y"], lat.inputs["Value"])
+        geo["lon"], geo["lat"] = lon.outputs["Result"], lat.outputs["Result"]
+        return geo["lon"], geo["lat"]
 
-        def _edge(value_socket, low, high, y):
+    def _window_mask(lon_socket, lat_socket, lon0, lon1, lat0, lat1, feather, y):
+        """0 outside a lon/lat rectangle, 1 inside, smooth-stepped over ``feather`` degrees."""
+        def _edge(value_socket, low, high, yy):
             a = nodes.new("ShaderNodeMath")
             a.operation = "SUBTRACT"
-            a.location = (260, y)
+            a.location = (260, yy)
             a.inputs[1].default_value = low
             links.new(value_socket, a.inputs[0])
             b = nodes.new("ShaderNodeMath")
             b.operation = "SUBTRACT"
-            b.location = (260, y - 120)
+            b.location = (260, yy - 120)
             b.inputs[0].default_value = high
             links.new(value_socket, b.inputs[1])
             m = nodes.new("ShaderNodeMath")
             m.operation = "MINIMUM"
-            m.location = (440, y - 60)
+            m.location = (440, yy - 60)
             links.new(a.outputs[0], m.inputs[0])
             links.new(b.outputs[0], m.inputs[1])
             return m.outputs[0]
 
-        edge_lon = _edge(lon.outputs["Result"], lon0, lon1, 1000)
-        edge_lat = _edge(lat.outputs["Result"], lat0, lat1, 760)
+        edge_lon = _edge(lon_socket, lon0, lon1, y)
+        edge_lat = _edge(lat_socket, lat0, lat1, y - 240)
         edge = nodes.new("ShaderNodeMath")
         edge.operation = "MINIMUM"
-        edge.location = (620, 880)
+        edge.location = (620, y - 120)
         links.new(edge_lon, edge.inputs[0])
         links.new(edge_lat, edge.inputs[1])
-
         mask = nodes.new("ShaderNodeMapRange")
-        mask.location = (800, 880)
+        mask.location = (800, y - 120)
         mask.interpolation_type = "SMOOTHSTEP"
         mask.clamp = True
         mask.inputs["From Min"].default_value = 0.0
@@ -367,27 +368,41 @@ def _earth_albedo_layers(nt, spec: dict, scene_config: dict, mapping, day_tex_no
         mask.inputs["To Min"].default_value = 0.0
         mask.inputs["To Max"].default_value = 1.0
         links.new(edge.outputs[0], mask.inputs["Value"])
+        return mask.outputs["Result"]
 
-        u_detail = nodes.new("ShaderNodeMapRange")
-        u_detail.location = (260, 560)
-        u_detail.inputs["From Min"].default_value = lon0
-        u_detail.inputs["From Max"].default_value = lon1
-        u_detail.inputs["To Min"].default_value = 0.0
-        u_detail.inputs["To Max"].default_value = 1.0
-        u_detail.clamp = True
-        links.new(lon.outputs["Result"], u_detail.inputs["Value"])
-        v_detail = nodes.new("ShaderNodeMapRange")
-        v_detail.location = (260, 380)
-        v_detail.inputs["From Min"].default_value = lat0
-        v_detail.inputs["From Max"].default_value = lat1
-        v_detail.inputs["To Min"].default_value = 0.0
-        v_detail.inputs["To Max"].default_value = 1.0
-        v_detail.clamp = True
-        links.new(lat.outputs["Result"], v_detail.inputs["Value"])
+    def _window_uv(lon_socket, lat_socket, lon0, lon1, lat0, lat1, y):
+        """Normalized (u, v) inside a lon/lat rectangle, clamped, for a window texture lookup."""
+        u = nodes.new("ShaderNodeMapRange")
+        u.location = (260, y)
+        u.inputs["From Min"].default_value = lon0
+        u.inputs["From Max"].default_value = lon1
+        u.inputs["To Min"].default_value = 0.0
+        u.inputs["To Max"].default_value = 1.0
+        u.clamp = True
+        links.new(lon_socket, u.inputs["Value"])
+        v = nodes.new("ShaderNodeMapRange")
+        v.location = (260, y - 180)
+        v.inputs["From Min"].default_value = lat0
+        v.inputs["From Max"].default_value = lat1
+        v.inputs["To Min"].default_value = 0.0
+        v.inputs["To Max"].default_value = 1.0
+        v.clamp = True
+        links.new(lat_socket, v.inputs["Value"])
         combine = nodes.new("ShaderNodeCombineXYZ")
-        combine.location = (440, 470)
-        links.new(u_detail.outputs["Result"], combine.inputs["X"])
-        links.new(v_detail.outputs["Result"], combine.inputs["Y"])
+        combine.location = (440, y - 90)
+        links.new(u.outputs["Result"], combine.inputs["X"])
+        links.new(v.outputs["Result"], combine.inputs["Y"])
+        return combine.outputs["Vector"]
+
+    window = spec.get("detail_window")
+    detail_file = spec.get("detail_texture")
+    if window and detail_file:
+        lon0, lon1 = float(window["lon0"]), float(window["lon1"])
+        lat0, lat1 = float(window["lat0"]), float(window["lat1"])
+        feather = float(window.get("feather_deg", 2.0))
+        lon_socket, lat_socket = _geographic()
+        mask = _window_mask(lon_socket, lat_socket, lon0, lon1, lat0, lat1, feather, 1000)
+        uv = _window_uv(lon_socket, lat_socket, lon0, lon1, lat0, lat1, 560)
 
         detail_node = nodes.new("ShaderNodeTexImage")
         detail_node.location = (620, 470)
@@ -398,15 +413,77 @@ def _earth_albedo_layers(nt, spec: dict, scene_config: dict, mapping, day_tex_no
                 detail_node.interpolation = interpolation
             except TypeError:
                 pass
-        links.new(combine.outputs["Vector"], detail_node.inputs["Vector"])
+        links.new(uv, detail_node.inputs["Vector"])
 
         blend = nodes.new("ShaderNodeMixRGB")
         blend.location = (1000, 600)
         blend.blend_type = "MIX"
-        links.new(mask.outputs["Result"], blend.inputs["Fac"])
+        links.new(mask, blend.inputs["Fac"])
         links.new(current, blend.inputs["Color1"])
         links.new(detail_node.outputs["Color"], blend.inputs["Color2"])
         current = blend.outputs["Color"]
+
+    # --- WEB-005A R3: regional detail multiplier -------------------------------------------
+    # A greyscale ratio texture (materialize_earth_sharpen.py) that carries 30 m ground structure
+    # without carrying any colour: inside its window the albedo is multiplied by
+    # 1 + (ratio - 1) * strength, so the 500 m mean is preserved and no seam can form. Loaded
+    # Non-Color because the values are ratios, not colours.
+    sharpen = spec.get("detail_sharpen")
+    if sharpen and sharpen.get("texture"):
+        s_window = sharpen["window"]
+        lon0, lon1 = float(s_window["lon0"]), float(s_window["lon1"])
+        lat0, lat1 = float(s_window["lat0"]), float(s_window["lat1"])
+        lon_socket, lat_socket = _geographic()
+        mask = _window_mask(lon_socket, lat_socket, lon0, lon1, lat0, lat1,
+                            float(s_window.get("feather_deg", 0.05)), 200)
+        uv = _window_uv(lon_socket, lat_socket, lon0, lon1, lat0, lat1, -240)
+
+        ratio_node = nodes.new("ShaderNodeTexImage")
+        ratio_node.location = (620, -330)
+        ratio_node.image = _load_image(sharpen["texture"])
+        ratio_node.extension = "EXTEND"
+        try:
+            ratio_node.image.colorspace_settings.name = "Non-Color"
+        except TypeError:
+            pass
+        try:
+            ratio_node.interpolation = "Cubic"
+        except TypeError:
+            pass
+        links.new(uv, ratio_node.inputs["Vector"])
+
+        decode = nodes.new("ShaderNodeMath")
+        decode.operation = "MULTIPLY"
+        decode.location = (820, -330)
+        decode.inputs[1].default_value = float(sharpen.get("encode_scale", 2.0))
+        links.new(ratio_node.outputs["Color"], decode.inputs[0])
+
+        # ratio_s = 1 + (ratio - 1) * strength  ==  ratio * strength + (1 - strength)
+        strength = float(sharpen.get("strength", 1.0))
+        scaled = nodes.new("ShaderNodeMath")
+        scaled.operation = "MULTIPLY_ADD"
+        scaled.location = (1000, -330)
+        scaled.inputs[1].default_value = strength
+        scaled.inputs[2].default_value = 1.0 - strength
+        links.new(decode.outputs[0], scaled.inputs[0])
+
+        # gate by the window mask: outside the window the multiplier is exactly 1
+        gated = nodes.new("ShaderNodeMapRange")
+        gated.location = (1180, -330)
+        gated.clamp = False
+        gated.inputs["From Min"].default_value = 0.0
+        gated.inputs["From Max"].default_value = 1.0
+        gated.inputs["To Min"].default_value = 1.0
+        links.new(scaled.outputs[0], gated.inputs["To Max"])
+        links.new(mask, gated.inputs["Value"])
+
+        multiplied = nodes.new("ShaderNodeMixRGB")
+        multiplied.location = (1360, -200)
+        multiplied.blend_type = "MULTIPLY"
+        multiplied.inputs["Fac"].default_value = 1.0
+        links.new(current, multiplied.inputs["Color1"])
+        links.new(gated.outputs["Result"], multiplied.inputs["Color2"])
+        current = multiplied.outputs["Color"]
 
     sea = spec.get("sea_tint")
     if sea:
@@ -463,6 +540,34 @@ def _earth_albedo_layers(nt, spec: dict, scene_config: dict, mapping, day_tex_no
         cloud_amount.use_clamp = True
         cloud_amount.inputs[1].default_value = float(spec.get("cloud_strength", 1.0))
         links.new(cloud_node.outputs["Color"], cloud_amount.inputs[0])
+        # WEB-005A R3: a clear acquisition window. The 8192 px cloud composite is about 5 km per
+        # texel; smeared over a 170 km hold it reads as a milky veil, not as cloud. Inside the
+        # detail window the cloud amount is scaled down over a wide feather, so the target region
+        # is acquired under the clear sky the Sentinel-2 detail was itself observed under.
+        sharpen_cfg = spec.get("detail_sharpen") or {}
+        clear = float(sharpen_cfg.get("clear_clouds", 0.0))
+        if clear > 0.0 and sharpen_cfg.get("window"):
+            w = sharpen_cfg["window"]
+            lon_socket, lat_socket = _geographic()
+            clear_mask = _window_mask(
+                lon_socket, lat_socket, float(w["lon0"]), float(w["lon1"]), float(w["lat0"]), float(w["lat1"]),
+                float(sharpen_cfg.get("clear_feather_deg", 0.6)), -600,
+            )
+            keep = nodes.new("ShaderNodeMapRange")
+            keep.location = (1200, -420)
+            keep.clamp = True
+            keep.inputs["From Min"].default_value = 0.0
+            keep.inputs["From Max"].default_value = 1.0
+            keep.inputs["To Min"].default_value = 1.0
+            keep.inputs["To Max"].default_value = 1.0 - clear
+            links.new(clear_mask, keep.inputs["Value"])
+            cleared = nodes.new("ShaderNodeMath")
+            cleared.operation = "MULTIPLY"
+            cleared.location = (1300, -300)
+            cleared.use_clamp = True
+            links.new(cloud_amount.outputs[0], cleared.inputs[0])
+            links.new(keep.outputs["Result"], cleared.inputs[1])
+            cloud_amount = cleared
         cloud_mix = nodes.new("ShaderNodeMixRGB")
         cloud_mix.location = (1400, -100)
         cloud_mix.inputs["Color2"].default_value = _rgba(
@@ -1365,7 +1470,24 @@ def _build_aoi_emission_material(name: str, spec: dict, scene_config: dict):
         hc.palette_color(scene_config, spec["emission_color_ref"])
     )
     emission.inputs["Strength"].default_value = float(spec.get("emission_strength", 8.0))
-    links.new(emission.outputs["Emission"], output.inputs["Surface"])
+    # WEB-005A R3: a presence gate. An emission ribbon at strength zero is a black ribbon, which
+    # is invisible while it is sub-pixel and a dark line the moment the camera is close -- so a
+    # frame that has to appear, or vanish under the dive, is switched through a transparent mix
+    # instead of only dimmed. Default 1 keeps every accepted scene rendering exactly as reviewed.
+    _set_blend_method(material, show_back=False)
+    presence = nodes.new("ShaderNodeValue")
+    presence.name = "aoi_presence"
+    presence.label = "aoi_presence"
+    presence.location = (150, -200)
+    presence.outputs[0].default_value = 1.0
+    transparent = nodes.new("ShaderNodeBsdfTransparent")
+    transparent.location = (150, 200)
+    mix = nodes.new("ShaderNodeMixShader")
+    mix.location = (300, 0)
+    links.new(presence.outputs[0], mix.inputs["Fac"])
+    links.new(transparent.outputs["BSDF"], mix.inputs[1])
+    links.new(emission.outputs["Emission"], mix.inputs[2])
+    links.new(mix.outputs["Shader"], output.inputs["Surface"])
     return material
 
 
@@ -1957,6 +2079,16 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
             return []
         return [(int(frame), float(factor)) for frame, factor in extra]
 
+    def _presence_keys(cfg):
+        """Transparent before it appears; optionally fades out over cfg["vanish"] = [start, end]."""
+        if "appear_start_frame" not in cfg:
+            return []
+        keys = [(int(cfg["appear_start_frame"]) - 1, 0.0), (int(cfg["appear_start_frame"]), 1.0)]
+        vanish = cfg.get("vanish")
+        if vanish:
+            keys += [(int(vanish[0]), 1.0), (int(vanish[1]), 0.0)]
+        return keys
+
     border_cfg = spec.get("border", {})
     if "appear_start_frame" in border_cfg:
         _animate_emission_strength(
@@ -1967,6 +2099,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
                 (int(border_cfg["appear_end_frame"]), 1.0),
             ] + _extra_keys(border_cfg, "emphasis"),
         )
+        _animate_presence(border_material, _presence_keys(border_cfg))
 
     lock_cfg = spec.get("corner_locks", {})
     if "appear_start_frame" in lock_cfg:
@@ -1978,15 +2111,18 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
                 (int(lock_cfg["appear_end_frame"]), 1.0),
             ] + _extra_keys(lock_cfg, "emphasis"),
         )
+        _animate_presence(lock_material, _presence_keys(lock_cfg))
 
     fill_cfg = spec.get("fill", {})
     if "appear_start_frame" in fill_cfg:
+        vanish = fill_cfg.get("vanish")
         _animate_presence(
             fill_material,
             [
                 (int(fill_cfg["appear_start_frame"]), 0.0),
                 (int(fill_cfg["appear_end_frame"]), 1.0),
-            ] + _extra_keys(fill_cfg, "settle"),
+            ] + _extra_keys(fill_cfg, "settle")
+            + ([(int(vanish[0]), 1.0), (int(vanish[1]), 0.0)] if vanish else []),
         )
 
     if "appear_start_frame" in beam_spec:
@@ -2014,6 +2150,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
                 (int(border_cfg["appear_end_frame"]), 1.0),
             ] + _extra_keys(border_cfg, "emphasis"),
         )
+        _animate_presence(glow_material, _presence_keys(border_cfg))
 
     # corner locks: draw-in from the corner outward (R2 lock event)
     draw_node = _node_named(lock_material, "aoi_lock_draw")

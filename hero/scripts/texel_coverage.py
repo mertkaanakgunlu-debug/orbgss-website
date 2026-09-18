@@ -94,10 +94,33 @@ def main() -> int:
             "albedo under the target: lon %s-%s E, lat %s-%s N" % (
                 window["lon0"], window["lon1"], window["lat0"], window["lat1"]))
 
+    colour_after = rows[-1]["magnification_at_delivered_width"]
+    # WEB-005A R3: the structure of the ground under the hold comes from the Sentinel-2 detail
+    # multiplier, a window texture at 30 m per texel in both axes (it is resampled to a metric
+    # grid before being laid out in degrees), while the colour stays Blue Marble.
+    sharpen = earth.get("detail_sharpen") or {}
+    sharpen_asset = next((a for a in manifest.get("assets", []) if a.get("local_path", "").endswith(str(sharpen.get("texture") or "<none>"))), None)
+    if sharpen_asset:
+        metres = float(sharpen_asset.get("ground_sample_m", 30.0))
+        rows.append({
+            "label": "R3 detail multiplier under the hold (Sentinel-2 derived ratio, structure only)",
+            "asset": sharpen_asset["id"],
+            "role": "multiplies the albedo inside lon %s-%s E, lat %s-%s N; carries ground structure, no colour" % (
+                sharpen_asset["window"]["lon0"], sharpen_asset["window"]["lon1"],
+                sharpen_asset["window"]["lat0"], sharpen_asset["window"]["lat1"]),
+            "dimensions": sharpen_asset.get("dimensions"),
+            "metres_per_texel_east_west_at_aoi": metres,
+            "metres_per_texel_north_south": metres,
+            "source_texels_across_frame_width": round(frame_width_km * 1000.0 / metres, 0),
+            "magnification_at_delivered_width": round(metres / metres_per_delivered_px, 3),
+            "magnification_at_render_width": round(metres / metres_per_render_px, 3),
+            "upscaled_on_screen": metres / metres_per_delivered_px > 1.0,
+        })
+
     before = rows[0]["magnification_at_delivered_width"]
     after = rows[-1]["magnification_at_delivered_width"]
     record = {
-        "task": "WEB-005A R2 / MER-107 — A-HERO-11 source-resolution evidence",
+        "task": "WEB-005A R3 / MER-107 — A-HERO-11 source-resolution evidence",
         "scene": args.scene,
         "hold_keyframe": hold["frame"],
         "aoi_latitude_deg": lat,
@@ -113,10 +136,14 @@ def main() -> int:
             "before_magnification": before,
             "after_magnification_under_target": after,
             "linear_texel_density_gain": round(before / after, 2) if after else None,
-            "note": ("Magnification above 1.0 means the albedo is upscaled on screen. The rejected "
-                     "checkpoint upscaled its source about %.1fx at the delivered width; under the "
-                     "target the R2 detail window is sampled at %.2fx, i.e. the frame now sees more "
-                     "source texels than delivered pixels." % (before, after)),
+            "colour_magnification_under_target": colour_after,
+            "note": ("Magnification above 1.0 means the texture is upscaled on screen. At the R3 hold "
+                     "(%.0f km across the frame) the rejected checkpoint's source would be upscaled "
+                     "about %.1fx and the 500 m Blue Marble window alone %.2fx; the ground structure "
+                     "the viewer actually resolves comes from the 30 m detail multiplier, sampled at "
+                     "%.2fx, i.e. the frame sees more structure texels than delivered pixels. Colour "
+                     "remains Blue Marble at 500 m by design: the multiplier adds structure, not colour."
+                     % (frame_width_km, before, colour_after, after)),
         },
         "method": ("Frame width at the AOI from shot_plan.analyze on the last camera keyframe; texel "
                    "size from each texture's equirectangular dimensions with the east-west size "

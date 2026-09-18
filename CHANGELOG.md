@@ -1,5 +1,30 @@
 # Changelog
 
+## v1.0.0-rc3-web-005a-hero-visual-revision — 2026-09-18 (WEB-005A R3, MER-107, branch `feat/web-005a-hero-visual-fidelity`)
+
+The R2 package was technically green and did not pass the human visual gate. R3 keeps its satellite
+model, sensing-line envelope and Earth stack and re-choreographs the shot. Full evidence in
+`tasks/WEB-005A_HERO_FIDELITY_EVIDENCE.md` (Part A).
+
+- **The satellite settles.** `orbit_intent.rate_profile` time-remaps one circular 900 km orbit: fast
+  round the limb, 0.03 °/frame from frame 110. Per-frame measurement showed the remaining drift was
+  parallax from the camera's dolly, so the camera is locked off from the handover to the release and
+  the platform holds within 0.01 of (0.25, 0.40) for 56 frames.
+- **The lines release while the platform is still in frame**, with an acquisition-complete pulse;
+  R2 drew them from off-screen for two seconds.
+- **One dive, a frame that can vanish, and the analysis frame.** The regional frame's materials gain
+  a transparent presence gate and a `vanish` range; the accepted 36 km analysis AOI is a second
+  fixture (`production_analysis_aoi`) drawn as its own frame with a lock event; the hold is keyed
+  twice so it is still. Motion blur (shutter 0.5) on the production profile.
+- **30 m ground structure under the hold** from a Sentinel-2-derived detail ratio that multiplies
+  the Blue Marble albedo — no colour, no season, no seam — with the Copernicus attribution in the
+  footer.
+- **The handoff is inside the target.** The four accepted derivatives are registered onto the
+  audited corners of the analysis frame by a CSS homography and revealed in evidence order, ending
+  on the priority result; the stack is clamped under 1249 device pixels. No faults layer: the
+  structure/geology data gap is not filled.
+- Validators: hero 292 checks, site PASS 0 warnings, negative tests 27/27, shot audit 18/18.
+
 ## v1.0.0-rc1-web-005-cinematic-hero — 2026-09-16 (WEB-005, MER-93, branch `feat/web-005-cinematic-hero`)
 
 The pre-launch homepage release candidate. Consumes the accepted WEB-HERO-001D cinematic system

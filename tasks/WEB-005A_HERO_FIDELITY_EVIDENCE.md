@@ -7,18 +7,290 @@
 **Parent:** WEB-005 / MER-93, terminally accepted at `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`
 **Branch:** `feat/web-005a-hero-visual-fidelity`
 **Rejected review checkpoint (retained as before-evidence):** `ffa2f2944ca5992afb9e9891b42745a9bd1105ad`
-**State:** `REVIEW_READY` (R2)
-**Final implementation HEAD:** `b285c90cf685f6ca9da61c41302ae496d7e8169b` (this evidence publication follows it as a documentation-only commit)
+**Superseded R2 package (retained as before-evidence; did not pass the human visual gate):** `a6897828d6e35595ea5a9a39a1e812b0fcbbfb35`
+**State:** `REVIEW_READY` (R3)
+**Final implementation HEAD:** `{{IMPL_HEAD}}` (this evidence publication follows it as a documentation-only commit)
 
-This document has two parts. **Part A** is the R2 revision Product asked for after rejecting the
-`ffa2f294…` checkpoint. **Part B** is the original checkpoint's evidence, kept verbatim below the
-line because it is the "before" of every comparison here and because the technical work it
-records (orbit solve method, bitrate investigation, AOI thinning, resolved tail) was accepted as
-useful and is carried forward rather than restarted.
+This document has three parts. **Part A** is the R3 revision: the current implementation state and
+the only part under review. **Part B** is the R2 package, which was technically green, was pushed at
+`a6897828…`, and did not pass the human visual gate; it is kept verbatim because it is the "before" of
+every R3 comparison and because its satellite model, sensing-line envelope, lock event, Earth albedo
+stack and validators are carried forward rather than restarted. **Part C** is the first checkpoint's
+evidence, kept for the same reason.
 
 ---
 
-# Part A — R2 visual revision
+# Part A — R3 visual revision
+
+## 1. Identity
+
+| | |
+| --- | --- |
+| Branch | `feat/web-005a-hero-visual-fidelity` |
+| Final implementation HEAD | `{{IMPL_HEAD}}` |
+| Baseline | `main@00af0f232a8d7d77f5ca61d758461ff7316ba151` |
+| Superseded R2 package (did not pass the human visual gate) | `a6897828d6e35595ea5a9a39a1e812b0fcbbfb35` (implementation `b285c90cf685f6ca9da61c41302ae496d7e8169b`) — Part B |
+| Rejected first checkpoint | `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` — Part C |
+| Product visual references | two CTO-supplied images, composition/energy only; not copied, not shipped, not in the repository |
+
+## 2. What changed, against the required visual outcome
+
+| Narrative beat | R2 (superseded) | R3 |
+| --- | --- | --- |
+| 1 · Earth rotates in space | accepted establish | unchanged accepted establish (frames 1–96), same model, lighting, atmosphere and AgX look |
+| 2 · satellite enters from behind the Earth | emerged at frame 31 as a 1.7 % speck and crawled the limb for four seconds | hidden for the first two seconds, comes round the lower-left limb at frame 50–58 on a fast arc (2.4 °/frame), 4 % of the frame width by frame 80, 8 % by 112 |
+| 3 · settles into position | constant 0.7 °/frame: drifted through the acquisition composition and out of the bottom-left at frame 166 | time-remapped derived orbit: the rate eases to 0.03 °/frame over frames 60–110 and the camera is locked off for the beat, so the platform **holds at (0.25, 0.40) ± 0.01 of the frame from frame 136 to 192** at 13 % of the frame width |
+| 4 · scan / acquisition | lines connected, but stayed drawn from off-screen for two seconds after the satellite had left | lines connect 110–124, frame locks 128–144 (pulse 2.6×, corner locks draw in), a brighter sweep band crosses the frame 144–178, the lines **release at 178–192 with an acquisition-complete pulse while the satellite is still in frame**; the acquisition frame is 6.3 % of the frame width (was 3.9 %) |
+| 5 · regional zoom / hold | slow drift to an oblique 1260 km view; ground soft | one decisive dive (192–262) on the same registered target, eased in and out, motion-blurred; the 420 km frame vanishes as its edges leave, and the **accepted 36 × 36 km analysis AOI draws in as its own frame** (236–254, lock pulse 2.4×, sweep) and settles; genuinely still hold 262–276, 166 km across the frame, 27° off nadir |
+| 5b · Earth under the hold | 500 m Blue Marble window | Blue Marble colour everywhere, multiplied under the hold by a **30 m Sentinel-2 detail ratio** (structure only, no colour or season change); cloud veil cleared over the window |
+| 6 · evidence layers over the AOI | — (one detached result panel) | page layer registered **inside the analysis frame** by a CSS homography on the audited corners: Elevation (NASADEM context) → THM-01 → ALT-01, each byte-exact with its exact label and accepted warning in the caption column |
+| 7 · priority result as payoff | 320–440 px panel beside a 36 px marker | the accepted priority surface fills the analysis frame (23 % of the frame width — 334 CSS px at 1440, 596 at 2560) with its own legend, ledger of the four layers, exact label, mandatory warning, meta line and CTA |
+
+**Faults / structure.** The requested narrative names a faults layer. No public-safe fault or lithology
+master is authorized (`docs/PRODUCT_AND_CONTENT_AUTHORITY.md`, CLAUDE.md design invariants: structure/geology
+is a deliberate, score-invariant data gap that must not be filled). The hero therefore shows the accepted
+evidence set — terrain context, THM-01, ALT-01 — and the accepted priority result, and nothing is
+fabricated in the place of a fault layer. This is the one deliberate deviation from the requested beat list.
+
+Unchanged and re-verified: the four-act homepage; every GEO-WEB-002 asset, checksum and Act 2–4
+placement; the `mvp_remote_sensing_priority_v1` label and semantics; `render_surface: html_overlay` (no
+governed raster in any lossy encode); EN/TR parity; reduced-motion, reduced-data, small-screen and
+no-dual-download behaviour; the media ceilings; the accepted Kızıldere centre; the 420 km regional frame's
+classification as **not** the analysis AOI.
+
+## 3. Satellite asset provenance (A-HERO-03)
+
+Unchanged from R2: procedural and OrbGSS-original (`hero/scripts/satellite_model.py`), no external model,
+no operational spacecraft or sensor identity; the validator scans the spec for spacecraft/sensor names.
+R3 changes only its hero scale (`wingspan_bu` 1.0 → 1.15, because it now holds farther from the camera,
+out at the limb) and its pass. Light linking still gives it self-shadowing without a planet shadow.
+
+## 4. Earth source provenance and resolution (A-HERO-11)
+
+All R2 NASA sources are unchanged (Part B §4). R3 adds one derived texture:
+
+| Asset | Source | Dimensions | Bytes | SHA-256 |
+| --- | --- | --- | --- | --- |
+| `earth_s2_detail_multiplier` — `hero/assets/source/s2_kizildere_detail_30m.png` (16-bit greyscale ratio, lon 28.15–29.42 E, lat 36.94–38.84 N) | Copernicus Sentinel-2 L2A, tiles T35SPC + T35SPB, 2025-09-25 (S2C, baseline 05.11, cloudy pixels 0.001–0.002 %, no snow); bands B04, B02, SCL; six source files identified by name and SHA-256 in `hero/evidence/earth_detail_sharpen.json` | 3720 × 7051 | 48 460 935 | `c6c89c9837bc34524edaf28ed83c263f3353716817b4e5f780c43d7837ee463a` |
+
+Method (`hero/scripts/materialize_earth_sharpen.py`): 10 m BOA reflectance → 30 m block mean → broadband
+pan = 0.6 red + 0.4 blue → **ratio = pan / (pan blurred to 510 m)**, clipped 0.45–2.0, open water held to
+0.85–1.18, cloud/shadow/snow/no-data (SCL) = 1.0 → inverse-mapped from an equirectangular grid through the
+WGS84 UTM 35N forward projection (verified against the accepted centre to **0.05 m**) → 16-bit PNG. The
+Earth material multiplies the Blue Marble albedo by it inside the window, so the 500 m mean is preserved,
+**no colour is introduced** and no seam can form. Rights: Copernicus Sentinel data are free, full and
+open; the required attribution *Contains modified Copernicus Sentinel data (2025)* is now in the site
+footer (EN/TR). The source tiles are the science project's raw archive and are not copied into this
+repository. The ratio has no units and no palette, is not a measured layer, carries no forbidden layer
+class and is never delivered to the page.
+
+**Effective source-texel coverage at the R3 hold** (`hero/evidence/texel_coverage.json`; 165.5 km across
+the frame, 86.2 m per delivered pixel):
+
+| Texture | m / texel | source texels across the frame | magnification at 1920 px |
+| --- | --- | --- | --- |
+| rejected checkpoint (8192 composite) — what this hold would have shown | 3856 | 43 | 44.7× upscaled |
+| Blue Marble 500 m window (colour) | 366 | 453 | 4.24× |
+| **Sentinel-2 detail multiplier (structure)** | **30** | **5518** | **0.35× — not upscaled** |
+
+Colour stays Blue Marble at 500 m by design; every ridge, valley, field pattern and coastline the viewer
+resolves at the hold comes from the 30 m multiplier.
+
+## 5. Motion, orbit and framing audit (A-HERO-01, A-HERO-02, A-HERO-12, A-HERO-13)
+
+`hero/evidence/shot_audit_production.json` (`audit_shot.py`, evaluated scene, all 276 frames, projection
+through Blender's own `world_to_camera_view`). **All 18 checks pass:**
+
+| Check | Measured | Threshold |
+| --- | --- | --- |
+| AOI locked to the shifted anchor after handover | 0.00001 | ≤ 0.02 frame |
+| AOI apparent size never reverses | 0.0009 | ≤ 0.0015 / frame |
+| AOI orientation continuous | 0.02°/frame | ≤ 2° |
+| camera jerk ratio | 0.158 | ≤ 0.35 |
+| focal-length rate (now relative: a zoom's speed is Δf / f) | 3.3 % / frame | ≤ 5 % |
+| cut ratio | 2.78 | ≤ 4.0 |
+| AOI in frame from handover to end | 0 frames out | 0 |
+| headline-safe region clear through the establish | 0.0 occupancy | 0.0 |
+| satellite fully in frame and unoccluded through the beat (**110–192**, was 116–160) | none clipped | none |
+| satellite lower-left of the target through the beat | none wrong-side | none |
+| satellite never overlaps the target frame | none | none |
+| satellite readable at the anchor frame (146) | **13.0 % of frame width** | ≥ 8 % |
+| satellite never a foreground fly-by | 21.9 % max (as it leaves the left edge) | ≤ 25 % |
+| **sensing lines release while the satellite is still in frame** | visible at frame 192 | required |
+| **satellite has left before the analysis hold** | none visible from 262 | none |
+| **analysis AOI spans the declared width through the hold** | 23.2–23.4 % | 19–26 % |
+| **analysis frame settles for the hold** | width 0.0002 / frame, centre 0.00001 / frame | ≤ 0.0015, ≤ 0.002 |
+| **analysis frame fully inside the frame through the hold** | 0 frames | 0 |
+
+Pass, per frame (x, y as frame fractions, y from the bottom; width as a fraction of frame width):
+
+| Frame | Satellite (x, y) | Width | Target (x, y) | 420 km frame | 36 km AOI |
+| --- | --- | --- | --- | --- | --- |
+| 48 | behind the planet | — | 0.64, 0.63 | 2.4 % | — |
+| 56 | 0.42, 0.33 — coming round the lower-left limb | 2.8 % | 0.64, 0.63 | 2.7 % | — |
+| 80 | 0.41, 0.44 — climbing the limb | 4.1 % | 0.66, 0.64 | 3.2 % | — |
+| 112 | 0.36, 0.45 — lines connecting, camera completing its handover | 7.8 % | 0.62, 0.62 | 4.5 % | — |
+| 136 | **0.25, 0.40** — in position | 12.6 % | 0.68, 0.64 | 6.2 % | — |
+| 144 | **0.25, 0.40** — lock pulse | 13.0 % | 0.68, 0.65 | 6.3 % | — |
+| 176 | **0.25, 0.41** — sweep | 13.1 % | 0.69, 0.65 | 6.4 % | — |
+| 192 | **0.24, 0.41** — lines released | 14.3 % | 0.69, 0.65 | 6.6 % | — |
+| 200 | 0.17, 0.38 — left behind by the dive | 17.2 % | 0.69, 0.65 | 7.6 % | — |
+| 208 | out of frame (left edge) | — | 0.68, 0.64 | 10.1 % | 0.7 % |
+| 232 | — | — | 0.65, 0.59 | 37.9 % | 2.5 % |
+| 248 | — | — | 0.63, 0.56 | beyond the frame, vanished | 9.1 % |
+| 264–276 | — | — | **0.63, 0.553** | — | **23.3 %** |
+
+Orbit: one circle at 900 km, over 22.2 N 2.6 W at frame 146 heading 060; `rate_profile`
+2.4 → 0.03 °/frame (eased over 60–110). The committed satellite keyframes derive from that intent
+(`orbit_plan.py`, exact integral of the piecewise-linear rate), the camera's from its `shot_intent`, and the
+validator re-derives both. The pass was solved, not tuned: the anchor is the solution of "be at (0.25, 0.40)
+of the frame at frame 146", and the diagnosis that made it possible is recorded in the intent's note — the
+on-screen drift of a platform this close is parallax from the camera's own dolly, so the camera is locked
+off for the beat (radius 14.4 → 14.0 BU, 37 → 38 mm) and makes its whole approach afterwards.
+
+Registration: the regional fixture is unchanged. The analysis frame is a new fixture
+`kizildere_analysis` (`production_analysis_aoi`, `is_analysis_aoi: true`): the accepted centre, the accepted
+36 km extent, turned 1.10° for UTM 35N grid convergence so it sits on the accepted EPSG:32635 grid square. The
+validator enforces all of that, and `audit_aoi`'s sphere conformance applies to it through the same code path.
+
+## 6. Sensing FX and lock events (A-HERO-04, A-HERO-05)
+
+| Element | Value | Gate |
+| --- | --- | --- |
+| core lines / glow / cone | unchanged R2 envelope (4 lines to the corners, 2.2 → 3.6 km, #7FEFFF; sheath #3CCBFF; faint cone) | unchanged |
+| regional frame | 2.6 km border, halo ribbon 15 km, corner-lock arms 64 km; **now gated by a transparent presence node**, so it is absent before it appears and its border, halo and fill can vanish (224–240) instead of turning into a dark ribbon; its corner locks are left to sweep outward past the frame edges (gone by 250), which reads as the acquisition frame opening onto the analysis AOI | halo + pulse required |
+| lock pulse | emphasis 1.0 → **2.6** (frame 138) → 1.15; acquisition-complete pulse 1.9 at 188 as the lines release | peak ≥ 1.8 |
+| sweep | band alpha 0.5, width 0.06, 144–178 | forward range |
+| analysis frame | 0.34 km border, halo 1.6 km, locks 6.5 km; appears 236–248, **locks draw in 240–254, pulse 2.4× at 254**, sweep 248–264; its own material datablocks | appears after release; pulse ≥ 1.8; locks land before the hold; no sensing lines of its own |
+| timing | lines 110–124 on, **178–192 off (inside the beat)**; regional vanish after release and before the hold | ordered, validator-enforced |
+| motion blur | production profile, shutter 0.5 | — |
+| claims | no sensing-physics vocabulary in the production configuration or hero copy | scanned |
+
+`validate_hero.py`: **292 checks, 0 failed** (R2 contract + the R3 contract: time-remapped pass with a settled
+section covering the beat, release inside the beat, exactly one analysis frame on the accepted 36 km extent
+and centre, its lock event and ordering, the hold framing re-derived Blender-free from the committed camera,
+the detail multiplier's manifest record, checksum, window, attribution and strength).
+
+## 7. Final handoff (A-HERO-06, A-HERO-14)
+
+The sequence ends on the accepted analysis AOI at audited screen geometry: centre (0.630, 0.553), corners
+nw (0.532, 0.730) · ne (0.746, 0.717) · se (0.730, 0.371) · sw (0.512, 0.387), y from the bottom.
+`index.html` carries those numbers as `data-hero-anchor`; `script.js` maps them through the poster/video
+cover-fit (`object-position: center 46%`) and, from 260/24 s (or at once in every static state):
+
+1. places the evidence stage on the four corners with a CSS `matrix3d` homography — a screen-space
+   placement of the image elements; no raster is re-projected, recoloured, filtered or cropped;
+2. reveals **Elevation — NASADEM context → THM-01 → ALT-01 → priority**, 0.95 s apart, each an accepted
+   byte-exact `geo_web_002` derivative (800 / 1249 by `sizes`), while the caption column beside the frame shows
+   a four-row ledger and the current layer's exact public label and accepted warning (`.beam-note`);
+3. settles on the priority result with the export's own legend inside the frame, the exact label, the meta
+   line (36 × 36 km · EPSG:32635 · 30 m), the mandatory warning and the CTA to Act 4.
+
+Ceiling: the stage is at most `1249 / devicePixelRatio` CSS px; beyond that the raster stack shrinks about
+its centre inside the frame instead of upscaling. Measured live, the payoff layer is 283 CSS px wide at a 1024 px viewport, 296 at 1280, 334 at 1440, 596 at 2560 (1192 device px at 2×) and 895 at 3840 (1×) — recorded per asset in `sources.json` → `web_005_placement.hero_stage`. The caption column sits right of the frame from about 1240 px and folds to a compact two-column strip under it below that; the headline column is constrained to stay left of the frame from first layout, so nothing reflows at the reveal. The hero crop moved from `center 52%` to `center 46%` (and `69% 46%` below 981 px) so the analysis frame stays whole on 3840-wide and phone-width heroes.
+Below 981 px the stage is off and the accepted strip (priority thumbnail, kicker, exact label) is used.
+`scripts/validate_site.py` fails if the anchor or any corner drifts from the audit by more than 0.006, if the
+object-position changes, if the ceiling clamp is missing, if the four layers are not accepted derivatives in
+the accepted evidence order ending on the priority payoff with its legend, or if any layer's exact label or
+warning is missing.
+
+## 8. Production media (A-HERO-07)
+
+<!-- media-table-r3-start -->
+Rendered at **2304 × 1296** (Cycles, OptiX, 128 adaptive samples, compositor bloom, motion blur shutter 0.5) and delivered at 1920 × 1080; encoded through Blender 4.5.10 LTS's bundled FFmpeg with the bitrate search recorded in `hero/evidence/production_media.json`. The poster is the last frame.
+
+| File | Container / codec | Dimensions | Rate · frames · duration | Bitrate | Size / ceiling | SHA-256 |
+| --- | --- | --- | --- | --- | --- | --- |
+| `assets/hero/orbgss-hero.webm` | WebM / VP9 | 1920 × 1080 | 24 fps · 276 frames · 11.5 s | 1396 kbps | **2.797 MiB** / 3.0 MiB | `c094d323be7747de7ff3c6299a634c8ddd66d2de58317e9c8575449c871423ad` |
+| `assets/hero/orbgss-hero.mp4` | MP4 / H.264 | 1920 × 1080 | 24 fps · 276 frames · 11.5 s | 2800 kbps | **3.880 MiB** / 4.5 MiB | `e02e25e2ccd7ef344e06cffff8b96ff30d632c0d0e202a3802fb7a9734a977d9` |
+| `assets/hero/hero-poster-1600.webp` | WebP q88 | 1600 × 900 | — | — | **169.4 KiB** / 180 KiB | `4b80ba21ef9125bd8accbcf01d5085f7bf7d5ab93921ff3f8891315eb0123f83` |
+| `assets/hero/hero-poster-900.webp` | WebP q88 | 900 × 506 | — | — | **67.7 KiB** / 180 KiB | `467a29f208c35fcbfb2771f7c553c2160be83103b347fa314ff47b6841c6d319` |
+
+Bitrate search (WebM): 1900 kbps → 3.591 MiB; 1396 kbps → 2.797 MiB.
+<!-- media-table-r3-end -->
+
+## 9. Fallback matrix (A-HERO-08)
+
+| Profile | Hero | Handoff | Video bytes |
+| --- | --- | --- | --- |
+| desktop ≥ 981 px, motion allowed | one encode attached at runtime (WebM if VP9 `probably`, else MP4), plays once, holds on the last frame | evidence sequence from 260/24 s; layer rasters are warmed when playback starts | one encode |
+| `prefers-reduced-motion: reduce` | poster only, video never attached | priority result inside the frame at once, no transitions; a mid-visit switch cancels a running sequence and settles on the result | 0 |
+| ≤ 780 px | poster only | strip layout, at once | 0 |
+| 781–980 px | one encode | strip layout at the hold | one encode |
+| Save-Data / slow network | poster only | at once | 0 |
+| autoplay refused / encode error | poster | at once | ≤ one encode |
+| JavaScript off | poster; `<video>` has no `src`/`<source>` | stage and figure stay `hidden` — the answer is Act 4 | 0 |
+
+No state downloads both encodes (validator-enforced).
+
+## 10. Human visual gate (A-HERO-10)
+
+`hero/evidence/web005a_r3/` — 1280 × 720 WebP stills of the R3 production frames, each beside the R2 frame
+it replaces (`*_r2.webp`, the superseded package's "after"):
+
+| Moment | R2 (before) | R3 (after) |
+| --- | --- | --- |
+| Satellite entry | `1_entry_r2.webp` (f80) | `1_entry_r3.webp` (f84) |
+| Acquisition / scan | `2_acquisition_r2.webp` (f146) | `2_acquisition_r3.webp` (f146) |
+| Scan sweep, satellite holding | — | `2b_scan_hold_r3.webp` (f176) |
+| Dive, frames handing over | `3_regional_hold_r2.webp` (f240) | `3_dive_r3.webp` (f236) |
+| Hold / handoff frame | `4_final_handoff_r2.webp` (f276) | `4_hold_r3.webp` (f276) |
+
+Full sequence: the shipped `assets/hero/orbgss-hero.webm` / `.mp4`; a 24-frame contact sheet
+(`sequence_contact_sheet.png`, frames 1 → 276); and page captures (headless Edge against the local static server, reduced-motion
+static state, each retried until a pixel probe confirmed the poster and the layer had painted): `page_1440_payoff.png` and
+`page_2560_payoff.png` (final state), `page_1440_layer1_terrain.png`, `page_1440_layer2_thm01.png`,
+`page_1440_layer3_alt01.png` (the evidence sequence, stepped deterministically with the `#hero-layer=<id>` review hook),
+`page_768.png` and `page_375.png` (strip layout). The narrow captures are taken through a fixed-width iframe: headless Edge
+enforces a minimum window width of about 500 px, which is why the R2 package's `page_375.png` shows a cropped 500 px layout
+rather than a true phone layout. The live playback path was exercised in the browser pane (static reveal, layer states, relayout
+on resize); a screen recording of live playback is **NOT RUN** — the shipped encodes are the sequence capture.
+
+## 11. A-HERO-01 … A-HERO-14 matrix
+
+| Gate | Result | Evidence |
+| --- | --- | --- |
+| A-HERO-01 geometry continuity | **PASS** | §5; `validate_hero.py` 292 checks, 0 failed |
+| A-HERO-02 orbital-path audit | **PASS** | §5; derived, time-remapped circular orbit; 21.9 % peak as it exits, no fly-by |
+| A-HERO-03 generic-satellite provenance | **PASS** | §3 |
+| A-HERO-04 sensing-FX negative gate | **PASS** | §6; envelope + negative cases; no baked raster |
+| A-HERO-05 target-frame quality | **PASS** | §6; two lock events, both pulsed and drawn in; registration §5 |
+| A-HERO-06 resolved ending | **PASS** | §5, §7; still hold 262–276, sequence from 260/24 s, `held` state |
+| A-HERO-07 production media integrity | **PASS** | §8 |
+| A-HERO-08 fallback/network | **PASS** | §9 |
+| A-HERO-09 regression suite | **PASS** | site validator PASS 0 warnings; hero validator 292/292; negative tests 27/27, tree restored byte-identical |
+| A-HERO-10 human visual gate | **evidence supplied — awaiting Product** | §10 |
+| A-HERO-11 source resolution | **PASS** | §4; structure at 0.35× at a hold 7.6× closer than R2's |
+| A-HERO-12 satellite readability | **PASS** | §5; 13.0 % of frame width at frame 146 = 187 px at 1440 CSS px, held for 56 frames |
+| A-HERO-13 reference composition | **evidence supplied — awaiting Product** | `2_acquisition_r3.webp`: Earth right-dominant, satellite lower-left on the limb, four lines to a luminous frame |
+| A-HERO-14 analytical handoff | **PASS** | §7; governed content inside the acquired target, 23 % of the frame width |
+
+`NOT RUN`: hosted preview (accepted `HOSTED_PREVIEW_NOT_RUN`); bit-reproducibility of the GPU render (not
+reproducible on this machine, per `hero/README.md`; not a WEB-005A gate).
+
+## 12. Scientific / public semantic non-change statement
+
+No scientific method, score meaning, threshold, eligibility, CRS/grid/unit/NoData/mask/resampling semantics,
+public label or warning changed, and no new evidence family appears. The hero now *shows* three more accepted
+assets (terrain, THM-01, ALT-01) — the same byte-exact derivatives Act 3 shows, under the same exact labels and
+warnings; their `web_005_placement` records gain a `hero_stage` note and nothing else. `sources.json` →
+`scenes`, `web_002`, `production_source`, `web_vnext` and `policy` are untouched. The hero caption still says
+*Rendered orbital sequence — not sensor imagery*. The analysis frame is the accepted AOI drawn as a frame;
+nothing scientific is rendered into it and no governed pixel enters the video. The Sentinel-2 detail ratio is a
+presentation texture of the render, not a layer. Structure/geology remains the stated data gap. One piece of
+accepted footer copy changed, for truthfulness: the sentence describing the hero as a Landsat composite (true of
+the pre-WEB-005 poster, not of the render) now names NASA Blue Marble and the Copernicus attribution.
+
+## 13. Not done under this authority
+
+No production deploy, no Vercel production alias, no DNS/domain change, no WEB-005B, no WEB-006.
+`CONTACT_RELEASE_GATE` and `HOSTED_PREVIEW_NOT_RUN` remain as recorded by WEB-004/005.
+
+---
+
+# Part B — R2 package `a6897828…` (superseded; did not pass the human visual gate)
+
+*Recorded on 2026-09-16. Technically green, visually not accepted. Kept as the "before" of Part A; nothing below is current implementation state.*
 
 ## 1. Identity
 
@@ -266,10 +538,10 @@ No production deploy, no Vercel production alias, no DNS/domain change, no WEB-0
 
 ---
 
-# Part B — Rejected checkpoint `ffa2f294…` (retained before-evidence)
+# Part C — Rejected checkpoint `ffa2f294…` (retained before-evidence)
 
 *Recorded on 2026-09-16 before Product review. Technically green, visually not accepted. Kept as
-the "before" of Part A; nothing below is current implementation state.*
+the "before" of Part B; nothing below is current implementation state.*
 
 ## B.1 What this revision was
 

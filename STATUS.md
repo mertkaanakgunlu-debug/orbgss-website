@@ -1,8 +1,8 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v1.0.0-rc2-web-005a-hero-visual-fidelity` — WEB-005A R2 REVIEW_READY (release candidate)
-**Date:** 2026-09-16
-**Stage:** WEB-005A / MER-107 (hero visual fidelity, Product R2 visual lock) is `REVIEW_READY` on `feat/web-005a-hero-visual-fidelity`, awaiting Product terminal exact-head acceptance. It revises the accepted WEB-005 / MER-93 hero (`main@00af0f232a8d7d77f5ca61d758461ff7316ba151`) after Product rejected the `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` checkpoint visually: derived orbital pass, volumetric generic EO satellite, readable cyan sensing lines, a target-frame lock event, a recomposed approach, a NASA Blue Marble 500 m regional albedo, and a page-layer analytical handoff coupled to the acquired frame. Evidence: `tasks/WEB-005A_HERO_FIDELITY_EVIDENCE.md`. **Not merged to `main`. Nothing deployed. No DNS touched. WEB-005B and WEB-006 have not begun.**
+**Canonical version:** `v1.0.0-rc3-web-005a-hero-visual-revision` — WEB-005A R3 REVIEW_READY (release candidate)
+**Date:** 2026-09-18
+**Stage:** WEB-005A / MER-107 (hero visual revision, Product R2 visual lock as re-reviewed) is `REVIEW_READY` at **R3** on `feat/web-005a-hero-visual-fidelity`, awaiting the human visual gate and Product terminal exact-head acceptance. The R2 package (`a6897828d6e35595ea5a9a39a1e812b0fcbbfb35`) was technically green and did **not** pass the human visual gate; like the `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` checkpoint before it, it is retained as before-evidence and is not accepted. R3 re-choreographs the same hero: a satellite that comes round the limb and settles for the whole acquisition beat, sensing lines that release while it is still in frame, one continuous dive onto the accepted 36 km analysis AOI with its own lock event, 30 m ground structure under the hold, and a page-layer evidence sequence (terrain → THM-01 → ALT-01 → priority) registered inside the analysis frame. Evidence: `tasks/WEB-005A_HERO_FIDELITY_EVIDENCE.md`. **Not merged to `main`. Nothing deployed. No DNS touched. WEB-005B and WEB-006 have not begun.**
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
@@ -12,7 +12,8 @@
 **Accepted GEO-WEB-002 implementation HEAD:** `ea693c29762279131fbed005e832c5ff2dca587b`
 **Accepted WEB-005 terminal acceptance:** `main@00af0f232a8d7d77f5ca61d758461ff7316ba151` (`tasks/WEB-005_TERMINAL_PRODUCT_ACCEPTANCE.md`)
 **WEB-005A rejected checkpoint (before-evidence):** `ffa2f2944ca5992afb9e9891b42745a9bd1105ad`
-**WEB-005A implementation HEAD (REVIEW_READY):** `b285c90cf685f6ca9da61c41302ae496d7e8169b`
+**WEB-005A R2 package (superseded, did not pass the human visual gate):** `a6897828d6e35595ea5a9a39a1e812b0fcbbfb35` (implementation `b285c90cf685f6ca9da61c41302ae496d7e8169b`)
+**WEB-005A R3 implementation HEAD (REVIEW_READY):** `{{IMPL_HEAD}}`
 **Reference/upstream only:** https://github.com/baran-orbgss/website
 **Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)
 **Registrar / DNS:** Squarespace
@@ -22,7 +23,7 @@
 **Product authority:** OrbGSS Website vNext Product & Execution Authority v1.8 (`docs/WEB_VNEXT_AUTHORITY.md`); `docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md` (R2 visual lock) where newer.
 **Accepted WEB-HERO-001D evidence HEAD:** `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e` (terminal Product acceptance published at `573f4f1`)
 **WEB-005 execution baseline:** `main@d2421a772f2e4cfa38c85dd5ee71a419c5160838`
-**Tracking:** MER-90 (WEB-002 accepted); MER-91 (WEB-003 accepted); MER-92 (WEB-004 accepted); MER-102 / GEO-WEB-002 (Science-accepted); MER-101 / WEB-HERO-001D (terminally accepted); MER-93 / WEB-005 (terminally accepted); **MER-107 / WEB-005A (REVIEW_READY, R2)**; MER-96 / GEO-WEB-001 resolved
+**Tracking:** MER-90 (WEB-002 accepted); MER-91 (WEB-003 accepted); MER-92 (WEB-004 accepted); MER-102 / GEO-WEB-002 (Science-accepted); MER-101 / WEB-HERO-001D (terminally accepted); MER-93 / WEB-005 (terminally accepted); **MER-107 / WEB-005A (REVIEW_READY, R3)**; MER-96 / GEO-WEB-001 resolved
 
 ## Authority
 
@@ -30,30 +31,34 @@
 
 `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` locks the final four-act homepage story for WEB-005 and supersedes the repeated full-width proof-scene rhythm where they conflict; it does not supersede accepted Science semantics, WEB-002 provenance constraints, WEB-004 performance/accessibility decisions or the accepted route architecture. GEO-WEB-002 / MER-102 is the Science & Geospatial publication dependency it named. It is terminally accepted under `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md` at implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`. Product may bind the package into WEB-005 while preserving its exact labels, warnings, provenance and maximum-safe-render constraints.
 
-## Current state (WEB-005A R2, REVIEW_READY)
+## Current state (WEB-005A R3, REVIEW_READY)
 
 WEB-005A revises only the hero's rendered media, the hero production configuration that generates it,
-and the page-layer handoff. The four-act homepage and every accepted scientific asset, label and
-warning are unchanged and re-verified.
+the page-layer handoff, and one footer attribution sentence. The four-act homepage and every accepted
+scientific asset, label and warning are unchanged and re-verified.
 
-- **Satellite.** A procedural, OrbGSS-original generic EO platform (`hero/scripts/satellite_model.py`)
-  replaces the accepted placeholder in the production scene: volumetric bus in MLI, instrument deck,
-  three-segment arrays with real thickness, dish, star trackers, thruster; no operational spacecraft
-  or sensor identity. Its pass is derived from an `orbit_intent` like the camera is from its
-  `shot_intent`: it emerges from behind the left limb, sits lower-left of the target through the
-  whole acquisition beat at 10.2 % of the frame width, and never becomes a foreground fly-by.
-- **Sensing FX and lock.** Four thin cyan core lines (#7FEFFF) with glow sheaths (#3CCBFF) connect
-  satellite and footprint corners by constraint; the #98F5FF frame carries a halo ribbon, pulses
-  2.6× at the lock while the corner locks draw in, and settles again for the handoff. The validator
-  holds the lines inside a checkable envelope and rejects sensing-physics vocabulary.
-- **Earth.** Same model, lighting and atmosphere; the albedo is now NASA Blue Marble Next Generation
-  (21600 × 10800) with a lossless 500 m regional window under the target and the same cloud layer the
-  accepted composite was built from. Upscaling at the hold: 5.87× → 0.56× (`hero/evidence/texel_coverage.json`).
-- **Handoff.** The page places a registration marker at the audited position of the 36 km analysis
-  AOI inside the rendered 420 km frame, draws leader lines, and reveals the accepted priority
-  derivative (≤ 440 CSS px, byte-exact, with its in-frame legend, exact label and mandatory warning)
-  coupled below the frame. `data-hero-anchor` must match `hero/evidence/shot_audit_production.json`.
-- **Gates.** Site validator PASS 0 warnings; hero validator PASS; negative tests 20/20; shot audit 13/13.
+- **Satellite.** The R2 procedural generic EO platform, on a **time-remapped derived orbit**
+  (`orbit_intent.rate_profile`): hidden for the first two seconds, round the lower-left limb near
+  frame 55, then held at (0.25, 0.40) of the frame — lower-left of the target, 13 % of the frame
+  width — from frame 136 to 192, because the camera is locked off for the same frames. It is left
+  behind by the dive and never becomes a foreground fly-by.
+- **Acquisition.** Four thin cyan lines connect (110–124), the 420 km frame locks with a 2.6× pulse
+  while its corner locks draw in (128–144), a sweep band crosses it (144–178), and the lines release
+  with an acquisition-complete pulse at 178–192 **while the satellite is still in frame**.
+- **Dive and hold.** One eased, motion-blurred dive (192–262) on the same registered target. The
+  regional frame vanishes as its edges leave; the **accepted 36 × 36 km analysis AOI** draws in as
+  its own frame with a lock pulse and settles. The hold (262–276) is genuinely still: 166 km across
+  the frame, the AOI 23 % of the frame width.
+- **Earth.** Same model, lighting and atmosphere; Blue Marble colour everywhere, multiplied under the
+  hold by a 30 m **Sentinel-2-derived detail ratio** (structure only) with the cloud veil cleared over
+  that window. Structure is sampled at 0.35× at the hold (`hero/evidence/texel_coverage.json`);
+  attribution *Contains modified Copernicus Sentinel data (2025)* is in the footer.
+- **Handoff.** The page maps the accepted derivatives **inside the analysis frame** with a CSS
+  homography on the audited corners and reveals Elevation → THM-01 → ALT-01 → priority, each
+  byte-exact under its exact label and accepted warning, ending on the priority result with its own
+  legend. The stack never exceeds 1249 device pixels. No faults layer is shown: structure/geology
+  remains the stated data gap and nothing is fabricated for it.
+- **Gates.** Site validator PASS 0 warnings; hero validator 292/292; negative tests 27/27; shot audit 18/18.
 
 ## Current state (WEB-005, ACCEPTED)
 

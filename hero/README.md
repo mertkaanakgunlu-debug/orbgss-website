@@ -6,7 +6,7 @@ Canonical authority: `docs/WEB_HERO_001_AUTHORITY.md` and the linked Drive CURRE
 
 ## Current state
 
-`WEB-HERO-001` was pre-data and is accepted. `WEB-005` bound the accepted Kızıldere regional frame and shipped the production hero; `WEB-005A R2` revised its visual treatment (see [WEB-005A R2: the production hero](#web-005a-r2-the-production-hero)). No scientific layer is baked into any frame.
+`WEB-HERO-001` was pre-data and is accepted. `WEB-005` bound the accepted Kızıldere regional frame and shipped the production hero; `WEB-005A R2` revised its visual treatment (see [WEB-005A R2: the production hero](#web-005a-r2-the-production-hero)), and `WEB-005A R3` re-choreographed it after R2 did not pass the human visual gate (see [WEB-005A R3: settle, dive, analysis frame](#web-005a-r3-settle-dive-analysis-frame)). No scientific layer is baked into any frame.
 
 `WEB-HERO-001A` established the scaffold below. `WEB-HERO-001B` added the Earth, atmosphere, satellite, starfield and establishing camera move. `WEB-HERO-001C` added the surface-conforming AOI acquisition system described under [AOI system](#aoi-system). `WEB-HERO-001D` assembled all of it into the continuous animatic described under [The continuous animatic](#the-continuous-animatic).
 
@@ -56,6 +56,7 @@ hero/
     orbit_plan.py         plain Python: derive satellite keyframes from an orbit intent; plan a pass against the camera
     satellite_model.py    Blender: procedural generic EO satellite, orbital trail, satellite light isolation
     materialize_earth_detail.py  Blender: cut the 500 m regional detail window from a Blue Marble tile
+    materialize_earth_sharpen.py Blender: derive the 30 m regional detail multiplier from Sentinel-2 L2A tiles (R3)
     encode_production_media.py   Blender: WebM / MP4 / poster inside the accepted media envelope
   assets/
     manifest.json         asset rights/provenance/checksum record
@@ -349,6 +350,64 @@ over. `sea_tint` pulls open water toward the accepted darker navy from an albedo
 `hero/evidence/earth_detail_crop.json` records the exact texel rectangle and checksums. None of
 it is a measured layer and none of it moves the accepted target registration; the validator
 checks every texture against the manifest and the detail window against the crop record.
+
+## WEB-005A R3: settle, dive, analysis frame
+
+R2 was technically green and did not pass the human visual gate. R3 keeps its satellite model, its
+sensing-line envelope, its lock event and its Earth stack, and changes the choreography, the hold
+and what the page does with it. Everything below is still configuration in `scene.json`.
+
+### The pass is time-remapped, and the camera is locked off for the beat
+
+`orbit_intent.rate_profile` is `[[frame, degrees of arc per frame], ...]`, linearly interpolated;
+`orbit_plan.py` integrates it exactly, so the pass is still one circle at one altitude and the
+validator still re-derives every committed keyframe. The R3 profile runs 2.4 deg/frame while the
+platform is behind the planet and coming round the limb, eases over frames 60-110, and holds
+0.03 deg/frame afterwards. That alone does not make a satellite *settle*: measured per frame, the
+on-screen drift of a body this close to the camera is parallax from the camera's own dolly, not
+orbital motion. So the camera is locked off from the handover (136) to the release (192) -- radius
+14.4 to 14.0 BU, 37 to 38 mm -- and makes its whole approach afterwards. The anchor is then the
+solution of "be at (0.25, 0.40) of the frame at frame 146", and the audit confirms the platform
+stays within 0.01 of that point for 56 frames at 13 percent of the frame width.
+
+The sensing lines release at 178-192, *inside* the acquisition beat, so they are never drawn from a
+platform that has left the frame; the audit checks the satellite is still visible at the release
+frame and gone before the hold.
+
+### One dive, and a frame that can vanish
+
+From 192 the camera makes one eased dive to a hold 166 km across (radius 7.1 BU, 729 km altitude,
+176 mm, 27 degrees off nadir), reached at 262 and keyed again at 276 so the hold is genuinely
+still. The audit's lens check is now relative (`d(f)/f` per frame, 5 percent ceiling), because a
+zoom's perceived speed is fractional. The `production` render profile carries
+`motion_blur_shutter: 0.5`; every other profile renders exactly as before.
+
+`aoi_emission` materials now carry an `aoi_presence` gate through a transparent mix, keyed from the
+object's `appear_start_frame` and an optional `vanish: [start, end]`. An emission ribbon at
+strength zero is a black ribbon -- invisible while sub-pixel, a dark line once the camera is close
+-- so the regional frame's border, halo and fill vanish (224-240) instead of being dimmed; its corner locks simply sweep out of frame with the dive.
+
+### The analysis frame
+
+`kizildere_analysis` is a second fixture, classification `production_analysis_aoi`,
+`is_analysis_aoi: true`: the accepted centre, the accepted 36 km extent, turned 1.10 degrees for
+UTM 35N grid convergence. The `aoi_analysis` object draws it with its own material datablocks (two
+AOI systems keying one material would fight over its sockets), no sensing lines, a draw-in at
+240-254 with a 2.4x lock pulse, and a sealing sweep. `audit_shot.py` publishes its last-frame centre
+and four projected corners as `handoff_anchor`; the page registers the governed rasters onto those
+corners as HTML, and `scripts/validate_site.py` checks the page against the audit. Nothing
+scientific is rendered into the frame.
+
+### Detail multiplier under the hold
+
+At 166 km across, the 500 m Blue Marble window is magnified 4.2 times. `materialize_earth_sharpen.py`
+derives a greyscale ratio from Sentinel-2 L2A (10 m red and blue BOA reflectance to 30 m, divided by
+its own 510 m blur, SCL-masked, UTM 35N to equirectangular through a forward projection verified to
+0.05 m against the accepted centre), and `earth_surface.detail_sharpen` multiplies the albedo by it
+inside its window. The 500 m mean is preserved and no colour is introduced, so there is no seam and no
+season; `clear_clouds` scales the 5 km cloud composite down over the same window, where it would
+otherwise smear into a veil. The ratio is a presentation texture, recorded in the manifest with its
+Copernicus attribution, checksummed by the validator, and never delivered to the page.
 
 ## Geometry audit
 

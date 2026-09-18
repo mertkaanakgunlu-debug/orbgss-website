@@ -66,43 +66,66 @@ button,a{-webkit-tap-highlight-color:transparent}
    the composition and there is no layout work when playback starts. The poster stays underneath
    rather than being removed: it is the fallback for every static state, including a mid-visit
    switch to reduced motion. */
-.hero-poster,.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 52%}
+.hero-poster,.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 46%}
 .hero-video{opacity:0;transition:opacity .9s ease;border:0}
 .hero[data-hero-state="playing"] .hero-video,
 .hero[data-hero-state="held"] .hero-video{opacity:1}
 .hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,9,14,.97) 0%,rgba(3,9,14,.88) 27%,rgba(3,9,14,.48) 50%,rgba(3,9,14,.08) 74%,rgba(3,9,14,.04) 100%),linear-gradient(0deg,rgba(3,9,14,.82) 0%,rgba(3,9,14,.55) 12%,rgba(3,9,14,.12) 32%,transparent 52%)}
 .hero-content{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;height:100%;padding:30px var(--pad) 56px;width:min(780px,62vw)}
 
-/* The real-data/result handoff (WEB-005A R2): what the acquired regional frame hands off to. A
-   page layer, never a video frame, so the governed priority raster is delivered byte-exact. A
-   registration marker sits at the analysis AOI's audited position inside the rendered frame,
-   leader lines run from it to the result panel, and the panel is placed by script.js from the
-   same audited geometry: right-aligned, directly under the acquired frame, never over the marker
-   or the headline column. The raster is at most 440 CSS px wide (880 device px at 2x) -- inside
-   the accepted 1249 px ceiling -- and is never graded, filtered or cropped. */
-.hero{--handoff-img:clamp(240px,26vw,440px)}
-.hero-target{position:absolute;inset:0;z-index:3;pointer-events:none}
-.hero-target[hidden]{display:none}
-.hero-target-marker{position:absolute;left:0;top:0;width:44px;height:44px;transform:translate(-50%,-50%);border:1px solid rgba(152,245,255,.95);box-shadow:0 0 14px rgba(60,203,255,.6),inset 0 0 10px rgba(60,203,255,.28);opacity:0;transition:opacity .5s ease}
-.hero-target-marker::before,.hero-target-marker::after{content:"";position:absolute;inset:-5px;border:1px solid rgba(152,245,255,.45)}
-.hero-target-marker::after{inset:-9px;border-color:rgba(60,203,255,.18)}
-.hero-target-leaders{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.hero-target-leader{stroke:#7fefff;stroke-width:1;stroke-opacity:.82;fill:none;stroke-dasharray:1600;stroke-dashoffset:1600;transition:stroke-dashoffset .9s ease .2s}
-.hero-target.is-visible .hero-target-marker{opacity:1}
-.hero-target.is-visible .hero-target-leader{stroke-dashoffset:0}
-.hero-handoff{position:absolute;z-index:4;left:auto;right:var(--pad);top:auto;bottom:clamp(86px,11vh,124px);margin:0;display:grid;grid-template-columns:var(--handoff-img) minmax(180px,240px);gap:20px;align-items:end;padding:16px;background:rgba(4,12,18,.78);border:1px solid rgba(152,245,255,.26);border-radius:4px;backdrop-filter:blur(12px);box-shadow:0 0 0 1px rgba(60,203,255,.05),0 24px 60px rgba(0,0,0,.5);opacity:0;transform:translateY(14px);transition:opacity .7s ease .25s,transform .7s ease .25s}
-.hero-handoff.is-stacked{grid-template-columns:var(--handoff-img);gap:12px}
+/* The real-data/result handoff (WEB-005A R3): what the acquired analysis AOI hands off to. A page
+   layer, never a video frame, so every governed raster is delivered byte-exact. The stage frame is
+   mapped by script.js onto the audited screen corners of the 36 km analysis AOI with a CSS
+   homography (screen-space placement only), the four accepted derivatives stack inside it and are
+   revealed in evidence order, and the caption column beside the frame carries each layer's exact
+   label and accepted warning, ending on the priority result. The raster stack is shrunk about its
+   centre whenever the quad would exceed 1249 device pixels, and is never graded, filtered or cropped. */
+.hero-stage{position:absolute;inset:0;z-index:3;pointer-events:none}
+.hero-stage[hidden]{display:none}
+.hero-stage-frame{position:absolute;left:0;top:0;width:300px;height:300px;transform-origin:0 0;will-change:transform}
+.hero-stage-layers{position:absolute;inset:0;transform-origin:50% 50%;overflow:hidden;background:rgba(4,12,18,.001)}
+.hero-layer{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .65s ease}
+.hero-layer.is-on{opacity:1}
+.hero-layer-image{display:block;width:100%;height:100%;object-fit:fill;filter:none;opacity:1}
+.hero-layer-legend{position:absolute;left:3.2%;bottom:3.2%;width:46%;height:auto;background:#fff;padding:1.2% 1.6%;border-radius:2px;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+.hero-stage-border{position:absolute;inset:0;border:1px solid rgba(152,245,255,.92);box-shadow:0 0 18px rgba(60,203,255,.42),inset 0 0 14px rgba(60,203,255,.16);opacity:0;transition:opacity .5s ease}
+.hero-stage-corner{position:absolute;width:12%;height:12%;border:0 solid #98f5ff;opacity:0;transition:opacity .5s ease;filter:drop-shadow(0 0 4px rgba(127,239,255,.85))}
+.hero-stage-corner.is-nw{left:-2px;top:-2px;border-left-width:2px;border-top-width:2px}
+.hero-stage-corner.is-ne{right:-2px;top:-2px;border-right-width:2px;border-top-width:2px}
+.hero-stage-corner.is-se{right:-2px;bottom:-2px;border-right-width:2px;border-bottom-width:2px}
+.hero-stage-corner.is-sw{left:-2px;bottom:-2px;border-left-width:2px;border-bottom-width:2px}
+.hero-stage.is-visible .hero-stage-border,.hero-stage.is-visible .hero-stage-corner{opacity:1}
+.hero-handoff{position:absolute;z-index:4;margin:0;width:340px;padding:16px 18px 18px;background:rgba(4,12,18,.8);border:1px solid rgba(152,245,255,.26);border-radius:4px;backdrop-filter:blur(12px);box-shadow:0 0 0 1px rgba(60,203,255,.05),0 24px 60px rgba(0,0,0,.5);opacity:0;transform:translateY(12px);transition:opacity .7s ease .2s,transform .7s ease .2s}
 .hero-handoff.is-visible{opacity:1;transform:none}
 .hero-handoff[hidden]{display:none}
-.hero-handoff-frame{position:relative;width:var(--handoff-img);overflow:hidden;background:#0b141a;border:1px solid rgba(152,245,255,.22)}
-.hero-handoff-image{display:block;width:100%;height:auto;filter:none;opacity:1}
-.hero-handoff-legend{position:absolute;left:8px;bottom:8px;width:min(160px,54%);height:auto;background:#fff;padding:3px 5px;border-radius:2px;box-shadow:0 4px 12px rgba(0,0,0,.4)}
-.hero-handoff-copy{display:flex;flex-direction:column;gap:9px;min-width:0}
+.hero-handoff-thumb{display:none}
+.hero-handoff-copy{display:flex;flex-direction:column;gap:10px;min-width:0}
 .hero-handoff-kicker{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent-soft)}
+.hero-handoff-ledger{list-style:none;margin:0;padding:0 0 10px;border-bottom:1px solid rgba(152,245,255,.14);display:flex;flex-direction:column;gap:6px}
+.hero-handoff-ledger li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;line-height:1.5;color:#6f8597;transition:color .4s ease}
+.hero-handoff-ledger li.is-done{color:#9eb1c1}
+.hero-handoff-ledger li.is-active{color:#8af1ff}
+.hero-ledger-index{opacity:.85}
+.hero-layer-caption{display:flex;flex-direction:column;gap:9px}
+.hero-layer-caption[hidden]{display:none}
 .hero-handoff-label{font-size:14px;line-height:1.4;color:#eaf2f8;font-weight:400}
 .hero-handoff-meta{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9eb1c1;line-height:1.7}
 .hero-handoff-note{font-size:11px;line-height:1.55;color:#9eb1c1}
 .hero-handoff-link{align-self:flex-start;white-space:normal}
+/* Narrow desktops have no room beside the frame, so the caption sits under it as a compact two-column
+   strip: ledger left, the current layer's label and warning right. If even that would reach the
+   caption line, the warning folds away exactly as it does in the small-screen strip (it is always
+   present in Act 4). */
+.hero-handoff.is-below{padding:12px 14px 13px}
+.hero-handoff.is-below .hero-handoff-copy{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1fr);column-gap:16px;row-gap:6px;align-items:start}
+.hero-handoff.is-below .hero-handoff-kicker{grid-column:1/-1}
+.hero-handoff.is-below .hero-handoff-ledger{grid-column:1;border-bottom:0;padding-bottom:0;gap:4px}
+.hero-handoff.is-below .hero-handoff-ledger li{font-size:8.5px}
+.hero-handoff.is-below .hero-layer-caption{grid-column:2;gap:6px}
+.hero-handoff.is-below .hero-handoff-meta{display:none}
+.hero-handoff.is-below .hero-handoff-label{font-size:12.5px}
+.hero-handoff.is-below .hero-handoff-note{font-size:10px;line-height:1.45}
+.hero-handoff.is-below.is-tight .hero-handoff-note{display:none}
 .eyebrow{font-size:11px;line-height:1.9;text-transform:uppercase;letter-spacing:.28em;color:#b9cbd6;margin:0 0 28px}
 .hero h1{font-size:clamp(50px,6.1vw,98px);font-weight:370;letter-spacing:-.045em;line-height:1;margin:0 0 30px;max-width:11ch}
 .hero-copy{max-width:600px;color:#c2cbd0;line-height:1.7;font-size:clamp(16px,1.25vw,20px);margin:0 0 38px}
@@ -387,9 +410,15 @@ button,a{-webkit-tap-highlight-color:transparent}
      placed panel that would crowd a phone-width composition. The marker and leaders are desktop
      geometry and stay off. */
   .hero-content{padding-bottom:clamp(150px,24vh,210px)}
-  .hero-target{display:none}
-  .hero-handoff,.hero-handoff.is-stacked{left:var(--pad);right:var(--pad);top:auto;max-width:none;bottom:clamp(58px,9vh,86px);padding:12px;gap:13px;grid-template-columns:62px minmax(0,1fr);align-items:center;--handoff-img:62px}
-  .hero-handoff-legend,.hero-handoff-note,.hero-handoff-meta{display:none}
+  /* A narrow hero crops the 16:9 frame horizontally. The analysis frame sits at x = 0.63, so the crop is
+     biased right to keep it whole; script.js places nothing by geometry below 981px, so the anchor's
+     centred-crop assumption is not in play here. */
+  .hero-poster,.hero-video{object-position:69% 46%}
+  .hero-stage{display:none}
+  .hero-handoff,.hero-handoff.is-right,.hero-handoff.is-below{left:var(--pad)!important;right:var(--pad);top:auto!important;width:auto!important;max-width:none;bottom:clamp(58px,9vh,86px);padding:12px;display:grid;grid-template-columns:62px minmax(0,1fr);gap:13px;align-items:center}
+  .hero-handoff-thumb{display:block;width:62px;height:62px;border:1px solid rgba(152,245,255,.22);background:#0b141a}
+  .hero-handoff-ledger,.hero-handoff-note,.hero-handoff-meta,.hero-handoff-link,.hero-layer-caption:not([data-layer="priority"]){display:none}
+  .hero-handoff-copy{gap:6px}
   .hero-handoff-label{font-size:12px}
   .act{padding-top:clamp(44px,7vw,72px);padding-bottom:clamp(44px,7vw,72px)}
 }
@@ -398,8 +427,9 @@ button,a{-webkit-tap-highlight-color:transparent}
   .evidence-card img{max-width:520px}
 }
 @media(max-width:560px){
-  .hero-content{padding-bottom:clamp(140px,22vh,180px)}
-  .hero-handoff,.hero-handoff.is-stacked{gap:11px;padding:11px;bottom:52px;grid-template-columns:54px minmax(0,1fr);--handoff-img:54px}
+  .hero-content{padding-bottom:clamp(160px,25vh,200px)}
+  .hero-handoff,.hero-handoff.is-right,.hero-handoff.is-below{gap:11px;padding:11px;bottom:74px;grid-template-columns:54px minmax(0,1fr)}
+  .hero-handoff-thumb{width:54px;height:54px}
   .hero-handoff-label{font-size:11.5px}
   .hero-handoff-kicker{font-size:8.5px}
   .act h2{font-size:29px}
@@ -411,7 +441,6 @@ button,a{-webkit-tap-highlight-color:transparent}
 @media(prefers-reduced-motion:reduce){
   .hero-video{display:none}
   .hero-handoff{opacity:1;transform:none}
-  .hero-target-marker{opacity:1}
-  .hero-target-leader{stroke-dashoffset:0}
+  .hero-stage-border,.hero-stage-corner{opacity:1}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}

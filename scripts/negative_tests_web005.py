@@ -19,6 +19,7 @@ success too, so a bare substring match would score a passing check as a caught r
 """
 import json
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -211,7 +212,7 @@ case("target frame lock intensification removed", SCENE, lock_pulse_removed,
 
 
 def anchor_drift(t):
-    return t.replace('"x":0.72', '"x":0.62', 1)
+    return re.sub(r'(data-hero-anchor=\'\{[^\']*?"x":)(\d\.\d+)', lambda m: m.group(1) + "0.31", t, count=1)
 
 
 case("handoff anchor moved away from the audited frame", INDEX, anchor_drift,
@@ -225,8 +226,73 @@ case("handoff loses the exact public label", INDEX,
 
 
 case("handoff warning detached from the mandatory-warning class", INDEX,
-     lambda t: t.replace('class="hero-handoff-note beam-note"', 'class="hero-handoff-note"', 1),
+     lambda t: t.replace('<span class="hero-handoff-note beam-note" data-i18n="act.priority.note">',
+                         '<span class="hero-handoff-note" data-i18n="act.priority.note">', 1),
      site, "mandatory priority warning")
+
+
+# ---- WEB-005A R3: the registered evidence stage has to fail loudly too --------------------
+def drop_payoff(t):
+    a = t.index('<figure class="hero-layer hero-layer-payoff" data-layer="priority">')
+    b = t.index('</figure>', a) + len('</figure>')
+    return t[:a] + t[b:]
+
+
+case("hero stage loses the priority payoff layer", INDEX, drop_payoff, site, "payoff")
+
+
+case("hero stage layer swapped for a non-accepted derivative", INDEX,
+     lambda t: t.replace('src="assets/proof/final/terrain-800.webp"\n                srcset="assets/proof/final/terrain-800.webp 800w, assets/proof/final/terrain-1249.webp 1249w"',
+                         'src="assets/proof/terrain-800.webp"\n                srcset="assets/proof/terrain-800.webp 800w, assets/proof/final/terrain-1249.webp 1249w"', 1),
+     site, "not an accepted geo_web_002 derivative")
+
+
+def reorder_layers(t):
+    return t.replace('data-layer="thm01">', 'data-layer="__tmp__">', 1).replace('data-layer="alt01">', 'data-layer="thm01">', 1).replace('data-layer="__tmp__">', 'data-layer="alt01">', 1)
+
+
+case("hero stage layers out of the accepted evidence order", INDEX, reorder_layers, site, "accepted evidence order")
+
+
+def analysis_span(t):
+    d = json.loads(t)
+    d["aoi_injection_interface"]["fixtures"]["kizildere_analysis"]["span_km"] = 40.0
+    return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+
+
+case("analysis frame drawn at a span that is not the accepted 36 km", SCENE, analysis_span,
+     hero, "accepted 36 km analysis extent")
+
+
+def constant_rate(t):
+    d = json.loads(t)
+    sat = next(o for o in d["scenes"]["hero_production_kizildere"]["objects"] if o["id"] == "satellite")
+    sat["orbit_intent"].pop("rate_profile", None)
+    sat["orbit_intent"]["rate_deg_per_frame"] = 0.7
+    return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+
+
+case("satellite pass no longer settles (constant rate)", SCENE, constant_rate, hero, "time-remapped")
+
+
+def early_analysis_frame(t):
+    d = json.loads(t)
+    a = next(o for o in d["scenes"]["hero_production_kizildere"]["objects"] if o["id"] == "aoi_analysis")
+    a["border"]["appear_start_frame"] = 150
+    return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+
+
+case("analysis frame appears before the sensing lines release", SCENE, early_analysis_frame,
+     hero, "after the sensing lines have released")
+
+
+def recolour_gain(t):
+    d = json.loads(t)
+    d["scenes"]["hero_production_kizildere"]["materials"]["earth_surface"]["detail_sharpen"]["strength"] = 2.5
+    return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+
+
+case("Earth detail multiplier pushed beyond a structure gain", SCENE, recolour_gain, hero, "structure gain")
 
 
 def main() -> int:

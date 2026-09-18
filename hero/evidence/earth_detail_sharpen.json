@@ -1,0 +1,85 @@
+{
+  "task": "WEB-005A R3 / MER-107 -- regional Earth detail multiplier",
+  "method": "Sentinel-2 L2A 10 m red (B04) and blue (B02) BOA reflectance -> 30 m block mean -> broadband pan = 0.6 red + 0.4 blue -> ratio = pan / box-blurred pan (radius 8 px twice, about 510 m) -> clipped 0.45..2.0, water 0.85..1.18, SCL cloud/shadow/snow/nodata = 1.0 -> inverse-mapped from an equirectangular grid through the WGS84 UTM forward projection and sampled bilinearly -> 16-bit PNG, ratio / 2.0. The Earth material multiplies the Blue Marble albedo by this ratio inside the window; the 500 m mean is preserved and no colour is introduced.",
+  "classification": "presentation detail texture; no units, no palette, not a measured layer, never delivered to the page",
+  "rights_basis": "Copernicus Sentinel data 2025, free full and open access; attribution: Contains modified Copernicus Sentinel data [2025]",
+  "acquisition_date": "20250925",
+  "utm_zone": 35,
+  "mosaic_grid": {
+    "ulx": 600000.0,
+    "uly": 4300020.0,
+    "pixel_m": 30.0,
+    "cols": 3660,
+    "rows": 6994
+  },
+  "projection_check": {
+    "lat": 37.9794,
+    "lon": 28.7907,
+    "easting": 657268.92,
+    "northing": 4205042.05,
+    "error_m": 0.053
+  },
+  "window_deg": {
+    "lon0": 28.15,
+    "lon1": 29.42,
+    "lat0": 36.94,
+    "lat1": 38.84
+  },
+  "texels_per_degree": {
+    "lon": 2929.134,
+    "lat": 3711.053
+  },
+  "metres_per_texel": 30.0,
+  "ratio_encoding": "value * 2.0",
+  "sources": [
+    {
+      "file": "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__B04_10m.jp2",
+      "bytes": 135606439,
+      "sha256": "9a854f2a6d533b286ce414abbf25cf70c1050df89b7f3f3476022d5fd9766cf2"
+    },
+    {
+      "file": "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__B02_10m.jp2",
+      "bytes": 134837602,
+      "sha256": "aa1428924142bf4dfdb6745746239067f0f8e031fc8c9f11359abe08ebc98e39"
+    },
+    {
+      "file": "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__SCL_20m.jp2",
+      "bytes": 3475640,
+      "sha256": "fbf30486307f41b25c7b5e5bb06db24ec5bf0c876485998de429b823e5f0b1de"
+    },
+    {
+      "file": "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__granule_metadata.xml",
+      "bytes": 548076,
+      "sha256": "54c566393517d646c1119d396342af5758b6cabb60f699a063e71d2aa3621fbe"
+    },
+    {
+      "file": "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__B04_10m.jp2",
+      "bytes": 135471219,
+      "sha256": "abf18ab6406ae78ef3d13eaf55c3a12212ac93fc2e6a47aa1edad7db154db436"
+    },
+    {
+      "file": "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__B02_10m.jp2",
+      "bytes": 133379977,
+      "sha256": "a795073322b23250bb51be6ace3ca09a7c0aeec539d46bec58162ac3b8988af3"
+    },
+    {
+      "file": "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__SCL_20m.jp2",
+      "bytes": 4261345,
+      "sha256": "ccc9789d7767b2e41e231320b751a5fdf97585dcc29c636fb8eef4d96c573cae"
+    },
+    {
+      "file": "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__granule_metadata.xml",
+      "bytes": 627136,
+      "sha256": "a9255abd343efc801dadb0a71ca5f82e472f2411a8dc10d79a2de14b74562efa"
+    }
+  ],
+  "output": "hero/assets/source/s2_kizildere_detail_30m.png",
+  "output_dimensions": [
+    3720,
+    7051
+  ],
+  "output_bytes": 48460935,
+  "output_sha256": "c6c89c9837bc34524edaf28ed83c263f3353716817b4e5f780c43d7837ee463a",
+  "round_trip_max_error": 7.68899917602539e-06,
+  "blender_version": "4.5.10 LTS"
+}

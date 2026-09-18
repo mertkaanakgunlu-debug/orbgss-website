@@ -482,16 +482,23 @@ def check_aoi_scene_wiring(report: Report, scene_config, descriptions) -> None:
             )
 
             beams = obj.get("beams", {})
-            report.check(
-                beams.get("source_object_id") in object_ids,
-                label + " AOI beams originate at a real scene object",
-                repr(beams.get("source_object_id")),
-            )
-            report.check(
-                beams.get("target") in AOI_ALLOWED_BEAM_TARGETS,
-                label + " AOI beams target the AOI system, not a fixed point",
-                repr(beams.get("target")) + " not in " + repr(sorted(AOI_ALLOWED_BEAM_TARGETS)),
-            )
+            if obj.get("beam_material") or beams:
+                report.check(
+                    beams.get("source_object_id") in object_ids,
+                    label + " AOI beams originate at a real scene object",
+                    repr(beams.get("source_object_id")),
+                )
+                report.check(
+                    beams.get("target") in AOI_ALLOWED_BEAM_TARGETS,
+                    label + " AOI beams target the AOI system, not a fixed point",
+                    repr(beams.get("target")) + " not in " + repr(sorted(AOI_ALLOWED_BEAM_TARGETS)),
+                )
+            else:
+                # WEB-005A R3: the analysis frame draws no sensing lines of its own -- it is the
+                # frame the dive resolves onto, not a second acquisition.
+                report.check(
+                    True, label + " AOI " + str(obj.get("id")) + " is a frame without sensing lines",
+                )
 
             literal = _literal_coordinates(obj)
             report.check(
@@ -519,6 +526,9 @@ def check_aoi_scene_wiring(report: Report, scene_config, descriptions) -> None:
 # exempt from the coordinate scan below but not unchecked: _ramp_offenders proves their shape, so
 # the exemption cannot be used to smuggle a hand-typed position through a timing field.
 AOI_RAMP_KEYS = ("emphasis", "settle")
+# Frame ranges -- [start, end] -- that a WEB-005A R3 frame may carry: the regional frame vanishes
+# under the dive. Two integers, ordered; still never a position.
+AOI_RANGE_KEYS = ("vanish",)
 
 
 def _ramp_offenders(spec, path="aoi"):
@@ -527,6 +537,15 @@ def _ramp_offenders(spec, path="aoi"):
     if isinstance(spec, dict):
         for key, value in spec.items():
             where = path + "." + str(key)
+            if key in AOI_RANGE_KEYS:
+                ok_range = (
+                    isinstance(value, list) and len(value) == 2
+                    and all(isinstance(v, int) and not isinstance(v, bool) for v in value)
+                    and 1 <= value[0] < value[1]
+                )
+                if not ok_range:
+                    offenders.append(where + " is not an ordered [start, end] frame range: " + repr(value))
+                continue
             if key not in AOI_RAMP_KEYS:
                 offenders.extend(_ramp_offenders(value, where))
                 continue
@@ -563,7 +582,7 @@ def _literal_coordinates(spec, path="aoi"):
     offenders = []
     if isinstance(spec, dict):
         for key, value in spec.items():
-            if key in AOI_RAMP_KEYS:
+            if key in AOI_RAMP_KEYS or key in AOI_RANGE_KEYS:
                 continue
             offenders.extend(_literal_coordinates(value, path + "." + str(key)))
     elif isinstance(spec, list):
@@ -603,7 +622,8 @@ REQUIRED_LAYER_SLOT_FIELDS = (
 )
 
 ALLOWED_DATA_STATES = ("pre_data", "accepted_data")
-ALLOWED_FIXTURE_CLASSIFICATIONS = ("design_fixture", "production_regional_frame")
+ALLOWED_FIXTURE_CLASSIFICATIONS = ("design_fixture", "production_regional_frame", "production_analysis_aoi")
+ANALYSIS_AOI_SPAN_KM = 36.0
 
 
 def check_pre_data_boundary(report: Report, scene_config, manifest) -> None:
@@ -722,6 +742,40 @@ def check_pre_data_boundary(report: Report, scene_config, manifest) -> None:
             report.check(
                 bool(spec.get("geometry_source")) and bool(spec.get("centre_provenance")),
                 label + " records where its real geometry came from",
+            )
+        # WEB-005A R3: the analysis AOI may be drawn as a frame, and only as the accepted one --
+        # the accepted 36 x 36 km extent on the accepted centre, declared as what it is.
+        regional = next(
+            (s for s in fixtures.values() if s.get("classification") == "production_regional_frame"), {}
+        )
+        for fixture_id, spec in sorted(fixtures.items()):
+            if spec.get("classification") != "production_analysis_aoi":
+                continue
+            label = "analysis fixture " + fixture_id
+            report.check(
+                spec.get("is_analysis_aoi") is True,
+                label + " declares itself the analysis AOI",
+                repr(spec.get("is_analysis_aoi")),
+            )
+            report.check(
+                abs(float(spec.get("span_km", 0.0)) - ANALYSIS_AOI_SPAN_KM) < 1e-9,
+                label + " spans exactly the accepted 36 km analysis extent",
+                repr(spec.get("span_km")),
+            )
+            report.check(
+                bool(regional)
+                and abs(float(spec.get("center_lat_deg", 0.0)) - float(regional.get("center_lat_deg", 1.0))) < 1e-9
+                and abs(float(spec.get("center_lon_deg", 0.0)) - float(regional.get("center_lon_deg", 1.0))) < 1e-9,
+                label + " sits on the same accepted centre as the regional frame",
+            )
+            report.check(
+                bool(spec.get("geometry_source")) and bool(spec.get("centre_provenance")),
+                label + " records where its geometry came from",
+            )
+            report.check(
+                abs(float(spec.get("bearing_deg", 0.0))) <= 2.0 and bool(spec.get("bearing_note")),
+                label + " bearing is a documented grid-convergence registration, not a re-orientation",
+                repr(spec.get("bearing_deg")),
             )
 
         slots = interface.get("layer_slots", [])
@@ -1221,6 +1275,175 @@ def check_r2_visual_contract(report: Report, scene_config, manifest) -> None:
                 label + "detail crop records the manifest asset it was cut from",
                 repr(asset.get("derived_from")),
             )
+
+        # --- WEB-005A R3: settled pass, analysis frame, dive and hold, detail multiplier ---------
+        _check_r3_contract(report, scene_config, spec, label, manifest, assets, aoi_spec, beams, intent)
+
+
+def _check_r3_contract(report, scene_config, spec, label, manifest, assets, aoi_spec, beams, intent):
+    """WEB-005A R3: what configuration can prove about the re-reviewed visual outcome.
+
+    The satellite must *settle* (a time-remapped pass whose slow section holds the acquisition
+    composition), the lines must release before the dive, the accepted analysis AOI must be drawn
+    as the frame the dive resolves onto -- with its own lock event, after the regional frame has
+    been told to vanish -- and the hold must frame that AOI at a size the page can register the
+    governed rasters into without breaching their ceiling. The detail multiplier under the hold
+    must be a cleared, checksummed manifest asset whose window contains the target.
+    """
+    objects = {o.get("id"): o for o in spec.get("objects", [])}
+    materials = spec.get("materials", {})
+    interface = scene_config.get("aoi_injection_interface", {})
+    fixtures = interface.get("fixtures", {})
+
+    # settled pass
+    profile = (intent or {}).get("rate_profile")
+    report.check(bool(profile), label + "satellite pass is time-remapped (rate_profile)")
+    if profile:
+        rates = [float(r) for _, r in profile]
+        report.check(min(rates) > 0.0, label + "orbit never stops or reverses", repr(rates))
+        report.check(
+            min(rates) <= 0.35 * max(rates),
+            label + "pass has a settled section at most 35 percent of its fastest rate",
+            "rates " + repr(rates),
+        )
+        beat = spec.get("camera", {}).get("composition", {}).get("acquisition_beat") or [0, 0]
+        slow_frames = [float(f) for f, r in profile if float(r) <= 0.35 * max(rates)]
+        report.check(
+            bool(slow_frames) and min(slow_frames) <= int(beat[0]) + 12 and max(slow_frames) >= int(beat[1]),
+            label + "settled section covers the acquisition beat",
+            "slow at " + repr(slow_frames) + " beat " + repr(beat),
+        )
+
+    # lines release before the dive, while the satellite still has the beat
+    beat = spec.get("camera", {}).get("composition", {}).get("acquisition_beat") or [0, 0]
+    report.check(
+        int(beams.get("release_end_frame", 0)) <= int(beat[1]),
+        label + "sensing lines release inside the acquisition beat (satellite still in frame)",
+        "release ends " + str(beams.get("release_end_frame")) + " beat " + repr(beat),
+    )
+
+    # the analysis frame
+    analysis_objects = [
+        o for o in spec.get("objects", [])
+        if o.get("type") == "aoi_system"
+        and fixtures.get(o.get("fixture"), {}).get("classification") == "production_analysis_aoi"
+    ]
+    report.check(len(analysis_objects) == 1, label + "draws exactly one analysis AOI frame", str(len(analysis_objects)))
+    hold = spec.get("camera", {}).get("composition", {}).get("analysis_hold", {})
+    report.check(
+        bool(hold) and isinstance(hold.get("width_fraction"), list) and len(hold["width_fraction"]) == 2
+        and 0.15 <= float(hold["width_fraction"][0]) < float(hold["width_fraction"][1]) <= 0.30,
+        label + "declares the analysis hold the audit gates (width fraction 0.15-0.30)",
+        repr(hold),
+    )
+    if analysis_objects:
+        frame = analysis_objects[0]
+        report.check(
+            hold.get("fixture") == frame.get("fixture"),
+            label + "analysis hold names the analysis frame's fixture",
+        )
+        border = frame.get("border", {})
+        locks = frame.get("corner_locks", {})
+        report.check(
+            int(border.get("appear_start_frame", 0)) >= int(beams.get("release_end_frame", 999)),
+            label + "analysis frame appears only after the sensing lines have released",
+            "appears " + str(border.get("appear_start_frame")) + " release ends " + str(beams.get("release_end_frame")),
+        )
+        peak = max((float(f) for _, f in border.get("emphasis", [])), default=1.0)
+        report.check(peak >= 1.8, label + "analysis frame has its own lock intensification", "peak " + str(peak))
+        report.check(
+            "draw_start_frame" in locks and "draw_end_frame" in locks
+            and materials.get(frame.get("corner_lock_material"), {}).get("type") == "aoi_lock_draw",
+            label + "analysis frame corner locks draw into place",
+        )
+        report.check(
+            int(locks.get("draw_end_frame", 999)) <= int(hold.get("frame", 0)),
+            label + "analysis frame locks land before the hold",
+        )
+        report.check(
+            not frame.get("beam_material") and not frame.get("beams"),
+            label + "analysis frame claims no second acquisition (no sensing lines)",
+        )
+        vanish = aoi_spec.get("border", {}).get("vanish")
+        report.check(
+            bool(vanish) and int(vanish[1]) <= int(hold.get("frame", 0))
+            and int(vanish[0]) >= int(beams.get("release_end_frame", 999)),
+            label + "regional frame vanishes under the dive, after release and before the hold",
+            repr(vanish),
+        )
+        # Blender-free re-derivation of the hold framing from the committed camera keyframes.
+        try:
+            camera_spec = spec.get("camera", {})
+            defaults = scene_config.get("camera_defaults", {})
+            sensor = float(defaults.get("sensor_width_mm", 36.0))
+            description = aoi.describe(scene_config, frame.get("fixture"), spec)
+            last = sorted(camera_spec.get("keyframes", []), key=lambda k: int(k["frame"]))[-1]
+            camera, look_at, lens, shift = orbit_plan.camera_state(camera_spec, int(last["frame"]))
+            rotation = shot_plan.earth_rotation_deg(spec, int(last["frame"]))
+            corners = [
+                orbit_plan.project_shifted(shot_plan._rotate_z(c, rotation), camera, look_at, lens, sensor,
+                                           (1920, 1080), shift)
+                for c in description["corner_positions_bu"]
+            ]
+            xs = [c["x"] for c in corners]
+            width = max(xs) - min(xs) if all(x is not None for x in xs) else None
+            lo, hi = (float(v) for v in hold.get("width_fraction", [0, 0]))
+            report.check(
+                width is not None and lo <= width <= hi,
+                label + "committed camera frames the analysis AOI inside the declared hold width",
+                "width " + repr(width) + " bounds " + repr((lo, hi)),
+            )
+            centre = orbit_plan.project_shifted(
+                shot_plan._rotate_z(description["center_position_bu"], rotation), camera, look_at, lens, sensor,
+                (1920, 1080), shift)
+            report.check(
+                centre["x"] is not None and 0.45 <= centre["x"] <= 0.78 and 0.35 <= centre["y"] <= 0.72,
+                label + "analysis AOI lands right of centre with room for the page-layer caption",
+                repr((centre["x"], centre["y"])),
+            )
+        except (KeyError, ValueError, IndexError) as error:
+            report.check(False, label + "hold framing re-derives from configuration", str(error))
+
+    # detail multiplier under the hold
+    earth = materials.get("earth_surface", {})
+    sharpen = earth.get("detail_sharpen")
+    report.check(bool(sharpen), label + "Earth carries a regional detail multiplier under the hold")
+    if sharpen:
+        asset = assets.get(str(sharpen.get("texture", "")))
+        report.check(
+            asset is not None and asset.get("rights_status") == "cleared" and bool(HEX64.match(str(asset.get("sha256", "")))),
+            label + "detail multiplier is a cleared, checksummed manifest asset",
+            repr(sharpen.get("texture")),
+        )
+        if asset is not None:
+            path = hc.REPO_ROOT / asset["local_path"]
+            report.check(
+                path.is_file() and hc.sha256_file(path) == asset["sha256"],
+                label + "detail multiplier on disk matches its recorded SHA-256",
+            )
+            recorded = asset.get("window", {})
+            window = sharpen.get("window", {})
+            report.check(
+                all(abs(float(window.get(k, 1e9)) - float(recorded.get(k, -1e9))) < 1e-6 for k in ("lon0", "lon1", "lat0", "lat1")),
+                label + "detail multiplier window in the material matches the manifest record",
+                repr(window) + " vs " + repr(recorded),
+            )
+            report.check(
+                bool(asset.get("attribution")) and "Copernicus" in str(asset.get("attribution")),
+                label + "detail multiplier carries the Copernicus attribution it requires",
+            )
+        fixture = aoi.resolve_fixture(scene_config, aoi_spec.get("fixture"))
+        window = sharpen.get("window", {})
+        report.check(
+            float(window.get("lon0", 1e9)) < float(fixture["center_lon_deg"]) < float(window.get("lon1", -1e9))
+            and float(window.get("lat0", 1e9)) < float(fixture["center_lat_deg"]) < float(window.get("lat1", -1e9)),
+            label + "detail multiplier window contains the accepted target centre",
+        )
+        report.check(
+            0.0 < float(sharpen.get("strength", 0.0)) <= 1.2,
+            label + "detail multiplier strength stays a structure gain, not a re-colour",
+            repr(sharpen.get("strength")),
+        )
 
 
 def check_manifest(report: Report, manifest) -> None:

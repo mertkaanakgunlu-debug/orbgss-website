@@ -759,19 +759,21 @@ def main() -> int:
              errors)
 
     # ------------------------------------------------------------------
-    # WEB-005A R2 hero handoff (A-HERO-06 / A-HERO-14). The page-layer result must be coupled to
-    # the acquired target region by measured geometry, not by eye: the anchor the markup carries
-    # has to match the shot audit of the shipped sequence's last frame, the poster/video
-    # object-position it assumes has to be the one styles.css applies, and the panel has to carry
-    # the exact public label, the mandatory warning as a .beam-note, and the accepted priority
-    # derivative at a CSS width inside its own ceiling. A small detached card with none of that
-    # is precisely what Product rejected.
+    # WEB-005A R3 hero handoff (A-HERO-06 / A-HERO-14). The page-layer result must be registered
+    # INSIDE the acquired analysis AOI by measured geometry, not by eye: the anchor the markup
+    # carries has to match the shot audit of the shipped sequence's last frame (centre and the four
+    # projected corners of the 36 km analysis AOI), the poster/video object-position it assumes has
+    # to be the one styles.css applies, the stage has to show the four accepted derivatives in the
+    # accepted evidence order with the priority result and its own legend as the payoff, every
+    # layer has to carry its exact public label and its accepted warning as a .beam-note, and the
+    # script has to clamp the raster stack under the 1249 device-pixel ceiling. A small detached
+    # card with none of that is precisely what Product rejected.
     # ------------------------------------------------------------------
     home = route_html.get("", "")
     anchor_match = re.search(r"data-hero-anchor='([^']+)'", home)
     if not anchor_match:
-        fail("index.html hero declares no data-hero-anchor; the handoff cannot be coupled to the "
-             "acquired frame", errors)
+        fail("index.html hero declares no data-hero-anchor; the handoff cannot be registered to the "
+             "acquired analysis AOI", errors)
     else:
         try:
             anchor = json.loads(anchor_match.group(1))
@@ -785,6 +787,9 @@ def main() -> int:
         elif anchor is not None:
             audit = json.loads(audit_path.read_text(encoding="utf-8"))
             measured = audit.get("handoff_anchor", {})
+            if measured.get("fixture") != "kizildere_analysis" or anchor.get("fixture") != "kizildere_analysis":
+                fail("handoff anchor must be the audited 36 km analysis AOI (fixture kizildere_analysis) "
+                     "in both the markup and the shot audit", errors)
             for key in ("x", "y", "extent"):
                 got = anchor.get(key)
                 want = measured.get(key)
@@ -793,18 +798,15 @@ def main() -> int:
                 elif abs(float(got) - float(want)) > 0.006:
                     fail(f"handoff anchor {key} = {got} drifts from the audited last frame "
                          f"({want}); re-run the shot audit and update data-hero-anchor", errors)
-            box_got = anchor.get("box")
-            box_want = measured.get("box")
-            if not (isinstance(box_got, list) and isinstance(box_want, list) and len(box_got) == 4
-                    and len(box_want) == 4
-                    and all(abs(float(a) - float(b)) <= 0.006 for a, b in zip(box_got, box_want))):
-                fail(f"handoff anchor box {box_got} drifts from the audited frame bounds {box_want}",
-                     errors)
-            fixture_span = 420.0
-            aoi_span = 36.0
-            if abs(float(anchor.get("aoi", 0)) - aoi_span / fixture_span) > 0.002:
-                fail("handoff anchor 'aoi' must be the 36 km analysis AOI as a fraction of the "
-                     "420 km acquisition frame", errors)
+            corners_got = anchor.get("corners")
+            corners_want = measured.get("corners")
+            if not (isinstance(corners_got, list) and isinstance(corners_want, list)
+                    and len(corners_got) == 4 and len(corners_want) == 4
+                    and all(isinstance(c, list) and len(c) == 2 for c in corners_got)
+                    and all(abs(float(a[0]) - float(b[0])) <= 0.006 and abs(float(a[1]) - float(b[1])) <= 0.006
+                            for a, b in zip(corners_got, corners_want))):
+                fail(f"handoff anchor corners {corners_got} drift from the audited analysis AOI corners "
+                     f"{corners_want}", errors)
             if list(anchor.get("frame", [])) != [1920, 1080]:
                 fail("handoff anchor frame size must be the delivered 1920 x 1080", errors)
             css_text = (ROOT / "styles.css").read_text(encoding="utf-8")
@@ -814,38 +816,79 @@ def main() -> int:
             elif abs(float(anchor.get("position", -1)) - int(position.group(1)) / 100.0) > 1e-6:
                 fail(f"handoff anchor position {anchor.get('position')} does not match the CSS "
                      f"object-position ({position.group(1)}%)", errors)
-            img_max = re.search(r"--handoff-img:clamp\((\d+)px,[^,]+,(\d+)px\)", css_text)
-            if not img_max:
-                fail("styles.css declares no --handoff-img clamp for the hero result panel", errors)
-            elif int(img_max.group(2)) * 2 > 1249:
-                fail(f"hero result panel may reach {img_max.group(2)} CSS px, over the 1249 device "
-                     f"pixel ceiling at 2x", errors)
+            script_text = (ROOT / "script.js").read_text(encoding="utf-8")
+            if "CLASS_B_CEILING_PX = 1249" not in script_text or "CLASS_B_CEILING_PX / (dpr * width)" not in script_text:
+                fail("script.js no longer clamps the hero stage under the 1249 device-pixel class-B "
+                     "ceiling", errors)
+            if not re.search(r"\.hero-layer-image\{[^}]*filter:none", css_text):
+                fail("styles.css must declare the hero layer rasters unfiltered (filter:none)", errors)
+
+    stage = re.search(r'<div class="hero-stage" data-hero-stage hidden aria-hidden="true">(.*?)\n      </div>\n      <figure class="hero-handoff"', home, re.S)
+    layer_assets = {a.get("id"): a for a in manifest.get("geo_web_002", {}).get("assets", [])}
+    expected_layers = ["terrain", "thm01", "alt01", "priority"]
+    if not stage:
+        fail("index.html has no data-hero-stage evidence stage inside the hero", errors)
+    else:
+        stage_body = stage.group(1)
+        layers = re.findall(r'<figure class="hero-layer[^"]*" data-layer="([^"]+)">(.*?)</figure>', stage_body, re.S)
+        order = [name for name, _ in layers]
+        if order != expected_layers:
+            fail(f"hero stage layers are {order}; the accepted evidence order is {expected_layers} "
+                 f"(context, thermal, alteration, then the priority payoff)", errors)
+        for name, body in layers:
+            asset = layer_assets.get(name, {})
+            own = {str(d.get("path", "")) for d in asset.get("derivatives", [])}
+            srcs = set(re.findall(r'src="([^"]+)"', body)) | {
+                c.strip().split()[0] for group in re.findall(r'srcset="([^"]+)"', body) for c in group.split(",")
+            }
+            if not asset or not srcs or not srcs <= own:
+                fail(f"hero stage layer {name!r} shows {sorted(srcs - own)}, which is not an accepted "
+                     f"geo_web_002 derivative of that asset", errors)
+            if 'sizes="' not in body:
+                fail(f"hero stage layer {name!r} declares no sizes attribute", errors)
+        if not re.search(r'<figure class="hero-layer hero-layer-payoff" data-layer="priority">', stage_body):
+            fail("hero stage has no priority payoff layer; the sequence must end on the accepted "
+                 "priority result", errors)
+        if "priority-legend" not in stage_body:
+            fail("hero stage shows the priority map without its own in-frame legend", errors)
 
     handoff = re.search(r'<figure class="hero-handoff" data-hero-handoff hidden>(.*?)</figure>', home, re.S)
     if not handoff:
-        fail("index.html has no data-hero-handoff figure", errors)
+        fail("index.html has no data-hero-handoff caption figure", errors)
     else:
         body = handoff.group(1)
         if 'data-i18n="label.priority"' not in body:
             fail("hero handoff does not carry the exact public label (label.priority)", errors)
         if not re.search(r'class="[^"]*beam-note[^"]*"[^>]*data-i18n="act\.priority\.note"', body):
             fail("hero handoff does not carry the mandatory priority warning as a .beam-note", errors)
-        priority_paths = {
-            str(d.get("path", "")) for a in manifest.get("geo_web_002", {}).get("assets", [])
-            if a.get("id") == "priority" for d in a.get("derivatives", [])
+        required_captions = {
+            "terrain": ("label.terrain", "story.terrain.note"),
+            "thm01": ("label.thm01", "act.evidence.thermal.note"),
+            "alt01": ("label.alt01", "act.evidence.alteration.note"),
+            "priority": ("label.priority", "act.priority.note"),
         }
-        srcs = set(re.findall(r'src="([^"]+)"', body)) | {
-            c.strip().split()[0] for group in re.findall(r'srcset="([^"]+)"', body) for c in group.split(",")
-        }
-        if not (srcs & priority_paths):
-            fail("hero handoff does not show an accepted priority derivative", errors)
-        if "priority-legend" not in body:
-            fail("hero handoff shows the priority map without its own in-frame legend", errors)
+        for name, (label_key, note_key) in required_captions.items():
+            caption = re.search(r'<div class="hero-layer-caption" data-layer="' + name + r'"[^>]*>(.*?)</div>', body, re.S)
+            if not caption:
+                fail(f"hero handoff has no caption block for layer {name!r}", errors)
+                continue
+            if f'data-i18n="{label_key}"' not in caption.group(1):
+                fail(f"hero handoff caption for {name!r} does not carry its exact public label ({label_key})", errors)
+            if not re.search(r'class="[^"]*beam-note[^"]*"[^>]*data-i18n="' + re.escape(note_key) + '"', caption.group(1)):
+                fail(f"hero handoff caption for {name!r} does not carry its mandatory warning ({note_key}) "
+                     f"as a .beam-note", errors)
+        ledger = re.search(r'<ol class="hero-handoff-ledger[^>]*>(.*?)</ol>', body, re.S)
+        ledger_order = re.findall(r'<li data-layer="([^"]+)">', ledger.group(1)) if ledger else []
+        if ledger_order != expected_layers:
+            fail(f"hero handoff ledger lists {ledger_order}; expected the evidence order {expected_layers}", errors)
+        priority_paths = {str(d.get("path", "")) for d in layer_assets.get("priority", {}).get("derivatives", [])}
+        thumb = re.search(r'<img class="hero-handoff-thumb" src="([^"]+)"', body)
+        if not thumb or thumb.group(1) not in priority_paths:
+            fail("hero handoff strip thumbnail is not an accepted priority derivative", errors)
         if 'data-i18n="hero.handoff.meta"' not in body:
-            fail("hero handoff does not state the 36 km analysis AOI against the 420 km frame", errors)
-    if "data-hero-target" not in home or "hero-target-marker" not in home:
-        fail("index.html has no registration marker for the analysis AOI inside the acquired frame",
-             errors)
+            fail("hero handoff does not state the 36 km analysis AOI extent", errors)
+    if "data-hero-target" in home or "hero-target-marker" in home:
+        fail("the R2 marker/leader handoff is back in the hero; the R3 stage replaces it", errors)
 
     # Sensing lines are attention, not physics (A-HERO-04): the hero's own copy may not claim an
     # instrument. Checked on the dictionary in both languages and on the static markup.

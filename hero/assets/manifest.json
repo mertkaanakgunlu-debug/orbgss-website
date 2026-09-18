@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "phase": "WEB-005A R2",
+  "phase": "WEB-005A R3",
   "policy": {
     "allowed_license_bases": [
       "public-domain",
@@ -8,7 +8,8 @@
       "cc0",
       "cc-by",
       "cc-by-sa",
-      "orbgss-original"
+      "orbgss-original",
+      "copernicus-open-access"
     ],
     "required_fields": [
       "id",
@@ -44,7 +45,10 @@
       "priority"
     ],
     "paid_or_unclear_rights": "human_gate_required",
-    "large_source_policy": "Materialize into hero/assets/source/ (ignored) via a recorded fetch; never commit large provider rasters or render sequences."
+    "large_source_policy": "Materialize into hero/assets/source/ (ignored) via a recorded fetch; never commit large provider rasters or render sequences.",
+    "license_basis_notes": {
+      "copernicus-open-access": "Copernicus Sentinel data: free, full and open access under the Legal Notice on the use of Copernicus Sentinel Data and Service Information; any use must state 'Contains modified Copernicus Sentinel data [year]'. Commercial use permitted."
+    }
   },
   "assets": [
     {
@@ -177,6 +181,55 @@
       ],
       "third_party_restrictions": "None on the record; NASA-produced cloud composite.",
       "notes": "Greyscale cloud composite mixed over the cloud-free BMNG albedo by the Earth material. This is the same cloud layer the accepted land_ocean_ice_cloud composite (record 57735) was assembled from, which is what keeps the R2 global look continuous with the accepted one. July 2004 cover is nearly clear over western Anatolia, so nothing is faded or painted around the target."
+    },
+    {
+      "id": "earth_s2_detail_multiplier",
+      "role": "earth_material_detail_multiplier",
+      "local_path": "hero/assets/source/s2_kizildere_detail_30m.png",
+      "derived_from_external": [
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__B04_10m.jp2",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__B02_10m.jp2",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__SCL_20m.jp2",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__granule_metadata.xml",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__B04_10m.jp2",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__B02_10m.jp2",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__SCL_20m.jp2",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__granule_metadata.xml"
+      ],
+      "derived_sources_sha256": {
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__B04_10m.jp2": "9a854f2a6d533b286ce414abbf25cf70c1050df89b7f3f3476022d5fd9766cf2",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__B02_10m.jp2": "aa1428924142bf4dfdb6745746239067f0f8e031fc8c9f11359abe08ebc98e39",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__SCL_20m.jp2": "fbf30486307f41b25c7b5e5bb06db24ec5bf0c876485998de429b823e5f0b1de",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPC_20250925T141717__granule_metadata.xml": "54c566393517d646c1119d396342af5758b6cabb60f699a063e71d2aa3621fbe",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__B04_10m.jp2": "abf18ab6406ae78ef3d13eaf55c3a12212ac93fc2e6a47aa1edad7db154db436",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__B02_10m.jp2": "a795073322b23250bb51be6ace3ca09a7c0aeec539d46bec58162ac3b8988af3",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__SCL_20m.jp2": "ccc9789d7767b2e41e231320b751a5fdf97585dcc29c636fb8eef4d96c573cae",
+        "S2C_MSIL2A_20250925T084731_N0511_R107_T35SPB_20250925T141717__granule_metadata.xml": "a9255abd343efc801dadb0a71ca5f82e472f2411a8dc10d79a2de14b74562efa"
+      },
+      "derivation": "hero/scripts/materialize_earth_sharpen.py --date 20250925 --tiles T35SPC T35SPB: Sentinel-2 L2A (processing baseline 05.11) 10 m B04/B02 BOA reflectance -> 30 m -> broadband pan / 510 m blur ratio, SCL-masked, UTM 35N -> equirectangular, 16-bit PNG ratio / 2. Record: hero/evidence/earth_detail_sharpen.json",
+      "source_url": "https://dataspace.copernicus.eu/",
+      "record_url": "https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice",
+      "publisher": "European Union, Copernicus Sentinel-2 mission (ESA); detail ratio derived by OrbGSS",
+      "license": "copernicus-open-access",
+      "license_url": "https://sentinels.copernicus.eu/documents/247904/690755/Sentinel_Data_Legal_Notice",
+      "attribution": "Contains modified Copernicus Sentinel data [2025]",
+      "rights_status": "cleared",
+      "sha256": "c6c89c9837bc34524edaf28ed83c263f3353716817b4e5f780c43d7837ee463a",
+      "bytes": 48460935,
+      "dimensions": [
+        3720,
+        7051
+      ],
+      "window": {
+        "lon0": 28.15,
+        "lon1": 29.42,
+        "lat0": 36.94,
+        "lat1": 38.84
+      },
+      "ground_sample_m": 30.0,
+      "acquisition": "2025-09-25, tiles T35SPC and T35SPB, cloudy pixels 0.001-0.002 percent, no snow",
+      "third_party_restrictions": "None beyond the Copernicus attribution requirement, which is carried by the site footer.",
+      "notes": "WEB-005A R3 regional detail multiplier: a greyscale ratio texture with no units and no palette that the Earth material multiplies into the Blue Marble albedo under the regional hold, so 30 m ground structure appears without any colour or seasonal change. Presentation only: not an OrbGSS analytical raster, not a sensor-specific claim on the page, carries no forbidden layer class, never delivered to the site. The Sentinel-2 source tiles are not copied into this repository; they are the science project's raw archive and are identified by name and SHA-256 above."
     }
   ],
   "notes": "WEB-HERO-001A shipped a fully procedural benchmark scene with no external asset. WEB-HERO-001B introduces the two Earth composites above for the day/night material; both are NASA public-domain whole-Earth imagery (not measured science-layer output), fetched directly from eoimages.gsfc.nasa.gov and checksummed. The satellite, atmosphere, and starfield in WEB-HERO-001B remain fully procedural and introduce no further external asset. WEB-HERO-001C adds the surface-conforming AOI acquisition system (footprint, border, corner locks, scan beams and scan sweep) and introduces no new external asset: all of it is generated procedurally from committed configuration by hero/scripts/aoi_system.py, and none of it encodes, derives or displays a scientific quantity. WEB-HERO-001D introduces no new class of external material: it adds the 8192 px member of the already-cleared NASA Visible Earth Blue Marble record as the Earth albedo for the closest-approach sharpness gate, and keeps the 2048 px asset recorded because the accepted Phase-B and Phase-C scenes still reference it and must stay reproducible. The refined two-shell atmosphere limb, the constraint-locked camera and every AOI element remain fully procedural, generated from committed configuration, and none of them encodes, derives or displays a scientific quantity. WEB-005A R2 adds the NASA Blue Marble Next Generation global albedo, its 500 m C1 tile and an OrbGSS lossless crop of that tile as the regional detail window, plus the NASA Blue Marble cloud composite, all NASA public-domain whole-Earth imagery fetched from eoimages.gsfc.nasa.gov and checksummed, materialized under the Earth-source-resolution authority of WEB-005A (A-HERO-11). The satellite model remains fully procedural (hero/scripts/satellite_model.py) and introduces no external asset. The accepted 2048/8192 composites stay recorded because the accepted scenes still reference them."

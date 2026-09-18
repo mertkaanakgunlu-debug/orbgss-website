@@ -201,6 +201,15 @@ def apply_profile(profile_name: str, render_config=None) -> dict:
         "device": None,
     }
 
+    # WEB-005A R3: optional motion blur. The dive to the regional hold zooms up to a few percent
+    # per frame, which strobes at 24 fps without it; a profile that names a shutter gets it, and
+    # every profile that does not rebuilds exactly as before.
+    shutter = profile.get("motion_blur_shutter")
+    scene.render.use_motion_blur = bool(shutter)
+    if shutter:
+        scene.render.motion_blur_shutter = float(shutter)
+    applied["motion_blur_shutter"] = float(shutter) if shutter else None
+
     if engine == "CYCLES":
         cycles = scene.cycles
         cycles.samples = int(profile.get("samples", 128))
@@ -225,6 +234,8 @@ def apply_profile(profile_name: str, render_config=None) -> dict:
         eevee = scene.eevee
         if hasattr(eevee, "taa_render_samples"):
             eevee.taa_render_samples = int(profile.get("samples", 32))
+        if hasattr(eevee, "use_motion_blur"):
+            eevee.use_motion_blur = bool(shutter)
         applied["device"] = {
             "requested_gpu": bool(profile.get("prefer_gpu", True)),
             "backend": "EEVEE_GPU_CONTEXT",

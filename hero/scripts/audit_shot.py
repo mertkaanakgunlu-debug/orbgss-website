@@ -58,8 +58,14 @@ AOI_ORIENTATION_STEP_DEG = 2.0
 # Camera speed may change smoothly; a spike is a jerk. Expressed as the ratio
 # of the largest single-frame speed change to the mean speed.
 CAMERA_JERK_RATIO = 0.35
-# Focal length may ramp but must not snap, in millimetres per frame.
-LENS_RATE_MM_PER_FRAME = 0.6
+# Focal length may ramp but must not snap. WEB-005A R3 measures the ramp as a fraction of the
+# focal length per frame, because a zoom's perceived speed is d(f)/f: 0.6 mm per frame on a 34 mm
+# lens is a brisk zoom and on a 170 mm lens is nothing. 5 percent per frame is a fast, still
+# continuous, cinematic push; a cut or a snap is an order of magnitude above it.
+LENS_RATE_FRACTION_PER_FRAME = 0.05
+# The analysis frame must be still for the hold: per-frame change of its projected width and centre.
+HOLD_EXTENT_STEP = 0.0015
+HOLD_CENTRE_STEP = 0.002
 # A cut would show up as a camera displacement far outside the run of the move.
 CAMERA_CUT_RATIO = 4.0
 
@@ -160,6 +166,29 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
     if centre_target is None or any(t is None for t in corner_targets):
         raise SystemExit("scene " + repr(scene_id) + " did not build the AOI target empties")
 
+    # WEB-005A R3: the analysis AOI frame, when the scene draws one. Its last-frame screen corners
+    # are the handoff anchor the page registers the governed rasters into.
+    interface = scene_config.get("aoi_injection_interface", {})
+    analysis_spec = next(
+        (o for o in spec.get("objects", [])
+         if o.get("type") == "aoi_system"
+         and interface.get("fixtures", {}).get(o.get("fixture"), {}).get("classification") == "production_analysis_aoi"),
+        None,
+    )
+    analysis_targets = None
+    analysis_centre = None
+    analysis_description = None
+    if analysis_spec is not None:
+        analysis_description = ax.describe(scene_config, analysis_spec.get("fixture"), spec)
+        a_prefix = analysis_spec["id"]
+        analysis_centre = bpy.data.objects.get(a_prefix + "_target_center")
+        analysis_targets = [
+            bpy.data.objects.get(a_prefix + "_target_" + cid) for cid in analysis_description["corner_order"]
+        ]
+        if analysis_centre is None or any(t is None for t in analysis_targets):
+            raise SystemExit("scene " + repr(scene_id) + " did not build the analysis AOI target empties")
+    analysis_hold = (spec.get("camera", {}).get("composition", {}) or {}).get("analysis_hold", {})
+
     camera_composition = spec.get("camera", {}).get("composition", {})
     headline_region = camera_composition.get("headline_safe_region")
     headline_through = camera_composition.get("headline_safe_through_frame")
@@ -210,6 +239,18 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
                 math.atan2(second[1] - first[1], second[0] - first[0])
             )
 
+        analysis_screen = None
+        analysis_corners = None
+        if analysis_targets is not None:
+            a_centre_world = analysis_centre.evaluated_get(depsgraph).matrix_world.translation.copy()
+            analysis_screen = _project(a_centre_world, matrix, lens, sensor_mm, resolution)
+            analysis_corners = [
+                _project(t.evaluated_get(depsgraph).matrix_world.translation.copy(), matrix, lens, sensor_mm, resolution)
+                for t in analysis_targets
+            ]
+            if any(c is None for c in analysis_corners):
+                analysis_corners = None
+
         satellite_evaluated = satellite.evaluated_get(depsgraph)
         satellite_matrix = satellite_evaluated.matrix_world.copy()
         satellite_world = satellite_matrix.translation.copy()
@@ -259,6 +300,16 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
             "anchor_x": round(anchor[0], 5),
             "anchor_y": round(anchor[1], 5),
         }
+        if analysis_targets is not None:
+            entry["analysis_screen_x"] = round(analysis_screen[0], 5) if analysis_screen else None
+            entry["analysis_screen_y"] = round(analysis_screen[1], 5) if analysis_screen else None
+            entry["analysis_corners"] = (
+                [[round(c[0], 5), round(c[1], 5)] for c in analysis_corners] if analysis_corners else None
+            )
+            entry["analysis_width"] = (
+                round(max(c[0] for c in analysis_corners) - min(c[0] for c in analysis_corners), 6)
+                if analysis_corners else None
+            )
 
         if headline_region and (headline_through is None or frame <= int(headline_through)):
             look_at = location + _basis(matrix)[2]
@@ -279,7 +330,7 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
     max_speed = max(speeds) if speeds else 0.0
 
     lens_steps = [
-        abs(per_frame[i + 1]["focal_length_mm"] - per_frame[i]["focal_length_mm"])
+        abs(per_frame[i + 1]["focal_length_mm"] - per_frame[i]["focal_length_mm"]) / max(per_frame[i]["focal_length_mm"], 1e-6)
         for i in range(len(per_frame) - 1)
     ]
     max_lens_step = max(lens_steps) if lens_steps else 0.0
@@ -338,9 +389,9 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
             CAMERA_JERK_RATIO, "max speed step / mean speed",
         ),
         _series_check(
-            max_lens_step <= LENS_RATE_MM_PER_FRAME,
+            max_lens_step <= LENS_RATE_FRACTION_PER_FRAME,
             "focal length ramps without a snap",
-            round(max_lens_step, 5), LENS_RATE_MM_PER_FRAME, "mm per frame",
+            round(max_lens_step, 5), LENS_RATE_FRACTION_PER_FRAME, "fraction of focal length per frame",
         ),
         _series_check(
             mean_speed > 0 and (max_speed / mean_speed) <= CAMERA_CUT_RATIO,
@@ -432,15 +483,85 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
     satellite_frames = [e["frame"] for e in per_frame if e["satellite_visible"]]
     emergence = min(satellite_frames) if satellite_frames else None
     last = per_frame[-1]
-    handoff_anchor = {
-        "frame": last["frame"],
-        "x": last["aoi_screen_x"],
-        "y": last["aoi_screen_y"],
-        "extent": last["aoi_screen_extent"],
-        "box": last["aoi_screen_box"],
-        "note": ("Screen geometry of the acquired frame on the last frame, as fractions of the frame "
-                 "with y from the bottom: the page-layer handoff is placed from these numbers."),
-    }
+
+    # ---- WEB-005A R3 gates ---------------------------------------------------------------
+    beams_cfg = aoi_spec.get("beams", {})
+    release_end = int(beams_cfg.get("release_end_frame", 0))
+    at_release = next((e for e in per_frame if e["frame"] == release_end), None)
+    if at_release is not None:
+        checks.append(_series_check(
+            bool(at_release["satellite_visible"]),
+            "sensing lines release while the satellite is still in frame",
+            at_release["frame"], release_end, "frame",
+        ))
+    hold_frame = int(analysis_hold.get("frame", 0)) if analysis_hold else None
+    if hold_frame:
+        lingering = [e["frame"] for e in per_frame if e["frame"] >= hold_frame and e["satellite_visible"]]
+        checks.append(_series_check(
+            not lingering,
+            "satellite has left the frame before the analysis hold",
+            lingering[:12], [], "frames visible during the hold",
+        ))
+    if analysis_targets is not None and analysis_hold:
+        hold_entries = [e for e in per_frame if e["frame"] >= hold_frame and e.get("analysis_width") is not None]
+        lo, hi = (float(v) for v in analysis_hold.get("width_fraction", [0.0, 1.0]))
+        widths = [e["analysis_width"] for e in hold_entries]
+        checks.append(_series_check(
+            bool(widths) and all(lo <= w <= hi for w in widths),
+            "analysis AOI spans the declared width through the hold",
+            [round(min(widths), 5), round(max(widths), 5)] if widths else None, [lo, hi], "fraction of frame width",
+        ))
+        width_steps = [abs(b - a) for a, b in zip(widths, widths[1:])]
+        centre_steps = [
+            math.hypot(b["analysis_screen_x"] - a["analysis_screen_x"], b["analysis_screen_y"] - a["analysis_screen_y"])
+            for a, b in zip(hold_entries, hold_entries[1:])
+            if a["analysis_screen_x"] is not None and b["analysis_screen_x"] is not None
+        ]
+        checks.append(_series_check(
+            bool(hold_entries) and max(width_steps, default=0.0) <= HOLD_EXTENT_STEP
+            and max(centre_steps, default=0.0) <= HOLD_CENTRE_STEP,
+            "analysis frame settles for the hold (no size or position creep)",
+            [round(max(width_steps, default=0.0), 6), round(max(centre_steps, default=0.0), 6)],
+            [HOLD_EXTENT_STEP, HOLD_CENTRE_STEP], "max per-frame change of width, centre",
+        ))
+        checks.append(_series_check(
+            all(e["analysis_corners"] is not None
+                and all(0.0 <= c[0] <= 1.0 and 0.0 <= c[1] <= 1.0 for c in e["analysis_corners"])
+                for e in hold_entries),
+            "analysis frame is fully inside the frame through the hold",
+            sum(1 for e in hold_entries if e["analysis_corners"] is None
+                or not all(0.0 <= c[0] <= 1.0 and 0.0 <= c[1] <= 1.0 for c in e["analysis_corners"])),
+            0, "hold frames with a corner off-screen",
+        ))
+
+    if analysis_targets is not None and last.get("analysis_corners"):
+        xs = [c[0] for c in last["analysis_corners"]]
+        ys = [c[1] for c in last["analysis_corners"]]
+        handoff_anchor = {
+            "frame": last["frame"],
+            "fixture": analysis_description["fixture_id"],
+            "corner_order": list(analysis_description["corner_order"]),
+            "x": last["analysis_screen_x"],
+            "y": last["analysis_screen_y"],
+            "corners": last["analysis_corners"],
+            "extent": round(max(max(xs) - min(xs), max(ys) - min(ys)), 6),
+            "box": [round(min(xs), 5), round(min(ys), 5), round(max(xs), 5), round(max(ys), 5)],
+            "regional_box": last["aoi_screen_box"],
+            "note": ("Screen geometry of the accepted 36 km analysis AOI on the last frame, as fractions of "
+                     "the frame with y from the bottom: centre, the four projected corners in corner_order, "
+                     "extent and bounding box. The page-layer handoff maps the governed rasters onto these "
+                     "corners; regional_box is the 420 km acquisition frame, by then outside the frame."),
+        }
+    else:
+        handoff_anchor = {
+            "frame": last["frame"],
+            "x": last["aoi_screen_x"],
+            "y": last["aoi_screen_y"],
+            "extent": last["aoi_screen_extent"],
+            "box": last["aoi_screen_box"],
+            "note": ("Screen geometry of the acquired frame on the last frame, as fractions of the frame "
+                     "with y from the bottom: the page-layer handoff is placed from these numbers."),
+        }
     return {
         "handoff_anchor": handoff_anchor,
         "scene": scene_id,
@@ -474,8 +595,10 @@ def audit(scene_id: str, fixture_id, frames) -> dict:
             "aoi_scale_reversal_tolerance": AOI_SCALE_REVERSAL_TOLERANCE,
             "aoi_orientation_step_deg": AOI_ORIENTATION_STEP_DEG,
             "camera_jerk_ratio": CAMERA_JERK_RATIO,
-            "lens_rate_mm_per_frame": LENS_RATE_MM_PER_FRAME,
+            "lens_rate_fraction_per_frame": LENS_RATE_FRACTION_PER_FRAME,
             "camera_cut_ratio": CAMERA_CUT_RATIO,
+            "hold_extent_step": HOLD_EXTENT_STEP,
+            "hold_centre_step": HOLD_CENTRE_STEP,
         },
         "checks": checks,
         "passed": all(check["passed"] for check in checks),

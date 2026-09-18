@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "phase": "WEB-005A R2",
+  "phase": "WEB-005A R3",
   "lane": "WEB-HERO-001 -> WEB-005 -> WEB-005A",
   "branch": "feat/web-005a-hero-visual-fidelity",
   "mode": "integration",
-  "integration_task": "WEB-005A / MER-107 (R2 visual revision of WEB-005 / MER-93)",
+  "integration_task": "WEB-005A / MER-107 (R3 visual revision of WEB-005 / MER-93, after the R2 REVIEW_READY package did not pass the human visual gate)",
   "integration_authority": "tasks/WEB-005A_HERO_VISUAL_FIDELITY.md; docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md",
   "consumed_hero_evidence_head": "e95fdcac7cac82e597d40dab4cdc96ce1a6b319e",
   "consumed_hero_implementation_head": "93e17f6293aeb8bdc882dfd28221ed786b772df1",
@@ -52,5 +52,9 @@
     "hero/evidence/visual_quality_inventory.json"
   ],
   "note": "WEB-HERO-001 ran isolated: protected_paths had to stay byte-identical to the pinned WEB-001 baseline for the whole lane, and WEB-005 was named as the only authorized integration gate. That gate is now open. The pin moves to the WEB-005 execution baseline, the mode becomes integration, and the boundary changes shape rather than disappearing: public-site changes must stay inside integration_write_surface, and only the allowlisted hero files may name a public-site path. Everything the hero lane was forbidden to do that WEB-005 does not own -- deployment, DNS, routes, backends -- stays forbidden. WEB-005A continues on its own branch from the accepted WEB-005 main; the write surface is unchanged. The public-site changes it owns are the hero media, the hero handoff markup/styles/script and the hero media records.",
-  "rejected_review_checkpoint": "ffa2f2944ca5992afb9e9891b42745a9bd1105ad"
+  "rejected_review_checkpoint": "ffa2f2944ca5992afb9e9891b42745a9bd1105ad",
+  "superseded_review_checkpoints": {
+    "rejected_visually": "ffa2f2944ca5992afb9e9891b42745a9bd1105ad",
+    "r2_not_passed_human_gate": "a6897828d6e35595ea5a9a39a1e812b0fcbbfb35"
+  }
 }

@@ -81,16 +81,56 @@ def orbit_basis(scene_config: dict, scene_spec: dict, intent: dict):
 
 def orbit_position(basis, intent: dict, frame: float):
     u, v, radius_bu = basis
-    theta = math.radians(
-        float(intent.get("rate_deg_per_frame", 1.0)) * (float(frame) - float(intent["anchor_frame"]))
-    )
+    theta = math.radians(orbit_angle_deg(intent, frame))
     return ax.scale(
         sp._add(ax.scale(u, math.cos(theta)), ax.scale(v, math.sin(theta))), radius_bu
     )
 
 
+def rate_at(intent: dict, frame: float) -> float:
+    """Angular rate (degrees of arc per frame) at ``frame``.
+
+    A constant ``rate_deg_per_frame`` is the accepted form. WEB-005A R3 adds an optional
+    ``rate_profile`` -- ``[[frame, rate], ...]``, linearly interpolated and clamped at the ends --
+    so the pass can be *time-remapped*: the orbit is still one circle at one altitude, but the
+    shot spends its frames unevenly along it, fast while the platform comes round the limb and slow
+    while it holds the acquisition composition. Every hero orbit is time-compressed by orders of
+    magnitude anyway; this only lets the compression vary across the shot, which is what makes the
+    satellite read as settling into position rather than drifting through it.
+    """
+    profile = intent.get("rate_profile")
+    if not profile:
+        return float(intent.get("rate_deg_per_frame", 1.0))
+    keys = sorted((float(f), float(r)) for f, r in profile)
+    if frame <= keys[0][0]:
+        return keys[0][1]
+    if frame >= keys[-1][0]:
+        return keys[-1][1]
+    for (f0, r0), (f1, r1) in zip(keys, keys[1:]):
+        if f0 <= frame <= f1:
+            return r0 if f1 == f0 else r0 + (r1 - r0) * (frame - f0) / (f1 - f0)
+    return keys[-1][1]
+
+
+def _integrate_rate(intent: dict, f0: float, f1: float) -> float:
+    """Exact integral of the piecewise-linear rate from f0 to f1 (degrees)."""
+    if f1 < f0:
+        return -_integrate_rate(intent, f1, f0)
+    profile = intent.get("rate_profile")
+    if not profile:
+        return float(intent.get("rate_deg_per_frame", 1.0)) * (f1 - f0)
+    breakpoints = sorted({float(f) for f, _ in profile} | {f0, f1})
+    total = 0.0
+    for a, b in zip(breakpoints, breakpoints[1:]):
+        if b <= f0 or a >= f1:
+            continue
+        a, b = max(a, f0), min(b, f1)
+        total += 0.5 * (rate_at(intent, a) + rate_at(intent, b)) * (b - a)
+    return total
+
+
 def orbit_angle_deg(intent: dict, frame: float) -> float:
-    return float(intent.get("rate_deg_per_frame", 1.0)) * (float(frame) - float(intent["anchor_frame"]))
+    return _integrate_rate(intent, float(intent["anchor_frame"]), float(frame))
 
 
 def derive(scene_config: dict, scene_id: str, object_id: str = "satellite"):

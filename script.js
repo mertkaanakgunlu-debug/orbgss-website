@@ -84,8 +84,9 @@ const I18N = {
     'alt.alt02': 'Sequential map of the ferric iron spectral alteration proxy across the Kızıldere area of interest',
     'alt.priority': 'Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area',
     'alt.geothermal': 'Relative priority surface over shaded NASADEM relief across the Kızıldere geothermal pilot area',
-    'hero.handoff.kicker': '04 · Result',
-    'hero.handoff.meta': '36 × 36 km analysis AOI · inside the 420 km acquisition frame',
+    'hero.handoff.kicker': 'Evidence to priority · Kızıldere AOI',
+    'hero.handoff.meta': '36 × 36 km analysis AOI · EPSG:32635 · 30 m grid',
+    'hero.handoff.ledgerLabel': 'Evidence layers over the analysis AOI',
     'hero.handoff.cta': 'See how it was derived',
     'act.context.kicker': '02 · The place',
     'act.context.title': 'A real area, before any analysis.',
@@ -162,7 +163,7 @@ const I18N = {
     'alt.chuquicamata': 'Satellite view of the Chuquicamata mining district in northern Chile',
     'alt.ili': 'Satellite view of the Ili River Delta and Lake Balkhash in Kazakhstan',
     'footer.builtBy': 'Built by VirgaSoft',
-    'footer.attribution': 'Landsat data courtesy of the U.S. Geological Survey. The hero is an OrbGSS natural-color composite of Landsat Collection 2 surface reflectance. The story panels are OrbGSS cartographic exports of the Kızıldere pilot area, derived from NASADEM elevation, Landsat thermal and Sentinel-2 alteration evidence, with Scientific colour maps v8.0 by Fabio Crameri. Full provenance is documented in the production package.',
+    'footer.attribution': 'Landsat data courtesy of the U.S. Geological Survey. The hero is a rendered orbital sequence whose Earth texture is NASA Blue Marble with ground detail from modified Copernicus Sentinel-2 data (2025). The story panels are OrbGSS cartographic exports of the Kızıldere pilot area, derived from NASADEM elevation, Landsat thermal and Sentinel-2 alteration evidence, with Scientific colour maps v8.0 by Fabio Crameri. Full provenance is documented in the production package.',
     'footer.copyright': '© 2026 OrbGSS. All rights reserved.',
 
     /* WEB-003 — deep public routes */
@@ -326,8 +327,9 @@ const I18N = {
     'alt.alt02': 'Kızıldere ilgi alanı boyunca ferrik demir spektral alterasyon vekilinin sıralı haritası',
     'alt.priority': 'Kızıldere ilgi alanının göreli öncelik haritası; zemini alan içinde 0 ile 100 arasında sıralar',
     'alt.geothermal': 'Kızıldere jeotermal pilot alanında gölgelendirilmiş NASADEM rölyefi üzerindeki göreli öncelik yüzeyi',
-    'hero.handoff.kicker': '04 · Sonuç',
-    'hero.handoff.meta': '36 × 36 km analiz alanı · 420 km veri alım çerçevesinin içinde',
+    'hero.handoff.kicker': 'Kanıttan önceliğe · Kızıldere analiz alanı',
+    'hero.handoff.meta': '36 × 36 km analiz alanı · EPSG:32635 · 30 m grid',
+    'hero.handoff.ledgerLabel': 'Analiz alanı üzerindeki kanıt katmanları',
     'hero.handoff.cta': 'Nasıl türetildiğini görün',
     'act.context.kicker': '02 · Alan',
     'act.context.title': 'Herhangi bir analizden önce, gerçek bir alan.',
@@ -405,7 +407,7 @@ const I18N = {
     'alt.chuquicamata': 'Kuzey Şili Chuquicamata madencilik bölgesinin uydu görüntüsü',
     'alt.ili': 'Kazakistan İli Nehri Deltası ve Balkaş Gölü uydu görüntüsü',
     'footer.builtBy': 'VirgaSoft tarafından geliştirildi',
-    'footer.attribution': 'Landsat verileri ABD Jeoloji Araştırmaları Kurumu (USGS) kaynaklıdır. Açılış görseli, Landsat Collection 2 yüzey yansıtması ürünlerinden OrbGSS tarafından üretilen doğal renkli bir kompozittir. Bölüm görselleri ise NASADEM yükselti, Landsat termal ve Sentinel-2 alterasyon kanıtlarından türetilen, Kızıldere pilot alanına ait OrbGSS kartografik dışa aktarımlarıdır; renk skalaları Fabio Crameri, Scientific colour maps v8.0. Kaynak bilgileri üretim paketinde belgelenmiştir.',
+    'footer.attribution': 'Landsat verileri ABD Jeoloji Araştırmaları Kurumu (USGS) kaynaklıdır. Açılış görseli, görselleştirilmiş bir yörünge sekansıdır; Dünya dokusu NASA Blue Marble’dır ve zemin detayı değiştirilmiş Copernicus Sentinel-2 verilerinden (2025) gelir. Bölüm görselleri ise NASADEM yükselti, Landsat termal ve Sentinel-2 alterasyon kanıtlarından türetilen, Kızıldere pilot alanına ait OrbGSS kartografik dışa aktarımlarıdır; renk skalaları Fabio Crameri, Scientific colour maps v8.0. Kaynak bilgileri üretim paketinde belgelenmiştir.',
     'footer.copyright': '© 2026 OrbGSS. Tüm hakları saklıdır.',
 
     /* WEB-003 — deep public routes */
@@ -880,10 +882,11 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
 /*     so no browser is ever asked to download both;                    */
 /*   - with JavaScript off, the poster is the hero.                     */
 /*                                                                      */
-/* The accepted sequence ends on a stable regional hold. What it hands  */
-/* off to is the result element below it, which is revealed when the    */
-/* hold is reached — or immediately, in every static state, so that a   */
-/* visitor who never sees the motion still sees the answer.             */
+/* The sequence ends on a stable hold on the 36 km analysis AOI. What   */
+/* it hands off to is the evidence stage registered inside that frame:  */
+/* terrain, THM-01, ALT-01 and the priority result revealed in order    */
+/* when the hold is reached — or the result at once, in every static    */
+/* state, so a visitor who never sees the motion still sees the answer. */
 /* ------------------------------------------------------------------ */
 (function cinematicHero() {
   const hero = document.querySelector('.hero[data-hero-slot="cinematic"]');
@@ -891,21 +894,32 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
 
   const video = hero.querySelector('.hero-video');
   const handoff = hero.querySelector('[data-hero-handoff]');
-  const target = hero.querySelector('[data-hero-target]');
+  const stage = hero.querySelector('[data-hero-stage]');
 
-  /* Frame 236 of 276 at 24 fps: the second, gentler lock settle. WEB-005A R2 reveals the page-layer
-     result as that settle lands, so the acquired frame, its marker and the result panel resolve as
-     one event rather than the result arriving over a stalled hold. */
-  const HOLD_SECONDS = 236 / 24;
+  /* Frame 260 of 276 at 24 fps: the analysis frame has drawn in and locked (240-254) and the camera
+     is settling into the hold it reaches at 262. WEB-005A R3 starts the page-layer evidence sequence there, so the last
+     second of motion and the first layer overlap and the payoff reads as one continuous resolve. */
+  const HOLD_SECONDS = 260 / 24;
+  /* Class-B ceiling: every accepted cartographic export is a 1200 x 1200 cell grid drawn at 1249 px,
+     so no layer may ever be laid out wider than 1249 device pixels. The stage shrinks its raster
+     stack about its centre, inside the frame, rather than ever upscaling. */
+  const CLASS_B_CEILING_PX = 1249;
+  /* The accepted evidence order: context, thermal, alteration, then the priority result. */
+  const LAYER_ORDER = ['terrain', 'thm01', 'alt01', 'priority'];
+  const LAYER_STEP_MS = 950;
 
   /* ---- audited geometry of the last frame -> page coordinates --------------------------- */
   /* The poster is the last rendered frame and the video ends on it, so one anchor serves every
      state. Fractions of the 1920 x 1080 frame with y measured from the bottom, exactly as
-     hero/evidence/shot_audit_production.json reports them; the cover-fit below reproduces what
-     object-fit: cover / object-position: center 52% does to that frame at any hero size. */
+     hero/evidence/shot_audit_production.json reports them (handoff_anchor: the analysis AOI's
+     centre and its four projected corners nw, ne, se, sw); the cover-fit below reproduces what
+     object-fit: cover / object-position: center 46% does to that frame at any hero size. */
   let anchor = null;
   try { anchor = JSON.parse(hero.getAttribute('data-hero-anchor') || 'null'); } catch (e) { anchor = null; }
+  if (anchor && !(Array.isArray(anchor.corners) && anchor.corners.length === 4)) anchor = null;
   const desktopLayout = window.matchMedia('(min-width: 981px)');
+  const frame = stage ? stage.querySelector('.hero-stage-frame') : null;
+  const layerStack = stage ? stage.querySelector('.hero-stage-layers') : null;
 
   function frameGeometry() {
     const W = hero.clientWidth;
@@ -918,12 +932,30 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     const ox = (W - rw) * 0.5;
     const oy = (H - rh) * anchor.position;
     const toPage = (x, y) => [ox + x * rw, oy + (1 - y) * rh];
-    const [mx, my] = toPage(anchor.x, anchor.y);
-    const [bx0, by1] = toPage(anchor.box[0], anchor.box[1]);
-    const [bx1, by0] = toPage(anchor.box[2], anchor.box[3]);
-    const frameWidth = anchor.extent * rw;
-    const marker = Math.max(30, Math.round(anchor.aoi * frameWidth));
-    return { W, H, mx, my, marker, frameBottom: by1, frameTop: by0, frameLeft: bx0, frameRight: bx1 };
+    const corners = anchor.corners.map((c) => toPage(c[0], c[1]));
+    const xs = corners.map((c) => c[0]);
+    const ys = corners.map((c) => c[1]);
+    return {
+      W, H, corners,
+      left: Math.min.apply(null, xs), right: Math.max.apply(null, xs),
+      top: Math.min.apply(null, ys), bottom: Math.max.apply(null, ys),
+    };
+  }
+
+  /* Homography that maps the stage square (0,0)-(size,size) onto the four page corners, as a CSS
+     matrix3d. Screen-space placement of the image element only: the raster's pixels are untouched. */
+  function squareToQuad(p, size) {
+    const x0 = p[0][0], y0 = p[0][1], x1 = p[1][0], y1 = p[1][1];
+    const x2 = p[2][0], y2 = p[2][1], x3 = p[3][0], y3 = p[3][1];
+    const dx1 = x1 - x2, dx2 = x3 - x2, dx3 = x0 - x1 + x2 - x3;
+    const dy1 = y1 - y2, dy2 = y3 - y2, dy3 = y0 - y1 + y2 - y3;
+    const det = dx1 * dy2 - dx2 * dy1;
+    const g = det ? (dx3 * dy2 - dx2 * dy3) / det : 0;
+    const h = det ? (dx1 * dy3 - dx3 * dy1) / det : 0;
+    const a = x1 - x0 + g * x1, b = x3 - x0 + h * x3, c = x0;
+    const d = y1 - y0 + g * y1, e = y3 - y0 + h * y3, f = y0;
+    const m = [a / size, d / size, 0, g / size, b / size, e / size, 0, h / size, 0, 0, 1, 0, c, f, 0, 1];
+    return 'matrix3d(' + m.map((v) => (Math.abs(v) < 1e-9 ? '0' : v.toFixed(6))).join(',') + ')';
   }
 
   function rightEdge(selector) {
@@ -936,105 +968,152 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     return right;
   }
 
-  /* Place the marker, the panel and the leaders. The panel sits bottom-right above the caption,
-     as large as the space allows: it may never cover the marker, and it may never cover the
-     headline column. If a wide panel cannot satisfy both it stacks, then shrinks, and on a
-     viewport where nothing fits it falls back to the strip the small-screen layout uses. */
+  /* The analysis frame's position is fixed by the render, so on narrower desktops the headline column
+     has to yield to it rather than run underneath. Applied from first layout, not at the reveal, so
+     the copy never reflows mid-visit. */
+  const heroContent = hero.querySelector('.hero-content');
+  function constrainCopy() {
+    if (!heroContent) return;
+    if (!anchor || !desktopLayout.matches) { heroContent.style.maxWidth = ''; return; }
+    /* max-width covers the padding box; the right padding is empty space and may sit under the frame. */
+    const padRight = parseFloat(getComputedStyle(heroContent).paddingRight) || 0;
+    heroContent.style.maxWidth = Math.max(420, Math.round(frameGeometry().left - 24 + padRight)) + 'px';
+  }
+  constrainCopy();
+
+  /* Register the stage onto the analysis AOI and place the caption column beside it: to the right
+     of the frame when there is room, otherwise below it, never over the headline column. */
   function layoutHandoff() {
-    if (!anchor || !target || !handoff) return;
+    if (!anchor || !stage || !handoff || !frame) return;
     if (!desktopLayout.matches) {
-      hero.style.removeProperty('--handoff-img');
-      handoff.style.top = '';
-      handoff.style.bottom = '';
-      handoff.classList.remove('is-stacked');
+      handoff.classList.remove('is-right', 'is-below', 'is-tight');
+      handoff.style.cssText = '';
       return;
     }
     const g = frameGeometry();
-    const markerEl = target.querySelector('.hero-target-marker');
-    markerEl.style.left = g.mx + 'px';
-    markerEl.style.top = g.my + 'px';
-    markerEl.style.width = g.marker + 'px';
-    markerEl.style.height = g.marker + 'px';
+    const width = g.right - g.left;
+    const size = Math.max(160, Math.round(width));
+    frame.style.width = size + 'px';
+    frame.style.height = size + 'px';
+    frame.style.transform = squareToQuad(g.corners, size);
+    const dpr = window.devicePixelRatio || 1;
+    const k = Math.min(1, CLASS_B_CEILING_PX / (dpr * width));
+    if (layerStack) layerStack.style.transform = k < 1 ? 'scale(' + k.toFixed(4) + ')' : '';
+    hero.dataset.heroLayerScale = k.toFixed(3);
 
-    const pad = parseFloat(getComputedStyle(hero).paddingLeft) || parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pad')) || 48;
     const copyRight = rightEdge('.hero-content h1, .hero-content .hero-copy, .hero-content .hero-actions, .hero-content .eyebrow');
     const caption = hero.querySelector('.scene-label');
-    const captionTop = caption ? caption.getBoundingClientRect().top - hero.getBoundingClientRect().top : g.H - 90;
-    const markerBottom = g.my + g.marker / 2;
-
-    const preferred = Math.min(440, Math.max(240, Math.round(window.innerWidth * 0.26)));
-    const sizes = [preferred, 320, 260, 220];
-    let placed = false;
-    handoff.style.bottom = '';
-    for (let i = 0; i < sizes.length && !placed; i += 1) {
-      for (let stacked = 0; stacked < 2 && !placed; stacked += 1) {
-        hero.style.setProperty('--handoff-img', sizes[i] + 'px');
-        handoff.classList.toggle('is-stacked', stacked === 1);
-        const pw = handoff.offsetWidth;
-        const ph = handoff.offsetHeight;
-        const left = g.W - pad - pw;
-        const top = captionTop - 16 - ph;
-        if (left >= copyRight + 20 && top >= markerBottom + 28) {
-          handoff.style.top = top + 'px';
-          handoff.style.bottom = 'auto';
-          placed = true;
-        }
-      }
+    const heroBox = hero.getBoundingClientRect();
+    const captionBox = caption ? caption.getBoundingClientRect() : null;
+    const captionTop = captionBox ? captionBox.top - heroBox.top : g.H - 90;
+    /* The page gutter, read off the caption that already sits on it, so the column shares its edge. */
+    const pad = captionBox ? Math.max(16, heroBox.right - captionBox.right) : 48;
+    const gap = 26;
+    handoff.classList.remove('is-right', 'is-below', 'is-tight');
+    handoff.style.right = 'auto';
+    handoff.style.bottom = 'auto';
+    const roomRight = g.W - pad - (g.right + gap);
+    if (roomRight >= 230) {
+      handoff.classList.add('is-right');
+      handoff.style.width = Math.min(340, roomRight) + 'px';
+      handoff.style.left = (g.right + gap) + 'px';
+      let top = g.top;
+      const overflow = top + handoff.offsetHeight - (captionTop - 12);
+      if (overflow > 0) top = Math.max(16, top - overflow);
+      handoff.style.top = top + 'px';
+    } else {
+      handoff.classList.add('is-below');
+      const width = Math.min(520, Math.max(260, g.W - pad - (copyRight + 20)));
+      const left = Math.max(copyRight + 20, Math.min(g.left, g.W - pad - width));
+      const top = g.bottom + 16;
+      handoff.style.width = width + 'px';
+      handoff.style.left = left + 'px';
+      handoff.style.top = top + 'px';
+      if (top + handoff.offsetHeight > captionTop - 10) handoff.classList.add('is-tight');
     }
-    if (!placed) {
-      hero.style.setProperty('--handoff-img', '200px');
-      handoff.classList.add('is-stacked');
-      handoff.style.top = Math.max(markerBottom + 28, captionTop - 16 - handoff.offsetHeight) + 'px';
-      handoff.style.bottom = 'auto';
-    }
-
-    /* leaders: marker's lower corners -> the panel frame's upper corners */
-    const heroRect = hero.getBoundingClientRect();
-    const frame = handoff.querySelector('.hero-handoff-frame');
-    const fr = frame.getBoundingClientRect();
-    const fx0 = fr.left - heroRect.left;
-    const fx1 = fr.right - heroRect.left;
-    const fy = fr.top - heroRect.top;
-    const lines = target.querySelectorAll('.hero-target-leader');
-    const ends = [[g.mx - g.marker / 2, g.my + g.marker / 2, fx0, fy], [g.mx + g.marker / 2, g.my + g.marker / 2, fx1, fy]];
-    lines.forEach((line, index) => {
-      const [x1, y1, x2, y2] = ends[index];
-      line.setAttribute('x1', x1.toFixed(1));
-      line.setAttribute('y1', y1.toFixed(1));
-      line.setAttribute('x2', x2.toFixed(1));
-      line.setAttribute('y2', y2.toFixed(1));
-      const length = Math.hypot(x2 - x1, y2 - y1);
-      line.style.strokeDasharray = length.toFixed(1);
-      if (!target.classList.contains('is-visible')) line.style.strokeDashoffset = length.toFixed(1);
-    });
   }
 
-  function revealHandoff() {
+  /* Show layers up to and including `id`; the ledger and caption column follow. */
+  function setLayer(id) {
+    const index = LAYER_ORDER.indexOf(id);
+    LAYER_ORDER.forEach((name, i) => {
+      if (stage) {
+        stage.querySelectorAll('.hero-layer[data-layer="' + name + '"]').forEach((el) => {
+          el.classList.toggle('is-on', i <= index);
+        });
+      }
+      handoff.querySelectorAll('.hero-handoff-ledger [data-layer="' + name + '"]').forEach((el) => {
+        el.classList.toggle('is-done', i < index);
+        el.classList.toggle('is-active', i === index);
+      });
+      handoff.querySelectorAll('.hero-layer-caption[data-layer="' + name + '"]').forEach((el) => {
+        el.hidden = i !== index;
+      });
+    });
+    hero.dataset.heroLayer = id;
+  }
+
+  let sequenceTimers = [];
+  function revealHandoff(instant) {
     if (!handoff || !handoff.hidden) return;
+    warmLayers();
     handoff.hidden = false;
-    if (target) target.hidden = false;
+    if (stage) stage.hidden = false;
     layoutHandoff();
+    if (instant || reduceMotion.matches || !stage) {
+      /* Review hook: in a static state, #hero-layer=<id> settles on that evidence layer instead of
+         the result, so each step of the sequence can be captured deterministically. */
+      const pick = /^#hero-layer=(terrain|thm01|alt01|priority)$/.exec(window.location.hash || '');
+      setLayer(pick ? pick[1] : 'priority');
+      if (stage) stage.classList.add('is-visible');
+      handoff.classList.add('is-visible');
+      return;
+    }
     /* Two frames: one for the elements to exist, one for the transitions to have a start value. */
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      if (target) {
-        target.classList.add('is-visible');
-        target.querySelectorAll('.hero-target-leader').forEach((line) => { line.style.strokeDashoffset = '0'; });
-      }
+      stage.classList.add('is-visible');
       handoff.classList.add('is-visible');
+      LAYER_ORDER.forEach((name, i) => {
+        sequenceTimers.push(window.setTimeout(() => setLayer(name), i * LAYER_STEP_MS));
+      });
     }));
   }
 
+  /* Warm the layer rasters while the sequence plays so they are decoded by the time the hold arrives. */
+  function warmLayers() {
+    if (!stage) return;
+    stage.querySelectorAll('.hero-layer-image').forEach((img) => {
+      img.loading = 'eager';
+      if (typeof img.decode === 'function') img.decode().catch(() => {});
+    });
+  }
+
   let layoutTimer = null;
+  function relayout() {
+    constrainCopy();
+    if (handoff && !handoff.hidden) layoutHandoff();
+  }
   window.addEventListener('resize', () => {
-    if (!handoff || handoff.hidden) return;
     window.clearTimeout(layoutTimer);
-    layoutTimer = window.setTimeout(layoutHandoff, 120);
+    layoutTimer = window.setTimeout(relayout, 120);
   });
+  /* Registration depends on the hero's own box, which can change without a window resize (the
+     static reveal runs before first layout has settled; 82vh moves with browser chrome). Observe the
+     box itself so the stage can never be left registered to a stale size. */
+  if (typeof ResizeObserver === 'function') {
+    let pending = false;
+    new ResizeObserver(() => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => { pending = false; relayout(); });
+    }).observe(hero);
+  }
+  window.addEventListener('load', relayout, { once: true });
 
   function settleStatic(reason) {
     hero.setAttribute('data-hero-state', 'static');
     if (hero.dataset.heroReason !== reason) hero.dataset.heroReason = reason;
-    revealHandoff();
+    revealHandoff(true);
   }
 
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
@@ -1079,6 +1158,7 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     });
     video.addEventListener('playing', () => {
       hero.setAttribute('data-hero-state', 'playing');
+      warmLayers();
     }, { once: true });
     video.addEventListener('error', () => settleStatic('encode-error'), { once: true });
 
@@ -1116,6 +1196,9 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   const onMotionChange = () => {
     if (!reduceMotion.matches) return;
     if (!video.paused) video.pause();
+    sequenceTimers.forEach((id) => window.clearTimeout(id));
+    sequenceTimers = [];
+    if (handoff && !handoff.hidden) setLayer('priority');
     settleStatic('reduced-motion');
   };
   if (typeof reduceMotion.addEventListener === 'function') {
@@ -1123,5 +1206,5 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   }
 
   /* Belt and braces: however playback goes, the result must not stay hidden. */
-  window.setTimeout(revealHandoff, 15000);
+  window.setTimeout(() => revealHandoff(true), 15000);
 })();

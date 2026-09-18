@@ -325,7 +325,7 @@ def main() -> None:
 
     record = {
         "task": "WEB-005 / MER-93",
-        "revision": "WEB-005A R2 / MER-107 hero visual fidelity",
+        "revision": "WEB-005A R3 / MER-107 hero visual revision",
         "scene": args.scene,
         "profile": args.profile,
         "consumed_hero_evidence_head": "e95fdcac7cac82e597d40dab4cdc96ce1a6b319e",
@@ -343,6 +343,7 @@ def main() -> None:
                     "apply it a second time.",
         },
         "render_resolution": [int(profile["resolution_x"]), int(profile["resolution_y"])],
+        "motion_blur_shutter": profile.get("motion_blur_shutter"),
         "delivered_resolution": [width, height],
         "blender_version": bpy.app.version_string,
         "python_version": sys.version.split()[0],

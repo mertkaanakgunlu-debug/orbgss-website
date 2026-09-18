@@ -107,7 +107,7 @@
       HTML inside the motion-safe region the shot was measured against, never baked into a frame.
       The poster is the LCP element and the only hero image fetched on first paint.
     -->
-    <section class="hero" id="hero" aria-labelledby="hero-title" data-hero-slot="cinematic" data-label-tone="light" data-label-tone-locked data-act="1" data-hero-anchor='{"frame":[1920,1080],"position":0.52,"x":0.72,"y":0.6867,"extent":0.3728,"box":[0.5184,0.5074,0.8912,0.8211],"aoi":0.0857}'>
+    <section class="hero" id="hero" aria-labelledby="hero-title" data-hero-slot="cinematic" data-label-tone="light" data-label-tone-locked data-act="1" data-hero-anchor='{"frame":[1920,1080],"position":0.46,"fixture":"kizildere_analysis","x":0.63,"y":0.5533,"extent":0.3592,"corners":[[0.5324,0.7305],[0.7462,0.7169],[0.7301,0.3713],[0.5121,0.3868]]}'>
       <div class="hero-visual" data-visual-slot="hero" data-visual-status="cinematic-hero">
         <img
           class="panel-image hero-poster"
@@ -154,54 +154,129 @@
       </div>
 
       <!--
-        The real-data/result handoff (WEB-005A R2). The rendered sequence ends on the acquired
-        420 km regional frame with the accepted 36 x 36 km analysis AOI at its centre. What the page
-        hands off to is composited here and never baked into the video: a registration marker at the
-        analysis AOI's audited screen position inside the rendered frame, leader lines from it, and
-        the accepted priority derivative -- byte-exact, with the export's own legend inside its
-        frame -- as the payoff panel coupled to the target region. data-hero-anchor carries the
-        audited last-frame geometry (hero/evidence/shot_audit_production.json: AOI centre and frame
-        bounds as fractions of the 1920 x 1080 frame, y from the bottom) and the poster/video
-        object-position, which script.js maps through the cover-fit at every size. The priority
-        raster renders at most 440 CSS px here -- 880 device px at 2x, inside the accepted 1249 px
-        ceiling -- and is not recoloured, filtered or cropped.
+        The real-data/result handoff (WEB-005A R3). The rendered sequence dives onto the accepted
+        36 x 36 km analysis AOI and holds with its frame locked at audited screen corners. What the
+        page hands off to is composited INSIDE that frame and is never baked into the video: the
+        accepted GEO-WEB-002 derivatives (terrain context, THM-01, ALT-01 and the priority result)
+        are mapped byte-exact onto the frame's projected corners by a CSS homography (a screen-space
+        placement, not a re-projection of any data) and revealed in the accepted evidence order, the
+        priority surface with its own legend as the payoff. data-hero-anchor carries the audited
+        last-frame geometry (hero/evidence/shot_audit_production.json, handoff_anchor: centre, the
+        four corners nw/ne/se/sw, extent, as fractions of the 1920 x 1080 frame with y from the bottom)
+        and the poster/video object-position; script.js maps it through the cover-fit at every size
+        and shrinks the raster stack inside the frame whenever the quad would exceed the 1249
+        device-pixel class-B ceiling. Every layer carries its exact public label and accepted warning
+        in the caption column; nothing is recoloured, filtered or cropped. Structure/geology stays the
+        stated data gap under Act 3 and is not fabricated here.
       -->
-      <div class="hero-target" data-hero-target hidden aria-hidden="true">
-        <span class="hero-target-marker"></span>
-        <svg class="hero-target-leaders" aria-hidden="true" focusable="false"><line class="hero-target-leader" x1="0" y1="0" x2="0" y2="0" /><line class="hero-target-leader" x1="0" y1="0" x2="0" y2="0" /></svg>
+      <div class="hero-stage" data-hero-stage hidden aria-hidden="true">
+        <div class="hero-stage-frame">
+          <div class="hero-stage-layers">
+            <figure class="hero-layer" data-layer="terrain">
+              <img
+                class="hero-layer-image"
+                src="assets/proof/final/terrain-800.webp"
+                srcset="assets/proof/final/terrain-800.webp 800w, assets/proof/final/terrain-1249.webp 1249w"
+                sizes="(min-width: 981px) 24vw, 62px"
+                alt="Colour elevation map of the Kızıldere area of interest, with low ground in dark blue and high ridges in pale yellow"
+                data-i18n-alt="alt.terrain"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="800"
+              />
+            </figure>
+            <figure class="hero-layer" data-layer="thm01">
+              <img
+                class="hero-layer-image"
+                src="assets/proof/final/thm01-800.webp"
+                srcset="assets/proof/final/thm01-800.webp 800w, assets/proof/final/thm01-1249.webp 1249w"
+                sizes="(min-width: 981px) 24vw, 62px"
+                alt="Diverging thermal anomaly map of the Kızıldere area of interest, with cooler ground in blue and warmer ground in red"
+                data-i18n-alt="alt.thm01"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="800"
+              />
+            </figure>
+            <figure class="hero-layer" data-layer="alt01">
+              <img
+                class="hero-layer-image"
+                src="assets/proof/final/alt01-800.webp"
+                srcset="assets/proof/final/alt01-800.webp 800w, assets/proof/final/alt01-1249.webp 1249w"
+                sizes="(min-width: 981px) 24vw, 62px"
+                alt="Sequential map of the clay and hydroxyl spectral alteration proxy across the Kızıldere area of interest"
+                data-i18n-alt="alt.alt01"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="800"
+              />
+            </figure>
+            <figure class="hero-layer hero-layer-payoff" data-layer="priority">
+              <img
+                class="hero-layer-image"
+                src="assets/proof/final/priority-800.webp"
+                srcset="assets/proof/final/priority-800.webp 800w, assets/proof/final/priority-1249.webp 1249w"
+                sizes="(min-width: 981px) 24vw, 62px"
+                alt="Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area"
+                data-i18n-alt="alt.priority"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="800"
+              />
+              <!--
+                The export's own legend, cropped losslessly from the master, inside the frame -- as in
+                Act 4. Eager at low priority for the same reason as there: a lazily loaded legend
+                inside an absolutely positioned frame does not reliably paint.
+              -->
+              <img
+                class="hero-layer-legend"
+                src="assets/proof/final/priority-legend.png"
+                alt="Colour scale for the relative priority map, running from 0 at the dark end to 100 at the pale end"
+                data-i18n-alt="alt.priorityLegend"
+                loading="eager"
+                fetchpriority="low"
+                decoding="async"
+                width="732"
+                height="122"
+              />
+            </figure>
+          </div>
+          <span class="hero-stage-border"></span>
+          <span class="hero-stage-corner is-nw"></span><span class="hero-stage-corner is-ne"></span><span class="hero-stage-corner is-se"></span><span class="hero-stage-corner is-sw"></span>
+        </div>
       </div>
       <figure class="hero-handoff" data-hero-handoff hidden>
-        <div class="hero-handoff-frame">
-          <img
-            class="hero-handoff-image"
-            src="assets/proof/final/priority-800.webp"
-            srcset="assets/proof/final/priority-800.webp 800w, assets/proof/final/priority-1249.webp 1249w"
-            sizes="(min-width: 981px) min(26vw, 440px), 62px"
-            alt="Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area"
-            data-i18n-alt="alt.priority"
-            loading="lazy"
-            decoding="async"
-            width="800"
-            height="800"
-          />
-          <img
-            class="hero-handoff-legend"
-            src="assets/proof/final/priority-legend.png"
-            alt="Colour scale for the relative priority map, running from 0 at the dark end to 100 at the pale end"
-            data-i18n-alt="alt.priorityLegend"
-            loading="eager"
-            fetchpriority="low"
-            decoding="async"
-            width="732"
-            height="122"
-          />
-        </div>
+        <img class="hero-handoff-thumb" src="assets/proof/final/priority-800.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" width="800" height="800" />
         <figcaption class="hero-handoff-copy">
-          <span class="hero-handoff-kicker mono" data-i18n="hero.handoff.kicker">04 · Result</span>
-          <span class="hero-handoff-label" data-i18n="label.priority">Remote-Sensing Relative Priority — Experimental Baseline</span>
-          <span class="hero-handoff-meta mono" data-i18n="hero.handoff.meta">36 × 36 km analysis AOI · inside the 420 km acquisition frame</span>
-          <span class="hero-handoff-note beam-note" data-i18n="act.priority.note">AOI-relative experimental screening only. Not probability, reserve/resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a calibrated cross-AOI score.</span>
-          <a class="text-link hero-handoff-link" href="#priority"><span data-i18n="hero.handoff.cta">See how it was derived</span> <span aria-hidden="true">↓</span></a>
+          <span class="hero-handoff-kicker mono" data-i18n="hero.handoff.kicker">Evidence to priority · Kızıldere AOI</span>
+          <ol class="hero-handoff-ledger mono" aria-label="Evidence layers over the analysis AOI" data-i18n-aria-label="hero.handoff.ledgerLabel">
+            <li data-layer="terrain"><span class="hero-ledger-index">01</span><span data-i18n="label.terrain">Elevation — NASADEM context</span></li>
+            <li data-layer="thm01"><span class="hero-ledger-index">02</span><span data-i18n="label.thm01">THM-01 Thermal Anomaly</span></li>
+            <li data-layer="alt01"><span class="hero-ledger-index">03</span><span data-i18n="label.alt01">ALT-01 Alteration Proxy — clay/hydroxyl</span></li>
+            <li data-layer="priority"><span class="hero-ledger-index">04</span><span data-i18n="label.priority">Remote-Sensing Relative Priority — Experimental Baseline</span></li>
+          </ol>
+          <div class="hero-layer-caption" data-layer="terrain" hidden>
+            <span class="hero-handoff-label" data-i18n="label.terrain">Elevation — NASADEM context</span>
+            <span class="hero-handoff-note beam-note" data-i18n="story.terrain.note">Context and display only. Terrain is not a scored predictor and carries no universal geothermal-favourability direction.</span>
+          </div>
+          <div class="hero-layer-caption" data-layer="thm01" hidden>
+            <span class="hero-handoff-label" data-i18n="label.thm01">THM-01 Thermal Anomaly</span>
+            <span class="hero-handoff-note beam-note" data-i18n="act.evidence.thermal.note">Evidence layer only. Do not describe it as geothermal probability, reserve, discovery, or drilling-success evidence.</span>
+          </div>
+          <div class="hero-layer-caption" data-layer="alt01" hidden>
+            <span class="hero-handoff-label" data-i18n="label.alt01">ALT-01 Alteration Proxy — clay/hydroxyl</span>
+            <span class="hero-handoff-note beam-note" data-i18n="act.evidence.alteration.note">Broad Sentinel-2 spectral alteration proxy; not mineral/kaolinite identification and not proof of hydrothermal alteration.</span>
+          </div>
+          <div class="hero-layer-caption" data-layer="priority">
+            <span class="hero-handoff-label" data-i18n="label.priority">Remote-Sensing Relative Priority — Experimental Baseline</span>
+            <span class="hero-handoff-meta mono" data-i18n="hero.handoff.meta">36 × 36 km analysis AOI · EPSG:32635 · 30 m grid</span>
+            <span class="hero-handoff-note beam-note" data-i18n="act.priority.note">AOI-relative experimental screening only. Not probability, reserve/resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a calibrated cross-AOI score.</span>
+            <a class="text-link hero-handoff-link" href="#priority"><span data-i18n="hero.handoff.cta">See how it was derived</span> <span aria-hidden="true">↓</span></a>
+          </div>
         </figcaption>
       </figure>
 
@@ -489,7 +564,7 @@
         <a href="/company/" data-i18n="nav.company">Company</a>
         <a href="/contact/" data-i18n="nav.contact">Contact</a>
       </nav>
-      <p class="attribution" data-i18n="footer.attribution">Landsat data courtesy of the U.S. Geological Survey. The hero is an OrbGSS natural-color composite of Landsat Collection 2 surface reflectance. The story panels are OrbGSS cartographic exports of the Kızıldere pilot area, derived from NASADEM elevation, Landsat thermal and Sentinel-2 alteration evidence, with Scientific colour maps v8.0 by Fabio Crameri. Full provenance is documented in the production package.</p>
+      <p class="attribution" data-i18n="footer.attribution">Landsat data courtesy of the U.S. Geological Survey. The hero is a rendered orbital sequence whose Earth texture is NASA Blue Marble with ground detail from modified Copernicus Sentinel-2 data (2025). The story panels are OrbGSS cartographic exports of the Kızıldere pilot area, derived from NASADEM elevation, Landsat thermal and Sentinel-2 alteration evidence, with Scientific colour maps v8.0 by Fabio Crameri. Full provenance is documented in the production package.</p>
       <p data-i18n="footer.copyright">© 2026 OrbGSS. All rights reserved.</p>
     </div>
   </footer>

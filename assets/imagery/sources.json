@@ -1302,6 +1302,25 @@
             "measured_max_css_width": 624,
             "measured_at_viewport_px": 2560,
             "measurement_method": "Live browser measurement of getBoundingClientRect().width across a 360-3840 CSS px viewport sweep of the built page, not a reading of the sizes attribute."
+          },
+          "hero_stage": {
+            "consumer": "WEB-005A R3 / MER-107",
+            "surface": "hero evidence stage: the layer is registered inside the rendered 36 km analysis frame by a CSS homography on the audited corners (screen-space placement only; no re-projection, recolour, filter or crop)",
+            "ceiling_rule": "script.js CLASS_B_CEILING_PX = 1249: the raster stack is shrunk about its centre whenever quad width x devicePixelRatio would exceed 1249 device px; it is never upscaled past the ceiling",
+            "measured_css_width": {
+              "1024": 283,
+              "1280": 296,
+              "1440": 334,
+              "2560": 596,
+              "3840": 895
+            },
+            "measured_worst_device_px": {
+              "2560 CSS px at 2x": 1192,
+              "3840 CSS px at 1x": 895
+            },
+            "measurement_method": "Live browser measurement of the payoff layer's getBoundingClientRect() at each viewport width in the static (revealed) state.",
+            "selected_derivative": "panel-800 / panel-native-1249 by sizes=\"(min-width: 981px) 24vw, 62px\"",
+            "order": 1
           }
         }
       },
@@ -1442,6 +1461,25 @@
             "measured_max_css_width": 624,
             "measured_at_viewport_px": 2560,
             "measurement_method": "Live browser measurement of getBoundingClientRect().width across a 360-3840 CSS px viewport sweep of the built page, not a reading of the sizes attribute."
+          },
+          "hero_stage": {
+            "consumer": "WEB-005A R3 / MER-107",
+            "surface": "hero evidence stage: the layer is registered inside the rendered 36 km analysis frame by a CSS homography on the audited corners (screen-space placement only; no re-projection, recolour, filter or crop)",
+            "ceiling_rule": "script.js CLASS_B_CEILING_PX = 1249: the raster stack is shrunk about its centre whenever quad width x devicePixelRatio would exceed 1249 device px; it is never upscaled past the ceiling",
+            "measured_css_width": {
+              "1024": 283,
+              "1280": 296,
+              "1440": 334,
+              "2560": 596,
+              "3840": 895
+            },
+            "measured_worst_device_px": {
+              "2560 CSS px at 2x": 1192,
+              "3840 CSS px at 1x": 895
+            },
+            "measurement_method": "Live browser measurement of the payoff layer's getBoundingClientRect() at each viewport width in the static (revealed) state.",
+            "selected_derivative": "panel-800 / panel-native-1249 by sizes=\"(min-width: 981px) 24vw, 62px\"",
+            "order": 2
           }
         }
       },
@@ -1583,6 +1621,25 @@
             "measured_max_css_width": 624,
             "measured_at_viewport_px": 2560,
             "measurement_method": "Live browser measurement of getBoundingClientRect().width across a 360-3840 CSS px viewport sweep of the built page, not a reading of the sizes attribute."
+          },
+          "hero_stage": {
+            "consumer": "WEB-005A R3 / MER-107",
+            "surface": "hero evidence stage: the layer is registered inside the rendered 36 km analysis frame by a CSS homography on the audited corners (screen-space placement only; no re-projection, recolour, filter or crop)",
+            "ceiling_rule": "script.js CLASS_B_CEILING_PX = 1249: the raster stack is shrunk about its centre whenever quad width x devicePixelRatio would exceed 1249 device px; it is never upscaled past the ceiling",
+            "measured_css_width": {
+              "1024": 283,
+              "1280": 296,
+              "1440": 334,
+              "2560": 596,
+              "3840": 895
+            },
+            "measured_worst_device_px": {
+              "2560 CSS px at 2x": 1192,
+              "3840 CSS px at 1x": 895
+            },
+            "measurement_method": "Live browser measurement of the payoff layer's getBoundingClientRect() at each viewport width in the static (revealed) state.",
+            "selected_derivative": "panel-800 / panel-native-1249 by sizes=\"(min-width: 981px) 24vw, 62px\"",
+            "order": 3
           }
         }
       },
@@ -1854,6 +1911,25 @@
             "measured_max_css_width": 623,
             "measured_at_viewport_px": 768,
             "measurement_method": "Live browser measurement of getBoundingClientRect().width across a 360-3840 CSS px viewport sweep of the built page, not a reading of the sizes attribute."
+          },
+          "hero_stage": {
+            "consumer": "WEB-005A R3 / MER-107",
+            "surface": "hero evidence stage: the layer is registered inside the rendered 36 km analysis frame by a CSS homography on the audited corners (screen-space placement only; no re-projection, recolour, filter or crop)",
+            "ceiling_rule": "script.js CLASS_B_CEILING_PX = 1249: the raster stack is shrunk about its centre whenever quad width x devicePixelRatio would exceed 1249 device px; it is never upscaled past the ceiling",
+            "measured_css_width": {
+              "1024": 283,
+              "1280": 296,
+              "1440": 334,
+              "2560": 596,
+              "3840": 895
+            },
+            "measured_worst_device_px": {
+              "2560 CSS px at 2x": 1192,
+              "3840 CSS px at 1x": 895
+            },
+            "measurement_method": "Live browser measurement of the payoff layer's getBoundingClientRect() at each viewport width in the static (revealed) state.",
+            "selected_derivative": "panel-800 / panel-native-1249 by sizes=\"(min-width: 981px) 24vw, 62px\"",
+            "order": 4
           }
         }
       }
@@ -1865,7 +1941,7 @@
     "authority": "tasks/WEB-005_CINEMATIC_HERO.md; tasks/WEB-005A_HERO_VISUAL_FIDELITY.md",
     "presentation_authority": "docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md; docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md",
     "asset_class": "C - rendered cinematic hero media",
-    "rights_basis": "OrbGSS-generated 3D render from the accepted WEB-HERO-001 production lane. The only external material is NASA Earth Observatory whole-Earth imagery, public domain under NASA media usage guidelines and recorded with checksums in hero/assets/manifest.json: the Blue Marble Next Generation July 2004 global composite with topography and bathymetry, a lossless OrbGSS crop of its 500 m C1 tile as the regional detail window, the Blue Marble cloud composite and the Earth-at-Night composite. The satellite is a procedural OrbGSS original. No paid, closed or restricted data, no NASA insignia, no endorsement implied, and no third-party licence is restated or widened.",
+    "rights_basis": "OrbGSS-generated 3D render from the accepted WEB-HERO-001 production lane. External material: NASA Earth Observatory whole-Earth imagery, public domain under NASA media usage guidelines (Blue Marble Next Generation July 2004 global composite with topography and bathymetry, a lossless OrbGSS crop of its 500 m C1 tile as the regional detail window, the Blue Marble cloud composite and the Earth-at-Night composite), and a greyscale detail ratio derived by OrbGSS from Copernicus Sentinel-2 L2A data (free, full and open; attribution 'Contains modified Copernicus Sentinel data (2025)' in the site footer), all recorded with checksums in hero/assets/manifest.json. The satellite is a procedural OrbGSS original. No paid, closed or restricted data, no NASA or EU insignia, no endorsement implied, and no third-party licence is restated or widened.",
     "truthfulness_requirement": "This is a RENDER, not sensor imagery, and the homepage caption must say so. The EN/TR strings scene.hero.kind carry 'Rendered orbital sequence - not sensor imagery' and are not optional.",
     "scientific_content": "none",
     "scientific_content_note": "No scientific raster is baked into any frame. Lossy video encoding subsamples chroma and quantises values, which is exactly the colour/value change the accepted GEO-WEB-002 package forbids for class-B assets. The real-data result handoff is composited in the page from the accepted checksummed derivative instead - see hero/config/scene.json -> aoi_injection_interface.layer_slots[result_priority].render_surface.",
@@ -1886,13 +1962,15 @@
         1080
       ],
       "supersampling_note": "Rendered at 2304 x 1296 and delivered at 1920 x 1080. The downscale removes edge aliasing and averages sampling noise, so the encoder receives a cleaner signal.",
-      "revision_head_note": "WEB-005A R2: same scene id, revised visual treatment; see hero/config/scene.json -> scenes.hero_production_kizildere.description.",
+      "revision_head_note": "WEB-005A R3: same scene id, revised choreography, hold and handoff; see hero/config/scene.json -> scenes.hero_production_kizildere.description.",
       "earth_albedo": {
         "global": "hero/assets/source/world.topo.bathy.200407.3x21600x10800.jpg (NASA BMNG, 21600 x 10800)",
         "regional_detail": "hero/assets/source/world.topo.bathy.200407.C1.crop.png (8160 x 5520 lossless crop of the NASA BMNG 500 m C1 tile, lon 12-46 E / lat 27-50 N)",
         "clouds": "hero/assets/source/cloud_combined_8192.tif (NASA Blue Marble clouds, 8192 x 4096)",
         "manifest": "hero/assets/manifest.json",
-        "crop_record": "hero/evidence/earth_detail_crop.json"
+        "crop_record": "hero/evidence/earth_detail_crop.json",
+        "regional_detail_multiplier": "hero/assets/source/s2_kizildere_detail_30m.png (3720 x 7051 greyscale ratio derived from Copernicus Sentinel-2 L2A 2025-09-25, lon 28.15-29.42 E / lat 36.94-38.84 N; multiplies the Blue Marble albedo under the hold, carries no colour; record hero/evidence/earth_detail_sharpen.json)",
+        "attribution": "NASA Earth Observatory; Contains modified Copernicus Sentinel data (2025)"
       },
       "satellite": "procedural generic EO platform, hero/scripts/satellite_model.py; no external asset, no specific spacecraft or sensor identity",
       "shot_audit": "hero/evidence/shot_audit_production.json"
@@ -1916,9 +1994,9 @@
         "frame_rate": 24,
         "frame_count": 276,
         "duration_seconds": 11.5,
-        "video_bitrate_kbps": 1385,
-        "bytes": 2955795,
-        "sha256": "0ef4b223290015aea31349884c226f8116ef34b8c8655ac8abe73936ce613c81"
+        "video_bitrate_kbps": 1396,
+        "bytes": 2932748,
+        "sha256": "c094d323be7747de7ff3c6299a634c8ddd66d2de58317e9c8575449c871423ad"
       },
       {
         "role": "hero-mp4",
@@ -1932,8 +2010,8 @@
         "frame_count": 276,
         "duration_seconds": 11.5,
         "video_bitrate_kbps": 2800,
-        "bytes": 3856456,
-        "sha256": "5b7f6877c5b5bf5caadac1514962452e7c5edf4c5be1808035a8b3c4309ae416"
+        "bytes": 4068259,
+        "sha256": "e02e25e2ccd7ef344e06cffff8b96ff30d632c0d0e202a3802fb7a9734a977d9"
       },
       {
         "role": "hero-poster",
@@ -1945,8 +2023,8 @@
         "height": 900,
         "quality": 88,
         "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f276.png",
-        "bytes": 101112,
-        "sha256": "70105cd3ebe74823330dff33b99253bc3d4e1ec36ceb63a7a16c9ea0a514b161"
+        "bytes": 173510,
+        "sha256": "4b80ba21ef9125bd8accbcf01d5085f7bf7d5ab93921ff3f8891315eb0123f83"
       },
       {
         "role": "hero-poster-narrow",
@@ -1958,16 +2036,18 @@
         "height": 506,
         "quality": 88,
         "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f276.png",
-        "bytes": 44864,
-        "sha256": "c3bdcd3bde5e18c21630a828c80a2a7c1527ce98ad132a61f160382311c5a1f2"
+        "bytes": 69374,
+        "sha256": "467a29f208c35fcbfb2771f7c553c2160be83103b347fa314ff47b6841c6d319"
       }
     ],
-    "revision": "WEB-005A R2 hero visual fidelity: derived orbital pass, volumetric generic EO satellite, thin cyan sensing lines, target-frame lock event, recomposed approach, NASA BMNG 500 m regional albedo, coupled page-layer analytical handoff",
+    "revision": "WEB-005A R3 hero visual revision: time-remapped derived orbital pass that settles lower-left for the whole acquisition beat, sensing lines that release while the platform is still in frame, a continuous dive onto the accepted 36 km analysis AOI with its own lock event, a 30 m Sentinel-2 detail multiplier under the regional hold, and a page-layer evidence stage registered inside the analysis frame (terrain, THM-01, ALT-01, priority)",
     "handoff": {
       "surface": "html_overlay",
-      "anchor_source": "hero/evidence/shot_audit_production.json -> handoff_anchor (audited last-frame geometry of the acquired 420 km regional frame); index.html carries it as data-hero-anchor and scripts/validate_site.py checks the two agree",
-      "analysis_aoi_marker": "36 x 36 km accepted analysis AOI drawn at its true position inside the rendered 420 km regional frame (36/420 of the frame extent)",
-      "payoff": "accepted geo_web_002 priority derivative (priority-800 / priority-1249) with its own in-frame legend, at most 440 CSS px wide (880 device px at 2x, inside the 1249 px ceiling), coupled to the marker by leader lines; exact public label and mandatory warning as visible EN/TR copy"
+      "anchor_source": "hero/evidence/shot_audit_production.json -> handoff_anchor (audited last-frame centre and four projected corners of the accepted 36 km analysis AOI, fixture kizildere_analysis); index.html carries it as data-hero-anchor and scripts/validate_site.py checks the two agree",
+      "registration": "script.js maps the audited corners through the poster/video cover-fit and places the evidence stage on them with a CSS homography: a screen-space placement of the image elements, never a re-projection of any data. The raster stack is shrunk about its centre inside the frame whenever the quad would exceed 1249 device pixels.",
+      "sequence": "terrain (Elevation - NASADEM context) -> THM-01 -> ALT-01 -> priority, each byte-exact accepted geo_web_002 derivative (panel-800 / panel-native-1249 by sizes), revealed in the accepted evidence order from 256/24 s with the layer's exact public label and accepted warning in the caption column; static states show the priority result at once",
+      "payoff": "accepted geo_web_002 priority derivative inside the analysis frame with its own in-frame legend, the exact public label, the mandatory warning as visible EN/TR copy, the 36 km / EPSG:32635 / 30 m meta line and the CTA",
+      "data_gap": "structure/geology is not shown in the hero: no public-safe fault or lithology master is authorized, and the gap stays the subordinate Act 3 footnote"
     }
   }
 }
