@@ -1,5 +1,39 @@
 # Changelog
 
+## WEB-005A R3 preview gate — 2026-09-18 (MER-107, branch `feat/web-005a-hero-visual-fidelity`; no version bump, nothing shipped)
+
+Product reviewed `37152222` and returned it `REVISION_REQUIRED`
+(`docs/web-005-polish-authority@473b48a`): the camera moved before the scan, the platform sat under the
+hero copy on the real page, and the analytical reveal was a planar page overlay rather than DEM relief.
+The review requires a low-cost preview gate before any further long render. This is that gate; full
+evidence in `tasks/WEB-005A_R3_PREVIEW_GATE.md`. **No site file, shipped media or production scene
+changed.**
+
+- **New scene `hero_r3_preview_gate`** (role `hero_preview_gate`, extends the production scene) and
+  render profiles `preview_gate` / `preview_gate_animatic` (Cycles 1280 x 720 at 48 samples; about a
+  twentieth of a production frame).
+- **Fixed observer.** Shot-intent mode `hold_of` and `camera.fixed_through_frame`: the opening camera
+  state is the acquisition state, the builder refuses any channel that changes before frame 208 and
+  holds the rest CONSTANT. Measured 0.0 m / 0.0 deg / 0.0 mm over 208 frames.
+- **Pass re-solved for the real page.** The platform comes round the left limb and settles at
+  x = 0.555; its silhouette never comes left of 0.490 while acquiring (copy column ends at 0.473 at
+  1440 x 900). No CSS or copy change.
+- **Scan fan.** Four lines plus a veil on the faces they span and a light curtain of translucent slices,
+  swept west to east in step with the ground band (one keyed value). Fan, wash and lines retire by 208;
+  the camera first moves at 209.
+- **One persistent lock frame.** Drawn on the accepted 36 km fixture with `presented` / `sag_comp` /
+  `weight` / `drape` shape keys derived from the evaluated camera (`derive_presentation.py`): 7 % to
+  24 % of the frame with no swap, line weight 1.5-2.2 px throughout, 0.31 m from the true corners when
+  settled.
+- **DEM relief.** `aoi_relief` displaces a 600 x 600 grid from the governed `top-dem.tif` only (3x), and
+  the prepared Terrain / THM-01 / ALT-01 / priority display textures cross-fade on that one UV, ending
+  on priority alone. `materialize_analytical_assets.py` ingests the pinned handoff by copy and SHA-256.
+- **Gates.** `audit_preview_gate.py` 36/36 over 420 evaluated frames; hero validator 343 checks
+  (34 new), and it fails if the production scene picks up the relief while this gate is open; site
+  validator PASS, 0 warnings.
+- **Inheritance.** Scene objects may now declare `replace` (re-author wholesale, position kept) and
+  `omit`. `render_animatic.py` plays a stepped animatic in real time.
+
 ## v1.0.0-rc3-web-005a-hero-visual-revision — 2026-09-18 (WEB-005A R3, MER-107, branch `feat/web-005a-hero-visual-fidelity`)
 
 The R2 package was technically green and did not pass the human visual gate. R3 keeps its satellite

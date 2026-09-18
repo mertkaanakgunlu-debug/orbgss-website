@@ -67,10 +67,19 @@ def _merge_by_id(base_list, child_list):
     for item in child_list:
         item_id = item.get("id")
         if item_id and item_id in index_of:
-            merged[index_of[item_id]] = _merge_spec(merged[index_of[item_id]], item)
+            if item.get("replace"):
+                # A child that re-authors an object wholesale says so, instead of inheriting
+                # keys it would then have to null out one by one. List position is kept, so
+                # anything resolved by order (the first aoi_system is the camera's AOI) holds.
+                replaced = copy.deepcopy(item)
+                replaced.pop("replace", None)
+                merged[index_of[item_id]] = replaced
+            else:
+                merged[index_of[item_id]] = _merge_spec(merged[index_of[item_id]], item)
         else:
             merged.append(copy.deepcopy(item))
-    return merged
+    # "omit": true drops an inherited object from the derived scene without editing the base.
+    return [item for item in merged if not item.get("omit")]
 
 
 def _merge_spec(base, child):

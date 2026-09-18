@@ -34,6 +34,7 @@ import bpy  # noqa: E402  (Blender-only import, after sys.path bootstrap)
 from mathutils import Matrix, Vector  # noqa: E402
 
 import aoi_system as ax  # noqa: E402
+import analysis_reveal as ar  # noqa: E402
 import hero_common as hc  # noqa: E402
 import orbit_plan as op  # noqa: E402
 import satellite_model as sm  # noqa: E402
@@ -1106,7 +1107,28 @@ def _build_material(name: str, spec: dict, scene_config: dict, sun_direction=(0.
         return _build_aoi_glow_ribbon_material(name, spec, scene_config)
     if kind == "aoi_lock_draw":
         return _build_aoi_lock_draw_material(name, spec, scene_config)
+    # WEB-005A R3 preview gate: the scan curtain and the DEM-relief display layers.
+    if kind == "aoi_scan_curtain":
+        return ar.build_scan_curtain_material(name, spec, scene_config, _ar_helpers())
+    if kind == "aoi_relief_layers":
+        return ar.build_relief_layers_material(name, spec, scene_config, _ar_helpers())
     raise ValueError("unsupported material type " + repr(kind) + " for " + name)
+
+
+def _ar_helpers():
+    """The builder helpers ``analysis_reveal`` shares, handed over rather than imported back."""
+    from types import SimpleNamespace
+
+    return SimpleNamespace(
+        rgba=_rgba,
+        set_input=_set_input,
+        set_blend_method=_set_blend_method,
+        keyframe_socket=_keyframe_socket,
+        load_image=_load_image,
+        mesh_object=_mesh_object,
+        animate_presence=_animate_presence,
+        node_named=_node_named,
+    )
 
 
 def _primary_light_direction(spec: dict):
@@ -1312,6 +1334,21 @@ def _ribbon_on_sphere(name, units, radius_bu, width_km, earth_radius_km, closed,
     flat strip stretched over it. Used for the footprint border and the corner
     locks alike.
     """
+    verts, uvs = _ribbon_vertices(units, radius_bu, width_km, earth_radius_km, closed)
+    count = len(units)
+    faces = []
+    last = count if closed else count - 1
+    for index in range(last):
+        a = 2 * index
+        b = 2 * index + 1
+        c = 2 * ((index + 1) % count)
+        d = 2 * ((index + 1) % count) + 1
+        faces.append((a, b, d, c))
+    return _mesh_object(name, verts, faces, material, uvs=uvs, outward_of=_radially_outward)
+
+
+def _ribbon_vertices(units, radius_bu, width_km, earth_radius_km, closed):
+    """Rail vertices and UVs of a ribbon; shared by the mesh and by its presentation shape key."""
     half_angle = (float(width_km) / float(earth_radius_km)) / 2.0
     count = len(units)
     verts = []
@@ -1344,16 +1381,7 @@ def _ribbon_on_sphere(name, units, radius_bu, width_km, earth_radius_km, closed,
         along_u = index / float(max(1, count - 1))
         uvs.append((along_u, 0.0))
         uvs.append((along_u, 1.0))
-
-    faces = []
-    last = count if closed else count - 1
-    for index in range(last):
-        a = 2 * index
-        b = 2 * index + 1
-        c = 2 * ((index + 1) % count)
-        d = 2 * ((index + 1) % count) + 1
-        faces.append((a, b, d, c))
-    return _mesh_object(name, verts, faces, material, uvs=uvs, outward_of=_radially_outward)
+    return verts, uvs
 
 
 def _fill_on_sphere(name, rows, radius_bu, material):
@@ -1897,10 +1925,39 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
     fixture_id = context.get("aoi_fixture") or spec.get("fixture")
 
     description = ax.describe(scene_config, fixture_id, scene_spec)
+    context["aoi_description"] = description
+
+    # WEB-005A R3 persistent lock frame. ``description`` stays the authoritative footprint. With a
+    # presentation block, the ribbons are built at that footprint in their settled dimensions and
+    # carry a shape key at the acquisition presentation; ``presented`` is the same fixture
+    # re-described at that scale (same centre, bearing and corner order), which is also where the
+    # scan fill, the fan and the sensing-line anchors live while the observer is fixed.
+    presentation = (spec.get("presentation") or {}).get("derived")
+    if spec.get("presentation") and not presentation:
+        raise KeyError(
+            "AOI " + spec["id"] + " declares a presentation intent with no derived block; run "
+            "hero/scripts/shot_plan.py --derive-presentation"
+        )
+    presented = description
+    if presentation:
+        settled = {k: v for k, v in presentation["settled"].items() if k != "span_km"}
+        description = ax.describe(scene_config, fixture_id, scene_spec, settled)
+        presented = ax.describe(scene_config, fixture_id, scene_spec, presentation["acquisition"])
+        context["aoi_presented_description"] = presented
     fixture = description["fixture"]
     radius_bu = description["surface_radius_bu"]
     earth_radius_km = description["earth_radius_km"]
-    context["aoi_description"] = description
+    frame_objects = context.setdefault("aoi_frame_objects", {}).setdefault(spec["id"], [])
+
+    def morphing(obj, true_units, units, ribbon_radius, settled_km, acquisition_km, closed):
+        """Register a frame ribbon; give it its presentation and weight keys when the frame morphs."""
+        if presentation:
+            moved, _ = _ribbon_vertices(units, ribbon_radius, settled_km, earth_radius_km, closed)
+            heavy, _ = _ribbon_vertices(units, ribbon_radius, acquisition_km, earth_radius_km, closed)
+            ar.add_morph_keys(obj, moved, heavy)
+            ar.key_morph(obj, presentation["morph_keyframes"], presentation.get("weight_keyframes", ()))
+            frame_objects.append(obj)
+        return obj
 
     root = bpy.data.objects.new(spec["id"], None)
     root.empty_display_size = 0.08
@@ -1926,22 +1983,26 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
     fill_material = materials.get(spec.get("fill_material"))
     attach(
         _fill_on_sphere(
-            spec["id"] + "_fill", description["fill_rows"], radius_bu, fill_material
+            spec["id"] + "_fill", presented["fill_rows"], radius_bu, fill_material
         )
     )
 
     # --- border ------------------------------------------------------------
     border_material = materials.get(spec.get("border_material"))
-    attach(
-        _ribbon_on_sphere(
-            spec["id"] + "_border",
-            description["boundary_units"],
-            radius_bu,
-            fixture["border_width_km"],
-            earth_radius_km,
-            True,
-            border_material,
-        )
+    morphing(
+        attach(
+            _ribbon_on_sphere(
+                spec["id"] + "_border",
+                description["boundary_units"],
+                radius_bu,
+                fixture["border_width_km"],
+                earth_radius_km,
+                True,
+                border_material,
+            )
+        ),
+        description["boundary_units"], presented["boundary_units"], radius_bu,
+        fixture["border_width_km"], presented["fixture"]["border_width_km"], True,
     )
 
     # --- border glow (WEB-005A R2) ----------------------------------------
@@ -1953,16 +2014,21 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
         glow_radius = ax.surface_radius_bu(
             fixture, earth_radius_km, extra_offset_m=float(glow_cfg.get("offset_m", -60.0))
         )
-        attach(
-            _ribbon_on_sphere(
-                spec["id"] + "_border_glow",
-                description["boundary_units"],
-                glow_radius,
-                float(glow_cfg.get("width_km", 12.0)),
-                earth_radius_km,
-                True,
-                glow_material,
-            )
+        morphing(
+            attach(
+                _ribbon_on_sphere(
+                    spec["id"] + "_border_glow",
+                    description["boundary_units"],
+                    glow_radius,
+                    float(glow_cfg.get("width_km", 12.0)),
+                    earth_radius_km,
+                    True,
+                    glow_material,
+                )
+            ),
+            description["boundary_units"], presented["boundary_units"], glow_radius,
+            float(glow_cfg.get("width_km", 12.0)),
+            float((presentation or {}).get("acquisition", {}).get("glow_width_km", 0.0)), True,
         )
 
     # --- corner locks ------------------------------------------------------
@@ -1970,32 +2036,50 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
     lock_radius = ax.surface_radius_bu(
         fixture, earth_radius_km, extra_offset_m=fixture["corner_lock_offset_m"]
     )
-    for lock in description["corner_locks"]:
-        attach(
-            _ribbon_on_sphere(
-                spec["id"] + "_lock_" + lock["corner_id"],
-                [lock["arms"][0], lock["apex"], lock["arms"][1]],
-                lock_radius,
-                fixture["corner_lock_width_km"],
-                earth_radius_km,
-                False,
-                lock_material,
-            )
+    for lock, shown in zip(description["corner_locks"], presented["corner_locks"]):
+        morphing(
+            attach(
+                _ribbon_on_sphere(
+                    spec["id"] + "_lock_" + lock["corner_id"],
+                    [lock["arms"][0], lock["apex"], lock["arms"][1]],
+                    lock_radius,
+                    fixture["corner_lock_width_km"],
+                    earth_radius_km,
+                    False,
+                    lock_material,
+                )
+            ),
+            [lock["arms"][0], lock["apex"], lock["arms"][1]],
+            [shown["arms"][0], shown["apex"], shown["arms"][1]], lock_radius,
+            fixture["corner_lock_width_km"], presented["fixture"]["corner_lock_width_km"], False,
         )
 
     # --- per-corner beam targets -------------------------------------------
     # Real empties rather than baked coordinates: the beams aim at these, the
     # empties ride the Earth, so a beam endpoint is by construction the AOI
     # corner at every frame instead of a constant that happens to match on one.
+    # WEB-005A R3: while the observer is fixed the lines lock the corners of the *presented* frame
+    # (``beams.anchor: presented``) -- the true footprint is a few pixels across at that range and
+    # four lines onto it read as one. Those corners lie on the footprint's own diagonals, the lines
+    # retire before the frame starts to tighten, and the true corners are always built as
+    # ``_true_<corner>`` empties, so the audit can measure both against each other.
+    anchor_description = presented if spec.get("beams", {}).get("anchor") == "presented" else description
     targets = []
     for index, corner_id in enumerate(description["corner_order"]):
         target = bpy.data.objects.new(spec["id"] + "_target_" + corner_id, None)
         target.empty_display_type = "PLAIN_AXES"
         target.empty_display_size = 0.04
         bpy.context.collection.objects.link(target)
-        target.location = tuple(description["corner_positions_bu"][index])
+        target.location = tuple(anchor_description["corner_positions_bu"][index])
         attach(target)
         targets.append((corner_id, target))
+        if presentation:
+            true_corner = bpy.data.objects.new(spec["id"] + "_true_" + corner_id, None)
+            true_corner.empty_display_type = "PLAIN_AXES"
+            true_corner.empty_display_size = 0.02
+            bpy.context.collection.objects.link(true_corner)
+            true_corner.location = tuple(description["corner_positions_bu"][index])
+            attach(true_corner)
 
     center_target = bpy.data.objects.new(spec["id"] + "_target_center", None)
     center_target.empty_display_type = "PLAIN_AXES"
@@ -2165,22 +2249,34 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
             interpolation="BEZIER",
         )
 
+    # --- scan fan (WEB-005A R3) ---------------------------------------------
+    fan_cfg = spec.get("scan_fan")
+    if fan_cfg:
+        for fan_object in ar.build_scan_fan(spec, fan_cfg, root, presented, materials, context, _ar_helpers()):
+            beams.append(fan_object)
+
     # --- scan sweep --------------------------------------------------------
+    # The ground band and the light curtain read the same keys, so they cross the footprint
+    # together by construction rather than by matching two timings.
     sweep_cfg = spec.get("sweep", {})
-    sweep_node = _node_named(fill_material, "aoi_sweep_position")
-    if sweep_node is not None and "start_frame" in sweep_cfg:
+    sweep_materials = [fill_material, materials.get((fan_cfg or {}).get("curtain_material"))]
+    if "start_frame" in sweep_cfg:
         band = float(
             scene_materials.get(spec.get("fill_material"), {}).get("band_width", 0.13)
         )
-        _keyframe_socket(
-            fill_material.node_tree,
-            sweep_node.outputs[0],
-            [
-                (int(sweep_cfg["start_frame"]), -band),
-                (int(sweep_cfg["end_frame"]), 1.0 + band),
-            ],
-            interpolation="LINEAR",
-        )
+        for sweep_material in sweep_materials:
+            sweep_node = _node_named(sweep_material, "aoi_sweep_position")
+            if sweep_node is None:
+                continue
+            _keyframe_socket(
+                sweep_material.node_tree,
+                sweep_node.outputs[0],
+                [
+                    (int(sweep_cfg["start_frame"]), -band),
+                    (int(sweep_cfg["end_frame"]), 1.0 + band),
+                ],
+                interpolation="LINEAR",
+            )
 
     print(
         "[hero] AOI fixture " + repr(description["fixture_id"])
@@ -2214,6 +2310,11 @@ def _add_object(spec: dict, materials: dict, context: dict | None = None):
                 "object type 'aoi_system' needs the build context; call _add_object from build()"
             )
         return _build_aoi_system(spec, materials, context)
+
+    if kind == "aoi_relief":
+        if context is None:
+            raise ValueError("object type 'aoi_relief' needs the build context")
+        return ar.build_aoi_relief(spec, materials, context, _ar_helpers())
 
     location = tuple(spec.get("location", (0.0, 0.0, 0.0)))
 
@@ -2477,6 +2578,40 @@ def _apply_camera_track(camera_object, track_spec):
     return constraint
 
 
+def _lock_off_camera(camera_object, camera_data, fixed_through_frame) -> None:
+    """WEB-005A R3 fixed observer (A-HERO-15): hold every camera channel constant up to a frame.
+
+    A locked-off camera is not "two equal keys and a smooth curve between them" -- that leaves the
+    result to the handle solver. Every key before ``fixed_through_frame`` must equal the key on it,
+    which is checked here rather than assumed, and the segments between them are made CONSTANT, so
+    location, rotation, focal length and lens shift cannot move by construction. The key on the
+    frame itself keeps its smoothed handles: the approach eases out of a standstill.
+    """
+    if fixed_through_frame is None:
+        return
+    limit = int(fixed_through_frame)
+    for datablock in (camera_object, camera_data):
+        animation = getattr(datablock, "animation_data", None)
+        action = getattr(animation, "action", None) if animation else None
+        if not action:
+            continue
+        for fcurve in _action_fcurves(action):
+            if "constraints" in fcurve.data_path:
+                continue
+            held = [p for p in fcurve.keyframe_points if p.co.x <= limit]
+            if not held:
+                continue
+            reference = held[-1].co.y
+            for point in held:
+                if abs(point.co.y - reference) > 1.0e-6:
+                    raise ValueError(
+                        "camera channel " + fcurve.data_path + "[" + str(fcurve.array_index)
+                        + "] changes before fixed_through_frame " + str(limit)
+                    )
+                if point.co.x < limit:
+                    point.interpolation = "CONSTANT"
+
+
 def _add_camera(spec: dict, scene_config: dict):
     defaults = scene_config.get("camera_defaults", {})
     camera_data = bpy.data.cameras.new(name="hero_camera")
@@ -2519,6 +2654,7 @@ def _add_camera(spec: dict, scene_config: dict):
             camera_data.keyframe_insert(data_path="shift_x", frame=frame)
             camera_data.keyframe_insert(data_path="shift_y", frame=frame)
         _smooth_data_fcurves(camera_data)
+        _lock_off_camera(camera_object, camera_data, spec.get("fixed_through_frame"))
     else:
         camera_object.location = tuple(spec.get("location", (0.0, -10.0, 2.0)))
         camera_object.rotation_euler = _look_at_euler(
@@ -2726,6 +2862,10 @@ def build(scene_id: str, scene_config=None, frame: int | None = None, aoi_fixtur
         )
 
     _apply_post_processing(spec.get("post_processing"))
+
+    overrides = spec.get("render_overrides") or {}
+    if "transparent_max_bounces" in overrides:
+        bpy.context.scene.cycles.transparent_max_bounces = int(overrides["transparent_max_bounces"])
 
     target_frame = frame if frame is not None else int(spec.get("frame", 1))
     bpy.context.scene.frame_set(target_frame)

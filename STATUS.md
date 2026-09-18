@@ -1,8 +1,8 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v1.0.0-rc3-web-005a-hero-visual-revision` — WEB-005A R3 REVIEW_READY (release candidate)
+**Canonical version:** `v1.0.0-rc3-web-005a-hero-visual-revision` — WEB-005A R3 `REVISION_REQUIRED`; preview gate submitted (release candidate unchanged)
 **Date:** 2026-09-18
-**Stage:** WEB-005A / MER-107 (hero visual revision, Product R2 visual lock as re-reviewed) is `REVIEW_READY` at **R3** on `feat/web-005a-hero-visual-fidelity`, awaiting the human visual gate and Product terminal exact-head acceptance. The R2 package (`a6897828d6e35595ea5a9a39a1e812b0fcbbfb35`) was technically green and did **not** pass the human visual gate; like the `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` checkpoint before it, it is retained as before-evidence and is not accepted. R3 re-choreographs the same hero: a satellite that comes round the limb and settles for the whole acquisition beat, sensing lines that release while it is still in frame, one continuous dive onto the accepted 36 km analysis AOI with its own lock event, 30 m ground structure under the hold, and a page-layer evidence sequence (terrain → THM-01 → ALT-01 → priority) registered inside the analysis frame. Evidence: `tasks/WEB-005A_HERO_FIDELITY_EVIDENCE.md`. **Not merged to `main`. Nothing deployed. No DNS touched. WEB-005B and WEB-006 have not begun.**
+**Stage:** WEB-005A / MER-107 is in **`REVISION_REQUIRED`** after Product/CTO human visual review of `37152222` (`docs/web-005-polish-authority@473b48a00bfe85d3dbe1cfe7219105c2b5ec7574:tasks/WEB-005A_R3_REVIEW_37152222.md`): the camera moved before the scan completed (A-HERO-15), the platform sat under the hero copy on the real 1440 × 900 page, and the analytical reveal was a planar page overlay rather than DEM relief (A-HERO-18/19). The review requires a low-cost **preview gate** before any further long production render. That gate is now **submitted**: `tasks/WEB-005A_R3_PREVIEW_GATE.md` (scene `hero_r3_preview_gate`, evidence `hero/evidence/web005a_r3_preview/`). It changes no site file, no shipped media and not the production scene; WEB-005A returns to `REVIEW_READY` only after the gate is passed, the conforming production output is rendered and the integrated homepage is re-submitted. *The remainder of this paragraph describes the reviewed R3 checkpoint, which is what the branch still ships:* WEB-005A (hero visual revision, Product R2 visual lock as re-reviewed) was published `REVIEW_READY` at **R3** on `feat/web-005a-hero-visual-fidelity`. The R2 package (`a6897828d6e35595ea5a9a39a1e812b0fcbbfb35`) was technically green and did **not** pass the human visual gate; like the `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` checkpoint before it, it is retained as before-evidence and is not accepted. R3 re-choreographs the same hero: a satellite that comes round the limb and settles for the whole acquisition beat, sensing lines that release while it is still in frame, one continuous dive onto the accepted 36 km analysis AOI with its own lock event, 30 m ground structure under the hold, and a page-layer evidence sequence (terrain → THM-01 → ALT-01 → priority) registered inside the analysis frame. Evidence: `tasks/WEB-005A_HERO_FIDELITY_EVIDENCE.md`. **Not merged to `main`. Nothing deployed. No DNS touched. WEB-005B and WEB-006 have not begun.**
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`
 **Canonical repository:** https://github.com/mertkaanakgunlu-debug/orbgss-website
@@ -13,7 +13,8 @@
 **Accepted WEB-005 terminal acceptance:** `main@00af0f232a8d7d77f5ca61d758461ff7316ba151` (`tasks/WEB-005_TERMINAL_PRODUCT_ACCEPTANCE.md`)
 **WEB-005A rejected checkpoint (before-evidence):** `ffa2f2944ca5992afb9e9891b42745a9bd1105ad`
 **WEB-005A R2 package (superseded, did not pass the human visual gate):** `a6897828d6e35595ea5a9a39a1e812b0fcbbfb35` (implementation `b285c90cf685f6ca9da61c41302ae496d7e8169b`)
-**WEB-005A R3 implementation HEAD (REVIEW_READY):** `37152222c33fdc09265ba022ce45828c8d002723`
+**WEB-005A R3 implementation HEAD (reviewed, `REVISION_REQUIRED`):** `37152222c33fdc09265ba022ce45828c8d002723`
+**WEB-005A R3 preview gate:** `tasks/WEB-005A_R3_PREVIEW_GATE.md` — `PREVIEW_GATE_SUBMITTED`, awaiting Product/CTO
 **Reference/upstream only:** https://github.com/baran-orbgss/website
 **Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)
 **Registrar / DNS:** Squarespace
@@ -23,7 +24,7 @@
 **Product authority:** OrbGSS Website vNext Product & Execution Authority v1.8 (`docs/WEB_VNEXT_AUTHORITY.md`); `docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md` (R2 visual lock) where newer.
 **Accepted WEB-HERO-001D evidence HEAD:** `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e` (terminal Product acceptance published at `573f4f1`)
 **WEB-005 execution baseline:** `main@d2421a772f2e4cfa38c85dd5ee71a419c5160838`
-**Tracking:** MER-90 (WEB-002 accepted); MER-91 (WEB-003 accepted); MER-92 (WEB-004 accepted); MER-102 / GEO-WEB-002 (Science-accepted); MER-101 / WEB-HERO-001D (terminally accepted); MER-93 / WEB-005 (terminally accepted); **MER-107 / WEB-005A (REVIEW_READY, R3)**; MER-96 / GEO-WEB-001 resolved
+**Tracking:** MER-90 (WEB-002 accepted); MER-91 (WEB-003 accepted); MER-92 (WEB-004 accepted); MER-102 / GEO-WEB-002 (Science-accepted); MER-101 / WEB-HERO-001D (terminally accepted); MER-93 / WEB-005 (terminally accepted); **MER-107 / WEB-005A (REVISION_REQUIRED after R3 review; preview gate submitted)**; MER-96 / GEO-WEB-001 resolved
 
 ## Authority
 
@@ -31,7 +32,7 @@
 
 `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` locks the final four-act homepage story for WEB-005 and supersedes the repeated full-width proof-scene rhythm where they conflict; it does not supersede accepted Science semantics, WEB-002 provenance constraints, WEB-004 performance/accessibility decisions or the accepted route architecture. GEO-WEB-002 / MER-102 is the Science & Geospatial publication dependency it named. It is terminally accepted under `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md` at implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`. Product may bind the package into WEB-005 while preserving its exact labels, warnings, provenance and maximum-safe-render constraints.
 
-## Current state (WEB-005A R3, REVIEW_READY)
+## Current state (WEB-005A R3 as reviewed — `REVISION_REQUIRED`; this is what the branch still ships)
 
 WEB-005A revises only the hero's rendered media, the hero production configuration that generates it,
 the page-layer handoff, and one footer attribution sentence. The four-act homepage and every accepted

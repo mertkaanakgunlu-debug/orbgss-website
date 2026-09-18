@@ -525,10 +525,12 @@ def check_aoi_scene_wiring(report: Report, scene_config, descriptions) -> None:
 # Keys whose lists are animation ramps -- [[frame, factor], ...] -- rather than geometry. They are
 # exempt from the coordinate scan below but not unchecked: _ramp_offenders proves their shape, so
 # the exemption cannot be used to smuggle a hand-typed position through a timing field.
-AOI_RAMP_KEYS = ("emphasis", "settle")
+# WEB-005A R3 adds "morph_keyframes": [frame, m] with m in 0..1 -- how far the persistent lock frame
+# is from the true footprint. A presentation parameter of the fixture, never a position.
+AOI_RAMP_KEYS = ("emphasis", "settle", "morph_keyframes", "weight_keyframes")
 # Frame ranges -- [start, end] -- that a WEB-005A R3 frame may carry: the regional frame vanishes
 # under the dive. Two integers, ordered; still never a position.
-AOI_RANGE_KEYS = ("vanish",)
+AOI_RANGE_KEYS = ("vanish", "morph_frames")
 
 
 def _ramp_offenders(spec, path="aoi"):
@@ -1446,6 +1448,194 @@ def _check_r3_contract(report, scene_config, spec, label, manifest, assets, aoi_
         )
 
 
+def check_r3_preview_gate(report: Report, scene_config) -> None:
+    """WEB-005A R3 preview gate: what configuration can prove about the fixed-camera revision.
+
+    Authority: docs/web-005-polish-authority@473b48a (review disposition) over 946cd8b and db4605a.
+    ``audit_preview_gate.py`` measures the evaluated scene; this proves the contract those
+    measurements rest on, without Blender -- the observer is locked off by construction, nothing
+    that belongs to the scan survives into the camera move, the lock frame only ever tightens, and
+    the relief is built from the governed DEM on the accepted analysis footprint and ends on the
+    priority layer alone. It also keeps the gate a gate: until Product passes it, the shipped
+    production scene may not pick up the relief, so the html_overlay rule on shipped media holds.
+    """
+    report.section("WEB-005A R3 preview gate")
+    scenes = (scene_config or {}).get("scenes", {})
+    gates = sorted(sid for sid, spec in scenes.items() if spec.get("role") == "hero_preview_gate")
+    report.check(bool(gates), "a preview-gate scene exists")
+
+    for scene_id, spec in scenes.items():
+        if spec.get("role") != "hero_production":
+            continue
+        resolved = hc.resolve_scene_spec(scene_id, scenes)
+        report.check(
+            not any(o.get("type") == "aoi_relief" for o in resolved.get("objects", [])),
+            "scene " + scene_id + " ships no relief layer while the preview gate is open",
+        )
+
+    interface = (scene_config or {}).get("aoi_injection_interface", {})
+    for scene_id in gates:
+        spec = hc.resolve_scene_spec(scene_id, scenes)
+        label = "scene " + scene_id + " "
+        camera = spec.get("camera", {})
+        objects = {o.get("id"): o for o in spec.get("objects", [])}
+        fixed = camera.get("fixed_through_frame")
+        report.check(isinstance(fixed, int) and fixed > 1, label + "declares the frame the observer is fixed through",
+                     repr(fixed))
+        if not isinstance(fixed, int):
+            continue
+
+        # --- A-HERO-15: locked off by construction --------------------------------------------
+        keys = sorted(camera.get("keyframes", []), key=lambda k: int(k["frame"]))
+        try:
+            derived = shot_plan.derive(scene_config, scene_id)
+            drift = 0.0 if len(derived) == len(keys) else float("inf")
+            for a, b in zip(keys, derived):
+                if int(a["frame"]) != int(b["frame"]):
+                    drift = float("inf")
+                    break
+                for field in ("location", "look_at"):
+                    drift = max([drift] + [abs(float(x) - float(y)) for x, y in zip(a[field], b[field])])
+                drift = max(drift, abs(float(a["focal_length_mm"]) - float(b["focal_length_mm"])))
+            report.check(drift <= 1.0e-3, label + "committed camera keyframes match their shot intent",
+                         "worst drift " + str(drift))
+        except (KeyError, ValueError, SystemExit) as error:
+            report.check(False, label + "camera derives from its shot intent", str(error))
+        held = [k for k in keys if int(k["frame"]) <= fixed]
+        states = {json.dumps([k["location"], k["look_at"], k["focal_length_mm"]]) for k in held}
+        report.check(
+            len(held) >= 2 and int(held[0]["frame"]) == int(spec["animation"]["frame_start"])
+            and int(held[-1]["frame"]) == fixed and len(states) == 1,
+            label + "every camera key from the first frame through " + str(fixed) + " is one identical state",
+            str(len(states)) + " distinct states over " + str(len(held)) + " keys",
+        )
+        shifts = [k for k in camera.get("shift_keyframes", []) if int(k["frame"]) <= fixed]
+        report.check(
+            len({(k.get("shift_x"), k.get("shift_y")) for k in shifts}) == 1
+            and any(int(k["frame"]) == fixed for k in shifts),
+            label + "lens shift is constant while the observer is fixed",
+        )
+        influence = [k for k in camera.get("track", {}).get("influence_keyframes", []) if int(k["frame"]) <= fixed]
+        report.check(
+            bool(influence) and all(float(k["value"]) == 0.0 for k in influence)
+            and any(int(k["frame"]) == fixed for k in influence),
+            label + "the AOI track constraint is off while the observer is fixed",
+        )
+
+        # --- nothing of the scan survives into the move -----------------------------------------
+        aoi_spec = objects.get("aoi", {})
+        beams, fan, sweep = aoi_spec.get("beams", {}), aoi_spec.get("scan_fan", {}), aoi_spec.get("sweep", {})
+        fill_vanish = (aoi_spec.get("fill", {}).get("vanish") or [None, None])[1]
+        report.check(beams.get("target") == "corners" and not beams.get("cone"),
+                     label + "draws four corner lines and no centre cone", repr(beams.get("target")))
+        report.check(
+            all(isinstance(v, int) and v <= fixed for v in
+                (beams.get("release_end_frame"), fan.get("retire_end_frame"), fill_vanish, sweep.get("end_frame"))),
+            label + "lines, fan, ground wash and sweep have all ended by frame " + str(fixed),
+            repr([beams.get("release_end_frame"), fan.get("retire_end_frame"), fill_vanish, sweep.get("end_frame")]),
+        )
+        report.check(
+            isinstance(sweep.get("start_frame"), int) and isinstance(fan.get("appear_end_frame"), int)
+            and beams.get("appear_end_frame", 0) <= fan.get("appear_start_frame", -1)
+            and fan["appear_end_frame"] <= sweep["start_frame"] + 4
+            and sweep["end_frame"] <= fan.get("retire_start_frame", -1) <= beams.get("release_start_frame", -1),
+            label + "orders the beat: lines lock, fan rises, sweep crosses, fan retires, lines release",
+        )
+        materials = spec.get("materials", {})
+        report.check(materials.get(aoi_spec.get("fill_material"), {}).get("axis") == "u",
+                     label + "sweeps along AOI u (west to east, left to right under this camera)")
+        veil = materials.get(fan.get("veil_material"), {})
+        curtain = materials.get(fan.get("curtain_material"), {})
+        report.check(
+            0.0 < float(veil.get("tip_alpha", 0.0)) <= 0.08 and 0.0 < float(curtain.get("band_alpha", 0.0)) <= 0.45
+            and float(curtain.get("tail_alpha", 1.0)) <= 0.05,
+            label + "keeps the fan secondary: a faint veil and a translucent curtain, never a slab",
+            "veil " + repr(veil.get("tip_alpha")) + ", band " + repr(curtain.get("band_alpha")),
+        )
+
+        # --- one lock frame that only tightens ------------------------------------------------------
+        presentation = aoi_spec.get("presentation", {})
+        derived = presentation.get("derived", {})
+        morph = derived.get("morph_keyframes", [])
+        window = presentation.get("screen_intent", {}).get("morph_frames", [0, 0])
+        fixture = interface.get("fixtures", {}).get(aoi_spec.get("fixture"), {})
+        report.check(fixture.get("is_analysis_aoi") is True,
+                     label + "lock frame is drawn from the accepted analysis fixture", repr(aoi_spec.get("fixture")))
+        report.check(
+            bool(morph) and morph[0] == [window[0], 1.0] and morph[-1] == [window[1], 0.0]
+            and window[0] >= fixed and all(b[1] <= a[1] and b[0] > a[0] for a, b in zip(morph, morph[1:])),
+            label + "lock frame holds its presentation while fixed, then tightens monotonically onto the footprint",
+        )
+        weight = derived.get("weight_keyframes", [])
+        report.check(
+            bool(weight) and weight[0] == [window[0], 1.0] and weight[-1] == [window[1], 0.0]
+            and all(b[1] <= a[1] and b[0] > a[0] for a, b in zip(weight, weight[1:])),
+            label + "lock-frame line weight is its own ramp over the same window",
+        )
+        report.check(
+            abs(float(derived.get("settled", {}).get("span_km", 0.0)) - float(fixture.get("span_km", -1.0))) < 1e-9,
+            label + "settled lock frame is the fixture's own span", repr(derived.get("settled", {}).get("span_km")),
+        )
+        report.check(derived.get("ground_scale_source") == "evaluated_camera",
+                     label + "morph was derived from the evaluated camera", repr(derived.get("ground_scale_source")))
+
+        # --- satellite pass still derived ------------------------------------------------------------
+        satellite = objects.get("satellite", {})
+        try:
+            planned = orbit_plan.derive(scene_config, scene_id)
+            committed = sorted(satellite.get("location_keyframes", []), key=lambda k: int(k["frame"]))
+            drift = 0.0 if len(planned) == len(committed) else float("inf")
+            for a, b in zip(committed, planned):
+                drift = max([drift] + [abs(float(x) - float(y)) for x, y in zip(a["location"], b["location"])])
+            report.check(drift <= 1.0e-3, label + "committed satellite keyframes match their orbit derivation",
+                         "worst drift " + str(drift))
+        except (KeyError, ValueError, SystemExit) as error:
+            report.check(False, label + "satellite pass derives from its orbit intent", str(error))
+
+        # --- A-HERO-18 / 19: relief contract -----------------------------------------------------------
+        relief = next((o for o in spec.get("objects", []) if o.get("type") == "aoi_relief"), None)
+        report.check(relief is not None, label + "builds the AOI relief")
+        if relief is None:
+            continue
+        report.check(relief.get("fixture") == aoi_spec.get("fixture") and relief.get("aoi_id") == "aoi",
+                     label + "relief and lock frame share one fixture mapping")
+        report.check(2.0 <= float(relief.get("vertical_exaggeration", 0.0)) <= 4.0,
+                     label + "vertical exaggeration is inside the authorized 2-4x presentation band",
+                     repr(relief.get("vertical_exaggeration")))
+        ingest_path = hc.EVIDENCE_DIR / "web005a_r3_preview" / "analytical_asset_ingest.json"
+        ingest = hc.load_json(ingest_path) if ingest_path.is_file() else {}
+        recorded = {entry["materialized"]: entry for entry in ingest.get("files", [])}
+        report.check(not ingest.get("problems") and bool(recorded),
+                     label + "analytical asset ingest is recorded with no open problem", hc.relpath(ingest_path))
+        report.check(recorded.get(relief.get("dem"), {}).get("use") == "relief_geometry_source",
+                     label + "relief geometry comes from the governed DEM, not from a display texture",
+                     repr(relief.get("dem")))
+        layers = materials.get(relief.get("material"), {})
+        order = layers.get("layer_order", [])
+        report.check(order == ["terrain", "thm01", "alt01", "priority"],
+                     label + "reveals Terrain, THM-01, ALT-01, priority in the locked order", repr(order))
+        for layer_id in order:
+            texture = layers.get("layers", {}).get(layer_id, {}).get("texture")
+            entry = recorded.get(texture, {})
+            report.check(entry.get("use") == "display_texture",
+                         label + "layer " + layer_id + " is a recorded display texture", repr(texture))
+            path = hc.SOURCE_DIR / str(texture)
+            if path.is_file() and entry.get("sha256"):
+                report.check(hc.sha256_file(path) == entry["sha256"],
+                             label + "materialized " + str(texture) + " matches its ingest checksum")
+        end = int(spec["animation"]["frame_end"])
+        ramps = relief.get("layer_keyframes", {})
+        final = {layer_id: (ramps.get(layer_id) or [[0, 0.0]])[-1] for layer_id in order}
+        report.check(
+            bool(order) and final.get("priority") == [end, 1.0]
+            and all(final[l][1] == 0.0 and final[l][0] < end for l in order if l != "priority"),
+            label + "ends on the priority layer alone (A-HERO-19)", repr(final),
+        )
+        rise = relief.get("rise_keyframes", [])
+        report.check(bool(rise) and rise[0][0] >= window[1],
+                     label + "relief rises only after the approach has settled", repr(rise[:1]))
+
+
 def check_manifest(report: Report, manifest) -> None:
     report.section("asset rights manifest")
     if not manifest:
@@ -1682,6 +1872,7 @@ def main() -> int:
     check_aoi_system(report, loaded.get("scene"))
     check_continuous_sequence(report, loaded.get("scene"))
     check_r2_visual_contract(report, loaded.get("scene"), loaded.get("manifest"))
+    check_r3_preview_gate(report, loaded.get("scene"))
     check_manifest(report, loaded.get("manifest"))
     check_generated_output_policy(report)
     check_lane_isolation(report, loaded.get("lane"))

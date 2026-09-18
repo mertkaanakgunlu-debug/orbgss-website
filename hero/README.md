@@ -58,6 +58,10 @@ hero/
     materialize_earth_detail.py  Blender: cut the 500 m regional detail window from a Blue Marble tile
     materialize_earth_sharpen.py Blender: derive the 30 m regional detail multiplier from Sentinel-2 L2A tiles (R3)
     encode_production_media.py   Blender: WebM / MP4 / poster inside the accepted media envelope
+    materialize_analytical_assets.py  plain Python: ingest the pinned DEM + display textures by copy and SHA-256 (R3 gate)
+    analysis_reveal.py    Blender: scan fan, persistent lock-frame morph, DEM relief and display-layer material (R3 gate)
+    derive_presentation.py Blender: lock-frame span / line-weight ramps from the evaluated camera (R3 gate)
+    audit_preview_gate.py Blender: per-frame proof of the R3 preview gate (fixed camera, anchors, morph, relief)
   assets/
     manifest.json         asset rights/provenance/checksum record
     source/               materialized source assets (ignored)
@@ -408,6 +412,49 @@ inside its window. The 500 m mean is preserved and no colour is introduced, so t
 season; `clear_clouds` scales the 5 km cloud composite down over the same window, where it would
 otherwise smear into a veil. The ratio is a presentation texture, recorded in the manifest with its
 Copernicus attribution, checksummed by the validator, and never delivered to the page.
+
+## WEB-005A R3 preview gate: fixed observer, scan fan, one lock frame, DEM relief
+
+Product returned the R3 checkpoint `REVISION_REQUIRED` and asked for a low-cost preview before any
+further long render (`tasks/WEB-005A_R3_PREVIEW_GATE.md`). `hero_r3_preview_gate` is that preview. It
+`extends` the production scene, re-authors its AOI object (`"replace": true`), drops the separate
+analysis frame (`"omit": true`) and leaves `hero_production_kizildere` and its shipped media alone.
+
+**The observer is fixed by construction.** `{"frame": 1, "mode": "hold_of", "of_frame": 208}` copies the
+derived acquisition state to the first frame, `camera.fixed_through_frame` makes the builder refuse any
+channel that changes before 208 and hold the rest CONSTANT, and the AOI track constraint stays at zero
+influence until then -- it would otherwise turn the camera with the Earth. The satellite pass is
+re-solved against that one camera so the platform settles right of the hero copy column.
+
+**The lock frame is sized in screen space; the footprint is not touched.** `presentation.screen_intent`
+states on-screen width, line weight, halo and corner-arm length in pixels. `derive_presentation.py`
+measures the evaluated camera's ground scale on every frame of the approach and writes
+`presentation.derived`: acquisition and settled ground dimensions plus two ramps. Each ribbon is built
+at the true footprint and carries shape keys -- `presented` (span), `sag_comp` (the chord's sagitta,
+weighted 4m(1-m), so a straight blend never cuts under the sphere), `weight` (line weight, its own ramp
+because ground scale falls hyperbolically under the dive) and `drape`. The sensing lines lock the
+presented corners (`beams.anchor: presented`), which lie on the true footprint's diagonals; the true
+corners are always built as `aoi_true_<corner>` so the audit can measure one against the other.
+
+**The scan fan is secondary by construction.** A veil on the four faces the lines span, and a light
+curtain: translucent slices from the platform to a north-south ground line, lit only near the sweep.
+Apex vertices sit at the local origin and are hooked to the satellite; ground vertices ride the Earth.
+Curtain and ground band read one keyed `aoi_sweep_position`. The validator caps their alphas.
+
+**Relief comes from the governed DEM and nothing else.** `aoi_relief` reads `kizildere_top_dem.tif` as
+float32 (values verified identical to rasterio), displaces a grid on the fixture's own corner
+interpolation, and gives the lock frame its `drape` key from the same samples. The four display
+textures are material on one UV. `materialize_analytical_assets.py` records what was ingested.
+
+```powershell
+py -3.14 hero/scripts/materialize_analytical_assets.py
+& $env:BLENDER -b -P hero/scripts/derive_presentation.py -- --scene hero_r3_preview_gate
+& $env:BLENDER -b -P hero/scripts/audit_preview_gate.py -- --scene hero_r3_preview_gate --out hero/evidence/web005a_r3_preview/preview_gate_audit.json
+& $env:BLENDER -b -P hero/scripts/render_animatic.py -- --scene hero_r3_preview_gate --profile preview_gate --frames 140,172,316,420 --out $PWD/hero/renders/preview_r3gate/stills
+```
+
+Measure distances at planetary radius in double precision: `mathutils.Vector.angle` is single precision
+through `acos` near 1 and cannot resolve a kilometre, let alone a metre.
 
 ## Geometry audit
 

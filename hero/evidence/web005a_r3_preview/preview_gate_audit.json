@@ -1,0 +1,1252 @@
+{
+  "scene": "hero_r3_preview_gate",
+  "authority": "docs/web-005-polish-authority@473b48a00bfe85d3dbe1cfe7219105c2b5ec7574:tasks/WEB-005A_R3_REVIEW_37152222.md",
+  "frames_measured": 420,
+  "fixed_through_frame": 208,
+  "anchor_scale_vs_true_footprint": [
+    15.1008,
+    15.1008,
+    15.101,
+    15.101
+  ],
+  "relief": {
+    "corner_registration_m": 0.216,
+    "lift_km": [
+      0.125,
+      5.042
+    ],
+    "uv_layers": 1,
+    "vertical_exaggeration": 3.0,
+    "geometry_source": "kizildere_top_dem.tif"
+  },
+  "governed_grid_residual_m": {
+    "nw": 54.4,
+    "ne": 49.8,
+    "se": 54.0,
+    "sw": 55.6
+  },
+  "checks": [
+    {
+      "ok": true,
+      "label": "A-HERO-15 camera translation, frames 1-208",
+      "measured": 0.0,
+      "threshold": 1.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-15 camera rotation",
+      "measured": 0.0,
+      "threshold": 0.0001,
+      "unit": "deg"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-15 focal length",
+      "measured": 0.0,
+      "threshold": 0.0001,
+      "unit": "mm"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-15 lens shift",
+      "measured": 0.0,
+      "threshold": 1e-06,
+      "unit": "sensor widths"
+    },
+    {
+      "ok": true,
+      "label": "first frame with any camera motion",
+      "measured": 209,
+      "threshold": 209,
+      "unit": "frame"
+    },
+    {
+      "ok": true,
+      "label": "sensing lines fully retired at frame 208",
+      "measured": 0.0,
+      "threshold": 0.0,
+      "unit": "presence"
+    },
+    {
+      "ok": true,
+      "label": "scan fan fully retired at frame 208",
+      "measured": 0.0,
+      "threshold": 0.0,
+      "unit": "presence"
+    },
+    {
+      "ok": true,
+      "label": "ground scan wash retired at frame 208",
+      "measured": 0.0,
+      "threshold": 0.0,
+      "unit": "presence"
+    },
+    {
+      "ok": true,
+      "label": "no line or fan is visible on any frame in which the camera moves",
+      "measured": 0.0,
+      "threshold": 0.0,
+      "unit": "presence"
+    },
+    {
+      "ok": true,
+      "label": "sweep travels west to east (AOI u, screen left to right) and never reverses",
+      "measured": [
+        -0.05,
+        1.05
+      ],
+      "threshold": "increasing",
+      "unit": "u"
+    },
+    {
+      "ok": true,
+      "label": "light curtain and ground band read one sweep value",
+      "measured": 0.0,
+      "threshold": 1e-06,
+      "unit": "u"
+    },
+    {
+      "ok": true,
+      "label": "whole sweep happens while the camera is fixed",
+      "measured": [
+        148,
+        194
+      ],
+      "threshold": [
+        106,
+        208
+      ],
+      "unit": "frames"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-16 exactly four primary sensing lines",
+      "measured": [
+        "aoi_beam_ne",
+        "aoi_beam_nw",
+        "aoi_beam_se",
+        "aoi_beam_sw"
+      ],
+      "threshold": 4,
+      "unit": "objects"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-16 every line ends on its corner anchor, every acquisition frame",
+      "measured": 0.715,
+      "threshold": 25.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "every line starts on the platform",
+      "measured": 0.0,
+      "threshold": 25.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "line anchors lie on the true footprint's own diagonals",
+      "measured": 0.0005,
+      "threshold": 0.05,
+      "unit": "deg"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-12 platform unclipped through the acquisition beat",
+      "measured": [],
+      "threshold": [],
+      "unit": "frames"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-13 platform silhouette stays right of the hero copy column (1440 x 900 page)",
+      "measured": 0.4898,
+      "threshold": 0.475,
+      "unit": "frame x"
+    },
+    {
+      "ok": true,
+      "label": "platform on-screen width while acquiring",
+      "measured": [
+        0.1244,
+        0.1269
+      ],
+      "threshold": [
+        0.08,
+        0.25
+      ],
+      "unit": "frame widths"
+    },
+    {
+      "ok": true,
+      "label": "platform holds its place while acquiring",
+      "measured": 0.0256,
+      "threshold": 0.04,
+      "unit": "frame widths"
+    },
+    {
+      "ok": true,
+      "label": "platform is hidden at the open and comes round the left limb",
+      "measured": {
+        "frame": 45,
+        "at": [
+          0.2866,
+          0.2648
+        ]
+      },
+      "threshold": "x < 0.45",
+      "unit": "frame x"
+    },
+    {
+      "ok": true,
+      "label": "platform has left the frame before the hold",
+      "measured": true,
+      "threshold": true,
+      "unit": ""
+    },
+    {
+      "ok": true,
+      "label": "no lock-frame ribbon (border, halo, corner locks) dips under the surface while it tightens",
+      "measured": 141.7,
+      "threshold": 50.0,
+      "unit": "m above the sphere"
+    },
+    {
+      "ok": true,
+      "label": "frame line weight stays inside its screen-space band",
+      "measured": [
+        1.47,
+        2.15
+      ],
+      "threshold": [
+        1.2,
+        3.2
+      ],
+      "unit": "px at 1920, most foreshortened edge"
+    },
+    {
+      "ok": true,
+      "label": "frame halo stays inside its screen-space band",
+      "measured": [
+        8.67,
+        12.71
+      ],
+      "threshold": [
+        7.0,
+        22.0
+      ],
+      "unit": "px at 1920"
+    },
+    {
+      "ok": true,
+      "label": "frame size changes continuously: no swap, no pop",
+      "measured": 0.00379,
+      "threshold": 0.012,
+      "unit": "frame widths per frame"
+    },
+    {
+      "ok": true,
+      "label": "settled lock frame sits on the true footprint corners",
+      "measured": 0.311,
+      "threshold": 5.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-17 settled footprint is right-middle and clear of the copy column",
+      "measured": [
+        0.5769,
+        0.3585,
+        0.8197,
+        0.6936
+      ],
+      "threshold": "x0 >= 0.525, x1 <= 0.92, centre y 0.25-0.75",
+      "unit": "frame"
+    },
+    {
+      "ok": true,
+      "label": "settled footprint width",
+      "measured": 0.2428,
+      "threshold": [
+        0.22,
+        0.27
+      ],
+      "unit": "frame widths"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-18 relief corners sit on the true footprint corners",
+      "measured": 0.216,
+      "threshold": 5.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-18 every display layer reads one shared UV",
+      "measured": 1,
+      "threshold": 1,
+      "unit": "layers"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-18 DEM relief is present in the geometry",
+      "measured": [
+        0.125,
+        5.042
+      ],
+      "threshold": 3.0,
+      "unit": "km"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-18 layers lead in the locked order",
+      "measured": [
+        "terrain",
+        "thm01",
+        "alt01",
+        "priority"
+      ],
+      "threshold": [
+        "terrain",
+        "thm01",
+        "alt01",
+        "priority"
+      ],
+      "unit": ""
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-19 final frame shows the priority layer alone",
+      "measured": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 1.0
+      },
+      "threshold": {
+        "priority": 1.0,
+        "others": 0.0
+      },
+      "unit": "weight"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-19 priority-only hold is long enough to read",
+      "measured": 23,
+      "threshold": 18,
+      "unit": "frames"
+    },
+    {
+      "ok": true,
+      "label": "fixture corners agree with the governed EPSG:32635 grid corners to under three cells",
+      "measured": {
+        "nw": 54.4,
+        "ne": 49.8,
+        "se": 54.0,
+        "sw": 55.6
+      },
+      "threshold": 90.0,
+      "unit": "m"
+    }
+  ],
+  "passed": 36,
+  "failed": 0,
+  "frames": [
+    {
+      "frame": 1,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.8392,
+          -0.1381
+        ],
+        "bbox": [
+          0.8114,
+          -0.1685,
+          0.867,
+          -0.1085
+        ],
+        "occluded": true
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.05,
+      "curtain_sweep": -0.05,
+      "beam_tip_error_m": 3.7734,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07498,
+      "frame_bbox": [
+        0.6689,
+        0.5535,
+        0.7439,
+        0.6384
+      ],
+      "border_px": 1.50572,
+      "frame_min_clearance_m": 189.60787,
+      "frame_to_true_corner_m": 359135.14721,
+      "glow_px": 8.89734,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 24,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5232,
+          0.0583
+        ],
+        "bbox": [
+          0.4952,
+          0.0232,
+          0.5492,
+          0.0921
+        ],
+        "occluded": true
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.05,
+      "curtain_sweep": -0.05,
+      "beam_tip_error_m": 2.66364,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07486,
+      "frame_bbox": [
+        0.6714,
+        0.5536,
+        0.7463,
+        0.6385
+      ],
+      "border_px": 1.50375,
+      "frame_min_clearance_m": 189.29571,
+      "frame_to_true_corner_m": 359135.115,
+      "glow_px": 8.88585,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 60,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.2293,
+          0.395
+        ],
+        "bbox": [
+          0.2089,
+          0.3414,
+          0.2476,
+          0.4462
+        ],
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.05,
+      "curtain_sweep": -0.05,
+      "beam_tip_error_m": 0.50422,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07426,
+      "frame_bbox": [
+        0.683,
+        0.5539,
+        0.7572,
+        0.6388
+      ],
+      "border_px": 1.4954,
+      "frame_min_clearance_m": 189.56344,
+      "frame_to_true_corner_m": 359135.05118,
+      "glow_px": 8.83649,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 104,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5512,
+          0.3812
+        ],
+        "bbox": [
+          0.4896,
+          0.3,
+          0.6136,
+          0.4561
+        ],
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.05,
+      "curtain_sweep": -0.05,
+      "beam_tip_error_m": 0.67698,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07314,
+      "frame_bbox": [
+        0.7017,
+        0.5542,
+        0.7748,
+        0.6392
+      ],
+      "border_px": 1.4836,
+      "frame_min_clearance_m": 189.34826,
+      "frame_to_true_corner_m": 359135.17944,
+      "glow_px": 8.76695,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 140,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5597,
+          0.3783
+        ],
+        "bbox": [
+          0.4974,
+          0.2959,
+          0.6224,
+          0.4503
+        ],
+        "occluded": false
+      },
+      "beam_presence": 1.0,
+      "fan_presence": 0.07407,
+      "fill_presence": 1.0,
+      "sweep": -0.05,
+      "curtain_sweep": -0.05,
+      "beam_tip_error_m": 0.49958,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07222,
+      "frame_bbox": [
+        0.7152,
+        0.5544,
+        0.7874,
+        0.6395
+      ],
+      "border_px": 1.47651,
+      "frame_min_clearance_m": 189.37048,
+      "frame_to_true_corner_m": 359135.31915,
+      "glow_px": 8.72493,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 152,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5625,
+          0.3773
+        ],
+        "bbox": [
+          0.5002,
+          0.2947,
+          0.6252,
+          0.4494
+        ],
+        "occluded": false
+      },
+      "beam_presence": 1.0,
+      "fan_presence": 1.0,
+      "fill_presence": 1.2112,
+      "sweep": 0.04565,
+      "curtain_sweep": 0.04565,
+      "beam_tip_error_m": 0.26656,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07192,
+      "frame_bbox": [
+        0.7193,
+        0.5544,
+        0.7912,
+        0.6395
+      ],
+      "border_px": 1.47461,
+      "frame_min_clearance_m": 189.55642,
+      "frame_to_true_corner_m": 359135.14934,
+      "glow_px": 8.71383,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 172,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5672,
+          0.3756
+        ],
+        "bbox": [
+          0.5049,
+          0.2927,
+          0.6301,
+          0.4479
+        ],
+        "occluded": false
+      },
+      "beam_presence": 1.0,
+      "fan_presence": 1.0,
+      "fill_presence": 1.0,
+      "sweep": 0.52391,
+      "curtain_sweep": 0.52391,
+      "beam_tip_error_m": 0.33717,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07145,
+      "frame_bbox": [
+        0.7256,
+        0.5545,
+        0.7971,
+        0.6396
+      ],
+      "border_px": 1.47189,
+      "frame_min_clearance_m": 189.39036,
+      "frame_to_true_corner_m": 359135.04486,
+      "glow_px": 8.69756,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 186,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5706,
+          0.3744
+        ],
+        "bbox": [
+          0.5081,
+          0.2914,
+          0.6336,
+          0.4469
+        ],
+        "occluded": false
+      },
+      "beam_presence": 1.0,
+      "fan_presence": 1.0,
+      "fill_presence": 1.0,
+      "sweep": 0.8587,
+      "curtain_sweep": 0.8587,
+      "beam_tip_error_m": 0.23842,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07113,
+      "frame_bbox": [
+        0.7298,
+        0.5545,
+        0.8009,
+        0.6397
+      ],
+      "border_px": 1.47023,
+      "frame_min_clearance_m": 189.40907,
+      "frame_to_true_corner_m": 359134.95815,
+      "glow_px": 8.68789,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 202,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5744,
+          0.373
+        ],
+        "bbox": [
+          0.5117,
+          0.2898,
+          0.6376,
+          0.4457
+        ],
+        "occluded": false
+      },
+      "beam_presence": 0.648,
+      "fan_presence": 0.25926,
+      "fill_presence": 0.5,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.584,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07077,
+      "frame_bbox": [
+        0.7343,
+        0.5546,
+        0.8051,
+        0.6399
+      ],
+      "border_px": 1.46862,
+      "frame_min_clearance_m": 189.39972,
+      "frame_to_true_corner_m": 359135.19813,
+      "glow_px": 8.67814,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 208,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5758,
+          0.3725
+        ],
+        "bbox": [
+          0.5127,
+          0.2901,
+          0.6396,
+          0.4463
+        ],
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.71526,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07063,
+      "frame_bbox": [
+        0.736,
+        0.5546,
+        0.8066,
+        0.6399
+      ],
+      "border_px": 1.46801,
+      "frame_min_clearance_m": 189.2781,
+      "frame_to_true_corner_m": 359135.10681,
+      "glow_px": 8.67482,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 209,
+      "camera_move_m": 7000.55595,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.03616,
+      "shift_delta": 5e-05,
+      "sat": {
+        "centre": [
+          0.5756,
+          0.3719
+        ],
+        "bbox": [
+          0.5123,
+          0.2894,
+          0.6395,
+          0.4462
+        ],
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.49151,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07072,
+      "frame_bbox": [
+        0.7361,
+        0.5544,
+        0.8068,
+        0.6399
+      ],
+      "border_px": 1.46822,
+      "frame_min_clearance_m": 189.13777,
+      "frame_to_true_corner_m": 359045.72381,
+      "glow_px": 8.67566,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 214,
+      "camera_move_m": 232835.42428,
+      "camera_turn_deg": 0.11869,
+      "lens_delta_mm": 1.27522,
+      "shift_delta": 0.00184,
+      "sat": {
+        "centre": [
+          0.5597,
+          0.3534
+        ],
+        "bbox": [
+          0.4924,
+          0.2657,
+          0.6283,
+          0.435
+        ],
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.48055,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.07431,
+      "frame_bbox": [
+        0.7319,
+        0.5498,
+        0.8063,
+        0.6399
+      ],
+      "border_px": 1.47655,
+      "frame_min_clearance_m": 180.30632,
+      "frame_to_true_corner_m": 355838.29247,
+      "glow_px": 8.72457,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 230,
+      "camera_move_m": 2305951.59939,
+      "camera_turn_deg": 1.72596,
+      "lens_delta_mm": 16.0,
+      "shift_delta": 0.02019,
+      "sat": {
+        "centre": [
+          0.333,
+          0.0809
+        ],
+        "bbox": [
+          0.2113,
+          -0.1043,
+          0.4617,
+          0.2528
+        ],
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.17881,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.11296,
+      "frame_bbox": [
+        0.6924,
+        0.5032,
+        0.8054,
+        0.6425
+      ],
+      "border_px": 1.57475,
+      "frame_min_clearance_m": 143.51161,
+      "frame_to_true_corner_m": 291620.08256,
+      "glow_px": 9.30561,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 246,
+      "camera_move_m": 4781479.26903,
+      "camera_turn_deg": 3.91049,
+      "lens_delta_mm": 44.78174,
+      "shift_delta": 0.04665,
+      "sat": {
+        "centre": [
+          -0.5565,
+          -1.0473
+        ],
+        "bbox": [
+          -0.8561,
+          -1.7593,
+          -0.2206,
+          -0.4654
+        ],
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.11921,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.17182,
+      "frame_bbox": [
+        0.636,
+        0.4324,
+        0.8079,
+        0.6515
+      ],
+      "border_px": 1.74382,
+      "frame_min_clearance_m": 203.32045,
+      "frame_to_true_corner_m": 166963.53893,
+      "glow_px": 10.3043,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 262,
+      "camera_move_m": 6836040.31295,
+      "camera_turn_deg": 6.30773,
+      "lens_delta_mm": 96.15857,
+      "shift_delta": 0.0668,
+      "sat": {
+        "centre": [
+          -10.0028,
+          -13.4877
+        ],
+        "bbox": [
+          -16.3783,
+          -39.1623,
+          -7.1076,
+          -6.1533
+        ],
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.23842,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.22412,
+      "frame_bbox": [
+        0.5897,
+        0.3717,
+        0.8138,
+        0.6681
+      ],
+      "border_px": 1.94033,
+      "frame_min_clearance_m": 213.64871,
+      "frame_to_true_corner_m": 48094.27516,
+      "glow_px": 11.46533,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 276,
+      "camera_move_m": 7768147.34484,
+      "camera_turn_deg": 8.93083,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          22.27,
+          30.1123
+        ],
+        "bbox": null,
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.49151,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.24362,
+      "frame_bbox": [
+        0.5772,
+        0.3504,
+        0.8208,
+        0.6844
+      ],
+      "border_px": 2.11447,
+      "frame_min_clearance_m": 189.45585,
+      "frame_to_true_corner_m": 0.30236,
+      "glow_px": 12.50496,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 316,
+      "camera_move_m": 7783531.60897,
+      "camera_turn_deg": 8.90456,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          20.1008,
+          27.5995
+        ],
+        "bbox": null,
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.56231,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.24577,
+      "frame_bbox": [
+        0.5755,
+        0.3553,
+        0.8212,
+        0.697
+      ],
+      "border_px": 2.12042,
+      "frame_min_clearance_m": 219.76708,
+      "frame_to_true_corner_m": 0.44227,
+      "glow_px": 12.61958,
+      "layers": {
+        "terrain": 1.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 350,
+      "camera_move_m": 7767659.94345,
+      "camera_turn_deg": 9.64478,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          23.8182,
+          31.6454
+        ],
+        "bbox": null,
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.71526,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.24269,
+      "frame_bbox": [
+        0.577,
+        0.3587,
+        0.8197,
+        0.6934
+      ],
+      "border_px": 2.07969,
+      "frame_min_clearance_m": 219.68288,
+      "frame_to_true_corner_m": 0.37123,
+      "glow_px": 12.37917,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 1.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 378,
+      "camera_move_m": 7768189.80685,
+      "camera_turn_deg": 10.18601,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          25.8647,
+          33.5971
+        ],
+        "bbox": null,
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.61077,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.24211,
+      "frame_bbox": [
+        0.5772,
+        0.3593,
+        0.8194,
+        0.6928
+      ],
+      "border_px": 2.07482,
+      "frame_min_clearance_m": 219.38351,
+      "frame_to_true_corner_m": 0.30459,
+      "glow_px": 12.3379,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 1.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 400,
+      "camera_move_m": 7773765.16984,
+      "camera_turn_deg": 10.40871,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          25.4147,
+          33.2064
+        ],
+        "bbox": null,
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.73727,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.24254,
+      "frame_bbox": [
+        0.577,
+        0.3588,
+        0.8196,
+        0.6933
+      ],
+      "border_px": 2.07818,
+      "frame_min_clearance_m": 219.39287,
+      "frame_to_true_corner_m": 0.5545,
+      "glow_px": 12.36813,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 1.0
+      }
+    },
+    {
+      "frame": 420,
+      "camera_move_m": 7776594.95651,
+      "camera_turn_deg": 10.46803,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          24.8732,
+          32.7352
+        ],
+        "bbox": null,
+        "occluded": false
+      },
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.05,
+      "curtain_sweep": 1.05,
+      "beam_tip_error_m": 0.53312,
+      "beam_root_error_m": 0.0,
+      "frame_width_fraction": 0.24282,
+      "frame_bbox": [
+        0.5769,
+        0.3585,
+        0.8197,
+        0.6936
+      ],
+      "border_px": 2.08173,
+      "frame_min_clearance_m": 219.48642,
+      "frame_to_true_corner_m": 0.31142,
+      "glow_px": 12.39182,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 1.0
+      }
+    }
+  ]
+}

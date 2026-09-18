@@ -78,6 +78,50 @@
       "publish_evidence": true,
       "note": "Same Cycles path as the master profile at reviewable size and 8-bit depth, so a review still can be committed without putting a large binary in source control. Masters stay 16-bit and out of Git."
     },
+    "preview_gate": {
+      "role": "preview_gate",
+      "engine": "CYCLES",
+      "resolution_x": 1280,
+      "resolution_y": 720,
+      "resolution_percentage": 100,
+      "samples": 48,
+      "adaptive_threshold": 0.03,
+      "max_bounces": 6,
+      "denoise": true,
+      "denoiser_preference": [
+        "OPTIX",
+        "OPENIMAGEDENOISE"
+      ],
+      "file_format": "PNG",
+      "color_depth": "8",
+      "compression": 25,
+      "prefer_gpu": true,
+      "publish_evidence": true,
+      "motion_blur_shutter": 0.5,
+      "note": "WEB-005A R3 preview gate (tasks/WEB-005A_R3_REVIEW_37152222.md section 6): the production look at a fraction of its cost -- same Cycles path and motion-blur shutter, 1280 x 720, 48 adaptive samples, denoised. Roughly a twentieth of a production frame, so the whole choreography can be reviewed before any long render is spent. Stills from it may be committed as review evidence; it never produces site media."
+    },
+    "preview_gate_animatic": {
+      "role": "preview_gate_animatic",
+      "engine": "CYCLES",
+      "resolution_x": 960,
+      "resolution_y": 540,
+      "resolution_percentage": 100,
+      "samples": 32,
+      "adaptive_threshold": 0.05,
+      "max_bounces": 6,
+      "denoise": true,
+      "denoiser_preference": [
+        "OPTIX",
+        "OPENIMAGEDENOISE"
+      ],
+      "file_format": "PNG",
+      "color_depth": "8",
+      "compression": 25,
+      "prefer_gpu": true,
+      "publish_evidence": false,
+      "motion_blur_shutter": 0.5,
+      "note": "WEB-005A R3 preview gate, motion review: the preview_gate path at 960 x 540 and 32 samples, rendered on every second frame and played back in real time. A review animatic only -- never site media, never committed."
+    },
     "production": {
       "role": "production_media",
       "engine": "CYCLES",

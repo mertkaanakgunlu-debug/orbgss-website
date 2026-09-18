@@ -105,7 +105,10 @@ def render_animatic(
     scene.frame_end = end
     scene.frame_step = int(frame_step)
     scene.render.fps = rate
-    scene.render.fps_base = 1.0
+    # A stepped animatic must still play in real time: rendering every Nth frame at the full
+    # rate would run the review N times too fast, which is exactly what a motion review cannot
+    # afford. fps / fps_base is the effective rate.
+    scene.render.fps_base = float(max(1, int(frame_step)))
 
     video = _configure_video(scene, container, codec, quality)
     out_path = Path(out_path)

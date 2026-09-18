@@ -359,13 +359,29 @@ def corner_lock_units(fixture: dict, radius_km: float, lon_offset_deg: float):
     return locks
 
 
-def describe(scene_config: dict, fixture_id: str | None = None, scene_spec: dict | None = None):
+def describe(scene_config: dict, fixture_id: str | None = None, scene_spec: dict | None = None,
+             presentation: dict | None = None):
     """Full resolved AOI description: the one shape every consumer reads.
 
     Returned as plain data so the Blender builder, the validator and the
     geometry audit all work from an identical description of the same AOI.
+
+    ``presentation`` (WEB-005A R3) re-describes the *same* fixture at a presentation scale: only
+    the span and the drawn dimensions (border, corner-lock arm and width) may be overridden.
+    Centre, bearing, corner order and surface offset always come from the fixture, so a presented
+    corner lies on the true footprint's own diagonal by construction and the authoritative
+    geometry is never edited to make a frame readable.
     """
     fixture = resolve_fixture(scene_config, fixture_id)
+    if presentation:
+        allowed = ("span_km", "border_width_km", "corner_lock_arm_km", "corner_lock_width_km")
+        unknown = sorted(set(presentation) - set(allowed) - {"glow_width_km"})
+        if unknown:
+            raise AOIFixtureError("presentation may not override " + repr(unknown))
+        fixture = dict(fixture)
+        for key in allowed:
+            if key in presentation:
+                fixture[key] = float(presentation[key])
     radius_km = earth_radius_km(scene_config)
     lon_offset = longitude_offset_deg(scene_config, scene_spec)
     radius_bu = surface_radius_bu(fixture, radius_km)

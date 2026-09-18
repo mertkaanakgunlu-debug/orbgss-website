@@ -413,10 +413,160 @@ def derive(scene_config: dict, scene_id: str, fixture_id=None):
         raise SystemExit(
             "scene " + repr(scene_id) + " declares no camera.shot_intent to derive from"
         )
-    return [
-        derive_keyframe(scene_config, scene_spec, entry, fixture_id)
-        for entry in sorted(intent, key=lambda e: int(e["frame"]))
-    ]
+    ordered = sorted(intent, key=lambda e: int(e["frame"]))
+    by_frame = {int(entry["frame"]): entry for entry in ordered}
+    derived = []
+    for entry in ordered:
+        if entry.get("mode") == "hold_of":
+            # WEB-005A R3 fixed observer: "be exactly where the camera is at frame N" is an
+            # intent of its own. The held state is derived once, at the frame it belongs to, and
+            # copied verbatim, so a locked-off camera is locked off by construction and the
+            # validator can prove it by comparing keyframes rather than trusting a tolerance.
+            source = by_frame.get(int(entry["of_frame"]))
+            if source is None or source.get("mode") == "hold_of":
+                raise ValueError(
+                    "hold_of intent at frame " + str(entry["frame"])
+                    + " must name the frame of a derivable intent"
+                )
+            held = derive_keyframe(scene_config, scene_spec, source, fixture_id)
+            held["frame"] = int(entry["frame"])
+            derived.append(held)
+        else:
+            derived.append(derive_keyframe(scene_config, scene_spec, entry, fixture_id))
+    return derived
+
+
+# ---------------------------------------------------------------------------
+# Lock-frame presentation: screen-space intent -> ground geometry and morph keys
+# ---------------------------------------------------------------------------
+
+def _interp_keys(keys, frame, extract):
+    if frame <= int(keys[0]["frame"]):
+        return extract(keys[0])
+    if frame >= int(keys[-1]["frame"]):
+        return extract(keys[-1])
+    for k0, k1 in zip(keys, keys[1:]):
+        f0, f1 = int(k0["frame"]), int(k1["frame"])
+        if f0 <= frame <= f1:
+            t = (frame - f0) / float(f1 - f0) if f1 > f0 else 0.0
+            a, b = extract(k0), extract(k1)
+            if isinstance(a, (list, tuple)):
+                return [x + (y - x) * t for x, y in zip(a, b)]
+            return a + (b - a) * t
+    return extract(keys[-1])
+
+
+def ground_km_across(scene_config: dict, scene_spec: dict, frame: float, fixture_id=None) -> float:
+    """Kilometres of ground spanned by the frame width at the AOI's distance, at ``frame``.
+
+    Planning approximation (linear between camera keys, like ``orbit_plan.camera_state``);
+    the evaluated figure is measured in Blender by the preview-gate audit.
+    """
+    camera = scene_spec.get("camera", {})
+    keys = sorted(camera.get("keyframes", []), key=lambda k: int(k["frame"]))
+    location = _interp_keys(keys, frame, lambda k: [float(v) for v in k["location"]])
+    lens = _interp_keys(keys, frame, lambda k: float(k["focal_length_mm"]))
+    sensor = float(scene_config.get("camera_defaults", {}).get("sensor_width_mm", 36.0))
+    center, _ = aoi_center_at(scene_config, scene_spec, frame, fixture_id)
+    distance_km = ax.length(_sub(center, location)) * ax.KM_PER_BLENDER_UNIT
+    return 2.0 * distance_km * (sensor / (2.0 * lens))
+
+
+def derive_presentation(scene_config: dict, scene_id: str, measured_km_across=None):
+    """Screen-space lock-frame intent -> the ground geometry and morph keys the builder reads.
+
+    The authoritative AOI is the fixture and never changes. What the viewer is *shown* around it
+    is a lock frame whose on-screen size, line weight, halo and corner arms are stated in pixels
+    of a 1920-wide frame, because that is the only space in which "readable" means anything
+    across a 50x change of ground scale. This converts that intent into (a) the acquisition-state
+    and settled-state ground dimensions, and (b) the morph parameter m per frame -- 1 is the
+    acquisition presentation, 0 is the true footprint -- chosen so the presented span is
+    ``max(true span, on-screen width x ground scale)``. The frame therefore tightens continuously
+    onto the same target and lands on the true corners exactly, with no swap.
+
+    ``measured_km_across`` is ``{frame: km}`` from the *evaluated* camera. Without it the ground
+    scale is planned by linear interpolation between camera keys, which is good enough to build
+    from but kinks where Blender's Bezier does not; ``derive_presentation.py`` supplies the
+    measured figure, and that is what gets committed.
+    """
+    scenes = scene_config.get("scenes", {})
+    scene_spec = hc.resolve_scene_spec(scene_id, scenes)
+    aoi_spec = _aoi_spec(scene_spec) or {}
+    presentation = aoi_spec.get("presentation")
+    if not presentation:
+        raise SystemExit("scene " + repr(scene_id) + " AOI declares no presentation intent")
+    intent = presentation["screen_intent"]
+    fixture_id = aoi_spec.get("fixture")
+    description = ax.describe(scene_config, fixture_id, scene_spec)
+    true_span = float(description["fixture"]["span_km"])
+
+    start, end = int(intent["morph_frames"][0]), int(intent["morph_frames"][1])
+    reference_px = float(intent.get("reference_width_px", 1920.0))
+
+    def across(frame):
+        if measured_km_across is not None:
+            return float(measured_km_across[int(frame)])
+        return ground_km_across(scene_config, scene_spec, frame, fixture_id)
+
+    across_start = across(start)
+    across_end = across(end)
+
+    acquisition_span = float(intent["acquisition_width_fraction"]) * across_start
+    settled_fraction = true_span / across_end
+
+    # Line weight is stated once, in pixels at the acquisition, and grows by one factor to the
+    # settled frame. One factor for border, halo and corner locks means one weight ramp serves all
+    # three ribbons, so they can never drift apart in thickness while the frame tightens.
+    px = intent["acquisition_px"]
+    px_scale = float(intent.get("settled_px_scale", 1.2))
+
+    def block(span, across, factor, arm_fraction):
+        def ground(value):
+            return round(float(value) * factor * across / reference_px, 4)
+        return {
+            "span_km": round(span, 3),
+            "border_width_km": ground(px["border_px"]),
+            "glow_width_km": ground(px["glow_px"]),
+            "corner_lock_width_km": ground(px["corner_lock_px"]),
+            "corner_lock_arm_km": round(span * float(arm_fraction), 3),
+        }
+
+    step = int(intent.get("morph_key_step", 2))
+    frames = list(range(start, end, step)) + [end]
+    keys, weights = [], []
+    for frame in frames:
+        t = (frame - start) / float(end - start)
+        eased = t * t * (3.0 - 2.0 * t)
+        fraction = float(intent["acquisition_width_fraction"]) + (
+            settled_fraction - float(intent["acquisition_width_fraction"])
+        ) * eased
+        span = max(true_span, fraction * across(frame))
+        m = (span - true_span) / (acquisition_span - true_span)
+        keys.append([frame, round(max(0.0, min(1.0, m)), 5)])
+        # Span and line weight cannot share one blend: ground scale falls hyperbolically under the
+        # dive, so a ribbon that thins in step with the span is twice too heavy half-way down.
+        # k is where the ribbon's ground width sits between its two ends for a constant on-screen
+        # weight at this frame's measured scale.
+        wanted = (1.0 + (px_scale - 1.0) * eased) * across(frame)
+        k = (wanted - px_scale * across_end) / (across_start - px_scale * across_end)
+        weights.append([frame, round(max(0.0, min(1.0, k)), 5)])
+    for ramp in (keys, weights):
+        ramp[0][1] = 1.0
+        ramp[-1][1] = 0.0
+        # A lock tightens; it never breathes back out.
+        for index in range(1, len(ramp)):
+            ramp[index][1] = min(ramp[index][1], ramp[index - 1][1])
+
+    return {
+        "acquisition": block(acquisition_span, across_start, 1.0, px["corner_arm_fraction"]),
+        "settled": block(true_span, across_end, px_scale, intent["settled_corner_arm_fraction"]),
+        "settled_width_fraction": round(settled_fraction, 4),
+        "ground_km_across_acquisition": round(across_start, 1),
+        "ground_km_across_settled": round(across_end, 1),
+        "ground_scale_source": "evaluated_camera" if measured_km_across is not None else "planned_linear",
+        "morph_keyframes": keys,
+        "weight_keyframes": weights,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -486,12 +636,18 @@ def main() -> int:
     parser.add_argument("--aoi-fixture", default=None)
     parser.add_argument("--derive", action="store_true", help="print derived world keyframes")
     parser.add_argument("--analyze", action="store_true", help="print the framing report")
+    parser.add_argument(
+        "--derive-presentation", action="store_true",
+        help="print the lock-frame presentation derived from its screen-space intent",
+    )
     parser.add_argument("--out", default=None, help="write the framing report as JSON")
     args = parser.parse_args()
 
     scene_config = hc.load_scene_config()
     if args.derive:
         print(json.dumps(derive(scene_config, args.scene, args.aoi_fixture), indent=2))
+    if args.derive_presentation:
+        print(json.dumps(derive_presentation(scene_config, args.scene), indent=2))
     if args.analyze or args.out:
         report = analyze(
             scene_config, args.scene, hc.load_render_config(), args.aoi_fixture
@@ -502,8 +658,8 @@ def main() -> int:
             hc.ensure_dir(out.parent)
             out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
             print("[hero] shot plan -> " + hc.relpath(out))
-    if not (args.derive or args.analyze or args.out):
-        parser.error("choose --derive and/or --analyze")
+    if not (args.derive or args.analyze or args.out or args.derive_presentation):
+        parser.error("choose --derive, --derive-presentation and/or --analyze")
     return 0
 
 

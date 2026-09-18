@@ -1,0 +1,72 @@
+{
+  "authority": "docs/web-005-polish-authority@db4605abcb35be9ab0337deb6b15c80aab79b12b:tasks/WEB-005A_R3_ANALYTICAL_ASSET_HANDOFF.md",
+  "export_id": "20260917T161155Z-5e7a0e53",
+  "project_id": "kizildere_mvp_v2",
+  "grid": {
+    "crs": "EPSG:32635",
+    "grid_id": "2e228684b270dbbd03e763a09b754b387502ca8e617c39e4d09cf9bad18dc9fe",
+    "height": 1200,
+    "origin_x": 639270.0,
+    "origin_y": 4223040.0,
+    "resolution_x": 30.0,
+    "resolution_y": 30.0,
+    "width": 1200
+  },
+  "config_hash": "c6eac56027d3118280d2a454bdcacf5b01ddb0d733ab23dacbf348b6a50b777c",
+  "processing": "none: byte-for-byte copy and SHA-256 only",
+  "geometry_authority": "kizildere_top_dem.tif (governed top-dem.tif); never a coloured texture",
+  "display_texture_boundary": "presentation-only display derivatives per the handoff; analysis_use_allowed is false in their own manifest; they are not the governed class-B derivatives the page ships",
+  "files": [
+    {
+      "materialized": "kizildere_top_dem.tif",
+      "use": "relief_geometry_source",
+      "source": "C:/Projects/geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260917T161155Z-5e7a0e53/top-dem.tif",
+      "sha256": "590f74322c6ad942e0d36b79446934da7a0938c7d87c06ab8c9bd27da73fb694",
+      "bytes": 5767572,
+      "present_in_workspace": true
+    },
+    {
+      "materialized": "terrain_webhero_display_4k.png",
+      "use": "display_texture",
+      "source": "C:/Projects/geothermal-prospectivity/outputs/webhero_display_final/terrain_webhero_display_4k.png",
+      "sha256": "5fdf81f525020a7c96bf09c01bb784d2a4b2bda8f959c9a7c8837c697a5c7694",
+      "bytes": 7655490,
+      "present_in_workspace": true
+    },
+    {
+      "materialized": "thm01_webhero_display_4k.png",
+      "use": "display_texture",
+      "source": "C:/Projects/geothermal-prospectivity/outputs/webhero_display_final/thm01_webhero_display_4k.png",
+      "sha256": "3a497c3342a52f20ee5a9d41c2c924068466431849aa425327e415619035a2df",
+      "bytes": 18220492,
+      "present_in_workspace": true
+    },
+    {
+      "materialized": "alt01_webhero_display_4k.png",
+      "use": "display_texture",
+      "source": "C:/Projects/geothermal-prospectivity/outputs/webhero_display_final/alt01_webhero_display_4k.png",
+      "sha256": "16ba3668a8fbeeeccec972458d2b0a6e4a3ed0489fc9f39be672638ae253ea56",
+      "bytes": 32191956,
+      "present_in_workspace": true
+    },
+    {
+      "materialized": "priority_webhero_display_4k.png",
+      "use": "display_texture",
+      "source": "C:/Projects/geothermal-prospectivity/outputs/webhero_display_final/priority_webhero_display_4k.png",
+      "sha256": "bfcdec473a40558de559e59733c599b54c9cf59bad5e301e43d62417f4e89f50",
+      "bytes": 32619796,
+      "present_in_workspace": true
+    }
+  ],
+  "provenance_context": [
+    {
+      "path": "C:/Projects/geothermal-prospectivity/outputs/kizildere_mvp_v2/exports/20260917T161155Z-5e7a0e53/export_manifest.json",
+      "sha256": "8e33fd6ad85b51cf2ba7535fe9eb1260b36681e8e3499bb86ccbc2b2c8c11d88"
+    },
+    {
+      "path": "C:/Projects/geothermal-prospectivity/outputs/webhero_display_final/webhero_display_final_manifest.json",
+      "sha256": "952963e9329ceeb1bd271fda75350b6ec94aedb0e425c4090d32d6c33d09b299"
+    }
+  ],
+  "problems": []
+}

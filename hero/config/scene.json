@@ -2716,6 +2716,1841 @@
           "note": "Controlled halo for the emissive frame, corner locks and sensing lines. The threshold sits above anything sunlit on the planet."
         }
       }
+    },
+    "hero_r3_preview_gate": {
+      "extends": "hero_production_kizildere",
+      "description": "WEB-005A R3 preview gate (fixed-camera acquisition, scan fan, persistent lock frame, DEM-relief analytical reveal). Low-cost review scene required by tasks/WEB-005A_R3_REVIEW_37152222.md before any further long production render; it does not replace hero_production_kizildere, whose shipped media stay bound to their own configuration until Product passes this gate. One world, one camera, no cut: the observer is locked off from frame 1 until the scan fan and the four sensing lines have retired (208); the satellite alone moves, comes round the left limb and settles left-of-centre clear of the hero copy; four lines lock the corners of the presented lock frame, a translucent fan spans them and a light curtain sweeps the footprint left to right; only then does the camera approach, while the same frame tightens continuously onto the true 36 km footprint; at the hold the governed DEM lifts the footprint into relief and the prepared Terrain, THM-01, ALT-01 and priority display textures are revealed on that one registered surface, ending on priority alone.",
+      "role": "hero_preview_gate",
+      "frame": 170,
+      "render_overrides": {
+        "transparent_max_bounces": 96,
+        "note": "The scan curtain is a stack of translucent slices; a view ray can cross most of them."
+      },
+      "animation": {
+        "frame_start": 1,
+        "frame_end": 420,
+        "frame_rate": 24,
+        "representative_frames": {
+          "fixed_establish": 24,
+          "satellite_entry": 72,
+          "beam_lock": 140,
+          "scan_fan": 152,
+          "scan_sweep": 172,
+          "retire": 202,
+          "first_approach": 214,
+          "mid_approach": 246,
+          "relief": 316,
+          "thm01": 346,
+          "alt01": 376,
+          "priority": 400,
+          "final_hold": 420
+        },
+        "beats": {
+          "fixed_observer": [
+            1,
+            208
+          ],
+          "satellite_entrance": [
+            44,
+            106
+          ],
+          "aoi_acquisition": [
+            106,
+            208
+          ],
+          "scan_sweep": [
+            148,
+            194
+          ],
+          "retire": [
+            194,
+            208
+          ],
+          "camera_approach": [
+            208,
+            276
+          ],
+          "analytical_reveal": [
+            284,
+            398
+          ],
+          "regional_hold": [
+            276,
+            420
+          ]
+        },
+        "continuity_note": "Fixed observer 1-208: no camera key changes value before 208 and the AOI track constraint is off, so the only things that move are the satellite and the turning Earth. Lines connect 106-120, the frame locks 112-150, the fan rises 138-150, the curtain crosses west to east 148-194, fan, fill and lines retire 194-208. Approach 208-276 onto the hold; the lock frame morphs 208-276. Relief rises 284-308 and the four display textures cross-fade on it; from 398 only the priority layer remains."
+      },
+      "camera": {
+        "fixed_through_frame": 208,
+        "shot_intent": [
+          {
+            "frame": 1,
+            "mode": "hold_of",
+            "of_frame": 208,
+            "note": "Fixed observer (A-HERO-15): the opening state IS the acquisition state."
+          },
+          {
+            "frame": 208,
+            "mode": "aoi_relative",
+            "radius_bu": 14.0,
+            "offset_deg": 25.6,
+            "bearing_deg": 171.8,
+            "focal_length_mm": 38.0,
+            "note": "The accepted R3 acquisition composition, now held from frame 1: Earth right-dominant, left limb in frame for the satellite to come round, the target right-of-centre."
+          },
+          {
+            "frame": 230,
+            "mode": "aoi_relative",
+            "radius_bu": 11.9,
+            "offset_deg": 21.4,
+            "bearing_deg": 171.0,
+            "focal_length_mm": 54.0
+          },
+          {
+            "frame": 250,
+            "mode": "aoi_relative",
+            "radius_bu": 9.2,
+            "offset_deg": 13.6,
+            "bearing_deg": 170.0,
+            "focal_length_mm": 92.0
+          },
+          {
+            "frame": 264,
+            "mode": "aoi_relative",
+            "radius_bu": 7.75,
+            "offset_deg": 7.6,
+            "bearing_deg": 169.0,
+            "focal_length_mm": 146.0
+          },
+          {
+            "frame": 276,
+            "mode": "aoi_relative",
+            "radius_bu": 7.15,
+            "offset_deg": 4.4,
+            "bearing_deg": 168.0,
+            "focal_length_mm": 210.0
+          },
+          {
+            "frame": 348,
+            "mode": "aoi_relative",
+            "radius_bu": 7.15,
+            "offset_deg": 4.4,
+            "bearing_deg": 168.0,
+            "focal_length_mm": 210.0
+          },
+          {
+            "frame": 420,
+            "mode": "aoi_relative",
+            "radius_bu": 7.15,
+            "offset_deg": 4.4,
+            "bearing_deg": 168.0,
+            "focal_length_mm": 210.0,
+            "note": "Hold: about 160 km across the frame at 36 deg incidence, oblique enough for the DEM relief to read; the 36 km footprint spans about 24 percent of the width in the right-middle zone."
+          }
+        ],
+        "track": {
+          "target_id": "aoi_target_center",
+          "influence_keyframes": [
+            {
+              "frame": 1,
+              "value": 0.0
+            },
+            {
+              "frame": 208,
+              "value": 0.0
+            },
+            {
+              "frame": 220,
+              "value": 1.0
+            },
+            {
+              "frame": 420,
+              "value": 1.0
+            }
+          ],
+          "note": "Off for the whole fixed-observer phase: a track constraint would turn the camera with the Earth. The keyed aim at 208 already points at the AOI centre, so the hand-over cannot swing."
+        },
+        "shift_keyframes": [
+          {
+            "frame": 1,
+            "shift_x": -0.27,
+            "shift_y": -0.05625
+          },
+          {
+            "frame": 208,
+            "shift_x": -0.27,
+            "shift_y": -0.05625
+          },
+          {
+            "frame": 270,
+            "shift_x": -0.2,
+            "shift_y": -0.01125
+          },
+          {
+            "frame": 420,
+            "shift_x": -0.2,
+            "shift_y": -0.01125
+          }
+        ],
+        "shift_note": "Constant through the fixed phase (a lens-shift change is apparent camera motion). Target at (0.77, 0.60) while acquiring, easing to (0.70, 0.52) -- right-middle -- at the hold.",
+        "composition": {
+          "headline_safe_through_frame": 0,
+          "acquisition_beat": [
+            106,
+            208
+          ],
+          "copy_safe_region_1440": {
+            "x0": 0.0,
+            "x1": 0.475,
+            "note": "Measured in the built page at 1440 x 900: the hero is 1425 x 738 CSS px and the right edge of the widest copy line is 674 px, 0.473 of the hero width. The 16:9 media is cover-fitted at full width there, so a frame x is a page x."
+          },
+          "satellite_readability": {
+            "min_width_fraction": 0.08,
+            "max_width_fraction": 0.25,
+            "anchor_frame": 120
+          },
+          "analysis_hold": {
+            "frame": 276,
+            "fixture": "kizildere_analysis",
+            "width_fraction": [
+              0.22,
+              0.27
+            ]
+          }
+        },
+        "keyframes": [
+          {
+            "frame": 1,
+            "location": [
+              3.1897,
+              -13.2862,
+              3.0501
+            ],
+            "look_at": [
+              0.8617,
+              -4.9476,
+              3.9207
+            ],
+            "focal_length_mm": 38.0
+          },
+          {
+            "frame": 208,
+            "location": [
+              3.1897,
+              -13.2862,
+              3.0501
+            ],
+            "look_at": [
+              0.8617,
+              -4.9476,
+              3.9207
+            ],
+            "focal_length_mm": 38.0
+          },
+          {
+            "frame": 230,
+            "location": [
+              2.7454,
+              -11.0569,
+              3.4377
+            ],
+            "look_at": [
+              0.9175,
+              -4.9375,
+              3.9207
+            ],
+            "focal_length_mm": 54.0
+          },
+          {
+            "frame": 250,
+            "location": [
+              1.9701,
+              -8.1327,
+              3.8235
+            ],
+            "look_at": [
+              0.962,
+              -4.929,
+              3.9207
+            ],
+            "focal_length_mm": 92.0
+          },
+          {
+            "frame": 264,
+            "location": [
+              1.506,
+              -6.5051,
+              3.9342
+            ],
+            "look_at": [
+              0.9889,
+              -4.9237,
+              3.9207
+            ],
+            "focal_length_mm": 146.0
+          },
+          {
+            "frame": 276,
+            "location": [
+              1.3105,
+              -5.8044,
+              3.9641
+            ],
+            "look_at": [
+              1.0119,
+              -4.919,
+              3.9207
+            ],
+            "focal_length_mm": 210.0
+          },
+          {
+            "frame": 348,
+            "location": [
+              1.4729,
+              -5.7654,
+              3.9641
+            ],
+            "look_at": [
+              1.1496,
+              -4.8887,
+              3.9207
+            ],
+            "focal_length_mm": 210.0
+          },
+          {
+            "frame": 420,
+            "location": [
+              1.6341,
+              -5.7218,
+              3.9641
+            ],
+            "look_at": [
+              1.2863,
+              -4.8545,
+              3.9207
+            ],
+            "focal_length_mm": 210.0
+          }
+        ]
+      },
+      "objects": [
+        {
+          "id": "aoi",
+          "replace": true,
+          "type": "aoi_system",
+          "fixture": "kizildere_analysis",
+          "parent_id": "earth",
+          "border_material": "aoi_border",
+          "fill_material": "aoi_fill",
+          "corner_lock_material": "aoi_lock",
+          "beam_material": "aoi_beam",
+          "border_glow": {
+            "material": "aoi_glow",
+            "offset_m": -60.0,
+            "width_km": 1.3028
+          },
+          "presentation": {
+            "purpose": "One persistent lock frame. The authoritative footprint is the fixture (36 km) and is never edited; what is drawn around it is sized in screen space and tightens onto it.",
+            "screen_intent": {
+              "reference_width_px": 1920,
+              "acquisition_width_fraction": 0.066,
+              "morph_frames": [
+                208,
+                276
+              ],
+              "morph_key_step": 1,
+              "acquisition_px": {
+                "border_px": 2.2,
+                "glow_px": 13.0,
+                "corner_lock_px": 4.0,
+                "corner_arm_fraction": 0.24
+              },
+              "settled_px_scale": 1.2,
+              "settled_corner_arm_fraction": 0.18
+            },
+            "derived": {
+              "acquisition": {
+                "span_km": 543.961,
+                "border_width_km": 9.4438,
+                "glow_width_km": 55.8041,
+                "corner_lock_width_km": 17.1705,
+                "corner_lock_arm_km": 130.551
+              },
+              "settled": {
+                "span_km": 36.0,
+                "border_width_km": 0.2205,
+                "glow_width_km": 1.3028,
+                "corner_lock_width_km": 0.4009,
+                "corner_lock_arm_km": 6.48
+              },
+              "settled_width_fraction": 0.2245,
+              "ground_km_across_acquisition": 8241.8,
+              "ground_km_across_settled": 160.4,
+              "ground_scale_source": "evaluated_camera",
+              "morph_keyframes": [
+                [
+                  208,
+                  1.0
+                ],
+                [
+                  209,
+                  0.99975
+                ],
+                [
+                  210,
+                  0.99905
+                ],
+                [
+                  211,
+                  0.99786
+                ],
+                [
+                  212,
+                  0.99614
+                ],
+                [
+                  213,
+                  0.99381
+                ],
+                [
+                  214,
+                  0.99082
+                ],
+                [
+                  215,
+                  0.98707
+                ],
+                [
+                  216,
+                  0.98249
+                ],
+                [
+                  217,
+                  0.97702
+                ],
+                [
+                  218,
+                  0.97058
+                ],
+                [
+                  219,
+                  0.96312
+                ],
+                [
+                  220,
+                  0.9546
+                ],
+                [
+                  221,
+                  0.94498
+                ],
+                [
+                  222,
+                  0.93427
+                ],
+                [
+                  223,
+                  0.92244
+                ],
+                [
+                  224,
+                  0.90953
+                ],
+                [
+                  225,
+                  0.89557
+                ],
+                [
+                  226,
+                  0.8806
+                ],
+                [
+                  227,
+                  0.86468
+                ],
+                [
+                  228,
+                  0.84788
+                ],
+                [
+                  229,
+                  0.83029
+                ],
+                [
+                  230,
+                  0.812
+                ],
+                [
+                  231,
+                  0.79308
+                ],
+                [
+                  232,
+                  0.77359
+                ],
+                [
+                  233,
+                  0.75355
+                ],
+                [
+                  234,
+                  0.733
+                ],
+                [
+                  235,
+                  0.71199
+                ],
+                [
+                  236,
+                  0.69056
+                ],
+                [
+                  237,
+                  0.66877
+                ],
+                [
+                  238,
+                  0.64665
+                ],
+                [
+                  239,
+                  0.62427
+                ],
+                [
+                  240,
+                  0.60169
+                ],
+                [
+                  241,
+                  0.57895
+                ],
+                [
+                  242,
+                  0.55611
+                ],
+                [
+                  243,
+                  0.53323
+                ],
+                [
+                  244,
+                  0.51036
+                ],
+                [
+                  245,
+                  0.48755
+                ],
+                [
+                  246,
+                  0.46485
+                ],
+                [
+                  247,
+                  0.44232
+                ],
+                [
+                  248,
+                  0.41999
+                ],
+                [
+                  249,
+                  0.39792
+                ],
+                [
+                  250,
+                  0.37615
+                ],
+                [
+                  251,
+                  0.35469
+                ],
+                [
+                  252,
+                  0.33347
+                ],
+                [
+                  253,
+                  0.31242
+                ],
+                [
+                  254,
+                  0.29151
+                ],
+                [
+                  255,
+                  0.27074
+                ],
+                [
+                  256,
+                  0.25014
+                ],
+                [
+                  257,
+                  0.22977
+                ],
+                [
+                  258,
+                  0.20968
+                ],
+                [
+                  259,
+                  0.18996
+                ],
+                [
+                  260,
+                  0.17069
+                ],
+                [
+                  261,
+                  0.15196
+                ],
+                [
+                  262,
+                  0.13387
+                ],
+                [
+                  263,
+                  0.11649
+                ],
+                [
+                  264,
+                  0.09989
+                ],
+                [
+                  265,
+                  0.0842
+                ],
+                [
+                  266,
+                  0.06965
+                ],
+                [
+                  267,
+                  0.05642
+                ],
+                [
+                  268,
+                  0.0446
+                ],
+                [
+                  269,
+                  0.03422
+                ],
+                [
+                  270,
+                  0.02526
+                ],
+                [
+                  271,
+                  0.0177
+                ],
+                [
+                  272,
+                  0.0115
+                ],
+                [
+                  273,
+                  0.00662
+                ],
+                [
+                  274,
+                  0.00307
+                ],
+                [
+                  275,
+                  0.00085
+                ],
+                [
+                  276,
+                  0.0
+                ]
+              ],
+              "weight_keyframes": [
+                [
+                  208,
+                  1.0
+                ],
+                [
+                  209,
+                  0.99832
+                ],
+                [
+                  210,
+                  0.9934
+                ],
+                [
+                  211,
+                  0.98538
+                ],
+                [
+                  212,
+                  0.97443
+                ],
+                [
+                  213,
+                  0.96075
+                ],
+                [
+                  214,
+                  0.94455
+                ],
+                [
+                  215,
+                  0.92607
+                ],
+                [
+                  216,
+                  0.90555
+                ],
+                [
+                  217,
+                  0.88324
+                ],
+                [
+                  218,
+                  0.85939
+                ],
+                [
+                  219,
+                  0.83424
+                ],
+                [
+                  220,
+                  0.80805
+                ],
+                [
+                  221,
+                  0.78103
+                ],
+                [
+                  222,
+                  0.75342
+                ],
+                [
+                  223,
+                  0.72542
+                ],
+                [
+                  224,
+                  0.69723
+                ],
+                [
+                  225,
+                  0.66901
+                ],
+                [
+                  226,
+                  0.64093
+                ],
+                [
+                  227,
+                  0.61313
+                ],
+                [
+                  228,
+                  0.58574
+                ],
+                [
+                  229,
+                  0.55888
+                ],
+                [
+                  230,
+                  0.53263
+                ],
+                [
+                  231,
+                  0.50709
+                ],
+                [
+                  232,
+                  0.48227
+                ],
+                [
+                  233,
+                  0.4582
+                ],
+                [
+                  234,
+                  0.43488
+                ],
+                [
+                  235,
+                  0.41233
+                ],
+                [
+                  236,
+                  0.39055
+                ],
+                [
+                  237,
+                  0.36954
+                ],
+                [
+                  238,
+                  0.34929
+                ],
+                [
+                  239,
+                  0.32979
+                ],
+                [
+                  240,
+                  0.31104
+                ],
+                [
+                  241,
+                  0.29302
+                ],
+                [
+                  242,
+                  0.27573
+                ],
+                [
+                  243,
+                  0.25914
+                ],
+                [
+                  244,
+                  0.24324
+                ],
+                [
+                  245,
+                  0.22802
+                ],
+                [
+                  246,
+                  0.21345
+                ],
+                [
+                  247,
+                  0.19953
+                ],
+                [
+                  248,
+                  0.18623
+                ],
+                [
+                  249,
+                  0.17353
+                ],
+                [
+                  250,
+                  0.16142
+                ],
+                [
+                  251,
+                  0.14987
+                ],
+                [
+                  252,
+                  0.13881
+                ],
+                [
+                  253,
+                  0.1282
+                ],
+                [
+                  254,
+                  0.11798
+                ],
+                [
+                  255,
+                  0.10814
+                ],
+                [
+                  256,
+                  0.09866
+                ],
+                [
+                  257,
+                  0.08954
+                ],
+                [
+                  258,
+                  0.08079
+                ],
+                [
+                  259,
+                  0.07241
+                ],
+                [
+                  260,
+                  0.0644
+                ],
+                [
+                  261,
+                  0.05679
+                ],
+                [
+                  262,
+                  0.04958
+                ],
+                [
+                  263,
+                  0.04279
+                ],
+                [
+                  264,
+                  0.03641
+                ],
+                [
+                  265,
+                  0.03048
+                ],
+                [
+                  266,
+                  0.02505
+                ],
+                [
+                  267,
+                  0.02018
+                ],
+                [
+                  268,
+                  0.01587
+                ],
+                [
+                  269,
+                  0.01212
+                ],
+                [
+                  270,
+                  0.00891
+                ],
+                [
+                  271,
+                  0.00622
+                ],
+                [
+                  272,
+                  0.00403
+                ],
+                [
+                  273,
+                  0.00231
+                ],
+                [
+                  274,
+                  0.00107
+                ],
+                [
+                  275,
+                  0.00029
+                ],
+                [
+                  276,
+                  0.0
+                ]
+              ]
+            }
+          },
+          "border": {
+            "appear_start_frame": 112,
+            "appear_end_frame": 126,
+            "emphasis": [
+              [
+                126,
+                1.0
+              ],
+              [
+                132,
+                1.0
+              ],
+              [
+                140,
+                2.5
+              ],
+              [
+                154,
+                1.15
+              ],
+              [
+                194,
+                1.15
+              ],
+              [
+                200,
+                1.9
+              ],
+              [
+                210,
+                1.2
+              ],
+              [
+                272,
+                1.2
+              ],
+              [
+                280,
+                2.2
+              ],
+              [
+                292,
+                1.3
+              ],
+              [
+                420,
+                1.3
+              ]
+            ]
+          },
+          "fill": {
+            "appear_start_frame": 124,
+            "appear_end_frame": 140,
+            "vanish": [
+              196,
+              208
+            ],
+            "settle": [
+              [
+                140,
+                1.0
+              ],
+              [
+                146,
+                1.6
+              ],
+              [
+                156,
+                1.0
+              ],
+              [
+                196,
+                1.0
+              ]
+            ]
+          },
+          "corner_locks": {
+            "appear_start_frame": 118,
+            "appear_end_frame": 128,
+            "draw_start_frame": 120,
+            "draw_end_frame": 138,
+            "emphasis": [
+              [
+                138,
+                1.0
+              ],
+              [
+                144,
+                1.5
+              ],
+              [
+                156,
+                1.0
+              ],
+              [
+                194,
+                1.0
+              ],
+              [
+                200,
+                1.45
+              ],
+              [
+                210,
+                1.0
+              ],
+              [
+                272,
+                1.0
+              ],
+              [
+                280,
+                1.6
+              ],
+              [
+                292,
+                1.0
+              ],
+              [
+                420,
+                1.0
+              ]
+            ]
+          },
+          "beams": {
+            "source_object_id": "satellite",
+            "target": "corners",
+            "anchor": "presented",
+            "root_radius_km": 2.4,
+            "tip_radius_km": 4.2,
+            "sides": 24,
+            "glow_material": "aoi_beam_glow",
+            "glow_radius_factor": 4.5,
+            "appear_start_frame": 106,
+            "appear_end_frame": 120,
+            "release_start_frame": 198,
+            "release_end_frame": 208
+          },
+          "scan_fan": {
+            "source_object_id": "satellite",
+            "veil_material": "aoi_fan_veil",
+            "curtain_material": "aoi_scan_curtain",
+            "slices": 48,
+            "slice_segments": 8,
+            "appear_start_frame": 138,
+            "appear_end_frame": 150,
+            "retire_start_frame": 194,
+            "retire_end_frame": 206,
+            "note": "Secondary support for the four lines: a faint veil on the four faces of the pyramid they span, and a light curtain -- a stack of translucent slices from the platform to the ground, lit only near the sweep position -- that crosses the footprint west to east in step with the ground band, because both read the same keyed sweep value."
+          },
+          "sweep": {
+            "start_frame": 148,
+            "end_frame": 194
+          },
+          "note": "WEB-005A R3 persistent lock frame on the accepted 36 km analysis fixture."
+        },
+        {
+          "id": "earth",
+          "rotation_keyframes": [
+            {
+              "frame": 1,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "frame": 96,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                2.794
+              ]
+            },
+            {
+              "frame": 240,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                7.03
+              ]
+            },
+            {
+              "frame": 276,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                7.834
+              ]
+            },
+            {
+              "frame": 348,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                9.442
+              ]
+            },
+            {
+              "frame": 420,
+              "rotation_euler_deg": [
+                0.0,
+                0.0,
+                11.05
+              ]
+            }
+          ]
+        },
+        {
+          "id": "satellite",
+          "aim": {
+            "target_id": "aoi_target_center",
+            "influence_keyframes": [
+              {
+                "frame": 92,
+                "value": 0.0
+              },
+              {
+                "frame": 116,
+                "value": 1.0
+              },
+              {
+                "frame": 200,
+                "value": 1.0
+              },
+              {
+                "frame": 224,
+                "value": 0.0
+              }
+            ]
+          },
+          "orbit_intent": {
+            "altitude_km": 900.0,
+            "anchor_frame": 120,
+            "anchor_lat_deg": 23.76,
+            "anchor_lon_deg": 19.81,
+            "heading_deg": 100.0,
+            "rate_profile": [
+              [
+                1,
+                2.2
+              ],
+              [
+                52,
+                2.2
+              ],
+              [
+                104,
+                0.015
+              ],
+              [
+                420,
+                0.015
+              ]
+            ],
+            "keyframe_frames": [
+              1,
+              6,
+              11,
+              16,
+              21,
+              26,
+              31,
+              36,
+              41,
+              46,
+              51,
+              56,
+              61,
+              66,
+              71,
+              76,
+              81,
+              86,
+              91,
+              96,
+              101,
+              104,
+              106,
+              111,
+              112,
+              120,
+              128,
+              136,
+              144,
+              152,
+              160,
+              168,
+              176,
+              184,
+              192,
+              200,
+              208,
+              216,
+              224,
+              232,
+              240,
+              248,
+              256,
+              264,
+              272,
+              276,
+              300,
+              340,
+              380,
+              420
+            ],
+            "note": "One circular 900 km orbit, derived and time-remapped, solved against the locked-off camera: over 23.76 N 19.81 E at frame 120 heading 100, which puts the platform at about (0.555, 0.38) of the frame -- left of centre, right of the hero copy column -- for the whole acquisition. 2.2 degrees of arc per frame while it is behind the planet and coming round the left limb, easing over 52-104 to 0.015, where it stays: with the observer fixed there is no parallax to hide a drift, so the platform creeps about two percent of the frame width through the beat and reads as station-keeping."
+          },
+          "location_keyframes": [
+            {
+              "frame": 1,
+              "location": [
+                -1.0433,
+                6.676,
+                -2.6852
+              ]
+            },
+            {
+              "frame": 6,
+              "location": [
+                -2.3729,
+                6.4688,
+                -2.3219
+              ]
+            },
+            {
+              "frame": 11,
+              "location": [
+                -3.6152,
+                6.024,
+                -1.8733
+              ]
+            },
+            {
+              "frame": 16,
+              "location": [
+                -4.7248,
+                5.3577,
+                -1.3559
+              ]
+            },
+            {
+              "frame": 21,
+              "location": [
+                -5.6607,
+                4.4947,
+                -0.7886
+              ]
+            },
+            {
+              "frame": 26,
+              "location": [
+                -6.3886,
+                3.4664,
+                -0.1924
+              ]
+            },
+            {
+              "frame": 31,
+              "location": [
+                -6.8818,
+                2.3108,
+                0.4109
+              ]
+            },
+            {
+              "frame": 36,
+              "location": [
+                -7.1221,
+                1.0703,
+                0.9991
+              ]
+            },
+            {
+              "frame": 41,
+              "location": [
+                -7.1006,
+                -0.2096,
+                1.5506
+              ]
+            },
+            {
+              "frame": 46,
+              "location": [
+                -6.8183,
+                -1.4818,
+                2.0451
+              ]
+            },
+            {
+              "frame": 51,
+              "location": [
+                -6.2854,
+                -2.6995,
+                2.4645
+              ]
+            },
+            {
+              "frame": 56,
+              "location": [
+                -5.5481,
+                -3.7857,
+                2.7847
+              ]
+            },
+            {
+              "frame": 61,
+              "location": [
+                -4.7163,
+                -4.6555,
+                2.9916
+              ]
+            },
+            {
+              "frame": 66,
+              "location": [
+                -3.8624,
+                -5.3206,
+                3.1049
+              ]
+            },
+            {
+              "frame": 71,
+              "location": [
+                -3.0409,
+                -5.8065,
+                3.1471
+              ]
+            },
+            {
+              "frame": 76,
+              "location": [
+                -2.2915,
+                -6.1447,
+                3.1399
+              ]
+            },
+            {
+              "frame": 81,
+              "location": [
+                -1.6405,
+                -6.3677,
+                3.103
+              ]
+            },
+            {
+              "frame": 86,
+              "location": [
+                -1.1043,
+                -6.506,
+                3.0529
+              ]
+            },
+            {
+              "frame": 91,
+              "location": [
+                -0.6922,
+                -6.5857,
+                3.0028
+              ]
+            },
+            {
+              "frame": 96,
+              "location": [
+                -0.4086,
+                -6.6275,
+                2.9626
+              ]
+            },
+            {
+              "frame": 101,
+              "location": [
+                -0.2554,
+                -6.6456,
+                2.939
+              ]
+            },
+            {
+              "frame": 104,
+              "location": [
+                -0.2262,
+                -6.6488,
+                2.9343
+              ]
+            },
+            {
+              "frame": 106,
+              "location": [
+                -0.2224,
+                -6.6491,
+                2.9337
+              ]
+            },
+            {
+              "frame": 111,
+              "location": [
+                -0.2131,
+                -6.6501,
+                2.9322
+              ]
+            },
+            {
+              "frame": 112,
+              "location": [
+                -0.2112,
+                -6.6503,
+                2.9319
+              ]
+            },
+            {
+              "frame": 120,
+              "location": [
+                -0.1963,
+                -6.6518,
+                2.9295
+              ]
+            },
+            {
+              "frame": 128,
+              "location": [
+                -0.1813,
+                -6.6533,
+                2.9271
+              ]
+            },
+            {
+              "frame": 136,
+              "location": [
+                -0.1663,
+                -6.6548,
+                2.9247
+              ]
+            },
+            {
+              "frame": 144,
+              "location": [
+                -0.1514,
+                -6.6562,
+                2.9222
+              ]
+            },
+            {
+              "frame": 152,
+              "location": [
+                -0.1364,
+                -6.6576,
+                2.9197
+              ]
+            },
+            {
+              "frame": 160,
+              "location": [
+                -0.1215,
+                -6.659,
+                2.9173
+              ]
+            },
+            {
+              "frame": 168,
+              "location": [
+                -0.1065,
+                -6.6603,
+                2.9148
+              ]
+            },
+            {
+              "frame": 176,
+              "location": [
+                -0.0915,
+                -6.6617,
+                2.9123
+              ]
+            },
+            {
+              "frame": 184,
+              "location": [
+                -0.0766,
+                -6.6629,
+                2.9098
+              ]
+            },
+            {
+              "frame": 192,
+              "location": [
+                -0.0616,
+                -6.6642,
+                2.9072
+              ]
+            },
+            {
+              "frame": 200,
+              "location": [
+                -0.0466,
+                -6.6654,
+                2.9047
+              ]
+            },
+            {
+              "frame": 208,
+              "location": [
+                -0.0317,
+                -6.6666,
+                2.9021
+              ]
+            },
+            {
+              "frame": 216,
+              "location": [
+                -0.0167,
+                -6.6678,
+                2.8996
+              ]
+            },
+            {
+              "frame": 224,
+              "location": [
+                -0.0017,
+                -6.669,
+                2.897
+              ]
+            },
+            {
+              "frame": 232,
+              "location": [
+                0.0132,
+                -6.6701,
+                2.8944
+              ]
+            },
+            {
+              "frame": 240,
+              "location": [
+                0.0282,
+                -6.6711,
+                2.8918
+              ]
+            },
+            {
+              "frame": 248,
+              "location": [
+                0.0432,
+                -6.6722,
+                2.8892
+              ]
+            },
+            {
+              "frame": 256,
+              "location": [
+                0.0581,
+                -6.6732,
+                2.8865
+              ]
+            },
+            {
+              "frame": 264,
+              "location": [
+                0.0731,
+                -6.6742,
+                2.8839
+              ]
+            },
+            {
+              "frame": 272,
+              "location": [
+                0.088,
+                -6.6752,
+                2.8812
+              ]
+            },
+            {
+              "frame": 276,
+              "location": [
+                0.0955,
+                -6.6757,
+                2.8799
+              ]
+            },
+            {
+              "frame": 300,
+              "location": [
+                0.1404,
+                -6.6783,
+                2.8718
+              ]
+            },
+            {
+              "frame": 340,
+              "location": [
+                0.2152,
+                -6.6822,
+                2.8582
+              ]
+            },
+            {
+              "frame": 380,
+              "location": [
+                0.29,
+                -6.6854,
+                2.8442
+              ]
+            },
+            {
+              "frame": 420,
+              "location": [
+                0.3647,
+                -6.6878,
+                2.8298
+              ]
+            }
+          ],
+          "yaw_deg": 152.0,
+          "yaw_note": "Yaw about nadir so the array axis lies across the screen under the locked-off camera: the sun-tracking arrays then present about half their face to the observer instead of their edge."
+        },
+        {
+          "id": "orbit_trail",
+          "presence_keyframes": [
+            [
+              1,
+              1.0
+            ],
+            [
+              200,
+              1.0
+            ],
+            [
+              222,
+              0.0
+            ]
+          ]
+        },
+        {
+          "id": "aoi_analysis",
+          "omit": true
+        },
+        {
+          "id": "aoi_relief",
+          "type": "aoi_relief",
+          "aoi_id": "aoi",
+          "fixture": "kizildere_analysis",
+          "parent_id": "earth",
+          "dem": "kizildere_top_dem.tif",
+          "grid": 600,
+          "vertical_exaggeration": 3.0,
+          "reference_elevation": "min",
+          "base_offset_m": 120.0,
+          "frame_clearance_m": 140.0,
+          "material": "aoi_relief_layers",
+          "wall_material": "aoi_relief_wall",
+          "rise_keyframes": [
+            [
+              284,
+              0.0
+            ],
+            [
+              308,
+              1.0
+            ]
+          ],
+          "layer_keyframes": {
+            "terrain": [
+              [
+                284,
+                0.0
+              ],
+              [
+                296,
+                1.0
+              ],
+              [
+                328,
+                1.0
+              ],
+              [
+                340,
+                0.0
+              ]
+            ],
+            "thm01": [
+              [
+                328,
+                0.0
+              ],
+              [
+                340,
+                1.0
+              ],
+              [
+                358,
+                1.0
+              ],
+              [
+                370,
+                0.0
+              ]
+            ],
+            "alt01": [
+              [
+                358,
+                0.0
+              ],
+              [
+                370,
+                1.0
+              ],
+              [
+                386,
+                1.0
+              ],
+              [
+                398,
+                0.0
+              ]
+            ],
+            "priority": [
+              [
+                386,
+                0.0
+              ],
+              [
+                398,
+                1.0
+              ],
+              [
+                420,
+                1.0
+              ]
+            ]
+          },
+          "note": "A-HERO-18/19. Geometry is displaced from the governed top-dem.tif only (never from a coloured texture), on the same fixture mapping the lock frame is drawn from; 3x is a presentation exaggeration, not a claim. The four prepared display textures are material only and share one UV."
+        }
+      ],
+      "materials": {
+        "aoi_fill": {
+          "axis": "u",
+          "band_width": 0.05,
+          "base_alpha": 0.03,
+          "acquired_alpha": 0.075,
+          "band_alpha": 0.55
+        },
+        "aoi_beam": {
+          "emission_strength": 8.0
+        },
+        "aoi_fan_veil": {
+          "type": "aoi_beam",
+          "emission_color_ref": "beam_glow",
+          "emission_strength": 1.4,
+          "root_alpha": 0.0,
+          "tip_alpha": 0.032,
+          "note": "Fan faces: invisible at the platform, a breath of cyan at the ground. Never a slab."
+        },
+        "aoi_scan_curtain": {
+          "type": "aoi_scan_curtain",
+          "emission_color_ref": "beam_core",
+          "emission_strength": 5.5,
+          "band_width": 0.032,
+          "tail_width": 0.22,
+          "band_alpha": 0.34,
+          "tail_alpha": 0.012,
+          "root_alpha_factor": 0.12
+        },
+        "aoi_relief_layers": {
+          "type": "aoi_relief_layers",
+          "layers": {
+            "terrain": {
+              "texture": "terrain_webhero_display_4k.png",
+              "emission_mix": 0.2
+            },
+            "thm01": {
+              "texture": "thm01_webhero_display_4k.png",
+              "emission_mix": 0.62
+            },
+            "alt01": {
+              "texture": "alt01_webhero_display_4k.png",
+              "emission_mix": 0.62
+            },
+            "priority": {
+              "texture": "priority_webhero_display_4k.png",
+              "emission_mix": 0.62
+            }
+          },
+          "layer_order": [
+            "terrain",
+            "thm01",
+            "alt01",
+            "priority"
+          ],
+          "nodata_color": [
+            0.012,
+            0.016,
+            0.02
+          ],
+          "roughness": 0.85,
+          "note": "Prepared display textures, consumed byte-for-byte (checksums in hero/assets/manifest.json). No recolouring: the only thing the material adds is the scene's own light on the DEM relief."
+        },
+        "aoi_relief_wall": {
+          "type": "aoi_beam",
+          "emission_color_ref": "beam_glow",
+          "emission_strength": 1.6,
+          "root_alpha": 0.0,
+          "tip_alpha": 0.34,
+          "note": "Sides of the raised block: not ground and not data. A cyan glass that is absent at the globe and strongest at the rim, so the relief reads as the footprint lifted for analysis rather than as a slab with painted edges."
+        }
+      }
     }
   },
   "data_state_note": "WEB-005 is the authorized integration gate. The four accepted WEB-HERO-001 scenes stay pre-data and unedited; the production scene binds accepted GEO-WEB-002 geometry and declares -- but does not bake -- the accepted result layer, which is composited in the page over the render so its governed pixels are never re-encoded. WEB-005A R2 revises only the production scene's visual treatment, camera composition, satellite and Earth albedo sources.",
