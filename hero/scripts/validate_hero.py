@@ -1456,6 +1456,15 @@ def check_r3_preview_gate(report: Report, scene_config) -> None:
     2026-09-18: true-corner line anchors, a reticle that is separate from the true outline, the
     settle -> aim -> draw-on -> lock -> sweep -> retire -> approach order, thinner line language,
     a cyan / teal scan palette, a bounded platform exit and the approved timing envelope.
+
+    Third preview. Product's human visual review of the second preview found that four lines onto
+    the true 36 km footprint read as "beams go toward the middle, then the AOI appears", and
+    overrode c7c6cb1 section 2 for the *visible* acquisition (chat, 2026-09-18): the four lines land
+    on the four corners of a presentation reticle centred on the true AOI, the reticle is legible
+    before any line exists, and it tightens onto the true AOI only after the lines have released.
+    Everything analytical -- relief, drape, final hold -- stays on the true governed footprint.
+    b9579ef adds: the platform may not cross the bottom-right caption, and masked analytical ground
+    shows the Terrain context beneath rather than a dark neutral.
     ``audit_preview_gate.py`` measures the evaluated scene; this proves the contract those
     measurements rest on, without Blender -- the observer is locked off by construction, nothing
     that belongs to the scan survives into the camera move, the lock frame only ever tightens, and
@@ -1557,16 +1566,43 @@ def check_r3_preview_gate(report: Report, scene_config) -> None:
             "veil " + repr(veil.get("tip_alpha")) + ", band " + repr(curtain.get("band_alpha")),
         )
 
-        # --- c7c6cb1 section 2: true-corner anchors, reticle separate from the true outline ---------
+        # --- Product override of 2026-09-18: visible acquisition on a presentation reticle ------------
         presentation = aoi_spec.get("presentation", {})
-        report.check(beams.get("anchor") == "true",
-                     label + "anchors the four primary lines on the true governed corners (never 'presented')",
+        report.check(beams.get("anchor") == "presented",
+                     label + "lands the four visible lines on the four corners of the presentation reticle",
                      repr(beams.get("anchor")))
-        report.check(presentation.get("reticle_parts") == ["corner_locks"],
-                     label + "keeps the outline on the true footprint; only the corner brackets are reticle",
+        report.check(sorted(presentation.get("reticle_parts", [])) == ["border", "border_glow", "corner_locks"],
+                     label + "draws one reticle (frame, halo, brackets) that travels as a whole onto the true footprint",
                      repr(presentation.get("reticle_parts")))
+        morph_start = presentation.get("screen_intent", {}).get("morph_frames", [0, 0])[0]
+        report.check(isinstance(beams.get("release_end_frame"), int) and morph_start >= beams["release_end_frame"],
+                     label + "never moves a line anchor while a line is attached (reticle tightens only after release)",
+                     repr([beams.get("release_end_frame"), morph_start]))
+        border_cfg, locks_cfg = aoi_spec.get("border", {}), aoi_spec.get("corner_locks", {})
+        report.check(
+            isinstance(beams.get("appear_start_frame"), int)
+            and border_cfg.get("appear_start_frame", 10 ** 6) + 8 <= beams["appear_start_frame"]
+            and locks_cfg.get("draw_start_frame", 10 ** 6) + 6 <= beams["appear_start_frame"]
+            and locks_cfg.get("draw_end_frame", 10 ** 6) <= beams.get("appear_end_frame", -1),
+            label + "resolves the reticle before the lines: the target is legible first, never 'appears afterwards'",
+            repr([border_cfg.get("appear_start_frame"), locks_cfg.get("draw_start_frame"),
+                  locks_cfg.get("draw_end_frame"), beams.get("appear_start_frame"), beams.get("appear_end_frame")]),
+        )
+        pulse_frame = aoi_spec.get("lock_pulse_frame")
+        pulse = dict((int(f), float(v)) for f, v in border_cfg.get("emphasis", [])).get(pulse_frame, 0.0)
+        report.check(
+            isinstance(pulse_frame, int) and beams.get("appear_end_frame", 10 ** 6) <= pulse_frame <= sweep.get("start_frame", -1)
+            and pulse >= 1.8,
+            label + "makes the lock an event after all four lines have landed and before the sweep",
+            repr([pulse_frame, pulse]),
+        )
         report.check(bool((beams.get("emitter") or {}).get("object_id")),
                      label + "emits the lines from the instrument aperture")
+        top = fan.get("top") or {}
+        half = float((beams.get("emitter") or {}).get("half_side_km", -1.0))
+        report.check(float(top.get("half_length_km", 0.0)) == half and float(top.get("half_depth_km", 0.0)) == half,
+                     label + "builds the scan fan exactly between the four lines (its top is the emitter square)",
+                     repr([top, half]))
 
         # --- Product clarifications 1-2: settle -> aim -> draw-on, and lines that propagate ---------
         satellite_spec = objects.get("satellite", {})
@@ -1644,6 +1680,15 @@ def check_r3_preview_gate(report: Report, scene_config) -> None:
         exit_cfg = camera.get("composition", {}).get("satellite_exit", {})
         report.check(0.0 < float(exit_cfg.get("max_width_fraction", 9.9)) <= 0.22,
                      label + "declares the platform-exit fly-by bound at or under 22 percent", repr(exit_cfg.get("max_width_fraction")))
+        region = camera.get("composition", {}).get("caption_safe_region_1440", {})
+        box = region.get("caption_box", {})
+        report.check(
+            bool(box) and float(region.get("x0", 9.9)) <= float(box.get("x0", 0.0)) - 0.03
+            and float(region.get("y1", 0.0)) >= float(box.get("y1", 9.9)) + 0.04
+            and float(region.get("x1", 0.0)) >= 1.0 and float(region.get("y0", 9.9)) <= 0.0,
+            label + "protects the bottom-right caption with a margin, out to the frame's right and bottom edges (b9579ef section 2)",
+            repr({k: region.get(k) for k in ("x0", "x1", "y0", "y1")}),
+        )
         envelope = spec.get("animation", {}).get("timing_envelope", {})
         rate = float(spec.get("animation", {}).get("frame_rate", 24))
         motion = envelope.get("motion_section_frames", [0, 0])
@@ -1714,6 +1759,9 @@ def check_r3_preview_gate(report: Report, scene_config) -> None:
                      repr(relief.get("dem")))
         layers = materials.get(relief.get("material"), {})
         order = layers.get("layer_order", [])
+        report.check(layers.get("underlay_layer") == "terrain" and "terrain" in order,
+                     label + "shows the Terrain context through masked analytical ground, never a dark neutral (b9579ef section 3)",
+                     repr(layers.get("underlay_layer")))
         report.check(order == ["terrain", "thm01", "alt01", "priority"],
                      label + "reveals Terrain, THM-01, ALT-01, priority in the locked order", repr(order))
         for layer_id in order:

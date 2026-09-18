@@ -1,0 +1,131 @@
+{
+  "scene": "hero_r3_preview_gate",
+  "results": [
+    {
+      "mutation": "beams.anchor = true: gate-2 geometry, overridden by Product after visual review",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate lands the four visible lines on the four corners of the presentation reticle \u2014 'true'"
+      ]
+    },
+    {
+      "mutation": "frame left on the true footprint, only brackets as reticle (gate-2 look)",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate draws one reticle (frame, halo, brackets) that travels as a whole onto the true footprint \u2014 ['corner_locks']"
+      ]
+    },
+    {
+      "mutation": "reticle starts to tighten while lines are still attached",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate never moves a line anchor while a line is attached (reticle tightens only after release) \u2014 [178, 170]",
+        "scene hero_r3_preview_gate lock frame holds its presentation while fixed, then tightens monotonically onto the footprint",
+        "scene hero_r3_preview_gate lock-frame line weight is its own ramp over the same window"
+      ]
+    },
+    {
+      "mutation": "reticle resolves after the lines (target 'appears afterwards')",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate resolves the reticle before the lines: the target is legible first, never 'appears afterwards' \u2014 [120, 100, 114, 108, 126]"
+      ]
+    },
+    {
+      "mutation": "no lock pulse",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate makes the lock an event after all four lines have landed and before the sweep \u2014 [132, 1.2]"
+      ]
+    },
+    {
+      "mutation": "scan fan not between the four lines",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate builds the scan fan exactly between the four lines (its top is the emitter square) \u2014 [{'half_length_km': 190.0, 'half_depth_km': 22.0"
+      ]
+    },
+    {
+      "mutation": "caption region shrunk to the bare caption box",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate protects the bottom-right caption with a margin, out to the frame's right and bottom edges (b9579ef section 2) \u2014 {'x0': 0.655, 'x1': "
+      ]
+    },
+    {
+      "mutation": "masked analytical ground back to the dark neutral",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate shows the Terrain context through masked analytical ground, never a dark neutral (b9579ef section 3) \u2014 None"
+      ]
+    },
+    {
+      "mutation": "lines start before the slew has finished",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate resolves the reticle before the lines: the target is legible first, never 'appears afterwards' \u2014 [98, 100, 114, 96, 126]",
+        "scene hero_r3_preview_gate orders the acquisition: pass settles, platform slews, slew completes, only then do lines draw \u2014 {'settled': 84.0, 'aim': [86, 102], '"
+      ]
+    },
+    {
+      "mutation": "slew starts before the pass has settled",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate orders the acquisition: pass settles, platform slews, slew completes, only then do lines draw \u2014 {'settled': 84.0, 'aim': [70, 102], '"
+      ]
+    },
+    {
+      "mutation": "lines fade in (no draw-on)",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate draws each line on over at least 8 frames (core and glow both masked), never a fade-in \u2014 {}"
+      ]
+    },
+    {
+      "mutation": "first-gate outline weight",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate states the thinner outline / halo / bracket weights (first gate: 2.2 / 13 / 4.0 px) \u2014 {'border_px': 2.2, 'glow_px': 7.0, 'corner_lock"
+      ]
+    },
+    {
+      "mutation": "curtain back on the near-white R2 core colour",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate draws every acquisition effect in the scan cyan / teal \u2014 {'aoi_beam': 'scan_cyan', 'aoi_beam_glow': 'scan_teal', 'aoi_fan_veil': 'sca"
+      ]
+    },
+    {
+      "mutation": "scan palette made pale / milky",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate palette scan_cyan is a saturated cyan / teal (almost no red, green and blue together) \u2014 [0.6, 0.9, 1.0]"
+      ]
+    },
+    {
+      "mutation": "platform-exit bound loosened to 0.29",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate declares the platform-exit fly-by bound at or under 22 percent \u2014 0.29"
+      ]
+    },
+    {
+      "mutation": "analytical sequence stretched to 5 s",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate declares a timing envelope inside the approved one (motion 11.5-12.5 s, reveal 2.4-3.2 s) \u2014 [[1, 276], [276, 398]]",
+        "scene hero_r3_preview_gate layer ramps occupy exactly the declared analytical window \u2014 [276, 342] vs [276, 398]"
+      ]
+    },
+    {
+      "mutation": "platform resumes its pass while lines are attached",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate holds the platform at station-keeping rate for as long as any line is attached",
+        "scene hero_r3_preview_gate committed satellite keyframes match their orbit derivation \u2014 worst drift 1.8796"
+      ]
+    }
+  ],
+  "caught": 17,
+  "total": 17
+}

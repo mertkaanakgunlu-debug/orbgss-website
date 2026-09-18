@@ -2729,9 +2729,9 @@
     },
     "hero_r3_preview_gate": {
       "extends": "hero_production_kizildere",
-      "description": "WEB-005A R3 preview gate, second low-cost preview (Product decision docs/web-005-polish-authority@c7c6cb1 plus the Product clarifications of 2026-09-18). Low-cost review scene; it does not replace hero_production_kizildere, whose shipped media stay bound to their own configuration until Product passes this gate. One world, one camera, no cut, observer locked off from frame 1 until every acquisition effect has retired (186). Order of events: the satellite comes round the left limb and SETTLES (84); only then does it slew to face the target (86-102); only then do four thin lines DRAW ON from the instrument aperture to the four TRUE governed 36 km corners (106-124); the true outline and a screen-space reticle lock (118-140); a translucent fan, broad aloft and standing on the true footprint, carries a west-to-east light curtain (140-172); fan, wash and lines retire (172-186). The platform then resumes its own pass and leaves lower-right under its own motion, bounded below the fly-by envelope, while the camera eases into the approach and the reticle tightens continuously onto the true outline (186-266). At the hold the governed DEM lifts the footprint into relief and Terrain, THM-01, ALT-01 and priority cross-fade on that one registered surface inside 2.75 s, ending on priority alone.",
+      "description": "WEB-005A R3 preview gate, third low-cost preview. Product's human visual review of the second preview was REVISION_REQUIRED: four lines onto the true 36 km footprint read as 'beams go toward the middle, then the AOI appears'. Product override of 2026-09-18 (chat, after that review): the visible acquisition may and must use a larger PRESENTATION RETICLE centred on the true AOI; the four lines land on ITS four corners; it then tightens continuously onto the true AOI; relief, drape and final hold stay on the true governed footprint. Order of events, observer locked off until 186: the satellite comes round the lower-left limb and settles (84); slews to the target (86-102) while the reticle resolves around the target (98-114), so the target area is legible before any line exists; four thin lines draw on from the instrument aperture to the reticle's four corners (108-126); lock pulse (132); a translucent fan between the four lines carries a west-to-east light curtain (136-168); fan, wash and lines retire (168-178); the platform resumes its pass (178) and leaves through the right edge, clear of the caption; the camera moves from 187 while the reticle tightens onto the true corners (186-266); DEM relief and Terrain -> THM-01 -> ALT-01 -> priority on the true footprint, masked ground showing Terrain beneath, ending on priority alone.",
       "role": "hero_preview_gate",
-      "frame": 156,
+      "frame": 152,
       "render_overrides": {
         "transparent_max_bounces": 96,
         "note": "The scan curtain is a stack of translucent slices; a view ray can cross most of them."
@@ -2742,15 +2742,15 @@
         "frame_rate": 24,
         "representative_frames": {
           "fixed_establish": 24,
-          "satellite_entry": 56,
+          "satellite_entry": 60,
           "settled": 84,
-          "aimed": 104,
-          "beam_start": 112,
-          "beam_lock": 138,
-          "scan_sweep": 156,
-          "retire": 180,
+          "reticle_resolving": 104,
+          "beam_start": 114,
+          "beam_lock": 134,
+          "scan_sweep": 152,
+          "retire": 174,
           "first_approach": 187,
-          "platform_exit": 198,
+          "platform_exit": 196,
           "mid_approach": 236,
           "relief": 292,
           "thm01": 310,
@@ -2771,25 +2771,33 @@
             86,
             102
           ],
+          "reticle_resolve": [
+            98,
+            114
+          ],
           "beam_draw": [
-            106,
-            124
+            108,
+            126
           ],
           "aoi_lock": [
-            118,
-            140
+            126,
+            136
           ],
           "aoi_acquisition": [
-            106,
-            186
+            108,
+            178
           ],
           "scan_sweep": [
-            140,
-            172
+            136,
+            168
           ],
           "retire": [
-            172,
-            186
+            168,
+            178
+          ],
+          "platform_departure": [
+            178,
+            206
           ],
           "camera_approach": [
             186,
@@ -2808,7 +2816,7 @@
             384
           ]
         },
-        "continuity_note": "Fixed observer 1-186. Platform settles by 84 (rate eased to station-keeping), slews 86-102, lines draw on 106-124 (2-frame stagger nw, ne, se, sw), true outline 118-126, reticle brackets 120-136 with the lock pulse at 140, fan 132-142, curtain west to east 140-172, fan and wash retire 172-184, lines release 176-186. Platform resumes its pass at 186 and is out of frame about 210. Approach 186-266 with the reticle morph over the same window. Relief rises 276-292; Terrain, THM-01, ALT-01, priority cross-fade 276-342; priority alone 342-384.",
+        "continuity_note": "Fixed observer 1-186. Platform settles by 84, slews 86-102. Reticle resolves 98-114 (frame and halo 98-110 at 0.7 of their locked brightness, corner brackets drawn 100-114). Lines draw on 108-126 (2-frame stagger nw, ne, se, sw; 12 frames each) onto the four reticle corners; lock pulse 132. Fan 126-136, curtain west to east 136-168, fan and wash retire 168-176, lines release 170-178. Platform resumes its pass at 178 with the camera still fixed and is out of frame about 203. Approach 186-266 with the reticle morph over the same window, so no anchor ever moves while a line is attached. Relief rises 276-292; layers cross-fade 276-342; priority alone 342-384.",
         "timing_envelope": {
           "motion_section_frames": [
             1,
@@ -2932,6 +2940,11 @@
             "shift_y": -0.05625
           },
           {
+            "frame": 214,
+            "shift_x": -0.27,
+            "shift_y": -0.05625
+          },
+          {
             "frame": 260,
             "shift_x": -0.2,
             "shift_y": -0.01125
@@ -2942,12 +2955,12 @@
             "shift_y": -0.01125
           }
         ],
-        "shift_note": "Constant through the fixed phase (a lens-shift change is apparent camera motion). Target at (0.77, 0.60) while acquiring, easing to (0.70, 0.52) -- right-middle -- at the hold.",
+        "shift_note": "Constant through the fixed phase (a lens-shift change is apparent camera motion) and held until 214, after the platform has left: re-framing the target while the platform is still in frame would carry it down toward the caption. Target at (0.77, 0.60) while acquiring, easing to (0.70, 0.52) -- right-middle -- at the hold.",
         "composition": {
           "headline_safe_through_frame": 0,
           "acquisition_beat": [
-            106,
-            186
+            108,
+            178
           ],
           "copy_safe_region_1440": {
             "x0": 0.0,
@@ -2969,8 +2982,21 @@
           },
           "satellite_exit": {
             "max_width_fraction": 0.22,
-            "out_of_frame_by_frame": 212,
+            "out_of_frame_by_frame": 216,
             "note": "Product decision c7c6cb1 section 6: through the intentional exit the whole projected silhouette stays at or under 22 percent of the frame width on every frame in which any of it is in frame."
+          },
+          "caption_safe_region_1440": {
+            "x0": 0.655,
+            "x1": 1.0,
+            "y0": 0.0,
+            "y1": 0.185,
+            "caption_box": {
+              "x0": 0.698,
+              "x1": 0.944,
+              "y0": 0.07,
+              "y1": 0.134
+            },
+            "note": "Product decision b9579ef section 2. Measured in the built page at 1440 x 900: the bottom-right caption occupies frame x 0.698-0.944, y 0.070-0.134 (y up). The protected region adds 0.04 of a frame width to its left and 0.05 of a frame height above it and runs to the right and bottom edges. The platform's silhouette, grown by its motion-blur travel, may not enter it on any frame."
           }
         },
         "keyframes": [
@@ -3119,7 +3145,7 @@
             "width_km": 0.6723
           },
           "presentation": {
-            "purpose": "Two separate things. The TRUE outline (border + halo) is drawn on the governed 36 km footprint for the whole shot and only its line weight is screen-derived. The RETICLE (the four corner brackets) is screen-space presentation: it opens at a readable size around the target and tightens continuously onto the true corners during the approach. Nothing on the ground is ever drawn at the reticle's size.",
+            "purpose": "One persistent presentation reticle (frame, halo and corner brackets) centred on the true AOI. It is screen-space presentation, sized for readability, and it is what the four visible lines land on (Product override of 2026-09-18). It holds still for as long as any line is attached, then tightens continuously onto the true governed corners and becomes the outline of the true footprint. The authoritative footprint is the fixture and is never edited; relief, drape and final hold are built on it alone.",
             "screen_intent": {
               "reference_width_px": 1920,
               "acquisition_width_fraction": 0.066,
@@ -3139,6 +3165,8 @@
               "line_language_note": "Product clarification 3 (thinner line language): border 2.2 -> 1.5 px, halo 13 -> 7 px, corner locks 4.0 -> 2.4 px at 1920, with shorter bracket arms."
             },
             "reticle_parts": [
+              "border",
+              "border_glow",
               "corner_locks"
             ],
             "derived": {
@@ -3815,35 +3843,35 @@
             }
           },
           "border": {
-            "appear_start_frame": 118,
-            "appear_end_frame": 126,
+            "appear_start_frame": 98,
+            "appear_end_frame": 110,
             "emphasis": [
               [
+                110,
+                0.7
+              ],
+              [
                 126,
-                1.0
+                0.8
               ],
               [
-                134,
-                1.0
-              ],
-              [
-                140,
+                132,
                 2.2
               ],
               [
-                150,
+                142,
                 1.1
               ],
               [
-                172,
+                168,
                 1.1
               ],
               [
-                178,
+                174,
                 1.7
               ],
               [
-                188,
+                184,
                 1.15
               ],
               [
@@ -3865,11 +3893,11 @@
             ]
           },
           "fill": {
-            "appear_start_frame": 120,
+            "appear_start_frame": 118,
             "appear_end_frame": 130,
             "vanish": [
-              174,
-              184
+              168,
+              176
             ],
             "settle": [
               [
@@ -3877,47 +3905,55 @@
                 1.0
               ],
               [
-                138,
+                134,
                 1.5
               ],
               [
-                146,
+                142,
                 1.0
               ],
               [
-                174,
+                168,
                 1.0
               ]
             ]
           },
           "corner_locks": {
-            "appear_start_frame": 120,
-            "appear_end_frame": 128,
-            "draw_start_frame": 122,
-            "draw_end_frame": 136,
+            "appear_start_frame": 100,
+            "appear_end_frame": 108,
+            "draw_start_frame": 100,
+            "draw_end_frame": 114,
             "emphasis": [
               [
-                136,
+                108,
+                0.75
+              ],
+              [
+                120,
+                0.85
+              ],
+              [
+                126,
                 1.0
               ],
               [
-                141,
-                1.5
+                132,
+                1.6
               ],
               [
-                150,
+                142,
                 1.0
               ],
               [
-                172,
+                168,
                 1.0
               ],
               [
-                178,
+                174,
                 1.4
               ],
               [
-                188,
+                184,
                 1.0
               ],
               [
@@ -3941,7 +3977,7 @@
           "beams": {
             "source_object_id": "satellite",
             "target": "corners",
-            "anchor": "true",
+            "anchor": "presented",
             "emitter": {
               "object_id": "satellite_aperture",
               "half_side_km": 22.0
@@ -3951,8 +3987,8 @@
             "sides": 16,
             "glow_material": "aoi_beam_glow",
             "glow_radius_factor": 3.0,
-            "appear_start_frame": 106,
-            "appear_end_frame": 124,
+            "appear_start_frame": 108,
+            "appear_end_frame": 126,
             "draw": {
               "stagger_frames": 2,
               "order": [
@@ -3963,31 +3999,32 @@
               ],
               "ease_power": 2.0
             },
-            "release_start_frame": 176,
-            "release_end_frame": 186,
-            "note": "Four primary lines from the instrument aperture rim to the four TRUE governed corners (Product decision c7c6cb1 section 2). They propagate; they do not fade in."
+            "release_start_frame": 170,
+            "release_end_frame": 178,
+            "note": "Four primary lines from the instrument aperture rim to the four corners of the presentation reticle (Product override of 2026-09-18). Those corners are the true governed corners scaled along the footprint's own diagonals about the same centre; they do not move while a line is attached; the true corners are still built as aoi_true_<corner> and audited. The lines propagate; they do not fade in."
           },
           "scan_fan": {
             "source_object_id": "satellite",
             "veil_material": "aoi_fan_veil",
             "curtain_material": "aoi_scan_curtain",
             "top": {
-              "half_length_km": 190.0,
+              "half_length_km": 22.0,
               "half_depth_km": 22.0
             },
-            "slices": 56,
+            "slices": 64,
             "slice_segments": 6,
-            "appear_start_frame": 132,
-            "appear_end_frame": 142,
-            "retire_start_frame": 172,
-            "retire_end_frame": 182,
-            "note": "Broad in space, true on the ground: the fan's upper edge is a 260 x 44 km rectangle on the aperture, its foot is the governed 36 km footprint, and the light curtain crosses from its west face to its east face in step with the ground band (one keyed sweep value)."
+            "appear_start_frame": 126,
+            "appear_end_frame": 136,
+            "retire_start_frame": 168,
+            "retire_end_frame": 176,
+            "note": "The fan is exactly the volume between the four lines: its top is the aperture square the lines leave from, its foot is the reticle they land on. The light curtain crosses it from its west face to its east face in step with the ground band (one keyed sweep value)."
           },
           "sweep": {
-            "start_frame": 140,
-            "end_frame": 172
+            "start_frame": 136,
+            "end_frame": 168
           },
-          "note": "WEB-005A R3 preview gate 2: true 36 km outline + screen-space reticle on the accepted analysis fixture."
+          "note": "WEB-005A R3 preview gate 3: presentation reticle for the visible acquisition, true 36 km footprint for everything analytical.",
+          "lock_pulse_frame": 132
         },
         {
           "id": "earth",
@@ -4056,22 +4093,22 @@
                 "value": 1.0
               },
               {
-                "frame": 186,
+                "frame": 178,
                 "value": 1.0
               },
               {
-                "frame": 206,
+                "frame": 198,
                 "value": 0.0
               }
             ],
-            "note": "Aiming beat. The slew begins only after the pass has settled (84) and is complete (102) four frames before the first line leaves the aperture (106); it is released only after the lines have."
+            "note": "Aiming beat. The slew begins only after the pass has settled (84) and is complete (102) before the first line leaves the aperture (108); it is released only after the last line has (178)."
           },
           "orbit_intent": {
             "altitude_km": 900.0,
             "anchor_frame": 120,
             "anchor_lat_deg": 23.76,
             "anchor_lon_deg": 19.81,
-            "heading_deg": 100.0,
+            "heading_deg": 86.0,
             "rate_profile": [
               [
                 1,
@@ -4086,19 +4123,19 @@
                 0.015
               ],
               [
-                186,
+                178,
                 0.015
               ],
               [
-                204,
-                2.3
+                202,
+                1.3
               ],
               [
-                234,
-                2.3
+                238,
+                1.3
               ],
               [
-                254,
+                258,
                 0.0
               ],
               [
@@ -4132,8 +4169,8 @@
               86,
               94,
               102,
-              106,
-              112,
+              108,
+              114,
               120,
               128,
               136,
@@ -4142,6 +4179,9 @@
               160,
               168,
               176,
+              178,
+              180,
+              182,
               184,
               186,
               188,
@@ -4179,230 +4219,228 @@
               252,
               254,
               256,
-              258,
-              260,
               266,
               300,
               340,
               384
             ],
-            "note": "One circular 900 km orbit, derived and time-remapped against the locked-off camera: over 23.76 N 19.81 E at frame 120 heading 100, about (0.56, 0.38) of the frame -- left of centre, right of the hero copy column. 2.2 degrees of arc per frame behind the planet and round the left limb, eased over 32-84 to 0.015 (station-keeping) and held there for the whole acquisition, so nothing about the platform is in transit while a line is attached. At 186, with every line released, it resumes its own pass (0.015 -> 2.3 over 18 frames) and leaves lower-right at near-constant apparent size; the camera's approach is still almost purely optical until it has gone, which is what bounds the exit."
+            "note": "One circular 900 km orbit, derived and time-remapped against the locked-off camera: over 23.76 N 19.81 E at frame 120 -- about (0.56, 0.38) of the frame, left of centre and right of the hero copy column, exactly the accepted acquisition position -- now heading 86 instead of 100 (Product decision b9579ef section 2). The anchor point fixes where the platform acquires; the heading only chooses the great circle through it. At 100 the continuation left through the bottom-right corner across the caption; at 86 it leaves through the right edge well above it, and the entry comes round the lower-left limb and rises into position. 2.2 degrees of arc per frame behind the planet, eased over 32-84 to 0.015 (station-keeping) and held for as long as any line is attached. At 178, with every line released and the camera still fixed, it resumes its pass (0.015 -> 1.3 over 24 frames, against 2.3 in the second gate, so it glides rather than streaks) and has left before the approach has magnified anything."
           },
           "location_keyframes": [
             {
               "frame": 1,
               "location": [
-                -5.6378,
-                4.5205,
-                -0.8046
+                -5.7294,
+                3.9485,
+                -2.1095
               ]
             },
             {
               "frame": 5,
               "location": [
-                -6.243,
-                3.7127,
-                -0.3293
+                -6.3438,
+                3.0831,
+                -1.7657
               ]
             },
             {
               "frame": 9,
               "location": [
-                -6.7012,
-                2.8175,
-                0.1537
+                -6.8089,
+                2.1451,
+                -1.3803
               ]
             },
             {
               "frame": 13,
               "location": [
-                -7.0016,
-                1.8559,
-                0.6331
+                -7.1136,
+                1.1566,
+                -0.9624
               ]
             },
             {
               "frame": 17,
               "location": [
-                -7.1372,
-                0.8507,
-                1.0976
+                -7.2509,
+                0.1408,
+                -0.5219
               ]
             },
             {
               "frame": 21,
               "location": [
-                -7.1047,
-                -0.1746,
-                1.5362
+                -7.2174,
+                -0.8783,
+                -0.0691
               ]
             },
             {
               "frame": 25,
               "location": [
-                -6.905,
-                -1.1958,
-                1.9387
+                -7.0141,
+                -1.8767,
+                0.3854
               ]
             },
             {
               "frame": 29,
               "location": [
-                -6.5427,
-                -2.1888,
-                2.2956
+                -6.6456,
+                -2.8309,
+                0.8308
               ]
             },
             {
               "frame": 33,
               "location": [
-                -6.0278,
-                -3.1281,
-                2.5977
+                -6.122,
+                -3.7164,
+                1.2556
               ]
             },
             {
               "frame": 37,
               "location": [
-                -5.4112,
-                -3.9487,
-                2.8274
+                -5.4952,
+                -4.4735,
+                1.6302
               ]
             },
             {
               "frame": 41,
               "location": [
-                -4.7444,
-                -4.6303,
-                2.9864
+                -4.8175,
+                -5.087,
+                1.9445
               ]
             },
             {
               "frame": 45,
               "location": [
-                -4.0629,
-                -5.1808,
-                3.0854
+                -4.125,
+                -5.5683,
+                2.2013
               ]
             },
             {
               "frame": 49,
               "location": [
-                -3.3957,
-                -5.6127,
-                3.1359
+                -3.447,
+                -5.9329,
+                2.4055
               ]
             },
             {
               "frame": 53,
               "location": [
-                -2.7653,
-                -5.9417,
-                3.1492
+                -2.8064,
+                -6.1984,
+                2.5635
               ]
             },
             {
               "frame": 57,
               "location": [
-                -2.1884,
-                -6.1842,
-                3.1359
+                -2.2202,
+                -6.383,
+                2.6824
               ]
             },
             {
               "frame": 61,
               "location": [
-                -1.6768,
-                -6.3569,
-                3.1058
+                -1.7005,
+                -6.5045,
+                2.769
               ]
             },
             {
               "frame": 65,
               "location": [
-                -1.2387,
-                -6.4751,
-                3.067
+                -1.2553,
+                -6.5789,
+                2.8301
               ]
             },
             {
               "frame": 69,
               "location": [
-                -0.8789,
-                -6.5524,
-                3.0267
+                -0.8898,
+                -6.6204,
+                2.8717
               ]
             },
             {
               "frame": 73,
               "location": [
-                -0.6005,
-                -6.6004,
-                2.9903
+                -0.6069,
+                -6.6406,
+                2.8985
               ]
             },
             {
               "frame": 77,
               "location": [
-                -0.4049,
-                -6.628,
-                2.962
+                -0.4082,
+                -6.6487,
+                2.9147
               ]
             },
             {
               "frame": 81,
               "location": [
-                -0.2927,
-                -6.6415,
-                2.9449
+                -0.2943,
+                -6.6511,
+                2.923
               ]
             },
             {
               "frame": 84,
               "location": [
-                -0.2635,
-                -6.6447,
-                2.9403
+                -0.2646,
+                -6.6514,
+                2.925
               ]
             },
             {
               "frame": 86,
               "location": [
-                -0.2598,
-                -6.6452,
-                2.9397
+                -0.2608,
+                -6.6515,
+                2.9253
               ]
             },
             {
               "frame": 94,
               "location": [
-                -0.2449,
-                -6.6468,
-                2.9373
+                -0.2456,
+                -6.6516,
+                2.9263
               ]
             },
             {
               "frame": 102,
               "location": [
-                -0.2299,
-                -6.6484,
-                2.9349
+                -0.2304,
+                -6.6517,
+                2.9273
               ]
             },
             {
-              "frame": 106,
+              "frame": 108,
               "location": [
-                -0.2224,
-                -6.6491,
-                2.9337
+                -0.219,
+                -6.6518,
+                2.9281
               ]
             },
             {
-              "frame": 112,
+              "frame": 114,
               "location": [
-                -0.2112,
-                -6.6503,
-                2.9319
+                -0.2076,
+                -6.6518,
+                2.9288
               ]
             },
             {
@@ -4416,401 +4454,409 @@
             {
               "frame": 128,
               "location": [
-                -0.1813,
-                -6.6533,
-                2.9271
+                -0.181,
+                -6.6518,
+                2.9305
               ]
             },
             {
               "frame": 136,
               "location": [
-                -0.1663,
-                -6.6548,
-                2.9247
+                -0.1658,
+                -6.6518,
+                2.9315
               ]
             },
             {
               "frame": 144,
               "location": [
-                -0.1514,
-                -6.6562,
-                2.9222
+                -0.1506,
+                -6.6518,
+                2.9324
               ]
             },
             {
               "frame": 152,
               "location": [
-                -0.1364,
-                -6.6576,
-                2.9197
+                -0.1354,
+                -6.6517,
+                2.9333
               ]
             },
             {
               "frame": 160,
               "location": [
-                -0.1214,
-                -6.659,
-                2.9173
+                -0.1202,
+                -6.6516,
+                2.9342
               ]
             },
             {
               "frame": 168,
               "location": [
-                -0.1065,
-                -6.6603,
-                2.9148
+                -0.105,
+                -6.6514,
+                2.9351
               ]
             },
             {
               "frame": 176,
               "location": [
-                -0.0915,
-                -6.6617,
-                2.9123
+                -0.0898,
+                -6.6513,
+                2.936
+              ]
+            },
+            {
+              "frame": 178,
+              "location": [
+                -0.086,
+                -6.6512,
+                2.9362
+              ]
+            },
+            {
+              "frame": 180,
+              "location": [
+                -0.0687,
+                -6.651,
+                2.9372
+              ]
+            },
+            {
+              "frame": 182,
+              "location": [
+                -0.0242,
+                -6.6502,
+                2.9397
               ]
             },
             {
               "frame": 184,
               "location": [
-                -0.0765,
-                -6.6629,
-                2.9098
+                0.0475,
+                -6.6484,
+                2.9435
               ]
             },
             {
               "frame": 186,
               "location": [
-                -0.0728,
-                -6.6633,
-                2.9091
+                0.1462,
+                -6.6449,
+                2.9482
               ]
             },
             {
               "frame": 188,
               "location": [
-                -0.0374,
-                -6.6662,
-                2.9031
+                0.2721,
+                -6.6386,
+                2.9534
               ]
             },
             {
               "frame": 190,
               "location": [
-                0.0613,
-                -6.6734,
-                2.886
+                0.4249,
+                -6.6283,
+                2.9585
               ]
             },
             {
               "frame": 192,
               "location": [
-                0.2233,
-                -6.6826,
-                2.8567
+                0.6046,
+                -6.6124,
+                2.9628
               ]
             },
             {
               "frame": 194,
               "location": [
-                0.4484,
-                -6.6896,
-                2.8134
+                0.8109,
+                -6.589,
+                2.9656
               ]
             },
             {
               "frame": 196,
               "location": [
-                0.7361,
-                -6.6889,
-                2.754
+                1.0434,
+                -6.5561,
+                2.9658
               ]
             },
             {
               "frame": 198,
               "location": [
-                1.0852,
-                -6.6732,
-                2.6754
+                1.3015,
+                -6.5114,
+                2.9624
               ]
             },
             {
               "frame": 200,
               "location": [
-                1.4937,
-                -6.6339,
-                2.5744
+                1.5844,
+                -6.4522,
+                2.9541
               ]
             },
             {
               "frame": 202,
               "location": [
-                1.9581,
-                -6.5608,
-                2.4472
+                1.8911,
+                -6.3757,
+                2.9397
               ]
             },
             {
               "frame": 204,
               "location": [
-                2.4732,
-                -6.4426,
-                2.2899
+                2.207,
+                -6.2831,
+                2.9188
               ]
             },
             {
               "frame": 206,
               "location": [
-                3.0028,
-                -6.2771,
-                2.1092
+                2.5184,
+                -6.1775,
+                2.8918
               ]
             },
             {
               "frame": 208,
               "location": [
-                3.5131,
-                -6.0711,
-                1.9148
+                2.8247,
+                -6.0593,
+                2.859
               ]
             },
             {
               "frame": 210,
               "location": [
-                4.0008,
-                -5.8261,
-                1.7082
+                3.1251,
+                -5.9286,
+                2.8202
               ]
             },
             {
               "frame": 212,
               "location": [
-                4.4627,
-                -5.5435,
-                1.4905
+                3.4191,
+                -5.7856,
+                2.7756
               ]
             },
             {
               "frame": 214,
               "location": [
-                4.8958,
-                -5.2252,
-                1.2632
+                3.706,
+                -5.6308,
+                2.7253
               ]
             },
             {
               "frame": 216,
               "location": [
-                5.2974,
-                -4.8732,
-                1.0278
+                3.9853,
+                -5.4643,
+                2.6694
               ]
             },
             {
               "frame": 218,
               "location": [
-                5.6649,
-                -4.4899,
-                0.7857
+                4.2565,
+                -5.2866,
+                2.608
               ]
             },
             {
               "frame": 220,
               "location": [
-                5.9959,
-                -4.0776,
-                0.5386
+                4.5188,
+                -5.0981,
+                2.5412
               ]
             },
             {
               "frame": 222,
               "location": [
-                6.2882,
-                -3.6391,
-                0.288
+                4.7718,
+                -4.899,
+                2.4692
               ]
             },
             {
               "frame": 224,
               "location": [
-                6.5401,
-                -3.1771,
-                0.0356
+                5.0151,
+                -4.6898,
+                2.3921
               ]
             },
             {
               "frame": 226,
               "location": [
-                6.7498,
-                -2.6946,
-                -0.2171
+                5.248,
+                -4.471,
+                2.3101
               ]
             },
             {
               "frame": 228,
               "location": [
-                6.916,
-                -2.1948,
-                -0.4683
+                5.47,
+                -4.243,
+                2.2233
               ]
             },
             {
               "frame": 230,
               "location": [
-                7.0377,
-                -1.6808,
-                -0.7166
+                5.6809,
+                -4.0062,
+                2.132
               ]
             },
             {
               "frame": 232,
               "location": [
-                7.114,
-                -1.156,
-                -0.9602
+                5.88,
+                -3.7612,
+                2.0362
               ]
             },
             {
               "frame": 234,
               "location": [
-                7.1445,
-                -0.6238,
-                -1.1976
+                6.067,
+                -3.5085,
+                1.9363
               ]
             },
             {
               "frame": 236,
               "location": [
-                7.1309,
-                -0.1144,
-                -1.4161
+                6.2416,
+                -3.2485,
+                1.8324
               ]
             },
             {
               "frame": 238,
               "location": [
-                7.0835,
-                0.342,
-                -1.6046
+                6.4032,
+                -2.9818,
+                1.7247
               ]
             },
             {
               "frame": 240,
               "location": [
-                7.0143,
-                0.7435,
-                -1.7648
+                6.5446,
+                -2.7228,
+                1.6191
               ]
             },
             {
               "frame": 242,
               "location": [
-                6.9337,
-                1.0893,
-                -1.8984
+                6.6608,
+                -2.4867,
+                1.5221
               ]
             },
             {
               "frame": 244,
               "location": [
-                6.8508,
-                1.3797,
-                -2.0075
+                6.7552,
+                -2.2754,
+                1.4346
               ]
             },
             {
               "frame": 246,
               "location": [
-                6.7731,
-                1.6153,
-                -2.0938
+                6.8306,
+                -2.09,
+                1.3574
               ]
             },
             {
               "frame": 248,
               "location": [
-                6.7065,
-                1.797,
-                -2.1591
+                6.8897,
+                -1.9318,
+                1.2911
               ]
             },
             {
               "frame": 250,
               "location": [
-                6.6556,
-                1.926,
-                -2.2047
+                6.935,
+                -1.8014,
+                1.2363
               ]
             },
             {
               "frame": 252,
               "location": [
-                6.6238,
-                2.003,
-                -2.2316
+                6.9681,
+                -1.6995,
+                1.1934
               ]
             },
             {
               "frame": 254,
               "location": [
-                6.613,
-                2.0287,
-                -2.2405
+                6.9908,
+                -1.6264,
+                1.1625
               ]
             },
             {
               "frame": 256,
               "location": [
-                6.613,
-                2.0287,
-                -2.2405
-              ]
-            },
-            {
-              "frame": 258,
-              "location": [
-                6.613,
-                2.0287,
-                -2.2405
-              ]
-            },
-            {
-              "frame": 260,
-              "location": [
-                6.613,
-                2.0287,
-                -2.2405
+                7.0039,
+                -1.5825,
+                1.1439
               ]
             },
             {
               "frame": 266,
               "location": [
-                6.613,
-                2.0287,
-                -2.2405
+                7.0082,
+                -1.5678,
+                1.1377
               ]
             },
             {
               "frame": 300,
               "location": [
-                6.613,
-                2.0287,
-                -2.2405
+                7.0082,
+                -1.5678,
+                1.1377
               ]
             },
             {
               "frame": 340,
               "location": [
-                6.613,
-                2.0287,
-                -2.2405
+                7.0082,
+                -1.5678,
+                1.1377
               ]
             },
             {
               "frame": 384,
               "location": [
-                6.613,
-                2.0287,
-                -2.2405
+                7.0082,
+                -1.5678,
+                1.1377
               ]
             }
           ],
@@ -4825,11 +4871,11 @@
               1.0
             ],
             [
-              178,
+              170,
               1.0
             ],
             [
-              186,
+              178,
               0.0
             ]
           ]
@@ -4938,16 +4984,16 @@
       "materials": {
         "aoi_fill": {
           "axis": "u",
-          "band_width": 0.08,
-          "base_alpha": 0.03,
-          "acquired_alpha": 0.075,
-          "band_alpha": 0.5,
+          "band_width": 0.05,
+          "base_alpha": 0.025,
+          "acquired_alpha": 0.06,
+          "band_alpha": 0.42,
           "band_color_ref": "scan_cyan",
           "band_emission_strength": 2.4
         },
         "aoi_beam": {
           "emission_color_ref": "scan_cyan",
-          "emission_strength": 2.4,
+          "emission_strength": 2.8,
           "root_alpha": 0.8,
           "tip_alpha": 0.62,
           "draw_on": {
@@ -4961,23 +5007,23 @@
         "aoi_fan_veil": {
           "type": "aoi_beam",
           "emission_color_ref": "scan_cyan",
-          "emission_strength": 1.35,
+          "emission_strength": 1.6,
           "root_alpha": 0.0,
           "tip_alpha": 0.06,
-          "note": "Fan faces: invisible at the platform, a breath of cyan through the volume. The emitter is kept brighter than sunlit desert on purpose -- an alpha mix replaces a fraction of what is behind it, so a veil darker than the ground would print a grey wedge across the planet instead of a light one. Never a slab.",
-          "full_alpha_at": 0.4
+          "full_alpha_at": 0.55,
+          "note": "The four faces between the four lines: invisible at the platform, a clearly visible breath of cyan from mid-way down to the reticle. Kept brighter than sunlit desert on purpose -- an alpha mix replaces a fraction of what is behind it, so a veil darker than the ground prints a grey wedge. Never a slab."
         },
         "aoi_scan_curtain": {
           "type": "aoi_scan_curtain",
           "emission_color_ref": "scan_cyan",
-          "emission_strength": 1.9,
+          "emission_strength": 2.0,
           "band_width": 0.045,
-          "tail_width": 0.3,
-          "band_alpha": 0.3,
-          "tail_alpha": 0.016,
-          "root_alpha_factor": 0.0,
-          "full_alpha_at": 0.42,
-          "note": "Supports the four lines, never overpowers them: peak alpha 0.30 in scan cyan at about a third of the first gate's emission and dimmer than the lines themselves, legible in the volume where the fan is broad rather than at its few-pixel foot."
+          "tail_width": 0.4,
+          "band_alpha": 0.24,
+          "tail_alpha": 0.03,
+          "root_alpha_factor": 0.08,
+          "full_alpha_at": 0.6,
+          "note": "The sweep itself: a translucent blade from the aperture to a north-south line on the reticle, with a faint trail behind it so the direction of travel is unambiguous. Dimmer than the lines it supports."
         },
         "aoi_relief_layers": {
           "type": "aoi_relief_layers",
@@ -5011,7 +5057,8 @@
             0.02
           ],
           "roughness": 0.85,
-          "note": "Prepared display textures, consumed byte-for-byte. Product decision c7c6cb1 section 4: scene light may not re-author thematic colour, so THM-01, ALT-01 and priority are fully emissive (unlit) on the relief; only Terrain, which is context, takes the scene's light. The remaining difference in the animatic is the scene view transform; the lossless drape states for the page are rendered through a Standard view instead."
+          "note": "Prepared display textures, consumed byte-for-byte. THM-01, ALT-01 and priority are fully emissive (scene light may not re-author thematic colour, c7c6cb1 section 4); Terrain, which is context, takes the scene's light. Product decision b9579ef section 3: where an analytical layer's own alpha is below 1 -- the governed invalid / NoData support, used as delivered, never filled, dilated or extrapolated -- the Terrain layer shows through, lit as context, instead of a dark neutral.",
+          "underlay_layer": "terrain"
         },
         "aoi_relief_wall": {
           "type": "aoi_beam",

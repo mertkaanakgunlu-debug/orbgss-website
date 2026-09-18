@@ -1,7 +1,7 @@
 """Render the analytical drape states as lossless, colour-faithful overlays.
 
     blender -b -P hero/scripts/render_drape_states.py -- --scene hero_r3_preview_gate \
-        --profile preview_gate --out hero/renders/preview_r3gate2/drape
+        --profile preview_gate --coverage --out hero/renders/preview_r3gate3/drape
 
 Product decision docs/web-005-polish-authority@c7c6cb1 sections 3-4: the hero video carries the
 motion and settles on one held geometry; Terrain, THM-01, ALT-01 and priority are delivered as
@@ -17,6 +17,11 @@ So each state is rendered on its own, from the same scene build and the same hel
 * the view transform is ``Standard`` with no look, exposure 0, gamma 1. THM-01, ALT-01 and
   priority are fully emissive in the relief material, so a texel's display colour reaches the PNG
   as delivered (up to texture filtering); only Terrain, which is context, takes scene light.
+
+``--coverage`` adds one more pass per analytical state: the material's own per-pixel analytical
+coverage (the delivered alpha, as the surface uses it) written as a linear grey image through the
+``Raw`` view. Where it is below 1 the Terrain context shows through (Product decision b9579ef
+section 3); the pass is what lets the governed mask be measured in screen space instead of assumed.
 
 Nothing here is site media. The preview gate uses it to show the delivery concept and to measure
 the colour path; the production states are rendered the same way at the production profile.
@@ -49,11 +54,34 @@ def state_frames(spec: dict) -> dict:
     return frames
 
 
+def _render_coverage(scene, relief, out_dir: Path, layer_id: str, frame: int) -> Path:
+    """The relief again, shaded by nothing but the material's ``analytical_coverage`` value."""
+    material = relief.data.materials[0]
+    tree = material.node_tree
+    output = next(n for n in tree.nodes if n.type == "OUTPUT_MATERIAL")
+    surface = output.inputs["Surface"].links[0].from_socket
+    probe = tree.nodes.new("ShaderNodeEmission")
+    tree.links.new(tree.nodes["analytical_coverage"].outputs[0], probe.inputs["Color"])
+    tree.links.new(probe.outputs["Emission"], output.inputs["Surface"])
+    view = scene.view_settings.view_transform
+    scene.view_settings.view_transform = "Raw"
+    path = out_dir / ("coverage_" + layer_id + "_f" + str(frame) + ".png")
+    scene.render.filepath = str(path.with_suffix(""))
+    try:
+        bpy.ops.render.render(write_still=True)
+    finally:
+        scene.view_settings.view_transform = view
+        tree.links.new(surface, output.inputs["Surface"])
+        tree.nodes.remove(probe)
+    return path
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Render lossless colour-faithful drape states.")
     parser.add_argument("--scene", default="hero_r3_preview_gate")
     parser.add_argument("--profile", default="preview_gate")
     parser.add_argument("--out", required=True)
+    parser.add_argument("--coverage", action="store_true", help="also render each state's analytical coverage")
     args = parser.parse_args(hc.argv_after_double_dash())
 
     scene_config = hc.load_scene_config()
@@ -96,8 +124,11 @@ def main() -> None:
         path = out_dir / ("drape_" + layer_id + "_f" + str(frame) + ".png")
         scene.render.filepath = str(path.with_suffix(""))
         bpy.ops.render.render(write_still=True)
-        states.append({"layer": layer_id, "frame": frame, "output_path": hc.relpath(path),
-                       "output_bytes": path.stat().st_size, "sha256": hc.sha256_file(path)})
+        state = {"layer": layer_id, "frame": frame, "output_path": hc.relpath(path),
+                 "output_bytes": path.stat().st_size, "sha256": hc.sha256_file(path)}
+        if args.coverage and layer_id != "terrain":
+            state["coverage_path"] = hc.relpath(_render_coverage(scene, relief, out_dir, layer_id, frame))
+        states.append(state)
 
     record = {
         "scene": args.scene,

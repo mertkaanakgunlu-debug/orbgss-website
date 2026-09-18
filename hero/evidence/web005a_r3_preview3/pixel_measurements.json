@@ -1,0 +1,93 @@
+{
+  "scan_palette_third_gate_f134_four_lines": {
+    "samples": 640,
+    "median_rgb_8bit": [
+      146,
+      194,
+      200
+    ],
+    "median_hue_deg": 188.3,
+    "median_saturation": 0.279,
+    "median_whiteness_min_over_max": 0.721
+  },
+  "scan_palette_first_gate_f172": {
+    "samples": 640,
+    "median_rgb_8bit": [
+      218,
+      237,
+      240
+    ],
+    "median_hue_deg": 190.0,
+    "median_saturation": 0.095,
+    "median_whiteness_min_over_max": 0.905
+  },
+  "drape_colour_path": {
+    "method": "64^3 occupancy of the delivered texture's fully opaque texel blocks, area-averaged 2x-16x in linear light, grown by two bins (about +-8/255); tested on overlay pixels whose rendered analytical coverage is >= 0.99. Mask: the rendered mean analytical coverage is compared with the delivered texture's mean alpha; at this preview size one pixel averages about 13 x 13 texels of a fine-grained mask, so most pixels are partially covered and only the means are comparable (screen space is perspective-weighted, so they are indicative).",
+    "layers": {
+      "thm01": {
+        "interior_pixels": 63723,
+        "reference_colour_set_fraction_of_rgb_cube": 0.0472,
+        "fully_covered_pixels_inside_delivered_colour_set": 0.9991,
+        "mask_in_screen_space": {
+          "mean_coverage": 0.997,
+          "fully_analytical": 0.9936,
+          "terrain_showing_through": 0.0016
+        },
+        "mask_in_the_delivered_texture": {
+          "mean_alpha": 0.9969,
+          "opaque": 0.9958,
+          "transparent": 0.0024
+        }
+      },
+      "alt01": {
+        "interior_pixels": 62188,
+        "reference_colour_set_fraction_of_rgb_cube": 0.1504,
+        "fully_covered_pixels_inside_delivered_colour_set": 1.0,
+        "mask_in_screen_space": {
+          "mean_coverage": 0.8536,
+          "fully_analytical": 0.4745,
+          "terrain_showing_through": 0.0061
+        },
+        "mask_in_the_delivered_texture": {
+          "mean_alpha": 0.8403,
+          "opaque": 0.7576,
+          "transparent": 0.0877
+        }
+      },
+      "priority": {
+        "interior_pixels": 62137,
+        "reference_colour_set_fraction_of_rgb_cube": 0.086,
+        "fully_covered_pixels_inside_delivered_colour_set": 1.0,
+        "mask_in_screen_space": {
+          "mean_coverage": 0.8494,
+          "fully_analytical": 0.4684,
+          "terrain_showing_through": 0.0084
+        },
+        "mask_in_the_delivered_texture": {
+          "mean_alpha": 0.8339,
+          "opaque": 0.7511,
+          "transparent": 0.0939
+        },
+        "same_pixels_in_the_AgX_scene_render": 0.6687
+      }
+    }
+  },
+  "page_shade_over_footprint_1440x900": {
+    "footprint_page_box_px": [
+      831,
+      303,
+      1180,
+      574
+    ],
+    "shipped_shade": {
+      "left_60px_luminance_vs_unshaded": 0.699,
+      "whole_footprint_luminance_vs_unshaded": 0.8499,
+      "max_abs_rgb_difference_8bit": 129
+    },
+    "proposed_analysis_safe_shade": {
+      "left_60px_luminance_vs_unshaded": 0.9945,
+      "whole_footprint_luminance_vs_unshaded": 0.9989,
+      "max_abs_rgb_difference_8bit": 5
+    }
+  }
+}

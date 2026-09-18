@@ -431,8 +431,17 @@ def build_relief_layers_material(name: str, spec: dict, scene_config: dict, help
     Colours are consumed as delivered: no ramp, no curve, no hue/contrast node touches them. The
     surface is part lit (so the DEM relief is visible as light and shadow) and part emissive (so
     a thematic layer stays legible on a slope facing away from the sun); ``emission_mix`` is that
-    split per layer. NoData -- transparent in the delivered texture -- is shown as a neutral
-    dark surface rather than a hole, so the relief stays one continuous piece of ground.
+    split per layer. NoData -- transparent in the delivered texture -- is never a hole, so the
+    relief stays one continuous piece of ground.
+
+    What shows through it is ``underlay_layer`` (Product decision b9579ef section 3): the
+    authorized Terrain context, lit exactly as the Terrain state is, under the analytical layer's
+    *own* alpha. Nothing is filled, extrapolated or dilated -- the governed mask is the texture's
+    alpha channel and is used as delivered -- so masked ground reads as terrain seen through the
+    analysis rather than as a dark patch of false data. Without an underlay the neutral
+    ``nodata_color`` is used, as in the first two preview gates. The per-pixel analytical coverage
+    is exposed as the ``analytical_coverage`` node so a render pass can measure the mask in screen
+    space.
     """
     material = bpy.data.materials.new(name=name)
     material.use_nodes = True
@@ -455,6 +464,7 @@ def build_relief_layers_material(name: str, spec: dict, scene_config: dict, help
         return node.outputs[0]
 
     colour = alpha = total = glow = None
+    textures = {}
     for layer_id in spec["layer_order"]:
         layer = spec["layers"][layer_id]
         texture = nodes.new("ShaderNodeTexImage")
@@ -463,6 +473,7 @@ def build_relief_layers_material(name: str, spec: dict, scene_config: dict, help
         texture.interpolation = "Cubic"
         texture.extension = "EXTEND"
         links.new(tex_coord.outputs["UV"], texture.inputs["Vector"])
+        textures[layer_id] = texture
         weight = nodes.new("ShaderNodeValue")
         weight.name = weight.label = "layer_weight_" + layer_id
         weight.outputs[0].default_value = 0.0
@@ -492,10 +503,23 @@ def build_relief_layers_material(name: str, spec: dict, scene_config: dict, help
         links.new(safe_total, spread.inputs[axis])
     links.new(spread.outputs["Vector"], normalise.inputs[1])
 
+    coverage = nodes.new("ShaderNodeMath")
+    coverage.name = coverage.label = "analytical_coverage"
+    coverage.operation = "DIVIDE"
+    coverage.use_clamp = True
+    links.new(alpha, coverage.inputs[0])
+    links.new(safe_total, coverage.inputs[1])
+
     shown = nodes.new("ShaderNodeMixRGB")
     shown.blend_type = "MIX"
-    links.new(math_node("DIVIDE", alpha, safe_total, clamp=True), shown.inputs["Fac"])
-    shown.inputs["Color1"].default_value = tuple(spec.get("nodata_color", (0.012, 0.016, 0.02))) + (1.0,)
+    links.new(coverage.outputs[0], shown.inputs["Fac"])
+    underlay_id = spec.get("underlay_layer")
+    if underlay_id:
+        if underlay_id not in textures:
+            raise KeyError("relief underlay_layer " + repr(underlay_id) + " is not one of the material's layers")
+        links.new(textures[underlay_id].outputs["Color"], shown.inputs["Color1"])
+    else:
+        shown.inputs["Color1"].default_value = tuple(spec.get("nodata_color", (0.012, 0.016, 0.02))) + (1.0,)
     links.new(normalise.outputs["Vector"], shown.inputs["Color2"])
 
     lit = nodes.new("ShaderNodeBsdfPrincipled")
@@ -506,7 +530,18 @@ def build_relief_layers_material(name: str, spec: dict, scene_config: dict, help
     links.new(shown.outputs["Color"], emission.inputs["Color"])
     emission.inputs["Strength"].default_value = float(spec.get("emission_strength", 1.0))
     surface = nodes.new("ShaderNodeMixShader")
-    links.new(math_node("DIVIDE", glow, safe_total, clamp=True), surface.inputs["Fac"])
+    glow_fraction = math_node("DIVIDE", glow, safe_total, clamp=True)
+    if underlay_id:
+        # Where the underlay shows, it is lit the way it is when it is the active state: context
+        # takes the scene's light, analysis does not.
+        under_glow = float(spec["layers"][underlay_id].get("emission_mix", 0.5))
+        blend = nodes.new("ShaderNodeMapRange")
+        blend.clamp = True
+        links.new(coverage.outputs[0], blend.inputs["Value"])
+        blend.inputs["To Min"].default_value = under_glow
+        links.new(glow_fraction, blend.inputs["To Max"])
+        glow_fraction = blend.outputs["Result"]
+    links.new(glow_fraction, surface.inputs["Fac"])
     links.new(lit.outputs["BSDF"], surface.inputs[1])
     links.new(emission.outputs["Emission"], surface.inputs[2])
 
