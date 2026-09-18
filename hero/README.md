@@ -61,7 +61,8 @@ hero/
     materialize_analytical_assets.py  plain Python: ingest the pinned DEM + display textures by copy and SHA-256 (R3 gate)
     analysis_reveal.py    Blender: scan fan, persistent lock-frame morph, DEM relief and display-layer material (R3 gate)
     derive_presentation.py Blender: lock-frame span / line-weight ramps from the evaluated camera (R3 gate)
-    audit_preview_gate.py Blender: per-frame proof of the R3 preview gate (fixed camera, anchors, morph, relief)
+    audit_preview_gate.py Blender: per-frame proof of the R3 preview gate (fixed camera, sequence, draw-on, true-corner anchors, reticle, exit, relief, timing)
+    render_drape_states.py Blender: the analytical drape states as lossless RGBA overlays through a Standard view (R3 gate 2)
   assets/
     manifest.json         asset rights/provenance/checksum record
     source/               materialized source assets (ignored)
@@ -416,13 +417,16 @@ Copernicus attribution, checksummed by the validator, and never delivered to the
 ## WEB-005A R3 preview gate: fixed observer, scan fan, one lock frame, DEM relief
 
 Product returned the R3 checkpoint `REVISION_REQUIRED` and asked for a low-cost preview before any
-further long render (`tasks/WEB-005A_R3_PREVIEW_GATE.md`). `hero_r3_preview_gate` is that preview. It
+further long render (`tasks/WEB-005A_R3_PREVIEW_GATE.md`), then reviewed that preview and asked for a
+corrected second one (`tasks/WEB-005A_R3_PREVIEW_GATE_2.md`). `hero_r3_preview_gate` is that preview, in
+its second revision; the first is retained in git at `cd2018e` with its evidence under
+`hero/evidence/web005a_r3_preview/`. It
 `extends` the production scene, re-authors its AOI object (`"replace": true`), drops the separate
 analysis frame (`"omit": true`) and leaves `hero_production_kizildere` and its shipped media alone.
 
-**The observer is fixed by construction.** `{"frame": 1, "mode": "hold_of", "of_frame": 208}` copies the
+**The observer is fixed by construction.** `{"frame": 1, "mode": "hold_of", "of_frame": 186}` copies the
 derived acquisition state to the first frame, `camera.fixed_through_frame` makes the builder refuse any
-channel that changes before 208 and hold the rest CONSTANT, and the AOI track constraint stays at zero
+channel that changes before that frame and hold the rest CONSTANT, and the AOI track constraint stays at zero
 influence until then -- it would otherwise turn the camera with the Earth. The satellite pass is
 re-solved against that one camera so the platform settles right of the hero copy column.
 
@@ -432,25 +436,61 @@ measures the evaluated camera's ground scale on every frame of the approach and 
 `presentation.derived`: acquisition and settled ground dimensions plus two ramps. Each ribbon is built
 at the true footprint and carries shape keys -- `presented` (span), `sag_comp` (the chord's sagitta,
 weighted 4m(1-m), so a straight blend never cuts under the sphere), `weight` (line weight, its own ramp
-because ground scale falls hyperbolically under the dive) and `drape`. The sensing lines lock the
-presented corners (`beams.anchor: presented`), which lie on the true footprint's diagonals; the true
-corners are always built as `aoi_true_<corner>` so the audit can measure one against the other.
+because ground scale falls hyperbolically under the dive) and `drape`.
 
-**The scan fan is secondary by construction.** A veil on the four faces the lines span, and a light
-curtain: translucent slices from the platform to a north-south ground line, lit only near the sweep.
-Apex vertices sit at the local origin and are hooked to the satellite; ground vertices ride the Earth.
-Curtain and ground band read one keyed `aoi_sweep_position`. The validator caps their alphas.
+**Ground geometry is true; only the reticle is presentation (second gate).** Product rejected the first
+gate's `beams.anchor: presented` (`docs/web-005-polish-authority@c7c6cb1`, section 2). The gate now
+declares `beams.anchor: true`: the line anchors, the scan fill and the fan's ground line are all the
+governed 36 km footprint, and the validator refuses anything else. `presentation.reticle_parts:
+["corner_locks"]` names the only ribbons that travel from the presented span onto the footprint; the
+outline and its halo sit on the true corners for the whole shot and change nothing but line weight.
+`aoi_true_<corner>` empties are still built, and the audit measures every line tip against them by name.
+
+**The lines leave the aperture and draw on.** `beams.emitter` names the instrument aperture; one empty
+rides the Earth's frame at that aperture (Copy Location: the platform's position, the Earth's
+orientation) with four children on the rim, laid out along the footprint's own east and north, so line
+k runs from rim point k to true corner k and no two cross. `beams.draw` turns the appearance into
+propagation: one LINEAR-keyed `aoi_beam_draw` value, a per-line `beam_delay` object property for the
+stagger, and a mask along the tube's own UV with the ease-out applied per line in the material, so all
+four lines take the same number of frames. The geometry -- and so the endpoint -- stays owned by the
+constraints.
+
+**The order of events is a contract.** Pass settles (rate profile at station-keeping) -> platform slews
+(`aim` influence) -> slew complete -> lines draw on -> outline and reticle lock -> fan and sweep -> fan,
+wash and lines retire -> camera moves. The validator proves the order from configuration, evaluating the
+orbit rate per frame; the audit proves it from the evaluated scene, including that the aiming beat is a
+real slew that ends on the target. The platform resumes its own pass only at the release frame, and the
+first part of the approach is almost purely optical, which is what keeps the exit inside the fly-by
+bound: zooming about the AOI alone cannot, because the silhouette would need about 3.5x before it cleared
+the frame.
+
+**The scan fan is secondary by construction.** A veil and a light curtain: translucent slices down to a
+north-south ground line, lit only near the sweep. With `scan_fan.top` the fan is broad in space and true
+on the ground -- its upper edge is a rectangle on the aperture, long along the sweep axis, its foot is the
+governed footprint -- so a sweep that is a few pixels of travel on the ground is tens of pixels aloft.
+Top vertices are offsets about the local origin, hooked to the emitter root (a pure translation onto the
+platform); ground vertices ride the Earth. Curtain and ground band read one keyed `aoi_sweep_position`.
+The validator caps their alphas and keeps the curtain dimmer than the lines. Keep a faint emitter
+brighter than sunlit ground: an alpha mix replaces a fraction of what is behind it, so a veil darker
+than desert prints a grey wedge instead of a light one.
 
 **Relief comes from the governed DEM and nothing else.** `aoi_relief` reads `kizildere_top_dem.tif` as
 float32 (values verified identical to rasterio), displaces a grid on the fixture's own corner
 interpolation, and gives the lock frame its `drape` key from the same samples. The four display
 textures are material on one UV. `materialize_analytical_assets.py` records what was ingested.
+THM-01, ALT-01 and priority are fully emissive (scene light may not re-author thematic colour); only
+Terrain takes light. `render_drape_states.py` renders each state on its own -- relief only, transparent
+film, `Standard` view, RGBA PNG, crisp frame lines as holdouts -- which is the lossless page-composited
+delivery Product chose; no governed thematic pixel goes into a lossy encode. ALT-01 and priority carry a
+feathered alpha mask (about 9 % transparent, 16 % partial) that the material blends toward the declared
+NoData neutral; any colour check has to model that rule or it will misreport a quarter of the surface.
 
 ```powershell
 py -3.14 hero/scripts/materialize_analytical_assets.py
 & $env:BLENDER -b -P hero/scripts/derive_presentation.py -- --scene hero_r3_preview_gate
-& $env:BLENDER -b -P hero/scripts/audit_preview_gate.py -- --scene hero_r3_preview_gate --out hero/evidence/web005a_r3_preview/preview_gate_audit.json
-& $env:BLENDER -b -P hero/scripts/render_animatic.py -- --scene hero_r3_preview_gate --profile preview_gate --frames 140,172,316,420 --out $PWD/hero/renders/preview_r3gate/stills
+& $env:BLENDER -b -P hero/scripts/audit_preview_gate.py -- --scene hero_r3_preview_gate --out hero/evidence/web005a_r3_preview2/preview_gate_audit.json
+& $env:BLENDER -b -P hero/scripts/render_animatic.py -- --scene hero_r3_preview_gate --profile preview_gate --frames 112,138,156,187,384 --out $PWD/hero/renders/preview_r3gate2/stills
+& $env:BLENDER -b -P hero/scripts/render_drape_states.py -- --scene hero_r3_preview_gate --profile preview_gate --out hero/renders/preview_r3gate2/drape
 ```
 
 Measure distances at planetary radius in double precision: `mathutils.Vector.angle` is single precision

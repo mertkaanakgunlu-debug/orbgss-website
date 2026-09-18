@@ -190,7 +190,12 @@ def build_scan_curtain_material(name: str, spec: dict, scene_config: dict, helpe
         math_node("MULTIPLY", band, float(spec.get("band_alpha", 0.2))),
         math_node("MULTIPLY", tail, float(spec.get("tail_alpha", 0.03))),
     )
-    height = ramp(separate.outputs["Y"], 1.0, float(spec.get("root_alpha_factor", 0.12)), 1.0, "SMOOTHERSTEP")
+    # ``full_alpha_at`` is where, from the platform (0) to the ground (1), the curtain reaches its
+    # full strength. 1.0 is the first gate's profile (dense only at the ground); the second gate's
+    # fan is broad aloft and a few pixels wide at the true footprint, so it has to be legible in
+    # the volume rather than at its foot.
+    height = ramp(separate.outputs["Y"], float(spec.get("full_alpha_at", 1.0)),
+                  float(spec.get("root_alpha_factor", 0.12)), 1.0, "SMOOTHERSTEP")
     alpha = math_node("MULTIPLY", math_node("MULTIPLY", lit, height), presence.outputs[0], clamp=True)
 
     emission = nodes.new("ShaderNodeEmission")
@@ -209,14 +214,44 @@ def build_scan_curtain_material(name: str, spec: dict, scene_config: dict, helpe
 
 
 def build_scan_fan(spec: dict, fan: dict, root, presented: dict, materials: dict, context: dict, helpers):
-    """Veil + light curtain between the four sensing lines; returns the objects it built."""
-    source = context["objects"].get(fan.get("source_object_id"))
+    """Veil + light curtain between the four sensing lines; returns the objects it built.
+
+    ``presented`` is the description whose footprint the fan stands on -- the *ground* geometry the
+    AOI builder chose, which for the second preview gate is the true governed footprint (Product
+    decision c7c6cb1 section 2: no presentation-sized ground footprint).
+
+    With a ``top`` block the fan is no longer a pyramid to a point. Its upper edge is a rectangle
+    centred on the instrument aperture -- ``half_length_km`` along the footprint's own east (the
+    sweep axis), ``half_depth_km`` along its north -- so it is broad in space and converges onto the
+    true footprint, and the curtain crosses from its west face to its east face: a sweep that is a
+    few pixels of travel on the ground is tens of pixels of travel aloft. The top vertices are
+    authored as offsets about the local origin and hooked to the emitter root, which rides the
+    Earth's frame at the aperture, so the hook is a pure translation onto the platform.
+    """
+    source = context.get("aoi_emitter_roots", {}).get(spec["id"]) if fan.get("top") else None
+    if source is None:
+        source = context["objects"].get(fan.get("source_object_id"))
     if source is None:
         raise KeyError("scan fan needs source object " + repr(fan.get("source_object_id")))
     radius_bu = presented["surface_radius_bu"]
     order = presented["corner_order"]
     corners = {cid: presented["corner_units"][order.index(cid)] for cid in ax.CORNER_IDS}
     built = []
+
+    top_cfg = fan.get("top")
+    if top_cfg:
+        axes = context.get("aoi_tangent_axes", {}).get(spec["id"])
+        if axes is None:
+            raise KeyError("a broad scan-fan top needs beams.emitter, which defines the aperture frame")
+        east, north = axes
+        half_length = float(top_cfg["half_length_km"]) / ax.KM_PER_BLENDER_UNIT
+        half_depth = float(top_cfg["half_depth_km"]) / ax.KM_PER_BLENDER_UNIT
+
+        def top_point(x, y):
+            """Local offset for aperture-frame (x east, y north), each in -1 .. 1."""
+            return tuple(x * half_length * e + y * half_depth * n for e, n in zip(east, north))
+
+        top_corner = {"nw": (-1.0, 1.0), "ne": (1.0, 1.0), "se": (1.0, -1.0), "sw": (-1.0, -1.0)}
 
     def finish(obj, apex_indices):
         obj.parent = root
@@ -234,7 +269,24 @@ def build_scan_fan(spec: dict, fan: dict, root, presented: dict, materials: dict
         return obj
 
     veil_material = materials.get(fan.get("veil_material"))
-    if veil_material is not None:
+    if veil_material is not None and top_cfg:
+        ring = presented["boundary_units"]
+        steps = len(ring) // 4
+        verts, faces, uvs, tops = [], [], [], []
+        for index, unit in enumerate(ring):
+            edge, step = divmod(index, steps)
+            a, b = top_corner[order[edge]], top_corner[order[(edge + 1) % 4]]
+            t = step / float(steps)
+            tops.append(len(verts))
+            verts += [top_point(a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t), ax.scale(unit, radius_bu)]
+            along = index / float(len(ring))
+            uvs += [(along, 0.0), (along, 1.0)]
+        for index in range(len(ring)):
+            a, b = 2 * index, 2 * ((index + 1) % len(ring))
+            faces.append((a, a + 1, b + 1, b))
+        veil = helpers.mesh_object(spec["id"] + "_fan_veil", verts, faces, veil_material, uvs=uvs)
+        finish(veil, tops)
+    elif veil_material is not None:
         ring = presented["boundary_units"]
         verts, faces, uvs = [], [], []
         for index, unit in enumerate(ring):
@@ -248,7 +300,27 @@ def build_scan_fan(spec: dict, fan: dict, root, presented: dict, materials: dict
         finish(veil, list(range(0, len(verts), 3)))
 
     curtain_material = materials.get(fan.get("curtain_material"))
-    if curtain_material is not None:
+    if curtain_material is not None and top_cfg:
+        slices = max(4, int(fan.get("slices", 48)))
+        segments = max(1, int(fan.get("slice_segments", 8)))
+        verts, faces, uvs, tops = [], [], [], []
+        for k in range(slices):
+            u = (k + 0.5) / float(slices)
+            north_unit = ax.slerp(corners["nw"], corners["ne"], u)
+            south_unit = ax.slerp(corners["sw"], corners["se"], u)
+            base = len(verts)
+            for j in range(segments + 1):
+                t = j / float(segments)
+                tops.append(len(verts))
+                verts += [top_point(2.0 * u - 1.0, 1.0 - 2.0 * t),
+                          ax.scale(ax.slerp(north_unit, south_unit, t), radius_bu)]
+                uvs += [(u, 0.0), (u, 1.0)]
+            for j in range(segments):
+                a = base + 2 * j
+                faces.append((a, a + 1, a + 3, a + 2))
+        curtain = helpers.mesh_object(spec["id"] + "_fan_curtain", verts, faces, curtain_material, uvs=uvs)
+        finish(curtain, tops)
+    elif curtain_material is not None:
         slices = max(4, int(fan.get("slices", 48)))
         segments = max(1, int(fan.get("slice_segments", 8)))
         verts, faces, uvs, apexes = [], [], [], []

@@ -1690,7 +1690,8 @@ def _build_aoi_beam_material(name: str, spec: dict, scene_config: dict):
     along.clamp = True
     along.interpolation_type = "SMOOTHSTEP"
     along.inputs["From Min"].default_value = 0.0
-    along.inputs["From Max"].default_value = 1.0
+    # ``full_alpha_at``: where along the tube (0 platform .. 1 ground) the alpha ramp tops out.
+    along.inputs["From Max"].default_value = float(spec.get("full_alpha_at", 1.0))
     along.inputs["To Min"].default_value = float(spec.get("root_alpha", 0.03))
     along.inputs["To Max"].default_value = float(spec.get("tip_alpha", 0.22))
     links.new(separate.outputs["Y"], along.inputs["Value"])
@@ -1707,20 +1708,107 @@ def _build_aoi_beam_material(name: str, spec: dict, scene_config: dict):
     alpha.use_clamp = True
     links.new(along.outputs["Result"], alpha.inputs[0])
     links.new(presence.outputs[0], alpha.inputs[1])
+    alpha_socket = alpha.outputs[0]
 
     emission = nodes.new("ShaderNodeEmission")
     emission.location = (300, 120)
     emission.inputs["Color"].default_value = _rgba(
         hc.palette_color(scene_config, spec["emission_color_ref"])
     )
-    emission.inputs["Strength"].default_value = float(spec.get("emission_strength", 3.4))
+    base_strength = float(spec.get("emission_strength", 3.4))
+    emission.inputs["Strength"].default_value = base_strength
+
+    # WEB-005A R3 preview gate 2: draw-on. A line that fades in is a line that was always there;
+    # a line that *propagates* from the platform to its corner is an acquisition. ``aoi_beam_draw``
+    # is one keyed value for all four lines, each line reads its own start offset from the object
+    # property ``beam_delay``, and the mask travels along the tube's own length (UV.y), so the
+    # geometry -- and therefore the endpoint -- is still owned by the constraints. The keyed value
+    # is linear in time and the ease-out (fast off the platform, soft onto the corner) is applied
+    # here, per line, so all four lines take the same number of frames and differ only in when
+    # they start. A short brighter head rides the front and leaves with it. Default 1 = fully
+    # drawn, so a scene that never keys it renders exactly as before.
+    draw_cfg = spec.get("draw_on")
+    if draw_cfg:
+        def _math(operation, a, b=None, clamp=False, y=0):
+            node = nodes.new("ShaderNodeMath")
+            node.operation = operation
+            node.use_clamp = clamp
+            node.location = (-420, y)
+            for index, value in enumerate((a, b)):
+                if value is None:
+                    continue
+                if isinstance(value, (int, float)):
+                    node.inputs[index].default_value = float(value)
+                else:
+                    links.new(value, node.inputs[index])
+            return node.outputs[0]
+
+        feather = float(draw_cfg.get("feather", 0.05))
+        draw = nodes.new("ShaderNodeValue")
+        draw.name = draw.label = "aoi_beam_draw"
+        draw.location = (-820, -420)
+        draw.outputs[0].default_value = 1.0
+        span = nodes.new("ShaderNodeValue")
+        span.name = span.label = "aoi_beam_draw_span"
+        span.location = (-820, -520)
+        span.outputs[0].default_value = 1.0
+        delay = nodes.new("ShaderNodeAttribute")
+        delay.attribute_type = "OBJECT"
+        delay.attribute_name = "beam_delay"
+        delay.location = (-820, -620)
+
+        power = nodes.new("ShaderNodeValue")
+        power.name = power.label = "aoi_beam_draw_power"
+        power.location = (-820, -720)
+        power.outputs[0].default_value = 1.0
+        linear = _math("DIVIDE", _math("SUBTRACT", draw.outputs[0], delay.outputs["Fac"], y=-420),
+                       span.outputs[0], clamp=True, y=-480)
+        local = _math("SUBTRACT", 1.0, _math("POWER", _math("SUBTRACT", 1.0, linear, clamp=True, y=-500),
+                                             power.outputs[0], y=-520), clamp=True, y=-560)
+        front = _math("MULTIPLY", local, 1.0 + feather, y=-540)
+        drawn = nodes.new("ShaderNodeMapRange")
+        drawn.interpolation_type = "SMOOTHSTEP"
+        drawn.clamp = True
+        drawn.location = (-220, -480)
+        links.new(separate.outputs["Y"], drawn.inputs["Value"])
+        links.new(_math("SUBTRACT", front, feather, y=-600), drawn.inputs["From Min"])
+        links.new(front, drawn.inputs["From Max"])
+        drawn.inputs["To Min"].default_value = 1.0
+        drawn.inputs["To Max"].default_value = 0.0
+
+        head = nodes.new("ShaderNodeMapRange")
+        head.interpolation_type = "SMOOTHSTEP"
+        head.clamp = True
+        head.location = (-220, -700)
+        links.new(
+            _math("ABSOLUTE", _math("SUBTRACT", separate.outputs["Y"],
+                                    _math("SUBTRACT", front, feather * 0.5, y=-660), y=-720), y=-780),
+            head.inputs["Value"],
+        )
+        head.inputs["From Min"].default_value = 0.0
+        head.inputs["From Max"].default_value = float(draw_cfg.get("head_width", 0.05))
+        head.inputs["To Min"].default_value = 1.0
+        head.inputs["To Max"].default_value = 0.0
+        travelling = _math("MULTIPLY", head.outputs["Result"], _math("LESS_THAN", local, 0.999, y=-840), y=-900)
+
+        masked = _math("MULTIPLY", alpha_socket, drawn.outputs["Result"], clamp=True, y=-80)
+        alpha_socket = _math(
+            "MULTIPLY", masked,
+            _math("ADD", 1.0, _math("MULTIPLY", travelling, float(draw_cfg.get("head_alpha_gain", 1.0)))),
+            clamp=True, y=-140,
+        )
+        links.new(
+            _math("MULTIPLY", base_strength,
+                  _math("ADD", 1.0, _math("MULTIPLY", travelling, float(draw_cfg.get("head_gain", 2.0))))),
+            emission.inputs["Strength"],
+        )
 
     transparent = nodes.new("ShaderNodeBsdfTransparent")
     transparent.location = (300, 320)
 
     mix = nodes.new("ShaderNodeMixShader")
     mix.location = (520, 0)
-    links.new(alpha.outputs[0], mix.inputs["Fac"])
+    links.new(alpha_socket, mix.inputs["Fac"])
     links.new(transparent.outputs["BSDF"], mix.inputs[1])
     links.new(emission.outputs["Emission"], mix.inputs[2])
     links.new(mix.outputs["Shader"], output.inputs["Surface"])
@@ -1949,9 +2037,22 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
     earth_radius_km = description["earth_radius_km"]
     frame_objects = context.setdefault("aoi_frame_objects", {}).setdefault(spec["id"], [])
 
-    def morphing(obj, true_units, units, ribbon_radius, settled_km, acquisition_km, closed):
+    # WEB-005A R3 preview gate 2 (Product decision c7c6cb1 section 2). Two things that used to be
+    # one are now separate. *Ground geometry* -- the corner anchors the four primary lines end on,
+    # the scan fill and the fan's ground line -- follows ``beams.anchor`` and for the gate that is
+    # the true governed footprint. The *reticle* is screen-space presentation: only the ribbons
+    # named in ``presentation.reticle_parts`` travel from the presented span onto the footprint.
+    # A ribbon that is not a reticle part is drawn on the true footprint for the whole shot and
+    # only ever changes its line weight, so the authoritative outline never lies about its size.
+    ground = presented if spec.get("beams", {}).get("anchor") == "presented" else description
+    reticle_parts = set((spec.get("presentation") or {}).get(
+        "reticle_parts", ("border", "border_glow", "corner_locks")))
+
+    def morphing(obj, part, true_units, units, ribbon_radius, settled_km, acquisition_km, closed):
         """Register a frame ribbon; give it its presentation and weight keys when the frame morphs."""
         if presentation:
+            if part not in reticle_parts:
+                units = true_units
             moved, _ = _ribbon_vertices(units, ribbon_radius, settled_km, earth_radius_km, closed)
             heavy, _ = _ribbon_vertices(units, ribbon_radius, acquisition_km, earth_radius_km, closed)
             ar.add_morph_keys(obj, moved, heavy)
@@ -1983,7 +2084,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
     fill_material = materials.get(spec.get("fill_material"))
     attach(
         _fill_on_sphere(
-            spec["id"] + "_fill", presented["fill_rows"], radius_bu, fill_material
+            spec["id"] + "_fill", ground["fill_rows"], radius_bu, fill_material
         )
     )
 
@@ -2001,7 +2102,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
                 border_material,
             )
         ),
-        description["boundary_units"], presented["boundary_units"], radius_bu,
+        "border", description["boundary_units"], presented["boundary_units"], radius_bu,
         fixture["border_width_km"], presented["fixture"]["border_width_km"], True,
     )
 
@@ -2026,7 +2127,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
                     glow_material,
                 )
             ),
-            description["boundary_units"], presented["boundary_units"], glow_radius,
+            "border_glow", description["boundary_units"], presented["boundary_units"], glow_radius,
             float(glow_cfg.get("width_km", 12.0)),
             float((presentation or {}).get("acquisition", {}).get("glow_width_km", 0.0)), True,
         )
@@ -2049,7 +2150,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
                     lock_material,
                 )
             ),
-            [lock["arms"][0], lock["apex"], lock["arms"][1]],
+            "corner_locks", [lock["arms"][0], lock["apex"], lock["arms"][1]],
             [shown["arms"][0], shown["apex"], shown["arms"][1]], lock_radius,
             fixture["corner_lock_width_km"], presented["fixture"]["corner_lock_width_km"], False,
         )
@@ -2058,12 +2159,11 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
     # Real empties rather than baked coordinates: the beams aim at these, the
     # empties ride the Earth, so a beam endpoint is by construction the AOI
     # corner at every frame instead of a constant that happens to match on one.
-    # WEB-005A R3: while the observer is fixed the lines lock the corners of the *presented* frame
-    # (``beams.anchor: presented``) -- the true footprint is a few pixels across at that range and
-    # four lines onto it read as one. Those corners lie on the footprint's own diagonals, the lines
-    # retire before the frame starts to tighten, and the true corners are always built as
-    # ``_true_<corner>`` empties, so the audit can measure both against each other.
-    anchor_description = presented if spec.get("beams", {}).get("anchor") == "presented" else description
+    # WEB-005A R3: ``beams.anchor: presented`` (first preview gate) locked the corners of the
+    # *presented* frame; Product rejected that for production (c7c6cb1 section 2) and the gate now
+    # anchors the true governed corners. The true corners are always built as ``_true_<corner>``
+    # empties as well, so the audit measures the line tips against them by name.
+    anchor_description = ground
     targets = []
     for index, corner_id in enumerate(description["corner_order"]):
         target = bpy.data.objects.new(spec["id"] + "_target_" + corner_id, None)
@@ -2111,19 +2211,61 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
         elif target_mode == "corners_and_center":
             beam_targets = list(targets) + [("center", center_target)]
 
-        def _constrained_beam(name, root_r, tip_r, material, target):
+        # WEB-005A R3 preview gate 2: the lines leave the instrument, not the middle of the bus.
+        # ``emitter`` names the aperture object; one empty rides the Earth's frame at the aperture
+        # (Copy Location, so it takes the platform's position and the Earth's orientation) and
+        # carries four children on the aperture rim, laid out parallel to the footprint's own east
+        # and north. Line k therefore runs from rim point k to true corner k and no two lines
+        # cross, whatever attitude the platform has slewed to.
+        emitters = {}
+        emitter_cfg = beam_spec.get("emitter")
+        if emitter_cfg:
+            aperture = bpy.data.objects.get(emitter_cfg["object_id"])
+            if aperture is None:
+                raise KeyError("beam emitter object " + repr(emitter_cfg["object_id"]) + " is not built")
+            emitter_root = bpy.data.objects.new(spec["id"] + "_emitter_root", None)
+            emitter_root.empty_display_size = 0.02
+            bpy.context.collection.objects.link(emitter_root)
+            attach(emitter_root)
+            follow = emitter_root.constraints.new(type="COPY_LOCATION")
+            follow.target = aperture
+            context.setdefault("aoi_emitter_roots", {})[spec["id"]] = emitter_root
+            order = description["corner_order"]
+            unit = {cid: description["corner_units"][order.index(cid)] for cid in ax.CORNER_IDS}
+            east = ax.normalize(tuple(a - b for a, b in zip(unit["ne"], unit["nw"])))
+            north = ax.normalize(tuple(a - b for a, b in zip(unit["nw"], unit["sw"])))
+            context.setdefault("aoi_tangent_axes", {})[spec["id"]] = (east, north)
+            half = float(emitter_cfg.get("half_side_km", 20.0)) / ax.KM_PER_BLENDER_UNIT
+            signs = {"nw": (-1.0, 1.0), "ne": (1.0, 1.0), "se": (1.0, -1.0), "sw": (-1.0, -1.0)}
+            for corner_id, (se, sn) in signs.items():
+                emitter = bpy.data.objects.new(spec["id"] + "_emitter_" + corner_id, None)
+                emitter.empty_display_size = 0.01
+                bpy.context.collection.objects.link(emitter)
+                emitter.parent = emitter_root
+                emitter.matrix_parent_inverse = Matrix.Identity(4)
+                emitter.location = tuple(half * (se * e + sn * n) for e, n in zip(east, north))
+                emitters[corner_id] = emitter
+
+        draw_cfg = beam_spec.get("draw") or {}
+        draw_window = max(1, int(beam_spec.get("appear_end_frame", 1)) - int(beam_spec.get("appear_start_frame", 0)))
+        stagger = float(draw_cfg.get("stagger_frames", 0.0)) / draw_window
+        draw_order = list(draw_cfg.get("order", ax.CORNER_IDS))
+
+        def _constrained_beam(name, root_r, tip_r, material, target, corner_id=None):
             beam = _beam_mesh_object(name, root_r, tip_r, sides, material)
             copy_location = beam.constraints.new(type="COPY_LOCATION")
-            copy_location.target = source
+            copy_location.target = emitters.get(corner_id, source)
             stretch = beam.constraints.new(type="STRETCH_TO")
             stretch.target = target
             stretch.rest_length = 1.0
             stretch.volume = "NO_VOLUME"
+            # Read by the beam material's draw-on mask; zero for a scene that does not draw on.
+            beam["beam_delay"] = stagger * draw_order.index(corner_id) if corner_id in draw_order else 0.0
             return beam
 
         for corner_id, target in beam_targets:
             beams.append(_constrained_beam(
-                spec["id"] + "_beam_" + corner_id, root_radius, tip_radius, beam_material, target
+                spec["id"] + "_beam_" + corner_id, root_radius, tip_radius, beam_material, target, corner_id
             ))
             # WEB-005A R2 sensing lines: each thin core line carries a wider, fainter glow tube
             # around it, so the satellite-target link is legible at review size without ever
@@ -2133,7 +2275,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
                 factor = float(beam_spec.get("glow_radius_factor", 4.0))
                 beams.append(_constrained_beam(
                     spec["id"] + "_beamglow_" + corner_id, root_radius * factor,
-                    tip_radius * factor, glow_material, target
+                    tip_radius * factor, glow_material, target, corner_id
                 ))
 
         # Optional secondary support: one broad, very faint cone to the centre.
@@ -2210,10 +2352,26 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
         )
 
     if "appear_start_frame" in beam_spec:
-        keys = [
-            (int(beam_spec["appear_start_frame"]), 0.0),
-            (int(beam_spec["appear_end_frame"]), 1.0),
-        ]
+        appear_start, appear_end = int(beam_spec["appear_start_frame"]), int(beam_spec["appear_end_frame"])
+        draw_cfg = beam_spec.get("draw")
+        if draw_cfg:
+            # Draw-on: the line is fully present from its first frame and the material's mask does
+            # the revealing, so what the viewer sees is propagation, never a fade. One LINEAR key
+            # pair drives all four lines; the material offsets each by its ``beam_delay`` and eases
+            # it, so the audit can reproduce every line's drawn fraction exactly.
+            keys = [(appear_start - 1, 0.0), (appear_start, 1.0)]
+            max_delay = float(draw_cfg.get("stagger_frames", 0.0)) / max(1, appear_end - appear_start) * 3.0
+            for material in (beam_material, materials.get(beam_spec.get("glow_material"))):
+                draw_node = _node_named(material, "aoi_beam_draw")
+                if draw_node is None:
+                    raise KeyError("beams declare draw-on but their material has no draw_on block")
+                _node_named(material, "aoi_beam_draw_span").outputs[0].default_value = max(1.0e-3, 1.0 - max_delay)
+                _node_named(material, "aoi_beam_draw_power").outputs[0].default_value = float(
+                    draw_cfg.get("ease_power", 2.0))
+                _keyframe_socket(material.node_tree, draw_node.outputs[0],
+                                 [(appear_start, 0.0), (appear_end, 1.0)], interpolation="LINEAR")
+        else:
+            keys = [(appear_start, 0.0), (appear_end, 1.0)]
         if "release_start_frame" in beam_spec:
             keys.append((int(beam_spec["release_start_frame"]), 1.0))
             keys.append((int(beam_spec["release_end_frame"]), 0.0))
@@ -2252,7 +2410,7 @@ def _build_aoi_system(spec: dict, materials: dict, context: dict):
     # --- scan fan (WEB-005A R3) ---------------------------------------------
     fan_cfg = spec.get("scan_fan")
     if fan_cfg:
-        for fan_object in ar.build_scan_fan(spec, fan_cfg, root, presented, materials, context, _ar_helpers()):
+        for fan_object in ar.build_scan_fan(spec, fan_cfg, root, ground, materials, context, _ar_helpers()):
             beams.append(fan_object)
 
     # --- scan sweep --------------------------------------------------------

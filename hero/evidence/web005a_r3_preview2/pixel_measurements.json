@@ -1,0 +1,63 @@
+{
+  "scan_palette_second_gate_f156": {
+    "samples": 160,
+    "median_rgb_8bit": [
+      151,
+      199,
+      206
+    ],
+    "median_hue_deg": 187.5,
+    "median_saturation": 0.274,
+    "median_whiteness_min_over_max": 0.726
+  },
+  "scan_palette_first_gate_f172": {
+    "samples": 640,
+    "median_rgb_8bit": [
+      218,
+      237,
+      240
+    ],
+    "median_hue_deg": 190.0,
+    "median_saturation": 0.095,
+    "median_whiteness_min_over_max": 0.905
+  },
+  "drape_colour_path": {
+    "method": "64^3 occupancy of the delivered display texture composited over the declared NoData neutral by its own alpha (linear light), area-averaged 2x-16x, grown by two bins (about +-8/255); fraction of the overlay's interior pixels that fall inside it",
+    "layers": {
+      "thm01": {
+        "overlay_pixels": 63723,
+        "reference_colour_set_fraction_of_rgb_cube": 0.0809,
+        "fraction_inside_delivered_texture_colour_set": 0.9996
+      },
+      "alt01": {
+        "overlay_pixels": 62188,
+        "reference_colour_set_fraction_of_rgb_cube": 0.2181,
+        "fraction_inside_delivered_texture_colour_set": 1.0
+      },
+      "priority": {
+        "overlay_pixels": 62137,
+        "reference_colour_set_fraction_of_rgb_cube": 0.1488,
+        "fraction_inside_delivered_texture_colour_set": 0.9999,
+        "same_pixels_in_the_AgX_scene_render": 0.6613
+      }
+    }
+  },
+  "page_shade_over_footprint_1440x900": {
+    "footprint_page_box_px": [
+      831,
+      303,
+      1180,
+      574
+    ],
+    "shipped_shade": {
+      "left_60px_luminance_vs_unshaded": 0.6969,
+      "whole_footprint_luminance_vs_unshaded": 0.8274,
+      "max_abs_rgb_difference_8bit": 100
+    },
+    "proposed_analysis_safe_shade": {
+      "left_60px_luminance_vs_unshaded": 0.9943,
+      "whole_footprint_luminance_vs_unshaded": 0.999,
+      "max_abs_rgb_difference_8bit": 5
+    }
+  }
+}

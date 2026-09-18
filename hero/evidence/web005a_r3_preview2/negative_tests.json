@@ -1,0 +1,86 @@
+{
+  "scene": "hero_r3_preview_gate",
+  "results": [
+    {
+      "mutation": "beams.anchor = presented (rejected by c7c6cb1 section 2)",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate anchors the four primary lines on the true governed corners (never 'presented') \u2014 'presented'"
+      ]
+    },
+    {
+      "mutation": "outline morphs with the reticle again",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate keeps the outline on the true footprint; only the corner brackets are reticle \u2014 ['border', 'border_glow', 'corner_locks']"
+      ]
+    },
+    {
+      "mutation": "lines start before the slew has finished",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate orders the acquisition: pass settles, platform slews, slew completes, only then do lines draw \u2014 {'settled': 84.0, 'aim': [86, 102], '"
+      ]
+    },
+    {
+      "mutation": "slew starts before the pass has settled",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate orders the acquisition: pass settles, platform slews, slew completes, only then do lines draw \u2014 {'settled': 84.0, 'aim': [70, 102], '"
+      ]
+    },
+    {
+      "mutation": "lines fade in (no draw-on)",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate draws each line on over at least 8 frames (core and glow both masked), never a fade-in \u2014 {}"
+      ]
+    },
+    {
+      "mutation": "first-gate outline weight",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate states the thinner outline / halo / bracket weights (first gate: 2.2 / 13 / 4.0 px) \u2014 {'border_px': 2.2, 'glow_px': 7.0, 'corner_lock"
+      ]
+    },
+    {
+      "mutation": "curtain back on the near-white R2 core colour",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate draws every acquisition effect in the scan cyan / teal \u2014 {'aoi_beam': 'scan_cyan', 'aoi_beam_glow': 'scan_teal', 'aoi_fan_veil': 'sca"
+      ]
+    },
+    {
+      "mutation": "scan palette made pale / milky",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate palette scan_cyan is a saturated cyan / teal (almost no red, green and blue together) \u2014 [0.6, 0.9, 1.0]"
+      ]
+    },
+    {
+      "mutation": "platform-exit bound loosened to 0.29",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate declares the platform-exit fly-by bound at or under 22 percent \u2014 0.29"
+      ]
+    },
+    {
+      "mutation": "analytical sequence stretched to 5 s",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate declares a timing envelope inside the approved one (motion 11.5-12.5 s, reveal 2.4-3.2 s) \u2014 [[1, 276], [276, 398]]",
+        "scene hero_r3_preview_gate layer ramps occupy exactly the declared analytical window \u2014 [276, 342] vs [276, 398]"
+      ]
+    },
+    {
+      "mutation": "platform resumes its pass while lines are attached",
+      "caught": true,
+      "failed_checks": [
+        "scene hero_r3_preview_gate holds the platform at station-keeping rate for as long as any line is attached",
+        "scene hero_r3_preview_gate committed satellite keyframes match their orbit derivation \u2014 worst drift 2.1253"
+      ]
+    }
+  ],
+  "caught": 11,
+  "total": 11
+}

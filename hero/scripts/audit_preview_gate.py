@@ -6,18 +6,25 @@
 ``validate_hero.py`` proves what configuration can prove. This proves the rest, per frame, after
 F-curves, constraints, hooks, shape keys and Earth rotation -- the gates the R3 review
 (docs/web-005-polish-authority@473b48a, tasks/WEB-005A_R3_REVIEW_37152222.md) asks to see
-numerically before any further long render:
+numerically before any further long render, as amended by the Product decision on the first
+preview (docs/web-005-polish-authority@c7c6cb1, tasks/WEB-005A_R3_PREVIEW_GATE_PRODUCT_DECISION.md)
+and the Product clarifications of 2026-09-18:
 
 A-HERO-15  the camera does not move, turn, zoom or shift before the scan has retired
 A-HERO-12/13  the platform is unclipped, right of the hero copy column and readable while acquiring
-A-HERO-16  exactly four lines, each ending on its corner anchor and starting on the platform;
-           the anchors lie on the true footprint's own diagonals
+(sequence) the pass has settled before the platform slews, the slew has finished before the first
+           line leaves the aperture, the lines are whole before the lock, the lock before the sweep
+(draw-on)  every line propagates from the platform to its corner over several frames; none pops
+A-HERO-16  exactly four lines, each starting on the instrument aperture and ending on its TRUE
+           governed 36 km corner (c7c6cb1 section 2); no presentation-sized ground anchor exists
+(reticle)  the true outline sits on the true corners on every frame; the reticle is the only thing
+           that is ever larger, and it tightens continuously onto that outline
 (refined)  lines, fan and ground band are gone before the first camera motion
-(refined)  one lock frame: never under the surface while it tightens, line weight inside a
-           screen-space band, landing on the true corners
+(exit)     the whole platform silhouette stays inside the fly-by bound until it has left the frame
 A-HERO-17  the settled footprint sits in the right-middle zone, clear of the copy column
 A-HERO-18  the relief, every display layer and the frame share one registered footprint
 A-HERO-19  the last frame shows the priority layer alone
+(timing)   motion section and analytical sequence sit inside the approved envelope
 
 Whether it *looks* right is for the stills and the animatic. Nothing here renders.
 """
@@ -120,6 +127,13 @@ def audit(scene_id):
 
     satellite = bpy.data.objects["satellite"]
     sat_meshes = [o for o in satellite.children_recursive if o.type == "MESH"] or [satellite]
+    aperture = bpy.data.objects[aoi["beams"]["emitter"]["object_id"]]
+    aperture_radius_m = max(aperture.dimensions[0], aperture.dimensions[1]) / 2.0 * 1.0e6
+    locks = {c: bpy.data.objects["aoi_lock_" + c] for c in corner_ids}
+    beam_delay = {c: float(bpy.data.objects["aoi_beam_" + c].get("beam_delay", 0.0)) for c in corner_ids}
+    draw_span = value_node("aoi_beam", "aoi_beam_draw_span")
+    draw_span = float(draw_span.default_value) if draw_span is not None else 1.0
+    draw_power = float(aoi["beams"].get("draw", {}).get("ease_power", 2.0))
     border = bpy.data.objects["aoi_border"]
     glow = bpy.data.objects.get("aoi_border_glow")
     relief = bpy.data.objects.get("aoi_relief")
@@ -160,6 +174,14 @@ def audit(scene_id):
             "bbox": [round(min(xs), 4), round(min(ys), 4), round(max(xs), 4), round(max(ys), 4)] if xs else None,
             "occluded": occluded(matrix.translation, centre, radius_bu),
         }
+        # Aiming beat: keyed influence of the slew, and what it actually does -- the angle between
+        # the instrument boresight (platform -Z) and the direction to the AOI centre.
+        sat_eval = satellite.evaluated_get(depsgraph)
+        aim = sat_eval.constraints.get("aim")
+        row["aim_influence"] = float(aim.influence) if aim is not None else None
+        boresight = -(sat_eval.matrix_world.to_3x3() @ Vector((0.0, 0.0, 1.0)))
+        to_target = bpy.data.objects["aoi_target_center"].evaluated_get(depsgraph).matrix_world.translation - centre
+        row["boresight_error_deg"] = angle_deg(boresight, to_target)
 
         # sensing lines
         row["beam_presence"] = evaluated_socket("aoi_beam", "aoi_presence", depsgraph)
@@ -170,13 +192,26 @@ def audit(scene_id):
         row["fill_presence"] = evaluated_socket("aoi_fill", "aoi_presence", depsgraph)
         row["sweep"] = evaluated_socket("aoi_fill", "aoi_sweep_position", depsgraph)
         row["curtain_sweep"] = evaluated_socket("aoi_scan_curtain", "aoi_sweep_position", depsgraph)
-        tips, roots = [], []
+        tips, roots, anchors = [], [], []
+        aperture_centre = aperture.evaluated_get(depsgraph).matrix_world.translation
         for corner_id in corner_ids:
             beam = bpy.data.objects["aoi_beam_" + corner_id].evaluated_get(depsgraph)
             target = bpy.data.objects["aoi_target_" + corner_id].evaluated_get(depsgraph)
-            tips.append(((beam.matrix_world @ Vector((0, 1, 0))) - target.matrix_world.translation).length * 1.0e6)
-            roots.append((beam.matrix_world.translation - centre).length * 1.0e6)
+            true = bpy.data.objects["aoi_true_" + corner_id].evaluated_get(depsgraph)
+            # Tip is measured against the TRUE governed corner, by name, not against the anchor.
+            tips.append(((beam.matrix_world @ Vector((0, 1, 0))) - true.matrix_world.translation).length * 1.0e6)
+            roots.append((beam.matrix_world.translation - aperture_centre).length * 1.0e6)
+            anchors.append((target.matrix_world.translation - true.matrix_world.translation).length * 1.0e6)
         row["beam_tip_error_m"], row["beam_root_error_m"] = max(tips), max(roots)
+        row["anchor_to_true_corner_m"] = max(anchors)
+        # Draw-on: the keyed value, and each line's own drawn fraction from it (the material's rule).
+        draw = evaluated_socket("aoi_beam", "aoi_beam_draw", depsgraph)
+        row["beam_draw"] = draw
+        row["beam_drawn"] = {
+            c: 1.0 - (1.0 - max(0.0, min(1.0, ((draw if draw is not None else 1.0) - beam_delay[c]) / draw_span)))
+            ** draw_power
+            for c in corner_ids
+        }
 
         # lock frame, as evaluated
         mesh = border.evaluated_get(depsgraph)
@@ -209,6 +244,23 @@ def audit(scene_id):
             gm.to_mesh_clear()
             a, b = screen(scene, camera, gv[2 * mid]), screen(scene, camera, gv[2 * mid + 1])
             row["glow_px"] = math.hypot((a[0] - b[0]) * REFERENCE_WIDTH_PX, (a[1] - b[1]) * REFERENCE_WIDTH_PX * 9 / 16)
+
+        # Reticle: the four corner brackets. Each ribbon is [arm, apex, arm] with two rails per
+        # sample, so rails 2 and 3 straddle the apex and rails 0 and 1 are the end of one arm.
+        apexes, reticle_error, lock_px = {}, 0.0, []
+        for corner_id in corner_ids:
+            lm = locks[corner_id].evaluated_get(depsgraph)
+            lv = [lm.matrix_world @ v.co for v in lm.to_mesh().vertices]
+            lm.to_mesh_clear()
+            apexes[corner_id] = (lv[2] + lv[3]) / 2.0
+            reticle_error = max(reticle_error, angular_m(apexes[corner_id], true_corners[corner_ids.index(corner_id)],
+                                                         radius_bu))
+            a, b = screen(scene, camera, lv[0]), screen(scene, camera, lv[1])
+            lock_px.append(math.hypot((a[0] - b[0]) * REFERENCE_WIDTH_PX, (a[1] - b[1]) * REFERENCE_WIDTH_PX * 9 / 16))
+        reticle = [screen(scene, camera, p) for p in apexes.values()]
+        row["reticle_width_fraction"] = max(p[0] for p in reticle) - min(p[0] for p in reticle)
+        row["reticle_to_true_corner_m"] = reticle_error
+        row["lock_px"] = min(lock_px)
 
         row["layers"] = {
             layer: evaluated_socket("aoi_relief_layers", "layer_weight_" + layer, depsgraph)
@@ -260,28 +312,65 @@ def audit(scene_id):
                         "whole sweep happens while the camera is fixed",
                         [sweep["start_frame"], sweep["end_frame"]], [beat[0], fixed_end], "frames"))
 
+    # --- acquisition sequence (Product clarification 1) ----------------------------------------------
+    # "Settled" is measured, not read off the rate profile: the first frame from which the
+    # platform's on-screen travel stays under 0.06 percent of a frame width per frame.
+    travel = {b["frame"]: math.dist(a["sat"]["centre"], b["sat"]["centre"]) for a, b in zip(fixed, fixed[1:])}
+    settled_frame = next(f for f in sorted(travel) if all(travel[g] <= 6.0e-4 for g in travel if g >= f))
+    aim_start = next(r["frame"] for r in rows if (r["aim_influence"] or 0.0) > 1.0e-4) - 1
+    aim_done = next(r["frame"] for r in rows if (r["aim_influence"] or 0.0) >= 0.999)
+    beam_first = next(r["frame"] for r in rows if (r["beam_presence"] or 0.0) > 1.0e-4
+                      and max(r["beam_drawn"].values()) > 0.0)
+    beams_whole = next(r["frame"] for r in rows if r["frame"] >= beam_first and min(r["beam_drawn"].values()) >= 0.999)
+    lock_done = int(aoi["corner_locks"]["draw_end_frame"])
+    acquisition_sequence = {"settled": settled_frame, "aim_start": aim_start, "aim_complete": aim_done,
+                "first_line": beam_first, "lines_whole": beams_whole, "lock": lock_done,
+                "sweep": [sweep["start_frame"], sweep["end_frame"]], "retired": fixed_end, "approach": fixed_end + 1}
+    checks.append(check(settled_frame <= aim_start, "sequence: the pass has settled before the platform starts to slew",
+                        [settled_frame, aim_start], "settled <= aim start", "frames"))
+    checks.append(check(aim_done < beam_first, "sequence: the slew is complete before the first line leaves the aperture",
+                        [aim_done, beam_first], "aim complete < first line", "frames"))
+    slew = by_frame[aim_start]["boresight_error_deg"] - by_frame[aim_done]["boresight_error_deg"]
+    checks.append(check(slew >= 5.0 and by_frame[beam_first]["boresight_error_deg"] <= 1.0,
+                        "sequence: the aiming beat is a visible slew that ends on the target",
+                        {"slew_deg": round(slew, 2), "error_at_first_line_deg": round(by_frame[beam_first]["boresight_error_deg"], 3)},
+                        "slew >= 5 deg, error <= 1 deg", ""))
+    emitting = [r for r in rows if beam_first <= r["frame"] <= fixed_end]
+    checks.append(check(max(travel[r["frame"]] for r in emitting if r["frame"] in travel) <= 6.0e-4
+                        and min(r["aim_influence"] for r in emitting if r["frame"] < int(aoi["beams"]["release_end_frame"])) >= 0.999,
+                        "sequence: no line is ever attached to a platform in transit or mid-slew",
+                        round(max(travel[r["frame"]] for r in emitting if r["frame"] in travel), 6), 6.0e-4,
+                        "frame widths per frame"))
+    checks.append(check(beams_whole <= lock_done <= sweep["start_frame"],
+                        "sequence: lines whole, then the lock, then the sweep", [beams_whole, lock_done, sweep["start_frame"]],
+                        "increasing", "frames"))
+
+    # --- draw-on (Product clarification 2) --------------------------------------------------------------
+    drawing = [r for r in rows if beam_first - 1 <= r["frame"] <= beams_whole]
+    per_line = {c: [r["beam_drawn"][c] for r in drawing] for c in corner_ids}
+    first_shown = by_frame[beam_first]["beam_drawn"]
+    checks.append(check(max(first_shown.values()) <= 0.25, "draw-on: no line appears already formed",
+                        {c: round(v, 3) for c, v in first_shown.items()}, 0.25, "drawn fraction on the first frame"))
+    grow = {c: sum(1 for a, b in zip(v, v[1:]) if b > a + 1.0e-6) for c, v in per_line.items()}
+    jump = max(b - a for v in per_line.values() for a, b in zip(v, v[1:]))
+    checks.append(check(all(all(b >= a - 1.0e-9 for a, b in zip(v, v[1:])) for v in per_line.values())
+                        and min(grow.values()) >= 8 and jump <= 0.25,
+                        "draw-on: every line propagates outward over at least 8 frames and never jumps",
+                        {"frames_growing": grow, "largest_step": round(jump, 3)}, "monotonic, >= 8 frames, step <= 0.25", ""))
+
     # --- A-HERO-16 -------------------------------------------------------------------------------
     checks.append(check(len(beams) == 4, "A-HERO-16 exactly four primary sensing lines", beams, 4, "objects"))
+    checks.append(check(aoi["beams"].get("anchor") == "true" and max(r["anchor_to_true_corner_m"] for r in rows) <= 1.0,
+                        "A-HERO-16 the line anchors ARE the true governed corners (no presentation-sized ground anchor)",
+                        round(max(r["anchor_to_true_corner_m"] for r in rows), 4), 1.0, "m"))
     checks.append(check(max(r["beam_tip_error_m"] for r in acquiring) <= 25.0,
-                        "A-HERO-16 every line ends on its corner anchor, every acquisition frame",
+                        "A-HERO-16 every line ends on its true governed corner, every acquisition frame",
                         round(max(r["beam_tip_error_m"] for r in acquiring), 3), 25.0, "m"))
-    checks.append(check(max(r["beam_root_error_m"] for r in acquiring) <= 25.0,
-                        "every line starts on the platform", round(max(r["beam_root_error_m"] for r in acquiring), 3),
-                        25.0, "m"))
-    scene.frame_set(int(beat[0]))
-    depsgraph = bpy.context.evaluated_depsgraph_get()
-    centre = bpy.data.objects["aoi_target_center"].evaluated_get(depsgraph).matrix_world.translation
-    diagonal_error, scales = 0.0, []
-    for corner_id in corner_ids:
-        anchor = bpy.data.objects["aoi_target_" + corner_id].evaluated_get(depsgraph).matrix_world.translation - centre
-        true = bpy.data.objects["aoi_true_" + corner_id].evaluated_get(depsgraph).matrix_world.translation - centre
-        # compare directions in the tangent plane at the centre
-        normal = centre.normalized()
-        anchor_t, true_t = anchor - normal * anchor.dot(normal), true - normal * true.dot(normal)
-        diagonal_error = max(diagonal_error, angle_deg(anchor_t, true_t))
-        scales.append(anchor_t.length / true_t.length)
-    checks.append(check(diagonal_error <= 0.05, "line anchors lie on the true footprint's own diagonals",
-                        round(diagonal_error, 5), 0.05, "deg"))
+    checks.append(check(max(r["beam_root_error_m"] for r in acquiring) <= aperture_radius_m,
+                        "every line starts on the instrument aperture",
+                        round(max(r["beam_root_error_m"] for r in acquiring) / 1000.0, 2),
+                        round(aperture_radius_m / 1000.0, 2), "km from the aperture centre"))
+    scales = [1.0, 1.0, 1.0, 1.0]
 
     # --- platform readability on the integrated page ------------------------------------------------
     clipped = [r["frame"] for r in acquiring if r["sat"]["bbox"] is None or r["sat"]["bbox"][0] < 0.0
@@ -300,32 +389,64 @@ def audit(scene_id):
                         "platform is hidden at the open and comes round the left limb",
                         None if not emerge else {"frame": emerge["frame"], "at": emerge["sat"]["centre"]},
                         "x < 0.45", "frame x"))
-    after = [r for r in rows if r["frame"] >= int(spec["camera"]["composition"]["analysis_hold"]["frame"])]
-    checks.append(check(all(r["sat"]["bbox"] is None or r["sat"]["bbox"][2] < 0.0 or r["sat"]["bbox"][3] < 0.0
-                            or r["sat"]["bbox"][0] > 1.0 for r in after),
-                        "platform has left the frame before the hold", True, True, ""))
+    def in_frame(r):
+        box = r["sat"]["bbox"]
+        return (box is not None and not r["sat"]["occluded"]
+                and box[2] > 0.0 and box[0] < 1.0 and box[3] > 0.0 and box[1] < 1.0)
 
-    # --- one persistent lock frame --------------------------------------------------------------
+    # --- bounded exit (Product decision c7c6cb1 section 6) -----------------------------------------------
+    exit_cfg = spec["camera"]["composition"]["satellite_exit"]
+    leaving = [r for r in rows if r["frame"] > fixed_end and in_frame(r)]
+    widest = max(leaving, key=lambda r: r["sat"]["bbox"][2] - r["sat"]["bbox"][0])
+    exit_width = widest["sat"]["bbox"][2] - widest["sat"]["bbox"][0]
+    gone = max(r["frame"] for r in leaving) + 1
+    checks.append(check(exit_width <= float(exit_cfg["max_width_fraction"]),
+                        "exit: whole platform silhouette stays inside the fly-by bound while any of it is in frame",
+                        {"width": round(exit_width, 4), "frame": widest["frame"]},
+                        exit_cfg["max_width_fraction"], "frame widths"))
+    checks.append(check(gone <= int(exit_cfg["out_of_frame_by_frame"]),
+                        "exit: platform has left the frame early in the approach", gone,
+                        exit_cfg["out_of_frame_by_frame"], "frame"))
+    after = [r for r in rows if r["frame"] >= gone]
+    checks.append(check(not any(in_frame(r) for r in after), "platform never re-enters the frame", True, True, ""))
+
+    # --- true outline + screen-space reticle (c7c6cb1 section 2; Product clarification 3) ------------------
     shown = [r for r in rows if r["frame"] >= int(aoi["border"]["appear_end_frame"])]
+    checks.append(check(max(r["frame_to_true_corner_m"] for r in rows) <= 5.0,
+                        "true outline sits on the true governed corners on every frame of the shot",
+                        round(max(r["frame_to_true_corner_m"] for r in rows), 3), 5.0, "m"))
     checks.append(check(min(r["frame_min_clearance_m"] for r in shown) >= 50.0,
-                        "no lock-frame ribbon (border, halo, corner locks) dips under the surface while it tightens",
+                        "no ribbon (outline, halo, reticle brackets) dips under the surface while the reticle tightens",
                         round(min(r["frame_min_clearance_m"] for r in shown), 1), 50.0, "m above the sphere"))
-    checks.append(check(1.2 <= min(r["border_px"] for r in shown) and max(r["border_px"] for r in shown) <= 3.2,
-                        "frame line weight stays inside its screen-space band",
+    # Thinner line language: the first gate's bands were 1.2-3.2 px (outline) and 7-22 px (halo).
+    checks.append(check(0.7 <= min(r["border_px"] for r in shown) and max(r["border_px"] for r in shown) <= 2.0,
+                        "outline line weight stays inside the thinner screen-space band",
                         [round(min(r["border_px"] for r in shown), 2), round(max(r["border_px"] for r in shown), 2)],
-                        [1.2, 3.2], "px at 1920, most foreshortened edge"))
+                        [0.7, 2.0], "px at 1920, most foreshortened edge"))
     if glow is not None:
-        checks.append(check(7.0 <= min(r["glow_px"] for r in shown) and max(r["glow_px"] for r in shown) <= 22.0,
-                            "frame halo stays inside its screen-space band",
+        checks.append(check(3.0 <= min(r["glow_px"] for r in shown) and max(r["glow_px"] for r in shown) <= 11.0,
+                            "outline halo stays inside the thinner screen-space band",
                             [round(min(r["glow_px"] for r in shown), 2), round(max(r["glow_px"] for r in shown), 2)],
-                            [7.0, 22.0], "px at 1920"))
-    steps = [abs(b["frame_width_fraction"] - a["frame_width_fraction"]) for a, b in zip(shown, shown[1:])]
-    checks.append(check(max(steps) <= 0.012, "frame size changes continuously: no swap, no pop",
+                            [3.0, 11.0], "px at 1920"))
+    checks.append(check(1.0 <= min(r["lock_px"] for r in shown) and max(r["lock_px"] for r in shown) <= 3.4,
+                        "reticle bracket weight stays inside the thinner screen-space band",
+                        [round(min(r["lock_px"] for r in shown), 2), round(max(r["lock_px"] for r in shown), 2)],
+                        [1.0, 3.4], "px at 1920, most foreshortened arm"))
+    held = [r for r in fixed if r["frame"] >= int(aoi["corner_locks"]["draw_end_frame"])]
+    checks.append(check(min(r["reticle_width_fraction"] for r in held) >= 5.0 * max(r["frame_width_fraction"] for r in held),
+                        "reticle is plainly larger than the true outline while acquiring (presentation, not footprint)",
+                        [round(min(r["reticle_width_fraction"] for r in held), 4),
+                         round(max(r["frame_width_fraction"] for r in held), 4)], ">= 5x", "frame widths"))
+    steps = [abs(b["reticle_width_fraction"] - a["reticle_width_fraction"]) for a, b in zip(shown, shown[1:])]
+    checks.append(check(max(steps) <= 0.012, "reticle size changes continuously: no swap, no pop",
                         round(max(steps), 5), 0.012, "frame widths per frame"))
+    tightening = [r["reticle_to_true_corner_m"] for r in rows if r["frame"] >= fixed_end]
+    checks.append(check(all(b <= a + 0.5 for a, b in zip(tightening, tightening[1:])),
+                        "reticle only ever tightens toward the true corners", True, True, ""))
     settled = by_frame[int(spec["camera"]["composition"]["analysis_hold"]["frame"])]
-    checks.append(check(settled["frame_to_true_corner_m"] <= 5.0 and rows[-1]["frame_to_true_corner_m"] <= 5.0,
-                        "settled lock frame sits on the true footprint corners",
-                        round(max(settled["frame_to_true_corner_m"], rows[-1]["frame_to_true_corner_m"]), 3), 5.0, "m"))
+    checks.append(check(settled["reticle_to_true_corner_m"] <= 5.0 and rows[-1]["reticle_to_true_corner_m"] <= 5.0,
+                        "settled reticle sits on the true footprint corners",
+                        round(max(settled["reticle_to_true_corner_m"], rows[-1]["reticle_to_true_corner_m"]), 3), 5.0, "m"))
 
     # --- A-HERO-17 ----------------------------------------------------------------------------------
     box = rows[-1]["frame_bbox"]
@@ -380,6 +501,20 @@ def audit(scene_id):
     hold = [r for r in rows if abs((r["layers"]["priority"] or 0.0) - 1.0) <= 1.0e-4]
     checks.append(check(len(hold) >= 18, "A-HERO-19 priority-only hold is long enough to read", len(hold), 18, "frames"))
 
+    # --- timing envelope (c7c6cb1 section 8; Product clarification 6) -------------------------------------
+    rate = float(animation["frame_rate"])
+    first_layer = next(r["frame"] for r in rows if any((w or 0.0) > 1.0e-4 for w in r["layers"].values())) - 1
+    motion_s = (first_layer - start + 1) / rate
+    reveal_s = (hold[0]["frame"] - first_layer) / rate
+    sweep_s = (sweep["end_frame"] - sweep["start_frame"]) / rate
+    checks.append(check(11.5 <= motion_s <= 12.5, "timing: rendered motion section", round(motion_s, 3), [11.5, 12.5], "s"))
+    checks.append(check(2.4 <= reveal_s <= 3.2, "timing: Terrain -> THM-01 -> ALT-01 -> priority", round(reveal_s, 3),
+                        [2.4, 3.2], "s"))
+    checks.append(check(sweep_s <= 1.5, "timing: the sweep is brisk (first gate: 1.917 s)", round(sweep_s, 3), 1.5, "s"))
+    timing = {"motion_section_s": round(motion_s, 3), "analytical_sequence_s": round(reveal_s, 3),
+              "sweep_s": round(sweep_s, 3), "priority_hold_s": round(len(hold) / rate, 3),
+              "total_s": round((end - start + 1) / rate, 3)}
+
     # --- governed grid vs the fixture the hero draws from --------------------------------------------
     ingest = hc.EVIDENCE_DIR / "web005a_r3_preview" / "analytical_asset_ingest.json"
     residual = None
@@ -401,14 +536,20 @@ def audit(scene_id):
                                 "fixture corners agree with the governed EPSG:32635 grid corners to under three cells",
                                 residual, 90.0, "m"))
 
-    keep = sorted({start, 24, 60, 104, 140, 152, 172, 186, 202, fixed_end, fixed_end + 1, 214, 230, 246, 262, 276,
-                   316, 350, 378, 400, end})
+    keep = sorted(set(animation["representative_frames"].values())
+                  | {start, settled_frame, aim_start, aim_done, beam_first, beams_whole, lock_done, fixed_end,
+                     fixed_end + 1, gone - 1, gone, widest["frame"], end}
+                  | set(range(beam_first - 1, beams_whole + 1, 2)))
     return {
         "scene": scene_id,
-        "authority": "docs/web-005-polish-authority@473b48a00bfe85d3dbe1cfe7219105c2b5ec7574:"
-                     "tasks/WEB-005A_R3_REVIEW_37152222.md",
+        "authority": "docs/web-005-polish-authority@c7c6cb10e305c9de63d805c414b332440fd87ddb:"
+                     "tasks/WEB-005A_R3_PREVIEW_GATE_PRODUCT_DECISION.md (+ Product clarifications of 2026-09-18)",
         "frames_measured": len(rows),
         "fixed_through_frame": fixed_end,
+        "sequence": acquisition_sequence,
+        "timing": timing,
+        "platform_exit": {"widest_silhouette_fraction": round(exit_width, 4), "at_frame": widest["frame"],
+                          "out_of_frame_from": gone, "bound": exit_cfg["max_width_fraction"]},
         "anchor_scale_vs_true_footprint": [round(s, 4) for s in scales],
         "relief": relief_record,
         "governed_grid_residual_m": residual,

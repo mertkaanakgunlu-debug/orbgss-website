@@ -1,0 +1,2878 @@
+{
+  "scene": "hero_r3_preview_gate",
+  "authority": "docs/web-005-polish-authority@c7c6cb10e305c9de63d805c414b332440fd87ddb:tasks/WEB-005A_R3_PREVIEW_GATE_PRODUCT_DECISION.md (+ Product clarifications of 2026-09-18)",
+  "frames_measured": 384,
+  "fixed_through_frame": 186,
+  "sequence": {
+    "settled": 85,
+    "aim_start": 86,
+    "aim_complete": 102,
+    "first_line": 107,
+    "lines_whole": 124,
+    "lock": 136,
+    "sweep": [
+      140,
+      172
+    ],
+    "retired": 186,
+    "approach": 187
+  },
+  "timing": {
+    "motion_section_s": 11.5,
+    "analytical_sequence_s": 2.75,
+    "sweep_s": 1.333,
+    "priority_hold_s": 1.792,
+    "total_s": 16.0
+  },
+  "platform_exit": {
+    "widest_silhouette_fraction": 0.1884,
+    "at_frame": 206,
+    "out_of_frame_from": 207,
+    "bound": 0.22
+  },
+  "anchor_scale_vs_true_footprint": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "relief": {
+    "corner_registration_m": 0.463,
+    "lift_km": [
+      0.125,
+      5.043
+    ],
+    "uv_layers": 1,
+    "vertical_exaggeration": 3.0,
+    "geometry_source": "kizildere_top_dem.tif"
+  },
+  "governed_grid_residual_m": {
+    "nw": 54.4,
+    "ne": 49.8,
+    "se": 54.0,
+    "sw": 55.6
+  },
+  "checks": [
+    {
+      "ok": true,
+      "label": "A-HERO-15 camera translation, frames 1-186",
+      "measured": 0.0,
+      "threshold": 1.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-15 camera rotation",
+      "measured": 0.0,
+      "threshold": 0.0001,
+      "unit": "deg"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-15 focal length",
+      "measured": 0.0,
+      "threshold": 0.0001,
+      "unit": "mm"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-15 lens shift",
+      "measured": 0.0,
+      "threshold": 1e-06,
+      "unit": "sensor widths"
+    },
+    {
+      "ok": true,
+      "label": "first frame with any camera motion",
+      "measured": 187,
+      "threshold": 187,
+      "unit": "frame"
+    },
+    {
+      "ok": true,
+      "label": "sensing lines fully retired at frame 186",
+      "measured": 0.0,
+      "threshold": 0.0,
+      "unit": "presence"
+    },
+    {
+      "ok": true,
+      "label": "scan fan fully retired at frame 186",
+      "measured": 0.0,
+      "threshold": 0.0,
+      "unit": "presence"
+    },
+    {
+      "ok": true,
+      "label": "ground scan wash retired at frame 186",
+      "measured": 0.0,
+      "threshold": 0.0,
+      "unit": "presence"
+    },
+    {
+      "ok": true,
+      "label": "no line or fan is visible on any frame in which the camera moves",
+      "measured": 0.0,
+      "threshold": 0.0,
+      "unit": "presence"
+    },
+    {
+      "ok": true,
+      "label": "sweep travels west to east (AOI u, screen left to right) and never reverses",
+      "measured": [
+        -0.08,
+        1.08
+      ],
+      "threshold": "increasing",
+      "unit": "u"
+    },
+    {
+      "ok": true,
+      "label": "light curtain and ground band read one sweep value",
+      "measured": 0.0,
+      "threshold": 1e-06,
+      "unit": "u"
+    },
+    {
+      "ok": true,
+      "label": "whole sweep happens while the camera is fixed",
+      "measured": [
+        140,
+        172
+      ],
+      "threshold": [
+        106,
+        186
+      ],
+      "unit": "frames"
+    },
+    {
+      "ok": true,
+      "label": "sequence: the pass has settled before the platform starts to slew",
+      "measured": [
+        85,
+        86
+      ],
+      "threshold": "settled <= aim start",
+      "unit": "frames"
+    },
+    {
+      "ok": true,
+      "label": "sequence: the slew is complete before the first line leaves the aperture",
+      "measured": [
+        102,
+        107
+      ],
+      "threshold": "aim complete < first line",
+      "unit": "frames"
+    },
+    {
+      "ok": true,
+      "label": "sequence: the aiming beat is a visible slew that ends on the target",
+      "measured": {
+        "slew_deg": 56.73,
+        "error_at_first_line_deg": 0.0
+      },
+      "threshold": "slew >= 5 deg, error <= 1 deg",
+      "unit": ""
+    },
+    {
+      "ok": true,
+      "label": "sequence: no line is ever attached to a platform in transit or mid-slew",
+      "measured": 0.000412,
+      "threshold": 0.0006,
+      "unit": "frame widths per frame"
+    },
+    {
+      "ok": true,
+      "label": "sequence: lines whole, then the lock, then the sweep",
+      "measured": [
+        124,
+        136,
+        140
+      ],
+      "threshold": "increasing",
+      "unit": "frames"
+    },
+    {
+      "ok": true,
+      "label": "draw-on: no line appears already formed",
+      "measured": {
+        "nw": 0.16,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "threshold": 0.25,
+      "unit": "drawn fraction on the first frame"
+    },
+    {
+      "ok": true,
+      "label": "draw-on: every line propagates outward over at least 8 frames and never jumps",
+      "measured": {
+        "frames_growing": {
+          "nw": 12,
+          "ne": 12,
+          "se": 12,
+          "sw": 12
+        },
+        "largest_step": 0.16
+      },
+      "threshold": "monotonic, >= 8 frames, step <= 0.25",
+      "unit": ""
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-16 exactly four primary sensing lines",
+      "measured": [
+        "aoi_beam_ne",
+        "aoi_beam_nw",
+        "aoi_beam_se",
+        "aoi_beam_sw"
+      ],
+      "threshold": 4,
+      "unit": "objects"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-16 the line anchors ARE the true governed corners (no presentation-sized ground anchor)",
+      "measured": 0.0,
+      "threshold": 1.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-16 every line ends on its true governed corner, every acquisition frame",
+      "measured": 0.737,
+      "threshold": 25.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "every line starts on the instrument aperture",
+      "measured": 31.11,
+      "threshold": 31.65,
+      "unit": "km from the aperture centre"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-12 platform unclipped through the acquisition beat",
+      "measured": [],
+      "threshold": [],
+      "unit": "frames"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-13 platform silhouette stays right of the hero copy column (1440 x 900 page)",
+      "measured": 0.4979,
+      "threshold": 0.475,
+      "unit": "frame x"
+    },
+    {
+      "ok": true,
+      "label": "platform on-screen width while acquiring",
+      "measured": [
+        0.1271,
+        0.1278
+      ],
+      "threshold": [
+        0.08,
+        0.25
+      ],
+      "unit": "frame widths"
+    },
+    {
+      "ok": true,
+      "label": "platform holds its place while acquiring",
+      "measured": 0.0202,
+      "threshold": 0.04,
+      "unit": "frame widths"
+    },
+    {
+      "ok": true,
+      "label": "platform is hidden at the open and comes round the left limb",
+      "measured": {
+        "frame": 24,
+        "at": [
+          0.2934,
+          0.2525
+        ]
+      },
+      "threshold": "x < 0.45",
+      "unit": "frame x"
+    },
+    {
+      "ok": true,
+      "label": "exit: whole platform silhouette stays inside the fly-by bound while any of it is in frame",
+      "measured": {
+        "width": 0.1884,
+        "frame": 206
+      },
+      "threshold": 0.22,
+      "unit": "frame widths"
+    },
+    {
+      "ok": true,
+      "label": "exit: platform has left the frame early in the approach",
+      "measured": 207,
+      "threshold": 212,
+      "unit": "frame"
+    },
+    {
+      "ok": true,
+      "label": "platform never re-enters the frame",
+      "measured": true,
+      "threshold": true,
+      "unit": ""
+    },
+    {
+      "ok": true,
+      "label": "true outline sits on the true governed corners on every frame of the shot",
+      "measured": 0.714,
+      "threshold": 5.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "no ribbon (outline, halo, reticle brackets) dips under the surface while the reticle tightens",
+      "measured": 185.3,
+      "threshold": 50.0,
+      "unit": "m above the sphere"
+    },
+    {
+      "ok": true,
+      "label": "outline line weight stays inside the thinner screen-space band",
+      "measured": [
+        1.08,
+        1.4
+      ],
+      "threshold": [
+        0.7,
+        2.0
+      ],
+      "unit": "px at 1920, most foreshortened edge"
+    },
+    {
+      "ok": true,
+      "label": "outline halo stays inside the thinner screen-space band",
+      "measured": [
+        5.06,
+        6.79
+      ],
+      "threshold": [
+        3.0,
+        11.0
+      ],
+      "unit": "px at 1920"
+    },
+    {
+      "ok": true,
+      "label": "reticle bracket weight stays inside the thinner screen-space band",
+      "measured": [
+        1.6,
+        2.24
+      ],
+      "threshold": [
+        1.0,
+        3.4
+      ],
+      "unit": "px at 1920, most foreshortened arm"
+    },
+    {
+      "ok": true,
+      "label": "reticle is plainly larger than the true outline while acquiring (presentation, not footprint)",
+      "measured": [
+        0.0706,
+        0.0048
+      ],
+      "threshold": ">= 5x",
+      "unit": "frame widths"
+    },
+    {
+      "ok": true,
+      "label": "reticle size changes continuously: no swap, no pop",
+      "measured": 0.00775,
+      "threshold": 0.012,
+      "unit": "frame widths per frame"
+    },
+    {
+      "ok": true,
+      "label": "reticle only ever tightens toward the true corners",
+      "measured": true,
+      "threshold": true,
+      "unit": ""
+    },
+    {
+      "ok": true,
+      "label": "settled reticle sits on the true footprint corners",
+      "measured": 0.422,
+      "threshold": 5.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-17 settled footprint is right-middle and clear of the copy column",
+      "measured": [
+        0.5769,
+        0.3585,
+        0.8197,
+        0.6935
+      ],
+      "threshold": "x0 >= 0.525, x1 <= 0.92, centre y 0.25-0.75",
+      "unit": "frame"
+    },
+    {
+      "ok": true,
+      "label": "settled footprint width",
+      "measured": 0.2428,
+      "threshold": [
+        0.22,
+        0.27
+      ],
+      "unit": "frame widths"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-18 relief corners sit on the true footprint corners",
+      "measured": 0.463,
+      "threshold": 5.0,
+      "unit": "m"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-18 every display layer reads one shared UV",
+      "measured": 1,
+      "threshold": 1,
+      "unit": "layers"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-18 DEM relief is present in the geometry",
+      "measured": [
+        0.125,
+        5.043
+      ],
+      "threshold": 3.0,
+      "unit": "km"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-18 layers lead in the locked order",
+      "measured": [
+        "terrain",
+        "thm01",
+        "alt01",
+        "priority"
+      ],
+      "threshold": [
+        "terrain",
+        "thm01",
+        "alt01",
+        "priority"
+      ],
+      "unit": ""
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-19 final frame shows the priority layer alone",
+      "measured": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 1.0
+      },
+      "threshold": {
+        "priority": 1.0,
+        "others": 0.0
+      },
+      "unit": "weight"
+    },
+    {
+      "ok": true,
+      "label": "A-HERO-19 priority-only hold is long enough to read",
+      "measured": 43,
+      "threshold": 18,
+      "unit": "frames"
+    },
+    {
+      "ok": true,
+      "label": "timing: rendered motion section",
+      "measured": 11.5,
+      "threshold": [
+        11.5,
+        12.5
+      ],
+      "unit": "s"
+    },
+    {
+      "ok": true,
+      "label": "timing: Terrain -> THM-01 -> ALT-01 -> priority",
+      "measured": 2.75,
+      "threshold": [
+        2.4,
+        3.2
+      ],
+      "unit": "s"
+    },
+    {
+      "ok": true,
+      "label": "timing: the sweep is brisk (first gate: 1.917 s)",
+      "measured": 1.333,
+      "threshold": 1.5,
+      "unit": "s"
+    },
+    {
+      "ok": true,
+      "label": "fixture corners agree with the governed EPSG:32635 grid corners to under three cells",
+      "measured": {
+        "nw": 54.4,
+        "ne": 49.8,
+        "se": 54.0,
+        "sw": 55.6
+      },
+      "threshold": 90.0,
+      "unit": "m"
+    }
+  ],
+  "passed": 52,
+  "failed": 0,
+  "frames": [
+    {
+      "frame": 1,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5599,
+          0.0285
+        ],
+        "bbox": [
+          0.5323,
+          -0.0063,
+          0.5858,
+          0.0622
+        ],
+        "occluded": true
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 24.75874,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 3.83884,
+      "beam_root_error_m": 31112.71112,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.0,
+      "beam_drawn": {
+        "nw": 0.0,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00495,
+      "frame_bbox": [
+        0.7108,
+        0.5957,
+        0.7157,
+        0.6013
+      ],
+      "border_px": 1.1032,
+      "frame_min_clearance_m": 189.70844,
+      "frame_to_true_corner_m": 0.20923,
+      "glow_px": 5.1482,
+      "reticle_width_fraction": 0.07465,
+      "reticle_to_true_corner_m": 359120.97896,
+      "lock_px": 1.63861,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 24,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.2934,
+          0.2525
+        ],
+        "bbox": [
+          0.2621,
+          0.209,
+          0.3205,
+          0.2945
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 46.25479,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 1.16229,
+      "beam_root_error_m": 31112.80817,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.0,
+      "beam_drawn": {
+        "nw": 0.0,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00494,
+      "frame_bbox": [
+        0.7133,
+        0.5958,
+        0.7182,
+        0.6014
+      ],
+      "border_px": 1.10214,
+      "frame_min_clearance_m": 189.62425,
+      "frame_to_true_corner_m": 0.37702,
+      "glow_px": 5.14323,
+      "reticle_width_fraction": 0.07451,
+      "reticle_to_true_corner_m": 359121.07799,
+      "lock_px": 1.63664,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 56,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.3465,
+          0.432
+        ],
+        "bbox": [
+          0.3184,
+          0.3651,
+          0.3736,
+          0.4962
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 60.93711,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.29802,
+      "beam_root_error_m": 31112.71276,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.0,
+      "beam_drawn": {
+        "nw": 0.0,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.0049,
+      "frame_bbox": [
+        0.7231,
+        0.5961,
+        0.728,
+        0.6017
+      ],
+      "border_px": 1.0982,
+      "frame_min_clearance_m": 189.39738,
+      "frame_to_true_corner_m": 0.09249,
+      "glow_px": 5.12504,
+      "reticle_width_fraction": 0.07396,
+      "reticle_to_true_corner_m": 359121.06823,
+      "lock_px": 1.62893,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 72,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5081,
+          0.3982
+        ],
+        "bbox": [
+          0.4534,
+          0.3209,
+          0.5643,
+          0.4731
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 57.45315,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.25463,
+      "beam_root_error_m": 31112.72305,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.0,
+      "beam_drawn": {
+        "nw": 0.0,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00488,
+      "frame_bbox": [
+        0.7296,
+        0.5963,
+        0.7345,
+        0.6019
+      ],
+      "border_px": 1.09583,
+      "frame_min_clearance_m": 189.59735,
+      "frame_to_true_corner_m": 0.37503,
+      "glow_px": 5.11387,
+      "reticle_width_fraction": 0.07356,
+      "reticle_to_true_corner_m": 359120.95843,
+      "lock_px": 1.62427,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 84,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5563,
+          0.3827
+        ],
+        "bbox": [
+          0.4957,
+          0.3029,
+          0.619,
+          0.4602
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 56.70725,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.26656,
+      "beam_root_error_m": 31112.76818,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.0,
+      "beam_drawn": {
+        "nw": 0.0,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00485,
+      "frame_bbox": [
+        0.7347,
+        0.5964,
+        0.7395,
+        0.6021
+      ],
+      "border_px": 1.09411,
+      "frame_min_clearance_m": 189.49795,
+      "frame_to_true_corner_m": 0.37503,
+      "glow_px": 5.10567,
+      "reticle_width_fraction": 0.07324,
+      "reticle_to_true_corner_m": 359121.17882,
+      "lock_px": 1.62082,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 85,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5567,
+          0.3826
+        ],
+        "bbox": [
+          0.496,
+          0.3028,
+          0.6193,
+          0.4601
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 56.71617,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.49151,
+      "beam_root_error_m": 31112.80233,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.0,
+      "beam_drawn": {
+        "nw": 0.0,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00485,
+      "frame_bbox": [
+        0.7351,
+        0.5965,
+        0.74,
+        0.6021
+      ],
+      "border_px": 1.09393,
+      "frame_min_clearance_m": 189.61255,
+      "frame_to_true_corner_m": 0.37566,
+      "glow_px": 5.10498,
+      "reticle_width_fraction": 0.07321,
+      "reticle_to_true_corner_m": 359120.99138,
+      "lock_px": 1.62058,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 86,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5568,
+          0.3826
+        ],
+        "bbox": [
+          0.4961,
+          0.3027,
+          0.6195,
+          0.46
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 56.72741,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.26656,
+      "beam_root_error_m": 31112.65102,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.0,
+      "beam_drawn": {
+        "nw": 0.0,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00485,
+      "frame_bbox": [
+        0.7355,
+        0.5965,
+        0.7404,
+        0.6021
+      ],
+      "border_px": 1.09382,
+      "frame_min_clearance_m": 189.58448,
+      "frame_to_true_corner_m": 0.37563,
+      "glow_px": 5.10435,
+      "reticle_width_fraction": 0.07318,
+      "reticle_to_true_corner_m": 359121.04954,
+      "lock_px": 1.62025,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 102,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5606,
+          0.3813
+        ],
+        "bbox": [
+          0.4969,
+          0.2994,
+          0.6246,
+          0.4531
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.26656,
+      "beam_root_error_m": 31112.70504,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.0,
+      "beam_drawn": {
+        "nw": 0.0,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00482,
+      "frame_bbox": [
+        0.7422,
+        0.5966,
+        0.747,
+        0.6022
+      ],
+      "border_px": 1.09169,
+      "frame_min_clearance_m": 189.42311,
+      "frame_to_true_corner_m": 0.21583,
+      "glow_px": 5.09445,
+      "reticle_width_fraction": 0.07273,
+      "reticle_to_true_corner_m": 359121.1287,
+      "lock_px": 1.61607,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 104,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.561,
+          0.3811
+        ],
+        "bbox": [
+          0.4974,
+          0.2992,
+          0.625,
+          0.4529
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.56231,
+      "beam_root_error_m": 31112.8056,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.0,
+      "beam_drawn": {
+        "nw": 0.0,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00482,
+      "frame_bbox": [
+        0.7429,
+        0.5967,
+        0.7478,
+        0.6023
+      ],
+      "border_px": 1.09143,
+      "frame_min_clearance_m": 189.31318,
+      "frame_to_true_corner_m": 0.21848,
+      "glow_px": 5.09327,
+      "reticle_width_fraction": 0.07268,
+      "reticle_to_true_corner_m": 359121.08707,
+      "lock_px": 1.6155,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 106,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5615,
+          0.381
+        ],
+        "bbox": [
+          0.4979,
+          0.299,
+          0.6255,
+          0.4528
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.584,
+      "beam_root_error_m": 31112.75228,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.0,
+      "beam_drawn": {
+        "nw": 0.0,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00481,
+      "frame_bbox": [
+        0.7437,
+        0.5967,
+        0.7485,
+        0.6023
+      ],
+      "border_px": 1.09117,
+      "frame_min_clearance_m": 189.28745,
+      "frame_to_true_corner_m": 0.37512,
+      "glow_px": 5.09221,
+      "reticle_width_fraction": 0.07262,
+      "reticle_to_true_corner_m": 359121.129,
+      "lock_px": 1.61511,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 107,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5617,
+          0.3809
+        ],
+        "bbox": [
+          0.4982,
+          0.2989,
+          0.6257,
+          0.4527
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.56231,
+      "beam_root_error_m": 31112.74176,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.05556,
+      "beam_drawn": {
+        "nw": 0.1597,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00481,
+      "frame_bbox": [
+        0.7441,
+        0.5967,
+        0.7489,
+        0.6023
+      ],
+      "border_px": 1.09107,
+      "frame_min_clearance_m": 189.41375,
+      "frame_to_true_corner_m": 0.37503,
+      "glow_px": 5.09162,
+      "reticle_width_fraction": 0.07259,
+      "reticle_to_true_corner_m": 359120.98609,
+      "lock_px": 1.61482,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 108,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.562,
+          0.3808
+        ],
+        "bbox": [
+          0.4984,
+          0.2988,
+          0.6259,
+          0.4526
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.23842,
+      "beam_root_error_m": 31112.77754,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.11111,
+      "beam_drawn": {
+        "nw": 0.3056,
+        "ne": 0.0,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00481,
+      "frame_bbox": [
+        0.7445,
+        0.5967,
+        0.7493,
+        0.6023
+      ],
+      "border_px": 1.09098,
+      "frame_min_clearance_m": 189.61723,
+      "frame_to_true_corner_m": 0.38438,
+      "glow_px": 5.09108,
+      "reticle_width_fraction": 0.07257,
+      "reticle_to_true_corner_m": 359121.02631,
+      "lock_px": 1.61463,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 110,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5625,
+          0.3806
+        ],
+        "bbox": [
+          0.4989,
+          0.2986,
+          0.6264,
+          0.4525
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.26656,
+      "beam_root_error_m": 31112.78689,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.22222,
+      "beam_drawn": {
+        "nw": 0.5556,
+        "ne": 0.3056,
+        "se": 0.0,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.00481,
+      "frame_bbox": [
+        0.7453,
+        0.5967,
+        0.7501,
+        0.6023
+      ],
+      "border_px": 1.09073,
+      "frame_min_clearance_m": 189.64763,
+      "frame_to_true_corner_m": 0.67316,
+      "glow_px": 5.09006,
+      "reticle_width_fraction": 0.07251,
+      "reticle_to_true_corner_m": 359121.25916,
+      "lock_px": 1.61421,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 112,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5629,
+          0.3805
+        ],
+        "bbox": [
+          0.4994,
+          0.2984,
+          0.6268,
+          0.4524
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.33717,
+      "beam_root_error_m": 31112.76397,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.33333,
+      "beam_drawn": {
+        "nw": 0.75,
+        "ne": 0.5556,
+        "se": 0.3056,
+        "sw": 0.0
+      },
+      "frame_width_fraction": 0.0048,
+      "frame_bbox": [
+        0.746,
+        0.5967,
+        0.7508,
+        0.6023
+      ],
+      "border_px": 1.0905,
+      "frame_min_clearance_m": 189.49327,
+      "frame_to_true_corner_m": 0.37498,
+      "glow_px": 5.08904,
+      "reticle_width_fraction": 0.07246,
+      "reticle_to_true_corner_m": 359121.139,
+      "lock_px": 1.61371,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 114,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5634,
+          0.3803
+        ],
+        "bbox": [
+          0.4999,
+          0.2982,
+          0.6273,
+          0.4522
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.26656,
+      "beam_root_error_m": 31112.74527,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.44444,
+      "beam_drawn": {
+        "nw": 0.8889,
+        "ne": 0.75,
+        "se": 0.5556,
+        "sw": 0.3056
+      },
+      "frame_width_fraction": 0.0048,
+      "frame_bbox": [
+        0.7468,
+        0.5968,
+        0.7516,
+        0.6024
+      ],
+      "border_px": 1.09034,
+      "frame_min_clearance_m": 189.45585,
+      "frame_to_true_corner_m": 0.3841,
+      "glow_px": 5.08794,
+      "reticle_width_fraction": 0.0724,
+      "reticle_to_true_corner_m": 359121.09227,
+      "lock_px": 1.61328,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 116,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5639,
+          0.3802
+        ],
+        "bbox": [
+          0.5004,
+          0.298,
+          0.6278,
+          0.4521
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.56231,
+      "beam_root_error_m": 31112.69662,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.55556,
+      "beam_drawn": {
+        "nw": 0.9722,
+        "ne": 0.8889,
+        "se": 0.75,
+        "sw": 0.5556
+      },
+      "frame_width_fraction": 0.00479,
+      "frame_bbox": [
+        0.7475,
+        0.5968,
+        0.7523,
+        0.6024
+      ],
+      "border_px": 1.09005,
+      "frame_min_clearance_m": 189.49561,
+      "frame_to_true_corner_m": 0.24057,
+      "glow_px": 5.08691,
+      "reticle_width_fraction": 0.07235,
+      "reticle_to_true_corner_m": 359121.01531,
+      "lock_px": 1.61285,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 118,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5643,
+          0.38
+        ],
+        "bbox": [
+          0.5009,
+          0.2978,
+          0.6282,
+          0.4519
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.48055,
+      "beam_root_error_m": 31112.81028,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.66667,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 0.9722,
+        "se": 0.8889,
+        "sw": 0.75
+      },
+      "frame_width_fraction": 0.00479,
+      "frame_bbox": [
+        0.7483,
+        0.5968,
+        0.7531,
+        0.6024
+      ],
+      "border_px": 1.08989,
+      "frame_min_clearance_m": 189.48625,
+      "frame_to_true_corner_m": 0.37484,
+      "glow_px": 5.08598,
+      "reticle_width_fraction": 0.0723,
+      "reticle_to_true_corner_m": 359121.05386,
+      "lock_px": 1.61238,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 120,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5648,
+          0.3798
+        ],
+        "bbox": [
+          0.5014,
+          0.2976,
+          0.6287,
+          0.4518
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.54629,
+      "beam_root_error_m": 31112.66108,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.77778,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 0.9722,
+        "sw": 0.8889
+      },
+      "frame_width_fraction": 0.00479,
+      "frame_bbox": [
+        0.749,
+        0.5968,
+        0.7538,
+        0.6024
+      ],
+      "border_px": 1.08968,
+      "frame_min_clearance_m": 189.52835,
+      "frame_to_true_corner_m": 0.37503,
+      "glow_px": 5.08508,
+      "reticle_width_fraction": 0.07224,
+      "reticle_to_true_corner_m": 359121.11043,
+      "lock_px": 1.61199,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 122,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5653,
+          0.3797
+        ],
+        "bbox": [
+          0.5019,
+          0.2974,
+          0.6292,
+          0.4517
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.066,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.29802,
+      "beam_root_error_m": 31112.7538,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 0.88889,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 0.9722
+      },
+      "frame_width_fraction": 0.00478,
+      "frame_bbox": [
+        0.7497,
+        0.5968,
+        0.7545,
+        0.6024
+      ],
+      "border_px": 1.08948,
+      "frame_min_clearance_m": 189.33423,
+      "frame_to_true_corner_m": 0.37643,
+      "glow_px": 5.08408,
+      "reticle_width_fraction": 0.07219,
+      "reticle_to_true_corner_m": 359121.15729,
+      "lock_px": 1.61162,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 124,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5658,
+          0.3795
+        ],
+        "bbox": [
+          0.5024,
+          0.2972,
+          0.6296,
+          0.4515
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.238,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.26656,
+      "beam_root_error_m": 31112.74854,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00478,
+      "frame_bbox": [
+        0.7505,
+        0.5968,
+        0.7552,
+        0.6025
+      ],
+      "border_px": 1.0892,
+      "frame_min_clearance_m": 189.69207,
+      "frame_to_true_corner_m": 0.32112,
+      "glow_px": 5.08314,
+      "reticle_width_fraction": 0.07214,
+      "reticle_to_true_corner_m": 359120.95747,
+      "lock_px": 1.61123,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 136,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5686,
+          0.3785
+        ],
+        "bbox": [
+          0.5053,
+          0.296,
+          0.6324,
+          0.4507
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.352,
+      "fill_presence": 1.46641,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.29802,
+      "beam_root_error_m": 31112.71802,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00476,
+      "frame_bbox": [
+        0.7546,
+        0.5969,
+        0.7594,
+        0.6025
+      ],
+      "border_px": 1.08811,
+      "frame_min_clearance_m": 189.41609,
+      "frame_to_true_corner_m": 0.38313,
+      "glow_px": 5.07795,
+      "reticle_width_fraction": 0.07182,
+      "reticle_to_true_corner_m": 359121.09786,
+      "lock_px": 1.60894,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 138,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5691,
+          0.3784
+        ],
+        "bbox": [
+          0.5057,
+          0.2958,
+          0.6329,
+          0.4505
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.648,
+      "fill_presence": 1.5,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.23842,
+      "beam_root_error_m": 31112.77613,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00476,
+      "frame_bbox": [
+        0.7553,
+        0.5969,
+        0.7601,
+        0.6026
+      ],
+      "border_px": 1.088,
+      "frame_min_clearance_m": 189.61489,
+      "frame_to_true_corner_m": 0.37441,
+      "glow_px": 5.0771,
+      "reticle_width_fraction": 0.07177,
+      "reticle_to_true_corner_m": 359121.08783,
+      "lock_px": 1.6086,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 140,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5696,
+          0.3782
+        ],
+        "bbox": [
+          0.5062,
+          0.2956,
+          0.6334,
+          0.4504
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 0.896,
+      "fill_presence": 1.42188,
+      "sweep": -0.08,
+      "curtain_sweep": -0.08,
+      "beam_tip_error_m": 0.23842,
+      "beam_root_error_m": 31112.75345,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00475,
+      "frame_bbox": [
+        0.756,
+        0.597,
+        0.7607,
+        0.6026
+      ],
+      "border_px": 1.08778,
+      "frame_min_clearance_m": 189.54239,
+      "frame_to_true_corner_m": 0.37437,
+      "glow_px": 5.07631,
+      "reticle_width_fraction": 0.07172,
+      "reticle_to_true_corner_m": 359120.96427,
+      "lock_px": 1.60829,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 150,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.572,
+          0.3773
+        ],
+        "bbox": [
+          0.5086,
+          0.2946,
+          0.6358,
+          0.4496
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 1.0,
+      "fill_presence": 1.0,
+      "sweep": 0.2825,
+      "curtain_sweep": 0.2825,
+      "beam_tip_error_m": 0.56231,
+      "beam_root_error_m": 31112.79695,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00474,
+      "frame_bbox": [
+        0.7592,
+        0.597,
+        0.764,
+        0.6026
+      ],
+      "border_px": 1.08704,
+      "frame_min_clearance_m": 189.60553,
+      "frame_to_true_corner_m": 0.6734,
+      "glow_px": 5.07268,
+      "reticle_width_fraction": 0.07147,
+      "reticle_to_true_corner_m": 359120.85962,
+      "lock_px": 1.6066,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 156,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5734,
+          0.3768
+        ],
+        "bbox": [
+          0.51,
+          0.2941,
+          0.6373,
+          0.4492
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 1.0,
+      "fan_presence": 1.0,
+      "fill_presence": 1.0,
+      "sweep": 0.5,
+      "curtain_sweep": 0.5,
+      "beam_tip_error_m": 0.29802,
+      "beam_root_error_m": 31112.80338,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00473,
+      "frame_bbox": [
+        0.7611,
+        0.5971,
+        0.7658,
+        0.6027
+      ],
+      "border_px": 1.0865,
+      "frame_min_clearance_m": 189.41375,
+      "frame_to_true_corner_m": 0.0887,
+      "glow_px": 5.07063,
+      "reticle_width_fraction": 0.07132,
+      "reticle_to_true_corner_m": 359121.06956,
+      "lock_px": 1.60578,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 180,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5794,
+          0.3747
+        ],
+        "bbox": [
+          0.5158,
+          0.2916,
+          0.6436,
+          0.4473
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 0.648,
+      "fan_presence": 0.104,
+      "fill_presence": 0.352,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 0.29802,
+      "beam_root_error_m": 31112.66178,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00469,
+      "frame_bbox": [
+        0.7682,
+        0.5972,
+        0.7729,
+        0.6028
+      ],
+      "border_px": 1.08503,
+      "frame_min_clearance_m": 189.59618,
+      "frame_to_true_corner_m": 0.37669,
+      "glow_px": 5.06345,
+      "reticle_width_fraction": 0.07074,
+      "reticle_to_true_corner_m": 359121.25092,
+      "lock_px": 1.60264,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 186,
+      "camera_move_m": 0.0,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.0,
+      "shift_delta": 0.0,
+      "sat": {
+        "centre": [
+          0.5806,
+          0.3743
+        ],
+        "bbox": [
+          0.517,
+          0.2911,
+          0.6448,
+          0.447
+        ],
+        "occluded": false
+      },
+      "aim_influence": 1.0,
+      "boresight_error_deg": 0.0,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 0.47684,
+      "beam_root_error_m": 31112.76351,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00468,
+      "frame_bbox": [
+        0.7698,
+        0.5972,
+        0.7745,
+        0.6029
+      ],
+      "border_px": 1.0847,
+      "frame_min_clearance_m": 189.49795,
+      "frame_to_true_corner_m": 0.23227,
+      "glow_px": 5.06195,
+      "reticle_width_fraction": 0.0706,
+      "reticle_to_true_corner_m": 359120.90074,
+      "lock_px": 1.60194,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 187,
+      "camera_move_m": 776.33109,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.00319,
+      "shift_delta": 4e-05,
+      "sat": {
+        "centre": [
+          0.5819,
+          0.3738
+        ],
+        "bbox": [
+          0.5179,
+          0.2906,
+          0.6464,
+          0.4465
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.99275,
+      "boresight_error_deg": 0.41684,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 0.54629,
+      "beam_root_error_m": 31112.66353,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00468,
+      "frame_bbox": [
+        0.77,
+        0.5972,
+        0.7747,
+        0.6029
+      ],
+      "border_px": 1.08476,
+      "frame_min_clearance_m": 189.40439,
+      "frame_to_true_corner_m": 0.08493,
+      "glow_px": 5.06204,
+      "reticle_width_fraction": 0.07059,
+      "reticle_to_true_corner_m": 359121.19013,
+      "lock_px": 1.60196,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 188,
+      "camera_move_m": 3024.61749,
+      "camera_turn_deg": 0.0,
+      "lens_delta_mm": 0.01463,
+      "shift_delta": 0.00015,
+      "sat": {
+        "centre": [
+          0.5845,
+          0.3726
+        ],
+        "bbox": [
+          0.5198,
+          0.2895,
+          0.6498,
+          0.4455
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.972,
+      "boresight_error_deg": 1.60878,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 0.26656,
+      "beam_root_error_m": 31112.7082,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00468,
+      "frame_bbox": [
+        0.7698,
+        0.5973,
+        0.7745,
+        0.603
+      ],
+      "border_px": 1.08497,
+      "frame_min_clearance_m": 189.47456,
+      "frame_to_true_corner_m": 0.37348,
+      "glow_px": 5.06324,
+      "reticle_width_fraction": 0.07059,
+      "reticle_to_true_corner_m": 359121.16236,
+      "lock_px": 1.60224,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 198,
+      "camera_move_m": 82452.26062,
+      "camera_turn_deg": 0.28804,
+      "lens_delta_mm": 1.19638,
+      "shift_delta": 0.00493,
+      "sat": {
+        "centre": [
+          0.7295,
+          0.2915
+        ],
+        "bbox": [
+          0.6475,
+          0.1976,
+          0.8123,
+          0.3823
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.352,
+      "boresight_error_deg": 37.06833,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 0.23842,
+      "beam_root_error_m": 31112.731,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00483,
+      "frame_bbox": [
+        0.7627,
+        0.5914,
+        0.7675,
+        0.5973
+      ],
+      "border_px": 1.09814,
+      "frame_min_clearance_m": 188.98808,
+      "frame_to_true_corner_m": 0.38085,
+      "glow_px": 5.12467,
+      "reticle_width_fraction": 0.0729,
+      "reticle_to_true_corner_m": 359121.08116,
+      "lock_px": 1.62236,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 206,
+      "camera_move_m": 187175.50471,
+      "camera_turn_deg": 0.81852,
+      "lens_delta_mm": 4.81146,
+      "shift_delta": 0.01258,
+      "sat": {
+        "centre": [
+          1.0628,
+          0.0633
+        ],
+        "bbox": [
+          0.9698,
+          -0.0374,
+          1.1582,
+          0.1648
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 60.9579,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 0.42982,
+      "beam_root_error_m": 31112.65137,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00532,
+      "frame_bbox": [
+        0.7548,
+        0.5824,
+        0.7601,
+        0.5889
+      ],
+      "border_px": 1.12026,
+      "frame_min_clearance_m": 187.77657,
+      "frame_to_true_corner_m": 0.37318,
+      "glow_px": 5.22717,
+      "reticle_width_fraction": 0.08034,
+      "reticle_to_true_corner_m": 359121.09412,
+      "lock_px": 1.65564,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 207,
+      "camera_move_m": 202450.22982,
+      "camera_turn_deg": 0.88558,
+      "lens_delta_mm": 5.50972,
+      "shift_delta": 0.01371,
+      "sat": {
+        "centre": [
+          1.1161,
+          0.0215
+        ],
+        "bbox": [
+          1.0232,
+          -0.0799,
+          1.2111,
+          0.1241
+        ],
+        "occluded": false
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 61.13614,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 0.42982,
+      "beam_root_error_m": 31112.73848,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.00542,
+      "frame_bbox": [
+        0.7536,
+        0.581,
+        0.759,
+        0.5876
+      ],
+      "border_px": 1.12346,
+      "frame_min_clearance_m": 187.80931,
+      "frame_to_true_corner_m": 0.37317,
+      "glow_px": 5.24269,
+      "reticle_width_fraction": 0.0818,
+      "reticle_to_true_corner_m": 359120.96225,
+      "lock_px": 1.66054,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 236,
+      "camera_move_m": 5119180.55909,
+      "camera_turn_deg": 2.72112,
+      "lens_delta_mm": 55.44551,
+      "shift_delta": 0.05269,
+      "sat": {
+        "centre": [
+          4.0402,
+          -3.928
+        ],
+        "bbox": [
+          3.8456,
+          -4.1335,
+          4.2945,
+          -3.7673
+        ],
+        "occluded": true
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 42.10183,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 1.61703,
+      "beam_root_error_m": 31112.61992,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.0283,
+      "frame_bbox": [
+        0.7031,
+        0.523,
+        0.7314,
+        0.5567
+      ],
+      "border_px": 1.19738,
+      "frame_min_clearance_m": 379.6424,
+      "frame_to_true_corner_m": 0.42244,
+      "glow_px": 5.5879,
+      "reticle_width_fraction": 0.18917,
+      "reticle_to_true_corner_m": 144743.95886,
+      "lock_px": 1.77658,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 240,
+      "camera_move_m": 5722438.06599,
+      "camera_turn_deg": 2.9566,
+      "lens_delta_mm": 67.20435,
+      "shift_delta": 0.05742,
+      "sat": {
+        "centre": [
+          4.3995,
+          -4.6827
+        ],
+        "bbox": [
+          4.1503,
+          -4.9392,
+          4.7179,
+          -4.4787
+        ],
+        "occluded": true
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 39.05148,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 1.29632,
+      "beam_root_error_m": 31112.56332,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.03837,
+      "frame_bbox": [
+        0.6933,
+        0.5115,
+        0.7317,
+        0.5573
+      ],
+      "border_px": 1.2122,
+      "frame_min_clearance_m": 355.95066,
+      "frame_to_true_corner_m": 0.51621,
+      "glow_px": 5.65546,
+      "reticle_width_fraction": 0.20112,
+      "reticle_to_true_corner_m": 107982.0162,
+      "lock_px": 1.80941,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 252,
+      "camera_move_m": 7040623.53304,
+      "camera_turn_deg": 4.3376,
+      "lens_delta_mm": 113.20647,
+      "shift_delta": 0.06772,
+      "sat": {
+        "centre": [
+          5.8522,
+          -7.2251
+        ],
+        "bbox": [
+          5.4353,
+          -7.6533,
+          6.3716,
+          -6.8767
+        ],
+        "occluded": true
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 34.44424,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 1.66146,
+      "beam_root_error_m": 31112.73731,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.09916,
+      "frame_bbox": [
+        0.6524,
+        0.4601,
+        0.7516,
+        0.5842
+      ],
+      "border_px": 1.27998,
+      "frame_min_clearance_m": 256.87943,
+      "frame_to_true_corner_m": 0.30888,
+      "glow_px": 5.97475,
+      "reticle_width_fraction": 0.23003,
+      "reticle_to_true_corner_m": 33590.45417,
+      "lock_px": 1.96464,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 276,
+      "camera_move_m": 7778353.58866,
+      "camera_turn_deg": 8.89866,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          7.826,
+          -9.5337
+        ],
+        "bbox": [
+          7.2213,
+          -10.1956,
+          8.5814,
+          -8.9948
+        ],
+        "occluded": true
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 34.52055,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 1.81965,
+      "beam_root_error_m": 31112.78081,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.24545,
+      "frame_bbox": [
+        0.5762,
+        0.3482,
+        0.8217,
+        0.6866
+      ],
+      "border_px": 1.39784,
+      "frame_min_clearance_m": 189.55876,
+      "frame_to_true_corner_m": 0.4856,
+      "glow_px": 6.53257,
+      "reticle_width_fraction": 0.24548,
+      "reticle_to_true_corner_m": 0.21375,
+      "lock_px": 2.23727,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 292,
+      "camera_move_m": 7781992.1492,
+      "camera_turn_deg": 8.93337,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          7.8154,
+          -9.5473
+        ],
+        "bbox": [
+          7.2111,
+          -10.2121,
+          8.5705,
+          -9.0063
+        ],
+        "occluded": true
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 34.63323,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 1.22153,
+      "beam_root_error_m": 31112.77052,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.24545,
+      "frame_bbox": [
+        0.5756,
+        0.3556,
+        0.8211,
+        0.6966
+      ],
+      "border_px": 1.34273,
+      "frame_min_clearance_m": 219.90741,
+      "frame_to_true_corner_m": 0.3813,
+      "glow_px": 6.79039,
+      "reticle_width_fraction": 0.24549,
+      "reticle_to_true_corner_m": 0.32352,
+      "lock_px": 1.98387,
+      "layers": {
+        "terrain": 1.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 310,
+      "camera_move_m": 7774914.81296,
+      "camera_turn_deg": 9.24245,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          7.983,
+          -9.7406
+        ],
+        "bbox": [
+          7.362,
+          -10.4389,
+          8.762,
+          -9.1746
+        ],
+        "occluded": true
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 34.77089,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 1.73571,
+      "beam_root_error_m": 31112.62693,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.24418,
+      "frame_bbox": [
+        0.5762,
+        0.357,
+        0.8204,
+        0.6951
+      ],
+      "border_px": 1.3319,
+      "frame_min_clearance_m": 219.67353,
+      "frame_to_true_corner_m": 0.44078,
+      "glow_px": 6.73641,
+      "reticle_width_fraction": 0.24422,
+      "reticle_to_true_corner_m": 0.2267,
+      "lock_px": 1.97131,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 1.0,
+        "alt01": 0.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 328,
+      "camera_move_m": 7767624.26189,
+      "camera_turn_deg": 9.69228,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          8.1814,
+          -9.9732
+        ],
+        "bbox": [
+          7.5401,
+          -10.7126,
+          8.9895,
+          -9.3765
+        ],
+        "occluded": true
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 34.93495,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 2.29923,
+      "beam_root_error_m": 31112.76164,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.24265,
+      "frame_bbox": [
+        0.577,
+        0.3587,
+        0.8196,
+        0.6933
+      ],
+      "border_px": 1.31961,
+      "frame_min_clearance_m": 219.83257,
+      "frame_to_true_corner_m": 0.27738,
+      "glow_px": 6.67156,
+      "reticle_width_fraction": 0.24269,
+      "reticle_to_true_corner_m": 0.30131,
+      "lock_px": 1.95005,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 1.0,
+        "priority": 0.0
+      }
+    },
+    {
+      "frame": 346,
+      "camera_move_m": 7767673.66354,
+      "camera_turn_deg": 10.04805,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          8.2968,
+          -10.1314
+        ],
+        "bbox": [
+          7.6429,
+          -10.8998,
+          9.1233,
+          -9.5134
+        ],
+        "occluded": true
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 35.12184,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 1.78416,
+      "beam_root_error_m": 31112.75345,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.24225,
+      "frame_bbox": [
+        0.5772,
+        0.3591,
+        0.8194,
+        0.6929
+      ],
+      "border_px": 1.31305,
+      "frame_min_clearance_m": 219.32738,
+      "frame_to_true_corner_m": 0.52575,
+      "glow_px": 6.65162,
+      "reticle_width_fraction": 0.24229,
+      "reticle_to_true_corner_m": 0.35165,
+      "lock_px": 1.94462,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 1.0
+      }
+    },
+    {
+      "frame": 384,
+      "camera_move_m": 7774794.71215,
+      "camera_turn_deg": 10.32578,
+      "lens_delta_mm": 172.0,
+      "shift_delta": 0.07,
+      "sat": {
+        "centre": [
+          8.3504,
+          -10.2414
+        ],
+        "bbox": [
+          7.6899,
+          -11.0309,
+          9.1874,
+          -9.608
+        ],
+        "occluded": true
+      },
+      "aim_influence": 0.0,
+      "boresight_error_deg": 35.35903,
+      "beam_presence": 0.0,
+      "fan_presence": 0.0,
+      "fill_presence": 0.0,
+      "sweep": 1.08,
+      "curtain_sweep": 1.08,
+      "beam_tip_error_m": 1.16801,
+      "beam_root_error_m": 31112.66108,
+      "anchor_to_true_corner_m": 0.0,
+      "beam_draw": 1.0,
+      "beam_drawn": {
+        "nw": 1.0,
+        "ne": 1.0,
+        "se": 1.0,
+        "sw": 1.0
+      },
+      "frame_width_fraction": 0.24283,
+      "frame_bbox": [
+        0.5769,
+        0.3585,
+        0.8197,
+        0.6935
+      ],
+      "border_px": 1.3177,
+      "frame_min_clearance_m": 219.73901,
+      "frame_to_true_corner_m": 0.33968,
+      "glow_px": 6.67924,
+      "reticle_width_fraction": 0.24287,
+      "reticle_to_true_corner_m": 0.42173,
+      "lock_px": 1.95189,
+      "layers": {
+        "terrain": 0.0,
+        "thm01": 0.0,
+        "alt01": 0.0,
+        "priority": 1.0
+      }
+    }
+  ]
+}

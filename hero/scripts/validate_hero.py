@@ -1451,7 +1451,11 @@ def _check_r3_contract(report, scene_config, spec, label, manifest, assets, aoi_
 def check_r3_preview_gate(report: Report, scene_config) -> None:
     """WEB-005A R3 preview gate: what configuration can prove about the fixed-camera revision.
 
-    Authority: docs/web-005-polish-authority@473b48a (review disposition) over 946cd8b and db4605a.
+    Authority: docs/web-005-polish-authority@473b48a (review disposition) over 946cd8b and db4605a,
+    as amended by c7c6cb1 (Product decision on the first preview) and the Product clarifications of
+    2026-09-18: true-corner line anchors, a reticle that is separate from the true outline, the
+    settle -> aim -> draw-on -> lock -> sweep -> retire -> approach order, thinner line language,
+    a cyan / teal scan palette, a bounded platform exit and the approved timing envelope.
     ``audit_preview_gate.py`` measures the evaluated scene; this proves the contract those
     measurements rest on, without Blender -- the observer is locked off by construction, nothing
     that belongs to the scan survives into the camera move, the lock frame only ever tightens, and
@@ -1553,8 +1557,106 @@ def check_r3_preview_gate(report: Report, scene_config) -> None:
             "veil " + repr(veil.get("tip_alpha")) + ", band " + repr(curtain.get("band_alpha")),
         )
 
-        # --- one lock frame that only tightens ------------------------------------------------------
+        # --- c7c6cb1 section 2: true-corner anchors, reticle separate from the true outline ---------
         presentation = aoi_spec.get("presentation", {})
+        report.check(beams.get("anchor") == "true",
+                     label + "anchors the four primary lines on the true governed corners (never 'presented')",
+                     repr(beams.get("anchor")))
+        report.check(presentation.get("reticle_parts") == ["corner_locks"],
+                     label + "keeps the outline on the true footprint; only the corner brackets are reticle",
+                     repr(presentation.get("reticle_parts")))
+        report.check(bool((beams.get("emitter") or {}).get("object_id")),
+                     label + "emits the lines from the instrument aperture")
+
+        # --- Product clarifications 1-2: settle -> aim -> draw-on, and lines that propagate ---------
+        satellite_spec = objects.get("satellite", {})
+        profile = sorted((float(f), float(r)) for f, r in satellite_spec.get("orbit_intent", {}).get("rate_profile", []))
+        aim_keys = sorted((int(k["frame"]), float(k["value"]))
+                          for k in satellite_spec.get("aim", {}).get("influence_keyframes", []))
+        draw_start, release_end = beams.get("appear_start_frame"), beams.get("release_end_frame")
+        station = [f for f, r in profile if r <= 0.02]
+        settled = min(station) if station else None
+        aim_begin = aim_keys[0][0] if aim_keys else None
+        aim_full = next((f for f, v in aim_keys if v >= 1.0), None)
+        aim_release = next((f for f, v in reversed(aim_keys) if v >= 1.0), None)
+        report.check(
+            None not in (settled, aim_begin, aim_full, aim_release) and isinstance(draw_start, int)
+            and settled <= aim_begin < aim_full < draw_start and aim_release >= release_end,
+            label + "orders the acquisition: pass settles, platform slews, slew completes, only then do lines draw",
+            repr({"settled": settled, "aim": [aim_begin, aim_full], "lines": [draw_start, release_end],
+                  "aim_released": aim_release}),
+        )
+        # Evaluated per frame, not per key: a ramp that starts before the release has no key inside
+        # the window but still moves the platform under an attached line.
+        orbit_intent = satellite_spec.get("orbit_intent", {})
+        report.check(
+            isinstance(release_end, int) and settled is not None
+            and all(orbit_plan.rate_at(orbit_intent, frame) <= 0.02 for frame in range(int(settled), release_end + 1)),
+            label + "holds the platform at station-keeping rate for as long as any line is attached",
+        )
+        draw = beams.get("draw") or {}
+        report.check(
+            bool(draw) and isinstance(draw_start, int)
+            and beams.get("appear_end_frame", 0) - draw_start - 3 * float(draw.get("stagger_frames", 0.0)) >= 8
+            and all("draw_on" in materials.get(name, {}) for name in (aoi_spec.get("beam_material"), beams.get("glow_material"))),
+            label + "draws each line on over at least 8 frames (core and glow both masked), never a fade-in",
+            repr(draw),
+        )
+
+        # --- Product clarification 3: thinner line language ---------------------------------------------
+        px = presentation.get("screen_intent", {}).get("acquisition_px", {})
+        report.check(
+            float(px.get("border_px", 99)) <= 1.6 and float(px.get("glow_px", 99)) <= 8.0
+            and float(px.get("corner_lock_px", 99)) <= 2.6,
+            label + "states the thinner outline / halo / bracket weights (first gate: 2.2 / 13 / 4.0 px)", repr(px),
+        )
+        report.check(
+            float(beams.get("tip_radius_km", 99)) <= 2.0 and float(beams.get("root_radius_km", 99)) <= 2.0
+            and float(beams.get("glow_radius_factor", 99)) <= 3.0,
+            label + "states thinner sensing lines (first gate: 2.4 -> 4.2 km core, 4.5x glow)",
+            repr([beams.get("root_radius_km"), beams.get("tip_radius_km"), beams.get("glow_radius_factor")]),
+        )
+
+        # --- Product clarification 4: cyan / teal, never milky white --------------------------------------
+        palette = (scene_config or {}).get("palette", {})
+        scan_refs = {
+            name: materials.get(name, {}).get("emission_color_ref")
+            for name in (aoi_spec.get("beam_material"), beams.get("glow_material"), fan.get("veil_material"),
+                         fan.get("curtain_material"), aoi_spec.get("border_material"),
+                         aoi_spec.get("corner_lock_material"))
+        }
+        report.check(set(scan_refs.values()) <= {"scan_cyan", "scan_teal"},
+                     label + "draws every acquisition effect in the scan cyan / teal", repr(scan_refs))
+        for ref in ("scan_cyan", "scan_teal"):
+            colour = palette.get(ref) or [1.0, 1.0, 1.0]
+            report.check(
+                colour[0] <= 0.1 * max(colour) and min(colour[1], colour[2]) >= 0.5 * max(colour),
+                label + "palette " + ref + " is a saturated cyan / teal (almost no red, green and blue together)",
+                repr(colour),
+            )
+        curtain_spec = materials.get(fan.get("curtain_material"), {})
+        report.check(
+            float(curtain_spec.get("emission_strength", 99)) <= float(materials.get(aoi_spec.get("beam_material"), {}).get("emission_strength", 0)),
+            label + "keeps the curtain dimmer than the four lines it supports",
+        )
+
+        # --- c7c6cb1 sections 6 and 8: bounded exit and timing envelope ----------------------------------
+        exit_cfg = camera.get("composition", {}).get("satellite_exit", {})
+        report.check(0.0 < float(exit_cfg.get("max_width_fraction", 9.9)) <= 0.22,
+                     label + "declares the platform-exit fly-by bound at or under 22 percent", repr(exit_cfg.get("max_width_fraction")))
+        envelope = spec.get("animation", {}).get("timing_envelope", {})
+        rate = float(spec.get("animation", {}).get("frame_rate", 24))
+        motion = envelope.get("motion_section_frames", [0, 0])
+        reveal = envelope.get("analytical_sequence_frames", [0, 0])
+        report.check(11.5 <= (motion[1] - motion[0] + 1) / rate <= 12.5 and 2.4 <= (reveal[1] - reveal[0]) / rate <= 3.2,
+                     label + "declares a timing envelope inside the approved one (motion 11.5-12.5 s, reveal 2.4-3.2 s)",
+                     repr([motion, reveal]))
+        report.check(
+            not any(o.get("type") in ("legend", "colorbar", "info_card", "text") for o in spec.get("objects", [])),
+            label + "renders no colour bar, legend or information card into the hero (Product clarification 5)",
+        )
+
+        # --- one reticle that only tightens ---------------------------------------------------------
         derived = presentation.get("derived", {})
         morph = derived.get("morph_keyframes", [])
         window = presentation.get("screen_intent", {}).get("morph_frames", [0, 0])
@@ -1634,6 +1736,11 @@ def check_r3_preview_gate(report: Report, scene_config) -> None:
         rise = relief.get("rise_keyframes", [])
         report.check(bool(rise) and rise[0][0] >= window[1],
                      label + "relief rises only after the approach has settled", repr(rise[:1]))
+        priority_full = next((f for f, w in ramps.get("priority", []) if w >= 1.0), None)
+        first_layer = min((keys[0][0] for keys in ramps.values() if keys), default=None)
+        report.check(first_layer == reveal[0] and priority_full == reveal[1],
+                     label + "layer ramps occupy exactly the declared analytical window",
+                     repr([first_layer, priority_full]) + " vs " + repr(reveal))
 
 
 def check_manifest(report: Report, manifest) -> None:
