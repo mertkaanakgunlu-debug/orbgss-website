@@ -3961,8 +3961,8 @@
         }
       },
       "render_overrides": {
-        "transparent_max_bounces": 96,
-        "note": "The scan curtain is a stack of translucent slices; a view ray can cross most of them."
+        "transparent_max_bounces": 512,
+        "note": "The scan curtain is a stack of translucent slices (96) and a view ray can cross all of them plus a line tube and the reticle. Past this budget Cycles ends the path black whether or not the slices are visible, which printed a black line from the platform to a reticle corner in the first final production render (budget 96 under 96 slices). validate_hero.py requires at least 2 x slices + 64."
       }
     },
     "hero_r3_preview_gate": {

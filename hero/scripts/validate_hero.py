@@ -1646,6 +1646,17 @@ def check_r3_preview_gate(report: Report, scene_config) -> None:
         report.check(float(top.get("half_length_km", 0.0)) == half and float(top.get("half_depth_km", 0.0)) == half,
                      label + "builds the scan fan exactly between the four lines (its top is the emitter square)",
                      repr([top, half]))
+        # A view ray can cross every curtain slice, a line tube and the reticle before it reaches the
+        # ground. Past transparent_max_bounces Cycles ends the path BLACK -- and it does so whether or
+        # not the slices are visible, so an exhausted budget prints a black line from the platform to a
+        # reticle corner before the lines draw on and after they release (found in the first final
+        # production render: slices went 64 -> 96 for smoothness under an unchanged budget of 96).
+        slices = int(fan.get("slices", 0))
+        budget = int((spec.get("render_overrides") or {}).get("transparent_max_bounces", 8))
+        report.check(budget >= 2 * slices + 64,
+                     label + "gives view rays a transparent-bounce budget that clears the whole curtain stack "
+                             "(at least 2 x slices + 64), so invisible effects cannot print a black line",
+                     repr({"slices": slices, "transparent_max_bounces": budget}))
 
         # --- Product clarifications 1-2: settle -> aim -> draw-on, and lines that propagate ---------
         satellite_spec = objects.get("satellite", {})

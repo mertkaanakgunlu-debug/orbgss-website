@@ -368,6 +368,10 @@ case("lines fade in instead of drawing on", SCENE,
      _scene_case(lambda scene, aoi, d: aoi["beams"].pop("draw")),
      hero, "never a fade-in")
 
+case("transparent-bounce budget below the curtain stack (invisible effects print a black line)", SCENE,
+     _scene_case(lambda scene, aoi, d: scene["render_overrides"].__setitem__("transparent_max_bounces", 96)),
+     hero, "transparent-bounce budget that clears the whole curtain stack")
+
 case("scan fan no longer between the four lines", SCENE,
      _scene_case(lambda scene, aoi, d: aoi["scan_fan"]["top"].__setitem__("half_length_km", 190.0)),
      hero, "exactly between the four lines")

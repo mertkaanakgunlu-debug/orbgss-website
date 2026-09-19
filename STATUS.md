@@ -18,7 +18,7 @@
 **WEB-005A R3 preview gate 2:** `tasks/WEB-005A_R3_PREVIEW_GATE_2.md` at `b6cd5fb` — reviewed as motion, `REVISION_REQUIRED` (before-evidence)
 **WEB-005A R3 preview gate 3:** `tasks/WEB-005A_R3_PREVIEW_GATE_3.md` at `6e3d2f8` — direction accepted by Product in chat; moved to final production
 **WEB-005A final production implementation HEAD:** `92745527cf23c0be82573c37c60a62e5e3afb4c1`
-**WEB-005A final production:** `tasks/WEB-005A_FINAL_PRODUCTION_EVIDENCE.md` — `REVIEW_READY`, awaiting Product review; not pushed, not merged, not deployed
+**WEB-005A final production:** `tasks/WEB-005A_FINAL_PRODUCTION_EVIDENCE.md` — **`REVIEW_READY` WITHDRAWN 2026-09-19 pending a motion re-render**: on first viewing the owner saw a line from the platform before it settles and a band sweeping during its exit. Confirmed in the frames: a BLACK line platform → reticle corner at f72, f100–112, f180 and f208–216. Cause: scan-fan slices were raised 64 → 96 for production under an unchanged `transparent_max_bounces` of 96, so view rays crossing the whole (even invisible) slice stack end black. Fixed to 512 with a validator rule and a negative test; frames 24–216 are being re-rendered. The choreography, drape states and page integration are unaffected; the shipped WebM/MP4 at `92745527` are defective. Not pushed, not merged, not deployed
 **Reference/upstream only:** https://github.com/baran-orbgss/website
 **Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)
 **Registrar / DNS:** Squarespace
