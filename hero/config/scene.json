@@ -1468,7 +1468,10 @@
             276
           ],
           "held_frame": 276,
+          "opening_frame": 1,
           "drape_state_frames": "derived by render_drape_states.state_frames from the relief layer ramps",
+          "relief_rise_frames": [278, 280, 282, 284, 286, 288, 290],
+          "relief_rise_note": "docs/web-005-polish-authority@0e87675: the page must show the DEM relief RISING between the held frame (276) and the Terrain state (292), not jump to it. These are the scene's own frames inside its relief-rise interval (rise_keyframes 276 -> 292, 16 frames = 0.667 s at 24 fps, eased), every second one, rendered exactly like a drape state (render_drape_states.py --rise-only: same camera, DEM, mapping, production_drape profile; per-frame effects and contact-shadow passes so the outline and the shadow rise with the block). The page interpolates between successive states on the scene's own clock. They are not new choreography: the motion render, the four drape states and their frames are untouched.",
           "note": "The lossy encodes and the poster are made from motion_video_frames only. The analytical states are lossless page-composited overlays on the held frame (Product decision c7c6cb1 section 3)."
         }
       },

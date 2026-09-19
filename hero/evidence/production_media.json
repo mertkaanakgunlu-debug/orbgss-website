@@ -6,7 +6,8 @@
       1,
       276
     ],
-    "analytical_content": "none: the encodes and the poster end on the held frame, before the relief or any display layer exists; the analytical states are separate lossless files"
+    "analytical_content": "none: the encodes and the poster end on the held frame, before the relief or any display layer exists; the analytical states are separate lossless files",
+    "startup_poster": "hero-poster-opening is the first motion frame and is shown only where the motion is about to play, so poster -> video is continuous; hero-poster / hero-poster-narrow are the held frame, the base of every static state and the only frame the drape states register with"
   },
   "scene": "hero_production_kizildere",
   "profile": "production",
@@ -150,6 +151,29 @@
           "quality": 88,
           "bytes": 69796,
           "kib": 68.2
+        }
+      ]
+    },
+    {
+      "role": "hero-poster-opening",
+      "path": "assets/hero/hero-opening-1600.webp",
+      "container": "WebP",
+      "mime_type": "image/webp",
+      "codec": "WebP (lossy)",
+      "quality": 88,
+      "width": 1600,
+      "height": 900,
+      "bytes": 117528,
+      "kib": 114.8,
+      "ceiling_kib": 180.0,
+      "within_ceiling": true,
+      "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f1.png",
+      "sha256": "dc22358e31880407a68429b134cdfead1637f24b66ef960e970b1d43dc960c98",
+      "quality_search": [
+        {
+          "quality": 88,
+          "bytes": 117528,
+          "kib": 114.8
         }
       ]
     }

@@ -215,7 +215,7 @@ def fit_encode(scene, role: str, spec: dict, out_path: Path, attempts: int = 5) 
 
 
 def write_poster(source: Path, out_path: Path, width: int, height: int,
-                 ceiling: int = POSTER_CEILING) -> dict:
+                 ceiling: int = POSTER_CEILING, role: str | None = None) -> dict:
     """The poster is the LCP element, so it gets the same treatment as the encodes: find the
     highest quality that fits, rather than picking a number and hoping."""
     scene = bpy.context.scene
@@ -246,7 +246,7 @@ def write_poster(source: Path, out_path: Path, width: int, height: int,
 
     size = out_path.stat().st_size
     return {
-        "role": "hero-poster" if width >= 1600 else "hero-poster-narrow",
+        "role": role or ("hero-poster" if width >= 1600 else "hero-poster-narrow"),
         "path": hc.relpath(out_path).replace("\\", "/"),
         "container": "WebP",
         "mime_type": "image/webp",
@@ -264,6 +264,17 @@ def write_poster(source: Path, out_path: Path, width: int, height: int,
     }
 
 
+OPENING_POSTER_NOTE = ("hero-poster-opening is the first motion frame and is shown only where the motion is about to "
+                       "play, so poster -> video is continuous; hero-poster / hero-poster-narrow are the held frame, the "
+                       "base of every static state and the only frame the drape states register with")
+
+
+def write_opening_poster(frames, out_dir: Path) -> dict:
+    scene = bpy.context.scene
+    scene.render.image_settings.file_format = "PNG"
+    return write_poster(frames[0], out_dir / "hero-opening-1600.webp", 1600, 900, role="hero-poster-opening")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Encode the WEB-005 production hero media.")
     parser.add_argument("--scene", default="hero_production_kizildere")
@@ -276,6 +287,9 @@ def main() -> None:
                         help="override the delivered encode width (the profile's render width "
                              "is the default; a smaller delivery buys bitrate per pixel)")
     parser.add_argument("--height", type=int, default=None)
+    parser.add_argument("--opening-poster-only", action="store_true",
+                        help="write only the startup poster (the opening frame) and add it to the existing record; "
+                             "the encodes and the held-frame posters are left byte for byte as they are")
     args = parser.parse_args(hc.argv_after_double_dash())
 
     scene_config = hc.load_scene_config()
@@ -309,6 +323,18 @@ def main() -> None:
               + ", delivering " + str(width) + "x" + str(height))
 
     out_dir = hc.REPO_ROOT / args.out_dir
+    if args.opening_poster_only:
+        # docs/web-005-polish-authority@1437fbb: the startup poster is separated from the held base.
+        # Derived from an already accepted frame; nothing is re-rendered and no encode is touched.
+        record_path = hc.REPO_ROOT / args.record
+        record = hc.load_json(record_path)
+        entry = write_opening_poster(frames, out_dir)
+        record["media"] = [m for m in record["media"] if m.get("role") != entry["role"]] + [entry]
+        record["delivery"]["startup_poster"] = OPENING_POSTER_NOTE
+        record_path.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps(entry, indent=2))
+        print("[web005] record -> " + hc.relpath(record_path))
+        return
     encode_scene = build_sequencer_scene(frames, rate, width, height)
 
     media = []
@@ -324,13 +350,15 @@ def main() -> None:
         })
         media.append(record)
 
-    # The poster is the LAST frame, not the first: the shot ends on the stable hold, so the still
-    # a visitor sees before playback is the same composition playback settles into. Starting on
-    # frame 1 would show a distant Earth that the copy does not describe.
+    # Two stills, two jobs (docs/web-005-polish-authority@1437fbb). The HELD base is the last frame:
+    # it is what every static state shows and what the lossless drape states register with. The
+    # STARTUP poster is the first frame: a visitor who is about to see the motion must not be shown
+    # the ending first (held target -> Earth establish read as a reverse-story flash).
     poster_source = frames[-1]
     encode_scene.render.image_settings.file_format = "PNG"
     media.append(write_poster(poster_source, out_dir / "hero-poster-1600.webp", 1600, 900))
     media.append(write_poster(poster_source, out_dir / "hero-poster-900.webp", 900, 506))
+    media.append(write_opening_poster(frames, out_dir))
 
     record = {
         "task": "WEB-005 / MER-93",
@@ -339,6 +367,7 @@ def main() -> None:
             "motion_video_frames": motion,
             "analytical_content": "none: the encodes and the poster end on the held frame, before the relief or any "
                                   "display layer exists; the analytical states are separate lossless files",
+            "startup_poster": OPENING_POSTER_NOTE,
         },
         "scene": args.scene,
         "profile": args.profile,

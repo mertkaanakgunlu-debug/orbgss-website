@@ -1520,6 +1520,27 @@ def check_r3_preview_gate(report: Report, scene_config) -> None:
             "scene " + scene_id + " ends its lossy motion render on the held frame, before any analytical pixel exists",
             "motion " + repr(motion) + " first analytical frame " + str(first_analytical),
         )
+        # docs/web-005-polish-authority@0e87675: the page shows the relief RISING between the held
+        # frame and the Terrain state. The transition is the scene's own rise interval, delivered as
+        # 6-12 lossless states strictly inside it, 0.45-0.70 s long -- not new choreography.
+        rise_keys = sorted(int(f) for f, _ in relief.get("rise_keyframes", []))
+        rise_frames = [int(f) for f in delivery.get("relief_rise_frames", [])]
+        rate = float(resolved.get("animation", {}).get("frame_rate", 24))
+        seconds = (rise_keys[-1] - rise_keys[0]) / rate if len(rise_keys) >= 2 else 0.0
+        report.check(
+            len(rise_keys) >= 2 and rise_keys[0] == int(motion[1]) and 6 <= len(rise_frames) <= 12
+            and rise_frames == sorted(set(rise_frames))
+            and rise_keys[0] < rise_frames[0] and rise_frames[-1] < rise_keys[-1]
+            and 0.45 <= seconds <= 0.70,
+            "scene " + scene_id + " delivers the relief rise as 6-12 states strictly inside its own rise interval, "
+            "which starts on the held frame and lasts 0.45-0.70 s",
+            repr({"rise_keyframes": rise_keys, "relief_rise_frames": rise_frames, "seconds": round(seconds, 3)}),
+        )
+        report.check(
+            int(delivery.get("opening_frame", -1)) == int(motion[0]),
+            "scene " + scene_id + " declares its startup poster as the first motion frame (the held frame is a separate base)",
+            repr(delivery.get("opening_frame")),
+        )
     for scene_id in gates:
         a = {k: v for k, v in hc.resolve_scene_spec(scene_id, scenes).items() if k not in ("role", "description")}
         parent = scenes[scene_id].get("extends")

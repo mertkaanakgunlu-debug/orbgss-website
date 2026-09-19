@@ -115,7 +115,7 @@ const I18N = {
     'scene.context.kind': 'Natural-color composite',
     'scene.priority.place': 'Kızıldere — Büyük Menderes graben, Denizli, Türkiye',
     'scene.priority.coords': '37.9794° N, 28.7907° E',
-    'alt.hero': 'Rendered close view from orbit of the Kızıldere area in western Türkiye, with a thin cyan outline around the 36 km analysis area',
+    'alt.hero': 'Rendered view from orbit: Earth over the eastern Mediterranean, closing on the Kızıldere area in western Türkiye with a thin cyan outline around the 36 km analysis area',
     'alt.heroPriority': 'Rendered terrain relief of the Kızıldere analysis area with the Remote-Sensing Relative Priority — Experimental Baseline surface draped over it; terrain shows through where there is no analytical support',
     'alt.context': 'Natural-colour Landsat 8 view of the Büyük Menderes graben around Kızıldere, showing the valley floor, irrigated fields and the ridges on either side',
     'alt.priorityLegend': 'Colour scale for the relative priority map, running from 0 at the dark end to 100 at the pale end',
@@ -355,7 +355,7 @@ const I18N = {
     'scene.context.kind': 'Doğal renkli bileşim',
     'scene.priority.place': 'Kızıldere — Büyük Menderes grabeni, Denizli, Türkiye',
     'scene.priority.coords': '37.9794° K, 28.7907° D',
-    'alt.hero': 'Batı Türkiye’deki Kızıldere bölgesinin yörüngeden görselleştirilmiş yakın görünümü; 36 km’lik analiz alanının çevresinde ince camgöbeği bir çerçeve ile',
+    'alt.hero': 'Yörüngeden görselleştirilmiş görünüm: Doğu Akdeniz üzerinde Dünya, Batı Türkiye’deki Kızıldere bölgesine yaklaşır; 36 km’lik analiz alanının çevresinde ince camgöbeği bir çerçeve ile',
     'alt.heroPriority': 'Kızıldere analiz alanının görselleştirilmiş arazi kabartması; üzerine Uzaktan Algılama Göreli Önceliği — Deneysel Temel yüzeyi giydirilmiştir; analitik desteğin olmadığı yerlerde arazi görünür',
     'alt.context': 'Kızıldere çevresindeki Büyük Menderes grabeninin doğal renkli Landsat 8 görünümü; vadi tabanı, sulanan tarlalar ve iki yandaki sırtlar görülüyor',
     'alt.priorityLegend': 'Göreli öncelik haritasının renk ölçeği; koyu uçta 0 değerinden açık uçta 100 değerine uzanır',
@@ -877,12 +877,15 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
 /*   - with JavaScript off, the poster is the hero.                     */
 /*                                                                      */
 /* The sequence ends on a stable hold on the 36 km analysis AOI and     */
-/* carries no analytical pixel. What follows is composited here: four   */
-/* lossless full-frame drape states that share the poster's fit rule,   */
-/* cross-faded in the accepted order and ending on the priority surface */
-/* alone — or the priority surface at once, in every static state, so a */
-/* visitor who never sees the motion still sees the answer. No legend,  */
-/* card or label: Acts 3 and 4 carry those.                             */
+/* carries no analytical pixel. What follows is composited here: the    */
+/* DEM relief rises out of the ground (rendered lossless states,        */
+/* interpolated on the scene's own clock) into four lossless full-frame */
+/* drape states that share the poster's fit rule, cross-faded in the    */
+/* accepted order and ending on the priority surface alone — or the     */
+/* priority surface at once, on the held base, in every static state,   */
+/* so a visitor who never sees the motion still sees the answer. The    */
+/* startup poster is the OPENING frame; the held base is a separate     */
+/* still. No legend, card or label: Acts 3 and 4 carry those.           */
 /* ------------------------------------------------------------------ */
 (function cinematicHero() {
   const hero = document.querySelector('.hero[data-hero-slot="cinematic"]');
@@ -890,6 +893,7 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
 
   const video = hero.querySelector('.hero-video');
   const drape = hero.querySelector('[data-hero-drape]');
+  const heldBase = hero.querySelector('[data-hero-held]');
 
   /* Frame 268 of 276 at 24 fps: the approach settles at 266 and the video holds still to its last
      frame, which is also the poster. The drape sequence starts inside that stillness, so the end of
@@ -900,6 +904,15 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   const LAYER_ORDER = ['terrain', 'thm01', 'alt01', 'priority'];
   const LAYER_STEP_MS = 750;
   const LAYER_FADE_MS = 450;
+  /* The relief rise (docs/web-005-polish-authority@0e87675). The scene raises the DEM from the held
+     frame (276) to the Terrain state (292): 16 frames, 0.667 s, eased by the scene's own keys. The
+     page has the scene's frames in between as lossless states and plays them on that same clock.
+     Terrain then dwells exactly as long as it used to before THM-01 arrives (step minus fade), so
+     Terrain -> THM-01 -> ALT-01 -> priority is unchanged. */
+  const HELD_FRAME = 276;
+  const TERRAIN_FRAME = 292;
+  const SCENE_FPS = 24;
+  const TERRAIN_DWELL_MS = LAYER_STEP_MS - LAYER_FADE_MS;
 
   /* ---- audited geometry of the held frame -> page coordinates ---------------------------- */
   /* Fractions of the 1920 x 1080 frame with y measured from the bottom, exactly as
@@ -958,10 +971,87 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     if (typeof img.decode === 'function') img.decode().catch(() => {});
   }
 
-  /* Warm the states while the sequence plays so they are decoded by the time the hold arrives. */
+  function riseImages() {
+    if (!drape) return [];
+    return Array.prototype.slice.call(drape.querySelectorAll('.hero-drape-rise[data-rise-frame]'))
+      .sort((a, b) => Number(a.dataset.riseFrame) - Number(b.dataset.riseFrame));
+  }
+
+  /* Warm the states while the sequence plays so they are decoded by the time the hold arrives. The
+     rise states are motion-path only: nothing else ever calls this before the payoff. */
   function warmLayers() {
     if (!drape || !desktopLayout.matches) return;
+    riseImages().forEach(promote);
     LAYER_ORDER.forEach((name) => promote(layerImage(name)));
+  }
+
+  /* The held base covers the startup poster before any static payoff: the drape states register
+     with the held frame only, never with the opening Earth. If it cannot load, no payoff is shown. */
+  function showHeldBase(then) {
+    if (!heldBase) { then(); return; }
+    if (heldBase.dataset.src) {
+      heldBase.sizes = '100vw';
+      if (heldBase.dataset.srcset) heldBase.srcset = heldBase.dataset.srcset;
+      heldBase.src = heldBase.dataset.src;
+      heldBase.removeAttribute('data-src');
+      heldBase.removeAttribute('data-srcset');
+    }
+    const ready = () => { heldBase.classList.add('is-on'); then(); };
+    if (heldBase.complete && heldBase.naturalWidth > 0) { ready(); return; }
+    heldBase.addEventListener('load', ready, { once: true });
+    heldBase.addEventListener('error', () => { hero.dataset.heroHeld = 'failed'; }, { once: true });
+  }
+
+  /* ---- the relief rise ------------------------------------------------------------------- */
+  /* Keyframes: nothing (held frame) -> each rendered rise state -> the Terrain state. At scene
+     frame f the two neighbouring keyframes are shown at opacities (1 - p) and p; with plus-lighter
+     in an isolated group that is an exact linear interpolation of two partly transparent images.
+     Without plus-lighter the nearest state is shown whole (a flipbook), never a dipping cross-fade. */
+  const exactBlend = !!(window.CSS && CSS.supports && CSS.supports('mix-blend-mode', 'plus-lighter'));
+  let riseRaf = 0;
+  function riseReady() {
+    const imgs = riseImages().concat([layerImage('terrain')]);
+    return imgs.length > 1 && imgs.every((img) => img && img.complete && img.naturalWidth > 0);
+  }
+  function clearRise() {
+    if (riseRaf) window.cancelAnimationFrame(riseRaf);
+    riseRaf = 0;
+    riseImages().forEach((img) => { img.style.opacity = ''; });
+    const terrain = layerImage('terrain');
+    if (terrain) terrain.style.opacity = '';
+    if (drape) drape.classList.remove('is-rising');
+  }
+  function playRise(done) {
+    const terrain = layerImage('terrain');
+    const keys = [{ frame: HELD_FRAME, img: null }]
+      .concat(riseImages().map((img) => ({ frame: Number(img.dataset.riseFrame), img })))
+      .concat([{ frame: TERRAIN_FRAME, img: terrain }]);
+    const span = TERRAIN_FRAME - HELD_FRAME;
+    const total = span / SCENE_FPS * 1000;
+    const t0 = performance.now();
+    drape.classList.add('is-rising');
+    hero.dataset.heroLayer = 'rise';
+    function paint(now) {
+      const progress = Math.min(1, Math.max(0, (now - t0) / total));
+      const frame = HELD_FRAME + progress * span;
+      let i = 0;
+      while (i < keys.length - 2 && frame >= keys[i + 1].frame) i += 1;
+      const from = keys[i];
+      const to = keys[i + 1];
+      let p = (frame - from.frame) / (to.frame - from.frame);
+      if (!exactBlend) p = p < 0.5 ? 0 : 1;
+      keys.forEach((key) => {
+        if (!key.img) return;
+        key.img.style.opacity = key === from ? String(1 - p) : key === to ? String(p) : '0';
+      });
+      if (progress < 1) { riseRaf = window.requestAnimationFrame(paint); return; }
+      riseRaf = 0;
+      terrain.classList.add('is-on');
+      clearRise();
+      hero.dataset.heroLayer = 'terrain';
+      done();
+    }
+    riseRaf = window.requestAnimationFrame(paint);
   }
 
   /* Show exactly `id`. The incoming state fades in over the outgoing one, which is dropped once it
@@ -990,13 +1080,27 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     if (instant || reduceMotion.matches) {
       /* Review hook: in a static state, #hero-layer=<id> settles on that state instead of the
          result, so each step of the sequence can be captured deterministically. */
-      const pick = /^#hero-layer=(terrain|thm01|alt01|priority)$/.exec(window.location.hash || '');
-      setLayer(pick ? pick[1] : 'priority', true);
+      const pick = /^#hero-layer=(terrain|thm01|alt01|priority|rise-f\d+)$/.exec(window.location.hash || '');
+      if (pick && pick[1].indexOf('rise-f') === 0) {
+        const still = riseImages().find((img) => img.dataset.riseFrame === pick[1].slice(6));
+        if (still) { promote(still); still.style.opacity = '1'; hero.dataset.heroLayer = pick[1]; return; }
+      }
+      setLayer(pick && pick[1].indexOf('rise-f') !== 0 ? pick[1] : 'priority', true);
       return;
     }
     warmLayers();
     /* Two frames: one for the elements to exist, one for the transitions to have a start value. */
     requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (riseReady()) {
+        /* The relief rises into Terrain; the rest of the order follows on its accepted cadence. */
+        playRise(() => {
+          LAYER_ORDER.slice(1).forEach((name, i) => {
+            sequenceTimers.push(window.setTimeout(() => setLayer(name), TERRAIN_DWELL_MS + i * LAYER_STEP_MS));
+          });
+        });
+        return;
+      }
+      /* Rise states not decoded in time: the accepted cross-fade from the held frame, as before. */
       LAYER_ORDER.forEach((name, i) => {
         sequenceTimers.push(window.setTimeout(() => setLayer(name), i * LAYER_STEP_MS));
       });
@@ -1022,14 +1126,18 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   /* A window widened into the desktop layout after the hero has settled still gets the payoff. */
   const onLayoutChange = () => {
     const state = hero.getAttribute('data-hero-state');
-    if (desktopLayout.matches && (state === 'static' || state === 'held')) revealPayoff(true);
+    if (!desktopLayout.matches) return;
+    if (state === 'static') showHeldBase(() => revealPayoff(true));
+    else if (state === 'held') revealPayoff(true);
   };
   if (typeof desktopLayout.addEventListener === 'function') desktopLayout.addEventListener('change', onLayoutChange);
 
   function settleStatic(reason) {
     hero.setAttribute('data-hero-state', 'static');
     if (hero.dataset.heroReason !== reason) hero.dataset.heroReason = reason;
-    revealPayoff(true);
+    /* Static means the video is not what the visitor is looking at, so the startup poster is: cover
+       it with the held base first, then the payoff. */
+    showHeldBase(() => revealPayoff(true));
   }
 
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
@@ -1067,7 +1175,7 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
         revealPayoff();
       }
     });
-    /* The last rendered frame is the poster frame, so ending on it is a settle, not a stop. */
+    /* The last rendered frame is the held frame, so ending on it is a settle, not a stop. */
     video.addEventListener('ended', () => {
       hero.setAttribute('data-hero-state', 'held');
       revealPayoff();
@@ -1085,7 +1193,7 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
 
     const attempt = video.play();
     if (attempt && typeof attempt.catch === 'function') {
-      /* Autoplay refused by policy is a normal outcome, not a failure: fall back to the poster
+      /* Autoplay refused by policy is a normal outcome, not a failure: fall back to the held base
          and hand off straight away rather than leaving a blank frame or nagging the visitor. */
       attempt.catch(() => settleStatic('autoplay-blocked'));
     }
@@ -1114,6 +1222,7 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     if (!video.paused) video.pause();
     sequenceTimers.forEach((id) => window.clearTimeout(id));
     sequenceTimers = [];
+    clearRise();
     if (revealed) setLayer('priority', true);
     settleStatic('reduced-motion');
   };
@@ -1123,7 +1232,7 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
 
   /* Belt and braces: however playback goes, the result must not stay hidden. */
   /* A stalled playback must not get the payoff laid over whatever frame it stopped on: the states
-     register with the held frame only. Fall back to the poster, which is that frame. */
+     register with the held frame only. settleStatic covers everything with the held base first. */
   window.setTimeout(() => {
     if (revealed) return;
     if (!video.paused && !video.ended && video.readyState > 2) return;

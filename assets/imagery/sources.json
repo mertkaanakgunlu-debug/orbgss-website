@@ -2100,6 +2100,29 @@
             "kib": 68.2
           }
         ]
+      },
+      {
+        "role": "hero-poster-opening",
+        "path": "assets/hero/hero-opening-1600.webp",
+        "container": "WebP",
+        "mime_type": "image/webp",
+        "codec": "WebP (lossy)",
+        "quality": 88,
+        "width": 1600,
+        "height": 900,
+        "bytes": 117528,
+        "kib": 114.8,
+        "ceiling_kib": 180.0,
+        "within_ceiling": true,
+        "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f1.png",
+        "sha256": "dc22358e31880407a68429b134cdfead1637f24b66ef960e970b1d43dc960c98",
+        "quality_search": [
+          {
+            "quality": 88,
+            "bytes": 117528,
+            "kib": 114.8
+          }
+        ]
       }
     ],
     "revision": "WEB-005A final production (after three low-cost preview gates): fixed observer; the platform comes round the lower-left limb, settles and slews; a presentation reticle resolves over the target before any line; four thin cyan lines draw on from the instrument aperture to its four corners; lock pulse; a translucent fan between the lines sweeps west to east; effects retire; the platform leaves through the right edge above the caption; the camera approaches while the reticle tightens onto the true 36 km corners; still hold. Page: lossless drape states Terrain -> THM-01 -> ALT-01 -> priority on DEM relief, ending on priority alone.",
@@ -2107,7 +2130,7 @@
       "surface": "html_overlay",
       "anchor_source": "hero/evidence/shot_audit_production.json -> handoff_anchor (audited held-frame centre and four projected corners of the true 36 km analysis AOI, fixture kizildere_analysis); index.html carries it as data-hero-anchor and scripts/validate_site.py checks the two agree. It keeps the copy column clear of the payoff; the drape states need no placement.",
       "registration": "The drape states are full-frame images in the hero media's own box with the same object-fit and object-position as the poster and the video, so they register at every hero size by construction. The production audit proves the true footprint does not move on screen between the held frame the video ends on and any frame a state is rendered at (0.0 px).",
-      "sequence": "Terrain -> THM-01 -> ALT-01 -> priority, 750 ms apart with a 450 ms cross-fade (2.7 s), started at 268/24 s inside the video's own still hold; each incoming state covers the outgoing one, which is then dropped, so the sequence ends on the priority surface alone. Static states show the priority surface at once and never fetch the transitional states (data-src).",
+      "sequence": "The relief rises out of the held frame into the Terrain state over 0.667 s (hero_relief_rise: the scene's own frames 278-290 interpolated on the scene's clock, started at 268/24 s inside the video's still hold), then THM-01 -> ALT-01 -> priority follow on the accepted cadence, 750 ms apart with a 450 ms cross-fade; each incoming state covers the outgoing one, which is then dropped, so the sequence ends on the priority surface alone. Every state is data-src: static desktop states lay the held base over the startup poster, promote and show the priority surface at once and never fetch the transitional or rise states, phones fetch none, and a noscript held base and payoff serve visitors without JavaScript.",
       "payoff": "the priority drape state alone on the held frame, under an analysis-safe shade whose gradient stops transition (identical to the resting shade behind the copy and in the caption band). No colour bar, legend, card or layer label in the hero (Product decision b9579ef section 4); Acts 3 and 4 carry the exact public labels, mandatory warnings and legend.",
       "layout": "desktop layout (min-width 981px) only; below it the copy spans the frame, the drape stays off and the hero ends on the held frame",
       "data_gap": "structure/geology is not shown in the hero: no public-safe fault or lithology master is authorized, and the gap stays the subordinate Act 3 footnote"
@@ -2202,6 +2225,88 @@
         "lit_by_scene": false
       }
     ],
-    "hero_drape_states_note": "WEB-005A final production. Asset class: rendered analytical drape states for the cinematic hero -- the true 36 km Kizildere analysis footprint raised into relief from the governed top-dem.tif (3x presentation exaggeration) and draped with one prepared 4K website-hero display texture per state (docs/web-005-polish-authority@db4605a; hero display palette authority MER-108). Rendered on their own from the production scene and its held camera through a Standard view with no denoiser, shipped as lossless full-frame RGBA PNG and composited by the page over the held video frame, so no governed thematic pixel is ever inside a lossy encode (Product decision c7c6cb1 section 3). The outline, halo, brackets and the block's glass sides are effects, rendered in a separate pass with the video's own look and laid over each state; the block's contact shadow on the ground is a third pass (ground as shadow catcher) laid under each state, because the motion render ends before the block exists and its held frame carries no shadow for it. A thematic pixel is Standard-exact or covered by an effect. Where a layer's own alpha is below 1 the Terrain context shows through, lit as context; the alpha is used as delivered, nothing is filled or dilated (b9579ef section 3). Evidence record: hero/evidence/production_drape_states.json; ingest record of the display textures and DEM: hero/evidence/web005a_r3_preview/analytical_asset_ingest.json. These are not geo_web_002 class-B cartographic derivatives and replace none of them; Acts 3 and 4 still show those, with their exact labels and mandatory warnings."
+    "hero_drape_states_note": "WEB-005A final production. Asset class: rendered analytical drape states for the cinematic hero -- the true 36 km Kizildere analysis footprint raised into relief from the governed top-dem.tif (3x presentation exaggeration) and draped with one prepared 4K website-hero display texture per state (docs/web-005-polish-authority@db4605a; hero display palette authority MER-108). Rendered on their own from the production scene and its held camera through a Standard view with no denoiser, shipped as lossless full-frame RGBA PNG and composited by the page over the held video frame, so no governed thematic pixel is ever inside a lossy encode (Product decision c7c6cb1 section 3). The outline, halo, brackets and the block's glass sides are effects, rendered in a separate pass with the video's own look and laid over each state; the block's contact shadow on the ground is a third pass (ground as shadow catcher) laid under each state, because the motion render ends before the block exists and its held frame carries no shadow for it. A thematic pixel is Standard-exact or covered by an effect. Where a layer's own alpha is below 1 the Terrain context shows through, lit as context; the alpha is used as delivered, nothing is filled or dilated (b9579ef section 3). Evidence record: hero/evidence/production_drape_states.json; ingest record of the display textures and DEM: hero/evidence/web005a_r3_preview/analytical_asset_ingest.json. These are not geo_web_002 class-B cartographic derivatives and replace none of them; Acts 3 and 4 still show those, with their exact labels and mandatory warnings.",
+    "hero_relief_rise": {
+      "authority": "docs/web-005-polish-authority@0e876754e121b355426f71bd76f17d9aa81e9947",
+      "scene": "hero_production_kizildere",
+      "render_profile": "production_drape",
+      "samples": 384,
+      "denoise": false,
+      "view_transform": "Standard",
+      "held_frame": 276,
+      "terrain_state_frame": 292,
+      "frame_rate": 24,
+      "duration_seconds": 0.6667,
+      "display_texture": "terrain_webhero_display_4k.png",
+      "display_texture_sha256": "5fdf81f525020a7c96bf09c01bb784d2a4b2bda8f959c9a7c8837c697a5c7694",
+      "total_bytes": 1580834,
+      "states": [
+        {
+          "frame": 278,
+          "path": "assets/hero/drape/hero-rise-f278-1920.webp",
+          "bytes": 216146,
+          "sha256": "dcd37bd9eee6bd2c886f89bd623302124c3bf3549f139f18819795cb938c656d",
+          "width": 1920,
+          "height": 1080,
+          "encoding": "WebP lossless (VP8L), 8-bit RGBA"
+        },
+        {
+          "frame": 280,
+          "path": "assets/hero/drape/hero-rise-f280-1920.webp",
+          "bytes": 217518,
+          "sha256": "9898cef91f493a6091d80e69807fc1f71360223c74c5a7bb791db241ad648bac",
+          "width": 1920,
+          "height": 1080,
+          "encoding": "WebP lossless (VP8L), 8-bit RGBA"
+        },
+        {
+          "frame": 282,
+          "path": "assets/hero/drape/hero-rise-f282-1920.webp",
+          "bytes": 223158,
+          "sha256": "6682675ccc834912e3cbc3f02663deb6f2bebf8d2c3d8113cf1a95dce8366fc4",
+          "width": 1920,
+          "height": 1080,
+          "encoding": "WebP lossless (VP8L), 8-bit RGBA"
+        },
+        {
+          "frame": 284,
+          "path": "assets/hero/drape/hero-rise-f284-1920.webp",
+          "bytes": 229950,
+          "sha256": "f03e932ad630e717918efefd2bc656457b5120a5312a47f2197ad298171c35c3",
+          "width": 1920,
+          "height": 1080,
+          "encoding": "WebP lossless (VP8L), 8-bit RGBA"
+        },
+        {
+          "frame": 286,
+          "path": "assets/hero/drape/hero-rise-f286-1920.webp",
+          "bytes": 234600,
+          "sha256": "da561e66898920738cb0eb94806e68971266fdd6ca6363c5c402934f1fdade13",
+          "width": 1920,
+          "height": 1080,
+          "encoding": "WebP lossless (VP8L), 8-bit RGBA"
+        },
+        {
+          "frame": 288,
+          "path": "assets/hero/drape/hero-rise-f288-1920.webp",
+          "bytes": 227644,
+          "sha256": "723b978ecf12426d911921feddf451f22f0c81c688ee507d59b2c2d41d247125",
+          "width": 1920,
+          "height": 1080,
+          "encoding": "WebP lossless (VP8L), 8-bit RGBA"
+        },
+        {
+          "frame": 290,
+          "path": "assets/hero/drape/hero-rise-f290-1920.webp",
+          "bytes": 231818,
+          "sha256": "83d8a8d6d510a099e9e0a3fd044c8b2e0daed93479081381caaf6e499724acf6",
+          "width": 1920,
+          "height": 1080,
+          "encoding": "WebP lossless (VP8L), 8-bit RGBA"
+        }
+      ],
+      "note": "WEB-005A final relief-rise polish. The page must show the DEM relief RISING between the held frame and the Terrain state instead of jumping to it. These are the production scene's own frames inside its relief-rise interval (276 -> 292, eased by the scene), rendered exactly like a drape state -- same held camera, governed DEM, mapping, 3x exaggeration, production_drape profile, Standard view, no denoiser -- with the effects and contact-shadow passes rendered per frame, so the outline and the shadow rise with the block. Shipped as lossless WebP (VP8L): alpha and every visible pixel's RGB are verified identical to the composited PNG at write time, at about a quarter of the PNG's bytes. script.js interpolates between successive states on the scene's 24 fps clock (plus-lighter in an isolated group = exact linear interpolation; a flipbook where that is unsupported). Motion path on the desktop layout only: data-src, warmed while the video plays, never fetched by a static or phone visitor. No motion frame, drape state, camera, asset or palette changed. Evidence record: hero/evidence/production_relief_rise.json."
+    },
+    "hero_media_note": "Two stills, two jobs (docs/web-005-polish-authority@1437fbb). hero-poster-opening is the first motion frame and is the startup poster wherever the motion is about to play, so poster -> video is continuous. hero-poster / hero-poster-narrow are the held frame (276): the poster where the motion never plays (reduced motion, phone widths -- chosen by the <picture> media query, so one still is fetched), the held base every other static state lays over the startup poster before the payoff, and the only frame the drape states register with. All three are derived from accepted render frames; nothing was re-rendered and no encode was touched."
   }
 }

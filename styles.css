@@ -66,8 +66,12 @@ button,a{-webkit-tap-highlight-color:transparent}
    the composition and there is no layout work when playback starts. The poster stays underneath
    rather than being removed: it is the fallback for every static state, including a mid-visit
    switch to reduced motion. */
-.hero-poster,.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 46%}
+.hero-poster,.hero-held,.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 46%}
 .hero-video{opacity:0;transition:opacity .9s ease;border:0}
+/* The held base (the frame the video ends on) covers the startup poster in every static state; the
+   drape states register with this frame and no other. */
+.hero-held{opacity:0;transition:opacity .35s ease}
+.hero-held.is-on{opacity:1}
 .hero[data-hero-state="playing"] .hero-video,
 .hero[data-hero-state="held"] .hero-video{opacity:1}
 @property --hs50{syntax:'<number>';inherits:false;initial-value:.48}@property --hs52{syntax:'<number>';inherits:false;initial-value:.4467}@property --hs54{syntax:'<number>';inherits:false;initial-value:.4133}@property --hs56{syntax:'<number>';inherits:false;initial-value:.38}@property --hs58{syntax:'<number>';inherits:false;initial-value:.3467}@property --hs61{syntax:'<number>';inherits:false;initial-value:.2967}@property --hs74{syntax:'<number>';inherits:false;initial-value:.08}@property --hs100{syntax:'<number>';inherits:false;initial-value:.04}@property --hv24{syntax:'<number>';inherits:false;initial-value:.292}@property --hv30{syntax:'<number>';inherits:false;initial-value:.163}@property --hv32{syntax:'<number>';inherits:false;initial-value:.12}@property --hv33{syntax:'<number>';inherits:false;initial-value:.114}
@@ -78,9 +82,15 @@ button,a{-webkit-tap-highlight-color:transparent}
    frame. Same box, same object-fit and same object-position as the poster and the video, so they
    register pixel for pixel with no placement maths; never graded or filtered. No legend, card or
    label lives here (Product decision b9579ef section 4). Desktop layout only. */
-.hero-drape{position:absolute;inset:0;pointer-events:none;display:none}
+.hero-drape{position:absolute;inset:0;pointer-events:none;display:none;isolation:isolate}
 .hero-drape-layer{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 46%;filter:none;opacity:0;transition:opacity .45s ease}
 .hero-drape-layer.is-on{opacity:1}
+/* The relief rise. script.js drives two successive rendered states at opacities (1 - p) and p;
+   plus-lighter makes that an exact linear interpolation of two partly transparent images (a plain
+   cross-fade dips in the middle), and the isolated group keeps the sum inside the drape instead of
+   adding it to the video underneath. No CSS transition: the script is the clock. */
+.hero-drape-rise,.hero-drape.is-rising .hero-drape-layer{transition:none}
+.hero-drape-rise,.hero-drape.is-rising .hero-drape-layer[data-layer="terrain"]{mix-blend-mode:plus-lighter}
 @media(min-width:981px){
   .hero-drape{display:block}
   .hero-drape[hidden]{display:none}
@@ -375,7 +385,7 @@ button,a{-webkit-tap-highlight-color:transparent}
   /* A narrow hero crops the 16:9 frame horizontally. The settled footprint is centred at x = 0.70, so
      the crop is biased right to keep its outline whole; script.js places nothing by geometry below
      981px, so the anchor's centred-crop assumption is not in play here. */
-  .hero-poster,.hero-video{object-position:79% 46%}
+  .hero-poster,.hero-held,.hero-video{object-position:79% 46%}
   .act{padding-top:clamp(44px,7vw,72px);padding-bottom:clamp(44px,7vw,72px)}
 }
 @media(max-width:700px){

@@ -1,0 +1,100 @@
+{
+  "task": "WEB-005A / MER-107 final relief-rise polish",
+  "authority": "docs/web-005-polish-authority@0e876754e121b355426f71bd76f17d9aa81e9947",
+  "scene": "hero_production_kizildere",
+  "profile": "production_drape",
+  "samples": 384,
+  "denoise": false,
+  "view_transform": "Standard",
+  "effects_view_transform": "AgX",
+  "passes": "per frame: data surface (Standard view; lines and glass sides held out), contact shadow (ground as shadow catcher, laid under), effects (outline, halo, brackets, glass sides in the scene's view, laid over)",
+  "held_frame": 276,
+  "rise_keyframes": [
+    276,
+    292
+  ],
+  "terrain_state_frame": 292,
+  "frame_rate": 24,
+  "duration_seconds": 0.6667,
+  "display_texture": "terrain_webhero_display_4k.png",
+  "display_texture_sha256": "5fdf81f525020a7c96bf09c01bb784d2a4b2bda8f959c9a7c8837c697a5c7694",
+  "relief_geometry": {
+    "dem": "kizildere_top_dem.tif",
+    "dem_sha256": "590f74322c6ad942e0d36b79446934da7a0938c7d87c06ab8c9bd27da73fb694",
+    "grid": 1200,
+    "vertical_exaggeration": 3.0
+  },
+  "states": [
+    {
+      "frame": 278,
+      "path": "assets/hero/drape/hero-rise-f278-1920.webp",
+      "bytes": 216146,
+      "sha256": "dcd37bd9eee6bd2c886f89bd623302124c3bf3549f139f18819795cb938c656d",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "WebP lossless (VP8L), 8-bit RGBA",
+      "round_trip": "alpha and every visible pixel's RGB identical to the composited PNG (checked at write time)"
+    },
+    {
+      "frame": 280,
+      "path": "assets/hero/drape/hero-rise-f280-1920.webp",
+      "bytes": 217518,
+      "sha256": "9898cef91f493a6091d80e69807fc1f71360223c74c5a7bb791db241ad648bac",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "WebP lossless (VP8L), 8-bit RGBA",
+      "round_trip": "alpha and every visible pixel's RGB identical to the composited PNG (checked at write time)"
+    },
+    {
+      "frame": 282,
+      "path": "assets/hero/drape/hero-rise-f282-1920.webp",
+      "bytes": 223158,
+      "sha256": "6682675ccc834912e3cbc3f02663deb6f2bebf8d2c3d8113cf1a95dce8366fc4",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "WebP lossless (VP8L), 8-bit RGBA",
+      "round_trip": "alpha and every visible pixel's RGB identical to the composited PNG (checked at write time)"
+    },
+    {
+      "frame": 284,
+      "path": "assets/hero/drape/hero-rise-f284-1920.webp",
+      "bytes": 229950,
+      "sha256": "f03e932ad630e717918efefd2bc656457b5120a5312a47f2197ad298171c35c3",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "WebP lossless (VP8L), 8-bit RGBA",
+      "round_trip": "alpha and every visible pixel's RGB identical to the composited PNG (checked at write time)"
+    },
+    {
+      "frame": 286,
+      "path": "assets/hero/drape/hero-rise-f286-1920.webp",
+      "bytes": 234600,
+      "sha256": "da561e66898920738cb0eb94806e68971266fdd6ca6363c5c402934f1fdade13",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "WebP lossless (VP8L), 8-bit RGBA",
+      "round_trip": "alpha and every visible pixel's RGB identical to the composited PNG (checked at write time)"
+    },
+    {
+      "frame": 288,
+      "path": "assets/hero/drape/hero-rise-f288-1920.webp",
+      "bytes": 227644,
+      "sha256": "723b978ecf12426d911921feddf451f22f0c81c688ee507d59b2c2d41d247125",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "WebP lossless (VP8L), 8-bit RGBA",
+      "round_trip": "alpha and every visible pixel's RGB identical to the composited PNG (checked at write time)"
+    },
+    {
+      "frame": 290,
+      "path": "assets/hero/drape/hero-rise-f290-1920.webp",
+      "bytes": 231818,
+      "sha256": "83d8a8d6d510a099e9e0a3fd044c8b2e0daed93479081381caaf6e499724acf6",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "WebP lossless (VP8L), 8-bit RGBA",
+      "round_trip": "alpha and every visible pixel's RGB identical to the composited PNG (checked at write time)"
+    }
+  ],
+  "total_bytes": 1580834
+}

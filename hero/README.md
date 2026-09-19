@@ -548,6 +548,26 @@ audit and rebind `data-hero-anchor` whenever the camera changes.
 py -3.14 hero/scripts/package_drape_states.py
 ```
 
+**The relief rises on the page too** (`docs/web-005-polish-authority@0e87675`). The page used to jump from the
+flat held frame to the raised Terrain state. `animation.delivery.relief_rise_frames` names the scene's own frames
+inside its rise interval (276 -> 292); `render_drape_states.py --rise-only` renders exactly those like a state,
+with the effects and contact-shadow passes **per frame** (height, outline drape, glass sides and shadow all
+change during the rise), and writes them as lossless WebP: alpha and every visible pixel's RGB must read back
+identical to the composited PNG or the run fails. `package_drape_states.py --rise` copies them to
+`assets/hero/drape/hero-rise-f<frame>-1920.webp`. The page interpolates between successive states on the scene's
+clock (`plus-lighter` in an isolated group is an exact lerp of two partly transparent images). The four states
+are never touched by either command.
+
+**Two posters.** `encode_production_media.py` writes the held-frame posters (the base of every static state and
+the only frame the states register with) and `hero-opening-1600.webp` from frame 1, the startup poster wherever
+the motion is about to play; `--opening-poster-only` adds the latter without re-running an encode.
+
+```powershell
+& $env:BLENDER -b -P hero/scripts/render_drape_states.py -- --scene hero_production_kizildere --profile production_drape --rise-only --out hero/renders/production/rise
+py -3.14 hero/scripts/package_drape_states.py --rise
+& $env:BLENDER -b -P hero/scripts/encode_production_media.py -- --scene hero_production_kizildere --width 1920 --height 1080 --opening-poster-only
+```
+
 The motion render is about 70 s a frame on the workstation GPU (5.3 h); frames are independent stills, so
 an interrupted run resumes with `--frames <missing list>` into the same directory. The drape passes take
 seconds.

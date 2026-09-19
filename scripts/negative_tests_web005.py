@@ -28,6 +28,7 @@ INDEX = ROOT / "index.html"
 SOURCES = ROOT / "assets" / "imagery" / "sources.json"
 SCENE = ROOT / "hero" / "config" / "scene.json"
 STYLES = ROOT / "styles.css"
+SCRIPT = ROOT / "script.js"
 
 
 def run(validator: str) -> tuple[int, str]:
@@ -309,6 +310,110 @@ case("drape states stop sharing the poster's fit rule", STYLES,
      site, "share the poster's box")
 
 
+# ---- WEB-005A startup poster vs held base (docs/web-005-polish-authority@1437fbb) ---------------------
+case("startup poster put back on the held frame (the ending flashes before the Earth establish)", INDEX,
+     lambda t: t.replace('src="assets/hero/hero-opening-1600.webp"', 'src="assets/hero/hero-poster-1600.webp"', 1),
+     site, "must be the recorded startup poster")
+
+case("held frame no longer swapped in where the motion never plays", INDEX,
+     lambda t: t.replace('media="(prefers-reduced-motion: reduce), (max-width: 780px)"\n            srcset=',
+                         'media="(max-width: 780px)"\n            srcset=', 1),
+     site, "must swap in the held frame exactly where the motion never plays")
+
+case("startup poster preload loses its media query (a still the visitor is never shown gets preloaded)", INDEX,
+     lambda t: t.replace('    media="(prefers-reduced-motion: no-preference) and (min-width: 781px)"\n', '', 1),
+     site, "startup poster preload must exist once")
+
+case("held base removed (static payoff would sit on the opening Earth)", INDEX,
+     lambda t: re.sub(r'\s*<img\s+class="hero-held"\s+data-hero-held.*?/>', '', t, count=1, flags=re.S),
+     site, "needs a deferred held base")
+
+case("held base made eager (a visitor whose motion plays would fetch it)", INDEX,
+     lambda t: t.replace('          data-src="assets/hero/hero-poster-1600.webp"\n          data-srcset=',
+                         '          src="assets/hero/hero-poster-1600.webp"\n          data-srcset=', 1),
+     site, "needs a deferred held base")
+
+case("no-JavaScript held base removed", INDEX,
+     lambda t: re.sub(r'\s*<noscript><img class="hero-held is-on"[^\n]*</noscript>', '', t, count=1),
+     site, "<noscript> held base")
+
+case("static state reveals the payoff without the held base", SCRIPT,
+     lambda t: t.replace("    showHeldBase(() => revealPayoff(true));\n  }", "    revealPayoff(true);\n  }", 1),
+     site, "lay the held base over the startup poster")
+
+
+def opening_from_held(t):
+    d = json.loads(t)
+    entry = next(m for m in d["web_005"]["hero_media"] if m["role"] == "hero-poster-opening")
+    entry["source_frame"] = entry["source_frame"].replace("_f1.png", "_f276.png")
+    return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+
+
+case("startup poster recorded as made from the held frame", SOURCES, opening_from_held,
+     site, "must be made from the first motion frame")
+
+
+# ---- WEB-005A relief rise (docs/web-005-polish-authority@0e87675) ------------------------------------
+def _rise_case(mutate):
+    def apply(t):
+        d = json.loads(t)
+        mutate(d["web_005"]["hero_relief_rise"])
+        return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+    return apply
+
+
+case("relief rise removed from the manifest (relief would jump to the raised Terrain state)", SOURCES,
+     _rise_case(lambda r: r.__setitem__("states", [])), site, "hero_relief_rise is missing")
+
+case("relief rise state checksum drift", SOURCES,
+     _rise_case(lambda r: r["states"][3].__setitem__("sha256", "0" * 64)), site, "rise state checksum or size mismatch")
+
+case("relief rise thinned below the authorized 6 states", SOURCES,
+     _rise_case(lambda r: r.__setitem__("states", r["states"][:4])), site, "the authorized transition is 6-12")
+
+case("relief rise stretched past the authorized duration", SOURCES,
+     _rise_case(lambda r: r.update({"terrain_state_frame": 300, "duration_seconds": 1.0})), site, "authorized duration is 0.45-0.70 s")
+
+case("relief rise recorded as denoised", SOURCES,
+     _rise_case(lambda r: r.__setitem__("denoise", True)), site, "rise states must be rendered through a Standard view")
+
+case("relief rise state swapped for a lossy file", SOURCES,
+     _rise_case(lambda r: r["states"][0].update({"path": "assets/hero/hero-poster-900.webp", "bytes": 69796,
+                                                "sha256": "11818a638533b715bd62987b1cedd26c7b2bce5104144181cdd718d80b9b6964"})),
+     site, "missing from repository")
+
+case("a relief rise state made eager (static and phone visitors would fetch it)", INDEX,
+     lambda t: t.replace('data-rise-frame="284" data-src=', 'data-rise-frame="284" src=', 1),
+     site, "rise states must be data-src only")
+
+case("relief rise states out of order in the markup", INDEX,
+     lambda t: (t.replace('data-rise-frame="280"', 'data-rise-frame="__"', 1)
+                 .replace('data-rise-frame="282"', 'data-rise-frame="280"', 1)
+                 .replace('data-rise-frame="__"', 'data-rise-frame="282"', 1)),
+     site, "does not match the recorded state")
+
+case("relief rise placed after the Terrain state", INDEX,
+     lambda t: (lambda line: t.replace(line, '', 1).replace('<img class="hero-drape-layer" data-layer="thm01"',
+                                                          line.strip() + '\n          <img class="hero-drape-layer" data-layer="thm01"', 1))(
+         next(l + "\n" for l in t.split("\n") if 'data-rise-frame="290"' in l)),
+     site, "rise states first, then the four drape states")
+
+case("drape group no longer isolated (the rise would add itself to the video)", STYLES,
+     lambda t: t.replace("pointer-events:none;display:none;isolation:isolate}", "pointer-events:none;display:none}", 1),
+     site, "must be an isolated group")
+
+case("rise interpolation degraded to a plain cross-fade", STYLES,
+     lambda t: t.replace('[data-layer="terrain"]{mix-blend-mode:plus-lighter}', '[data-layer="terrain"]{mix-blend-mode:normal}', 1),
+     site, "must interpolate with plus-lighter")
+
+case("rise states promoted on the static path too", SCRIPT,
+     lambda t: t.replace("    revealed = true;\n    drape.hidden = false;", "    revealed = true;\n    riseImages().forEach(promote);\n    drape.hidden = false;", 1),
+     site, "promote the rise states in exactly one place")
+
+case("relief rise playback removed from the page script", SCRIPT,
+     lambda t: t.replace("function playRise(", "function playRiseRemoved(", 1),
+     site, "must play the relief rise")
+
 def analysis_span(t):
     d = json.loads(t)
     d["aoi_injection_interface"]["fixtures"]["kizildere_analysis"]["span_km"] = 40.0
@@ -367,6 +472,18 @@ case("reticle resolves after the lines (target appears afterwards)", SCENE,
 case("lines fade in instead of drawing on", SCENE,
      _scene_case(lambda scene, aoi, d: aoi["beams"].pop("draw")),
      hero, "never a fade-in")
+
+case("relief rise frames outside the scene's own rise interval", SCENE,
+     _scene_case(lambda scene, aoi, d: scene["animation"]["delivery"].__setitem__("relief_rise_frames", [278, 280, 282, 284, 286, 288, 294])),
+     hero, "strictly inside its own rise interval")
+
+case("relief rise stretched in the scene (new choreography)", SCENE,
+     _scene_case(lambda scene, aoi, d: next(o for o in scene["objects"] if o.get("type") == "aoi_relief")["rise_keyframes"].__setitem__(1, [300, 1.0])),
+     hero, "strictly inside its own rise interval")
+
+case("startup poster declared as the held frame in the scene", SCENE,
+     _scene_case(lambda scene, aoi, d: scene["animation"]["delivery"].__setitem__("opening_frame", 276)),
+     hero, "startup poster as the first motion frame")
 
 case("transparent-bounce budget below the curtain stack (invisible effects print a black line)", SCENE,
      _scene_case(lambda scene, aoi, d: scene["render_overrides"].__setitem__("transparent_max_bounces", 96)),

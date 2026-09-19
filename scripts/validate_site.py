@@ -75,6 +75,11 @@ EXPECTED_HOMEPAGE_SLOTS = ["context", "terrain", "thermal", "alteration", "prior
 # changes the colours they are read by), so they are bounded per file instead of being compressed.
 HERO_DRAPE_STATE_CEILING = 1.25 * 1024 * 1024
 HERO_DRAPE_LAYERS = ["terrain", "thm01", "alt01", "priority"]
+# WEB-005A relief rise (docs/web-005-polish-authority@0e87675): 6-12 lossless states, 0.45-0.70 s.
+HERO_RISE_STATE_CEILING = 512 * 1024
+HERO_RISE_TOTAL_CEILING = int(2.5 * 1024 * 1024)
+HERO_STATIC_POSTER_MEDIA = "(prefers-reduced-motion: reduce), (max-width: 780px)"
+HERO_MOTION_POSTER_MEDIA = "(prefers-reduced-motion: no-preference) and (min-width: 781px)"
 HERO_MEDIA_CEILINGS = {
     "hero-webm": 3.0 * 1024 * 1024,
     "hero-mp4": 4.5 * 1024 * 1024,
@@ -821,7 +826,7 @@ def main() -> int:
                      f"{corners_want}", errors)
             if list(anchor.get("frame", [])) != [1920, 1080]:
                 fail("hero anchor frame size must be the delivered 1920 x 1080", errors)
-            position = re.search(r"\.hero-poster,\.hero-video\{[^}]*object-position:center (\d+)%", css_text)
+            position = re.search(r"\.hero-poster,\.hero-held,\.hero-video\{[^}]*object-position:center (\d+)%", css_text)
             if not position:
                 fail("styles.css no longer declares the hero object-position the anchor assumes", errors)
             elif abs(float(anchor.get("position", -1)) - int(position.group(1)) / 100.0) > 1e-6:
@@ -913,6 +918,131 @@ def main() -> int:
         if texture.get("use") != "display_texture" or texture.get("sha256") != record.get("display_texture_sha256"):
             fail(f"hero drape state {name!r} is not tied to an ingested prepared display texture "
                  f"({record.get('display_texture')})", errors)
+
+    # ------------------------------------------------------------------
+    # WEB-005A startup poster vs held base (docs/web-005-polish-authority@1437fbb). Showing the held
+    # frame before the motion read as a reverse-story flash, so the startup poster is the OPENING
+    # frame wherever the motion is about to play. The held frame stays a separate still: the poster
+    # where the motion never plays, and the base every static state lays over the startup poster
+    # before the payoff -- the drape states register with the held frame and with nothing else.
+    # ------------------------------------------------------------------
+    media_by_role = {str(m.get("role", "")): m for m in manifest.get("web_005", {}).get("hero_media", [])}
+    opening, held_wide, held_narrow = (media_by_role.get(r, {}) for r in
+                                       ("hero-poster-opening", "hero-poster", "hero-poster-narrow"))
+    if not opening:
+        fail("web_005.hero_media has no 'hero-poster-opening' record: the startup poster must be the opening "
+             "frame, separate from the held base", errors)
+    else:
+        if not re.search(r"_f1\.png$", str(opening.get("source_frame", ""))):
+            fail("the startup poster (hero-poster-opening) must be made from the first motion frame", errors)
+        if not re.search(r"_f276\.png$", str(held_wide.get("source_frame", ""))):
+            fail("the held base (hero-poster) must be made from the held frame the video ends on", errors)
+        held_srcset = f'{held_narrow.get("path")} 900w, {held_wide.get("path")} 1600w'
+        picture = re.search(r'<picture>(.*?)</picture>', hero_html, re.S)
+        poster_img = re.search(r'<img\b[^>]*class="panel-image hero-poster"[^>]*>', picture.group(1), re.S) if picture else None
+        source = re.search(r'<source\b[^>]*>', picture.group(1), re.S) if picture else None
+        if not poster_img or f'src="{opening.get("path")}"' not in poster_img.group(0) or "srcset=" in poster_img.group(0):
+            fail("the hero poster <img> must be the recorded startup poster (hero-poster-opening) inside a <picture>; "
+                 "a held-frame startup poster flashes the ending before the Earth establish", errors)
+        if not source or f'media="{HERO_STATIC_POSTER_MEDIA}"' not in source.group(0) \
+                or f'srcset="{held_srcset}"' not in source.group(0):
+            fail("the hero <picture> must swap in the held frame exactly where the motion never plays "
+                 f"({HERO_STATIC_POSTER_MEDIA}); those visitors end on it", errors)
+        preloads = re.findall(r'<link\b[^>]*rel="preload"[^>]*as="image"[^>]*>', home, re.S)
+        motion_preload = [l for l in preloads if f'href="{opening.get("path")}"' in l]
+        static_preload = [l for l in preloads if f'imagesrcset="{held_srcset}"' in l]
+        if len(motion_preload) != 1 or f'media="{HERO_MOTION_POSTER_MEDIA}"' not in motion_preload[0]:
+            fail("the startup poster preload must exist once and carry the complement of the <picture> source "
+                 f"media ({HERO_MOTION_POSTER_MEDIA}), or a visitor preloads a still they are never shown", errors)
+        if len(static_preload) != 1 or f'media="{HERO_STATIC_POSTER_MEDIA}"' not in static_preload[0]:
+            fail("the held-frame preload must exist once and carry the <picture> source media exactly", errors)
+        held_img = re.search(r'<img\b[^>]*data-hero-held[^>]*>', hero_html, re.S)
+        if not held_img or f'data-src="{held_wide.get("path")}"' not in held_img.group(0) \
+                or f'data-srcset="{held_srcset}"' not in held_img.group(0) \
+                or re.search(r'(?<![-\w])src="', held_img.group(0)):
+            fail("the hero needs a deferred held base (img[data-hero-held], data-src = the recorded held frame): "
+                 "static states must never lay the payoff over the opening Earth", errors)
+        if not re.search(r'<noscript><img class="hero-held is-on" src="' + re.escape(str(held_wide.get("path"))) + '"', hero_html):
+            fail("the hero needs a <noscript> held base under the <noscript> payoff", errors)
+        held_rule = re.search(r"\.hero-poster,\.hero-held,\.hero-video\{([^}]*)\}", css_text)
+        if not held_rule or "object-fit:cover" not in held_rule.group(1):
+            fail("styles.css: the held base must share the poster's and the video's box and fit rule", errors)
+
+    # ------------------------------------------------------------------
+    # WEB-005A relief rise (docs/web-005-polish-authority@0e87675): the DEM relief rises between the
+    # held frame and the Terrain state as 6-12 lossless rendered states over 0.45-0.70 s, outline and
+    # shadow rising with it; motion path only; Terrain -> THM-01 -> ALT-01 -> priority unchanged.
+    # ------------------------------------------------------------------
+    rise = manifest.get("web_005", {}).get("hero_relief_rise") or {}
+    rise_states = rise.get("states") or []
+    if not rise_states:
+        fail("web_005.hero_relief_rise is missing: without it the relief jumps from the flat held frame to the "
+             "fully raised Terrain state", errors)
+    else:
+        frames = [int(state.get("frame", -1)) for state in rise_states]
+        if not 6 <= len(frames) <= 12:
+            fail(f"hero relief rise has {len(frames)} states; the authorized transition is 6-12", errors)
+        if frames != sorted(set(frames)) or frames[0] <= int(rise.get("held_frame", 10**6)) \
+                or frames[-1] >= int(rise.get("terrain_state_frame", -1)):
+            fail("hero relief rise frames must increase strictly between the held frame and the Terrain state frame", errors)
+        span = (int(rise.get("terrain_state_frame", 0)) - int(rise.get("held_frame", 0))) / float(rise.get("frame_rate") or 1)
+        if not 0.45 <= span <= 0.70 or abs(span - float(rise.get("duration_seconds", -1))) > 1e-3:
+            fail(f"hero relief rise lasts {span:.3f} s; the authorized duration is 0.45-0.70 s", errors)
+        if rise.get("view_transform") != "Standard" or rise.get("denoise") not in (False,):
+            fail("hero relief rise states must be rendered through a Standard view with no denoiser", errors)
+        terrain_record = drape_records.get("terrain", {})
+        if rise.get("display_texture_sha256") != terrain_record.get("display_texture_sha256") \
+                or int(rise.get("terrain_state_frame", -1)) != int(terrain_record.get("rendered_frame", -2)):
+            fail("hero relief rise must end on the recorded Terrain state (same display texture, same frame)", errors)
+        total = 0
+        for state in rise_states:
+            rel = str(state.get("path", ""))
+            path = ROOT / rel
+            if not rel.startswith("assets/hero/drape/") or not path.exists():
+                fail(f"hero relief rise state missing from repository: {rel}", errors)
+                continue
+            data = path.read_bytes()
+            total += len(data)
+            if sha256_of(path) != str(state.get("sha256", "")) or len(data) != state.get("bytes"):
+                fail(f"hero relief rise state checksum or size mismatch for {rel}", errors)
+            # Lossless by rule: a VP8L (lossless) WebP with alpha at the delivered frame size.
+            is_vp8l = data[:4] == b"RIFF" and data[8:12] == b"WEBP" and data[12:16] == b"VP8L" and data[20] == 0x2F
+            bits = int.from_bytes(data[21:25], "little") if is_vp8l else 0
+            if not is_vp8l or ((bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1) != (1920, 1080) or not (bits >> 28) & 1:
+                fail(f"hero relief rise state {rel} is not a lossless (VP8L) RGBA WebP at 1920 x 1080", errors)
+            if len(data) > HERO_RISE_STATE_CEILING:
+                fail(f"hero relief rise state {rel} is over the {HERO_RISE_STATE_CEILING // 1024} KiB per-state ceiling", errors)
+        if total != rise.get("total_bytes") or total > HERO_RISE_TOTAL_CEILING:
+            fail(f"hero relief rise payload is {total} bytes; it must match the record and stay under "
+                 f"{HERO_RISE_TOTAL_CEILING / 1048576:.1f} MiB", errors)
+        if drape:
+            body = re.sub(r'<noscript>.*?</noscript>', '', drape.group(1), flags=re.S)
+            imgs = re.findall(r'<img\b([^>]*?)/?>', body, re.S)
+            kinds = ["rise" if "data-rise-frame=" in img else "layer" for img in imgs]
+            if kinds != ["rise"] * len(rise_states) + ["layer"] * len(HERO_DRAPE_LAYERS):
+                fail("the hero drape must hold the recorded rise states first, then the four drape states", errors)
+            for img, state in zip([i for i in imgs if "data-rise-frame=" in i], rise_states):
+                if f'data-rise-frame="{state.get("frame")}"' not in img or f'data-src="{state.get("path")}"' not in img \
+                        or "hero-drape-rise" not in img:
+                    fail(f"hero relief rise markup does not match the recorded state for frame {state.get('frame')}", errors)
+                if re.search(r'(?<![-\w])src="', img):
+                    fail("hero relief rise states must be data-src only: they belong to the desktop motion path and a "
+                         "static or phone visitor must never fetch them", errors)
+        if "isolation:isolate" not in (re.search(r"\.hero-drape\{([^}]*)\}", css_text) or [None, ""])[1]:
+            fail("styles.css: .hero-drape must be an isolated group, or the rise interpolation adds itself to the video", errors)
+        rise_rule = re.search(r"\.hero-drape-rise,[^{]*\{mix-blend-mode:plus-lighter\}", css_text)
+        if not rise_rule or ".hero-drape-rise,.hero-drape.is-rising .hero-drape-layer{transition:none}" not in css_text:
+            fail("styles.css: the rise states must interpolate with plus-lighter and no CSS transition "
+                 "(a plain cross-fade of partly transparent states dips in the middle)", errors)
+        script_rise = (ROOT / "script.js").read_text(encoding="utf-8")
+        if "function playRise(" not in script_rise or "riseReady()" not in script_rise:
+            fail("script.js must play the relief rise (playRise) and fall back when it is not decoded (riseReady)", errors)
+        if script_rise.count("riseImages().forEach(promote)") != 1:
+            fail("script.js may promote the rise states in exactly one place (warmLayers, the motion path)", errors)
+        if "showHeldBase(() => revealPayoff(true))" not in script_rise \
+                or re.search(r"function settleStatic\(reason\) \{(?:(?!\n  \}).)*?\n    revealPayoff\(true\);", script_rise, re.S):
+            fail("script.js: every static state must lay the held base over the startup poster before the payoff "
+                 "(showHeldBase), never reveal the payoff directly", errors)
 
     # Retired chrome may not come back (Product decision b9579ef section 4; CLAUDE.md design invariants).
     for token, what in (

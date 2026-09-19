@@ -130,6 +130,109 @@ def _render_ground_shadow(scene, relief, catcher, out_dir: Path, frame: int) -> 
     return path
 
 
+def _render_relief_rise(scene, spec, relief, lines, wall_material, scene_view, out_dir, args, applied) -> None:
+    """The relief rising out of the ground, as lossless states between the held frame and Terrain.
+
+    Same three passes as a drape state, but all three PER FRAME: the block's height, the outline's
+    drape, the glass sides' presence and the contact shadow all change during the rise, so one
+    effects pass cannot serve them all (it can for the four states, which share the risen block).
+    """
+    if wall_material is None:
+        raise SystemExit("the relief has no wall material slot; --rise-only expects the production block")
+    delivery = (spec.get("animation") or {}).get("delivery") or {}
+    frames = [int(f) for f in delivery.get("relief_rise_frames", [])]
+    rise = sorted(int(f) for f, _ in next(o for o in spec["objects"] if o.get("type") == "aoi_relief")["rise_keyframes"])
+    if not frames or frames != sorted(frames) or frames[0] <= rise[0] or frames[-1] >= rise[-1]:
+        raise SystemExit("relief_rise_frames must be increasing and strictly inside the rise interval " + repr(rise))
+    data_material = relief.data.materials[0]
+    catcher = bpy.data.objects["earth"]
+    states = []
+    for frame in frames:
+        # relief pass: data surface through the Standard view; crisp lines and glass sides are holdouts
+        for obj in lines:
+            obj.is_holdout = obj.name != "aoi_border_glow"
+            obj.hide_render = obj.name == "aoi_border_glow"
+        relief.data.materials[0] = data_material
+        relief.data.materials[1] = _holdout_material()
+        scene.view_settings.view_transform = "Standard"
+        scene.frame_set(frame)
+        path = out_dir / ("rise_f" + str(frame) + ".png")
+        scene.render.filepath = str(path.with_suffix(""))
+        bpy.ops.render.render(write_still=True)
+        shadow_path = _render_ground_shadow(scene, relief, catcher, out_dir, frame)
+        _composite_over(path, shadow_path, state_on_top=True)
+        lines_path = _render_frame_lines(scene, relief, lines, wall_material, scene_view, out_dir, frame)
+        _composite_over(path, lines_path)
+        delivered = _write_lossless_webp(path)
+        states.append({"frame": frame, "output_path": hc.relpath(delivered), "output_bytes": delivered.stat().st_size,
+                       "sha256": hc.sha256_file(delivered),
+                       "composited_png": {"output_path": hc.relpath(path), "sha256": hc.sha256_file(path)},
+                       "round_trip": "alpha and every visible pixel's RGB identical to the composited PNG (checked at write time)",
+                       "ground_shadow": {"output_path": hc.relpath(shadow_path), "sha256": hc.sha256_file(shadow_path)},
+                       "frame_lines": {"output_path": hc.relpath(lines_path), "sha256": hc.sha256_file(lines_path)}})
+    record = {
+        "scene": args.scene,
+        "profile": args.profile,
+        "resolution": applied.get("resolution"),
+        "view_transform": "Standard",
+        "effects_view_transform": scene_view,
+        "film_transparent": True,
+        "encoding": "WebP lossless (VP8L), 8-bit RGBA",
+        "samples": applied.get("samples"),
+        "denoise": applied.get("denoise"),
+        "rise_keyframes": rise,
+        "passes": "per frame: data surface (Standard view; lines and glass sides held out), contact shadow (ground as "
+                  "shadow catcher, laid under), effects (outline, halo, brackets, glass sides in the scene's view, laid over)",
+        "states": states,
+    }
+    (out_dir / "rise_record.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(record, indent=2))
+
+
+def _stored_pixels(path: Path):
+    import numpy as np
+
+    image = bpy.data.images.load(str(path), check_existing=False)
+    image.colorspace_settings.name = "Non-Color"  # the stored values, not a linearised copy
+    image.alpha_mode = "STRAIGHT"
+    width, height = image.size
+    pixels = np.empty(width * height * 4, dtype=np.float32)
+    image.pixels.foreach_get(pixels)
+    bpy.data.images.remove(image)
+    return np.rint(pixels.reshape(height, width, 4) * 255.0).astype(np.uint8)
+
+
+def _write_lossless_webp(png_path: Path) -> Path:
+    """The same pixels as a lossless WebP (VP8L), about a quarter of the PNG's bytes.
+
+    Lossless is the rule for anything the page composites from the analytical lane, and it is
+    PROVED here rather than assumed: the file must be a VP8L stream, and its alpha and the RGB of
+    every visible pixel must read back identical to the PNG. (RGB under alpha 0 is not preserved
+    by the encoder and is not visible.)
+    """
+    import numpy as np
+
+    source = _stored_pixels(png_path)
+    height, width = source.shape[:2]
+    out_path = png_path.with_suffix(".webp")
+    image = bpy.data.images.new(png_path.stem + "_webp", width=width, height=height, alpha=True, float_buffer=False)
+    image.colorspace_settings.name = "Non-Color"
+    image.alpha_mode = "STRAIGHT"
+    image.pixels.foreach_set((source.astype(np.float32) / 255.0).ravel())
+    image.filepath_raw = str(out_path)
+    image.file_format = "WEBP"
+    image.save(quality=100)
+    bpy.data.images.remove(image)
+    data = out_path.read_bytes()
+    if data[:4] != b"RIFF" or data[8:12] != b"WEBP" or data[12:16] != b"VP8L":
+        raise SystemExit(str(out_path) + " is not a lossless (VP8L) WebP")
+    back = _stored_pixels(out_path)
+    visible = source[..., 3] > 0
+    if not (np.array_equal(source[..., 3], back[..., 3]) and np.array_equal(source[visible][:, :3], back[visible][:, :3])):
+        raise SystemExit(str(out_path) + " did not round-trip: a lossless state must read back identical")
+    return out_path
+
+
 def _holdout_material():
     material = bpy.data.materials.get("drape_holdout")
     if material is None:
@@ -195,6 +298,9 @@ def main() -> None:
                         help="composite the draped outline, halo and brackets over every state (production delivery)")
     parser.add_argument("--ground-shadow", action="store_true",
                         help="composite the block's contact shadow on the ground under every state (production delivery)")
+    parser.add_argument("--rise-only", action="store_true",
+                        help="render ONLY the relief-rise transition states (animation.delivery.relief_rise_frames), each "
+                             "with its own effects and contact-shadow pass; the four drape states are not touched")
     args = parser.parse_args(hc.argv_after_double_dash())
 
     scene_config = hc.load_scene_config()
@@ -244,6 +350,10 @@ def main() -> None:
     wall_material = relief.data.materials[1] if len(relief.data.materials) > 1 else None
     if args.frame_lines and wall_material is not None:
         relief.data.materials[1] = _holdout_material()
+
+    if args.rise_only:
+        _render_relief_rise(scene, spec, relief, lines, wall_material, scene_view, out_dir, args, applied)
+        return
 
     states = []
     for layer_id, frame in state_frames(spec).items():

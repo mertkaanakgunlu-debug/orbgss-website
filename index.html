@@ -29,13 +29,25 @@
     preloaded and never eagerly fetched — script.js attaches its sources only after the poster has
     painted, and only where motion and data policy allow, so the poster is the only hero image
     request on first paint and mobile/reduced-data never pays for an encode at all.
+    WEB-005A: two posters, two jobs, one request. Where the motion is about to play the poster is
+    the OPENING frame, so poster -> video is continuous; where it never plays (reduced motion,
+    phone widths) the poster is the HELD frame the sequence ends on. The media queries here are the
+    <picture> below, exactly, so each visitor preloads the one still they will be shown.
   -->
+  <link
+    rel="preload"
+    as="image"
+    href="assets/hero/hero-opening-1600.webp"
+    media="(prefers-reduced-motion: no-preference) and (min-width: 781px)"
+    fetchpriority="high"
+  />
   <link
     rel="preload"
     as="image"
     href="assets/hero/hero-poster-1600.webp"
     imagesrcset="assets/hero/hero-poster-900.webp 900w, assets/hero/hero-poster-1600.webp 1600w"
     imagesizes="100vw"
+    media="(prefers-reduced-motion: reduce), (max-width: 780px)"
     fetchpriority="high"
   />
   <link rel="stylesheet" href="styles.css" />
@@ -109,18 +121,29 @@
     -->
     <section class="hero" id="hero" aria-labelledby="hero-title" data-hero-slot="cinematic" data-label-tone="light" data-label-tone-locked data-act="1" data-hero-anchor='{"frame":[1920,1080],"position":0.46,"fixture":"kizildere_analysis","x":0.7,"y":0.52,"extent":0.334,"corners":[[0.6007,0.6844],[0.8208,0.6768],[0.8021,0.3504],[0.5772,0.3599]]}'>
       <div class="hero-visual" data-visual-slot="hero" data-visual-status="cinematic-hero">
-        <img
-          class="panel-image hero-poster"
-          src="assets/hero/hero-poster-1600.webp"
-          srcset="assets/hero/hero-poster-900.webp 900w, assets/hero/hero-poster-1600.webp 1600w"
-          sizes="100vw"
-          alt="Rendered close view from orbit of the Kızıldere area in western Türkiye, with a thin cyan outline around the 36 km analysis area"
-          data-i18n-alt="alt.hero"
-          fetchpriority="high"
-          decoding="async"
-          width="1920"
-          height="1080"
-        />
+        <!--
+          Startup poster vs held base (WEB-005A, docs/web-005-polish-authority@1437fbb). The poster a
+          visitor sees before the motion is the sequence's OPENING frame; showing the ending first read
+          as a reverse-story flash (held target -> Earth establish). Where the motion never plays the
+          <source> swaps in the HELD frame instead, which is what those visitors end on anyway.
+        -->
+        <picture>
+          <source
+            media="(prefers-reduced-motion: reduce), (max-width: 780px)"
+            srcset="assets/hero/hero-poster-900.webp 900w, assets/hero/hero-poster-1600.webp 1600w"
+            sizes="100vw"
+          />
+          <img
+            class="panel-image hero-poster"
+            src="assets/hero/hero-opening-1600.webp"
+            alt="Rendered view from orbit: Earth over the eastern Mediterranean, closing on the Kızıldere area in western Türkiye with a thin cyan outline around the 36 km analysis area"
+            data-i18n-alt="alt.hero"
+            fetchpriority="high"
+            decoding="async"
+            width="1920"
+            height="1080"
+          />
+        </picture>
         <!--
           preload="none" and no <source> children on purpose. script.js attaches the encodes only
           when the visitor is not on a reduced-motion, reduced-data or small-screen profile, so
@@ -141,6 +164,25 @@
           tabindex="-1"
         ></video>
         <!--
+          The held base: the frame the video ends on, and the ONLY frame the drape states register
+          with. Every static state (Save-Data, slow network, autoplay blocked, stalled or failed
+          playback, no JavaScript) lays it over the startup poster before the payoff appears, so the
+          priority surface is never composited on the opening Earth. data-src: a visitor whose
+          motion plays never fetches it, because their video ends on this very frame.
+        -->
+        <img
+          class="hero-held"
+          data-hero-held
+          data-src="assets/hero/hero-poster-1600.webp"
+          data-srcset="assets/hero/hero-poster-900.webp 900w, assets/hero/hero-poster-1600.webp 1600w"
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+          width="1920"
+          height="1080"
+        />
+        <noscript><img class="hero-held is-on" src="assets/hero/hero-poster-1600.webp" srcset="assets/hero/hero-poster-900.webp 900w, assets/hero/hero-poster-1600.webp 1600w" sizes="100vw" alt="" aria-hidden="true" width="1920" height="1080" /></noscript>
+        <!--
           The analytical payoff (WEB-005A final production). The motion video ends on one held frame
           and carries no governed analytical pixel: a lossy encode would change the colours those
           pixels are read by. What follows the hold is composited here instead. Each state is the
@@ -159,8 +201,22 @@
           so a phone fetches none of them and a static desktop visitor fetches one. With JavaScript
           off the noscript image is the payoff. Desktop layout only: below 981 px the copy spans the frame and
           a bright surface behind it would cost the copy its contrast.
+
+          The relief RISES into the Terrain state (docs/web-005-polish-authority@0e87675): the hero-drape-rise
+          images are the scene's own frames between the held frame (276) and Terrain (292), rendered
+          like a state (lossless WebP, checksums in web_005.hero_relief_rise), and script.js
+          interpolates between successive ones on the scene's 24 fps clock -- 0.667 s, eased by the
+          scene itself, outline and contact shadow rising with the block. Motion path only: they
+          are data-src, fetched while the video plays, and never by a static or phone visitor.
         -->
         <div class="hero-drape" data-hero-drape hidden>
+          <img class="hero-drape-layer hero-drape-rise" data-rise-frame="278" data-src="assets/hero/drape/hero-rise-f278-1920.webp" alt="" aria-hidden="true" decoding="async" width="1920" height="1080" />
+          <img class="hero-drape-layer hero-drape-rise" data-rise-frame="280" data-src="assets/hero/drape/hero-rise-f280-1920.webp" alt="" aria-hidden="true" decoding="async" width="1920" height="1080" />
+          <img class="hero-drape-layer hero-drape-rise" data-rise-frame="282" data-src="assets/hero/drape/hero-rise-f282-1920.webp" alt="" aria-hidden="true" decoding="async" width="1920" height="1080" />
+          <img class="hero-drape-layer hero-drape-rise" data-rise-frame="284" data-src="assets/hero/drape/hero-rise-f284-1920.webp" alt="" aria-hidden="true" decoding="async" width="1920" height="1080" />
+          <img class="hero-drape-layer hero-drape-rise" data-rise-frame="286" data-src="assets/hero/drape/hero-rise-f286-1920.webp" alt="" aria-hidden="true" decoding="async" width="1920" height="1080" />
+          <img class="hero-drape-layer hero-drape-rise" data-rise-frame="288" data-src="assets/hero/drape/hero-rise-f288-1920.webp" alt="" aria-hidden="true" decoding="async" width="1920" height="1080" />
+          <img class="hero-drape-layer hero-drape-rise" data-rise-frame="290" data-src="assets/hero/drape/hero-rise-f290-1920.webp" alt="" aria-hidden="true" decoding="async" width="1920" height="1080" />
           <img class="hero-drape-layer" data-layer="terrain" data-src="assets/hero/drape/hero-drape-terrain-1920.png" alt="" aria-hidden="true" decoding="async" width="1920" height="1080" />
           <img class="hero-drape-layer" data-layer="thm01" data-src="assets/hero/drape/hero-drape-thm01-1920.png" alt="" aria-hidden="true" decoding="async" width="1920" height="1080" />
           <img class="hero-drape-layer" data-layer="alt01" data-src="assets/hero/drape/hero-drape-alt01-1920.png" alt="" aria-hidden="true" decoding="async" width="1920" height="1080" />

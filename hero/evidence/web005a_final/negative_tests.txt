@@ -31,6 +31,27 @@ Baseline (nothing mutated):
   CAUGHT  drape state recorded as denoised (a colour filter on thematic pixels) (exit 1)
   CAUGHT  drape state not tied to the ingested 4K display texture (exit 1)
   CAUGHT  drape states stop sharing the poster's fit rule (exit 1)
+  CAUGHT  startup poster put back on the held frame (the ending flashes before the Earth establish) (exit 1)
+  CAUGHT  held frame no longer swapped in where the motion never plays (exit 1)
+  CAUGHT  startup poster preload loses its media query (a still the visitor is never shown gets preloaded) (exit 1)
+  CAUGHT  held base removed (static payoff would sit on the opening Earth) (exit 1)
+  CAUGHT  held base made eager (a visitor whose motion plays would fetch it) (exit 1)
+  CAUGHT  no-JavaScript held base removed (exit 1)
+  CAUGHT  static state reveals the payoff without the held base (exit 1)
+  CAUGHT  startup poster recorded as made from the held frame (exit 1)
+  CAUGHT  relief rise removed from the manifest (relief would jump to the raised Terrain state) (exit 1)
+  CAUGHT  relief rise state checksum drift (exit 1)
+  CAUGHT  relief rise thinned below the authorized 6 states (exit 1)
+  CAUGHT  relief rise stretched past the authorized duration (exit 1)
+  CAUGHT  relief rise recorded as denoised (exit 1)
+  CAUGHT  relief rise state swapped for a lossy file (exit 1)
+  CAUGHT  a relief rise state made eager (static and phone visitors would fetch it) (exit 1)
+  CAUGHT  relief rise states out of order in the markup (exit 1)
+  CAUGHT  relief rise placed after the Terrain state (exit 1)
+  CAUGHT  drape group no longer isolated (the rise would add itself to the video) (exit 1)
+  CAUGHT  rise interpolation degraded to a plain cross-fade (exit 1)
+  CAUGHT  rise states promoted on the static path too (exit 1)
+  CAUGHT  relief rise playback removed from the page script (exit 1)
   CAUGHT  analysis frame drawn at a span that is not the accepted 36 km (exit 1)
   CAUGHT  satellite pass no longer settles (constant rate) (exit 1)
   CAUGHT  motion render extended into the analytical reveal (analytical pixels in a lossy encode) (exit 1)
@@ -39,6 +60,9 @@ Baseline (nothing mutated):
   CAUGHT  reticle starts to tighten while lines are still attached (exit 1)
   CAUGHT  reticle resolves after the lines (target appears afterwards) (exit 1)
   CAUGHT  lines fade in instead of drawing on (exit 1)
+  CAUGHT  relief rise frames outside the scene's own rise interval (exit 1)
+  CAUGHT  relief rise stretched in the scene (new choreography) (exit 1)
+  CAUGHT  startup poster declared as the held frame in the scene (exit 1)
   CAUGHT  transparent-bounce budget below the curtain stack (invisible effects print a black line) (exit 1)
   CAUGHT  scan fan no longer between the four lines (exit 1)
   CAUGHT  platform resumes its pass while lines are attached (exit 1)
@@ -49,7 +73,7 @@ Baseline (nothing mutated):
   CAUGHT  analytical sequence stretched into a slideshow (exit 1)
   CAUGHT  Earth detail multiplier pushed beyond a structure gain (exit 1)
 
-47/47 deliberate regressions caught
+71/71 deliberate regressions caught
 Restored tree:
   site: exit 0 — PASS — identical to baseline
   hero: exit 0 — PASS — identical to baseline

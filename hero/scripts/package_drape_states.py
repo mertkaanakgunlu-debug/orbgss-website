@@ -9,6 +9,11 @@ every state its delivered checksum, the frame and render settings it came from, 
 the prepared 4K display texture it was draped with, taken from the ingest record rather than
 re-read, so a texture that changed since ingest shows up as a mismatch instead of being absorbed.
 
+``--rise`` packages the relief-rise transition instead (``render_drape_states.py --rise-only``,
+docs/web-005-polish-authority@0e87675): the lossless WebP states between the held frame and Terrain,
+copied to ``assets/hero/drape/hero-rise-f<frame>-1920.webp`` with their own evidence record. The four
+drape states are not touched by it.
+
 Plain Python on purpose: nothing here touches a pixel. A state is refused if it is not an 8-bit
 RGBA PNG at the delivered frame size, because anything else means it did not come from the
 production profile.
@@ -41,12 +46,99 @@ def png_header(path: Path):
     return width, height, depth, colour
 
 
+def webp_lossless_header(path: Path):
+    """(width, height, has alpha) of a lossless WebP; refuses anything that is not a VP8L stream."""
+    with path.open("rb") as handle:
+        head = handle.read(25)
+    if head[:4] != b"RIFF" or head[8:12] != b"WEBP" or head[12:16] != b"VP8L" or head[20] != 0x2F:
+        raise SystemExit(hc.relpath(path) + " is not a lossless (VP8L) WebP")
+    bits = int.from_bytes(head[21:25], "little")
+    return (bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1, bool((bits >> 28) & 1)
+
+
+def package_rise(args) -> int:
+    record = hc.load_json(hc.REPO_ROOT / args.rise_record)
+    if record.get("denoise") or record.get("view_transform") != "Standard" or "VP8L" not in str(record.get("encoding")):
+        raise SystemExit("rise record is not a production run (no denoiser, Standard view, lossless WebP)")
+    scene_config = hc.load_scene_config()
+    spec = hc.resolve_scene_spec(record["scene"], scene_config["scenes"])
+    delivery = spec["animation"]["delivery"]
+    declared = [int(f) for f in delivery["relief_rise_frames"]]
+    if [int(s["frame"]) for s in record["states"]] != declared:
+        raise SystemExit("rise record frames differ from animation.delivery.relief_rise_frames " + repr(declared))
+    relief = next(o for o in spec["objects"] if o.get("type") == "aoi_relief")
+    material = spec["materials"]["aoi_relief_layers"]
+    ingest = hc.load_json(hc.EVIDENCE_DIR / "web005a_r3_preview" / "analytical_asset_ingest.json")
+    ingested = {entry["materialized"]: entry for entry in ingest["files"]}
+    texture = material["layers"]["terrain"]["texture"]
+    texture_path = hc.SOURCE_DIR / texture
+    if texture_path.is_file() and hc.sha256_file(texture_path) != ingested[texture]["sha256"]:
+        raise SystemExit(texture + " differs from its ingest checksum")
+
+    out_dir = hc.ensure_dir(hc.REPO_ROOT / args.out_dir)
+    delivered = []
+    for state in record["states"]:
+        source = hc.REPO_ROOT / state["output_path"]
+        if hc.sha256_file(source) != state["sha256"]:
+            raise SystemExit(state["output_path"] + " no longer matches its render record")
+        width, height, has_alpha = webp_lossless_header(source)
+        if (width, height) != DELIVERED_SIZE or not has_alpha:
+            raise SystemExit(state["output_path"] + " is not a lossless RGBA WebP at " + repr(DELIVERED_SIZE))
+        target = out_dir / ("hero-rise-f" + str(state["frame"]) + "-" + str(width) + ".webp")
+        shutil.copyfile(source, target)
+        delivered.append({
+            "frame": int(state["frame"]),
+            "path": hc.relpath(target),
+            "bytes": target.stat().st_size,
+            "sha256": hc.sha256_file(target),
+            "width": width,
+            "height": height,
+            "encoding": "WebP lossless (VP8L), 8-bit RGBA",
+            "round_trip": state["round_trip"],
+        })
+    rate = int(spec["animation"].get("frame_rate", 24))
+    rise = [int(f) for f, _ in relief["rise_keyframes"]]
+    evidence = {
+        "task": "WEB-005A / MER-107 final relief-rise polish",
+        "authority": "docs/web-005-polish-authority@0e876754e121b355426f71bd76f17d9aa81e9947",
+        "scene": record["scene"],
+        "profile": record["profile"],
+        "samples": record["samples"],
+        "denoise": record["denoise"],
+        "view_transform": record["view_transform"],
+        "effects_view_transform": record["effects_view_transform"],
+        "passes": record["passes"],
+        "held_frame": int(delivery["held_frame"]),
+        "rise_keyframes": rise,
+        "terrain_state_frame": max(rise),
+        "frame_rate": rate,
+        "duration_seconds": round((max(rise) - min(rise)) / float(rate), 4),
+        "display_texture": texture,
+        "display_texture_sha256": ingested[texture]["sha256"],
+        "relief_geometry": {"dem": relief["dem"], "dem_sha256": ingested[relief["dem"]]["sha256"], "grid": relief["grid"],
+                            "vertical_exaggeration": relief["vertical_exaggeration"]},
+        "states": delivered,
+        "total_bytes": sum(item["bytes"] for item in delivered),
+    }
+    out = hc.REPO_ROOT / args.rise_evidence
+    out.write_text(json.dumps(evidence, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    for item in delivered:
+        print("[rise] " + item["path"] + "  " + str(item["bytes"]) + " bytes  " + item["sha256"][:16])
+    print("[rise] total " + str(evidence["total_bytes"]) + " bytes; record -> " + hc.relpath(out))
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Package the production drape states for the page.")
     parser.add_argument("--record", default="hero/renders/production/drape/drape_record.json")
     parser.add_argument("--out-dir", default="assets/hero/drape")
     parser.add_argument("--evidence", default="hero/evidence/production_drape_states.json")
+    parser.add_argument("--rise", action="store_true", help="package the relief-rise transition states instead")
+    parser.add_argument("--rise-record", default="hero/renders/production/rise/rise_record.json")
+    parser.add_argument("--rise-evidence", default="hero/evidence/production_relief_rise.json")
     args = parser.parse_args()
+    if args.rise:
+        return package_rise(args)
 
     record = hc.load_json(hc.REPO_ROOT / args.record)
     if (not record.get("frame_lines") or not record.get("ground_shadow") or record.get("denoise")
