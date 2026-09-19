@@ -1,5 +1,28 @@
 # Changelog
 
+## WEB-005B R3 delivery encoding — 2026-09-20 (MER-109, branch `feat/web-005b-homepage-visual-fidelity`; `REVIEW_READY`, nothing deployed)
+
+One bounded responsive-delivery pass over the Acts 3-4 analytical panels under MER-108 section 8,
+authority `docs/web-005-polish-authority@4683bd3`. No redesign, no hero work, no Science re-entry.
+Evidence: `tasks/WEB-005B_EVIDENCE.md` section 10.
+
+- **Lossy delivery candidates where they are earned.** `scripts/build_web005b_delivery.py` re-encodes
+  the already-rendered lossless derivative at the same dimensions with lossy WebP - the codec the site
+  already ships - and keeps the lossless file as the reference. Governed masters, normalization,
+  palette, hillshade, analytical opacity, mask semantics, footprint and dimensions are untouched.
+- **Only Terrain qualified**, at q98: 802 -> 124 KiB, 486 -> 87 KiB, 241 -> 49 KiB (-84.6 / -82.2 /
+  -79.5 %), PSNR 46.6-47.7 dB, max 7 levels, NoData chroma 0. Package 9.93 -> 8.68 MiB.
+- **THM-01, ALT-01 and priority stay lossless.** Their per-pixel structure is the evidence and their
+  mask boundaries bleed under a 4:2:0 block transform: best-rung PSNR 39.5 / 33.8 / 23.8 dB with
+  NoData chroma up to 96. AVIF 4:4:4 was measured on THM-01 and did not clear the bar either.
+- **The coupled legend stays canonical lossless PNG.**
+- **Gates.** Selection is fidelity-first and judged on channel error, error at true display size,
+  distance off the governed palette ramp, implied-value shift as a fraction of display range, and
+  NoData cleanliness. The validator re-checks every recorded claim; 11 new negative cases cover the
+  delivery contract (suite now 35/35).
+- **Fixed:** the R1 commit left `hero/config/lane.json` failing its own write-surface guard once the
+  Act 2 files were tracked. The lane now names WEB-005B as the integration task and lists them.
+
 ## WEB-005B homepage visual fidelity — 2026-09-20 (MER-109, branch `feat/web-005b-homepage-visual-fidelity`; `REVIEW_READY`, nothing deployed)
 
 Acts 2-4 rebuilt as one continuous story after the terminally accepted WEB-005A hero, which is

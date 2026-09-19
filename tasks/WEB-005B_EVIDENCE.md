@@ -1,6 +1,6 @@
 # WEB-005B / MER-109 — homepage visual fidelity (Acts 2–4)
 
-**State:** `REVIEW_READY`
+**State:** `REVIEW_READY` (R3: bounded delivery-encoding pass applied on top of R1 — see §10)
 **Branch:** `feat/web-005b-homepage-visual-fidelity`, branched from the terminal WEB-005A
 implementation HEAD `1135e7a7e0b0f6db6348dee139d505550d8ca8b9`
 **Authority:** `docs/web-005-polish-authority@e47da637cfb13a2aa546b9e05381db7c12ff7350:tasks/WEB-005B_R1_HOMEPAGE_DESIGN_IMPLEMENTATION_BOUNDARY.md`
@@ -228,3 +228,173 @@ appears on a route other than the homepage.
    still shows those exports, but the homepage panels now use the MER-108 hero palette family. The
    sentence was left frozen (copy is not this task's to change) and is flagged for the
    content-owning domain.
+
+---
+
+## 10. R3 — bounded delivery-encoding pass
+
+**Authority:** `docs/web-005-polish-authority@4683bd3182ba824f03e3826bab035180a5d94688:tasks/WEB-005B_R3_REVIEW_AND_DELIVERY_OPTIMIZATION.md`,
+consuming MER-108 §8. Implementation-only: no redesign, no hero work, no Science re-entry.
+
+### 10.1 What was done
+
+One responsive-delivery optimization for the Acts 3–4 panels, built by
+`scripts/build_web005b_delivery.py`. It never touches the governed rasters, the normalization, the
+palette, the hillshade, the analytical opacity, the mask, the footprint or the dimensions: it
+re-encodes the **already rendered lossless derivative** at the same size, and the lossless file
+stays in the repository as the reference each candidate is judged against.
+
+Codec: **lossy WebP** (Pillow, method 6) — the codec the site already ships, so no `<picture>` type
+negotiation, no new decoder and no delivery-stack change. AVIF 4:4:4 was measured as an alternative
+for the hardest layer and did not clear the bar either (§10.4), so it was not adopted.
+
+Selection is fidelity-first: the ladder (q98 → q80) is walked from the highest quality down and the
+first rung that passes **every** gate while still saving at least 50 % is taken.
+
+### 10.2 Gates, and how they were calibrated
+
+Each candidate is decoded and compared with its lossless reference of the same size:
+
+| gate | limit |
+|---|---|
+| payload | at least 50 % smaller |
+| channel error | mean ≤ 1.5, p99.9 ≤ 8, max ≤ 24 levels, PSNR ≥ 45 dB |
+| display size | resampled to the largest size the panel is ever rendered at (834 px evidence, 1196 px result, from the measured sweep): mean ≤ 1.0, max ≤ 12 levels |
+| ringing / false class | decoded analytical colour's distance to the nearest governed LUT entry: p99.9 ≤ 8, max ≤ 24 |
+| interpretation | implied value shift ≤ 2.0 % of the layer's display range at p99.9, ≤ 4.0 % at worst |
+| NoData | inside governed NoData: chroma ≤ 2 levels and error ≤ 4 against the reference |
+
+Two calibration decisions are disclosed, because both were made with the data in hand and both are
+applied identically to every candidate:
+
+1. The **raw LUT-index shift is reported but is not the gate.** Where a palette has a near-flat
+   segment (terrain's pale-stone-to-white run) consecutive LUT entries differ by less than one
+   level, so the nearest-entry index is ill-conditioned there and an invisible ±1 level change can
+   move it several steps. The physically meaningful form is the shift as a fraction of the display
+   range, and the ringing gate is what actually catches an invented colour.
+2. `display_mean_abs` was set to 1.0 (0.4 % of range) rather than 0.8. For a file whose native size
+   is already at or below its display size this gate collapses onto the native mean, so a tighter
+   number would only restate the native gate for the small candidates. The full ladder is published
+   either way, so the effect is visible: it is what lets `terrain-600` (PSNR 46.6 dB, max error
+   7 levels) ship lossy.
+
+### 10.3 Per-asset result
+
+Only **Terrain** qualified. Everything else keeps its lossless delivery.
+
+| asset | lossless | delivery | reduction | codec | decoded vs reference (native) | at display size | NoData |
+|---|---|---|---|---|---|---|---|
+| `terrain-1200` | 802 KiB | **124 KiB** (`terrain-1200-d.webp`) | **−84.6 %** | WebP q98 | mean 0.755, p99.9 4, max 7, PSNR 47.7 dB | mean 0.70, max 6 | chroma 0, err 0 |
+| `terrain-900` | 486 KiB | **87 KiB** (`terrain-900-d.webp`) | **−82.2 %** | WebP q98 | mean 0.800, p99.9 4, max 7, PSNR 47.3 dB | mean 0.79, max 7 | chroma 0, err 0 |
+| `terrain-600` | 241 KiB | **49 KiB** (`terrain-600-d.webp`) | **−79.5 %** | WebP q98 | mean 0.870, p99.9 4, max 7, PSNR 46.6 dB | mean 0.87, max 7 | chroma 0, err 0 |
+| `thm01` 1200 / 900 / 600 | 1493 / 913 / 452 KiB | unchanged, lossless | — | — | best rung q98: mean 1.92, max 59, PSNR 39.5 dB | max 51 | **chroma 93, err 53** |
+| `alt01` 1200 / 900 / 600 | 831 / 534 / 260 KiB | unchanged, lossless | — | — | best rung q98: mean 2.40, max 125, PSNR 33.8 dB | max 54 | **chroma 69, err 44** |
+| `priority` 1200 / 900 / 600 | 1902 / 1503 / 740 KiB | unchanged, lossless | — | — | best rung q98: mean 10.95, max 123, **PSNR 23.8 dB** | max 123 | **chroma 96, err 70** |
+| `priority-legend-ramp.png` | 0.3 KiB | unchanged, lossless PNG | — | — | the canonical LUT, never re-encoded | — | — |
+
+Package total **9.93 MiB → 8.68 MiB (−12.5 %)**; the Terrain family alone drops 1 529 → 260 KiB
+(−83 %). What a visitor actually fetches below the hero falls from ≈1 693 KiB to ≈1 502 KiB at
+1440 × 1, and from ≈5.3 MiB to ≈4.5 MiB at 1440 × 2.
+
+Exact checksums for every delivery file, every rejected layer's best-rung metrics and the codec
+settings are recorded in `assets/imagery/sources.json → web_005b.analytical.delivery`, and
+re-verified by the validator on every run.
+
+### 10.4 Why three layers stayed lossless
+
+This is not a threshold artefact: the rejections are by wide margins, on several independent gates,
+at the **highest** rung tried, and every gate metric is monotone as quality drops — see
+`evidence/web005b/delivery_ladder_full.txt`, which walks the complete ladder for Terrain and THM-01
+and part of ALT-01.
+
+- **THM-01** — its per-pixel thermal speckle *is* the evidence, and a DCT codec smooths exactly
+  that: max error 59 levels, PSNR 39.5 dB. Its small NoData island also picks up colour bleed
+  (chroma 93), because lossy WebP is always 4:2:0 and chroma is therefore shared across the mask
+  boundary.
+- **ALT-01** — scattered single-cell NoData across the whole frame is the worst case for any block
+  transform: max error 125 levels, off-ramp distance 142 (colour well off the governed ramp), and
+  only 44 % smaller.
+- **Priority** — the densest high-frequency surface of the four: PSNR 23.8 dB and a mean error of
+  11 levels at q98, nowhere near visually lossless.
+- **AVIF 4:4:4** was measured on THM-01 to test whether chroma subsampling was the only obstacle. It
+  is not: at q80 it still showed NoData chroma 70 and off-ramp 42, so the ringing is spatial, not
+  merely chromatic. AVIF was therefore not adopted, which also avoids changing the delivery stack.
+- A structural alternative exists and is **not** taken here: shipping the analytical layer as RGBA
+  with transparent NoData over a single shared hillshade image would protect the mask exactly (WebP
+  keeps alpha lossless) and would let the other three layers compress. That changes the page's DOM
+  and the delivered asset semantics, which is beyond a bounded delivery pass — recorded as a Product
+  option, not done.
+
+### 10.5 Proof at the real page
+
+Rendered-page A/B, lossless build (`b597baf`) against this delivery build, cache disabled, Acts 2–4
+captured whole (`evidence/web005b/rendered_page_ab_lossless_vs_delivery.txt`), reported as maximum
+channel difference:
+
+| section | 1440 ×1 | 375 ×1 | 1440 ×2 | 375 ×2 |
+|---|---|---|---|---|
+| Act 2 context | 0 | 0 | 40 (see note) | 0 |
+| Act 3 evidence | 7 | 5 | 7 | 5 |
+| Act 4 priority | **0** | **0** | **0** | **0** |
+
+Act 4 and Act 2 ship unchanged files, and Act 3's maximum deviation is 7 levels out of 255, confined
+to the one Terrain tile.
+
+The Act 2 row is **not** attributable to this change. Its files are byte-identical in this pass, and
+the figure is unstable between runs — an earlier run of the same comparison put it at 29 at 375 × 2
+and 0 at 1440 × 2, this one at 40 at 1440 × 2 and 0 at 375 × 2. Re-running the comparison of the
+lossless build *against itself* reproduces the same magnitude (max 29 on 30 % of pixels at 375 × 2)
+while Acts 3 and 4 read 0 in that self-diff, so it is Chrome's resampling nondeterminism on that
+cover-cropped photograph at 2×, the same effect measured on `/pilot/` in §7.
+
+Side by side at the size it is actually rendered:
+`evidence/web005b/terrain_lossless_vs_delivery_at_display_834px.webp`.
+
+### 10.6 Unchanged in this pass
+
+- **Act 2** — no file, markup or CSS change; renders identically (§10.5).
+- **Hero** — `assets/hero/**` and `hero/**` show an empty diff against `1135e7a`; the hero
+  `<section>`, the head preloads, the `cinematicHero` IIFE and every hero CSS rule are
+  character-identical; the rendered hero is **pixel-identical** (max diff 0) at 1440, 1024 and 375.
+- **Copy** — `scripts/check_copy_preservation.py` against `b597baf` reports **0 differences**. The
+  six differences against `1135e7a` are the ones already declared in §5.
+- **ALT-01 rendering, footer copy, other routes, CSS hierarchy, source dimensions** — untouched, per
+  the R3 decisions.
+
+### 10.7 Defect found and fixed in this pass
+
+The R1 commit `b597baf` left the hero lane's own guard failing. `hero/config/lane.json` lists the
+exact public-site paths the current integration task may write, protected `assets/imagery/` is one
+of those paths, and R1 added six Act 2 context files there without extending that list. It passed
+when I ran it before committing **only because those files were still untracked**, so the "hero
+validator 420/0" reported for R1 was true of the tree I ran it on but not of the commit. R3 fixes it
+properly: `lane.json` now names WEB-005B / MER-109 as the integration task with its authority,
+records the consumed terminal WEB-005A head, and adds the six Act 2 files to the integration write
+surface. The guard still holds everywhere else — hero paths remain byte-identical and every other
+protected path is still refused. `py -3.14 hero/scripts/validate_hero.py` → **420 checks, 0 failed**.
+
+### 10.8 R3 gates
+
+| gate | result |
+|---|---|
+| `scripts/validate_site.py` (now also enforces the delivery contract) | **PASSED**, 0 warnings |
+| `hero/scripts/validate_hero.py` | **PASSED** — 420 checks, 0 failed |
+| `scripts/negative_tests_web005b.py` — 35 cases (24 + 11 new delivery cases) | **PASSED** — 35/35 caught, tree restored identical |
+| `scripts/negative_tests_web005.py` — 71 cases | **PASSED** — 71/71 caught, tree restored identical |
+| `scripts/check_copy_preservation.py` against `b597baf` | **PASSED** — 0 differences |
+| Safe-density sweep 360–3840 px, DPR 1 and 2 | **PASSED** — delivery candidates selected, nothing upscaled, no overflow |
+| Rendered-page A/B against the lossless build | **PASSED** — §10.5 |
+| Hosted preview | **NOT RUN** — unchanged gate, not WEB-005B's to close |
+
+New validator rules for the delivery contract: every delivery entry must name a lossless reference
+of its own layer, exist with a matching checksum and byte count, stay at or below the native grid,
+cover the same widths as the lossless set, be recorded as lossy only with a decoded comparison whose
+every metric is inside the declared limits, and be smaller than the reference it replaces; the
+coupled legend must remain a lossless PNG. All eleven rules are exercised by the negative suite.
+
+### 10.9 Remaining Product decisions
+
+Unchanged from §9, minus the ALT-01 item, which R3 closed: the ALT-01 canonical rendering stays and
+its visual weight is carried by layout. The footer attribution remains a content-owner handoff and
+was not touched. The RGBA-plus-shared-context delivery architecture in §10.4 is available if Product
+later wants the other three layers to compress.

@@ -596,11 +596,17 @@ def main() -> int:
             if deriv.get("path"):
                 package_derivative_paths.add(str(deriv["path"]))
     web005b_science_paths: set[str] = set()
-    for layer in manifest.get("web_005b", {}).get("analytical", {}).get("layers", {}).values():
+    web005b_analytical = manifest.get("web_005b", {}).get("analytical", {})
+    for layer in web005b_analytical.get("layers", {}).values():
         for deriv in layer.get("derivatives", []):
             web005b_science_paths.add(str(deriv.get("path", "")))
         if layer.get("legend", {}).get("path"):
             web005b_science_paths.add(str(layer["legend"]["path"]))
+    # WEB-005B R3: what the page actually fetches may be a lossy delivery encode of a lossless
+    # reference. Both are recorded science.
+    for entries in web005b_analytical.get("delivery", {}).get("layers", {}).values():
+        for entry in entries:
+            web005b_science_paths.add(str(entry.get("path", "")))
     recorded_science_paths = proof_paths | package_derivative_paths | web005b_science_paths
 
     def science_srcs(route_parser: SiteParser) -> set[str]:
@@ -844,6 +850,63 @@ def main() -> int:
                     own.add(rel)
             w5b_own[key] = own
 
+        # ------------------------------------------------------------------
+        # WEB-005B R3 delivery encoding. The lossless derivative stays in the repository as the
+        # reference; what the page fetches may be a lossy re-encode of it, but only under MER-108
+        # section 8 — same dimensions, same pixels to the eye, no false class, clean NoData. Every
+        # claim in that record is re-checked here against the file on disk, and the decoded
+        # comparison must stay inside the limits the record itself declares.
+        # ------------------------------------------------------------------
+        delivery = ana.get("delivery", {})
+        delivery_paths: set[str] = set()
+        if delivery:
+            for key in ("authority", "science", "codec", "limits", "quality_ladder", "layers"):
+                if not delivery.get(key):
+                    fail(f"web_005b.analytical.delivery missing field: {key}", errors)
+            limits = delivery.get("limits", {})
+            for layer_key, entries in delivery.get("layers", {}).items():
+                own_refs = {str(d.get("path", "")) for d in layers.get(layer_key, {}).get("derivatives", [])}
+                widths = {int(d.get("width", 0)) for d in layers.get(layer_key, {}).get("derivatives", [])}
+                if {int(e.get("width", 0)) for e in entries} != widths:
+                    fail(f"web_005b delivery for {layer_key!r} does not cover the same widths as its "
+                         f"lossless derivatives", errors)
+                for entry in entries:
+                    label = f"web_005b delivery {layer_key}-{entry.get('width')}"
+                    if str(entry.get("reference", "")) not in own_refs:
+                        fail(f"{label}: reference is not a lossless derivative of this layer", errors)
+                    rel = web005b_file(label, entry)
+                    if rel:
+                        delivery_paths.add(rel)
+                        w5b_own.setdefault(layer_key, set()).add(rel)
+                    if int(entry.get("width", 0)) > WEB005B_NATIVE_PX:
+                        fail(f"{label}: above the native {WEB005B_NATIVE_PX} px grid", errors)
+                    if rel == str(entry.get("reference", "")):
+                        # kept lossless: nothing more to prove than the checksum above
+                        if "lossless" not in str(entry.get("format", "")):
+                            fail(f"{label}: keeps the reference file but is not recorded as lossless", errors)
+                        continue
+                    if "lossy" not in str(entry.get("format", "")):
+                        fail(f"{label}: a separate delivery file must be recorded as lossy", errors)
+                    if not entry.get("reduction", 0) > 0:
+                        fail(f"{label}: a lossy delivery must record a real payload reduction", errors)
+                    if entry.get("bytes", 0) >= entry.get("reference_bytes", 0):
+                        fail(f"{label}: is not smaller than the lossless reference it replaces", errors)
+                    measured = entry.get("decoded_comparison")
+                    if not measured:
+                        fail(f"{label}: no decoded comparison against the lossless reference", errors)
+                        continue
+                    for metric, limit in limits.items():
+                        if metric not in measured:
+                            fail(f"{label}: decoded comparison does not report {metric}", errors)
+                        elif measured[metric] > limit:
+                            fail(f"{label}: {metric}={measured[metric]} exceeds the declared limit {limit} "
+                                 f"— that is a visible or interpretive change, not a delivery encode", errors)
+            # The coupled legend is canonical and never lossy.
+            legend = layers.get("priority", {}).get("legend", {})
+            if not str(legend.get("path", "")).endswith(".png"):
+                fail("the priority legend must stay lossless/canonical (PNG)", errors)
+            if any(str(legend.get("path", "")) == p for p in delivery_paths):
+                fail("the priority legend must not be re-encoded as a delivery candidate", errors)
         placements = w5b.get("placement", {})
         if set(placements) != set(w5b_own):
             fail(f"web_005b.placement covers {sorted(placements)}, expected {sorted(w5b_own)}", errors)

@@ -1,0 +1,12 @@
+dpr1  1440 context   1440x1196  max_px_diff=  0  changed_fraction=0.000000  mean_diff=0.0000
+dpr1  1440 evidence  1440x1212  max_px_diff=  7  changed_fraction=0.086620  mean_diff=0.1175
+dpr1  1440 priority  1440x1039  max_px_diff=  0  changed_fraction=0.000000  mean_diff=0.0000
+dpr1   375 context   375x952  max_px_diff=  0  changed_fraction=0.000000  mean_diff=0.0000
+dpr1   375 evidence  375x2003  max_px_diff=  5  changed_fraction=0.114595  mean_diff=0.1446
+dpr1   375 priority  375x1000  max_px_diff=  0  changed_fraction=0.000000  mean_diff=0.0000
+dpr2  1440 context   2880x2392  max_px_diff= 40  changed_fraction=0.417823  mean_diff=0.4718
+dpr2  1440 evidence  2880x2424  max_px_diff=  7  changed_fraction=0.086516  mean_diff=0.1169
+dpr2  1440 priority  2880x2078  max_px_diff=  0  changed_fraction=0.000000  mean_diff=0.0000
+dpr2   375 context   750x1904  max_px_diff=  0  changed_fraction=0.000000  mean_diff=0.0000
+dpr2   375 evidence  750x4006  max_px_diff=  5  changed_fraction=0.115199  mean_diff=0.1481
+dpr2   375 priority  750x2000  max_px_diff=  0  changed_fraction=0.000000  mean_diff=0.0000

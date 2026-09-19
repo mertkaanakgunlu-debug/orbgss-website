@@ -110,6 +110,45 @@ case("result map CSS cap widened past native density", STYLES,
 case("evidence placement laid out past native density", SOURCES,
      manifest(lambda w: w["placement"]["alt01"]["rendered"].update(max_css_width=700)), "above its native")
 
+# ---- R3 delivery encoding --------------------------------------------------------------------
+# Terrain is the layer that ships a lossy delivery encode; the other three stayed lossless, so the
+# lossy-specific cases target terrain and the structural ones target whichever layer shows them.
+def delivery(key, index, fn):
+    return manifest(lambda w: fn(w["analytical"]["delivery"]["layers"][key][index]))
+
+
+case("delivery file checksum drift", SOURCES,
+     delivery("terrain", 0, lambda e: e.update(sha256="0" * 64)), "checksum mismatch")
+case("delivery claims a fidelity it does not have", SOURCES,
+     delivery("terrain", 0, lambda e: e["decoded_comparison"].update(value_shift_max_pct=9.0)),
+     "exceeds the declared limit")
+case("delivery colour drifts off the governed ramp (ringing)", SOURCES,
+     delivery("terrain", 1, lambda e: e["decoded_comparison"].update(offramp_max=40.0)),
+     "exceeds the declared limit")
+case("delivery contaminates NoData with analytical colour", SOURCES,
+     delivery("terrain", 2, lambda e: e["decoded_comparison"].update(nodata_chroma_max=25)),
+     "exceeds the declared limit")
+case("delivery is not smaller than its lossless reference", SOURCES,
+     delivery("terrain", 0, lambda e: e.update(bytes=e["reference_bytes"] + 1)),
+     "not smaller than the lossless")
+case("delivery references another layer's raster", SOURCES,
+     delivery("terrain", 0, lambda e: e.update(reference="assets/proof/web005b/thm01-1200.webp")),
+     "reference is not a lossless derivative of this layer")
+case("lossy delivery ships with no decoded comparison", SOURCES,
+     delivery("terrain", 1, lambda e: e.pop("decoded_comparison")), "no decoded comparison")
+case("a lossy delivery is recorded as lossless", SOURCES,
+     delivery("terrain", 0, lambda e: e.update(format="image/webp (lossless)")),
+     "must be recorded as lossy")
+case("delivery recorded above the native grid", SOURCES,
+     delivery("thm01", 1, lambda e: e.update(width=1600)), "above the native 1200 px grid")
+case("a delivery width is dropped", SOURCES,
+     manifest(lambda w: w["analytical"]["delivery"]["layers"]["alt01"].pop()),
+     "does not cover the same widths")
+case("the coupled legend is re-encoded lossy", SOURCES,
+     manifest(lambda w: w["analytical"]["layers"]["priority"]["legend"].update(
+         path="assets/proof/web005b/priority-legend-ramp.webp")),
+     "legend must stay lossless")
+
 # ---- B-VIS-14 homepage-only -----------------------------------------------------------------
 case("a WEB-005B asset leaks onto /pilot/", PILOT,
      lambda t: t.replace("</main>", '<img src="/assets/proof/web005b/terrain-600.webp" alt="" /></main>', 1),

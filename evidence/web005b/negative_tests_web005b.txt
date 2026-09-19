@@ -22,7 +22,18 @@ Baseline (nothing mutated): site exit 0 — PASS
   CAUGHT  legend moved out of the result figure (exit 1)
   CAUGHT  result map CSS cap widened past native density (exit 1)
   CAUGHT  evidence placement laid out past native density (exit 1)
+  CAUGHT  delivery file checksum drift (exit 1)
+  CAUGHT  delivery claims a fidelity it does not have (exit 1)
+  CAUGHT  delivery colour drifts off the governed ramp (ringing) (exit 1)
+  CAUGHT  delivery contaminates NoData with analytical colour (exit 1)
+  CAUGHT  delivery is not smaller than its lossless reference (exit 1)
+  CAUGHT  delivery references another layer's raster (exit 1)
+  CAUGHT  lossy delivery ships with no decoded comparison (exit 1)
+  CAUGHT  a lossy delivery is recorded as lossless (exit 1)
+  CAUGHT  delivery recorded above the native grid (exit 1)
+  CAUGHT  a delivery width is dropped (exit 1)
+  CAUGHT  the coupled legend is re-encoded lossy (exit 1)
   CAUGHT  a WEB-005B asset leaks onto /pilot/ (exit 1)
 
-24/24 deliberate regressions caught
+35/35 deliberate regressions caught
 Restored tree: site exit 0 — PASS — identical to baseline

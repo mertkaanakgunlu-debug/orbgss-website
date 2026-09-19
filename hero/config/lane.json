@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "phase": "WEB-005A R3",
-  "lane": "WEB-HERO-001 -> WEB-005 -> WEB-005A",
-  "branch": "feat/web-005a-hero-visual-fidelity",
+  "phase": "WEB-005B R3 (hero lane terminal; homepage integration continues)",
+  "lane": "WEB-HERO-001 -> WEB-005 -> WEB-005A -> WEB-005B",
+  "branch": "feat/web-005b-homepage-visual-fidelity",
   "mode": "integration",
-  "integration_task": "WEB-005A / MER-107 (R3 visual revision of WEB-005 / MER-93, after the R2 REVIEW_READY package did not pass the human visual gate)",
-  "integration_authority": "tasks/WEB-005A_HERO_VISUAL_FIDELITY.md; docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md",
+  "integration_task": "WEB-005B / MER-109 (homepage visual fidelity, Acts 2-4). WEB-005A / MER-107 is terminally accepted and published at 1135e7a7e0b0f6db6348dee139d505550d8ca8b9; the hero itself is immutable from here and no hero file may change again on this lane.",
+  "integration_authority": "docs/web-005-polish-authority@e47da637:tasks/WEB-005B_R1_HOMEPAGE_DESIGN_IMPLEMENTATION_BOUNDARY.md; docs/web-005-polish-authority@4683bd3:tasks/WEB-005B_R3_REVIEW_AND_DELIVERY_OPTIMIZATION.md",
   "consumed_hero_evidence_head": "e95fdcac7cac82e597d40dab4cdc96ce1a6b319e",
   "consumed_hero_implementation_head": "93e17f6293aeb8bdc882dfd28221ed786b772df1",
   "consumed_hero_acceptance_record": "573f4f10cbe397e8f3bdf6611deea5cd2660dcae:tasks/WEB-HERO-001D_TERMINAL_PRODUCT_ACCEPTANCE.md",
@@ -43,7 +43,13 @@
     "script.js",
     "assets/imagery/sources.json",
     "site.webmanifest",
-    "vercel.json"
+    "vercel.json",
+    "assets/imagery/kizildere-aoi-context-2025-natural.jpg",
+    "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+    "assets/imagery/kizildere-aoi-context-2025-natural-2400.webp",
+    "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+    "assets/imagery/kizildere-aoi-context-2025-natural-1200.webp",
+    "assets/imagery/kizildere-aoi-context-2025-natural-800.webp"
   ],
   "integration_reference_allowlist": [
     "hero/config/scene.json",
@@ -51,10 +57,11 @@
     "hero/evidence/production_media.json",
     "hero/evidence/visual_quality_inventory.json"
   ],
-  "note": "WEB-HERO-001 ran isolated: protected_paths had to stay byte-identical to the pinned WEB-001 baseline for the whole lane, and WEB-005 was named as the only authorized integration gate. That gate is now open. The pin moves to the WEB-005 execution baseline, the mode becomes integration, and the boundary changes shape rather than disappearing: public-site changes must stay inside integration_write_surface, and only the allowlisted hero files may name a public-site path. Everything the hero lane was forbidden to do that WEB-005 does not own -- deployment, DNS, routes, backends -- stays forbidden. WEB-005A continues on its own branch from the accepted WEB-005 main; the write surface is unchanged. The public-site changes it owns are the hero media, the hero handoff markup/styles/script and the hero media records.",
+  "note": "WEB-HERO-001 ran isolated: protected_paths had to stay byte-identical to the pinned WEB-001 baseline for the whole lane, and WEB-005 was named as the only authorized integration gate. That gate is now open. The pin moves to the WEB-005 execution baseline, the mode becomes integration, and the boundary changes shape rather than disappearing: public-site changes must stay inside integration_write_surface, and only the allowlisted hero files may name a public-site path. Everything the hero lane was forbidden to do that WEB-005 does not own -- deployment, DNS, routes, backends -- stays forbidden. WEB-005A continues on its own branch from the accepted WEB-005 main; the write surface is unchanged. The public-site changes it owns are the hero media, the hero handoff markup/styles/script and the hero media records. WEB-005B continues on its own branch from the terminal WEB-005A head: the hero media, hero markup, styles and script stay byte-identical, and the surface grows only by the Act 2 context renders WEB-005B owns under the protected assets/imagery prefix. Everything still forbidden stays forbidden.",
   "rejected_review_checkpoint": "ffa2f2944ca5992afb9e9891b42745a9bd1105ad",
   "superseded_review_checkpoints": {
     "rejected_visually": "ffa2f2944ca5992afb9e9891b42745a9bd1105ad",
     "r2_not_passed_human_gate": "a6897828d6e35595ea5a9a39a1e812b0fcbbfb35"
-  }
+  },
+  "consumed_web_005a_terminal_head": "1135e7a7e0b0f6db6348dee139d505550d8ca8b9"
 }
