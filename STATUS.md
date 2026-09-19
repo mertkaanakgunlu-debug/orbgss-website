@@ -17,6 +17,7 @@
 **WEB-005A R3 preview gate 1:** `tasks/WEB-005A_R3_PREVIEW_GATE.md` at `cd2018e` — reviewed, `PREVIEW_GATE_REVISION_REQUIRED` (before-evidence)
 **WEB-005A R3 preview gate 2:** `tasks/WEB-005A_R3_PREVIEW_GATE_2.md` at `b6cd5fb` — reviewed as motion, `REVISION_REQUIRED` (before-evidence)
 **WEB-005A R3 preview gate 3:** `tasks/WEB-005A_R3_PREVIEW_GATE_3.md` at `6e3d2f8` — direction accepted by Product in chat; moved to final production
+**WEB-005A final production implementation HEAD:** `92745527cf23c0be82573c37c60a62e5e3afb4c1`
 **WEB-005A final production:** `tasks/WEB-005A_FINAL_PRODUCTION_EVIDENCE.md` — `REVIEW_READY`, awaiting Product review; not pushed, not merged, not deployed
 **Reference/upstream only:** https://github.com/baran-orbgss/website
 **Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)
