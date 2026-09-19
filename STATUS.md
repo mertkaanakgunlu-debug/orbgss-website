@@ -17,7 +17,7 @@
 **WEB-005A R3 preview gate 1:** `tasks/WEB-005A_R3_PREVIEW_GATE.md` at `cd2018e` — reviewed, `PREVIEW_GATE_REVISION_REQUIRED` (before-evidence)
 **WEB-005A R3 preview gate 2:** `tasks/WEB-005A_R3_PREVIEW_GATE_2.md` at `b6cd5fb` — reviewed as motion, `REVISION_REQUIRED` (before-evidence)
 **WEB-005A R3 preview gate 3:** `tasks/WEB-005A_R3_PREVIEW_GATE_3.md` at `6e3d2f8` — direction accepted by Product in chat; moved to final production
-**WEB-005A final production implementation HEAD:** `92745527cf23c0be82573c37c60a62e5e3afb4c1`
+**WEB-005A final production implementation HEAD:** `aed0597f961793f7a00d766673e7b9bc358df91a` (first render `92745527cf23c0be82573c37c60a62e5e3afb4c1` is defective before-evidence)
 **WEB-005A final production:** `tasks/WEB-005A_FINAL_PRODUCTION_EVIDENCE.md` — `REVIEW_READY` (re-submitted 2026-09-19 after a motion re-render), awaiting Product review. The first render (`92745527`) was withdrawn at `99b7e25`: the owner saw a line leave the platform before it settled and a band sweep during its exit — a BLACK line platform → reticle corner (f72, f100–112, f180) and a dark band (f208–219), printed by invisible scan-fan geometry because slices went 64 → 96 under an unchanged `transparent_max_bounces` of 96. Budget now 512 with a validator rule and a negative test; frames 24–224 and 238–243 re-rendered, the rest proved untouched by A/B; the whole sequence was checked every 4th frame before encoding (evidence doc §2.1). Not pushed, not merged, not deployed
 **Reference/upstream only:** https://github.com/baran-orbgss/website
 **Science authority:** `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag `v1.0.0`)

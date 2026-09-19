@@ -3,6 +3,7 @@
 **Task:** WEB-005A / MER-107 (final production continuation; no new task, no re-plan)
 **State:** `REVIEW_READY` — final production evidence for Product review. Not merged, not deployed, no DNS.
 **Branch:** `feat/web-005a-hero-visual-fidelity`
+**Implementation HEAD:** `aed0597f961793f7a00d766673e7b9bc358df91a` (local; not pushed). First render `92745527` is defective before-evidence (§2.1).
 
 **Governing authority (`docs/web-005-polish-authority`):** `946cd8b…` (fixed camera / globe drape),
 `db4605a…` (analytical asset handoff), `c7c6cb1…` (decision on preview gate 1), `b9579ef…` (decision on
