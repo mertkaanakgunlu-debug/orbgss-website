@@ -1,0 +1,29 @@
+{
+  "method": "64^3 occupancy of the delivered 4K texture's fully opaque texel blocks (1x-16x area means in linear light), grown by two bins (about +-8/255); tested on delivered drape pixels that are opaque, at least 3 px inside the silhouette, untouched by the effects pass and whose rendered analytical coverage is >= 0.99",
+  "layers": {
+    "thm01": {
+      "interior_pixels": 142384,
+      "fully_covered_pixels": 141653,
+      "fully_covered_pixels_inside_delivered_colour_set": 0.9999,
+      "reference_colour_set_fraction_of_rgb_cube": 0.0601,
+      "rendered_mean_analytical_coverage": 0.997,
+      "delivered_texture_mean_alpha": 0.9969
+    },
+    "alt01": {
+      "interior_pixels": 142384,
+      "fully_covered_pixels": 77789,
+      "fully_covered_pixels_inside_delivered_colour_set": 1.0,
+      "reference_colour_set_fraction_of_rgb_cube": 0.1906,
+      "rendered_mean_analytical_coverage": 0.8536,
+      "delivered_texture_mean_alpha": 0.8403
+    },
+    "priority": {
+      "interior_pixels": 142384,
+      "fully_covered_pixels": 77128,
+      "fully_covered_pixels_inside_delivered_colour_set": 1.0,
+      "reference_colour_set_fraction_of_rgb_cube": 0.1085,
+      "rendered_mean_analytical_coverage": 0.8497,
+      "delivered_texture_mean_alpha": 0.8339
+    }
+  }
+}

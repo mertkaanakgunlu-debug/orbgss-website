@@ -143,6 +143,22 @@
       "publish_evidence": false,
       "note": "WEB-005A production hero frames. Rendered at 2304 x 1296 and delivered at 1920 x 1080 or below: supersampling removes the edge aliasing and sampling noise the accepted build fed straight into a bitrate-starved encoder, and a cleaner source both looks sharper and compresses better. 128 adaptive samples is not a reduction in quality per delivered pixel -- the 1.44x downscale averages that many samples back up. Frames are intermediate and stay out of Git. WEB-005A R3 adds a half-frame motion-blur shutter: the dive onto the analysis AOI zooms several percent per frame and strobes at 24 fps without it.",
       "motion_blur_shutter": 0.5
+    },
+    "production_drape": {
+      "role": "production_drape_states",
+      "engine": "CYCLES",
+      "resolution_x": 1920,
+      "resolution_y": 1080,
+      "resolution_percentage": 100,
+      "samples": 384,
+      "max_bounces": 8,
+      "denoise": false,
+      "file_format": "PNG",
+      "color_depth": "8",
+      "compression": 100,
+      "prefer_gpu": true,
+      "publish_evidence": false,
+      "note": "WEB-005A production analytical drape states (render_drape_states.py). Rendered at the delivered 1920 x 1080 so the states register with the delivered video without a resample, 384 fixed samples for anti-aliasing of 4K display textures seen at about a seventh of their size, and NO denoiser: a denoiser is a colour filter, and these pixels are read by colour. Lossless PNG at maximum compression."
     }
   },
   "default_preview_profile": "preview",

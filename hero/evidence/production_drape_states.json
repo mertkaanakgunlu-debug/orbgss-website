@@ -1,0 +1,116 @@
+{
+  "task": "WEB-005A / MER-107 final production",
+  "scene": "hero_production_kizildere",
+  "profile": "production_drape",
+  "samples": 384,
+  "denoise": false,
+  "view_transform": "Standard",
+  "frame_lines": {
+    "output_path": "hero/renders/production/drape/frame_lines_f384.png",
+    "sha256": "d2c5c5f9b3d8da5882d7689898dae7b82bb1482b8e17ab4ceb779cb12462c6f6",
+    "view_transform": "AgX",
+    "composited_over": [
+      "terrain",
+      "thm01",
+      "alt01",
+      "priority"
+    ]
+  },
+  "ground_shadow": {
+    "output_path": "hero/renders/production/drape/ground_shadow_f384.png",
+    "sha256": "7e1d5e12b3172995ed5bb6c042b489878c8a20fa5e2c05f36ff2db146f7f221b",
+    "method": "ground as shadow catcher, block invisible to the camera, transparent film",
+    "composited_under": [
+      "terrain",
+      "thm01",
+      "alt01",
+      "priority"
+    ]
+  },
+  "holdouts": "relief pass: true outline, reticle brackets and the block's glass sides; effects pass: the data surface",
+  "relief_geometry": {
+    "dem": "kizildere_top_dem.tif",
+    "dem_sha256": "590f74322c6ad942e0d36b79446934da7a0938c7d87c06ab8c9bd27da73fb694",
+    "grid": 1200,
+    "vertical_exaggeration": 3.0,
+    "fixture": "kizildere_analysis"
+  },
+  "masked_support": "underlay_layer = terrain: where a layer's own alpha is below 1 the Terrain context shows through, lit as context; the alpha is used as delivered",
+  "source_package": {
+    "export_id": "20260917T161155Z-5e7a0e53",
+    "project_id": "kizildere_mvp_v2",
+    "config_hash": "c6eac56027d3118280d2a454bdcacf5b01ddb0d733ab23dacbf348b6a50b777c"
+  },
+  "ingest_record": "hero/evidence/web005a_r3_preview/analytical_asset_ingest.json",
+  "states": [
+    {
+      "layer": "terrain",
+      "path": "assets/hero/drape/hero-drape-terrain-1920.png",
+      "bytes": 886840,
+      "sha256": "f5469c1e906e432977640cbde4c56d7f7713f3a83fa47a4cc524d3782c514fb9",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "PNG, 8-bit RGBA, lossless",
+      "rendered_frame": 292,
+      "display_texture": "terrain_webhero_display_4k.png",
+      "display_texture_sha256": "5fdf81f525020a7c96bf09c01bb784d2a4b2bda8f959c9a7c8837c697a5c7694",
+      "display_texture_size": [
+        4096,
+        4096
+      ],
+      "lit": true
+    },
+    {
+      "layer": "thm01",
+      "path": "assets/hero/drape/hero-drape-thm01-1920.png",
+      "bytes": 969564,
+      "sha256": "510442f9332359d8143ea99405b48d906d6e21d564952201e1201554a27ba2e8",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "PNG, 8-bit RGBA, lossless",
+      "rendered_frame": 306,
+      "display_texture": "thm01_webhero_display_4k.png",
+      "display_texture_sha256": "3a497c3342a52f20ee5a9d41c2c924068466431849aa425327e415619035a2df",
+      "display_texture_size": [
+        4096,
+        4096
+      ],
+      "lit": false
+    },
+    {
+      "layer": "alt01",
+      "path": "assets/hero/drape/hero-drape-alt01-1920.png",
+      "bytes": 953775,
+      "sha256": "92154136ffbeed51133e525da3056f624660adad71f0fcc1ec4d69be64ac209c",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "PNG, 8-bit RGBA, lossless",
+      "rendered_frame": 324,
+      "display_texture": "alt01_webhero_display_4k.png",
+      "display_texture_sha256": "16ba3668a8fbeeeccec972458d2b0a6e4a3ed0489fc9f39be672638ae253ea56",
+      "display_texture_size": [
+        4096,
+        4096
+      ],
+      "lit": false
+    },
+    {
+      "layer": "priority",
+      "path": "assets/hero/drape/hero-drape-priority-1920.png",
+      "bytes": 974992,
+      "sha256": "a71336c2f7db01ff5163f3e8ec6f8688ef76f6203c9c4f7e3a51ec85c3bfc510",
+      "width": 1920,
+      "height": 1080,
+      "encoding": "PNG, 8-bit RGBA, lossless",
+      "rendered_frame": 384,
+      "display_texture": "priority_webhero_display_4k.png",
+      "display_texture_sha256": "bfcdec473a40558de559e59733c599b54c9cf59bad5e301e43d62417f4e89f50",
+      "display_texture_size": [
+        4096,
+        4096
+      ],
+      "lit": false
+    }
+  ],
+  "total_bytes": 3785171
+}

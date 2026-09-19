@@ -238,7 +238,7 @@ def check_scene_config(report: Report, scene_config, render_config) -> None:
             "undefined " + repr(dangling),
         )
         report.check(
-            bool(spec.get("camera")), "scene " + scene_id + " defines a camera"
+            bool(hc.resolve_scene_spec(scene_id, scenes).get("camera")), "scene " + scene_id + " defines a camera"
         )
 
     interface = scene_config.get("aoi_injection_interface")
@@ -1194,9 +1194,13 @@ def check_r2_visual_contract(report: Report, scene_config, manifest) -> None:
         )
         for ref in ("beam_core", "beam_glow", "aoi_frame"):
             report.check(ref in scene_config.get("palette", {}), label + "palette carries the R2 FX colour " + ref)
+        # The R2 FX lock, or the restrained scan cyan / teal Product accepted through the R3 preview
+        # gates after the R2 colours rendered near-white (b9579ef section 6).
         report.check(
-            core.get("emission_color_ref") == "beam_core" and glow.get("emission_color_ref") == "beam_glow",
-            label + "sensing lines use the locked core/glow colours",
+            (core.get("emission_color_ref"), glow.get("emission_color_ref"))
+            in (("beam_core", "beam_glow"), ("scan_cyan", "scan_teal")),
+            label + "sensing lines use an accepted core/glow colour pair",
+            repr((core.get("emission_color_ref"), glow.get("emission_color_ref"))),
         )
 
         # --- lock event ------------------------------------------------------------------
@@ -1219,15 +1223,29 @@ def check_r2_visual_contract(report: Report, scene_config, manifest) -> None:
             label + "corner locks draw into place",
         )
         beat = spec.get("camera", {}).get("composition", {}).get("acquisition_beat") or [0, 0]
-        report.check(
-            int(beat[0]) <= int(lock_cfg.get("draw_start_frame", -1)) <= int(beat[1]),
-            label + "lock event lands inside the acquisition beat",
-            "draw at " + str(lock_cfg.get("draw_start_frame")) + " beat " + repr(beat),
-        )
-        report.check(
-            int(beams.get("appear_start_frame", 999)) <= int(lock_cfg.get("draw_start_frame", 0)),
-            label + "sensing lines connect before the frame locks",
-        )
+        pulse_frame = aoi_spec.get("lock_pulse_frame")
+        if isinstance(pulse_frame, int):
+            # Accepted R3 order (Product review of preview gate 2): the target resolves first so it
+            # never "appears afterwards"; the lock is the pulse after the lines have landed.
+            report.check(
+                int(beat[0]) <= pulse_frame <= int(beat[1]),
+                label + "lock event lands inside the acquisition beat",
+                "pulse at " + str(pulse_frame) + " beat " + repr(beat),
+            )
+            report.check(
+                int(beams.get("appear_end_frame", 999)) <= pulse_frame,
+                label + "sensing lines connect before the frame locks",
+            )
+        else:
+            report.check(
+                int(beat[0]) <= int(lock_cfg.get("draw_start_frame", -1)) <= int(beat[1]),
+                label + "lock event lands inside the acquisition beat",
+                "draw at " + str(lock_cfg.get("draw_start_frame")) + " beat " + repr(beat),
+            )
+            report.check(
+                int(beams.get("appear_start_frame", 999)) <= int(lock_cfg.get("draw_start_frame", 0)),
+                label + "sensing lines connect before the frame locks",
+            )
 
         # --- no sensor-physics claim anywhere in the production configuration --------------
         text_blobs = [json.dumps(spec)]
@@ -1346,9 +1364,14 @@ def _check_r3_contract(report, scene_config, spec, label, manifest, assets, aoi_
         )
         border = frame.get("border", {})
         locks = frame.get("corner_locks", {})
+        # 946cd8b / c7c6cb1: one visually persistent adaptive lock presentation replaced the regional
+        # frame that vanished and the analysis frame that appeared. With a presentation block the
+        # acquired frame IS the analysis frame, so the three rules that kept the pair apart do not
+        # apply; what replaces them is the preview-gate contract below, which runs on this scene too.
+        persistent = bool(frame.get("presentation"))
         report.check(
-            int(border.get("appear_start_frame", 0)) >= int(beams.get("release_end_frame", 999)),
-            label + "analysis frame appears only after the sensing lines have released",
+            persistent or int(border.get("appear_start_frame", 0)) >= int(beams.get("release_end_frame", 999)),
+            label + "analysis frame appears only after the sensing lines have released, or is the one persistent reticle",
             "appears " + str(border.get("appear_start_frame")) + " release ends " + str(beams.get("release_end_frame")),
         )
         peak = max((float(f) for _, f in border.get("emphasis", [])), default=1.0)
@@ -1362,15 +1385,16 @@ def _check_r3_contract(report, scene_config, spec, label, manifest, assets, aoi_
             int(locks.get("draw_end_frame", 999)) <= int(hold.get("frame", 0)),
             label + "analysis frame locks land before the hold",
         )
+        aoi_systems = [o for o in spec.get("objects", []) if o.get("type") == "aoi_system"]
         report.check(
-            not frame.get("beam_material") and not frame.get("beams"),
-            label + "analysis frame claims no second acquisition (no sensing lines)",
+            (persistent and len(aoi_systems) == 1) or (not frame.get("beam_material") and not frame.get("beams")),
+            label + "there is one acquisition: a single persistent reticle, or an analysis frame with no lines of its own",
         )
         vanish = aoi_spec.get("border", {}).get("vanish")
         report.check(
-            bool(vanish) and int(vanish[1]) <= int(hold.get("frame", 0))
-            and int(vanish[0]) >= int(beams.get("release_end_frame", 999)),
-            label + "regional frame vanishes under the dive, after release and before the hold",
+            persistent or (bool(vanish) and int(vanish[1]) <= int(hold.get("frame", 0))
+                           and int(vanish[0]) >= int(beams.get("release_end_frame", 999))),
+            label + "regional frame vanishes under the dive, or there is no separate regional frame",
             repr(vanish),
         )
         # Blender-free re-derivation of the hold framing from the committed camera keyframes.
@@ -1477,14 +1501,33 @@ def check_r3_preview_gate(report: Report, scene_config) -> None:
     gates = sorted(sid for sid, spec in scenes.items() if spec.get("role") == "hero_preview_gate")
     report.check(bool(gates), "a preview-gate scene exists")
 
-    for scene_id, spec in scenes.items():
-        if spec.get("role") != "hero_production":
-            continue
+    # Product passed the gate and moved WEB-005A to production. The accepted choreography now lives
+    # in the production scene, the gate scene extends it unchanged, and this contract runs on both.
+    # What replaces "no relief while the gate is open" is the rule the gate was protecting: nothing
+    # analytical may reach a lossy encode, so the motion render has to end before the relief exists.
+    production = sorted(sid for sid, spec in scenes.items() if spec.get("role") == "hero_production")
+    for scene_id in production:
         resolved = hc.resolve_scene_spec(scene_id, scenes)
-        report.check(
-            not any(o.get("type") == "aoi_relief" for o in resolved.get("objects", [])),
-            "scene " + scene_id + " ships no relief layer while the preview gate is open",
+        relief = next((o for o in resolved.get("objects", []) if o.get("type") == "aoi_relief"), {})
+        delivery = resolved.get("animation", {}).get("delivery", {})
+        motion = delivery.get("motion_video_frames") or [0, 10 ** 9]
+        first_analytical = min(
+            [int(relief.get("rise_keyframes", [[10 ** 9]])[0][0])]
+            + [int(keys[0][0]) for keys in (relief.get("layer_keyframes") or {}).values() if keys]
         )
+        report.check(
+            bool(relief) and int(motion[1]) <= first_analytical and int(delivery.get("held_frame", -1)) == int(motion[1]),
+            "scene " + scene_id + " ends its lossy motion render on the held frame, before any analytical pixel exists",
+            "motion " + repr(motion) + " first analytical frame " + str(first_analytical),
+        )
+    for scene_id in gates:
+        a = {k: v for k, v in hc.resolve_scene_spec(scene_id, scenes).items() if k not in ("role", "description")}
+        parent = scenes[scene_id].get("extends")
+        b = {k: v for k, v in hc.resolve_scene_spec(parent, scenes).items() if k not in ("role", "description")} if parent else None
+        report.check(parent in production and a == b,
+                     "scene " + scene_id + " is the production scene unchanged (one definition of the choreography)",
+                     repr(parent))
+    gates = gates + production
 
     interface = (scene_config or {}).get("aoi_injection_interface", {})
     for scene_id in gates:

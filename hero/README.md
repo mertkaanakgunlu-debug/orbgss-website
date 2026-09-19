@@ -512,6 +512,46 @@ py -3.14 hero/scripts/materialize_analytical_assets.py
 Measure distances at planetary radius in double precision: `mathutils.Vector.angle` is single precision
 through `acos` near 1 and cannot resolve a kilometre, let alone a metre.
 
+## WEB-005A final production: one choreography, two deliveries
+
+The accepted gate-3 choreography now lives in `hero_production_kizildere`; `hero_r3_preview_gate` is a
+thin alias of it and the validator fails if the two diverge. Delivery is split, and the split is declared
+in the scene (`animation.delivery`):
+
+- **Motion** -- frames 1-276, profile `production`, encoded lossy (`encode_production_media.py` reads the
+  range from `motion_video_frames`). It ends on the held frame, which is also the poster, **before the
+  relief or any display layer exists**; the validator enforces that, so no analytical pixel can reach a
+  lossy encode.
+- **Analytical reveal** -- four lossless full-frame RGBA PNG states (Terrain, THM-01, ALT-01, priority),
+  profile `production_drape` (the delivered 1920 x 1080, 384 fixed samples, no denoiser, `Standard` view),
+  composited by the page over the held frame with the poster's own `object-fit` / `object-position`.
+  `package_drape_states.py` copies them to `assets/hero/drape/`, refuses a texture whose checksum differs
+  from ingest, and writes `hero/evidence/production_drape_states.json`.
+
+A state is three passes that never share a pixel's colour: the data surface (`Standard`); outline, halo,
+brackets and the block's glass sides (`--frame-lines`, the scene's own view, laid over); the block's
+contact shadow alone (`--ground-shadow`: ground as shadow catcher, block invisible to the camera, laid
+under). The shadow exists because the motion render ends before the block does -- its held frame has no
+shadow for it, and without one the block sits on the page like a sticker.
+
+**The hold is still by construction.** Camera keys chasing a turning Earth move on a chord while the
+ground moves on an arc: the footprint wandered 6 px through a "still" hold. One render hides that; a
+page-composited overlay does not. Earth rotation and camera state are constant from the settle frame, and
+the audit's `registration` check proves 0.0 px between the held frame and every state frame. Re-run the
+audit and rebind `data-hero-anchor` whenever the camera changes.
+
+```powershell
+& $env:BLENDER -b -P hero/scripts/audit_preview_gate.py  -- --scene hero_production_kizildere --out hero/evidence/shot_audit_production.json
+& $env:BLENDER -b -P hero/scripts/render_animatic.py -- --scene hero_production_kizildere --profile production --frames (1..276 -join ',') --out $PWD/hero/renders/production/frame.png
+& $env:BLENDER -b -P hero/scripts/encode_production_media.py -- --scene hero_production_kizildere --width 1920 --height 1080
+& $env:BLENDER -b -P hero/scripts/render_drape_states.py -- --scene hero_production_kizildere --profile production_drape --coverage --frame-lines --ground-shadow --out hero/renders/production/drape
+py -3.14 hero/scripts/package_drape_states.py
+```
+
+The motion render is about 70 s a frame on the workstation GPU (5.3 h); frames are independent stills, so
+an interrupted run resumes with `--frames <missing list>` into the same directory. The drape passes take
+seconds.
+
 ## Geometry audit
 
 `validate_hero.py` checks the AOI *contract* from configuration. `audit_aoi.py` checks the other

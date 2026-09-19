@@ -1,0 +1,13 @@
+{
+  "compared": [
+    "real_1440_priority_final_hold.webp (measured on the PNG capture before conversion) (poster + priority state, static path)",
+    "real_1440_motion_path_after_playback.webp (measured on the PNG capture before conversion) (last WebM frame + priority state, motion path)"
+  ],
+  "hero_mean_abs_difference_8bit": 1.403,
+  "footprint_mean_abs_difference_8bit": 0.243,
+  "footprint_surround_mean_abs_difference_8bit": 2.479,
+  "hero_p99_abs_difference_8bit": 9.0,
+  "note": "the drape pixels are the same lossless file in both; the surround differs only by WebM vs WebP coding of the same held frame. A misregistration would show as a bright double edge around the footprint.",
+  "geometric_registration": "hero/evidence/shot_audit_production.json -> check 'registration': the true footprint moves 0.0 px between the frame the video ends on (276) and any frame a state is rendered at",
+  "expected_difference": "in the states the outline rides on the raised block, a few px above the ground-level outline of the held frame; that is the block's height, not a registration error (see handoff_native_1920_*.webp)"
+}

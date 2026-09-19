@@ -290,7 +290,16 @@ def main() -> None:
 
     frames_dir = hc.REPO_ROOT / args.frames_dir
     frames = frame_sequence(frames_dir, args.scene, args.profile)
-    expected = int(animation.get("frame_end", 0)) - int(animation.get("frame_start", 1)) + 1
+    # WEB-005A final production splits delivery: the lossy encodes are made from the motion section
+    # only and end on the held frame, before the relief or any analytical layer exists. The scene
+    # keeps the later frames for the lossless drape states (render_drape_states.py).
+    motion = (animation.get("delivery") or {}).get("motion_video_frames")
+    if motion:
+        expected = int(motion[1]) - int(motion[0]) + 1
+        if frames and (frames[0].stem.rsplit("_f", 1)[-1], frames[-1].stem.rsplit("_f", 1)[-1]) != (str(motion[0]), str(motion[1])):
+            raise SystemExit("rendered frames do not span the declared motion section " + repr(motion))
+    else:
+        expected = int(animation.get("frame_end", 0)) - int(animation.get("frame_start", 1)) + 1
     if len(frames) != expected:
         raise SystemExit("expected " + str(expected) + " rendered frames in "
                          + str(frames_dir) + ", found " + str(len(frames)))
@@ -325,7 +334,12 @@ def main() -> None:
 
     record = {
         "task": "WEB-005 / MER-93",
-        "revision": "WEB-005A R3 / MER-107 hero visual revision",
+        "revision": "WEB-005A final production / MER-107",
+        "delivery": {
+            "motion_video_frames": motion,
+            "analytical_content": "none: the encodes and the poster end on the held frame, before the relief or any "
+                                  "display layer exists; the analytical states are separate lossless files",
+        },
         "scene": args.scene,
         "profile": args.profile,
         "consumed_hero_evidence_head": "e95fdcac7cac82e597d40dab4cdc96ce1a6b319e",

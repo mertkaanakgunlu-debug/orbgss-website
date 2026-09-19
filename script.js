@@ -84,10 +84,6 @@ const I18N = {
     'alt.alt02': 'Sequential map of the ferric iron spectral alteration proxy across the Kızıldere area of interest',
     'alt.priority': 'Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area',
     'alt.geothermal': 'Relative priority surface over shaded NASADEM relief across the Kızıldere geothermal pilot area',
-    'hero.handoff.kicker': 'Evidence to priority · Kızıldere AOI',
-    'hero.handoff.meta': '36 × 36 km analysis AOI · EPSG:32635 · 30 m grid',
-    'hero.handoff.ledgerLabel': 'Evidence layers over the analysis AOI',
-    'hero.handoff.cta': 'See how it was derived',
     'act.context.kicker': '02 · The place',
     'act.context.title': 'A real area, before any analysis.',
     'act.context.copy': 'Kızıldere sits in the Büyük Menderes graben in Denizli, Türkiye. This is the area as Landsat 8 photographed it — the ground the whole pilot is registered to, before a single layer is derived from it.',
@@ -119,7 +115,8 @@ const I18N = {
     'scene.context.kind': 'Natural-color composite',
     'scene.priority.place': 'Kızıldere — Büyük Menderes graben, Denizli, Türkiye',
     'scene.priority.coords': '37.9794° N, 28.7907° E',
-    'alt.hero': 'Rendered view from orbit of the eastern Mediterranean and western Türkiye, with a bright square acquisition frame locked over the Kızıldere pilot region',
+    'alt.hero': 'Rendered close view from orbit of the Kızıldere area in western Türkiye, with a thin cyan outline around the 36 km analysis area',
+    'alt.heroPriority': 'Rendered terrain relief of the Kızıldere analysis area with the Remote-Sensing Relative Priority — Experimental Baseline surface draped over it; terrain shows through where there is no analytical support',
     'alt.context': 'Natural-colour Landsat 8 view of the Büyük Menderes graben around Kızıldere, showing the valley floor, irrigated fields and the ridges on either side',
     'alt.priorityLegend': 'Colour scale for the relative priority map, running from 0 at the dark end to 100 at the pale end',
     'pilot.kicker': 'Pilot',
@@ -327,10 +324,6 @@ const I18N = {
     'alt.alt02': 'Kızıldere ilgi alanı boyunca ferrik demir spektral alterasyon vekilinin sıralı haritası',
     'alt.priority': 'Kızıldere ilgi alanının göreli öncelik haritası; zemini alan içinde 0 ile 100 arasında sıralar',
     'alt.geothermal': 'Kızıldere jeotermal pilot alanında gölgelendirilmiş NASADEM rölyefi üzerindeki göreli öncelik yüzeyi',
-    'hero.handoff.kicker': 'Kanıttan önceliğe · Kızıldere analiz alanı',
-    'hero.handoff.meta': '36 × 36 km analiz alanı · EPSG:32635 · 30 m grid',
-    'hero.handoff.ledgerLabel': 'Analiz alanı üzerindeki kanıt katmanları',
-    'hero.handoff.cta': 'Nasıl türetildiğini görün',
     'act.context.kicker': '02 · Alan',
     'act.context.title': 'Herhangi bir analizden önce, gerçek bir alan.',
     'act.context.copy': 'Kızıldere, Denizli, Türkiye’deki Büyük Menderes grabeninde yer alır. Bu, alanın Landsat 8 tarafından görüntülenmiş hâlidir — tek bir katman türetilmeden önce, pilot çalışmanın tamamının üzerine oturduğu zemin.',
@@ -362,7 +355,8 @@ const I18N = {
     'scene.context.kind': 'Doğal renkli bileşim',
     'scene.priority.place': 'Kızıldere — Büyük Menderes grabeni, Denizli, Türkiye',
     'scene.priority.coords': '37.9794° K, 28.7907° D',
-    'alt.hero': 'Doğu Akdeniz ve batı Türkiye’nin yörüngeden görselleştirilmiş görünümü; Kızıldere pilot bölgesinin üzerine kilitlenmiş parlak kare bir veri alım çerçevesi ile',
+    'alt.hero': 'Batı Türkiye’deki Kızıldere bölgesinin yörüngeden görselleştirilmiş yakın görünümü; 36 km’lik analiz alanının çevresinde ince camgöbeği bir çerçeve ile',
+    'alt.heroPriority': 'Kızıldere analiz alanının görselleştirilmiş arazi kabartması; üzerine Uzaktan Algılama Göreli Önceliği — Deneysel Temel yüzeyi giydirilmiştir; analitik desteğin olmadığı yerlerde arazi görünür',
     'alt.context': 'Kızıldere çevresindeki Büyük Menderes grabeninin doğal renkli Landsat 8 görünümü; vadi tabanı, sulanan tarlalar ve iki yandaki sırtlar görülüyor',
     'alt.priorityLegend': 'Göreli öncelik haritasının renk ölçeği; koyu uçta 0 değerinden açık uçta 100 değerine uzanır',
     'pilot.kicker': 'Pilot',
@@ -882,44 +876,42 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
 /*     so no browser is ever asked to download both;                    */
 /*   - with JavaScript off, the poster is the hero.                     */
 /*                                                                      */
-/* The sequence ends on a stable hold on the 36 km analysis AOI. What   */
-/* it hands off to is the evidence stage registered inside that frame:  */
-/* terrain, THM-01, ALT-01 and the priority result revealed in order    */
-/* when the hold is reached — or the result at once, in every static    */
-/* state, so a visitor who never sees the motion still sees the answer. */
+/* The sequence ends on a stable hold on the 36 km analysis AOI and     */
+/* carries no analytical pixel. What follows is composited here: four   */
+/* lossless full-frame drape states that share the poster's fit rule,   */
+/* cross-faded in the accepted order and ending on the priority surface */
+/* alone — or the priority surface at once, in every static state, so a */
+/* visitor who never sees the motion still sees the answer. No legend,  */
+/* card or label: Acts 3 and 4 carry those.                             */
 /* ------------------------------------------------------------------ */
 (function cinematicHero() {
   const hero = document.querySelector('.hero[data-hero-slot="cinematic"]');
   if (!hero) return;
 
   const video = hero.querySelector('.hero-video');
-  const handoff = hero.querySelector('[data-hero-handoff]');
-  const stage = hero.querySelector('[data-hero-stage]');
+  const drape = hero.querySelector('[data-hero-drape]');
 
-  /* Frame 260 of 276 at 24 fps: the analysis frame has drawn in and locked (240-254) and the camera
-     is settling into the hold it reaches at 262. WEB-005A R3 starts the page-layer evidence sequence there, so the last
-     second of motion and the first layer overlap and the payoff reads as one continuous resolve. */
-  const HOLD_SECONDS = 260 / 24;
-  /* Class-B ceiling: every accepted cartographic export is a 1200 x 1200 cell grid drawn at 1249 px,
-     so no layer may ever be laid out wider than 1249 device pixels. The stage shrinks its raster
-     stack about its centre, inside the frame, rather than ever upscaling. */
-  const CLASS_B_CEILING_PX = 1249;
-  /* The accepted evidence order: context, thermal, alteration, then the priority result. */
+  /* Frame 268 of 276 at 24 fps: the approach settles at 266 and the video holds still to its last
+     frame, which is also the poster. The drape sequence starts inside that stillness, so the end of
+     the motion and the first state read as one continuous resolve. */
+  const HOLD_SECONDS = 268 / 24;
+  /* The accepted evidence order: context, thermal, alteration, then the priority result. Four
+     states 750 ms apart with a 450 ms cross-fade: 2.7 s in all, inside the approved 2.4-3.2 s. */
   const LAYER_ORDER = ['terrain', 'thm01', 'alt01', 'priority'];
-  const LAYER_STEP_MS = 950;
+  const LAYER_STEP_MS = 750;
+  const LAYER_FADE_MS = 450;
 
-  /* ---- audited geometry of the last frame -> page coordinates --------------------------- */
-  /* The poster is the last rendered frame and the video ends on it, so one anchor serves every
-     state. Fractions of the 1920 x 1080 frame with y measured from the bottom, exactly as
-     hero/evidence/shot_audit_production.json reports them (handoff_anchor: the analysis AOI's
+  /* ---- audited geometry of the held frame -> page coordinates ---------------------------- */
+  /* Fractions of the 1920 x 1080 frame with y measured from the bottom, exactly as
+     hero/evidence/shot_audit_production.json reports them (handoff_anchor: the true analysis AOI's
      centre and its four projected corners nw, ne, se, sw); the cover-fit below reproduces what
-     object-fit: cover / object-position: center 46% does to that frame at any hero size. */
+     object-fit: cover / object-position: center 46% does to that frame at any hero size. The drape
+     states need none of this -- they are full-frame and share the media's fit rule -- it exists so
+     the copy column can yield to the payoff. */
   let anchor = null;
   try { anchor = JSON.parse(hero.getAttribute('data-hero-anchor') || 'null'); } catch (e) { anchor = null; }
   if (anchor && !(Array.isArray(anchor.corners) && anchor.corners.length === 4)) anchor = null;
   const desktopLayout = window.matchMedia('(min-width: 981px)');
-  const frame = stage ? stage.querySelector('.hero-stage-frame') : null;
-  const layerStack = stage ? stage.querySelector('.hero-stage-layers') : null;
 
   function frameGeometry() {
     const W = hero.clientWidth;
@@ -931,189 +923,113 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     const rh = fh * s;
     const ox = (W - rw) * 0.5;
     const oy = (H - rh) * anchor.position;
-    const toPage = (x, y) => [ox + x * rw, oy + (1 - y) * rh];
-    const corners = anchor.corners.map((c) => toPage(c[0], c[1]));
-    const xs = corners.map((c) => c[0]);
-    const ys = corners.map((c) => c[1]);
+    const xs = anchor.corners.map((c) => ox + c[0] * rw);
+    const ys = anchor.corners.map((c) => oy + (1 - c[1]) * rh);
     return {
-      W, H, corners,
+      W, H,
       left: Math.min.apply(null, xs), right: Math.max.apply(null, xs),
       top: Math.min.apply(null, ys), bottom: Math.max.apply(null, ys),
     };
   }
 
-  /* Homography that maps the stage square (0,0)-(size,size) onto the four page corners, as a CSS
-     matrix3d. Screen-space placement of the image element only: the raster's pixels are untouched. */
-  function squareToQuad(p, size) {
-    const x0 = p[0][0], y0 = p[0][1], x1 = p[1][0], y1 = p[1][1];
-    const x2 = p[2][0], y2 = p[2][1], x3 = p[3][0], y3 = p[3][1];
-    const dx1 = x1 - x2, dx2 = x3 - x2, dx3 = x0 - x1 + x2 - x3;
-    const dy1 = y1 - y2, dy2 = y3 - y2, dy3 = y0 - y1 + y2 - y3;
-    const det = dx1 * dy2 - dx2 * dy1;
-    const g = det ? (dx3 * dy2 - dx2 * dy3) / det : 0;
-    const h = det ? (dx1 * dy3 - dx3 * dy1) / det : 0;
-    const a = x1 - x0 + g * x1, b = x3 - x0 + h * x3, c = x0;
-    const d = y1 - y0 + g * y1, e = y3 - y0 + h * y3, f = y0;
-    const m = [a / size, d / size, 0, g / size, b / size, e / size, 0, h / size, 0, 0, 1, 0, c, f, 0, 1];
-    return 'matrix3d(' + m.map((v) => (Math.abs(v) < 1e-9 ? '0' : v.toFixed(6))).join(',') + ')';
-  }
-
-  function rightEdge(selector) {
-    const heroRect = hero.getBoundingClientRect();
-    let right = 0;
-    hero.querySelectorAll(selector).forEach((node) => {
-      const rect = node.getBoundingClientRect();
-      if (rect.width > 0) right = Math.max(right, rect.right - heroRect.left);
-    });
-    return right;
-  }
-
-  /* The analysis frame's position is fixed by the render, so on narrower desktops the headline column
-     has to yield to it rather than run underneath. Applied from first layout, not at the reveal, so
-     the copy never reflows mid-visit. */
+  /* The footprint's position is fixed by the render, so on narrower desktops the headline column has
+     to yield to it rather than run underneath. Applied from first layout, not at the reveal, so the
+     copy never reflows mid-visit. */
   const heroContent = hero.querySelector('.hero-content');
   function constrainCopy() {
     if (!heroContent) return;
     if (!anchor || !desktopLayout.matches) { heroContent.style.maxWidth = ''; return; }
-    /* max-width covers the padding box; the right padding is empty space and may sit under the frame. */
+    /* max-width covers the padding box; the right padding is empty space and may sit under the payoff. */
     const padRight = parseFloat(getComputedStyle(heroContent).paddingRight) || 0;
     heroContent.style.maxWidth = Math.max(420, Math.round(frameGeometry().left - 24 + padRight)) + 'px';
   }
   constrainCopy();
 
-  /* Register the stage onto the analysis AOI and place the caption column beside it: to the right
-     of the frame when there is room, otherwise below it, never over the headline column. */
-  function layoutHandoff() {
-    if (!anchor || !stage || !handoff || !frame) return;
-    if (!desktopLayout.matches) {
-      handoff.classList.remove('is-right', 'is-below', 'is-tight');
-      handoff.style.cssText = '';
-      return;
-    }
-    const g = frameGeometry();
-    const width = g.right - g.left;
-    const size = Math.max(160, Math.round(width));
-    frame.style.width = size + 'px';
-    frame.style.height = size + 'px';
-    frame.style.transform = squareToQuad(g.corners, size);
-    const dpr = window.devicePixelRatio || 1;
-    const k = Math.min(1, CLASS_B_CEILING_PX / (dpr * width));
-    if (layerStack) layerStack.style.transform = k < 1 ? 'scale(' + k.toFixed(4) + ')' : '';
-    hero.dataset.heroLayerScale = k.toFixed(3);
-
-    const copyRight = rightEdge('.hero-content h1, .hero-content .hero-copy, .hero-content .hero-actions, .hero-content .eyebrow');
-    const caption = hero.querySelector('.scene-label');
-    const heroBox = hero.getBoundingClientRect();
-    const captionBox = caption ? caption.getBoundingClientRect() : null;
-    const captionTop = captionBox ? captionBox.top - heroBox.top : g.H - 90;
-    /* The page gutter, read off the caption that already sits on it, so the column shares its edge. */
-    const pad = captionBox ? Math.max(16, heroBox.right - captionBox.right) : 48;
-    const gap = 26;
-    handoff.classList.remove('is-right', 'is-below', 'is-tight');
-    handoff.style.right = 'auto';
-    handoff.style.bottom = 'auto';
-    const roomRight = g.W - pad - (g.right + gap);
-    if (roomRight >= 230) {
-      handoff.classList.add('is-right');
-      handoff.style.width = Math.min(340, roomRight) + 'px';
-      handoff.style.left = (g.right + gap) + 'px';
-      let top = g.top;
-      const overflow = top + handoff.offsetHeight - (captionTop - 12);
-      if (overflow > 0) top = Math.max(16, top - overflow);
-      handoff.style.top = top + 'px';
-    } else {
-      handoff.classList.add('is-below');
-      const width = Math.min(520, Math.max(260, g.W - pad - (copyRight + 20)));
-      const left = Math.max(copyRight + 20, Math.min(g.left, g.W - pad - width));
-      const top = g.bottom + 16;
-      handoff.style.width = width + 'px';
-      handoff.style.left = left + 'px';
-      handoff.style.top = top + 'px';
-      if (top + handoff.offsetHeight > captionTop - 10) handoff.classList.add('is-tight');
-    }
+  function layerImage(name) {
+    return drape ? drape.querySelector('.hero-drape-layer[data-layer="' + name + '"]') : null;
   }
 
-  /* Show layers up to and including `id`; the ledger and caption column follow. */
-  function setLayer(id) {
-    const index = LAYER_ORDER.indexOf(id);
-    LAYER_ORDER.forEach((name, i) => {
-      if (stage) {
-        stage.querySelectorAll('.hero-layer[data-layer="' + name + '"]').forEach((el) => {
-          el.classList.toggle('is-on', i <= index);
-        });
-      }
-      handoff.querySelectorAll('.hero-handoff-ledger [data-layer="' + name + '"]').forEach((el) => {
-        el.classList.toggle('is-done', i < index);
-        el.classList.toggle('is-active', i === index);
-      });
-      handoff.querySelectorAll('.hero-layer-caption[data-layer="' + name + '"]').forEach((el) => {
-        el.hidden = i !== index;
-      });
+  /* A transitional state is data-src until the motion actually plays: a static visitor only ever
+     fetches the priority state. */
+  function promote(img) {
+    if (!img) return;
+    if (img.dataset.src) { img.src = img.dataset.src; img.removeAttribute('data-src'); }
+    img.loading = 'eager';
+    if (typeof img.decode === 'function') img.decode().catch(() => {});
+  }
+
+  /* Warm the states while the sequence plays so they are decoded by the time the hold arrives. */
+  function warmLayers() {
+    if (!drape || !desktopLayout.matches) return;
+    LAYER_ORDER.forEach((name) => promote(layerImage(name)));
+  }
+
+  /* Show exactly `id`. The incoming state fades in over the outgoing one, which is dropped once it
+     is fully covered, so the sequence ends on the priority surface alone. */
+  let sequenceTimers = [];
+  function setLayer(id, instant) {
+    LAYER_ORDER.forEach((name) => {
+      const img = layerImage(name);
+      if (!img) return;
+      if (name === id) { promote(img); img.classList.add('is-on'); return; }
+      if (instant) img.classList.remove('is-on');
+      else sequenceTimers.push(window.setTimeout(() => img.classList.remove('is-on'), LAYER_FADE_MS + 60));
     });
     hero.dataset.heroLayer = id;
   }
 
-  let sequenceTimers = [];
-  function revealHandoff(instant) {
-    if (!handoff || !handoff.hidden) return;
-    warmLayers();
-    handoff.hidden = false;
-    if (stage) stage.hidden = false;
-    layoutHandoff();
-    if (instant || reduceMotion.matches || !stage) {
-      /* Review hook: in a static state, #hero-layer=<id> settles on that evidence layer instead of
-         the result, so each step of the sequence can be captured deterministically. */
+  let revealed = false;
+  function revealPayoff(instant) {
+    if (revealed || !drape) return;
+    /* Desktop layout only (see styles.css). If the viewport becomes one later, the listener below
+       comes back here. */
+    if (!desktopLayout.matches) return;
+    revealed = true;
+    drape.hidden = false;
+    hero.setAttribute('data-hero-payoff', 'on');
+    if (instant || reduceMotion.matches) {
+      /* Review hook: in a static state, #hero-layer=<id> settles on that state instead of the
+         result, so each step of the sequence can be captured deterministically. */
       const pick = /^#hero-layer=(terrain|thm01|alt01|priority)$/.exec(window.location.hash || '');
-      setLayer(pick ? pick[1] : 'priority');
-      if (stage) stage.classList.add('is-visible');
-      handoff.classList.add('is-visible');
+      setLayer(pick ? pick[1] : 'priority', true);
       return;
     }
+    warmLayers();
     /* Two frames: one for the elements to exist, one for the transitions to have a start value. */
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      stage.classList.add('is-visible');
-      handoff.classList.add('is-visible');
       LAYER_ORDER.forEach((name, i) => {
         sequenceTimers.push(window.setTimeout(() => setLayer(name), i * LAYER_STEP_MS));
       });
     }));
   }
 
-  /* Warm the layer rasters while the sequence plays so they are decoded by the time the hold arrives. */
-  function warmLayers() {
-    if (!stage) return;
-    stage.querySelectorAll('.hero-layer-image').forEach((img) => {
-      img.loading = 'eager';
-      if (typeof img.decode === 'function') img.decode().catch(() => {});
-    });
-  }
-
   let layoutTimer = null;
-  function relayout() {
-    constrainCopy();
-    if (handoff && !handoff.hidden) layoutHandoff();
-  }
   window.addEventListener('resize', () => {
     window.clearTimeout(layoutTimer);
-    layoutTimer = window.setTimeout(relayout, 120);
+    layoutTimer = window.setTimeout(constrainCopy, 120);
   });
-  /* Registration depends on the hero's own box, which can change without a window resize (the
-     static reveal runs before first layout has settled; 82vh moves with browser chrome). Observe the
-     box itself so the stage can never be left registered to a stale size. */
+  /* The copy constraint depends on the hero's own box, which can change without a window resize
+     (82vh moves with browser chrome). Observe the box itself. */
   if (typeof ResizeObserver === 'function') {
     let pending = false;
     new ResizeObserver(() => {
       if (pending) return;
       pending = true;
-      requestAnimationFrame(() => { pending = false; relayout(); });
+      requestAnimationFrame(() => { pending = false; constrainCopy(); });
     }).observe(hero);
   }
-  window.addEventListener('load', relayout, { once: true });
+  window.addEventListener('load', constrainCopy, { once: true });
+  /* A window widened into the desktop layout after the hero has settled still gets the payoff. */
+  const onLayoutChange = () => {
+    const state = hero.getAttribute('data-hero-state');
+    if (desktopLayout.matches && (state === 'static' || state === 'held')) revealPayoff(true);
+  };
+  if (typeof desktopLayout.addEventListener === 'function') desktopLayout.addEventListener('change', onLayoutChange);
 
   function settleStatic(reason) {
     hero.setAttribute('data-hero-state', 'static');
     if (hero.dataset.heroReason !== reason) hero.dataset.heroReason = reason;
-    revealHandoff(true);
+    revealPayoff(true);
   }
 
   const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
@@ -1148,13 +1064,13 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     video.addEventListener('timeupdate', function onTime() {
       if (video.currentTime >= HOLD_SECONDS) {
         video.removeEventListener('timeupdate', onTime);
-        revealHandoff();
+        revealPayoff();
       }
     });
     /* The last rendered frame is the poster frame, so ending on it is a settle, not a stop. */
     video.addEventListener('ended', () => {
       hero.setAttribute('data-hero-state', 'held');
-      revealHandoff();
+      revealPayoff();
     });
     video.addEventListener('playing', () => {
       hero.setAttribute('data-hero-state', 'playing');
@@ -1198,7 +1114,7 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     if (!video.paused) video.pause();
     sequenceTimers.forEach((id) => window.clearTimeout(id));
     sequenceTimers = [];
-    if (handoff && !handoff.hidden) setLayer('priority');
+    if (revealed) setLayer('priority', true);
     settleStatic('reduced-motion');
   };
   if (typeof reduceMotion.addEventListener === 'function') {
@@ -1206,5 +1122,11 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   }
 
   /* Belt and braces: however playback goes, the result must not stay hidden. */
-  window.setTimeout(() => revealHandoff(true), 15000);
+  /* A stalled playback must not get the payoff laid over whatever frame it stopped on: the states
+     register with the held frame only. Fall back to the poster, which is that frame. */
+  window.setTimeout(() => {
+    if (revealed) return;
+    if (!video.paused && !video.ended && video.readyState > 2) return;
+    settleStatic('stalled');
+  }, 15000);
 })();

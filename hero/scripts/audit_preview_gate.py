@@ -254,6 +254,9 @@ def audit(scene_id):
         row["frame_to_true_corner_m"] = max(
             angular_m(frame_corners[order.index(c)], true_corners[i], radius_bu) for i, c in enumerate(corner_ids)
         )
+        row["true_corners_screen"] = [[round(v, 5) for v in screen(scene, camera, c)[:2]] for c in true_corners]
+        row["true_centre_screen"] = [round(v, 5) for v in screen(
+            scene, camera, bpy.data.objects["aoi_target_center"].evaluated_get(depsgraph).matrix_world.translation)[:2]]
         mean = sum(frame_corners, Vector((0.0, 0.0, 0.0)))
         true_centre = bpy.data.objects["aoi_target_center"].evaluated_get(depsgraph).matrix_world.translation
         row["reticle_centre_offset_m"] = angular_m(mean, true_centre, radius_bu)
@@ -593,6 +596,35 @@ def audit(scene_id):
     hold = [r for r in rows if abs((r["layers"]["priority"] or 0.0) - 1.0) <= 1.0e-4]
     checks.append(check(len(hold) >= 18, "A-HERO-19 priority-only hold is long enough to read", len(hold), 18, "frames"))
 
+    # --- delivery split: the held frame the video ends on vs the frames the drape states are rendered at ----
+    delivery = animation.get("delivery") or {}
+    held_frame = int(delivery.get("held_frame", spec["camera"]["composition"]["analysis_hold"]["frame"]))
+    held = by_frame[held_frame]
+    still = [r for r in rows if r["frame"] >= held_frame]
+    wander = max(
+        max(abs(a - b) for pa, pb in zip(r["true_corners_screen"], held["true_corners_screen"]) for a, b in zip(pa, pb))
+        for r in still
+    )
+    checks.append(check(wander <= 2.0e-4,
+                        "registration: the true footprint does not move on screen between the held frame and any drape-state frame",
+                        round(wander * REFERENCE_WIDTH_PX, 3), round(2.0e-4 * REFERENCE_WIDTH_PX, 3), "px at 1920"))
+    xs = [c[0] for c in held["true_corners_screen"]]
+    ys = [c[1] for c in held["true_corners_screen"]]
+    handoff_anchor = {
+        "frame": held_frame,
+        "fixture": aoi["fixture"],
+        "corner_order": corner_ids,
+        "x": held["true_centre_screen"][0],
+        "y": held["true_centre_screen"][1],
+        "corners": held["true_corners_screen"],
+        "extent": round(max(max(xs) - min(xs), max(ys) - min(ys)), 6),
+        "box": [round(min(xs), 5), round(min(ys), 5), round(max(xs), 5), round(max(ys), 5)],
+        "note": ("Screen geometry of the true governed 36 km AOI on the held frame the motion video and the poster "
+                 "end on, as fractions of the frame with y from the bottom: centre, the four projected corners in "
+                 "corner_order, extent and bounding box. The page uses it to keep the copy column clear of the "
+                 "analytical payoff; the drape states themselves are full-frame overlays and need no placement."),
+    }
+
     # --- timing envelope (c7c6cb1 section 8; Product clarification 6) -------------------------------------
     rate = float(animation["frame_rate"])
     first_layer = next(r["frame"] for r in rows if any((w or 0.0) > 1.0e-4 for w in r["layers"].values())) - 1
@@ -639,6 +671,8 @@ def audit(scene_id):
                      "override of 2026-09-18 (visible acquisition on a presentation reticle) where they differ",
         "frames_measured": len(rows),
         "fixed_through_frame": fixed_end,
+        "handoff_anchor": handoff_anchor,
+        "held_frame": held_frame,
         "sequence": acquisition_sequence,
         "timing": timing,
         "platform_exit": {"widest_silhouette_fraction": round(exit_width, 4), "at_frame": widest["frame"],

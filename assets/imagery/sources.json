@@ -1943,8 +1943,8 @@
     "asset_class": "C - rendered cinematic hero media",
     "rights_basis": "OrbGSS-generated 3D render from the accepted WEB-HERO-001 production lane. External material: NASA Earth Observatory whole-Earth imagery, public domain under NASA media usage guidelines (Blue Marble Next Generation July 2004 global composite with topography and bathymetry, a lossless OrbGSS crop of its 500 m C1 tile as the regional detail window, the Blue Marble cloud composite and the Earth-at-Night composite), and a greyscale detail ratio derived by OrbGSS from Copernicus Sentinel-2 L2A data (free, full and open; attribution 'Contains modified Copernicus Sentinel data (2025)' in the site footer), all recorded with checksums in hero/assets/manifest.json. The satellite is a procedural OrbGSS original. No paid, closed or restricted data, no NASA or EU insignia, no endorsement implied, and no third-party licence is restated or widened.",
     "truthfulness_requirement": "This is a RENDER, not sensor imagery, and the homepage caption must say so. The EN/TR strings scene.hero.kind carry 'Rendered orbital sequence - not sensor imagery' and are not optional.",
-    "scientific_content": "none",
-    "scientific_content_note": "No scientific raster is baked into any frame. Lossy video encoding subsamples chroma and quantises values, which is exactly the colour/value change the accepted GEO-WEB-002 package forbids for class-B assets. The real-data result handoff is composited in the page from the accepted checksummed derivative instead - see hero/config/scene.json -> aoi_injection_interface.layer_slots[result_priority].render_surface.",
+    "scientific_content": "none in any lossy encode; analytical drape states are separate lossless page-composited files",
+    "scientific_content_note": "No scientific raster is baked into any video frame or into the poster: the motion render ends on the held frame (276) before the relief or any display layer exists, and hero/scripts/validate_hero.py enforces that. Lossy video encoding subsamples chroma and quantises values, which is exactly the colour/value change the accepted packages forbid. The analytical reveal is composited in the page from the lossless hero_drape_states instead.",
     "source": {
       "hero_lane_evidence_head": "e95fdcac7cac82e597d40dab4cdc96ce1a6b319e",
       "scene": "hero_production_kizildere",
@@ -1989,14 +1989,37 @@
         "container": "WebM",
         "mime_type": "video/webm",
         "codec": "VP9",
+        "video_bitrate_kbps": 1125,
+        "bytes": 3090394,
+        "mib": 2.947,
+        "ceiling_mib": 3.0,
+        "within_ceiling": true,
+        "sha256": "d08dcb0ca0541307f0c7e4b5c6917c22c47a9baa8b2c520a37c6a1f9eafa8c52",
+        "bitrate_search": [
+          {
+            "attempt": 1,
+            "video_bitrate_kbps": 1900,
+            "bytes": 4673286,
+            "mib": 4.457,
+            "ceiling_mib": 3.0,
+            "within_ceiling": false,
+            "wall_clock_seconds": 140.98
+          },
+          {
+            "attempt": 2,
+            "video_bitrate_kbps": 1125,
+            "bytes": 3090394,
+            "mib": 2.947,
+            "ceiling_mib": 3.0,
+            "within_ceiling": true,
+            "wall_clock_seconds": 118.5
+          }
+        ],
         "width": 1920,
         "height": 1080,
         "frame_rate": 24,
         "frame_count": 276,
-        "duration_seconds": 11.5,
-        "video_bitrate_kbps": 1396,
-        "bytes": 2932748,
-        "sha256": "c094d323be7747de7ff3c6299a634c8ddd66d2de58317e9c8575449c871423ad"
+        "duration_seconds": 11.5
       },
       {
         "role": "hero-mp4",
@@ -2004,14 +2027,28 @@
         "container": "MP4",
         "mime_type": "video/mp4",
         "codec": "H.264",
+        "video_bitrate_kbps": 2800,
+        "bytes": 4244223,
+        "mib": 4.048,
+        "ceiling_mib": 4.5,
+        "within_ceiling": true,
+        "sha256": "cb26d09e35f7ce735fa5268a11ce69149ccf7f2e9ebbf0606f078304004d30b9",
+        "bitrate_search": [
+          {
+            "attempt": 1,
+            "video_bitrate_kbps": 2800,
+            "bytes": 4244223,
+            "mib": 4.048,
+            "ceiling_mib": 4.5,
+            "within_ceiling": true,
+            "wall_clock_seconds": 41.93
+          }
+        ],
         "width": 1920,
         "height": 1080,
         "frame_rate": 24,
         "frame_count": 276,
-        "duration_seconds": 11.5,
-        "video_bitrate_kbps": 2800,
-        "bytes": 4068259,
-        "sha256": "e02e25e2ccd7ef344e06cffff8b96ff30d632c0d0e202a3802fb7a9734a977d9"
+        "duration_seconds": 11.5
       },
       {
         "role": "hero-poster",
@@ -2019,12 +2056,27 @@
         "container": "WebP",
         "mime_type": "image/webp",
         "codec": "WebP (lossy)",
+        "quality": 82,
         "width": 1600,
         "height": 900,
-        "quality": 88,
+        "bytes": 120764,
+        "kib": 117.9,
+        "ceiling_kib": 180.0,
+        "within_ceiling": true,
         "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f276.png",
-        "bytes": 173510,
-        "sha256": "4b80ba21ef9125bd8accbcf01d5085f7bf7d5ab93921ff3f8891315eb0123f83"
+        "sha256": "389f2338f5a31faa3b87c1669544e29b4418ac0fe4c6306074288882ee96066f",
+        "quality_search": [
+          {
+            "quality": 88,
+            "bytes": 184776,
+            "kib": 180.4
+          },
+          {
+            "quality": 82,
+            "bytes": 120764,
+            "kib": 117.9
+          }
+        ]
       },
       {
         "role": "hero-poster-narrow",
@@ -2032,22 +2084,124 @@
         "container": "WebP",
         "mime_type": "image/webp",
         "codec": "WebP (lossy)",
+        "quality": 88,
         "width": 900,
         "height": 506,
-        "quality": 88,
+        "bytes": 69796,
+        "kib": 68.2,
+        "ceiling_kib": 180.0,
+        "within_ceiling": true,
         "source_frame": "hero/renders/production/frame.png/hero_production_kizildere_production_f276.png",
-        "bytes": 69374,
-        "sha256": "467a29f208c35fcbfb2771f7c553c2160be83103b347fa314ff47b6841c6d319"
+        "sha256": "11818a638533b715bd62987b1cedd26c7b2bce5104144181cdd718d80b9b6964",
+        "quality_search": [
+          {
+            "quality": 88,
+            "bytes": 69796,
+            "kib": 68.2
+          }
+        ]
       }
     ],
-    "revision": "WEB-005A R3 hero visual revision: time-remapped derived orbital pass that settles lower-left for the whole acquisition beat, sensing lines that release while the platform is still in frame, a continuous dive onto the accepted 36 km analysis AOI with its own lock event, a 30 m Sentinel-2 detail multiplier under the regional hold, and a page-layer evidence stage registered inside the analysis frame (terrain, THM-01, ALT-01, priority)",
+    "revision": "WEB-005A final production (after three low-cost preview gates): fixed observer; the platform comes round the lower-left limb, settles and slews; a presentation reticle resolves over the target before any line; four thin cyan lines draw on from the instrument aperture to its four corners; lock pulse; a translucent fan between the lines sweeps west to east; effects retire; the platform leaves through the right edge above the caption; the camera approaches while the reticle tightens onto the true 36 km corners; still hold. Page: lossless drape states Terrain -> THM-01 -> ALT-01 -> priority on DEM relief, ending on priority alone.",
     "handoff": {
       "surface": "html_overlay",
-      "anchor_source": "hero/evidence/shot_audit_production.json -> handoff_anchor (audited last-frame centre and four projected corners of the accepted 36 km analysis AOI, fixture kizildere_analysis); index.html carries it as data-hero-anchor and scripts/validate_site.py checks the two agree",
-      "registration": "script.js maps the audited corners through the poster/video cover-fit and places the evidence stage on them with a CSS homography: a screen-space placement of the image elements, never a re-projection of any data. The raster stack is shrunk about its centre inside the frame whenever the quad would exceed 1249 device pixels.",
-      "sequence": "terrain (Elevation - NASADEM context) -> THM-01 -> ALT-01 -> priority, each byte-exact accepted geo_web_002 derivative (panel-800 / panel-native-1249 by sizes), revealed in the accepted evidence order from 256/24 s with the layer's exact public label and accepted warning in the caption column; static states show the priority result at once",
-      "payoff": "accepted geo_web_002 priority derivative inside the analysis frame with its own in-frame legend, the exact public label, the mandatory warning as visible EN/TR copy, the 36 km / EPSG:32635 / 30 m meta line and the CTA",
+      "anchor_source": "hero/evidence/shot_audit_production.json -> handoff_anchor (audited held-frame centre and four projected corners of the true 36 km analysis AOI, fixture kizildere_analysis); index.html carries it as data-hero-anchor and scripts/validate_site.py checks the two agree. It keeps the copy column clear of the payoff; the drape states need no placement.",
+      "registration": "The drape states are full-frame images in the hero media's own box with the same object-fit and object-position as the poster and the video, so they register at every hero size by construction. The production audit proves the true footprint does not move on screen between the held frame the video ends on and any frame a state is rendered at (0.0 px).",
+      "sequence": "Terrain -> THM-01 -> ALT-01 -> priority, 750 ms apart with a 450 ms cross-fade (2.7 s), started at 268/24 s inside the video's own still hold; each incoming state covers the outgoing one, which is then dropped, so the sequence ends on the priority surface alone. Static states show the priority surface at once and never fetch the transitional states (data-src).",
+      "payoff": "the priority drape state alone on the held frame, under an analysis-safe shade whose gradient stops transition (identical to the resting shade behind the copy and in the caption band). No colour bar, legend, card or layer label in the hero (Product decision b9579ef section 4); Acts 3 and 4 carry the exact public labels, mandatory warnings and legend.",
+      "layout": "desktop layout (min-width 981px) only; below it the copy spans the frame, the drape stays off and the hero ends on the held frame",
       "data_gap": "structure/geology is not shown in the hero: no public-safe fault or lithology master is authorized, and the gap stays the subordinate Act 3 footnote"
-    }
+    },
+    "hero_drape_states": [
+      {
+        "layer": "terrain",
+        "path": "assets/hero/drape/hero-drape-terrain-1920.png",
+        "bytes": 886840,
+        "sha256": "f5469c1e906e432977640cbde4c56d7f7713f3a83fa47a4cc524d3782c514fb9",
+        "width": 1920,
+        "height": 1080,
+        "encoding": "PNG, 8-bit RGBA, lossless",
+        "scene": "hero_production_kizildere",
+        "rendered_frame": 292,
+        "render_profile": "production_drape",
+        "samples": 384,
+        "denoise": false,
+        "view_transform": "Standard",
+        "display_texture": "terrain_webhero_display_4k.png",
+        "display_texture_sha256": "5fdf81f525020a7c96bf09c01bb784d2a4b2bda8f959c9a7c8837c697a5c7694",
+        "display_texture_size": [
+          4096,
+          4096
+        ],
+        "lit_by_scene": true
+      },
+      {
+        "layer": "thm01",
+        "path": "assets/hero/drape/hero-drape-thm01-1920.png",
+        "bytes": 969564,
+        "sha256": "510442f9332359d8143ea99405b48d906d6e21d564952201e1201554a27ba2e8",
+        "width": 1920,
+        "height": 1080,
+        "encoding": "PNG, 8-bit RGBA, lossless",
+        "scene": "hero_production_kizildere",
+        "rendered_frame": 306,
+        "render_profile": "production_drape",
+        "samples": 384,
+        "denoise": false,
+        "view_transform": "Standard",
+        "display_texture": "thm01_webhero_display_4k.png",
+        "display_texture_sha256": "3a497c3342a52f20ee5a9d41c2c924068466431849aa425327e415619035a2df",
+        "display_texture_size": [
+          4096,
+          4096
+        ],
+        "lit_by_scene": false
+      },
+      {
+        "layer": "alt01",
+        "path": "assets/hero/drape/hero-drape-alt01-1920.png",
+        "bytes": 953775,
+        "sha256": "92154136ffbeed51133e525da3056f624660adad71f0fcc1ec4d69be64ac209c",
+        "width": 1920,
+        "height": 1080,
+        "encoding": "PNG, 8-bit RGBA, lossless",
+        "scene": "hero_production_kizildere",
+        "rendered_frame": 324,
+        "render_profile": "production_drape",
+        "samples": 384,
+        "denoise": false,
+        "view_transform": "Standard",
+        "display_texture": "alt01_webhero_display_4k.png",
+        "display_texture_sha256": "16ba3668a8fbeeeccec972458d2b0a6e4a3ed0489fc9f39be672638ae253ea56",
+        "display_texture_size": [
+          4096,
+          4096
+        ],
+        "lit_by_scene": false
+      },
+      {
+        "layer": "priority",
+        "path": "assets/hero/drape/hero-drape-priority-1920.png",
+        "bytes": 974992,
+        "sha256": "a71336c2f7db01ff5163f3e8ec6f8688ef76f6203c9c4f7e3a51ec85c3bfc510",
+        "width": 1920,
+        "height": 1080,
+        "encoding": "PNG, 8-bit RGBA, lossless",
+        "scene": "hero_production_kizildere",
+        "rendered_frame": 384,
+        "render_profile": "production_drape",
+        "samples": 384,
+        "denoise": false,
+        "view_transform": "Standard",
+        "display_texture": "priority_webhero_display_4k.png",
+        "display_texture_sha256": "bfcdec473a40558de559e59733c599b54c9cf59bad5e301e43d62417f4e89f50",
+        "display_texture_size": [
+          4096,
+          4096
+        ],
+        "lit_by_scene": false
+      }
+    ],
+    "hero_drape_states_note": "WEB-005A final production. Asset class: rendered analytical drape states for the cinematic hero -- the true 36 km Kizildere analysis footprint raised into relief from the governed top-dem.tif (3x presentation exaggeration) and draped with one prepared 4K website-hero display texture per state (docs/web-005-polish-authority@db4605a; hero display palette authority MER-108). Rendered on their own from the production scene and its held camera through a Standard view with no denoiser, shipped as lossless full-frame RGBA PNG and composited by the page over the held video frame, so no governed thematic pixel is ever inside a lossy encode (Product decision c7c6cb1 section 3). The outline, halo, brackets and the block's glass sides are effects, rendered in a separate pass with the video's own look and laid over each state; the block's contact shadow on the ground is a third pass (ground as shadow catcher) laid under each state, because the motion render ends before the block exists and its held frame carries no shadow for it. A thematic pixel is Standard-exact or covered by an effect. Where a layer's own alpha is below 1 the Terrain context shows through, lit as context; the alpha is used as delivered, nothing is filled or dilated (b9579ef section 3). Evidence record: hero/evidence/production_drape_states.json; ingest record of the display textures and DEM: hero/evidence/web005a_r3_preview/analytical_asset_ingest.json. These are not geo_web_002 class-B cartographic derivatives and replace none of them; Acts 3 and 4 still show those, with their exact labels and mandatory warnings."
   }
 }
