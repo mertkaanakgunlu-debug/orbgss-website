@@ -3,7 +3,6 @@
 **Task:** WEB-005A / MER-107 (final production continuation; no new task, no re-plan)
 **State:** `REVIEW_READY` — final production evidence for Product review. Not merged, not deployed, no DNS.
 **Branch:** `feat/web-005a-hero-visual-fidelity`
-**Implementation HEAD:** `92745527cf23c0be82573c37c60a62e5e3afb4c1` (local; not pushed)
 
 **Governing authority (`docs/web-005-polish-authority`):** `946cd8b…` (fixed camera / globe drape),
 `db4605a…` (analytical asset handoff), `c7c6cb1…` (decision on preview gate 1), `b9579ef…` (decision on
@@ -21,14 +20,14 @@ presentation reticle; this pass follows the later chat direction, as gate 3 did.
 
 | File | Codec | Size | Ceiling | SHA-256 |
 | --- | --- | --- | --- | --- |
-| `assets/hero/orbgss-hero.webm` | VP9, 1125 kbps, 1920 × 1080, 276 frames / 11.5 s | 2.95 MiB | 3.0 MiB | `d08dcb0ca0541307f0c7e4b5c6917c22c47a9baa8b2c520a37c6a1f9eafa8c52` |
-| `assets/hero/orbgss-hero.mp4` | H.264, 2800 kbps, 1920 × 1080, 276 frames / 11.5 s | 4.05 MiB | 4.5 MiB | `cb26d09e35f7ce735fa5268a11ce69149ccf7f2e9ebbf0606f078304004d30b9` |
+| `assets/hero/orbgss-hero.webm` | VP9, 991 kbps, 1920 × 1080, 276 frames / 11.5 s | 2.83 MiB | 3.0 MiB | `5907372ab5aea646dda9a33f5f6c473e817717aa1226a54df164c407b6ac6ddd` |
+| `assets/hero/orbgss-hero.mp4` | H.264, 2800 kbps, 1920 × 1080, 276 frames / 11.5 s | 4.05 MiB | 4.5 MiB | `9180cbd1011147d74095793cd0cfe91a79744b77ad63ae8e51b636854b931ad5` |
 | `assets/hero/hero-poster-1600.webp` | WebP (lossy) q82, 1600 × 900, frame 276 | 117.9 KiB | 180 KiB | `389f2338f5a31faa3b87c1669544e29b4418ac0fe4c6306074288882ee96066f` |
 | `assets/hero/hero-poster-900.webp` | WebP (lossy) q88, 900 × 506, frame 276 | 68.2 KiB | 180 KiB | `11818a638533b715bd62987b1cedd26c7b2bce5104144181cdd718d80b9b6964` |
 
 Scene `hero_production_kizildere`, profile `production`: Cycles, 2304 × 1296, 128 adaptive samples (threshold
 0.01), OptiX denoise, half-frame motion-blur shutter, delivered at 1920 × 1080 (1.44× supersampled), frames
-**1–276** (11.5 s at 24 fps). Render: 5.25 h wall clock, 68.5 s per frame on the workstation GPU, Blender 4.5.10 LTS (`hero/renders/production/render_record.json`, ignored directory). Record: `hero/evidence/production_media.json`.
+**1–276** (11.5 s at 24 fps). Render: pass 1, all 276 frames, 5.25 h; pass 2, frames 24–216 re-rendered after the black-line defect (§2.1), 4.96 h; pass 3, frames 217–224 and 238–243, 0.21 h — 10.4 h in all on the workstation GPU, Blender 4.5.10 LTS (`hero/renders/production/render_record_pass1/2/3.json`, ignored directory). The delivered frames are 1–23, 225–237 and 244–276 from pass 1 (proved untouched by the defect), the rest from passes 2 and 3. Record: `hero/evidence/production_media.json`.
 
 ### 1.2 Analytical drape states — `assets/hero/drape/` (lossless, page-composited)
 
@@ -95,6 +94,25 @@ Production-only polish, none of it choreography: relief grid 600 → 1200 (one v
 24 sides, 96 curtain slices, line emission 2.8 → 3.0 (the lane's own legibility floor), orbit tail eased to the
 station-keeping crawl instead of zero (an orbit does not stop).
 
+### 2.1 Defect found on first viewing, fixed and re-rendered
+
+The first final render (`92745527`) was declared review-ready and was **not**: on first viewing the owner saw a line
+leave the platform before it had settled and a band sweep across the frame while it left. Confirmed in the frames: a
+**black line from the platform to a reticle corner** at f72, f100–112 and f180, and a thick dark band during the exit
+at f208–219. Cause: the scan fan went from 64 to 96 slices for production under an unchanged
+`transparent_max_bounces` of 96. A view ray that crosses the whole slice stack plus a line tube exhausts the budget
+and Cycles ends the path black — *whether or not the slices are visible*, so it showed exactly when no effect should
+exist. The choreography was right; invisible geometry printed black.
+
+- Proved by A/B on the same frames and seed (budget 96 vs 512): the line disappears, nothing else changes.
+- Budget is now 512; `validate_hero.py` requires at least 2 × slices + 64; a negative test breaks it on purpose.
+- Frames 24–216 re-rendered; frames 1–23 and 217–276 A/B-checked at low resolution, and the few that differed
+  (217–220, 239, 242) re-rendered with margin (217–224, 238–243). The rest differ by exactly 0.
+- Why it was missed: the audit measures keyed values, not pixels, and I checked six beats instead of the sequence.
+  The re-render was checked every 4th frame **before** encoding (`sequence_check_*.webp`).
+- `REVIEW_READY` was withdrawn in `STATUS.md` at `99b7e25` for the duration. Drape states and page integration were
+  never affected.
+
 ## 3. Page integration (desktop)
 
 - **Architecture, explicit.** The video carries the motion and ends on the held frame (also the poster). The
@@ -120,8 +138,11 @@ station-keeping crawl instead of zero (an orbit does not stop).
 
 Evidence, `hero/evidence/web005a_final/`:
 
-- `contact_sheet_motion_beats_1440.webp` — six production frames under the real 1440 × 900 page chrome: reticle + first line (114), four-corner lock (134), mid-scan (152), first zoom frame (187), approach (230), held frame the video ends on (276)
-- `page_1440_f114_… / f134_… / f152_… / f187_… / f230_… / f276_….webp` — the same six, full size (harness: real `index.html` + `styles.css`, hero media swapped for the production still)
+- `contact_sheet_motion_beats_1440.webp` — eight production frames under the real 1440 × 900 page chrome: reticle before any line (104), first line (114), four-corner lock (134), mid-scan (152), first zoom frame (187), platform exit (210), approach (230), held frame the video ends on (276)
+- `page_1440_f104_… / f114_… / f134_… / f152_… / f187_… / f210_… / f230_… / f276_….webp` — the same eight, full size (harness: real `index.html` + `styles.css`, hero media swapped for the production still)
+- `defect_black_line_before_after.webp` — §2.1: the black line / dark band of the first render beside the re-render, frames 72, 108, 180, 210, 217
+- `sequence_check_f072_f132 / f134_f162 / f164_f224_every_4th.webp` — dense check of the re-rendered frames, every 4th frame: settle → slew → reticle → draw-on → fan → sweep → retire → exit, no stray line anywhere
+- `transparent_budget_ab_detection.json` — frames 1–23 and 217–276 rendered twice (budget 96 vs 512, same seed); all but 217–220, 239 and 242 differ by exactly 0
 - `contact_sheet_analytical_reveal_1440.webp` — REAL page, the four states in order: Terrain → THM-01 → ALT-01 → Priority
 - `real_1440_terrain / thm01 / alt01.webp` — REAL page, each transitional state (static state + `#hero-layer=` review hook)
 - `real_1440_priority_final_hold.webp` — REAL page, final priority hold, 1440 × 900 — **the primary desktop review image**
@@ -138,9 +159,9 @@ Evidence, `hero/evidence/web005a_final/`:
 | Gate | Result |
 | --- | --- |
 | `py -3.14 scripts/validate_site.py` | PASS, 0 warnings |
-| `py -3.14 hero/scripts/validate_hero.py` | 416 checks, 0 failed |
+| `py -3.14 hero/scripts/validate_hero.py` | 418 checks, 0 failed |
 | production audit (`audit_preview_gate.py --scene hero_production_kizildere`) | 59/59 checks pass |
-| `py -3.14 scripts/negative_tests_web005.py` | 46/46 deliberate regressions caught; tree restored byte-identical |
+| `py -3.14 scripts/negative_tests_web005.py` | 47/47 deliberate regressions caught; tree restored byte-identical (`negative_tests.txt`) |
 | drape colour path (`drape_pixel_measurements.json`) | 99.99–100 % of fully covered pixels inside the delivered texture's own colour set (THM-01 / ALT-01 / priority) |
 | drape mask | rendered mean analytical coverage 0.850 (priority), 0.854 (ALT-01) vs delivered texture mean alpha 0.834, 0.840 — perspective-weighted, indicative |
 
@@ -166,8 +187,9 @@ weakened.
 5. **Outline height.** In the states the outline rides on the raised block, a few pixels above the ground-level
    outline of the held frame, which stays visible as the block's base edge inside its shadow. In the gate-3 single
    render the one outline rose with the block; on the page the ground one remains. It reads as a slab with a base.
-6. **WebM bitrate.** The 3.0 MiB ceiling put VP9 at 1125 kbps for 11.5 s of 1080p (H.264 fallback: 2800 kbps,
-   4.05 MiB). Fine on the dark, slow frames; the fastest approach frames are where it would show first.
+6. **WebM bitrate.** The 3.0 MiB ceiling and the encoder's own bitrate search put VP9 at 991 kbps (2.83 MiB) for
+   11.5 s of 1080p (H.264 fallback: 2800 kbps, 4.05 MiB). Fine on the dark, slow frames; the fastest approach
+   frames are where it would show first.
 7. **`b9579ef` §7 asks for a push.** Nothing has been pushed; I take push instructions from chat.
 8. **Local capture note.** Headless captures against the local Python server occasionally dropped the poster
    request (the page then hides the failed image by design, WEB-004); such captures were retaken. It is a

@@ -1,0 +1,419 @@
+{
+ "compared": [
+  {
+   "frame": 1,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 2,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 3,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 4,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 5,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 6,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 7,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 8,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 9,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 10,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 11,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 12,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 13,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 14,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 15,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 16,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 17,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 18,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 19,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 20,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 21,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 22,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 23,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 217,
+   "differing_px_gt8": 1280,
+   "max_diff": 198
+  },
+  {
+   "frame": 218,
+   "differing_px_gt8": 693,
+   "max_diff": 192
+  },
+  {
+   "frame": 219,
+   "differing_px_gt8": 45,
+   "max_diff": 150
+  },
+  {
+   "frame": 220,
+   "differing_px_gt8": 1,
+   "max_diff": 12
+  },
+  {
+   "frame": 221,
+   "differing_px_gt8": 0,
+   "max_diff": 7
+  },
+  {
+   "frame": 222,
+   "differing_px_gt8": 0,
+   "max_diff": 3
+  },
+  {
+   "frame": 223,
+   "differing_px_gt8": 0,
+   "max_diff": 3
+  },
+  {
+   "frame": 224,
+   "differing_px_gt8": 0,
+   "max_diff": 5
+  },
+  {
+   "frame": 225,
+   "differing_px_gt8": 0,
+   "max_diff": 7
+  },
+  {
+   "frame": 226,
+   "differing_px_gt8": 0,
+   "max_diff": 7
+  },
+  {
+   "frame": 227,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 228,
+   "differing_px_gt8": 0,
+   "max_diff": 4
+  },
+  {
+   "frame": 229,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 230,
+   "differing_px_gt8": 0,
+   "max_diff": 7
+  },
+  {
+   "frame": 231,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 232,
+   "differing_px_gt8": 0,
+   "max_diff": 3
+  },
+  {
+   "frame": 233,
+   "differing_px_gt8": 0,
+   "max_diff": 6
+  },
+  {
+   "frame": 234,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 235,
+   "differing_px_gt8": 0,
+   "max_diff": 8
+  },
+  {
+   "frame": 236,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 237,
+   "differing_px_gt8": 0,
+   "max_diff": 6
+  },
+  {
+   "frame": 238,
+   "differing_px_gt8": 0,
+   "max_diff": 3
+  },
+  {
+   "frame": 239,
+   "differing_px_gt8": 1,
+   "max_diff": 19
+  },
+  {
+   "frame": 240,
+   "differing_px_gt8": 0,
+   "max_diff": 3
+  },
+  {
+   "frame": 241,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 242,
+   "differing_px_gt8": 1,
+   "max_diff": 11
+  },
+  {
+   "frame": 243,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 244,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 245,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 246,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 247,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 248,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 249,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 250,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 251,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 252,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 253,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 254,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 255,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 256,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 257,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 258,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 259,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 260,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 261,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 262,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 263,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 264,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 265,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 266,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 267,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 268,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 269,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 270,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 271,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  },
+  {
+   "frame": 272,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 273,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 274,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 275,
+   "differing_px_gt8": 0,
+   "max_diff": 1
+  },
+  {
+   "frame": 276,
+   "differing_px_gt8": 0,
+   "max_diff": 0
+  }
+ ]
+}

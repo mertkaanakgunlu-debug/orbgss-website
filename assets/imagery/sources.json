@@ -1989,30 +1989,30 @@
         "container": "WebM",
         "mime_type": "video/webm",
         "codec": "VP9",
-        "video_bitrate_kbps": 1125,
-        "bytes": 3090394,
-        "mib": 2.947,
+        "video_bitrate_kbps": 991,
+        "bytes": 2967086,
+        "mib": 2.83,
         "ceiling_mib": 3.0,
         "within_ceiling": true,
-        "sha256": "d08dcb0ca0541307f0c7e4b5c6917c22c47a9baa8b2c520a37c6a1f9eafa8c52",
+        "sha256": "5907372ab5aea646dda9a33f5f6c473e817717aa1226a54df164c407b6ac6ddd",
         "bitrate_search": [
           {
             "attempt": 1,
             "video_bitrate_kbps": 1900,
-            "bytes": 4673286,
-            "mib": 4.457,
+            "bytes": 5304313,
+            "mib": 5.059,
             "ceiling_mib": 3.0,
             "within_ceiling": false,
-            "wall_clock_seconds": 140.98
+            "wall_clock_seconds": 95.42
           },
           {
             "attempt": 2,
-            "video_bitrate_kbps": 1125,
-            "bytes": 3090394,
-            "mib": 2.947,
+            "video_bitrate_kbps": 991,
+            "bytes": 2967086,
+            "mib": 2.83,
             "ceiling_mib": 3.0,
             "within_ceiling": true,
-            "wall_clock_seconds": 118.5
+            "wall_clock_seconds": 83.25
           }
         ],
         "width": 1920,
@@ -2028,20 +2028,20 @@
         "mime_type": "video/mp4",
         "codec": "H.264",
         "video_bitrate_kbps": 2800,
-        "bytes": 4244223,
-        "mib": 4.048,
+        "bytes": 4243770,
+        "mib": 4.047,
         "ceiling_mib": 4.5,
         "within_ceiling": true,
-        "sha256": "cb26d09e35f7ce735fa5268a11ce69149ccf7f2e9ebbf0606f078304004d30b9",
+        "sha256": "9180cbd1011147d74095793cd0cfe91a79744b77ad63ae8e51b636854b931ad5",
         "bitrate_search": [
           {
             "attempt": 1,
             "video_bitrate_kbps": 2800,
-            "bytes": 4244223,
-            "mib": 4.048,
+            "bytes": 4243770,
+            "mib": 4.047,
             "ceiling_mib": 4.5,
             "within_ceiling": true,
-            "wall_clock_seconds": 41.93
+            "wall_clock_seconds": 32.13
           }
         ],
         "width": 1920,

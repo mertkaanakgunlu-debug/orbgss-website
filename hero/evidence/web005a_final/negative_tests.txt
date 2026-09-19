@@ -39,6 +39,7 @@ Baseline (nothing mutated):
   CAUGHT  reticle starts to tighten while lines are still attached (exit 1)
   CAUGHT  reticle resolves after the lines (target appears afterwards) (exit 1)
   CAUGHT  lines fade in instead of drawing on (exit 1)
+  CAUGHT  transparent-bounce budget below the curtain stack (invisible effects print a black line) (exit 1)
   CAUGHT  scan fan no longer between the four lines (exit 1)
   CAUGHT  platform resumes its pass while lines are attached (exit 1)
   CAUGHT  caption region shrunk to the bare caption box (exit 1)
@@ -48,7 +49,7 @@ Baseline (nothing mutated):
   CAUGHT  analytical sequence stretched into a slideshow (exit 1)
   CAUGHT  Earth detail multiplier pushed beyond a structure gain (exit 1)
 
-46/46 deliberate regressions caught
+47/47 deliberate regressions caught
 Restored tree:
   site: exit 0 — PASS — identical to baseline
   hero: exit 0 — PASS — identical to baseline
