@@ -1,0 +1,730 @@
+[
+ {
+  "docW": 360,
+  "vw": 360,
+  "context": {
+   "box": 360,
+   "drawn": 800,
+   "src": "kizildere-aoi-context-2025-natural-1200.webp"
+  },
+  "evidence": [
+   {
+    "w": 294,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 294,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 294,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 286,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 375,
+  "vw": 375,
+  "context": {
+   "box": 375,
+   "drawn": 833,
+   "src": "kizildere-aoi-context-2025-natural-1200.webp"
+  },
+  "evidence": [
+   {
+    "w": 309,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 309,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 309,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 301,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 414,
+  "vw": 414,
+  "context": {
+   "box": 414,
+   "drawn": 920,
+   "src": "kizildere-aoi-context-2025-natural-1200.webp"
+  },
+  "evidence": [
+   {
+    "w": 346,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 346,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 346,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 338,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 768,
+  "vw": 768,
+  "context": {
+   "box": 768,
+   "drawn": 768,
+   "src": "kizildere-aoi-context-2025-natural-1200.webp"
+  },
+  "evidence": [
+   {
+    "w": 289,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 289,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 289,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 900,
+  "vw": 900,
+  "context": {
+   "box": 900,
+   "drawn": 900,
+   "src": "kizildere-aoi-context-2025-natural-1200.webp"
+  },
+  "evidence": [
+   {
+    "w": 339,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 339,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 339,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 1024,
+  "vw": 1024,
+  "context": {
+   "box": 1024,
+   "drawn": 1024,
+   "src": "kizildere-aoi-context-2025-natural-1200.webp"
+  },
+  "evidence": [
+   {
+    "w": 287,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 287,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 287,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 1100,
+  "vw": 1100,
+  "context": {
+   "box": 1100,
+   "drawn": 1100,
+   "src": "kizildere-aoi-context-2025-natural-1200.webp"
+  },
+  "evidence": [
+   {
+    "w": 309,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 309,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 309,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 1280,
+  "vw": 1280,
+  "context": {
+   "box": 1280,
+   "drawn": 1280,
+   "src": "kizildere-aoi-context-2025-natural-1600.webp"
+  },
+  "evidence": [
+   {
+    "w": 359,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 359,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 359,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 1440,
+  "vw": 1440,
+  "context": {
+   "box": 1440,
+   "drawn": 1440,
+   "src": "kizildere-aoi-context-2025-natural-1600.webp"
+  },
+  "evidence": [
+   {
+    "w": 405,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 405,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 405,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 1600,
+  "vw": 1600,
+  "context": {
+   "box": 1600,
+   "drawn": 1600,
+   "src": "kizildere-aoi-context-2025-natural-1600.webp"
+  },
+  "evidence": [
+   {
+    "w": 417,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 417,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 417,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 1920,
+  "vw": 1920,
+  "context": {
+   "box": 1600,
+   "drawn": 1600,
+   "src": "kizildere-aoi-context-2025-natural-1600.webp"
+  },
+  "evidence": [
+   {
+    "w": 417,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 417,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 417,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 2560,
+  "vw": 2560,
+  "context": {
+   "box": 1600,
+   "drawn": 1600,
+   "src": "kizildere-aoi-context-2025-natural-1600.webp"
+  },
+  "evidence": [
+   {
+    "w": 417,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 417,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 417,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 3840,
+  "vw": 3840,
+  "context": {
+   "box": 1600,
+   "drawn": 1600,
+   "src": "kizildere-aoi-context-2025-natural-1600.webp"
+  },
+  "evidence": [
+   {
+    "w": 417,
+    "src": "terrain-600.webp"
+   },
+   {
+    "w": 417,
+    "src": "thm01-600.webp"
+   },
+   {
+    "w": 417,
+    "src": "alt01-600.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-600.webp"
+  },
+  "dpr": 1
+ },
+ {
+  "docW": 360,
+  "vw": 360,
+  "context": {
+   "box": 360,
+   "drawn": 800,
+   "src": "kizildere-aoi-context-2025-natural-2400.webp"
+  },
+  "evidence": [
+   {
+    "w": 294,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 294,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 294,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 286,
+   "src": "priority-900.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 375,
+  "vw": 375,
+  "context": {
+   "box": 375,
+   "drawn": 833,
+   "src": "kizildere-aoi-context-2025-natural-2400.webp"
+  },
+  "evidence": [
+   {
+    "w": 309,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 309,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 309,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 301,
+   "src": "priority-900.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 414,
+  "vw": 414,
+  "context": {
+   "box": 414,
+   "drawn": 920,
+   "src": "kizildere-aoi-context-2025-natural-2400.webp"
+  },
+  "evidence": [
+   {
+    "w": 346,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 346,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 346,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 338,
+   "src": "priority-900.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 768,
+  "vw": 768,
+  "context": {
+   "box": 768,
+   "drawn": 768,
+   "src": "kizildere-aoi-context-2025-natural-2400.webp"
+  },
+  "evidence": [
+   {
+    "w": 289,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 289,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 289,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-1200.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 900,
+  "vw": 900,
+  "context": {
+   "box": 900,
+   "drawn": 900,
+   "src": "kizildere-aoi-context-2025-natural-2400.webp"
+  },
+  "evidence": [
+   {
+    "w": 339,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 339,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 339,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-1200.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 1024,
+  "vw": 1024,
+  "context": {
+   "box": 1024,
+   "drawn": 1024,
+   "src": "kizildere-aoi-context-2025-natural-2400.webp"
+  },
+  "evidence": [
+   {
+    "w": 287,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 287,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 287,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-1200.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 1100,
+  "vw": 1100,
+  "context": {
+   "box": 1100,
+   "drawn": 1100,
+   "src": "kizildere-aoi-context-2025-natural-2400.webp"
+  },
+  "evidence": [
+   {
+    "w": 309,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 309,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 309,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-1200.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 1280,
+  "vw": 1280,
+  "context": {
+   "box": 1280,
+   "drawn": 1280,
+   "src": "kizildere-aoi-context-2025-natural-3200.webp"
+  },
+  "evidence": [
+   {
+    "w": 359,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 359,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 359,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-1200.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 1440,
+  "vw": 1440,
+  "context": {
+   "box": 1440,
+   "drawn": 1440,
+   "src": "kizildere-aoi-context-2025-natural-3200.webp"
+  },
+  "evidence": [
+   {
+    "w": 405,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 405,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 405,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-1200.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 1600,
+  "vw": 1600,
+  "context": {
+   "box": 1600,
+   "drawn": 1600,
+   "src": "kizildere-aoi-context-2025-natural-3200.webp"
+  },
+  "evidence": [
+   {
+    "w": 417,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 417,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 417,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-1200.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 1920,
+  "vw": 1920,
+  "context": {
+   "box": 1600,
+   "drawn": 1600,
+   "src": "kizildere-aoi-context-2025-natural-3200.webp"
+  },
+  "evidence": [
+   {
+    "w": 417,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 417,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 417,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-1200.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 2560,
+  "vw": 2560,
+  "context": {
+   "box": 1600,
+   "drawn": 1600,
+   "src": "kizildere-aoi-context-2025-natural-3200.webp"
+  },
+  "evidence": [
+   {
+    "w": 417,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 417,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 417,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-1200.webp"
+  },
+  "dpr": 2
+ },
+ {
+  "docW": 3840,
+  "vw": 3840,
+  "context": {
+   "box": 1600,
+   "drawn": 1600,
+   "src": "kizildere-aoi-context-2025-natural-3200.webp"
+  },
+  "evidence": [
+   {
+    "w": 417,
+    "src": "terrain-900.webp"
+   },
+   {
+    "w": 417,
+    "src": "thm01-900.webp"
+   },
+   {
+    "w": 417,
+    "src": "alt01-900.webp"
+   }
+  ],
+  "priority": {
+   "w": 598,
+   "src": "priority-1200.webp"
+  },
+  "dpr": 2
+ }
+]

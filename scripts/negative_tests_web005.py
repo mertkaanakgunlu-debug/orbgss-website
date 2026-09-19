@@ -80,28 +80,27 @@ case("missing act anchor", INDEX,
      site, "missing required section ids")
 
 
+# WEB-005B moved the homepage's analytical placements from geo_web_002 to web_005b (the GEO-WEB-002
+# exports stay recorded for /pilot/ but are no longer placed on the homepage), so these two cases
+# break the placement records the homepage now actually binds.
 def widen_placement(t):
     d = json.loads(t)
-    for a in d["geo_web_002"]["assets"]:
-        if a["id"] == "priority":
-            a["web_005_placement"]["rendered"]["max_css_width"] = 900   # 1800 device px at 2x
+    d["web_005b"]["placement"]["priority"]["rendered"]["max_css_width"] = 900   # 1800 device px at 2x
     return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
 
 
 case("safe density: lay out the priority map past its ceiling", SOURCES, widen_placement,
-     site, "exceeds its declared")
+     site, "above its native")
 
 
 def drop_placement(t):
     d = json.loads(t)
-    for a in d["geo_web_002"]["assets"]:
-        if a["id"] == "thm01":
-            a.pop("web_005_placement", None)
+    d["web_005b"]["placement"].pop("thm01", None)
     return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
 
 
-case("placed package asset with no placement record", SOURCES, drop_placement,
-     site, "no web_005_placement record")
+case("placed homepage asset with no placement record", SOURCES, drop_placement,
+     site, "web_005b.placement covers")
 
 
 def corrupt_derivative(t):

@@ -1,5 +1,36 @@
 # Changelog
 
+## WEB-005B homepage visual fidelity — 2026-09-20 (MER-109, branch `feat/web-005b-homepage-visual-fidelity`; `REVIEW_READY`, nothing deployed)
+
+Acts 2-4 rebuilt as one continuous story after the terminally accepted WEB-005A hero, which is
+preserved byte- and pixel-identical. Full evidence in `tasks/WEB-005B_EVIDENCE.md` and
+`evidence/web005b/`.
+
+- **Act 2 — the real place.** Full-bleed natural-colour Landsat band. Same USGS product as the
+  GEO-WEB-002 master, re-cropped wider at native 30 m (3200 x 1800 px, 96 x 54 km, 100 % valid) and
+  re-rendered on ONE common reflectance scale — the old per-band 1-99 percentile stretch is what made
+  the photograph read as a processed raster. Four corner marks draw the true 36 km analysis square
+  from the recorded frame geometry, which the validator checks against the CSS.
+- **Act 3 — one evidence stage.** Terrain, THM-01 and ALT-01 as three identical squares of the same
+  ground on one plate with hairline gutters and a shared caption rail; a tablet row layout between 561
+  and 900 px keeps the stack compact. Still exactly three; Structure/geology stays a footnote.
+- **Act 4 — the result.** The priority surface alone on its own stage at 600 CSS px, 2.2x the area of
+  any evidence panel, with the hero's cyan target corners and the map's own unblended LUT as a legend
+  coupled beneath it. No detached colour strip.
+- **Acts 3 and 4 now ship MER-108 website display derivatives** of the governed MER-113 rasters
+  (`scripts/build_web005b_derivatives.py`), so the page reads as one palette system from the hero
+  payoff to the result. Canonical normalization, frozen hero palette stops, NoData transparent over a
+  neutral DEM hillshade at fixed analytical opacity, at most one area downsample, lossless WebP, never
+  above the native 1200 px grid. None of the hero-only transforms (display window, gamma, Gaussian,
+  unsharp, upsampling) is used. Recomputing the priority layer reproduces the CTO-approved
+  `priority_webhero_v1` raster exactly. The GEO-WEB-002 exports stay published for `/pilot/`.
+- **Product palette tokens** defined once in `:root` and pinned by the validator.
+- **New gates.** `scripts/negative_tests_web005b.py` (24/24 caught) and
+  `scripts/check_copy_preservation.py`. The site validator gained the whole WEB-005B contract,
+  including recomputing each palette LUT from its recorded stops.
+- **Copy unchanged.** Only `alt.terrain.home` (EN/TR, because the old alt text described the previous
+  palette) and the legend's `0` / `100` ticks were added.
+
 ## WEB-005A R3 preview gate — 2026-09-18 (MER-107, branch `feat/web-005a-hero-visual-fidelity`; no version bump, nothing shipped)
 
 Product reviewed `37152222` and returned it `REVISION_REQUIRED`

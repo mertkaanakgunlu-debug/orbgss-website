@@ -1135,7 +1135,7 @@
           }
         ],
         "web_005_placement": {
-          "status": "placed",
+          "status": "superseded-on-homepage-by-web-005b",
           "consumer": "WEB-005 / MER-93",
           "act": "Act 2 - real Kizildere AOI context",
           "homepage_slot": "context",
@@ -1164,7 +1164,8 @@
             "measured_max_css_width": 1199,
             "measured_at_viewport_px": 2560,
             "measurement_method": "Live browser measurement of getBoundingClientRect().width across a 360-3840 CSS px viewport sweep of the built page, not a reading of the sizes attribute."
-          }
+          },
+          "superseded_by": "web_005b.placement.context"
         }
       },
       {
@@ -1275,7 +1276,7 @@
           1249
         ],
         "web_005_placement": {
-          "status": "placed",
+          "status": "superseded-on-homepage-by-web-005b",
           "consumer": "WEB-005 / MER-93",
           "act": "Act 3 - compact evidence trio",
           "homepage_slot": "terrain",
@@ -1321,7 +1322,8 @@
             "measurement_method": "Live browser measurement of the payoff layer's getBoundingClientRect() at each viewport width in the static (revealed) state.",
             "selected_derivative": "panel-800 / panel-native-1249 by sizes=\"(min-width: 981px) 24vw, 62px\"",
             "order": 1
-          }
+          },
+          "superseded_by": "web_005b.placement.terrain"
         }
       },
       {
@@ -1433,7 +1435,7 @@
           1249
         ],
         "web_005_placement": {
-          "status": "placed",
+          "status": "superseded-on-homepage-by-web-005b",
           "consumer": "WEB-005 / MER-93",
           "act": "Act 3 - compact evidence trio",
           "homepage_slot": "thermal",
@@ -1480,7 +1482,8 @@
             "measurement_method": "Live browser measurement of the payoff layer's getBoundingClientRect() at each viewport width in the static (revealed) state.",
             "selected_derivative": "panel-800 / panel-native-1249 by sizes=\"(min-width: 981px) 24vw, 62px\"",
             "order": 2
-          }
+          },
+          "superseded_by": "web_005b.placement.thm01"
         }
       },
       {
@@ -1592,7 +1595,7 @@
           1249
         ],
         "web_005_placement": {
-          "status": "placed",
+          "status": "superseded-on-homepage-by-web-005b",
           "consumer": "WEB-005 / MER-93",
           "act": "Act 3 - compact evidence trio",
           "homepage_slot": "alteration",
@@ -1640,7 +1643,8 @@
             "measurement_method": "Live browser measurement of the payoff layer's getBoundingClientRect() at each viewport width in the static (revealed) state.",
             "selected_derivative": "panel-800 / panel-native-1249 by sizes=\"(min-width: 981px) 24vw, 62px\"",
             "order": 3
-          }
+          },
+          "superseded_by": "web_005b.placement.alt01"
         }
       },
       {
@@ -1882,7 +1886,7 @@
           1249
         ],
         "web_005_placement": {
-          "status": "placed",
+          "status": "superseded-on-homepage-by-web-005b",
           "consumer": "WEB-005 / MER-93",
           "act": "Act 4 - priority/result climax",
           "homepage_slot": "priority",
@@ -1930,7 +1934,8 @@
             "measurement_method": "Live browser measurement of the payoff layer's getBoundingClientRect() at each viewport width in the static (revealed) state.",
             "selected_derivative": "panel-800 / panel-native-1249 by sizes=\"(min-width: 981px) 24vw, 62px\"",
             "order": 4
-          }
+          },
+          "superseded_by": "web_005b.placement.priority"
         }
       }
     ]
@@ -2308,5 +2313,604 @@
       "note": "WEB-005A final relief-rise polish. The page must show the DEM relief RISING between the held frame and the Terrain state instead of jumping to it. These are the production scene's own frames inside its relief-rise interval (276 -> 292, eased by the scene), rendered exactly like a drape state -- same held camera, governed DEM, mapping, 3x exaggeration, production_drape profile, Standard view, no denoiser -- with the effects and contact-shadow passes rendered per frame, so the outline and the shadow rise with the block. Shipped as lossless WebP (VP8L): alpha and every visible pixel's RGB are verified identical to the composited PNG at write time, at about a quarter of the PNG's bytes. script.js interpolates between successive states on the scene's 24 fps clock (plus-lighter in an isolated group = exact linear interpolation; a flipbook where that is unsupported). Motion path on the desktop layout only: data-src, warmed while the video plays, never fetched by a static or phone visitor. No motion frame, drape state, camera, asset or palette changed. Evidence record: hero/evidence/production_relief_rise.json."
     },
     "hero_media_note": "Two stills, two jobs (docs/web-005-polish-authority@1437fbb). hero-poster-opening is the first motion frame and is the startup poster wherever the motion is about to play, so poster -> video is continuous. hero-poster / hero-poster-narrow are the held frame (276): the poster where the motion never plays (reduced motion, phone widths -- chosen by the <picture> media query, so one still is fetched), the held base every other static state lays over the startup poster before the payoff, and the only frame the drape states register with. All three are derived from accepted render frames; nothing was re-rendered and no encode was touched."
+  },
+  "web_005b": {
+    "task": "WEB-005B / MER-109 homepage visual fidelity",
+    "authority": "docs/web-005-polish-authority@e47da637cfb13a2aa546b9e05381db7c12ff7350:tasks/WEB-005B_R1_HOMEPAGE_DESIGN_IMPLEMENTATION_BOUNDARY.md",
+    "product_decision": "Acts 3 and 4 consume MER-108 website display derivatives (11c32e8d section 10 names WEB-005B as a consumer) so the homepage reads as one palette system from the hero payoff to the result; confirmed by the owner in the WEB-005B session on 2026-09-19. The GEO-WEB-002 exports stay published for /pilot/.",
+    "context": {
+      "id": "act2-context-natural",
+      "supersedes_on_homepage": "geo_web_002.assets[act2-context] (same product, wider frame at the same 30 m; retained, no longer placed)",
+      "context_scene_id": "kizildere-aoi-context-2025",
+      "public_role": "context",
+      "asset_class": "A - OrbGSS natural-colour Landsat composite",
+      "source": {
+        "product_ids": [
+          "LC08_L2SP_179034_20250505_02_T1"
+        ],
+        "data": "USGS Landsat Collection 2 Level-2 Science Products (surface reflectance, OLI bands 4/3/2)",
+        "acquired": "2025-05-05",
+        "sensor": "Landsat 8 OLI",
+        "access": "Microsoft Planetary Computer STAC API, collection 'landsat-c2-l2', anonymous read",
+        "fetch_and_warp": "scripts/build_imagery.py fetch_items / read_band (cubic warp onto the 30 m frame grid), unchanged"
+      },
+      "frame": {
+        "crs": "EPSG:32635",
+        "bounds_utm": [
+          623040.0,
+          4178040.0,
+          719040.0,
+          4232040.0
+        ],
+        "bounds_wgs84": [
+          28.3965,
+          37.7414,
+          29.5018,
+          38.2097
+        ],
+        "size_px": [
+          3200,
+          1800
+        ],
+        "resolution_m": 30.0,
+        "extent_km": "96 x 54",
+        "placement": "on the analysis grid's 30 m lattice; shifted east of AOI-centred so the frame lies wholly inside the single Landsat scene",
+        "aoi_in_frame": {
+          "x0": 0.169063,
+          "x1": 0.544063,
+          "y0": 0.166667,
+          "y1": 0.833333,
+          "basis": "36 x 36 km MER-113 analysis grid bounds, as fractions of the frame"
+        }
+      },
+      "derivation": {
+        "pipeline": "scripts/build_web005b_context.py",
+        "tone": {
+          "haze_percentile": 0.1,
+          "haze_keep": 0.0,
+          "white_percentile": 99.5,
+          "transfer": "sRGB OETF",
+          "s_curve_strength": 0.35,
+          "saturation": 1.15
+        },
+        "resolved": {
+          "haze_offset_reflectance": 0.00174,
+          "white_point_reflectance": 0.324115,
+          "valid_coverage": 1.0
+        },
+        "operations_not_used": [
+          "per-band stretch",
+          "local contrast",
+          "sharpening",
+          "generative or AI step"
+        ]
+      },
+      "master": {
+        "file": "assets/imagery/kizildere-aoi-context-2025-natural.jpg",
+        "format": "image/jpeg",
+        "dimensions": [
+          3200,
+          1800
+        ],
+        "jpeg_quality": 90,
+        "chroma_subsampling": "4:4:4",
+        "bytes": 2531197,
+        "sha256": "e43310e8adee08a2e27e0d863abe1c8bbc448669784ade8702571520abe3f865"
+      },
+      "derivatives": [
+        {
+          "path": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+          "role": "act2-context-responsive",
+          "width": 3200,
+          "height": 1800,
+          "format": "image/webp",
+          "operation": "WebP quality 82 encode of the rendered frame at native 3200 px; no resize",
+          "bytes": 1313526,
+          "sha256": "ec95331eb01d8b1f0553be3abf3f5cf6ef77297a4529ba19892bacbb336ba5b3"
+        },
+        {
+          "path": "assets/imagery/kizildere-aoi-context-2025-natural-2400.webp",
+          "role": "act2-context-responsive",
+          "width": 2400,
+          "height": 1350,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of the rendered frame to 2400 px, then WebP quality 82; no crop, colour or tone change",
+          "bytes": 900484,
+          "sha256": "e799ba140d2879faba9d3c4bc95aac7617d8b1df764b8a1355b507da029da6ee"
+        },
+        {
+          "path": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+          "role": "act2-context-responsive",
+          "width": 1600,
+          "height": 900,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of the rendered frame to 1600 px, then WebP quality 82; no crop, colour or tone change",
+          "bytes": 470180,
+          "sha256": "e6ceb7025dba49c8434e09e289fb3350ced113ea98104b09e06e4017a5eb24d4"
+        },
+        {
+          "path": "assets/imagery/kizildere-aoi-context-2025-natural-1200.webp",
+          "role": "act2-context-responsive",
+          "width": 1200,
+          "height": 675,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of the rendered frame to 1200 px, then WebP quality 82; no crop, colour or tone change",
+          "bytes": 274934,
+          "sha256": "8828ba61a4ed4b1d0082309001255ac30cb2ae31d07b99db66fd037da39e9f62"
+        },
+        {
+          "path": "assets/imagery/kizildere-aoi-context-2025-natural-800.webp",
+          "role": "act2-context-responsive",
+          "width": 800,
+          "height": 450,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of the rendered frame to 800 px, then WebP quality 82; no crop, colour or tone change",
+          "bytes": 122726,
+          "sha256": "bf32cd8f056a7e6eab5d6ff042d1f96f175767c272d598e52dd20a031936e2da"
+        }
+      ],
+      "max_safe_rendered_px": {
+        "device_px": 3200,
+        "basis": "native 30 m Landsat at 3200 px; nothing is upscaled at or below that many device px"
+      },
+      "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Only the crop, tone rendering and encoding are OrbGSS work.",
+      "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
+      "mandatory_warning_i18n_key": "act.context.note",
+      "rendered_on": "2026-09-19"
+    },
+    "analytical": {
+      "export_id": "20260917T161155Z-5e7a0e53",
+      "project": "kizildere_mvp_v2",
+      "science": {
+        "terminal_authority": "geothermal-prospectivity@30779547ced0cbf047cb51fb6c2c6ed178547d56:tasks/MER-108_TERMINAL_WEBSITE_HERO_DISPLAY_AMENDMENT.yaml",
+        "website_derivative_authority": "geothermal-prospectivity@11c32e8d2d072aa709262e513c8888e6a745bb76:tasks/MER-108_PUBLIC_WEB_DISPLAY_DERIVATIVE_AUTHORITY.md",
+        "normalization_authority": "geothermal-prospectivity@d3a163bd6c6b2fe6a1a73fe28e5acf23cd9d4e87:tasks/MER-108_NORMALIZATION_AUTHORITY_CORRECTION.md",
+        "surface": "website-only public renderer (homepage Acts 3 and 4); hero-only transforms not used"
+      },
+      "pipeline": [
+        "governed scalar + governed valid mask (MER-113 export, SHA-256 verified)",
+        "canonical normalization per d3a163bd, resolved once over the whole raster's valid cells",
+        "selected palette LUT (256 entries, evenly spaced frozen stops, linear sRGB)",
+        "governed mask to RGBA: NoData analytical alpha 0; no fill, dilation or erosion",
+        "source-over onto neutral grayscale DEM hillshade at a fixed analytical opacity",
+        "one area (box) downsample of the final opaque RGB per smaller candidate (never upsampled)",
+        "lossless WebP (exact), SHA-256 recorded"
+      ],
+      "not_used": [
+        "display window",
+        "gamma / tone transfer",
+        "gaussian smoothing",
+        "unsharp",
+        "upsampling",
+        "CSS filter or blend on the page"
+      ],
+      "hillshade": {
+        "source": "top-dem.tif",
+        "azimuth_deg": 315.0,
+        "altitude_deg": 45.0,
+        "z_factor": 1.0,
+        "gray_base": 0.07,
+        "gray_span": 0.32,
+        "nodata_fill": "median of valid DEM cells (DEM has no invalid cells here)"
+      },
+      "grid": {
+        "crs": "EPSG:32635",
+        "width": 1200,
+        "height": 1200,
+        "transform": [
+          30.0,
+          0.0,
+          639270.0,
+          0.0,
+          -30.0,
+          4223040.0
+        ]
+      },
+      "renderer": {
+        "python": "3.14.6",
+        "numpy": "2.5.3",
+        "rasterio": "1.5.1",
+        "pillow": "12.3.0",
+        "webp": "1.6.0"
+      },
+      "encoder": "Pillow WebP lossless=True quality=100 method=6 exact=True",
+      "layers": {
+        "terrain": {
+          "source": "top-dem.tif",
+          "source_sha256": "590f74322c6ad942e0d36b79446934da7a0938c7d87c06ab8c9bd27da73fb694",
+          "normalization": "linear_min_max",
+          "resolved": {
+            "vmin": 79.50806427001953,
+            "vmax": 1722.535400390625
+          },
+          "topology_id": "terrain_natural_earth_relief_v1",
+          "stops": [
+            "#07131A",
+            "#173C35",
+            "#426447",
+            "#80744D",
+            "#B79B67",
+            "#D9C7A0",
+            "#F2E8D5",
+            "#FFFFFF"
+          ],
+          "stops_source": "webhero_publication_v1 terrain",
+          "lut_sha256": "3e787944d8f6097fb5c968f186532199d46b0ae96e386c4456ddf9163a400a10",
+          "analytical_opacity": 0.9,
+          "valid_fraction": 1.0,
+          "mask": "nearest (native grid); invalid cells show only the neutral context",
+          "derivatives": [
+            {
+              "path": "assets/proof/web005b/terrain-1200.webp",
+              "width": 1200,
+              "height": 1200,
+              "resize": "none (native 1200 grid)",
+              "format": "image/webp (lossless)",
+              "bytes": 822168,
+              "sha256": "c0d60a8f9586bc01c4e8e5fb0c1c02a0bfcad90d6324686082efebcb1ec5d0aa"
+            },
+            {
+              "path": "assets/proof/web005b/terrain-900.webp",
+              "width": 900,
+              "height": 900,
+              "resize": "area (box) downsample of the final RGB",
+              "format": "image/webp (lossless)",
+              "bytes": 498538,
+              "sha256": "77ddb52d3928491b4c1ea005a0b9c073dc297e2e311dab016443a2d40c57320c"
+            },
+            {
+              "path": "assets/proof/web005b/terrain-600.webp",
+              "width": 600,
+              "height": 600,
+              "resize": "area (box) downsample of the final RGB",
+              "format": "image/webp (lossless)",
+              "bytes": 247172,
+              "sha256": "94e09d29cca411d626fae8d99443963b6c8d35487686d7f8069e5cb021b015c2"
+            }
+          ]
+        },
+        "thm01": {
+          "source": "thm-thm01.tif",
+          "source_sha256": "6a2850f9915c08ed56ae2731d54881d55ca145db6cda11a21ed7e6191e629583",
+          "normalization": "diverging_symmetric_from_data",
+          "resolved": {
+            "center": 0.0,
+            "M": 4.46240234375,
+            "vmin": -4.46240234375,
+            "vmax": 4.46240234375
+          },
+          "topology_id": "thm_cool_neutral_warm_red_v1",
+          "stops": [
+            "#15365F",
+            "#235987",
+            "#3E82AC",
+            "#76AEC8",
+            "#BAD3DC",
+            "#E9E9DF",
+            "#F2D0B4",
+            "#F3A070",
+            "#ED704D",
+            "#E34232",
+            "#C51F24",
+            "#98151D"
+          ],
+          "stops_source": "webhero_publication_v4 thm01",
+          "lut_sha256": "fba5873e0ef2f6467404e429d4537da520ac104094cbfbaaa91aa63d3f25d9d0",
+          "analytical_opacity": 0.9,
+          "valid_fraction": 0.99686,
+          "mask": "nearest (native grid); invalid cells show only the neutral context",
+          "derivatives": [
+            {
+              "path": "assets/proof/web005b/thm01-1200.webp",
+              "width": 1200,
+              "height": 1200,
+              "resize": "none (native 1200 grid)",
+              "format": "image/webp (lossless)",
+              "bytes": 1529302,
+              "sha256": "1a2d66a44f6ed89e89f119aa7d6961db84a2246cbafce65c25fddd7fd586a6c1"
+            },
+            {
+              "path": "assets/proof/web005b/thm01-900.webp",
+              "width": 900,
+              "height": 900,
+              "resize": "area (box) downsample of the final RGB",
+              "format": "image/webp (lossless)",
+              "bytes": 935926,
+              "sha256": "9416a3bdaebcaff9fe4dd27f01bc24ef6c09e8bbf9d0cb3f5a62fa6fdb544657"
+            },
+            {
+              "path": "assets/proof/web005b/thm01-600.webp",
+              "width": 600,
+              "height": 600,
+              "resize": "area (box) downsample of the final RGB",
+              "format": "image/webp (lossless)",
+              "bytes": 463592,
+              "sha256": "7fb5378aed4403eb829eee831c89533069fe145c775dae2c6dfd1cc67f6cb5b5"
+            }
+          ]
+        },
+        "alt01": {
+          "source": "alt-alt01.tif",
+          "source_sha256": "ac7f2dade5274d9fd81b7fdbc8bcf7ae828bb958de5c74b9847e6332675fbf14",
+          "normalization": "linear_min_max",
+          "resolved": {
+            "vmin": 0.7092198133468628,
+            "vmax": 21.00902557373047
+          },
+          "topology_id": "alt_violet_blue_cyan_green_yellow_v1",
+          "stops": [
+            "#27104B",
+            "#362061",
+            "#3A377A",
+            "#30578D",
+            "#20799D",
+            "#159BA8",
+            "#18B2A0",
+            "#42C482",
+            "#7BD05E",
+            "#B7DC43",
+            "#E2E53B",
+            "#FFF05A"
+          ],
+          "stops_source": "webhero_publication_v4 alt01",
+          "lut_sha256": "ed32cf671a8701716fbf1f704a7428c0cce1a5f9fb349c3626a9d7c917443d70",
+          "analytical_opacity": 0.9,
+          "valid_fraction": 0.840325,
+          "mask": "nearest (native grid); invalid cells show only the neutral context",
+          "derivatives": [
+            {
+              "path": "assets/proof/web005b/alt01-1200.webp",
+              "width": 1200,
+              "height": 1200,
+              "resize": "none (native 1200 grid)",
+              "format": "image/webp (lossless)",
+              "bytes": 851026,
+              "sha256": "ed4e3708ff182f41f57bd253919fa0390e3ffb94bd5251948fab75abc481f9ef"
+            },
+            {
+              "path": "assets/proof/web005b/alt01-900.webp",
+              "width": 900,
+              "height": 900,
+              "resize": "area (box) downsample of the final RGB",
+              "format": "image/webp (lossless)",
+              "bytes": 547638,
+              "sha256": "87e0b3d69a56d6909a3646ddb162f6f6f1250c4c0e0be49fb84d35d6b20c5d92"
+            },
+            {
+              "path": "assets/proof/web005b/alt01-600.webp",
+              "width": 600,
+              "height": 600,
+              "resize": "area (box) downsample of the final RGB",
+              "format": "image/webp (lossless)",
+              "bytes": 266514,
+              "sha256": "85634902175217261a22af859cd020cd20d12e4ff8e80c0c3e974e167e6895a9"
+            }
+          ]
+        },
+        "priority": {
+          "source": "score-mvp-remote-sensing-priority.tif",
+          "source_sha256": "15065152f6f21eaf66236d51d6814acfb32326c5698bc2433dcb69653d8a9d1e",
+          "normalization": "fixed_range_0_100",
+          "resolved": {
+            "vmin": 0.0,
+            "vmax": 100.0
+          },
+          "topology_id": "priority_deep_purple_red_orange_yellow_v1",
+          "stops": [
+            "#13001F",
+            "#2B0A4A",
+            "#54106F",
+            "#8A176A",
+            "#C52A55",
+            "#E85B35",
+            "#F89A2B",
+            "#FFD84A",
+            "#FFF3A0"
+          ],
+          "stops_source": "webhero_publication_v1 priority",
+          "lut_sha256": "7babdc574d6d209a6d24162a3e5206bf16e5a39a74885c70d7ac659b1c01b43b",
+          "analytical_opacity": 0.95,
+          "valid_fraction": 0.833898,
+          "mask": "nearest (native grid); invalid cells show only the neutral context",
+          "derivatives": [
+            {
+              "path": "assets/proof/web005b/priority-1200.webp",
+              "width": 1200,
+              "height": 1200,
+              "resize": "none (native 1200 grid)",
+              "format": "image/webp (lossless)",
+              "bytes": 1948516,
+              "sha256": "7f1e53a96cb5765ad84f891d12afb1a06b42d4caad649cacef9b2cb3370f1c7b"
+            },
+            {
+              "path": "assets/proof/web005b/priority-900.webp",
+              "width": 900,
+              "height": 900,
+              "resize": "area (box) downsample of the final RGB",
+              "format": "image/webp (lossless)",
+              "bytes": 1539562,
+              "sha256": "1989096b10215aa3db27d15948780db8600fd456081c434c45f6e3c9398b6375"
+            },
+            {
+              "path": "assets/proof/web005b/priority-600.webp",
+              "width": 600,
+              "height": 600,
+              "resize": "area (box) downsample of the final RGB",
+              "format": "image/webp (lossless)",
+              "bytes": 758152,
+              "sha256": "2d29118439a44510d3f14be52e5cc1aa0b90ee27da43de964ca1fdf9a00da150"
+            }
+          ],
+          "legend": {
+            "path": "assets/proof/web005b/priority-legend-ramp.png",
+            "width": 256,
+            "height": 8,
+            "content": "the unblended 256-entry priority LUT, 0 at left to 100 at right",
+            "bytes": 257,
+            "sha256": "dd7899460402459fd24bd9ecbf2ea9a329d2bfa9b9dfa422743f37bd1e1b64d8"
+          }
+        }
+      }
+    },
+    "placement": {
+      "context": {
+        "status": "placed",
+        "consumer": "WEB-005B / MER-109",
+        "act": "Act 2 - real Kizildere place before analysis",
+        "homepage_slot": "context",
+        "routes": [
+          "index.html"
+        ],
+        "visible_warning": {
+          "i18n_key": "act.context.note",
+          "required_terms_en": [
+            "Earth-observation context only",
+            "not analytical evidence",
+            "not a scored input"
+          ],
+          "required_terms_tr": [
+            "Yalnızca Yer gözlem bağlamı",
+            "analitik kanıt değildir",
+            "skorlanan bir girdi değildir"
+          ]
+        },
+        "rendered": {
+          "max_css_width": 1600,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 3200,
+          "native_px": 3200,
+          "selected_derivative": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+          "measured_max_css_width": 1600,
+          "measured_max_device_px_at_2x": 3200,
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (13 widths x 2 DPRs); the widest render is recorded, never the sizes attribute.",
+          "measurement_note": "drawn width of the object-fit:cover photograph (the 4:5 / 4:3 phone windows draw it wider than the box: 833 CSS px at 375)"
+        }
+      },
+      "terrain": {
+        "status": "placed",
+        "consumer": "WEB-005B / MER-109",
+        "act": "Act 3 - evidence stage",
+        "homepage_slot": "terrain",
+        "routes": [
+          "index.html"
+        ],
+        "visible_warning": {
+          "i18n_key": "story.terrain.note",
+          "required_terms_en": [
+            "Context",
+            "not a scored predictor"
+          ],
+          "required_terms_tr": [
+            "bağlam",
+            "skorlanan bir öngörücü değildir"
+          ]
+        },
+        "rendered": {
+          "max_css_width": 600,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 1200,
+          "native_px": 1200,
+          "selected_derivative": "assets/proof/web005b/terrain-1200.webp",
+          "measured_max_css_width": 417,
+          "measured_max_device_px_at_2x": 834,
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (13 widths x 2 DPRs); the widest render is recorded, never the sizes attribute."
+        }
+      },
+      "thm01": {
+        "status": "placed",
+        "consumer": "WEB-005B / MER-109",
+        "act": "Act 3 - evidence stage",
+        "homepage_slot": "thermal",
+        "routes": [
+          "index.html"
+        ],
+        "visible_warning": {
+          "i18n_key": "act.evidence.thermal.note",
+          "required_terms_en": [
+            "Evidence layer only",
+            "not",
+            "geothermal probability"
+          ],
+          "required_terms_tr": [
+            "Yalnızca kanıt katmanı",
+            "Jeotermal olasılık"
+          ]
+        },
+        "rendered": {
+          "max_css_width": 600,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 1200,
+          "native_px": 1200,
+          "selected_derivative": "assets/proof/web005b/thm01-1200.webp",
+          "measured_max_css_width": 417,
+          "measured_max_device_px_at_2x": 834,
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (13 widths x 2 DPRs); the widest render is recorded, never the sizes attribute."
+        }
+      },
+      "alt01": {
+        "status": "placed",
+        "consumer": "WEB-005B / MER-109",
+        "act": "Act 3 - evidence stage",
+        "homepage_slot": "alteration",
+        "routes": [
+          "index.html"
+        ],
+        "visible_warning": {
+          "i18n_key": "act.evidence.alteration.note",
+          "required_terms_en": [
+            "alteration proxy",
+            "not mineral",
+            "not proof of hydrothermal alteration"
+          ],
+          "required_terms_tr": [
+            "alterasyon vekili",
+            "mineral",
+            "hidrotermal alterasyon kanıtı değildir"
+          ]
+        },
+        "rendered": {
+          "max_css_width": 600,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 1200,
+          "native_px": 1200,
+          "selected_derivative": "assets/proof/web005b/alt01-1200.webp",
+          "measured_max_css_width": 417,
+          "measured_max_device_px_at_2x": 834,
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (13 widths x 2 DPRs); the widest render is recorded, never the sizes attribute."
+        }
+      },
+      "priority": {
+        "status": "placed",
+        "consumer": "WEB-005B / MER-109",
+        "act": "Act 4 - priority result",
+        "homepage_slot": "priority",
+        "routes": [
+          "index.html"
+        ],
+        "visible_warning": {
+          "i18n_key": "act.priority.note",
+          "required_terms_en": [
+            "AOI-relative experimental screening only",
+            "Not probability",
+            "Full Prospectivity"
+          ],
+          "required_terms_tr": [
+            "Yalnızca alan içi deneysel ön eleme",
+            "Olasılık",
+            "Tam Prospektivite"
+          ]
+        },
+        "rendered": {
+          "max_css_width": 600,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 1200,
+          "native_px": 1200,
+          "selected_derivative": "assets/proof/web005b/priority-1200.webp",
+          "measured_max_css_width": 598,
+          "measured_max_device_px_at_2x": 1196,
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (13 widths x 2 DPRs); the widest render is recorded, never the sizes attribute."
+        }
+      }
+    }
   }
 }

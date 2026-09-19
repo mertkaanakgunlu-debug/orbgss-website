@@ -1,0 +1,28 @@
+Baseline (nothing mutated): site exit 0 — PASS
+  CAUGHT  governed source swapped for another raster (exit 1)
+  CAUGHT  THM-01 re-normalized with a display window (exit 1)
+  CAUGHT  priority stretched off the fixed 0-100 range (exit 1)
+  CAUGHT  THM-01 centre shifted (exit 1)
+  CAUGHT  palette stops reversed (value-to-colour inverted) (exit 1)
+  CAUGHT  palette topology renamed (exit 1)
+  CAUGHT  analytical opacity washed out by the context (exit 1)
+  CAUGHT  a hero-only transform (unsharp) used on the homepage (exit 1)
+  CAUGHT  derivative checksum drift (exit 1)
+  CAUGHT  derivative recorded above the native grid (upsampled) (exit 1)
+  CAUGHT  derivative recorded as a lossy encode (exit 1)
+  CAUGHT  context photograph checksum drift (exit 1)
+  CAUGHT  context photograph claims a different product (exit 1)
+  CAUGHT  context derivative wider than its native frame (exit 1)
+  CAUGHT  AOI corner marks drift off the analysis grid (exit 1)
+  CAUGHT  Product cyan token drifts (exit 1)
+  CAUGHT  a palette token is redefined a second time (exit 1)
+  CAUGHT  priority public label reworded (exit 1)
+  CAUGHT  priority warning dropped from the static page (exit 1)
+  CAUGHT  detached colour strip returns to the homepage (exit 1)
+  CAUGHT  legend moved out of the result figure (exit 1)
+  CAUGHT  result map CSS cap widened past native density (exit 1)
+  CAUGHT  evidence placement laid out past native density (exit 1)
+  CAUGHT  a WEB-005B asset leaks onto /pilot/ (exit 1)
+
+24/24 deliberate regressions caught
+Restored tree: site exit 0 — PASS — identical to baseline

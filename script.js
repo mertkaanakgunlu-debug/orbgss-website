@@ -79,6 +79,7 @@ const I18N = {
     'label.geothermal': 'Kızıldere — first geothermal application of the experimental remote-sensing baseline',
     'alt.observe': 'Greyscale elevation map of the 36 by 36 kilometre Kızıldere project area of interest, showing ridges and valleys across the pilot grid',
     'alt.terrain': 'Colour elevation map of the Kızıldere area of interest, with low ground in dark blue and high ridges in pale yellow',
+    'alt.terrain.home': 'Colour elevation map of the Kızıldere area of interest, with low ground in dark green and high ridges in pale stone and white',
     'alt.thm01': 'Diverging thermal anomaly map of the Kızıldere area of interest, with cooler ground in blue and warmer ground in red',
     'alt.alt01': 'Sequential map of the clay and hydroxyl spectral alteration proxy across the Kızıldere area of interest',
     'alt.alt02': 'Sequential map of the ferric iron spectral alteration proxy across the Kızıldere area of interest',
@@ -319,6 +320,7 @@ const I18N = {
     'label.geothermal': 'Kızıldere — deneysel uzaktan algılama temelinin ilk jeotermal uygulaması',
     'alt.observe': 'Kızıldere proje alanının 36 çarpı 36 kilometrelik gri tonlamalı yükselti haritası; pilot ızgara boyunca sırtları ve vadileri gösterir',
     'alt.terrain': 'Kızıldere ilgi alanının renkli yükselti haritası; alçak zemin koyu mavi, yüksek sırtlar soluk sarı',
+    'alt.terrain.home': 'Kızıldere ilgi alanının renkli yükselti haritası; alçak zemin koyu yeşil, yüksek sırtlar açık taş rengi ve beyaz',
     'alt.thm01': 'Kızıldere ilgi alanının ıraksak termal anomali haritası; daha serin zemin mavi, daha sıcak zemin kırmızı',
     'alt.alt01': 'Kızıldere ilgi alanı boyunca kil ve hidroksil spektral alterasyon vekilinin sıralı haritası',
     'alt.alt02': 'Kızıldere ilgi alanı boyunca ferrik demir spektral alterasyon vekilinin sıralı haritası',
@@ -1238,4 +1240,28 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     if (!video.paused && !video.ended && video.readyState > 2) return;
     settleStatic('stalled');
   }, 15000);
+})();
+
+/* ------------------------------------------------------------------ */
+/* WEB-005B act entrances                                               */
+/*                                                                      */
+/* One quiet rise per post-hero visual, once, as it enters the view.    */
+/* Only the wrapper's opacity and position move; the images inside are  */
+/* never filtered, and at rest nothing is transformed. No observer, or   */
+/* reduced motion, and the class is never added: everything is simply   */
+/* there. Independent of the hero sequence above.                       */
+/* ------------------------------------------------------------------ */
+(function actEntrances() {
+  const items = document.querySelectorAll('[data-reveal]');
+  if (!items.length || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('has-reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-revealed');
+      observer.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  items.forEach((item) => observer.observe(item));
 })();

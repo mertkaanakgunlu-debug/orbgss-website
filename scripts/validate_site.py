@@ -76,6 +76,32 @@ EXPECTED_HOMEPAGE_SLOTS = ["context", "terrain", "thermal", "alteration", "prior
 HERO_DRAPE_STATE_CEILING = 1.25 * 1024 * 1024
 HERO_DRAPE_LAYERS = ["terrain", "thm01", "alt01", "priority"]
 # WEB-005A relief rise (docs/web-005-polish-authority@0e87675): 6-12 lossless states, 0.45-0.70 s.
+# WEB-005B / MER-109. The Product palette (tasks/WEB-005B_HOMEPAGE_VISUAL_FIDELITY_PALETTE.md
+# section 5) is pinned here so a quiet token edit fails the build (B-VIS-05).
+WEB005B_TOKENS = {
+    "--orb-bg": "#030B12", "--orb-surface": "#08131D", "--orb-panel": "#0D1B27",
+    "--orb-divider": "#183245", "--orb-text-primary": "#EAF2F8", "--orb-text-secondary": "#9EB1C1",
+    "--orb-meta": "#6F8597", "--orb-cyan": "#73E7FF", "--orb-cyan-glow": "#8AF1FF",
+    "--orb-beam-core": "#7FEFFF", "--orb-beam-glow": "#3CCBFF", "--orb-target-frame": "#98F5FF",
+}
+# MER-108 governed-source pins and website-derivative bounds (B-VIS-04). The source SHA-256s are
+# the MER-113 identities in the terminal authority; normalization is d3a163bd's canonical kind per
+# layer; analytical opacity is 11c32e8d section 6. None of these may drift without Science.
+WEB005B_SOURCES = {
+    "terrain": ("590f74322c6ad942e0d36b79446934da7a0938c7d87c06ab8c9bd27da73fb694", "linear_min_max", (0.85, 1.0)),
+    "thm01": ("6a2850f9915c08ed56ae2731d54881d55ca145db6cda11a21ed7e6191e629583", "diverging_symmetric_from_data", (0.85, 1.0)),
+    "alt01": ("ac7f2dade5274d9fd81b7fdbc8bcf7ae828bb958de5c74b9847e6332675fbf14", "linear_min_max", (0.85, 1.0)),
+    "priority": ("15065152f6f21eaf66236d51d6814acfb32326c5698bc2433dcb69653d8a9d1e", "fixed_range_0_100", (0.90, 1.0)),
+}
+WEB005B_TOPOLOGY = {
+    "terrain": "terrain_natural_earth_relief_v1", "thm01": "thm_cool_neutral_warm_red_v1",
+    "alt01": "alt_violet_blue_cyan_green_yellow_v1", "priority": "priority_deep_purple_red_orange_yellow_v1",
+}
+WEB005B_NATIVE_PX = 1200
+# Transforms the terminal amendment allows for the hero surface only; a homepage derivative that
+# records using one of them is outside 11c32e8d.
+WEB005B_HERO_ONLY = ("display window", "gamma / tone transfer", "gaussian smoothing", "unsharp", "upsampling")
+
 HERO_RISE_STATE_CEILING = 512 * 1024
 HERO_RISE_TOTAL_CEILING = int(2.5 * 1024 * 1024)
 HERO_STATIC_POSTER_MEDIA = "(prefers-reduced-motion: reduce), (max-width: 780px)"
@@ -320,6 +346,13 @@ def main() -> int:
                 if deriv.get("path"):
                     package_context_paths.add(str(deriv["path"]))
 
+    web005b = manifest.get("web_005b", {})
+    for deriv in web005b.get("context", {}).get("derivatives", []):
+        if deriv.get("path"):
+            package_context_paths.add(str(deriv["path"]))
+    if web005b.get("context", {}).get("master", {}).get("file"):
+        package_context_paths.add(str(web005b["context"]["master"]["file"]))
+
     manifest_html_paths = {
         src for src in parser.img_srcs + parser.img_srcsets if src.startswith("assets/imagery/")
     }
@@ -562,7 +595,13 @@ def main() -> int:
         for deriv in asset.get("derivatives", []):
             if deriv.get("path"):
                 package_derivative_paths.add(str(deriv["path"]))
-    recorded_science_paths = proof_paths | package_derivative_paths
+    web005b_science_paths: set[str] = set()
+    for layer in manifest.get("web_005b", {}).get("analytical", {}).get("layers", {}).values():
+        for deriv in layer.get("derivatives", []):
+            web005b_science_paths.add(str(deriv.get("path", "")))
+        if layer.get("legend", {}).get("path"):
+            web005b_science_paths.add(str(layer["legend"]["path"]))
+    recorded_science_paths = proof_paths | package_derivative_paths | web005b_science_paths
 
     def science_srcs(route_parser: SiteParser) -> set[str]:
         srcs = route_parser.img_srcs + route_parser.img_srcsets
@@ -573,8 +612,8 @@ def main() -> int:
         all_proof_srcs |= science_srcs(route_parser)
     unrecorded_site_wide = all_proof_srcs - recorded_science_paths
     if unrecorded_site_wide:
-        fail(f"scientific imagery referenced with no provenance record in web_002.proof_assets "
-             f"or geo_web_002.assets: {sorted(unrecorded_site_wide)}", errors)
+        fail(f"scientific imagery referenced with no provenance record in web_002.proof_assets, "
+             f"geo_web_002.assets or web_005b.analytical: {sorted(unrecorded_site_wide)}", errors)
 
     # ------------------------------------------------------------------
     # Mandatory scientific warnings must be visible on EVERY route that shows the asset, in both
@@ -679,6 +718,176 @@ def main() -> int:
             if 'class="scale-strip"' in home:
                 fail("a detached scientific scale strip is back on the homepage; a necessary "
                      "legend belongs inside its own visual frame", errors)
+
+    # ------------------------------------------------------------------
+    # WEB-005B / MER-109: homepage Acts 2-4 (web_005b in the manifest).
+    #   B-VIS-02  the Act 2 photograph is a recorded, checksummed USGS Landsat derivative, never
+    #             wider than its native frame, and its AOI corner marks are the recorded geometry.
+    #   B-VIS-04  every Act 3/4 pixel is a MER-108 website derivative of a pinned governed source:
+    #             canonical normalization, the pinned palette topology, a LUT recomputed here from
+    #             the recorded stops, bounded analytical opacity, lossless, never above the native
+    #             grid, and none of the hero-only transforms.
+    #   B-VIS-05  the Product palette tokens are defined once and hold their pinned values.
+    #   B-VIS-06  the priority public label is exact; its warning terms are bound per placement.
+    #   B-VIS-07  every placement's CSS width x DPR stays within its native pixels.
+    #   B-VIS-08  the priority legend lives inside the result figure; no detached strip.
+    #   B-VIS-14  web_005b assets are placed on the homepage only.
+    # ------------------------------------------------------------------
+    def web005b_lut(stops: list[str], size: int = 256) -> bytes:
+        """The build script's LUT (numpy linspace + interp + uint8 truncation), in plain floats."""
+        pts = [tuple(int(h.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4)) for h in stops]
+        n = len(pts)
+        xp = [j * (1.0 / (n - 1)) for j in range(n - 1)] + [1.0]
+        out = bytearray()
+        for i in range(size):
+            x = 1.0 if i == size - 1 else i * (1.0 / (size - 1))
+            j = max(k for k in range(n - 1) if xp[k] <= x) if x < 1.0 else n - 2
+            for c in range(3):
+                if x >= 1.0:
+                    v = float(pts[-1][c])
+                else:
+                    slope = (pts[j + 1][c] - pts[j][c]) / (xp[j + 1] - xp[j])
+                    v = slope * (x - xp[j]) + pts[j][c]
+                out.append(int(min(max(v, 0.0), 255.0)))
+        return bytes(out)
+
+    def web005b_file(label: str, rec: dict) -> str | None:
+        rel = str(rec.get("path") or rec.get("file") or "")
+        if not rel:
+            fail(f"{label}: record without a path", errors)
+            return None
+        path = ROOT / rel
+        if not path.exists():
+            fail(f"{label}: {rel} is missing from the repository", errors)
+            return None
+        if sha256_of(path) != str(rec.get("sha256", "")):
+            fail(f"{label}: checksum mismatch for {rel}", errors)
+        if rec.get("bytes") != path.stat().st_size:
+            fail(f"{label}: byte size mismatch for {rel}", errors)
+        return rel
+
+    w5b = manifest.get("web_005b", {})
+    css_text = (ROOT / "styles.css").read_text(encoding="utf-8")
+    home = route_html[""]
+    w5b_own: dict[str, set[str]] = {}
+    if not w5b:
+        fail("manifest web_005b is missing", errors)
+    else:
+        ctx = w5b.get("context", {})
+        for key in ("source", "frame", "derivation", "master", "derivatives", "max_safe_rendered_px",
+                    "rights_basis", "attribution_requirement", "mandatory_warning_i18n_key"):
+            if not ctx.get(key):
+                fail(f"web_005b.context missing field: {key}", errors)
+        if "LC08_L2SP_179034_20250505_02_T1" not in ctx.get("source", {}).get("product_ids", []):
+            fail("web_005b.context is not the recorded USGS Landsat product", errors)
+        ctx_ceiling = ctx.get("max_safe_rendered_px", {}).get("device_px")
+        own = set()
+        for rec in [ctx.get("master", {})] + list(ctx.get("derivatives", [])):
+            rel = web005b_file("web_005b.context", rec)
+            if rel:
+                own.add(rel)
+            width = rec.get("width") or (rec.get("dimensions") or [None])[0]
+            if isinstance(width, int) and isinstance(ctx_ceiling, int) and width > ctx_ceiling:
+                fail(f"web_005b.context {rel} is wider than the native frame", errors)
+        w5b_own["context"] = own
+        aoi = ctx.get("frame", {}).get("aoi_in_frame", {})
+        mark = re.search(r"\.aoi-mark\{position:absolute;left:([\d.]+)%;right:([\d.]+)%;"
+                         r"top:([\d.]+)%;bottom:([\d.]+)%", css_text)
+        if not mark or not aoi:
+            fail("Act 2 AOI corner marks or their recorded geometry are missing", errors)
+        else:
+            expect = (aoi["x0"] * 100, (1 - aoi["x1"]) * 100, aoi["y0"] * 100, (1 - aoi["y1"]) * 100)
+            if any(abs(float(got) - want) > 0.001 for got, want in zip(mark.groups(), expect)):
+                fail(f"Act 2 AOI corner marks {mark.groups()} do not match the recorded analysis-grid "
+                     f"bounds {tuple(round(v, 4) for v in expect)}", errors)
+
+        ana = w5b.get("analytical", {})
+        layers = ana.get("layers", {})
+        if set(layers) != set(WEB005B_SOURCES):
+            fail(f"web_005b.analytical layers {sorted(layers)} != {sorted(WEB005B_SOURCES)}", errors)
+        for item in WEB005B_HERO_ONLY:
+            if item not in ana.get("not_used", []):
+                fail(f"web_005b.analytical does not record that the hero-only transform "
+                     f"{item!r} is unused", errors)
+        for key, (src_sha, norm, (olo, ohi)) in WEB005B_SOURCES.items():
+            layer = layers.get(key, {})
+            label = f"web_005b.analytical.{key}"
+            if layer.get("source_sha256") != src_sha:
+                fail(f"{label}: governed source is not the MER-108 pinned raster", errors)
+            if layer.get("normalization") != norm:
+                fail(f"{label}: normalization {layer.get('normalization')!r} is not the canonical {norm!r}", errors)
+            if layer.get("topology_id") != WEB005B_TOPOLOGY[key]:
+                fail(f"{label}: palette topology is not {WEB005B_TOPOLOGY[key]!r}", errors)
+            opacity = layer.get("analytical_opacity")
+            if not isinstance(opacity, (int, float)) or not olo <= opacity <= ohi:
+                fail(f"{label}: analytical opacity {opacity} is outside {olo}-{ohi}", errors)
+            stops = layer.get("stops") or []
+            if hashlib.sha256(web005b_lut(stops)).hexdigest() != layer.get("lut_sha256"):
+                fail(f"{label}: recorded LUT checksum does not match its recorded stops", errors)
+            resolved = layer.get("resolved", {})
+            if key == "priority" and (resolved.get("vmin"), resolved.get("vmax")) != (0.0, 100.0):
+                fail(f"{label}: priority must stay on the fixed 0-100 range", errors)
+            if key == "thm01" and (resolved.get("center") != 0.0 or resolved.get("vmin") != -resolved.get("vmax", 0)):
+                fail(f"{label}: THM-01 must stay symmetric about a 0.0 centre", errors)
+            own = set()
+            for deriv in layer.get("derivatives", []):
+                rel = web005b_file(label, deriv)
+                if rel:
+                    own.add(rel)
+                if not isinstance(deriv.get("width"), int) or deriv["width"] > WEB005B_NATIVE_PX:
+                    fail(f"{label}: {rel} is above the native {WEB005B_NATIVE_PX} px grid", errors)
+                if "lossless" not in str(deriv.get("format", "")):
+                    fail(f"{label}: {rel} is not a lossless encode", errors)
+            if key == "priority":
+                rel = web005b_file(f"{label}.legend", layer.get("legend", {}))
+                if rel:
+                    own.add(rel)
+            w5b_own[key] = own
+
+        placements = w5b.get("placement", {})
+        if set(placements) != set(w5b_own):
+            fail(f"web_005b.placement covers {sorted(placements)}, expected {sorted(w5b_own)}", errors)
+        for key, rec in placements.items():
+            own = w5b_own.get(key, set())
+            shown_on = [r for r, rp in route_parsers.items() if all_srcs(rp) & own]
+            if rec.get("status") == "placed" and "" not in shown_on:
+                fail(f"web_005b asset {key!r} claims a homepage placement but is not on the homepage", errors)
+            if [r for r in shown_on if r != ""]:
+                fail(f"web_005b asset {key!r} is published beyond the homepage: "
+                     f"{[ROUTES[r] for r in shown_on if r != '']}", errors)
+            if rec.get("visible_warning"):
+                check_warning_coverage("web_005b asset", key, rec["visible_warning"], shown_on)
+            else:
+                fail(f"web_005b asset {key!r} has no visible_warning binding", errors)
+            rendered = rec.get("rendered", {})
+            css_w, dpr, native = (rendered.get("max_css_width"), rendered.get("device_pixel_ratio_considered"),
+                                  rendered.get("native_px"))
+            if not all(isinstance(v, (int, float)) for v in (css_w, dpr, native)):
+                fail(f"web_005b asset {key!r} placement.rendered is incomplete", errors)
+            elif css_w * dpr > native:
+                fail(f"web_005b asset {key!r} is laid out at {css_w} CSS px = {int(css_w * dpr)} device px "
+                     f"at {dpr}x, above its native {native} px", errors)
+            if str(rendered.get("selected_derivative", "")) not in own:
+                fail(f"web_005b asset {key!r} names a selected derivative that is not its own", errors)
+        # The CSS caps that make those records true.
+        for selector, cap in ((".context-band", 1600), (".evidence-card", 600), (".priority-frame", 600)):
+            block = re.search(re.escape(selector) + r"\{[^}]*max-width:(\d+)px", css_text)
+            if not block or int(block.group(1)) != cap:
+                fail(f"{selector} must be capped at max-width:{cap}px (native density)", errors)
+
+        root_block = re.search(r":root\{(.*?)\n\}", css_text, re.S)
+        for name, value in WEB005B_TOKENS.items():
+            defs = re.findall(re.escape(name) + r":\s*(#[0-9A-Fa-f]{6})\s*;", css_text)
+            if len(defs) != 1 or not root_block or f"{name}:{value}" not in root_block.group(1).replace(" ", ""):
+                fail(f"palette token {name} must be defined once in :root as {value}", errors)
+
+        if dictionary_value("en", "label.priority") != "Remote-Sensing Relative Priority — Experimental Baseline":
+            fail("the priority public label changed", errors)
+        if 'class="scale-strip"' in home or "priority-scale.png" in home:
+            fail("a detached scientific scale strip is on the homepage", errors)
+        figure = re.search(r'<figure class="priority-stage".*?</figure>', home, re.S)
+        if not figure or "priority-legend-ramp.png" not in figure.group(0):
+            fail("the priority legend must sit inside the result figure", errors)
 
     # Claim discipline and the card/icon-grid guard apply to every public route, not just the
     # homepage (which was already scanned above, with its beam-note exclusion).
