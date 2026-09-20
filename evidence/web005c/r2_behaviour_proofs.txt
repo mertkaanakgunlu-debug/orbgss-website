@@ -1,0 +1,72 @@
+WEB-005C R2 / MER-149 - behaviour proofs
+Chrome headless over CDP, 1440x900 DPR 1, local static server.
+
+==============================================================================
+1. NO-JAVASCRIPT NAVIGATION - all three homepage Solutions cards
+==============================================================================
+Chrome DevTools Emulation.setScriptExecutionDisabled(true): the page's own JavaScript
+never executes. Each card is clicked ON ITS PHOTOGRAPH, above the copy block, to prove the
+whole card is the target and not just the text.
+
+  Geothermal  clicked photograph at y=263 (card top 200, copy starts 326)
+              http://127.0.0.1:8097/  ->  http://127.0.0.1:8097/solutions/#geothermal
+              expected http://127.0.0.1:8097/solutions/#geothermal   OK
+              landed on /solutions/ row: 'Geothermal' at scrollY 614
+  Mining      clicked photograph at y=246 (card top 200, copy starts 292)
+              http://127.0.0.1:8097/  ->  http://127.0.0.1:8097/solutions/#mining
+              expected http://127.0.0.1:8097/solutions/#mining   OK
+              landed on /solutions/ row: 'Mining' at scrollY 866
+  Marine      clicked photograph at y=246 (card top 200, copy starts 292)
+              http://127.0.0.1:8097/  ->  http://127.0.0.1:8097/solutions/#marine
+              expected http://127.0.0.1:8097/solutions/#marine   OK
+              landed on /solutions/ row: 'Marine' at scrollY 1013
+
+  RESULT: all three cards navigate with JavaScript disabled
+
+==============================================================================
+2. KEYBOARD REACHABILITY AND VISIBLE FOCUS
+==============================================================================
+  tab stop 1: <a class="domain-link"> href='/solutions/#geothermal'
+              accessible name = 'Geothermal', tabIndex=0
+  tab stop 2: <a class="domain-link"> href='/solutions/#mining'
+              accessible name = 'Mining', tabIndex=0
+  tab stop 3: <a class="domain-link"> href='/solutions/#marine'
+              accessible name = 'Marine', tabIndex=0
+
+  Tab order matches the visual order: True
+  Enter on the focused Mining card -> http://127.0.0.1:8097/solutions/#mining
+  expected http://127.0.0.1:8097/solutions/#mining   OK
+  computed ::after focus style on the keyboard-focused card: {"href":"/solutions/#mining","matchesFocusVisible":true,"outline":"rgb(67, 191, 240) solid 2px","outlineOffset":"-2px"}
+  focus ring captured -> evidence/web005c/card_focus_ring_1440.webp
+
+==============================================================================
+3. EN / TR
+==============================================================================
+  [en]
+     geothermal  href=/solutions/#geothermal   name='Geothermal'     status='Active · First application'
+     mining      href=/solutions/#mining       name='Mining'         status='In development'
+     marine      href=/solutions/#marine       name='Marine'         status='In development'
+  [tr]
+     geothermal  href=/solutions/#geothermal   name='Jeotermal'      status='Aktif · İlk uygulama'
+     mining      href=/solutions/#mining       name='Madencilik'     status='Geliştirme aşamasında'
+     marine      href=/solutions/#marine       name='Denizel'        status='Geliştirme aşamasında'
+
+==============================================================================
+4. LEGACY /solutions/ ANCHORS STILL LAND CORRECTLY
+==============================================================================
+  [en]
+     /solutions/#mineral      -> scrollY 866    row 'Mining'
+     /solutions/#mining       -> scrollY 866    row 'Mining'
+     identical landing: True
+     /solutions/#environment  -> scrollY 1013   row 'Marine'
+     /solutions/#marine       -> scrollY 1013   row 'Marine'
+     identical landing: True
+
+  [tr]
+     /solutions/#mineral      -> scrollY 837    row 'Madencilik'
+     /solutions/#mining       -> scrollY 837    row 'Madencilik'
+     identical landing: True
+     /solutions/#environment  -> scrollY 983    row 'Denizel'
+     /solutions/#marine       -> scrollY 983    row 'Denizel'
+     identical landing: True
+

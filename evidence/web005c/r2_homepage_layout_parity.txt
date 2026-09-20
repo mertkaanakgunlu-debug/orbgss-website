@@ -1,0 +1,39 @@
+WEB-005C R2 / MER-149 - whole-homepage layout parity, before vs after the card wiring
+
+Why this instrument and not a pixel diff: a full-page screenshot of this page is NOT
+deterministic. Two captures of the SAME tree differ by ~1 % of pixels at up to 8/255, because
+lazy image decode order shifts the ordered dither in the page's gradients. A pixel diff
+therefore cannot prove anything at that precision. This snapshot is deterministic: for every
+element on the page it records the layout box plus the computed styles that carry the design
+(font, colour, background, border, padding, margin, opacity, transform, display, position,
+z-index, text-decoration, letter-spacing, line-height, text-transform, object-fit/position,
+grid-template-columns, gap).
+
+The three <a class="domain-link"> wrappers are the change itself, so they are excluded; every
+OTHER element on the page is compared.
+
+viewport 1440
+   elements compared : 322  (after: 322)
+   document height   : 8621 px  (after: 8621 px)
+   layout boxes differing   : 0
+   computed styles differing: 0
+
+viewport 1440_tr
+   elements compared : 322  (after: 322)
+   document height   : 8569 px  (after: 8569 px)
+   layout boxes differing   : 0
+   computed styles differing: 0
+
+viewport 1024
+   elements compared : 322  (after: 322)
+   document height   : 7813 px  (after: 7813 px)
+   layout boxes differing   : 0
+   computed styles differing: 0
+
+viewport 390
+   elements compared : 322  (after: 322)
+   document height   : 9455 px  (after: 9455 px)
+   layout boxes differing   : 0
+   computed styles differing: 0
+
+RESULT: every element on the homepage keeps its exact box and computed design styles; the only new nodes are the three card links themselves.

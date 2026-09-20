@@ -4,7 +4,8 @@
 
 WEB-005C / MER-149 converged the public site on one domain taxonomy — Geothermal / Mining /
 Marine — and kept the superseded /solutions/ anchors (#mineral, #environment) resolvable as
-aliases so existing deep links still land on the domain they always meant.
+aliases so existing deep links still land on the domain they always meant. R2 additionally made the
+three homepage Solutions cards native links to their own /solutions/ rows.
 
 Same discipline as scripts/negative_tests_web005.py and ...web005b.py: each case mutates one real
 file, runs the site validator, and restores the file from the in-memory original in a `finally`
@@ -22,6 +23,7 @@ PLATFORM = ROOT / "platform" / "index.html"
 COMPANY = ROOT / "company" / "index.html"
 SOLUTIONS = ROOT / "solutions" / "index.html"
 SCRIPT = ROOT / "script.js"
+STYLES = ROOT / "styles.css"
 
 
 def site() -> tuple[int, str]:
@@ -96,6 +98,26 @@ case("a superseded label returns through the TR dictionary", SCRIPT,
      "'solutionsPage.meta.ogDescription': 'Tek bir kanıttan önceliğe deseni. "
      "Önce aktif jeotermal; ardından Maden Arama.',",
      "superseded domain label")
+
+# --- WEB-005C R2: the homepage cards are navigation surfaces --------------------------------------
+case("the Geothermal card stops being a link", INDEX,
+     '<a class="domain-link" href="/solutions/#geothermal" aria-labelledby="domain-geothermal-title">',
+     "<span>", "is not a native link to its /solutions/ row")
+case("the Mining card links to the wrong domain", INDEX,
+     '<a class="domain-link" href="/solutions/#mining"',
+     '<a class="domain-link" href="/solutions/#marine"',
+     "card links to")
+case("the Marine card link loses its own accessible name", INDEX,
+     'aria-labelledby="domain-marine-title"', 'aria-labelledby="solutions-title"',
+     "which is not")
+case("a card title loses the id its link is named by", INDEX,
+     '<h3 id="domain-mining-title" data-i18n="domain.mining.title">',
+     '<h3 data-i18n="domain.mining.title">',
+     "which is not")
+case("the card links lose their visible focus state", STYLES,
+     ".domain-link:focus-visible::after{outline:2px solid var(--accent);outline-offset:-2px}",
+     ".domain-link:focus-visible::after{outline:none}",
+     "no visible focus state")
 
 
 def main() -> int:

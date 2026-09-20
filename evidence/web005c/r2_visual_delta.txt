@@ -1,0 +1,42 @@
+WEB-005C R2 / MER-149 - Solutions section pixel comparison
+Chrome headless, DPR 1, section clipped to #solutions, reduced motion for the A/B pairs.
+
+NOISE FLOOR FIRST. Two captures of the SAME tree:
+   domains_1024.png             0 differing px, max delta 0
+   domains_1440.png             0 differing px, max delta 0
+   domains_1440_tr.png          0 differing px, max delta 0
+   domains_1920.png             0 differing px, max delta 0
+   domains_390.png              0 differing px, max delta 0
+   -> the section instrument is exactly reproducible. Any delta it reports is real.
+
+(For contrast, the FULL-PAGE capture is not: two runs of the same tree differ by ~1 % of
+ pixels at up to 8/255, because lazy image decode order shifts gradient dithering. That is
+ why whole-page parity is proved by DOM geometry instead - r2_homepage_layout_parity.txt.)
+
+A/B 1 - baseline tree vs the wired cards, reduced motion:
+   domains_1024.png        49,941 differing px (4.47 %), max delta 6/255, px with delta>=16: 0
+   domains_1440.png        71,868 differing px (3.87 %), max delta 5/255, px with delta>=16: 0
+   domains_1440_tr.png     71,917 differing px (3.87 %), max delta 6/255, px with delta>=16: 0
+   domains_1920.png        77,740 differing px (2.92 %), max delta 6/255, px with delta>=16: 0
+   domains_390.png         18,031 differing px (3.08 %), max delta 4/255, px with delta>=16: 0
+
+A/B 2 - the SAME wired markup with the stretch overlay rule (.domain-link::after) removed:
+   domains_1024.png             0 differing px, max delta 0/255
+   domains_1440.png             0 differing px, max delta 0/255
+   domains_1440_tr.png          0 differing px, max delta 0/255
+   domains_1920.png             0 differing px, max delta 0/255
+   domains_390.png              0 differing px, max delta 0/255
+
+CONCLUSION
+  The <a> wrapper that makes each card a link is pixel-free: A/B 2 is 0 differing pixels at
+  every viewport. The entire measured delta comes from the transparent overlay that extends
+  the click target across the whole card: being a positioned descendant, it makes Chrome
+  rasterise .domain-shade's gradient into a different backing store, and the ordered dither
+  lands one step differently. Bounded at 7/255 on one channel, with ZERO pixels at or above
+  16/255 anywhere. No geometry, type, colour token, spacing, imagery, status or hierarchy
+  value changes - proved separately and deterministically by the 23-width geometry sweep and
+  the whole-page layout parity snapshot.
+
+  The alternative with a literally zero-pixel delta is to drop the overlay and let only the
+  copy block navigate. That was not taken: R2 section 2 asks for the CARD to be the
+  navigation surface, and a sub-perceptual dither in a dark gradient is not a design change.

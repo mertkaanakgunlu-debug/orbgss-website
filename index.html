@@ -676,9 +676,13 @@
 
       The taxonomy is Geothermal / Mining / Marine (R13 section 2). The homepage domain module has
       its own `domain.*` strings rather than reusing the `app.*` application-ledger keys, because
-      /solutions/ publishes those same keys and this revision is homepage-only. None of the three
-      cards navigates: Mining and Marine have no production-ready destination route yet, and the
-      accepted design gives the cards no link, so they state their status instead of offering one.
+      /solutions/ publishes those same keys and that revision was homepage-only.
+
+      Each card is a native link to its own /solutions/ row (WEB-005C R2). The link wraps the copy
+      block and stretches over the whole card through its ::after, so the entire card is the click
+      target without a CTA, an arrow or any change to the imagery, spacing, status or hierarchy.
+      aria-labelledby points at the card title, so the accessible name is the domain name rather
+      than the whole card read aloud. Navigation needs no JavaScript.
     -->
     <section id="solutions" class="sec sec-domains" aria-labelledby="solutions-title">
       <div class="shell">
@@ -701,11 +705,13 @@
               height="1800"
             />
             <span class="domain-shade" aria-hidden="true"></span>
+            <a class="domain-link" href="/solutions/#geothermal" aria-labelledby="domain-geothermal-title">
             <div class="domain-copy">
-              <h3 data-i18n="domain.geothermal.title">Geothermal</h3>
+              <h3 id="domain-geothermal-title" data-i18n="domain.geothermal.title">Geothermal</h3>
               <p data-i18n="domain.geothermal.copy">Evidence-backed prioritization of geothermal exploration ground — the application the workflow above was built and published against.</p>
               <p class="domain-status mono is-active" data-i18n="domain.geothermal.status">Active · First application</p>
             </div>
+            </a>
           </li>
           <li class="domain-card" id="mining" data-label-tone="light" data-label-tone-locked data-reveal>
             <img
@@ -720,11 +726,13 @@
               height="1800"
             />
             <span class="domain-shade" aria-hidden="true"></span>
+            <a class="domain-link" href="/solutions/#mining" aria-labelledby="domain-mining-title">
             <div class="domain-copy">
-              <h3 data-i18n="domain.mining.title">Mining</h3>
+              <h3 id="domain-mining-title" data-i18n="domain.mining.title">Mining</h3>
               <p data-i18n="domain.mining.copy">The same evidence-to-priority workflow extended to mineral exploration targets.</p>
               <p class="domain-status mono" data-i18n="domain.mining.status">In development</p>
             </div>
+            </a>
           </li>
           <li class="domain-card" id="marine" data-label-tone="light" data-label-tone-locked data-reveal>
             <img
@@ -739,11 +747,13 @@
               height="1800"
             />
             <span class="domain-shade" aria-hidden="true"></span>
+            <a class="domain-link" href="/solutions/#marine" aria-labelledby="domain-marine-title">
             <div class="domain-copy">
-              <h3 data-i18n="domain.marine.title">Marine</h3>
+              <h3 id="domain-marine-title" data-i18n="domain.marine.title">Marine</h3>
               <p data-i18n="domain.marine.copy">Coastal and marine ground read as spatial evidence on the same footing.</p>
               <p class="domain-status mono" data-i18n="domain.marine.status">In development</p>
             </div>
+            </a>
           </li>
         </ul>
 

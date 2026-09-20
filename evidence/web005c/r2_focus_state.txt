@@ -1,0 +1,11 @@
+WEB-005C R2 - keyboard focus state on the homepage Solutions cards
+Chrome headless, 1440x900 DPR 1. :focus-visible armed by a real Tab keypress; each row
+below is the computed ::after style while that card holds keyboard focus.
+
+  /solutions/#geothermal     :focus-visible=True  outline=rgb(67, 191, 240) solid 2px  outline-offset=-2px
+  /solutions/#mining         :focus-visible=True  outline=rgb(67, 191, 240) solid 2px  outline-offset=-2px
+  /solutions/#marine         :focus-visible=True  outline=rgb(67, 191, 240) solid 2px  outline-offset=-2px
+
+The page's design-system focus token is 2px solid var(--accent) = rgb(67, 191, 240).
+The offset is inset (-2px) because .domain-card clips its own overflow, matching the
+other contained surfaces on the site (evidence tabs -2px, submenu -3px).

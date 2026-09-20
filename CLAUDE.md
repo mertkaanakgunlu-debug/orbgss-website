@@ -40,7 +40,9 @@ These are requirements, not suggestions:
 - Class-B assets have a hard honest-render ceiling on the long axis: **1249 device pixels** for the GEO-WEB-002 exports, and the **native 1200 px** grid for the WEB-005B homepage derivatives (design against 600 CSS px so a 2× display still fits; MER-151 would permit an enlarged presentation derivative, but none is published, so 600 CSS px remains the cap). Answer a bigger presentation with a contained composition, never a stretch — the homepage never upsamples a governed raster, even where MER-108 would permit it for the hero. Each asset records its own ceiling and its placement's measured `rendered` width, and the validator checks the layout against them.
 - Structure/geology is a deliberate data gap. No public-safe fault or lithology master is authorized, and the gap is score-invariant. Since WEB-005 it is a short subordinate footnote under Act 3 rather than a full scene. Do not fill it, and do not promote it back into an act.
 - The published score is `mvp_remote_sensing_priority_v1`, public label **Remote-Sensing Relative Priority — Experimental Baseline**: a deterministic 0–100 within-AOI screening surface. Never call it probability, Full Prospectivity, a reserve/resource estimate, discovery or drilling-success likelihood, or a cross-AOI calibrated score. Every proof panel carries its mandatory scientific warning as visible EN/TR copy.
-- Desktop navigation is right-aligned in exactly this order: Platform → Solutions (dropdown: Geothermal Exploration, Mineral Exploration, Environmental & Land Intelligence) → Pilot → Company → Contact → EN | TR. Every item resolves to a real anchor; no flags in the language switch.
+- The public domain taxonomy is exactly **Geothermal / Mining / Marine** (WEB-005C / MER-149), on the homepage, in the navigation and on `/solutions/` alike. The superseded application-ledger labels (Mineral Exploration, Environmental & Land Intelligence) must not return to visible copy. `/solutions/#mineral` and `/solutions/#environment` survive only as compatibility aliases on the renamed rows, and must keep resolving.
+- Desktop navigation is right-aligned in exactly this order: Platform → Solutions (dropdown: Geothermal, Mining, Marine) → Pilot → Company → Contact → EN | TR. Every item resolves to a real anchor; no flags in the language switch.
+- The three homepage Solutions cards are native links to `/solutions/#geothermal`, `/solutions/#mining` and `/solutions/#marine` (WEB-005C R2). They navigate without JavaScript and carry no CTA button, arrow or added copy — the card itself is the link.
 - The homepage is bilingual (English default, Turkish) via the lightweight client-side dictionary in `script.js`. Every new visible string needs both languages.
 - No `How it works` section.
 - No icon wall, feature-card grid, fake dashboard overlay, HUD chrome or decorative map pins.
@@ -53,10 +55,10 @@ If a requested change conflicts with these rules, stop and ask for explicit desi
 ## Content / claim discipline
 
 - OrbGSS is a geospatial intelligence / GIS platform with geothermal as the first pilot vertical.
-- Mineral and environmental/land intelligence may be presented as solution directions.
+- Mining and marine may be presented as solution directions.
 - Do not claim a capability, customer, pilot result, AI feature, benchmark, accuracy figure or production integration unless it is explicitly supported by current canonical material supplied by the user.
 - Keep copy concise. The design is not intended to explain the entire platform on the landing page.
-- Geothermal Exploration is the first active application; Mineral Exploration and Environmental & Land Intelligence are expansion directions and must be labelled as such.
+- Geothermal is the first active application; Mining and Marine are expansion directions and must be labelled as such.
 
 ## Imagery policy
 

@@ -1,0 +1,64 @@
+WEB-005C R2 / MER-149 - validator evidence
+Branch: feat/web-005c-public-domain-taxonomy-parity
+Working tree over: 289c8aef0c8237d1c4a123c1d2129c6142bd85ff (pre-commit)
+Python: Python 3.14.6
+
+=== scripts/validate_site.py ===
+OrbGSS site validation
+  scenes: 4
+  html images: 29
+  routes: 6
+  i18n keys referenced site-wide: 268
+  geo-web-002 package assets: 6 (19 files)
+  warnings: 0
+RESULT: PASS
+exit=0
+
+=== hero/scripts/validate_hero.py ===
+  PASS  no unallowlisted hero source file references a protected public-site path
+  PASS  public-site changes since the baseline stay inside the integration write surface
+
+420 checks, 0 failed
+VALIDATION PASSED
+
+=== scripts/negative_tests_web005.py ===
+
+72/72 deliberate regressions caught
+Restored tree:
+  site: exit 0 — PASS — identical to baseline
+  hero: exit 0 — PASS — identical to baseline
+
+=== scripts/negative_tests_web005b.py ===
+
+55/55 deliberate regressions caught
+Restored tree: site exit 0 — PASS — identical to baseline
+
+=== scripts/negative_tests_web005c.py ===
+WEB-005C negative tests — public domain taxonomy parity
+
+  CAUGHT  legacy #mineral deep link stops resolving (exit 1)
+  CAUGHT  legacy #environment deep link stops resolving (exit 1)
+  CAUGHT  the /solutions/ #mining row anchor drifts (exit 1)
+  CAUGHT  the /solutions/ #marine row anchor drifts (exit 1)
+  CAUGHT  the nav republishes a superseded label (exit 1)
+  CAUGHT  the nav taxonomy order is swapped (exit 1)
+  CAUGHT  a nav item points away from its domain row (exit 1)
+  CAUGHT  the EN domain name reverts in the dictionary (exit 1)
+  CAUGHT  the TR domain name reverts in the dictionary (exit 1)
+  CAUGHT  the /solutions/ row heading reverts in EN (exit 1)
+  CAUGHT  the /solutions/ row heading reverts in TR (exit 1)
+  CAUGHT  a superseded label returns through /company/ body copy (exit 1)
+  CAUGHT  a superseded label returns through the TR dictionary (exit 1)
+  CAUGHT  the Geothermal card stops being a link (exit 1)
+  CAUGHT  the Mining card links to the wrong domain (exit 1)
+  CAUGHT  the Marine card link loses its own accessible name (exit 1)
+  CAUGHT  a card title loses the id its link is named by (exit 1)
+  CAUGHT  the card links lose their visible focus state (exit 1)
+
+18/18 deliberate regressions caught
+Restored tree: site exit 0 — PASS — identical to baseline
+
+=== scripts/check_copy_preservation.py 289c8ae (R2 vs R1) ===
+Copy preservation: working tree vs 289c8aef0c82
+
+0 visible-copy difference(s)

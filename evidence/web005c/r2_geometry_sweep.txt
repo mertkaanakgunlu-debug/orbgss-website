@@ -1,0 +1,36 @@
+WEB-005C R2 / MER-149 - Solutions card geometry across a width sweep
+
+Each width measures, per card: the card box, its <img>, its .domain-shade, its .domain-copy,
+its <h3> and its .domain-status, as [left, documentTop, width, height] in CSS px.
+Before = the accepted baseline markup. After = the same cards wrapped in their native link.
+
+    320 px   identical   lead card [22, 5676, 276, 342], mining [22, 6038, 276, 342], marine [22, 6409, 276, 342]
+    360 px   identical   lead card [22, 5743, 316, 342], mining [22, 6101, 316, 342], marine [22, 6481, 316, 342]
+    390 px   identical   lead card [22, 5694, 346, 342], mining [22, 6052, 346, 342], marine [22, 6432, 346, 342]
+    414 px   identical   lead card [23, 5631, 368, 342], mining [23, 5989, 368, 342], marine [23, 6369, 368, 342]
+    480 px   identical   lead card [26, 5696, 427, 342], mining [26, 6054, 427, 342], marine [26, 6434, 427, 342]
+    560 px   identical   lead card [31, 5869, 498, 342], mining [31, 6227, 498, 342], marine [31, 6607, 498, 342]
+    640 px   identical   lead card [35, 5925, 570, 342], mining [35, 6283, 570, 342], marine [35, 6663, 570, 342]
+    700 px   identical   lead card [39, 5981, 623, 342], mining [39, 6339, 623, 342], marine [39, 6719, 623, 342]
+    768 px   identical   lead card [42, 5730, 684, 342], mining [42, 6088, 684, 342], marine [42, 6447, 684, 342]
+    820 px   identical   lead card [45, 5768, 730, 342], mining [45, 6126, 730, 342], marine [45, 6484, 730, 342]
+    900 px   identical   lead card [50, 5864, 801, 360], mining [50, 6240, 392, 300], marine [458, 6240, 392, 300]
+   1000 px   identical   lead card [55, 5993, 890, 360], mining [55, 6371, 436, 300], marine [509, 6371, 436, 300]
+   1001 px   identical   lead card [55, 5259, 891, 360], mining [55, 5637, 436, 300], marine [510, 5637, 436, 300]
+   1100 px   identical   lead card [61, 5539, 979, 360], mining [61, 5919, 480, 300], marine [560, 5919, 480, 300]
+   1200 px   identical   lead card [66, 5224, 1068, 360], mining [66, 5605, 523, 300], marine [611, 5605, 523, 300]
+   1280 px   identical   lead card [70, 5343, 1139, 360], mining [70, 5727, 558, 300], marine [652, 5727, 558, 300]
+   1366 px   identical   lead card [75, 5503, 1216, 360], mining [75, 5887, 596, 300], marine [695, 5887, 596, 300]
+   1440 px   identical   lead card [80, 5595, 1280, 360], mining [80, 5980, 627, 300], marine [733, 5980, 627, 300]
+   1600 px   identical   lead card [160, 5812, 1280, 360], mining [160, 6198, 627, 300], marine [813, 6198, 627, 300]
+   1720 px   identical   lead card [220, 5845, 1280, 360], mining [220, 6231, 627, 300], marine [873, 6231, 627, 300]
+   1920 px   identical   lead card [320, 5845, 1280, 360], mining [320, 6231, 627, 300], marine [973, 6231, 627, 300]
+   2200 px   identical   lead card [460, 5845, 1280, 360], mining [460, 6231, 627, 300], marine [1113, 6231, 627, 300]
+   2560 px   identical   lead card [640, 5845, 1280, 360], mining [640, 6231, 627, 300], marine [1293, 6231, 627, 300]
+
+widths swept: 23  (320 -> 2560)
+widths with ANY geometry difference: none
+
+The link is an in-flow block, so it keeps contributing the copy block's height to the card
+exactly as the copy block did on its own. That is why the cards do not collapse at any width,
+including the narrow ones where the wrapped sentence, not the min-height, sets the card height.

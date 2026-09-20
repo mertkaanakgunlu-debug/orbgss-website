@@ -77,6 +77,9 @@ PUBLIC_TAXONOMY = [
 # Superseded /solutions/ row anchors. They must stay resolvable on /solutions/ (as aliases on the
 # renamed rows) so an existing external deep link is not broken by the rename.
 LEGACY_DOMAIN_ANCHORS = ["mineral", "environment"]
+# WEB-005C R2: the three homepage Solutions cards are navigation surfaces. Each is a native link to
+# its own /solutions/ row, named by its own card title, so it works with JavaScript disabled and is
+# reachable and announced by keyboard. A card that loses its link silently stops being one.
 # Retired domain labels, EN and TR. Matched case-sensitively so the lowercase activity wording the
 # Mining row legitimately keeps ("... relevant to mineral targeting") is untouched.
 RETIRED_DOMAIN_LABELS = [
@@ -695,6 +698,36 @@ def main() -> int:
             if retired in lang_blocks.get(lang, ""):
                 fail(f"the {lang!r} dictionary still carries the superseded domain label "
                      f"{retired!r}; the public taxonomy is Geothermal / Mining / Marine", errors)
+
+    # WEB-005C R2: every homepage Solutions card navigates to its own /solutions/ row, as a native
+    # link (no JavaScript), named by its own title (no whole-card read-aloud, no untranslated label).
+    card_re = re.compile(r'<li class="domain-card[^"]*" id="([^"]+)"(.*?)</li>', re.S)
+    cards = {m.group(1): m.group(2) for m in card_re.finditer(html)}
+    for anchor_id, _, en_name, _ in PUBLIC_TAXONOMY:
+        body = cards.get(anchor_id)
+        if body is None:
+            fail(f"index.html: no Solutions card for the {en_name!r} domain", errors)
+            continue
+        link = re.search(r'<a class="domain-link" href="([^"]+)" aria-labelledby="([^"]+)">', body)
+        if not link:
+            fail(f"index.html: the {en_name!r} card is not a native link to its /solutions/ row "
+                 f"(WEB-005C R2: the card itself is the link, and it must work without JavaScript)",
+                 errors)
+            continue
+        want_href = f"/solutions/#{anchor_id}"
+        if link.group(1) != want_href:
+            fail(f"index.html: the {en_name!r} card links to {link.group(1)!r}, not {want_href!r}", errors)
+        labelled_by = link.group(2)
+        if not re.search(r'<h3 id="%s"' % re.escape(labelled_by), body):
+            fail(f"index.html: the {en_name!r} card link is labelled by #{labelled_by}, which is not "
+                 f"its own title; its accessible name would not be the domain name", errors)
+    # The focus state has to exist and actually DRAW something, or the card is a mouse-only
+    # control: a keyboard reader would tab onto it with nothing on screen to say where they are.
+    focus_rules = re.findall(r"\.domain-link:focus-visible(?:::after)?\s*\{([^}]*)\}",
+                             (ROOT / "styles.css").read_text(encoding="utf-8"))
+    if not any(re.search(r"outline:\s*\d", rule) for rule in focus_rules):
+        fail("styles.css declares no visible focus state for the Solutions card links "
+             "(WEB-005C R2 requires one consistent with the design system)", errors)
 
     # ------------------------------------------------------------------
     # Scientific imagery provenance, site-wide. Every scientific raster on any public route must
