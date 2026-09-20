@@ -57,15 +57,24 @@ case("act count: drop Act 2's data-act", INDEX,
                          ' aria-labelledby="context-title"', 1),
      site, "exactly four acts")
 
-case("evidence trio: add a fourth card", INDEX,
-     lambda t: t.replace('<li class="evidence-card" id="alteration"',
-                         '<li class="evidence-card" id="extra"></li>\n        '
-                         '<li class="evidence-card" id="alteration"', 1),
-     site, "exactly three cards")
+# WEB-005B R11: the accepted composition is ONE shared geographic frame read through exactly
+# three layers, so both directions have to fail — a fourth layer, and three separate frames (the
+# rejected three-equal-card gallery wearing the new class names).
+case("evidence stage: add a fourth layer plate", INDEX,
+     lambda t: t.replace('<figure class="evidence-plate" id="alteration"',
+                         '<figure class="evidence-plate" id="extra" data-layer="extra"></figure>\n'
+                         '                <figure class="evidence-plate" id="alteration"', 1),
+     site, "exactly three layer plates")
+
+case("evidence stage: each layer gets its own frame (the rejected gallery)", INDEX,
+     lambda t: t.replace('<figure class="evidence-plate" id="thermal"',
+                         '<div class="evidence-frame"></div>\n                '
+                         '<figure class="evidence-plate" id="thermal"', 1),
+     site, "exactly ONE shared frame")
 
 case("superseded component returns", INDEX,
-     lambda t: t.replace('<section id="context" class="act act-context"',
-                         '<section id="context" class="act act-context story-section"', 1),
+     lambda t: t.replace('<section id="context" class="sec sec-place"',
+                         '<section id="context" class="sec sec-place story-section"', 1),
      site, "superseded WEB-001/002 homepage component")
 
 case("hero video gets an eager <source>", INDEX,
@@ -75,8 +84,8 @@ case("hero video gets an eager <source>", INDEX,
      site, "eager sources")
 
 case("missing act anchor", INDEX,
-     lambda t: t.replace('<section id="priority" class="act act-priority"',
-                         '<section id="priority-x" class="act act-priority"', 1),
+     lambda t: t.replace('<section id="priority" class="sec sec-result"',
+                         '<section id="priority-x" class="sec sec-result"', 1),
      site, "missing required section ids")
 
 

@@ -1,0 +1,1 @@
+{"prefersReduced":true,"hasRevealClass":false,"heroVideoDisplay":"none","heroVideoSources":0,"heroVideoSrc":"","plateTransition":"0s","scrollBehavior":"auto","revealedHidden":0}

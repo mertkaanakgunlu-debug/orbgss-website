@@ -141,10 +141,15 @@ class SiteParser(HTMLParser):
         self.text: list[str] = []
         self.claim_text: list[str] = []
         self.visual_slots: list[tuple[str, str]] = []
-        # WEB-005: data-act on each major act section, in document order, and the evidence cards
-        # inside the one permitted card composition.
+        # WEB-005: data-act on each major act section, in document order.
         self.acts: list[str] = []
-        self.evidence_cards = 0
+        # WEB-005B R11: the accepted final design replaced the rejected three-equal-card gallery
+        # with ONE shared geographic frame holding three cross-faded plates and three selector
+        # tabs. Counting all three keeps the composition checkable in both directions: a fourth
+        # layer, a missing tab, or a second frame (a gallery by another name) all fail.
+        self.evidence_plates = 0
+        self.evidence_tabs = 0
+        self.evidence_frames = 0
         # <video> elements and the hero media URLs they declare, so the media envelope and the
         # "never download both encodes" rule can be checked from the markup.
         self.video_count = 0
@@ -187,8 +192,13 @@ class SiteParser(HTMLParser):
             self.visual_slots.append((str(data["data-visual-slot"]), str(data.get("data-visual-status") or "")))
         if data.get("data-act"):
             self.acts.append(str(data["data-act"]))
-        if tag == "li" and "evidence-card" in str(data.get("class") or "").split():
-            self.evidence_cards += 1
+        classes = str(data.get("class") or "").split()
+        if tag == "figure" and "evidence-plate" in classes:
+            self.evidence_plates += 1
+        if tag == "label" and "evidence-tab" in classes:
+            self.evidence_tabs += 1
+        if "evidence-frame" in classes:
+            self.evidence_frames += 1
         # WEB-005 hero media. The encodes are attached by script.js at runtime, so the markup
         # carries them as data- attributes; a <source> child or a src here would mean the browser
         # starts fetching video during parse, which is exactly what the media contract forbids.
@@ -386,11 +396,17 @@ def main() -> int:
     for section_id in REQUIRED_ACT_SECTION_IDS:
         if section_id not in parser.ids:
             fail(f"missing act anchor: #{section_id}", errors)
-    # Act 3 is the ONE deliberate card composition on the site, and it is exactly three evidence
-    # cards. Four would be a card wall; two would not be the accepted composition.
-    if parser.evidence_cards != 3:
-        fail(f"the evidence act must hold exactly three cards, found {parser.evidence_cards}",
+    # WEB-005B R11: Act 3 is ONE shared geographic frame read through exactly three layers. The
+    # frame is what makes the layers comparable, so there is exactly one of it; three plates and
+    # three tabs is the accepted composition. Three separately framed panels — the rejected
+    # three-equal-card gallery — would show up here as three frames.
+    if parser.evidence_frames != 1:
+        fail(f"the evidence act must hold exactly ONE shared frame, found "
+             f"{parser.evidence_frames}; separate frames per layer are the rejected gallery",
              errors)
+    if parser.evidence_plates != 3 or parser.evidence_tabs != 3:
+        fail(f"the evidence act must hold exactly three layer plates and three selector tabs, "
+             f"found {parser.evidence_plates} plates and {parser.evidence_tabs} tabs", errors)
     # The superseded rhythm, named so it cannot come back by accident.
     for retired in ("story-section", "story-beam", "layer-switch"):
         if f'class="{retired}' in html or f' {retired}"' in html:
@@ -932,11 +948,80 @@ def main() -> int:
                      f"at {dpr}x, above its native {native} px", errors)
             if str(rendered.get("selected_derivative", "")) not in own:
                 fail(f"web_005b asset {key!r} names a selected derivative that is not its own", errors)
-        # The CSS caps that make those records true.
-        for selector, cap in ((".context-band", 1600), (".evidence-card", 600), (".priority-frame", 600)):
+        # The CSS caps that make those records true. WEB-005B R11 renamed the Act-3 panel to the
+        # one shared frame and added the inspection aid, which draws the same governed rasters and
+        # therefore carries the same cap.
+        for selector, cap in ((".context-band", 1600), (".evidence-frame", 600),
+                              (".priority-frame", 600), (".inspect-frame", 600)):
             block = re.search(re.escape(selector) + r"\{[^}]*max-width:(\d+)px", css_text)
             if not block or int(block.group(1)) != cap:
                 fail(f"{selector} must be capped at max-width:{cap}px (native density)", errors)
+
+        # ------------------------------------------------------------------
+        # WEB-005B R11 inspection aid. Its whole claim is that both sides of the wipe are the SAME
+        # 36 x 36 km ground, which is only true if the photograph is scaled and offset by the
+        # recorded analysis-grid fractions. The prototype could only promise "approximate common
+        # framing"; these four numbers are what turns that into a fact, so they are recomputed here
+        # from the manifest rather than trusted as authored constants.
+        # ------------------------------------------------------------------
+        if aoi:
+            span_x, span_y = aoi["x1"] - aoi["x0"], aoi["y1"] - aoi["y0"]
+            want = (-aoi["x0"] / span_x * 100, -aoi["y0"] / span_y * 100, 100 / span_x, 100 / span_y)
+            got = re.search(r"\.inspect-base>img\{position:absolute;left:(-?[\d.]+)%;top:(-?[\d.]+)%;"
+                            r"width:([\d.]+)%;height:([\d.]+)%", css_text)
+            if not got:
+                fail("the inspection aid does not register its photograph against the recorded "
+                     "analysis-grid fractions; without that the two sides are not the same ground",
+                     errors)
+            elif any(abs(float(a) - b) > 0.01 for a, b in zip(got.groups(), want)):
+                fail(f"inspection-aid registration {got.groups()} does not match the recorded "
+                     f"analysis-grid bounds {tuple(round(v, 4) for v in want)}", errors)
+            if int(round(span_x * 3200)) != int(round(span_y * 1800)):
+                fail("the recorded analysis grid is not square inside the context frame; the "
+                     "inspection aid's square wipe would not be the same ground", errors)
+
+    # ------------------------------------------------------------------
+    # WEB-005B R11 domain cards. The three illustrative Landsat scenes were retired from the
+    # homepage by WEB-002 and are placed again by the accepted final design — as photography
+    # beside a domain, never as evidence. Each declares that placement, and the layout may not
+    # ask a 2x display for more pixels than the widest candidate it is offered.
+    # ------------------------------------------------------------------
+    for scene in scenes:
+        own = {str(d.get("path", "")) for d in scene.get("derivatives", [])}
+        shown_on = [r for r, rp in route_parsers.items() if all_srcs(rp) & own]
+        placement = scene.get("web_005b_placement")
+        sid = scene.get("id", "<unknown>")
+        if not shown_on:
+            if placement and placement.get("status") == "placed":
+                fail(f"scene {sid!r} claims a WEB-005B placement but appears on no route", errors)
+            continue
+        if not placement:
+            continue  # a scene placed by an earlier task keeps that task's contract
+        if [r for r in shown_on if r != ""]:
+            fail(f"scene {sid!r} is placed for the homepage but also appears on "
+                 f"{[ROUTES[r] for r in shown_on if r != '']}", errors)
+        rendered = placement.get("rendered", {})
+        for field in ("max_css_width", "device_pixel_ratio_considered", "widest_candidate_px",
+                      "selected_derivative"):
+            if rendered.get(field) in (None, ""):
+                fail(f"scene {sid!r} web_005b_placement.rendered missing {field}", errors)
+        css_w, dpr = rendered.get("max_css_width"), rendered.get("device_pixel_ratio_considered")
+        widest = rendered.get("widest_candidate_px")
+        if all(isinstance(v, (int, float)) for v in (css_w, dpr, widest)) and css_w * dpr > widest:
+            fail(f"scene {sid!r} is laid out at {css_w} CSS px = {int(css_w * dpr)} device px at "
+                 f"{dpr}x, above its widest {widest} px candidate", errors)
+        if str(rendered.get("selected_derivative", "")) not in own:
+            fail(f"scene {sid!r} names a selected derivative that is not its own", errors)
+        # An illustrative photograph that loses its "this is not a result" framing is exactly the
+        # kind of drift the imagery policy exists to stop.
+        for key in placement.get("visible_label_i18n_keys", []):
+            if key not in parser.i18n_keys:
+                fail(f"scene {sid!r} is placed on the homepage but its label key {key!r} is not "
+                     f"rendered there", errors)
+        for lang in ("en", "tr"):
+            if dictionary_value(lang, "domains.illustrative") is None:
+                fail(f"the domain photography footnote is missing from the {lang!r} dictionary",
+                     errors)
 
         root_block = re.search(r":root\{(.*?)\n\}", css_text, re.S)
         for name, value in WEB005B_TOKENS.items():

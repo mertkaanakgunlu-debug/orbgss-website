@@ -253,7 +253,71 @@ const I18N = {
     'contactPage.technical.title': 'Technical conversations',
     'contactPage.technical.copy': 'Talk through the evidence, the methodology boundaries, or how a pilot would be scoped.',
     'contactPage.technical.cta': 'Start a Technical Conversation',
-    'contactPage.direct.label': 'Direct'
+    'contactPage.direct.label': 'Direct',
+    /* WEB-005B R11 — the accepted final homepage design. */
+    'act.context.aoiMark': 'AOI · 36 × 36 km',
+    'act.context.grid': 'EPSG:32635 · 36 × 36 km',
+    'act.evidence.shown': 'Shown',
+    'act.evidence.terrain.index': '01',
+    'act.evidence.terrain.tab': 'Terrain / Elevation',
+    'act.evidence.terrain.body': 'Relief for reading the graben: the valley floor, the ridges that bound it, and the shape the evidence layers sit on.',
+    'act.evidence.terrain.meta': 'NASADEM · 30 m · elevation',
+    'act.evidence.thermal.index': '02',
+    'act.evidence.thermal.tab': 'THM-01 / Thermal',
+    'act.evidence.thermal.body': 'Relative surface thermal departure across the same area of interest, derived from Landsat thermal bands.',
+    'act.evidence.thermal.meta': 'THM-01 · Landsat thermal · 30 m',
+    'act.evidence.alteration.index': '03',
+    'act.evidence.alteration.tab': 'ALT-01 / Alteration',
+    'act.evidence.alteration.body': 'A broad spectral alteration proxy over the same grid, from Sentinel-2 reflectance.',
+    'act.evidence.alteration.meta': 'ALT-01 · Sentinel-2 · clay/hydroxyl',
+    'act.evidence.state.aoi': 'Kızıldere pilot AOI',
+    'act.evidence.state.grid': '36 × 36 km · 30 m · EPSG:32635',
+    'act.evidence.state.export': 'OrbGSS cartographic export',
+    'act.evidence.shared.frame': 'Shared frame · 36 × 36 km · 30 m · EPSG:32635',
+    'act.evidence.shared.registration': 'Three layers · one registration · no reprojection',
+    'act.priority.def.is.term': 'What it is',
+    'act.priority.def.is.copy': 'A within-area ranking of ground from 0 to 100, derived from the mapped evidence layers above.',
+    'act.priority.def.why.term': 'Why it matters',
+    'act.priority.def.why.copy': 'It turns a 36 × 36 km area into an ordered shortlist before anyone travels to it.',
+    'act.priority.def.for.term': 'What it is for',
+    'act.priority.def.for.copy': 'Deciding where to investigate next, with the evidence and its provenance attached.',
+    'act.priority.def.not.term': 'What it is not',
+    'inspect.kicker': 'Inspection aid',
+    'inspect.title': 'Hold a layer against the photograph.',
+    'inspect.copy': 'Wipe between the natural-colour view of the area of interest and one derived layer over the same ground. It is a way to look, not a published figure — and nothing on either side is filtered or recoloured.',
+    'inspect.against': 'Natural colour against',
+    'inspect.pairsLabel': 'Layer to compare',
+    'inspect.pair.thermal': 'THM-01 Thermal',
+    'inspect.pair.alteration': 'ALT-01 Alteration',
+    'inspect.pair.priority': 'Priority score',
+    'inspect.rangeLabel': 'Reveal the selected layer over the natural-colour view',
+    'inspect.tag.layer': 'Derived layer',
+    'inspect.tag.photo': 'Natural colour',
+    'inspect.note': 'A visual inspection aid, not a published report figure. Both sides are the files published above, on the same 36 × 36 km frame and the same 30 m grid; the wipe changes nothing about either. The published figures are the ones above.',
+    'alt.inspectBase': 'Natural-colour Landsat view of the Kızıldere area of interest, the base of the comparison',
+    'alt.inspectThermal': 'Thermal anomaly map of the same area of interest, revealed over the natural-colour view',
+    'alt.inspectAlteration': 'Alteration proxy map of the same area of interest, revealed over the natural-colour view',
+    'alt.inspectPriority': 'Relative priority map of the same area of interest, revealed over the natural-colour view',
+    'domains.illustrativeLabel': 'Illustrative',
+    'domains.illustrative': 'The three photographs above are public-domain Landsat scenes chosen to show the kind of ground each application reads. They are not OrbGSS analytical outputs, not results, and not the Kızıldere pilot area.',
+    'proof.kicker': 'Why it holds up',
+    'proof.title': 'Method, stated plainly.',
+    'proof.copy': 'Six commitments that govern what OrbGSS publishes. None of them is a performance claim.',
+    'proof.evidence.title': 'Evidence-backed screening',
+    'proof.evidence.copy': 'Priorities are derived from mapped layers, not from an unexplained model output.',
+    'proof.provenance.title': 'Traceable provenance',
+    'proof.provenance.copy': 'Every published visual maps back to a source dataset and a recorded export.',
+    'proof.gaps.title': 'Explicit data gaps',
+    'proof.gaps.copy': 'Where a layer does not exist, the absence is published in place of an invented one.',
+    'proof.aoi.title': 'AOI-first analysis',
+    'proof.aoi.copy': 'One declared area, one projection, one grid — comparability before interpretation.',
+    'proof.narrowing.title': 'Remote narrowing',
+    'proof.narrowing.copy': 'Large areas are ordered from orbit before field time is committed to them.',
+    'proof.decision.title': 'Decision support',
+    'proof.decision.copy': 'OrbGSS helps decide where to investigate. Field investigation remains necessary.',
+    'proof.foot': 'No accuracy, performance, deployment, customer or scale figures are published for this baseline.',
+    'contact.endTitle': "Let's talk about where to look next.",
+    'contact.endCta': 'Start a Technical Conversation'
   },
   tr: {
     'meta.title': 'OrbGSS — Coğrafi Zekâ',
@@ -495,7 +559,71 @@ const I18N = {
     'contactPage.technical.title': 'Teknik görüşmeler',
     'contactPage.technical.copy': 'Kanıtı, yöntem sınırlarını ya da bir pilotun nasıl kapsamlandırılacağını konuşalım.',
     'contactPage.technical.cta': 'Teknik Görüşme Başlatın',
-    'contactPage.direct.label': 'Doğrudan'
+    'contactPage.direct.label': 'Doğrudan',
+    /* WEB-005B R11 — the accepted final homepage design. */
+    'act.context.aoiMark': 'İlgi alanı · 36 × 36 km',
+    'act.context.grid': 'EPSG:32635 · 36 × 36 km',
+    'act.evidence.shown': 'Gösteriliyor',
+    'act.evidence.terrain.index': '01',
+    'act.evidence.terrain.tab': 'Arazi / Yükselti',
+    'act.evidence.terrain.body': 'Grabeni okumak için rölyef: vadi tabanı, onu sınırlayan sırtlar ve kanıt katmanlarının üzerine oturduğu biçim.',
+    'act.evidence.terrain.meta': 'NASADEM · 30 m · yükselti',
+    'act.evidence.thermal.index': '02',
+    'act.evidence.thermal.tab': 'THM-01 / Termal',
+    'act.evidence.thermal.body': 'Aynı ilgi alanı genelinde, Landsat termal bantlarından türetilen göreli yüzey termal sapması.',
+    'act.evidence.thermal.meta': 'THM-01 · Landsat termal · 30 m',
+    'act.evidence.alteration.index': '03',
+    'act.evidence.alteration.tab': 'ALT-01 / Alterasyon',
+    'act.evidence.alteration.body': 'Aynı ızgara üzerinde, Sentinel-2 yansıtımından elde edilen geniş kapsamlı spektral alterasyon vekili.',
+    'act.evidence.alteration.meta': 'ALT-01 · Sentinel-2 · kil/hidroksil',
+    'act.evidence.state.aoi': 'Kızıldere pilot ilgi alanı',
+    'act.evidence.state.grid': '36 × 36 km · 30 m · EPSG:32635',
+    'act.evidence.state.export': 'OrbGSS kartografik dışa aktarımı',
+    'act.evidence.shared.frame': 'Ortak çerçeve · 36 × 36 km · 30 m · EPSG:32635',
+    'act.evidence.shared.registration': 'Üç katman · tek bindirme · yeniden projeksiyon yok',
+    'act.priority.def.is.term': 'Ne olduğu',
+    'act.priority.def.is.copy': 'Yukarıdaki haritalanmış kanıt katmanlarından türetilen, alan içi 0-100 zemin sıralaması.',
+    'act.priority.def.why.term': 'Neden önemli',
+    'act.priority.def.why.copy': "36 × 36 km'lik bir alanı, kimse oraya gitmeden önce sıralı bir kısa listeye dönüştürür.",
+    'act.priority.def.for.term': 'Ne için',
+    'act.priority.def.for.copy': 'Kanıtı ve kökeni ekli hâlde, sırada nerenin inceleneceğine karar vermek.',
+    'act.priority.def.not.term': 'Ne olmadığı',
+    'inspect.kicker': 'İnceleme aracı',
+    'inspect.title': 'Bir katmanı fotoğrafın karşısına koyun.',
+    'inspect.copy': 'İlgi alanının doğal renkli görünümü ile aynı zemin üzerindeki bir türetilmiş katman arasında gezinin. Bu bir bakma yöntemidir, yayımlanmış bir şekil değildir — ve iki tarafta da hiçbir şey filtrelenmez ya da yeniden renklendirilmez.',
+    'inspect.against': 'Doğal rengin karşısında',
+    'inspect.pairsLabel': 'Karşılaştırılacak katman',
+    'inspect.pair.thermal': 'THM-01 Termal',
+    'inspect.pair.alteration': 'ALT-01 Alterasyon',
+    'inspect.pair.priority': 'Öncelik skoru',
+    'inspect.rangeLabel': 'Seçili katmanı doğal renkli görünümün üzerinde açın',
+    'inspect.tag.layer': 'Türetilmiş katman',
+    'inspect.tag.photo': 'Doğal renk',
+    'inspect.note': 'Görsel bir inceleme aracıdır, yayımlanmış bir rapor şekli değildir. Her iki taraf da yukarıda yayımlanan dosyalardır; aynı 36 × 36 km çerçeve ve aynı 30 m ızgara üzerindedir ve bu geçiş hiçbirini değiştirmez. Yayımlanmış şekiller yukarıdakilerdir.',
+    'alt.inspectBase': 'Kızıldere ilgi alanının doğal renkli Landsat görünümü; karşılaştırmanın temeli',
+    'alt.inspectThermal': 'Aynı ilgi alanının termal anomali haritası, doğal renkli görünümün üzerinde açılmış',
+    'alt.inspectAlteration': 'Aynı ilgi alanının alterasyon vekili haritası, doğal renkli görünümün üzerinde açılmış',
+    'alt.inspectPriority': 'Aynı ilgi alanının göreli öncelik haritası, doğal renkli görünümün üzerinde açılmış',
+    'domains.illustrativeLabel': 'Örnekleme',
+    'domains.illustrative': 'Yukarıdaki üç fotoğraf, her uygulamanın okuduğu zemin türünü göstermek için seçilmiş, kamuya açık Landsat sahneleridir. OrbGSS analitik çıktısı değildir, sonuç değildir ve Kızıldere pilot alanı değildir.',
+    'proof.kicker': 'Neden sağlam',
+    'proof.title': 'Yöntem, açıkça ifade edilmiş.',
+    'proof.copy': "OrbGSS'in yayımladıklarını yöneten altı taahhüt. Hiçbiri bir performans iddiası değildir.",
+    'proof.evidence.title': 'Kanıta dayalı ön eleme',
+    'proof.evidence.copy': 'Öncelikler, açıklanmamış bir model çıktısından değil, haritalanmış katmanlardan türetilir.',
+    'proof.provenance.title': 'İzlenebilir kaynak',
+    'proof.provenance.copy': 'Yayımlanan her görsel, bir kaynak veri kümesine ve kayıtlı bir dışa aktarıma geri izlenebilir.',
+    'proof.gaps.title': 'Açık veri boşlukları',
+    'proof.gaps.copy': 'Bir katman mevcut değilse, uydurulmuş bir katman yerine bu eksiklik yayımlanır.',
+    'proof.aoi.title': 'Önce ilgi alanı analizi',
+    'proof.aoi.copy': 'Tek bir bildirilmiş alan, tek projeksiyon, tek ızgara — yorumdan önce karşılaştırılabilirlik.',
+    'proof.narrowing.title': 'Uzaktan daraltma',
+    'proof.narrowing.copy': 'Geniş alanlar, saha zamanı ayrılmadan önce yörüngeden sıralanır.',
+    'proof.decision.title': 'Karar desteği',
+    'proof.decision.copy': 'OrbGSS nerenin inceleneceğine karar vermeye yardımcı olur. Saha incelemesi gerekli olmaya devam eder.',
+    'proof.foot': 'Bu temel sürüm için doğruluk, performans, devreye alma, müşteri veya ölçek rakamı yayımlanmaz.',
+    'contact.endTitle': 'Sırada nereye bakılacağını konuşalım.',
+    'contact.endCta': 'Teknik Görüşme Başlatın'
   }
 };
 
@@ -717,7 +845,7 @@ applyLanguage(readStoredLang());
 /* Graceful failure for self-hosted imagery: hide a scene that fails    */
 /* to load so the dark panel background shows, never a broken glyph.    */
 /* ------------------------------------------------------------------ */
-document.querySelectorAll('.panel-image, .story-panel > img, .evidence-card img').forEach((image) => {
+document.querySelectorAll('.panel-image, .story-panel > img, .evidence-plate img, .domain-card > img, .inspect-frame img').forEach((image) => {
   image.addEventListener('error', () => {
     image.style.visibility = 'hidden';
   }, { once: true });
@@ -1264,4 +1392,41 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     });
   }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
   items.forEach((item) => observer.observe(item));
+})();
+
+/* ------------------------------------------------------------------ */
+/* WEB-005B R11 inspection aid                                          */
+/*                                                                      */
+/* The wipe is a progressive enhancement over a composition that        */
+/* already reads: the three radios are the layer choice and CSS shows   */
+/* the selected one, so with no JavaScript the frame rests at a static  */
+/* 50/50 split and still says what it is. What JavaScript adds is the   */
+/* drag: a range input covering the whole frame, so the touch target is */
+/* the figure rather than a thin handle, and arrow keys move it for     */
+/* free. The input is display:none until this runs — an input nothing   */
+/* listens to is worse than no input at all.                            */
+/*                                                                      */
+/* Nothing here touches a pixel of either raster. The only thing that   */
+/* moves is the --pos custom property the clip and the divider read.    */
+/* ------------------------------------------------------------------ */
+(function inspectionAid() {
+  const frame = document.querySelector('.inspect-frame');
+  const range = frame ? frame.querySelector('.inspect-range') : null;
+  if (!frame || !range) return;
+
+  let queued = false;
+  function paint() {
+    queued = false;
+    frame.style.setProperty('--pos', `${range.value}%`);
+  }
+  function schedule() {
+    if (queued) return;
+    queued = true;
+    window.requestAnimationFrame(paint);
+  }
+
+  range.addEventListener('input', schedule);
+  range.addEventListener('change', schedule);
+  frame.classList.add('is-live');
+  paint();
 })();

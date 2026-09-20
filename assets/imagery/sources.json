@@ -152,6 +152,83 @@
         "status": "retired-from-homepage",
         "slots": [],
         "note": "Retained with full provenance and rights, no longer placed on the homepage: WEB-002 replaced the temporary gallery story panels with real product proof."
+      },
+      "derivatives": [
+        {
+          "path": "assets/imagery/yellowstone-2013-900.webp",
+          "role": "domain-card-responsive",
+          "width_px": 900,
+          "height_px": 562,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/yellowstone-2013.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 94190,
+          "sha256": "a3bae4ea3faae42a4da83d1fe235e4f6bfda7e457acfbf9848cc9072f15101cb"
+        },
+        {
+          "path": "assets/imagery/yellowstone-2013-1400.webp",
+          "role": "domain-card-responsive",
+          "width_px": 1400,
+          "height_px": 875,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/yellowstone-2013.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 217914,
+          "sha256": "0c34150468d9a4f945cc6262afa30538ea27d1684c6d3d4bbe6e2f41f49ffbfb"
+        },
+        {
+          "path": "assets/imagery/yellowstone-2013-1800.webp",
+          "role": "domain-card-responsive",
+          "width_px": 1800,
+          "height_px": 1125,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/yellowstone-2013.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 343724,
+          "sha256": "c8df1af0f29569a0c8c59463b7804cc67b504b217895cc15b817edc253bab0ca"
+        },
+        {
+          "path": "assets/imagery/yellowstone-2013-2400.webp",
+          "role": "domain-card-responsive",
+          "width_px": 2400,
+          "height_px": 1500,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/yellowstone-2013.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 532930,
+          "sha256": "7d11c4c726b58d8a6defa4ba7e4f4e704af9d91b1046d2f9b87758ec5f285aca"
+        },
+        {
+          "path": "assets/imagery/yellowstone-2013-2880.webp",
+          "role": "domain-card-responsive",
+          "width_px": 2880,
+          "height_px": 1800,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/yellowstone-2013.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 724378,
+          "sha256": "c1dead804d8783ad8f9d54b53b6d5c60a10c90cabecf3ac20c525e7d413a69bc"
+        }
+      ],
+      "web_005b_placement": {
+        "task": "WEB-005B / MER-109",
+        "status": "placed",
+        "section": "Domains",
+        "homepage_slot": "domain-geothermal",
+        "anchor": "geothermal",
+        "routes": [
+          "index.html"
+        ],
+        "public_role": "illustrative photography",
+        "note": "Illustrative public-domain Landsat scene shown beside a domain and its status. It is NOT an OrbGSS analytical output, not a result and not the Kizildere pilot area; the card carries its own location, coordinates and \"Natural-color composite\" label and the section footnote (i18n domains.illustrative) says so in both languages.",
+        "visible_label_i18n_keys": [
+          "scene.yellowstone.place",
+          "scene.kind.naturalColor"
+        ],
+        "rendered": {
+          "max_css_width": 1278,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 2556,
+          "widest_candidate_px": 2880,
+          "selected_derivative": "assets/imagery/yellowstone-2013-2880.webp",
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
+          "measured_max_css_width": 1278
+        }
       }
     },
     {
@@ -210,6 +287,63 @@
         "status": "retired-from-homepage",
         "slots": [],
         "note": "Retained with full provenance and rights, no longer placed on the homepage: WEB-002 replaced the temporary gallery story panels with real product proof."
+      },
+      "derivatives": [
+        {
+          "path": "assets/imagery/chuquicamata-2024-900.webp",
+          "role": "domain-card-responsive",
+          "width_px": 900,
+          "height_px": 562,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/chuquicamata-2024.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 129918,
+          "sha256": "4590ec1e8ea35dc9e8482dd89ca212886f270afbfe607ed40bf60c431e4762fb"
+        },
+        {
+          "path": "assets/imagery/chuquicamata-2024-1400.webp",
+          "role": "domain-card-responsive",
+          "width_px": 1400,
+          "height_px": 875,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/chuquicamata-2024.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 300272,
+          "sha256": "cd169ce9fff1e959ee438d8488cc16a83a2d1817b0b88370ffffb6b863fabf95"
+        },
+        {
+          "path": "assets/imagery/chuquicamata-2024-1800.webp",
+          "role": "domain-card-responsive",
+          "width_px": 1800,
+          "height_px": 1125,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/chuquicamata-2024.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 475452,
+          "sha256": "085a52d4834a752e0555b1988cffd03ff041c41b47ae087f73ba161b2e6bb716"
+        }
+      ],
+      "web_005b_placement": {
+        "task": "WEB-005B / MER-109",
+        "status": "placed",
+        "section": "Domains",
+        "homepage_slot": "domain-mineral",
+        "anchor": "mineral",
+        "routes": [
+          "index.html"
+        ],
+        "public_role": "illustrative photography",
+        "note": "Illustrative public-domain Landsat scene shown beside a domain and its status. It is NOT an OrbGSS analytical output, not a result and not the Kizildere pilot area; the card carries its own location, coordinates and \"Natural-color composite\" label and the section footnote (i18n domains.illustrative) says so in both languages.",
+        "visible_label_i18n_keys": [
+          "scene.chuquicamata.place",
+          "scene.kind.naturalColor"
+        ],
+        "rendered": {
+          "max_css_width": 728,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 1455.62,
+          "widest_candidate_px": 1800,
+          "selected_derivative": "assets/imagery/chuquicamata-2024-1800.webp",
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
+          "measured_max_css_width": 727.81
+        }
       }
     },
     {
@@ -269,6 +403,63 @@
         "status": "retired-from-homepage",
         "slots": [],
         "note": "Retained with full provenance and rights, no longer placed on the homepage: WEB-002 replaced the temporary gallery story panels with real product proof."
+      },
+      "derivatives": [
+        {
+          "path": "assets/imagery/ili-delta-2020-900.webp",
+          "role": "domain-card-responsive",
+          "width_px": 900,
+          "height_px": 562,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/ili-delta-2020.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 132592,
+          "sha256": "27ae3b2fe8d468c987f1920c3aad03162a55aa25fc2922104d5e40aa84b73140"
+        },
+        {
+          "path": "assets/imagery/ili-delta-2020-1400.webp",
+          "role": "domain-card-responsive",
+          "width_px": 1400,
+          "height_px": 875,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/ili-delta-2020.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 300306,
+          "sha256": "6a7610b08189ba2dca81e4f88011472a7dbd7e85cde1e6438fc2fb8c48bd7b7e"
+        },
+        {
+          "path": "assets/imagery/ili-delta-2020-1800.webp",
+          "role": "domain-card-responsive",
+          "width_px": 1800,
+          "height_px": 1125,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/ili-delta-2020.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 452298,
+          "sha256": "86520da7d3e744b2b1980c71f33fd414b7a34f7c75af4ee1f4932e5d31a48ff9"
+        }
+      ],
+      "web_005b_placement": {
+        "task": "WEB-005B / MER-109",
+        "status": "placed",
+        "section": "Domains",
+        "homepage_slot": "domain-environment",
+        "anchor": "environment",
+        "routes": [
+          "index.html"
+        ],
+        "public_role": "illustrative photography",
+        "note": "Illustrative public-domain Landsat scene shown beside a domain and its status. It is NOT an OrbGSS analytical output, not a result and not the Kizildere pilot area; the card carries its own location, coordinates and \"Natural-color composite\" label and the section footnote (i18n domains.illustrative) says so in both languages.",
+        "visible_label_i18n_keys": [
+          "scene.ili.place",
+          "scene.kind.naturalColor"
+        ],
+        "rendered": {
+          "max_css_width": 728,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 1455.62,
+          "widest_candidate_px": 1800,
+          "selected_derivative": "assets/imagery/ili-delta-2020-1800.webp",
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
+          "measured_max_css_width": 727.81
+        }
       }
     }
   ],
@@ -3333,8 +3524,8 @@
           "selected_derivative": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
           "measured_max_css_width": 1600,
           "measured_max_device_px_at_2x": 3200,
-          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (13 widths x 2 DPRs); the widest render is recorded, never the sizes attribute.",
-          "measurement_note": "drawn width of the object-fit:cover photograph (the 4:5 / 4:3 phone windows draw it wider than the box: 833 CSS px at 375)"
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
+          "measurement_note": "drawn width of the object-fit:cover photograph; at 1101 px and above the frame is exactly 16:9 and the drawn width equals the band width, capped at 1600"
         }
       },
       "terrain": {
@@ -3362,9 +3553,10 @@
           "max_device_px": 1200,
           "native_px": 1200,
           "selected_derivative": "assets/proof/web005b/terrain-1200-d.webp",
-          "measured_max_css_width": 417,
-          "measured_max_device_px_at_2x": 834,
-          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (13 widths x 2 DPRs); the widest render is recorded, never the sizes attribute."
+          "measured_max_css_width": 598,
+          "measured_max_device_px_at_2x": 1196,
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
+          "measurement_note": "the shared evidence frame, capped at 600 CSS px"
         }
       },
       "thm01": {
@@ -3393,9 +3585,10 @@
           "max_device_px": 1200,
           "native_px": 1200,
           "selected_derivative": "assets/proof/web005b/thm01-1200.webp",
-          "measured_max_css_width": 417,
-          "measured_max_device_px_at_2x": 834,
-          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (13 widths x 2 DPRs); the widest render is recorded, never the sizes attribute."
+          "measured_max_css_width": 598,
+          "measured_max_device_px_at_2x": 1196,
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
+          "measurement_note": "the shared evidence frame, capped at 600 CSS px"
         }
       },
       "alt01": {
@@ -3425,9 +3618,10 @@
           "max_device_px": 1200,
           "native_px": 1200,
           "selected_derivative": "assets/proof/web005b/alt01-1200.webp",
-          "measured_max_css_width": 417,
-          "measured_max_device_px_at_2x": 834,
-          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (13 widths x 2 DPRs); the widest render is recorded, never the sizes attribute."
+          "measured_max_css_width": 598,
+          "measured_max_device_px_at_2x": 1196,
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
+          "measurement_note": "the shared evidence frame, capped at 600 CSS px"
         }
       },
       "priority": {
@@ -3457,11 +3651,42 @@
           "max_device_px": 1200,
           "native_px": 1200,
           "selected_derivative": "assets/proof/web005b/priority-1200.webp",
-          "measured_max_css_width": 598,
-          "measured_max_device_px_at_2x": 1196,
-          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (13 widths x 2 DPRs); the widest render is recorded, never the sizes attribute."
+          "measured_max_css_width": 598.02,
+          "measured_max_device_px_at_2x": 1196.04,
+          "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
+          "measurement_note": "the result map, capped at 600 CSS px"
         }
       }
+    },
+    "inspection_aid": {
+      "task": "WEB-005B / MER-109 R11",
+      "role": "inspection aid - not a published figure",
+      "section": "#inspect, between the result and the domains",
+      "registration": {
+        "basis": "web_005b.context.frame.aoi_in_frame",
+        "method": "the natural-colour photograph is scaled and offset by the recorded analysis-grid fractions so the wipe compares the same 36 x 36 km ground; presentation scaling only - no reprojection, resampling of values, filtering or recolouring",
+        "css": {
+          "left_pct": -45.0835,
+          "top_pct": -25.0,
+          "width_pct": 266.6667,
+          "height_pct": 150.0
+        }
+      },
+      "rendered": {
+        "photograph": {
+          "measured_max_css_width": 1595.6,
+          "measured_max_device_px_at_2x": 3191.2,
+          "native_px": 3200
+        },
+        "derived_layer": {
+          "measured_max_css_width": 598,
+          "measured_max_device_px_at_2x": 1196,
+          "native_px": 1200
+        },
+        "device_pixel_ratio_considered": 2,
+        "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute."
+      },
+      "visible_caveat_i18n_key": "inspect.note"
     }
   }
 }

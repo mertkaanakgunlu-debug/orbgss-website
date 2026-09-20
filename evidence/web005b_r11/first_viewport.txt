@@ -1,0 +1,6 @@
+WEB-005B R11 first-viewport ownership (Act 02 must not be visible at scroll 0)
+
+desktop 1440x900: viewport height 900, hero ends at 900, Act 02 starts at 900 -> no leak
+desktop 1920x1080: viewport height 1080, hero ends at 1080, Act 02 starts at 1080 -> no leak
+mobile 390x844 @2x: viewport height 844, hero ends at 844, Act 02 starts at 844 -> no leak
+reduced motion 1440x900: viewport height 900, hero ends at 900, Act 02 starts at 900 -> no leak

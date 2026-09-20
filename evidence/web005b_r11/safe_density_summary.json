@@ -1,0 +1,111 @@
+{
+ "context_max_css": 1600,
+ "terrain_max_css": 598,
+ "thermal_max_css": 598,
+ "alteration_max_css": 598,
+ "priority_max_css": 598.02,
+ "inspect_base_max_css": 1595.6,
+ "inspect_layer_max_css": 598,
+ "domain_lead_max_css": 1278,
+ "domain_mineral_max_css": 727.81,
+ "domain_env_max_css": 727.81,
+ "first_viewport_leak": [],
+ "horizontal_overflow": [],
+ "aoi_mark_shown_only_at_16_9": [
+  [
+   360,
+   "none",
+   0.8
+  ],
+  [
+   375,
+   "none",
+   0.8
+  ],
+  [
+   390,
+   "none",
+   0.8
+  ],
+  [
+   414,
+   "none",
+   0.8
+  ],
+  [
+   560,
+   "none",
+   0.8
+  ],
+  [
+   700,
+   "none",
+   1.333
+  ],
+  [
+   768,
+   "block",
+   1.778
+  ],
+  [
+   820,
+   "block",
+   1.778
+  ],
+  [
+   900,
+   "block",
+   1.778
+  ],
+  [
+   1000,
+   "block",
+   1.778
+  ],
+  [
+   1024,
+   "block",
+   1.778
+  ],
+  [
+   1101,
+   "block",
+   1.778
+  ],
+  [
+   1180,
+   "block",
+   1.778
+  ],
+  [
+   1280,
+   "block",
+   1.778
+  ],
+  [
+   1440,
+   "block",
+   1.778
+  ],
+  [
+   1600,
+   "block",
+   1.778
+  ],
+  [
+   1920,
+   "block",
+   1.778
+  ],
+  [
+   2560,
+   "block",
+   1.778
+  ],
+  [
+   3840,
+   "block",
+   1.778
+  ]
+ ]
+}

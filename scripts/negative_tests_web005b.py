@@ -85,7 +85,7 @@ case("AOI corner marks drift off the analysis grid", STYLES,
 case("Product cyan token drifts", STYLES,
      lambda t: t.replace("--orb-cyan:#73E7FF;", "--orb-cyan:#43BFF0;", 1), "palette token --orb-cyan")
 case("a palette token is redefined a second time", STYLES,
-     lambda t: t.replace(".act{--act-inline:", ".act{--orb-surface:#101010;--act-inline:", 1),
+     lambda t: t.replace(".sec{position:relative;", ".sec{--orb-surface:#101010;position:relative;", 1),
      "palette token --orb-surface")
 
 # ---- B-VIS-06 / B-VIS-08 priority semantics and legend ---------------------------------------
@@ -93,14 +93,16 @@ case("priority public label reworded", SCRIPT,
      lambda t: t.replace("'label.priority': 'Remote-Sensing Relative Priority — Experimental Baseline'",
                          "'label.priority': 'Geothermal Priority'", 1), "priority public label changed")
 case("priority warning dropped from the static page", INDEX,
-     lambda t: re.sub(r'(<p class="act-note beam-note" data-i18n="act.priority.note">)[^<]*(</p>)',
+     lambda t: re.sub(r'(<dd class="beam-note" data-i18n="act.priority.note">)[^<]*(</dd>)',
                       r"\1Screening only.\2", t, count=1), "lost required wording")
 case("detached colour strip returns to the homepage", INDEX,
      lambda t: t.replace('<div class="priority-legend">', '<div class="scale-strip"></div><div class="priority-legend">', 1),
      "detached scientific scale strip")
 case("legend moved out of the result figure", INDEX,
      lambda t: t.replace('src="assets/proof/web005b/priority-legend-ramp.png"', 'src=""', 1)
-                .replace("    <!-- PILOT:", '    <img src="assets/proof/web005b/priority-legend-ramp.png" alt="" />\n    <!-- PILOT:', 1),
+                .replace("    <!--\r\n      INSPECTION AID",
+                         '    <img src="assets/proof/web005b/priority-legend-ramp.png" alt="" />\r\n'
+                         '    <!--\r\n      INSPECTION AID', 1),
      "legend must sit inside the result figure")
 
 # ---- B-VIS-07 safe density ------------------------------------------------------------------
@@ -153,6 +155,50 @@ case("the coupled legend is re-encoded lossy", SOURCES,
 case("a WEB-005B asset leaks onto /pilot/", PILOT,
      lambda t: t.replace("</main>", '<img src="/assets/proof/web005b/terrain-600.webp" alt="" /></main>', 1),
      "published beyond the homepage")
+
+
+# ---- R11 inspection aid ----------------------------------------------------------------------
+# Its only claim is that both sides of the wipe are the same 36 x 36 km ground. That is true
+# because the photograph is offset by the recorded analysis-grid fractions and false the moment
+# those numbers drift, which is exactly what the prototype's "approximate common framing" was.
+case("inspection aid registration drifts off the analysis grid", STYLES,
+     lambda t: t.replace(".inspect-base>img{position:absolute;left:-45.0835%",
+                         ".inspect-base>img{position:absolute;left:-40%", 1),
+     "does not match the recorded analysis-grid bounds")
+case("inspection aid loses its registration entirely", STYLES,
+     lambda t: t.replace(".inspect-base>img{position:absolute;",
+                         ".inspect-base>img{position:static;", 1),
+     "does not register its photograph")
+case("inspection aid frame widened past native density", STYLES,
+     lambda t: t.replace(".inspect-frame{position:relative;width:100%;max-width:600px",
+                         ".inspect-frame{position:relative;width:100%;max-width:900px", 1),
+     "must be capped")
+
+
+# ---- R11 domain photography -------------------------------------------------------------------
+def scene(sid, fn):
+    def apply(t):
+        d = json.loads(t)
+        fn(next(s for s in d["scenes"] if s["id"] == sid))
+        return json.dumps(d, indent=2, ensure_ascii=False) + "\n"
+    return apply
+
+
+case("a domain card is laid out above its widest candidate", SOURCES,
+     scene("chuquicamata-2024",
+           lambda s: s["web_005b_placement"]["rendered"].update(max_css_width=1200)),
+     "above its widest")
+case("a domain card names a derivative that is not its own", SOURCES,
+     scene("ili-delta-2020",
+           lambda s: s["web_005b_placement"]["rendered"].update(
+               selected_derivative="assets/imagery/yellowstone-2013-1400.webp")),
+     "selected derivative that is not its own")
+case("a domain photograph loses its on-image location label", INDEX,
+     lambda t: t.replace('<span data-i18n="scene.yellowstone.place">', '<span>', 1),
+     "label key 'scene.yellowstone.place' is not rendered")
+case("the illustrative-photography footnote is dropped from the dictionary", SCRIPT,
+     lambda t: t.replace("    'domains.illustrative': 'The three photographs", "    'x.removed': 'The three photographs", 1),
+     "domain photography footnote is missing")
 
 
 def main() -> int:
