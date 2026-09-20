@@ -57,9 +57,12 @@ def canonical_url(route: str) -> str:
 # #environment anchors belong to /solutions/, which keeps its own application-ledger vocabulary and
 # is still the target of every nav link; an existing route anchor is not authority to rename a
 # published homepage domain.
+# WEB-005B R14: the section is "Solutions" and carries the #solutions anchor; it is no longer
+# framed as a pilot panel, so there is no #pilot section on the homepage. The /pilot/ ROUTE is
+# unaffected and is still required above.
 REQUIRED_SECTION_IDS = {
     "hero", "context", "evidence", "terrain", "thermal", "alteration", "structure", "priority",
-    "pilot", "solutions", "geothermal", "mining", "marine", "company", "contact",
+    "solutions", "geothermal", "mining", "marine", "company", "contact",
 }
 # WEB-005: the homepage's primary visual hierarchy is exactly these four acts, in this order.
 REQUIRED_ACTS = ["1", "2", "3", "4"]
@@ -102,6 +105,12 @@ WEB005B_TOPOLOGY = {
     "alt01": "alt_violet_blue_cyan_green_yellow_v1", "priority": "priority_deep_purple_red_orange_yellow_v1",
 }
 WEB005B_NATIVE_PX = 1200
+# WEB-005B R14: the wording the domain-photography footnote may not lose. The per-card captions
+# that used to carry this are gone, so this footnote is the whole of the honesty now.
+DOMAIN_FOOTNOTE_TERMS = {
+    "en": ["not OrbGSS analytical outputs", "not results", "not the Kızıldere pilot area"],
+    "tr": ["OrbGSS analitik çıktısı değildir", "sonuç değildir", "Kızıldere pilot alanı değildir"],
+}
 # Transforms the terminal amendment allows for the hero surface only; a homepage derivative that
 # records using one of them is outside 11c32e8d.
 WEB005B_HERO_ONLY = ("display window", "gamma / tone transfer", "gaussian smoothing", "unsharp", "upsampling")
@@ -817,15 +826,24 @@ def main() -> int:
                 fail(f"web_005b.context {rel} is wider than the native frame", errors)
         w5b_own["context"] = own
         aoi = ctx.get("frame", {}).get("aoi_in_frame", {})
+        if not aoi:
+            fail("web_005b.context has no recorded analysis-grid geometry (frame.aoi_in_frame)",
+                 errors)
+        # WEB-005B R14 removed the Act 2 AOI overlay: the copy column hid 72-100% of it at every
+        # desktop width and no crop separates them. The rule is now conditional rather than deleted
+        # -- if an overlay ever comes back it must still be drawn from the recorded fractions and
+        # not from eyeballed ones, and it may not come back as bare markup with no geometry behind
+        # it. The recorded geometry itself is still checked, below, against the inspection aid.
         mark = re.search(r"\.aoi-mark\{position:absolute;left:([\d.]+)%;right:([\d.]+)%;"
                          r"top:([\d.]+)%;bottom:([\d.]+)%", css_text)
-        if not mark or not aoi:
-            fail("Act 2 AOI corner marks or their recorded geometry are missing", errors)
-        else:
+        if mark and aoi:
             expect = (aoi["x0"] * 100, (1 - aoi["x1"]) * 100, aoi["y0"] * 100, (1 - aoi["y1"]) * 100)
             if any(abs(float(got) - want) > 0.001 for got, want in zip(mark.groups(), expect)):
                 fail(f"Act 2 AOI corner marks {mark.groups()} do not match the recorded analysis-grid "
                      f"bounds {tuple(round(v, 4) for v in expect)}", errors)
+        elif "aoi-mark" in home:
+            fail("index.html draws an .aoi-mark overlay but styles.css no longer positions it from "
+                 "the recorded analysis-grid fractions", errors)
 
         ana = w5b.get("analytical", {})
         layers = ana.get("layers", {})
@@ -1017,15 +1035,26 @@ def main() -> int:
         if str(rendered.get("selected_derivative", "")) not in own:
             fail(f"scene {sid!r} names a selected derivative that is not its own", errors)
         # An illustrative photograph that loses its "this is not a result" framing is exactly the
-        # kind of drift the imagery policy exists to stop.
-        for key in placement.get("visible_label_i18n_keys", []):
+        # kind of drift the imagery policy exists to stop. WEB-005B R14 removed the per-card
+        # location/coordinate/kind captions at Product's instruction, which makes the section
+        # footnote the SOLE carrier of that framing — so it is checked harder than the captions
+        # were: it must be rendered on the page, it must be in both dictionaries, and it must still
+        # say the three things that make it work.
+        for key in placement.get("visible_framing_i18n_keys", []):
             if key not in parser.i18n_keys:
-                fail(f"scene {sid!r} is placed on the homepage but its label key {key!r} is not "
+                fail(f"scene {sid!r} is placed on the homepage but its framing key {key!r} is not "
                      f"rendered there", errors)
         for lang in ("en", "tr"):
-            if dictionary_value(lang, "domains.illustrative") is None:
+            note = dictionary_value(lang, "domains.illustrative")
+            if note is None:
                 fail(f"the domain photography footnote is missing from the {lang!r} dictionary",
                      errors)
+                continue
+            for term in DOMAIN_FOOTNOTE_TERMS[lang]:
+                if term not in note:
+                    fail(f"the {lang!r} domain photography footnote lost required wording "
+                         f"{term!r}; it is the only thing left telling a reader these photographs "
+                         f"are not OrbGSS results from the pilot area", errors)
 
         root_block = re.search(r":root\{(.*?)\n\}", css_text, re.S)
         for name, value in WEB005B_TOKENS.items():

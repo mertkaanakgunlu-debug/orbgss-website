@@ -77,9 +77,14 @@ case("context photograph claims a different product", SOURCES,
      "not the recorded USGS Landsat product")
 case("context derivative wider than its native frame", SOURCES,
      manifest(lambda w: w["context"]["derivatives"][0].update(width=4000)), "wider than the native frame")
-case("AOI corner marks drift off the analysis grid", STYLES,
-     lambda t: t.replace(".aoi-mark{position:absolute;left:16.9063%", ".aoi-mark{position:absolute;left:20%", 1),
-     "do not match the recorded analysis-grid")
+# WEB-005B R14 removed the Act 2 AOI overlay (the copy column hid 72-100% of it and no crop
+# separates them), so the marks can no longer drift. What must still fail is the overlay coming
+# BACK as bare markup with no recorded geometry positioning it.
+case("an AOI overlay returns to Act 2 with no recorded geometry behind it", INDEX,
+     lambda t: t.replace('<div class="context-shade" aria-hidden="true"></div>',
+                         '<div class="context-shade" aria-hidden="true"></div>'
+                         '<span class="aoi-mark" aria-hidden="true"></span>', 1),
+     "no longer positions it from the recorded analysis-grid fractions")
 
 # ---- B-VIS-05 tokens ------------------------------------------------------------------------
 case("Product cyan token drifts", STYLES,
@@ -193,9 +198,15 @@ case("a domain card names a derivative that is not its own", SOURCES,
            lambda s: s["web_005b_placement"]["rendered"].update(
                selected_derivative="assets/imagery/yellowstone-2013-1400.webp")),
      "selected derivative that is not its own")
-case("a domain photograph loses its on-image location label", INDEX,
-     lambda t: t.replace('<span data-i18n="scene.yellowstone.place">', '<span>', 1),
-     "label key 'scene.yellowstone.place' is not rendered")
+# R14 removed the per-card captions, so the section footnote is the only thing left telling a
+# reader these photographs are of other places. It is checked harder than the captions were.
+case("the illustrative footnote is dropped from the page", INDEX,
+     lambda t: t.replace('data-i18n="domains.illustrative"', 'data-i18n="domains.illustrativeX"', 1),
+     "framing key 'domains.illustrative' is not rendered")
+case("the illustrative footnote stops saying these are not results", SCRIPT,
+     lambda t: t.replace('They are not OrbGSS analytical outputs, not results, and not the '
+                         'Kızıldere pilot area.', 'Shown for illustration.', 1),
+     "lost required wording")
 case("the illustrative-photography footnote is dropped from the dictionary", SCRIPT,
      lambda t: t.replace("    'domains.illustrative': 'The three photographs", "    'x.removed': 'The three photographs", 1),
      "domain photography footnote is missing")

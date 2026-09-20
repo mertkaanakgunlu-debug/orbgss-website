@@ -208,10 +208,16 @@ body.home{background:var(--orb-bg)}
    deliberately has none: the hero already ends on its own bottom shade, and a line there would be
    exactly the hard edge R10 section 4 asks for the absence of. */
 .sec-evidence,.sec-result,.sec-inspect,.sec-domains,.sec-proof,.sec-company,.sec-contact{border-top:1px solid var(--line-soft)}
+.sec-result{padding-top:clamp(56px,6vw,96px);padding-bottom:clamp(56px,6vw,96px)}
 .sec h2{margin:0;color:var(--orb-text-primary)}
 .sec .kicker{margin:0;color:var(--orb-cyan)}
 .sec-head{display:flex;flex-direction:column;gap:18px;max-width:60ch}
 .sec-head h2{font-size:clamp(30px,3.5vw,54px);font-weight:360;letter-spacing:-.035em;line-height:1.08;max-width:16ch}
+/* The Solutions headline is a sentence rather than a phrase, so it needs a wider measure than the
+   act headings are tuned for. The real limiter is .sec-head's own 60ch, which resolves against the
+   inherited 16px body size (~480px) and caps the h2 no matter what the h2 asks for. */
+.sec-domains .sec-head{max-width:780px}
+.sec-domains .sec-head h2{max-width:none}
 .act-statement{margin:0;font-size:clamp(15px,1.15vw,19px);line-height:1.72;color:#c2cbd0;font-weight:350}
 /* Deliberately NOT uppercased. These lines carry exact identifiers — the accepted scoring profile
    id `mvp_remote_sensing_priority_v1`, the EPSG code — and a text-transform would publish them in a
@@ -264,25 +270,12 @@ body.home{background:var(--orb-bg)}
 .place-copy .beam-note{max-width:56ch}
 .place-spec{display:flex;flex-wrap:wrap;gap:6px 28px;margin-top:2px}
 .place-spec .act-meta{color:var(--orb-text-secondary)}
-/* The true 36 x 36 km analysis-grid bounds (web_005b.context.frame.aoi_in_frame), drawn as four
-   corner marks in the Product target-frame colour: the square the hero locked onto, on the real
-   ground, before any analysis. Geometry, not decoration; no fill, no glow. Only shown where the
-   frame is exactly 16:9, because that is the only case in which these fractions are true. */
-/* Under the protection shade, not over it (z-index 0 against the shade's 1): the analysis square
-   is only claimed where the photograph is actually visible, so it fades out behind the copy
-   instead of ruling lines across it. */
-.aoi-mark{position:absolute;left:16.9063%;right:45.5937%;top:16.6667%;bottom:16.6667%;display:none;pointer-events:none;z-index:0}
-.aoi-mark i{position:absolute;width:clamp(14px,1.6vw,26px);height:clamp(14px,1.6vw,26px);border:0 solid var(--orb-target-frame);opacity:.92;filter:drop-shadow(0 0 1px rgba(3,11,18,.9))}
-.aoi-mark i:nth-child(1){left:0;top:0;border-left-width:1.5px;border-top-width:1.5px}
-.aoi-mark i:nth-child(2){right:0;top:0;border-right-width:1.5px;border-top-width:1.5px}
-.aoi-mark i:nth-child(3){right:0;bottom:0;border-right-width:1.5px;border-bottom-width:1.5px}
-.aoi-mark i:nth-child(4){left:0;bottom:0;border-left-width:1.5px;border-bottom-width:1.5px}
-/* Above the square's top-right corner: the one edge of it that is never behind the copy column. */
-.aoi-mark b{position:absolute;right:0;bottom:calc(100% + 10px);font-weight:400;font-size:9px;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;text-align:right;color:#fbfdfe;
-  text-shadow:0 0 1px rgba(2,7,11,1),0 0 2px rgba(2,7,11,1),0 0 3px rgba(2,7,11,1),
-              0 0 5px rgba(2,7,11,1),0 0 9px rgba(2,7,11,.95),0 0 18px rgba(2,7,11,.85),
-              0 1px 2px rgba(2,7,11,1)}
-/* Row 1, bottom-right: on the photograph, wherever the copy happens to be. */
+/* WEB-005B R14: the AOI corner marks are removed from Act 02. The recorded analysis grid spans
+   x 0.169-0.544 of this frame and the copy column covers the left ~49% of it, so the square
+   measured 72-100% hidden behind the copy at every desktop width -- and no crop fixes it, because
+   pushing the square clear of the copy means cropping its own left edge away. Half a piece of
+   governed geometry is worse than none. The geometry is still recorded and is still drawn, to the
+   same fractions, by the inspection aid further down the page. */
 .context-band .scene-label{grid-area:1/1;position:relative;right:auto;bottom:auto;z-index:2;
   align-self:end;justify-self:end;margin:0 var(--place-pad) 20px 0}
 
@@ -297,8 +290,8 @@ body.home{background:var(--orb-bg)}
 .evidence-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--orb-divider);margin-bottom:clamp(18px,2vw,26px);background:var(--orb-surface)}
 .evidence-tab{position:relative;display:flex;flex-direction:column;justify-content:center;gap:6px;min-height:66px;padding:11px clamp(12px,1.2vw,18px);border-right:1px solid var(--orb-divider);cursor:pointer;transition:background .2s ease}
 .evidence-tab:last-child{border-right:0}
-.evidence-tab-role{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--orb-meta);transition:color .2s ease}
-.evidence-tab-name{font-size:13.5px;font-weight:430;letter-spacing:-.005em;color:var(--orb-text-secondary);transition:color .2s ease}
+.evidence-tab-role{font-size:9px;letter-spacing:.22em;color:var(--orb-meta);transition:color .2s ease}
+.evidence-tab-name{font-size:15px;font-weight:430;letter-spacing:-.005em;color:var(--orb-text-secondary);transition:color .2s ease}
 /* Selection is never colour alone: a 2px underline rule, a brighter label AND a "Shown" marker. */
 .evidence-tab-shown{display:none;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--orb-cyan)}
 .evidence-tab:hover .evidence-tab-name{color:var(--orb-text-primary)}
@@ -310,7 +303,7 @@ body.home{background:var(--orb-bg)}
 .evidence-read{grid-area:1/1;display:flex;flex-direction:column;gap:13px;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s}
 .evidence-role{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--orb-cyan)}
 .evidence-label{margin:0;font-size:clamp(15px,1.2vw,19px);font-weight:430;letter-spacing:-.01em;color:var(--orb-text-primary)}
-.evidence-body{margin:0;font-size:14.5px;line-height:1.72;color:#a9b5bd;max-width:42ch}
+.evidence-body{margin:0;font-size:15px;line-height:1.75;color:var(--orb-text-secondary);max-width:40ch}
 .evidence-note{max-width:44ch}
 .evidence-shared{grid-row:2;display:flex;flex-direction:column;gap:9px;border-top:1px solid var(--line-soft);padding-top:16px}
 #ev-terrain:checked~.evidence-stage .evidence-plate[data-layer="terrain"],
@@ -341,11 +334,16 @@ body.home{background:var(--orb-bg)}
    not by a different background. The map is 600 CSS px (native 1200 px grid, so 2x displays are
    served at native density). The cyan corners are the Product target frame carried from the hero's
    lock; they are not data. The legend is the map's own unblended LUT, inside the same figure. */
+/* R14 viewport fit: the headline and the map have to be readable together on a laptop. The map is
+   sized against the viewport as well as the native-density cap, so a short screen gets a smaller
+   map instead of a map that starts below the fold; a tall screen still gets the full 600 px. The
+   floor keeps it from collapsing on a very short window. */
+.sec-result{--result-map:max(320px,min(600px,calc(100svh - 392px)))}
 .sec-result .shell{display:flex;flex-direction:column;align-items:center;text-align:center}
-.sec-result .kicker{margin:0 0 20px}
-.sec-result h2{margin:0 0 22px;font-size:clamp(38px,4.9vw,78px);font-weight:370;letter-spacing:-.045em;line-height:1;max-width:13ch}
-.result-lead{margin:0 0 clamp(36px,4.4vw,68px);max-width:60ch;font-size:clamp(16px,1.3vw,21px);line-height:1.7;color:#c2cbd0;font-weight:350}
-.priority-stage{--stage-pad:clamp(20px,2.4vw,36px);position:relative;margin:0;width:100%;max-width:calc(600px + 2 * var(--stage-pad));padding:var(--stage-pad);text-align:left;background:linear-gradient(180deg,var(--orb-surface),#050e16);border:1px solid rgba(24,50,69,.75);border-radius:3px;box-shadow:0 60px 110px -50px rgba(0,0,0,.9)}
+.sec-result .kicker{margin:0 0 14px}
+.sec-result h2{margin:0 0 16px;font-size:clamp(34px,4.1vw,64px);font-weight:370;letter-spacing:-.045em;line-height:1.02;max-width:13ch}
+.result-lead{margin:0 0 clamp(26px,3vw,44px);max-width:54ch;font-size:clamp(15px,1.15vw,19px);line-height:1.68;color:#c2cbd0;font-weight:350}
+.priority-stage{--stage-pad:clamp(18px,2vw,30px);position:relative;margin:0;width:min(100%,calc(var(--result-map,600px) + 2 * var(--stage-pad)));max-width:calc(600px + 2 * var(--stage-pad));padding:var(--stage-pad);text-align:left;background:linear-gradient(180deg,var(--orb-surface),#050e16);border:1px solid rgba(24,50,69,.75);border-radius:3px;box-shadow:0 60px 110px -50px rgba(0,0,0,.9)}
 .priority-frame{position:relative;width:100%;max-width:600px;aspect-ratio:1/1;background:#0b141a}
 .priority-frame>.panel-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .target-frame{position:absolute;inset:-10px;pointer-events:none}
@@ -354,23 +352,23 @@ body.home{background:var(--orb-bg)}
 .target-frame i:nth-child(2){right:0;top:0;border-right-width:1.5px;border-top-width:1.5px}
 .target-frame i:nth-child(3){right:0;bottom:0;border-right-width:1.5px;border-bottom-width:1.5px}
 .target-frame i:nth-child(4){left:0;bottom:0;border-left-width:1.5px;border-bottom-width:1.5px}
-.priority-legend{margin-top:clamp(22px,2.2vw,30px);width:min(256px,62%)}
+.priority-legend{margin-top:clamp(16px,1.7vw,24px);width:min(256px,62%)}
 /* The ramp is a 256 x 8 image of the exact LUT; `pixelated` keeps each LUT entry a flat step
    instead of letting the browser blend neighbours into colours the map does not use. */
 .priority-legend-ramp{display:block;width:100%;height:8px;image-rendering:pixelated;border-radius:1px}
 .priority-legend-ends{display:flex;justify-content:space-between;margin-top:7px;font-size:10px;letter-spacing:.1em;color:var(--orb-text-secondary)}
-.priority-stage .scene-label{position:static;margin-top:18px;text-align:left;text-shadow:none;color:var(--orb-meta)}
+.priority-stage .scene-label{position:static;margin-top:14px;text-align:left;text-shadow:none;color:var(--orb-meta)}
 .priority-stage .scene-label span+span,.priority-stage .scene-label .scene-kind{color:var(--orb-meta)}
 .priority-stage .scene-label .scene-kind{color:var(--orb-text-secondary);letter-spacing:.13em}
 /* Four definitions, ending on what the score is not. The last cell is the mandatory warning. */
-.result-defs{margin:clamp(40px,4.8vw,78px) 0 0;width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--orb-divider);text-align:left}
-.result-defs>div{padding:24px clamp(16px,1.8vw,30px) 14px 0;border-right:1px solid var(--line-soft)}
+.result-defs{margin:clamp(30px,3.4vw,52px) 0 0;width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--orb-divider);text-align:left}
+.result-defs>div{padding:20px clamp(16px,1.8vw,30px) 10px 0;border-right:1px solid var(--line-soft)}
 .result-defs>div:last-child{border-right:0;padding-right:0}
-.result-defs dt{font-size:9px;font-family:var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--orb-cyan);margin-bottom:12px}
+.result-defs dt{font-size:9px;font-family:var(--mono);letter-spacing:.24em;text-transform:uppercase;color:var(--orb-cyan);margin-bottom:9px}
 .result-defs .is-not dt{color:rgba(200,169,122,.9)}
-.result-defs dd{margin:0;font-size:14px;line-height:1.72;color:#a9b5bd}
+.result-defs dd{margin:0;font-size:13.5px;line-height:1.68;color:#a9b5bd}
 .result-defs dd.beam-note{max-width:none;font-size:14px;color:#a9b5bd;padding-left:12px}
-.result-actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(22px,3vw,44px);margin-top:clamp(32px,3.6vw,52px)}
+.result-actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(22px,3vw,44px);margin-top:clamp(26px,2.8vw,40px)}
 
 /* ---------- inspection aid ----------
    A way to look, not a published figure. The photograph is scaled and offset by the recorded
@@ -422,13 +420,11 @@ body.home{background:var(--orb-bg)}
 .domain-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .25s ease}
 .domain-card:hover>img{opacity:.92}
 .domain-shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(3,11,18,.94) 0%,rgba(3,11,18,.6) 34%,rgba(3,11,18,.06) 76%)}
+/* R14: one composition on all three cards — title, sentence, status, lower-left, identical
+   padding. The asymmetric right gutter and the secondary cards' extra bottom padding both existed
+   only to keep the copy clear of the per-card technical caption, and that caption is gone. */
 .domain-copy{position:relative;z-index:2;display:flex;flex-direction:column;gap:11px;width:100%;
-  padding:clamp(22px,2.4vw,38px);padding-right:clamp(130px,20%,230px)}
-/* The caption is the same width on every card, but a secondary card is half of one — so measured
-   at 1440 its copy box ran 77-144 px into the caption. A half-width card clears the caption
-   vertically instead of horizontally, which is what the stacked card below 821px already does. */
-.domain-card:not(.is-lead) .domain-copy{padding-right:clamp(22px,2.4vw,38px);
-  padding-bottom:clamp(76px,6vw,92px)}
+  padding:clamp(22px,2.6vw,40px)}
 .domain-copy h3{margin:0;font-size:clamp(20px,1.9vw,30px);font-weight:370;letter-spacing:-.025em;color:#fff}
 .domain-copy p{margin:0;max-width:46ch;font-size:14.5px;line-height:1.7;color:#ccd7dd}
 .domain-status{margin:2px 0 0;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(214,226,233,.82)}
@@ -559,6 +555,16 @@ body.home .site-footer{background:var(--orb-bg);border-top:1px solid var(--line-
 }
 
 /* ---------- tablet / mobile ---------- */
+/* A laptop is short before it is narrow. Everything above the result map gives up a little height
+   so the headline and the map read as one object rather than two scroll positions; the map itself
+   is already sized against the viewport by --result-map. Nothing here fires above 1000px tall, so
+   the full-size desktop composition is untouched. */
+@media(max-height:1000px){
+  .sec-result{padding-top:clamp(40px,4.4vw,64px);padding-bottom:clamp(44px,4.6vw,72px)}
+  .sec-result .kicker{margin-bottom:12px}
+  .sec-result h2{font-size:clamp(32px,3.4vw,50px);margin-bottom:14px}
+  .result-lead{font-size:16px;line-height:1.62;max-width:66ch;margin-bottom:clamp(20px,2.2vw,30px)}
+}
 @media(max-width:1180px){
   .story-beam{grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);grid-template-areas:"head statement" "meta statement"}
   .story-beam .beam-head{grid-area:head}

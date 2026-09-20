@@ -267,9 +267,13 @@
       (3200 x 1800 px, 96 x 54 km) and tone-rendered on one common reflectance scale so colour is
       the sensor's, not a per-band stretch — sources.json -> web_005b.context. The 3200 px master
       fills a 1600 CSS px band on a 2x display at native density; nothing is upscaled.
-      The four corner marks are the true 36 km analysis-grid bounds as fractions of the frame
-      (web_005b.context.frame.aoi_in_frame), drawn in the Product-owned target-frame colour: the
-      same square the hero locked onto and Acts 3 and 4 show. They are geometry, not a map pin.
+
+      R14: the AOI corner marks are GONE. The recorded analysis grid spans x 0.169-0.544 of this
+      frame and the copy column covers the left ~49% of it, so the square measured 72-100% hidden
+      behind the copy at every desktop width, and no crop can separate them: pushing the square
+      right of the copy requires cropping its own left edge away. A half-visible piece of governed
+      geometry is worse than none, so it is removed rather than left ambiguous. The geometry itself
+      is still recorded, still exercised by the validator, and still drawn by the inspection aid.
       This act is CONTEXT: not evidence, not a scored input, and its acquisition date is not the
       acquisition date of any THM or ALT evidence layer.
     -->
@@ -289,16 +293,14 @@
             height="1800"
           />
           <div class="context-shade" aria-hidden="true"></div>
-          <span class="aoi-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><b class="mono" data-i18n="act.context.aoiMark">AOI · 36 × 36 km</b></span>
         </div>
         <div class="place-copy">
           <p class="kicker mono" data-i18n="act.context.kicker">02 · The place</p>
           <h2 id="context-title" data-i18n="act.context.title">A real area, before any analysis.</h2>
           <p class="act-statement" data-i18n="act.context.copy">Kızıldere sits in the Büyük Menderes graben in Denizli, Türkiye. This is the area as Landsat 8 photographed it — the ground the whole pilot is registered to, before a single layer is derived from it.</p>
-          <p class="act-note beam-note" data-i18n="act.context.note">Earth-observation context only. This is a natural-colour photographic composite of the area, not analytical evidence, not a scored input, and not the acquisition date of any THM or ALT evidence layer.</p>
+          <p class="act-note beam-note" data-i18n="act.context.note">Earth-observation context only. This is a natural-colour photographic composite of the area, not analytical evidence, not a scored input, and not the acquisition date of any evidence layer.</p>
           <div class="place-spec">
             <p class="act-meta mono" data-i18n="act.context.meta">Landsat 8 OLI · 2025-05-05 · 30 m · natural colour</p>
-            <p class="act-meta mono" data-i18n="act.context.grid">EPSG:32635 · 36 × 36 km</p>
           </div>
         </div>
         <figcaption class="scene-label">
@@ -310,7 +312,8 @@
     </section>
 
     <!--
-      ACT 3 — ONE GROUND, READ THROUGH SEVERAL LAYERS (WEB-005B R11, accepted final Claude Design).
+      ACT 3 — ONE GROUND, READ THROUGH SEVERAL LAYERS (WEB-005B R11, accepted final Claude Design;
+      language simplified in R14).
 
       The accepted composition replaces the rejected three-equal-card gallery with ONE shared
       geographic frame: the same 36 x 36 km square on the same 30 m grid, in the same place on the
@@ -326,13 +329,20 @@
       from the governed MER-113 rasters: canonical normalization, the frozen hero palette family,
       NoData transparent over a neutral DEM hillshade, lossless — sources.json -> web_005b.analytical.
       Structure/geology stays the subordinate data-gap footnote below; it is not a fourth layer.
+
+      R14 simplifies what the UI SAYS, not what it shows. The layer ids (THM-01, ALT-01) and the
+      specialist descriptors are gone from the visible labels because this is a homepage, not a
+      report; they remain the accepted identifiers in the manifest. The mandatory scientific
+      warnings are carried through VERBATIM — they are the honesty anchors and are not the place to
+      economize on words. The per-plate metadata strip is gone because it repeated, word for word,
+      the extent/grid/projection line the reading column already carries.
     -->
     <section id="evidence" class="sec sec-evidence" aria-labelledby="evidence-title" data-act="3">
       <div class="shell">
         <div class="sec-head">
           <p class="kicker mono" data-i18n="act.evidence.kicker">03 · The evidence</p>
           <h2 id="evidence-title" data-i18n="act.evidence.title">Three layers over the same ground.</h2>
-          <p class="act-statement" data-i18n="act.evidence.copy">Relief for context, one Landsat thermal anomaly and one Sentinel-2 alteration proxy as evidence. Same area of interest, same 30 m grid, same story stage — which is what makes them comparable at all.</p>
+          <p class="act-statement" data-i18n="act.evidence.copy">The frame never moves. Same ground, same grid, same projection — only the evidence inside it changes, which is what makes the layers comparable at all.</p>
         </div>
 
         <div class="evidence-switch" role="group" aria-label="Evidence layer" data-i18n-aria-label="evidence.switchLabel">
@@ -344,18 +354,18 @@
             <div class="evidence-main">
               <div class="evidence-tabs">
                 <label class="evidence-tab" for="ev-terrain">
-                  <span class="evidence-tab-role mono"><span data-i18n="act.evidence.terrain.index">01</span> · <span data-i18n="act.evidence.terrain.role">Context</span></span>
-                  <span class="evidence-tab-name" data-i18n="act.evidence.terrain.tab">Terrain / Elevation</span>
+                  <span class="evidence-tab-role mono" data-i18n="act.evidence.terrain.index">01</span>
+                  <span class="evidence-tab-name" data-i18n="act.evidence.terrain.tab">Terrain</span>
                   <span class="evidence-tab-shown mono" data-i18n="act.evidence.shown">Shown</span>
                 </label>
                 <label class="evidence-tab" for="ev-thermal">
-                  <span class="evidence-tab-role mono"><span data-i18n="act.evidence.thermal.index">02</span> · <span data-i18n="act.evidence.thermal.role">Evidence</span></span>
-                  <span class="evidence-tab-name" data-i18n="act.evidence.thermal.tab">THM-01 / Thermal</span>
+                  <span class="evidence-tab-role mono" data-i18n="act.evidence.thermal.index">02</span>
+                  <span class="evidence-tab-name" data-i18n="act.evidence.thermal.tab">Thermal</span>
                   <span class="evidence-tab-shown mono" data-i18n="act.evidence.shown">Shown</span>
                 </label>
                 <label class="evidence-tab" for="ev-alteration">
-                  <span class="evidence-tab-role mono"><span data-i18n="act.evidence.alteration.index">03</span> · <span data-i18n="act.evidence.alteration.role">Evidence</span></span>
-                  <span class="evidence-tab-name" data-i18n="act.evidence.alteration.tab">ALT-01 / Alteration</span>
+                  <span class="evidence-tab-role mono" data-i18n="act.evidence.alteration.index">03</span>
+                  <span class="evidence-tab-name" data-i18n="act.evidence.alteration.tab">Alteration</span>
                   <span class="evidence-tab-shown mono" data-i18n="act.evidence.shown">Shown</span>
                 </label>
               </div>
@@ -405,38 +415,32 @@
                 </figure>
               </div>
 
-              <p class="evidence-state mono">
-                <span data-i18n="act.evidence.state.aoi">Kızıldere pilot AOI</span>
-                <span data-i18n="act.evidence.state.grid">36 × 36 km · 30 m · EPSG:32635</span>
-                <span data-i18n="act.evidence.state.export">OrbGSS cartographic export</span>
-              </p>
             </div>
 
             <div class="evidence-side">
               <div class="evidence-read" data-layer="terrain">
                 <span class="evidence-role mono" data-i18n="act.evidence.terrain.role">Context</span>
-                <h3 class="evidence-label" data-i18n="label.terrain">Elevation — NASADEM context</h3>
-                <p class="evidence-body" data-i18n="act.evidence.terrain.body">Relief for reading the graben: the valley floor, the ridges that bound it, and the shape the evidence layers sit on.</p>
+                <h3 class="evidence-label" data-i18n="act.evidence.terrain.name">Elevation</h3>
+                <p class="evidence-body" data-i18n="act.evidence.terrain.body">The shape of the ground — the valley floor, the ridges that bound it, and what the evidence layers sit on.</p>
                 <p class="evidence-note beam-note" data-i18n="story.terrain.note">Context and display only. Terrain is not a scored predictor and carries no universal geothermal-favourability direction.</p>
-                <p class="act-meta mono" data-i18n="act.evidence.terrain.meta">NASADEM · 30 m · elevation</p>
+                <p class="act-meta mono" data-i18n="act.evidence.terrain.meta">From NASADEM elevation data</p>
               </div>
               <div class="evidence-read" data-layer="thermal">
                 <span class="evidence-role mono" data-i18n="act.evidence.thermal.role">Evidence</span>
-                <h3 class="evidence-label" data-i18n="label.thm01">THM-01 Thermal Anomaly</h3>
-                <p class="evidence-body" data-i18n="act.evidence.thermal.body">Relative surface thermal departure across the same area of interest, derived from Landsat thermal bands.</p>
+                <h3 class="evidence-label" data-i18n="act.evidence.thermal.name">Thermal anomaly</h3>
+                <p class="evidence-body" data-i18n="act.evidence.thermal.body">Where the surface runs warmer or cooler than the rest of the area.</p>
                 <p class="evidence-note beam-note" data-i18n="act.evidence.thermal.note">Evidence layer only. Do not describe it as geothermal probability, reserve, discovery, or drilling-success evidence.</p>
-                <p class="act-meta mono" data-i18n="act.evidence.thermal.meta">THM-01 · Landsat thermal · 30 m</p>
+                <p class="act-meta mono" data-i18n="act.evidence.thermal.meta">From Landsat thermal bands</p>
               </div>
               <div class="evidence-read" data-layer="alteration">
                 <span class="evidence-role mono" data-i18n="act.evidence.alteration.role">Evidence</span>
-                <h3 class="evidence-label" data-i18n="label.alt01">ALT-01 Alteration Proxy — clay/hydroxyl</h3>
-                <p class="evidence-body" data-i18n="act.evidence.alteration.body">A broad spectral alteration proxy over the same grid, from Sentinel-2 reflectance.</p>
-                <p class="evidence-note beam-note" data-i18n="act.evidence.alteration.note">Broad Sentinel-2 spectral alteration proxy; not mineral/kaolinite identification and not proof of hydrothermal alteration.</p>
-                <p class="act-meta mono" data-i18n="act.evidence.alteration.meta">ALT-01 · Sentinel-2 · clay/hydroxyl</p>
+                <h3 class="evidence-label" data-i18n="act.evidence.alteration.name">Alteration signal</h3>
+                <p class="evidence-body" data-i18n="act.evidence.alteration.body">Where the surface reflects light the way chemically altered rock tends to.</p>
+                <p class="evidence-note beam-note" data-i18n="act.evidence.alteration.note">Broad Sentinel-2 spectral alteration proxy; not mineral identification and not proof of hydrothermal alteration.</p>
+                <p class="act-meta mono" data-i18n="act.evidence.alteration.meta">From Sentinel-2 reflectance</p>
               </div>
               <div class="evidence-shared">
-                <p class="act-meta mono" data-i18n="act.evidence.shared.frame">Shared frame · 36 × 36 km · 30 m · EPSG:32635</p>
-                <p class="act-meta mono" data-i18n="act.evidence.shared.registration">Three layers · one registration · no reprojection</p>
+                <p class="act-meta mono" data-i18n="act.evidence.shared.frame">One frame · 36 × 36 km · 30 m grid · EPSG:32635</p>
               </div>
             </div>
           </div>
@@ -469,7 +473,7 @@
       <div class="shell">
         <p class="kicker mono" data-i18n="act.priority.kicker">04 · The result</p>
         <h2 id="priority-title" data-i18n="act.priority.title">Where to look first.</h2>
-        <p class="result-lead" data-i18n="act.priority.copy">The thermal and alteration evidence is combined into one ranking surface across the area of interest, 0 to 100, so a team can order the ground instead of guessing at it. High values mean "look here before there" — inside this area, for this baseline.</p>
+        <p class="result-lead" data-i18n="act.priority.copy">The thermal and alteration evidence is combined into one ranking surface across the area of interest, 0 to 100, so a team can order the ground instead of guessing at it. High values mean “look here before there” — inside this area, for this baseline.</p>
 
         <figure class="priority-stage" data-visual-slot="priority" data-visual-status="product-proof" data-reveal>
           <div class="priority-frame">
@@ -569,8 +573,8 @@
             <figcaption class="inspect-head">
               <span class="inspect-against mono" data-i18n="inspect.against">Natural colour against</span>
               <span class="inspect-pairs" role="group" aria-label="Layer to compare" data-i18n-aria-label="inspect.pairsLabel">
-                <label class="inspect-pair mono" for="cp-thermal" data-i18n="inspect.pair.thermal">THM-01 Thermal</label>
-                <label class="inspect-pair mono" for="cp-alteration" data-i18n="inspect.pair.alteration">ALT-01 Alteration</label>
+                <label class="inspect-pair mono" for="cp-thermal" data-i18n="inspect.pair.thermal">Thermal</label>
+                <label class="inspect-pair mono" for="cp-alteration" data-i18n="inspect.pair.alteration">Alteration</label>
                 <label class="inspect-pair mono" for="cp-priority" data-i18n="inspect.pair.priority">Priority score</label>
               </span>
             </figcaption>
@@ -643,13 +647,19 @@
     </section>
 
     <!--
-      DOMAINS (WEB-005B R11, accepted final Claude Design).
+      SOLUTIONS (WEB-005B R11 composition, renamed and simplified in R14).
 
-      The accepted hierarchy: the active application leads at full width, the two expansion
-      directions sit beneath it at half width, and every card states its own status. The
-      photographs are illustrative locked WEB-001 Landsat scenes, not OrbGSS outputs and not the
-      pilot area — each carries its own location, coordinates and "Natural-color composite" label,
-      and the footnote says plainly what they are.
+      The accepted hierarchy: the active domain leads at full width, the two in development sit
+      beneath it at half width, and every card states its own status. All three cards now use one
+      composition — title, one sentence, status, lower-left — with identical padding, because the
+      per-card technical caption that used to force a different gutter on each is gone (R14 A).
+
+      The photographs are illustrative locked WEB-001 Landsat scenes, not OrbGSS outputs and not
+      the pilot area. Their per-card location/coordinate/kind captions were removed for this
+      revision at Product's instruction; the footnote below the cards is now the sole carrier of
+      that honesty and says plainly what the three images are. Do not delete it: without it these
+      photographs read as OrbGSS results from the pilot area, which is what the captions were
+      preventing. Their provenance stays fully recorded in assets/imagery/sources.json.
 
       The taxonomy is Geothermal / Mining / Marine (R13 section 2). The homepage domain module has
       its own `domain.*` strings rather than reusing the `app.*` application-ledger keys, because
@@ -657,15 +667,15 @@
       cards navigates: Mining and Marine have no production-ready destination route yet, and the
       accepted design gives the cards no link, so they state their status instead of offering one.
     -->
-    <section id="pilot" class="sec sec-domains" aria-labelledby="pilot-title">
+    <section id="solutions" class="sec sec-domains" aria-labelledby="solutions-title">
       <div class="shell">
         <div class="sec-head">
-          <p class="kicker mono" data-i18n="pilot.kicker">Pilot</p>
-          <h2 id="pilot-title" data-i18n="pilot.title">Geothermal first.</h2>
-          <p class="act-statement" data-i18n="pilot.copy">Geothermal exploration is where OrbGSS is applied first. Mining and marine follow the same evidence-to-priority workflow and are in development, not finished products.</p>
+          <p class="kicker mono" data-i18n="solutions.kicker">Solutions</p>
+          <h2 id="solutions-title" data-i18n="solutions.title">One workflow, applied where the evidence supports it.</h2>
+          <p class="act-statement" data-i18n="solutions.copy">Status is stated on every domain, and nothing in development is presented as a finished product.</p>
         </div>
 
-        <ul class="domains" id="solutions" aria-label="Applications" data-i18n-aria-label="pilot.listLabel">
+        <ul class="domains" aria-label="Solution domains" data-i18n-aria-label="solutions.listLabel">
           <li class="domain-card is-lead" id="geothermal" data-label-tone="light" data-label-tone-locked data-reveal>
             <img
               src="assets/imagery/yellowstone-2013-1400.webp"
@@ -684,11 +694,6 @@
               <p data-i18n="domain.geothermal.copy">Evidence-backed prioritization of geothermal exploration areas. Kızıldere is the running pilot and the first application of the workflow.</p>
               <p class="domain-status mono is-active" data-i18n="domain.geothermal.status">Active · First application</p>
             </div>
-            <p class="scene-label">
-              <span data-i18n="scene.yellowstone.place">Yellowstone National Park, USA</span>
-              <span data-i18n="scene.yellowstone.coords">44.4604° N, 110.8282° W</span>
-              <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
-            </p>
           </li>
           <li class="domain-card" id="mining" data-label-tone="light" data-label-tone-locked data-reveal>
             <img
@@ -708,11 +713,6 @@
               <p data-i18n="domain.mining.copy">The same evidence-to-priority workflow extended to mineral exploration targets.</p>
               <p class="domain-status mono" data-i18n="domain.mining.status">In development</p>
             </div>
-            <p class="scene-label">
-              <span data-i18n="scene.chuquicamata.place">Chuquicamata, Antofagasta, Chile</span>
-              <span data-i18n="scene.chuquicamata.coords">22.3150° S, 68.9010° W</span>
-              <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
-            </p>
           </li>
           <li class="domain-card" id="marine" data-label-tone="light" data-label-tone-locked data-reveal>
             <img
@@ -732,17 +732,12 @@
               <p data-i18n="domain.marine.copy">Coastal and marine ground read as spatial evidence on the same footing.</p>
               <p class="domain-status mono" data-i18n="domain.marine.status">In development</p>
             </div>
-            <p class="scene-label">
-              <span data-i18n="scene.ili.place">Ili River Delta &amp; Lake Balkhash, Kazakhstan</span>
-              <span data-i18n="scene.ili.coords">45.0600° N, 74.5200° E</span>
-              <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
-            </p>
           </li>
         </ul>
 
         <p class="act-footnote domains-note">
           <span class="mono" data-i18n="domains.illustrativeLabel">Illustrative</span>
-          <span data-i18n="domains.illustrative">The three photographs above are public-domain Landsat scenes chosen to show the kind of ground each domain reads. They are not OrbGSS analytical outputs, not results, and not the Kızıldere pilot area.</span>
+          <span data-i18n="domains.illustrative">The three photographs above are public-domain Landsat scenes of other places, chosen to show the kind of ground each domain reads. They are not OrbGSS analytical outputs, not results, and not the Kızıldere pilot area.</span>
         </p>
       </div>
     </section>

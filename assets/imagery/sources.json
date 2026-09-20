@@ -216,10 +216,6 @@
         ],
         "public_role": "illustrative photography",
         "note": "Illustrative public-domain Landsat scene shown beside a domain and its status. It is NOT an OrbGSS analytical output, not a result and not the Kizildere pilot area; the card carries its own location, coordinates and \"Natural-color composite\" label and the section footnote (i18n domains.illustrative) says so in both languages.",
-        "visible_label_i18n_keys": [
-          "scene.yellowstone.place",
-          "scene.kind.naturalColor"
-        ],
         "rendered": {
           "max_css_width": 1278,
           "device_pixel_ratio_considered": 2,
@@ -228,7 +224,12 @@
           "selected_derivative": "assets/imagery/yellowstone-2013-2880.webp",
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measured_max_css_width": 1278
-        }
+        },
+        "visible_framing_i18n_keys": [
+          "domains.illustrativeLabel",
+          "domains.illustrative"
+        ],
+        "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record."
       }
     },
     {
@@ -331,10 +332,6 @@
         ],
         "public_role": "illustrative photography",
         "note": "Illustrative public-domain Landsat scene shown beside a domain and its status. It is NOT an OrbGSS analytical output, not a result and not the Kizildere pilot area; the card carries its own location, coordinates and \"Natural-color composite\" label and the section footnote (i18n domains.illustrative) says so in both languages.",
-        "visible_label_i18n_keys": [
-          "scene.chuquicamata.place",
-          "scene.kind.naturalColor"
-        ],
         "rendered": {
           "max_css_width": 728,
           "device_pixel_ratio_considered": 2,
@@ -343,7 +340,12 @@
           "selected_derivative": "assets/imagery/chuquicamata-2024-1800.webp",
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measured_max_css_width": 727.81
-        }
+        },
+        "visible_framing_i18n_keys": [
+          "domains.illustrativeLabel",
+          "domains.illustrative"
+        ],
+        "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record."
       }
     },
     {
@@ -447,10 +449,6 @@
         ],
         "public_role": "illustrative photography",
         "note": "Illustrative public-domain Landsat scene shown beside a domain and its status. It is NOT an OrbGSS analytical output, not a result and not the Kizildere pilot area; the card carries its own location, coordinates and \"Natural-color composite\" label and the section footnote (i18n domains.illustrative) says so in both languages.",
-        "visible_label_i18n_keys": [
-          "scene.ili.place",
-          "scene.kind.naturalColor"
-        ],
         "rendered": {
           "max_css_width": 728,
           "device_pixel_ratio_considered": 2,
@@ -459,7 +457,12 @@
           "selected_derivative": "assets/imagery/ili-delta-2020-1800.webp",
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measured_max_css_width": 727.81
-        }
+        },
+        "visible_framing_i18n_keys": [
+          "domains.illustrativeLabel",
+          "domains.illustrative"
+        ],
+        "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record."
       }
     }
   ],
@@ -3654,7 +3657,7 @@
           "measured_max_css_width": 598.02,
           "measured_max_device_px_at_2x": 1196.04,
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
-          "measurement_note": "the result map, capped at 600 CSS px"
+          "measurement_note": "WEB-005B R14 sizes the result map against the viewport as well as the native-density cap (--result-map = max(320px, min(600px, 100svh - 392px))), so the map is SMALLER than 600 CSS px on a laptop-height window and reaches the 600 px cap only on a tall one. 598.02 is the widest it is ever drawn, measured at 1920x1080; shorter viewports draw it smaller, which is always safe for density."
         }
       }
     },

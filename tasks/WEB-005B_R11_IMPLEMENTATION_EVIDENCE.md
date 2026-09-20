@@ -14,6 +14,143 @@ synced from this repository on 2026-09-20T02:25:53Z)
 **Evidence artifacts:** `evidence/web005b_r11/`
 **R13 bounded revision authority:** `docs/web-005-polish-authority@ba8d99b8:tasks/WEB-005B_R13_IMPLEMENTATION_REVIEW_DOMAIN_REVISION.md`
 **R11 implementation HEAD (reviewed):** `4e6c7c106399140565c77da0febe59ffc14f3ab3`
+**R13 taxonomy revision HEAD:** `0938f2ab122b11d496441d0b04cd7c94550a9854`
+
+## 0A. R14 bounded polish pass
+
+Five refinements on the accepted direction. Structure, section order, typography system, hero and
+visual language are unchanged.
+
+### A - Solutions
+
+The section is **Solutions**, not a pilot panel: kicker `Solutions`, headline *"One workflow,
+applied where the evidence supports it."*, anchor now `#solutions`. "Geothermal first" is gone. The
+three cards keep their hierarchy (Geothermal leading at full width, Mining and Marine beneath) and
+now share one composition - title, one sentence, status, lower-left, identical padding on all
+three. The asymmetric right gutter and the secondary cards' extra bottom padding went with the
+caption that forced them.
+
+The per-card location / coordinates / "Natural-color composite" captions are **removed**, as
+instructed. That is a deliberate departure from a standing repository invariant (`CLAUDE.md`:
+"Each image carries its location and coordinates directly on the image"), and it matters here
+because these three photographs are of **other places** - Yellowstone, Chuquicamata, the Ili delta
+- not the Kizildere pilot. The section footnote is now the only thing preventing a reader from
+taking them for OrbGSS results, so it was strengthened ("public-domain Landsat scenes **of other
+places**") and the validator now enforces it far harder than it ever enforced the captions: it must
+be rendered on the page, present in both dictionaries, and still contain "not OrbGSS analytical
+outputs", "not results" and "not the Kizildere pilot area". Full provenance stays recorded in
+`sources.json`. **If the captions are not coming back, that footnote is load-bearing.**
+
+### B - Evidence, de-technicalized
+
+| Was | Now |
+| --- | --- |
+| `Terrain / Elevation`, `THM-01 / Thermal`, `ALT-01 / Alteration` | `Terrain`, `Thermal`, `Alteration` |
+| `ALT-01 Alteration Proxy - clay/hydroxyl` | `Alteration signal` |
+| `THM-01 Thermal Anomaly` | `Thermal anomaly` |
+| `Elevation - NASADEM context` | `Elevation` |
+| `NASADEM / 30 m / elevation` | `From NASADEM elevation data` |
+| `THM-01 / Landsat thermal / 30 m` | `From Landsat thermal bands` |
+| `ALT-01 / Sentinel-2 / clay/hydroxyl` | `From Sentinel-2 reflectance` |
+| a plate strip *and* a shared line, both carrying 36 x 36 km / 30 m / EPSG:32635 | one line: `One frame / 36 x 36 km / 30 m grid / EPSG:32635` |
+| `Three layers / one registration / no reprojection` | removed - it said nothing the line above did not |
+
+`THM-01`, `ALT-01` and `clay/hydroxyl` now appear **nowhere** in visible homepage copy, including
+the inspection aid's pair labels. The model per layer is title -> one sentence -> caveat -> source.
+
+**The mandatory scientific warnings were not shortened.** They are the honesty anchors and are not
+where a copy pass should economize. Two clauses were *broadened* so they stop carrying codes, and
+neither narrows a disclaimer:
+
+- `not the acquisition date of any THM or ALT evidence layer` -> `...of any evidence layer`
+- `not mineral/kaolinite identification` -> `not mineral identification` (mineral subsumes kaolinite)
+
+Every validator-required warning term is intact in both languages.
+
+### C - Evidence imagery: NOT DELIVERED, needs Science authority
+
+This is the one requirement I could not meet, and it should not pass quietly.
+
+The current rasters are **not low-resolution**: they are lossless 1200 px MER-108 derivatives drawn
+at 598 CSS px, i.e. at native density. The single lossy encode on the page (Terrain) measures
+47.7 dB PSNR against its own lossless reference, max channel difference 7/255 - re-shipping the
+lossless file would add ~695 KB and change nothing anyone can see.
+
+What actually reads as unpolished is the **Alteration** panel's near-uniform dark field. That
+rendering is pinned by Science, in writing, in this repository - `geo_web_002.assets[alt01]`:
+
+> "That is the accepted scientific rendering and there is no alternative approved style, so WEB-005
+> must not re-stretch, re-normalize or CSS-adjust it."
+
+and `web_005b.analytical.not_used` forbids, on the homepage specifically, every lever that would
+change it: display window, gamma / tone transfer, gaussian, unsharp, upsampling, **and CSS filter
+or blend on the page**. "Corrected colour ranges" and "aesthetically tuned rendering" are precisely
+those levers. They are hero-surface-only under MER-108, so moving them onto the homepage is a
+Science decision about surface authority rather than an implementation choice - and it is, by name,
+the post-WEB-006 **WEB-007** programme that R11 section 7 and R13 section 5 both put out of scope.
+
+I also checked whether "the higher-quality web presentation versions intended for the homepage"
+already existed and were simply not wired up. They do not. The two alternative packages in the
+repository - `assets/proof/final/` (GEO-WEB-002) and `assets/proof/` (WEB-002) - are **report
+figures with a north arrow and a scale bar burned into the raster**, which is further from "not raw
+report outputs", not closer. `evidence/web005b_r11/proof_sets_compare.webp` shows all three
+generations side by side.
+
+**To unblock:** a Science/Product decision on MER-108 surface authority - either extend the hero's
+prepared display treatment to the homepage, or commission WEB-007 to produce approved presentation
+renderings. Either way it is a one-line asset swap here afterwards; the layout is already built for
+it and nothing else would move.
+
+### D - Act 02 AOI marker: removed
+
+Measured, not guessed. The recorded analysis grid spans x 0.169-0.544 of the Act 02 frame and the
+copy column covers the left ~49%, so the square was hidden behind the copy by:
+
+| Viewport | 1101 | 1280 | 1440 | 1600 | 1920+ |
+| --- | --- | --- | --- | --- | --- |
+| hidden behind copy | **100%** | **100%** | 84.5% | 71.6% | 71.6% |
+
+And no crop fixes it: to push the square's left edge clear of a copy column ending at 49% you must
+crop more than 23.75% off the frame's west side, which crops the square's own left edge off first.
+The two constraints are mutually exclusive, so "clearly visible and intentional" was unreachable
+and the stated fallback applies - the marker is gone rather than left half-visible.
+
+The geometry is not lost. It is still recorded in `web_005b.context.frame.aoi_in_frame`, still
+drawn to those exact fractions by the inspection aid, and the validator rule is now conditional
+rather than deleted: an AOI overlay that ever returns must still be positioned from the record, and
+may not return as bare markup with nothing behind it.
+
+### E - Act 04 viewport fit
+
+The map is now sized against the viewport as well as the native cap
+(`--result-map: max(320px, min(600px, 100svh - 392px))`), and everything above it gives up height
+below 1000 px tall. Headline plus the **whole** map in one view:
+
+| Viewport | 1366x768 | 1440x800 | 1512x860 | 1680x950 | 390x844 | 1920x1080 |
+| --- | --- | --- | --- | --- | --- | --- |
+| before | 76% | 74% | 73% | - | - | 98% |
+| after | **100%** | **100%** | **100%** | **100%** | **100%** | 98% |
+
+The section is about 300 px shorter at laptop heights. A true 1080-tall viewport keeps the full
+600 px map and the generous composition; nothing above 1000 px tall changed.
+
+### What did not change
+
+Hero, Act 02's composition, the evidence interaction model, the inspection aid, Act 04's concept,
+Company, Contact, the four-act structure, the page ground, the typography system, and every
+governed pixel.
+
+### R14 review package - `evidence/web005b_r11/`
+
+`homepage_desktop_1440_full.webp` - full desktop homepage ·
+`solutions_desktop_1440.webp` + `solutions_desktop_1440_secondary.webp` + `..._tr.webp` - Solutions ·
+`evidence_state_terrain|thermal|alteration_1440.webp` - all three Evidence states ·
+`homepage_desktop_1920_full.webp` - Result on a tall desktop ·
+`result_laptop_1440x800.webp` + `result_laptop_fit.txt` - the Act 04 laptop fit ·
+`place_desktop_1440_no_aoi.webp` - Act 02 with the marker resolved ·
+`proof_sets_compare.webp` - the three analytical asset generations, for the requirement-C decision
+
+
 
 ## 0. R13 revision — the accepted domain taxonomy
 
