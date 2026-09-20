@@ -11,6 +11,9 @@ Copy preservation: working tree vs 5f11894
   CHANGED en dictionary 'domain.geothermal.copy'
             - Evidence-backed prioritization of geothermal exploration areas. Kýzýldere is the running pilot and the first application of the workflow.
             + Evidence-backed prioritization of geothermal exploration ground — the application the workflow above was built and published against.
+  CHANGED en dictionary 'inspect.copy'
+            - Wipe between the natural-colour view of the area of interest and one derived layer over the same ground. It is a way to look, not a published figure — and nothing on either side is filtered or recoloured.
+            + Wipe between the natural-colour view of the area of interest and one derived layer over the same ground. It is a way to look, not a published figure — and both sides are exactly the files published above.
   CHANGED en dictionary 'solutions.copy'
             - Status is stated on every domain, and nothing in development is presented as a finished product.
             + The same evidence-to-priority workflow, read against different ground. Each domain states where it actually stands, and nothing in development is presented as a finished product.
@@ -28,6 +31,9 @@ Copy preservation: working tree vs 5f11894
   CHANGED tr dictionary 'domain.geothermal.copy'
             - Jeotermal arama alanlarýnýn kanýta dayalý önceliklendirilmesi. Kýzýldere yürüyen pilot çalýþmadýr ve iþ akýþýnýn ilk uygulamasýdýr.
             + Jeotermal arama zemininin kanýta dayalý önceliklendirilmesi — yukarýdaki iþ akýþýnýn üzerine kurulduðu ve yayýmlandýðý uygulama.
+  CHANGED tr dictionary 'inspect.copy'
+            - Ýlgi alanýnýn doðal renkli görünümü ile ayný zemin üzerindeki bir türetilmiþ katman arasýnda gezinin. Bu bir bakma yöntemidir, yayýmlanmýþ bir þekil deðildir — ve iki tarafta da hiçbir þey filtrelenmez ya da yeniden renklendirilmez.
+            + Ýlgi alanýnýn doðal renkli görünümü ile ayný zemin üzerindeki bir türetilmiþ katman arasýnda gezinin. Bu bir bakma yöntemidir, yayýmlanmýþ bir þekil deðildir — ve iki taraf da tam olarak yukarýda yayýmlanan dosyalardýr.
   CHANGED tr dictionary 'solutions.copy'
             - Her alanda durum açýkça belirtilir; geliþtirme aþamasýndaki hiçbir þey tamamlanmýþ ürün olarak sunulmaz.
             + Ayný kanýttan önceliðe iþ akýþý, farklý zeminler üzerinde okunur. Her alan bulunduðu noktayý açýkça belirtir; geliþtirme aþamasýndaki hiçbir þey tamamlanmýþ ürün olarak sunulmaz.
@@ -42,6 +48,9 @@ Copy preservation: working tree vs 5f11894
   CHANGED homepage element 'domain.geothermal.copy'
             - Evidence-backed prioritization of geothermal exploration areas. Kýzýldere is the running pilot and the first application of the workflow.
             + Evidence-backed prioritization of geothermal exploration ground — the application the workflow above was built and published against.
+  CHANGED homepage element 'inspect.copy'
+            - Wipe between the natural-colour view of the area of interest and one derived layer over the same ground. It is a way to look, not a published figure — and nothing on either side is filtered or recoloured.
+            + Wipe between the natural-colour view of the area of interest and one derived layer over the same ground. It is a way to look, not a published figure — and both sides are exactly the files published above.
   CHANGED homepage element 'solutions.copy'
             - Status is stated on every domain, and nothing in development is presented as a finished product.
             + The same evidence-to-priority workflow, read against different ground. Each domain states where it actually stands, and nothing in development is presented as a finished product.
@@ -57,12 +66,16 @@ Copy preservation: working tree vs 5f11894
   REMOVED homepage text
             - 04 · The result
   REMOVED homepage text
+            - Wipe between the natural-colour view of the area of interest and one derived layer over the same ground. It is a way to look, not a published figure — and nothing on either side is filtered or recoloured.
+  REMOVED homepage text
             - Status is stated on every domain, and nothing in development is presented as a finished product.
   REMOVED homepage text
             - Evidence-backed prioritization of geothermal exploration areas. Kýzýldere is the running pilot and the first application of the workflow.
+  ADDED   homepage text
+            + Wipe between the natural-colour view of the area of interest and one derived layer over the same ground. It is a way to look, not a published figure — and both sides are exactly the files published above.
   ADDED   homepage text
             + The same evidence-to-priority workflow, read against different ground. Each domain states where it actually stands, and nothing in development is presented as a finished product.
   ADDED   homepage text
             + Evidence-backed prioritization of geothermal exploration ground — the application the workflow above was built and published against.
 
-28 visible-copy difference(s)
+33 visible-copy difference(s)

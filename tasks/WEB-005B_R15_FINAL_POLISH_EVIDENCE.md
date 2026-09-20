@@ -219,7 +219,7 @@ so a quiet edit to the page's depth fails the build.
 | `py -3.14 hero/scripts/validate_hero.py` | **420 checks, 0 failed** |
 | `py -3.14 scripts/negative_tests_web005.py` | **72/72 caught**, restored tree identical to baseline |
 | `py -3.14 scripts/negative_tests_web005b.py` | **55/55 caught** (12 of them new MER-151 bounds), restored tree identical |
-| `py -3.14 scripts/check_copy_preservation.py 5f11894` | 28 differences, **all of them declared** in §3 and §6 — three kicker keys, `solutions.kicker`, `alt.alt01`, `solutions.copy`, `domain.geothermal.copy`, in both languages |
+| `py -3.14 scripts/check_copy_preservation.py 5f11894` | 33 differences, **all of them declared** in §3 and §6 — three kicker keys, `solutions.kicker`, `alt.alt01`, `solutions.copy`, `domain.geothermal.copy` and `inspect.copy`, in both languages |
 | hero markup | **byte-identical** to R14 and to the accepted WEB-005A implementation (10 148 B, `<section class="hero">…</section>`) |
 
 Evidence artifacts: `evidence/web005b_r15/` — full pages at 1440 / 1920 / 1024 / 768 / 390 and in
