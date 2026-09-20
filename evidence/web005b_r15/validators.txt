@@ -1,0 +1,13 @@
+OrbGSS site validation
+  scenes: 4
+  html images: 29
+  routes: 6
+  i18n keys referenced site-wide: 268
+  geo-web-002 package assets: 6 (19 files)
+  warnings: 0
+RESULT: PASS
+
+  PASS  public-site changes since the baseline stay inside the integration write surface
+
+420 checks, 0 failed
+VALIDATION PASSED

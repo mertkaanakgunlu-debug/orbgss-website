@@ -64,8 +64,48 @@ case("a hero-only transform (unsharp) used on the homepage", SOURCES,
      manifest(lambda w: w["analytical"]["not_used"].remove("unsharp")), "hero-only transform")
 case("derivative checksum drift", SOURCES,
      layer("terrain", lambda l: l["derivatives"][0].update(sha256="0" * 64)), "checksum mismatch")
-case("derivative recorded above the native grid (upsampled)", SOURCES,
+case("derivative enlarged without the one authorized resize", SOURCES,
      layer("alt01", lambda l: l["derivatives"][0].update(width=1600)), "above the native 1200 px grid")
+
+# ---- B-VIS-15 MER-151 presentation bounds ----------------------------------------------------
+# The parity authority widens what a homepage derivative may do; every number it widens to is a
+# bound, so each one gets a case. A derivative that walked past one of these would still look
+# plausible in the manifest -- that is exactly why it is worth failing the build over.
+case("presentation derivative past the 4800 px per-axis ceiling", SOURCES,
+     layer("terrain", lambda l: l["derivatives"].append(
+         dict(l["derivatives"][-1], width=5200, height=5200, resize="Lanczos3 enlargement"))),
+     "per-axis ceiling")
+case("derivative resized past the per-axis scale bound", SOURCES,
+     layer("terrain", lambda l: l["derivatives"].append(
+         dict(l["derivatives"][-1], width=480, height=480, resize="area (box) downsample of the final RGB"))),
+     "outside the MER-151 0.5-4.0 per-axis bound")
+case("ALT-01 display window narrower than the mandatory span", SOURCES,
+     layer("alt01", lambda l: l["display_window"].update(q_low=0.02, q_high=0.90)),
+     "below the 0.94 span floor")
+case("ALT-01 display window resolved from outside the authorized quantiles", SOURCES,
+     layer("alt01", lambda l: l["display_window"].update(q_low=0.08)),
+     "outside the MER-151")
+case("THM-01 window collapses the scientific dynamic range", SOURCES,
+     layer("thm01", lambda l: l["display_window"].update(resolved_M=0.41)),
+     "below the mandatory 0.7 floor")
+case("THM-01 window drifts off the fixed zero centre", SOURCES,
+     layer("thm01", lambda l: l["display_window"].update(center=0.05)),
+     "centre at exactly 0")
+case("THM-01 positive and negative sides windowed independently", SOURCES,
+     layer("thm01", lambda l: l["display_window"].update(independent_signed_windows=True)),
+     "window the two signs independently")
+case("gamma pushed outside the per-layer bound", SOURCES,
+     layer("thm01", lambda l: l["gamma"].update(gamma=0.6)), "outside the MER-151")
+case("gamma made local / adaptive", SOURCES,
+     layer("thm01", lambda l: l["gamma"].update(adaptive=True)), "never local or")
+case("priority given a display window", SOURCES,
+     layer("priority", lambda l: l.update(display_window={"kind": "quantile", "q_low": 0.02, "q_high": 0.98})),
+     "prohibited on the fixed 0-100 score")
+case("priority given a tone transfer", SOURCES,
+     layer("priority", lambda l: l.update(gamma={"gamma": 1.4, "formula": "u = n ** gamma", "adaptive": False})),
+     "outside the MER-151 0.75-1.35 bound")
+case("a layer stops declaring its transfer decision at all", SOURCES,
+     layer("terrain", lambda l: l.pop("display_window")), "records no MER-151 display-window")
 case("derivative recorded as a lossy encode", SOURCES,
      layer("thm01", lambda l: l["derivatives"][1].update(format="image/webp")), "not a lossless encode")
 
@@ -115,7 +155,8 @@ case("result map CSS cap widened past native density", STYLES,
      lambda t: t.replace(".priority-frame{position:relative;width:100%;max-width:600px", ".priority-frame{position:relative;width:100%;max-width:800px", 1),
      "must be capped")
 case("evidence placement laid out past native density", SOURCES,
-     manifest(lambda w: w["placement"]["alt01"]["rendered"].update(max_css_width=700)), "above its native")
+     manifest(lambda w: w["placement"]["alt01"]["rendered"].update(max_css_width=700)),
+     "above the 1200 px it publishes")
 
 # ---- R3 delivery encoding --------------------------------------------------------------------
 # Terrain is the layer that ships a lossy delivery encode; the other three stayed lossless, so the
@@ -146,8 +187,8 @@ case("lossy delivery ships with no decoded comparison", SOURCES,
 case("a lossy delivery is recorded as lossless", SOURCES,
      delivery("terrain", 0, lambda e: e.update(format="image/webp (lossless)")),
      "must be recorded as lossy")
-case("delivery recorded above the native grid", SOURCES,
-     delivery("thm01", 1, lambda e: e.update(width=1600)), "above the native 1200 px grid")
+case("delivery encode claims pixels its reference does not have", SOURCES,
+     delivery("thm01", 1, lambda e: e.update(width=1600)), "never adds pixels")
 case("a delivery width is dropped", SOURCES,
      manifest(lambda w: w["analytical"]["delivery"]["layers"]["alt01"].pop()),
      "does not cover the same widths")

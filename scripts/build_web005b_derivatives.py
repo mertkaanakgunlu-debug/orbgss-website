@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""WEB-005B homepage analytical derivatives (Acts 3 and 4) under MER-108.
+"""WEB-005B homepage analytical derivatives (Acts 3 and 4) under MER-108. SUPERSEDED BY R15.
+
+    Superseded by scripts/build_web005b_presentation.py, which builds the shipped Acts 3-4 and
+    inspection files under MER-151 / GEO-WEB-004 (geothermal-prospectivity@e8aa5d65). This script
+    is kept because it is the record of how the R11-R14 files were rendered, and because the
+    MER-151 profile is a strict superset of this one: run it with every display window and gamma
+    disabled and it reproduces exactly these pixels. Do not point the page at its output.
 
 Builds the Terrain, THM-01, ALT-01 and Priority panels the homepage shows after the hero, from
 the governed MER-113 rasters, as MER-108 website display derivatives. The governing contract is

@@ -100,13 +100,18 @@
       equal weight and stretched correct cartography until it read as soft texture. Each act now
       owns its own composition, and each explanation sits against the visual it describes.
 
-      WEB-005B: every scientific visual after the hero is a MER-108 website display derivative of
-      the governed MER-113 rasters (canonical normalization, the frozen hero palette family, NoData
-      transparent, lossless), shipped as the exact checksummed file recorded in
-      assets/imagery/sources.json -> web_005b and built by scripts/build_web005b_derivatives.py.
-      None is re-stretched, reprojected, filtered on the page or rendered above its native grid,
-      and none is baked into the hero video, where lossy encoding would change the governed
-      pixels. Science semantics come from the accepted authorities and are not reinterpreted here.
+      WEB-005B: every scientific visual after the hero is a presentation derivative of the governed
+      MER-113 rasters, shipped as the exact checksummed file recorded in
+      assets/imagery/sources.json -> web_005b. Since R15 they are built by
+      scripts/build_web005b_presentation.py under MER-151 / GEO-WEB-004
+      (geothermal-prospectivity@e8aa5d65), which governs these homepage surfaces: canonical
+      normalization, a bounded display window and one fixed monotonic gamma per layer, the frozen
+      hero palette family, NoData transparent, lossless. Nothing is reprojected, filtered on the
+      page, smoothed, sharpened or rendered above its native grid, priority carries no window at
+      all, and none of it is baked into the hero video, where lossy encoding would change the
+      governed pixels. The scientific master is unchanged at 1200 x 1200 / 30 m / EPSG:32635 and
+      these files claim no finer ground resolution than that. Science semantics come from the
+      accepted authorities and are not reinterpreted here.
     -->
 
     <!--
@@ -295,7 +300,6 @@
           <div class="context-shade" aria-hidden="true"></div>
         </div>
         <div class="place-copy">
-          <p class="kicker mono" data-i18n="act.context.kicker">02 · The place</p>
           <h2 id="context-title" data-i18n="act.context.title">A real area, before any analysis.</h2>
           <p class="act-statement" data-i18n="act.context.copy">Kızıldere sits in the Büyük Menderes graben in Denizli, Türkiye. This is the area as Landsat 8 photographed it — the ground the whole pilot is registered to, before a single layer is derived from it.</p>
           <p class="act-note beam-note" data-i18n="act.context.note">Earth-observation context only. This is a natural-colour photographic composite of the area, not analytical evidence, not a scored input, and not the acquisition date of any evidence layer.</p>
@@ -325,9 +329,14 @@
       label colour AND a "Shown" marker, never by colour alone. The plates share one grid cell and
       cross-fade; the reading column stacks in one cell too, so switching never shifts the layout.
 
-      Pixels are MER-108 website display derivatives built by scripts/build_web005b_derivatives.py
-      from the governed MER-113 rasters: canonical normalization, the frozen hero palette family,
-      NoData transparent over a neutral DEM hillshade, lossless — sources.json -> web_005b.analytical.
+      Pixels are MER-151 presentation derivatives built by scripts/build_web005b_presentation.py
+      from the governed MER-113 rasters: canonical normalization, a bounded display window and one
+      fixed gamma per layer, the frozen hero palette family, NoData transparent over a neutral DEM
+      hillshade, lossless — sources.json -> web_005b.analytical. R15: the display window is what
+      finally makes the Alteration layer legible; 99.9% of its governed valid cells sit in the
+      bottom 8.3% of the canonical range, so the unwindowed render spent the whole palette on
+      outliers. Terrain and the priority result carry no transfer at all and are byte-identical to
+      what the accepted hero payoff ends on.
       Structure/geology stays the subordinate data-gap footnote below; it is not a fourth layer.
 
       R14 simplifies what the UI SAYS, not what it shows. The layer ids (THM-01, ALT-01) and the
@@ -340,7 +349,6 @@
     <section id="evidence" class="sec sec-evidence" aria-labelledby="evidence-title" data-act="3">
       <div class="shell">
         <div class="sec-head">
-          <p class="kicker mono" data-i18n="act.evidence.kicker">03 · The evidence</p>
           <h2 id="evidence-title" data-i18n="act.evidence.title">Three layers over the same ground.</h2>
           <p class="act-statement" data-i18n="act.evidence.copy">The frame never moves. Same ground, same grid, same projection — only the evidence inside it changes, which is what makes the layers comparable at all.</p>
         </div>
@@ -405,7 +413,7 @@
                     src="assets/proof/web005b/alt01-900.webp"
                     srcset="assets/proof/web005b/alt01-600.webp 600w, assets/proof/web005b/alt01-900.webp 900w, assets/proof/web005b/alt01-1200.webp 1200w"
                     sizes="(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
-                    alt="Sequential map of the clay and hydroxyl spectral alteration proxy across the Kızıldere area of interest"
+                    alt="Map of the surface alteration signal across the Kızıldere area of interest, running from deep blue where the signal is weakest to yellow where it is strongest"
                     data-i18n-alt="alt.alt01"
                     loading="lazy"
                     decoding="async"
@@ -439,18 +447,24 @@
                 <p class="evidence-note beam-note" data-i18n="act.evidence.alteration.note">Broad Sentinel-2 spectral alteration proxy; not mineral identification and not proof of hydrothermal alteration.</p>
                 <p class="act-meta mono" data-i18n="act.evidence.alteration.meta">From Sentinel-2 reflectance</p>
               </div>
-              <div class="evidence-shared">
+              <!--
+                R15: the subordinate data-gap footnote moved up here, to the foot of the reading
+                column, and the one frame line sits under it. It used to run full width below the
+                stage while the reading column ran out a third of the way down the map, so the
+                section had empty ground on the right AND a loose line underneath. Same copy, same
+                subordinate weight, same anchor id — it now closes the column it belongs to.
+              -->
+              <div class="evidence-foot" id="structure">
+                <p class="evidence-gap">
+                  <span class="mono" data-i18n="act.evidence.gapLabel">Data gap</span>
+                  <span data-i18n="act.evidence.gap">Structural and geological evidence would sharpen interpretation here. OrbGSS has no public-safe fault or lithology layer for this baseline, so the gap is stated rather than filled — it is optional support and does not change the priority result.</span>
+                </p>
+                <a class="text-link" href="/pilot/"><span data-i18n="act.evidence.deeper">How the layers are built</span> <span aria-hidden="true">→</span></a>
                 <p class="act-meta mono" data-i18n="act.evidence.shared.frame">One frame · 36 × 36 km · 30 m grid · EPSG:32635</p>
               </div>
             </div>
           </div>
         </div>
-
-        <p class="act-footnote" id="structure">
-          <span class="mono" data-i18n="act.evidence.gapLabel">Data gap</span>
-          <span data-i18n="act.evidence.gap">Structural and geological evidence would sharpen interpretation here. OrbGSS has no public-safe fault or lithology layer for this baseline, so the gap is stated rather than filled — it is optional support and does not change the priority result.</span>
-          <a class="text-link" href="/pilot/"><span data-i18n="act.evidence.deeper">How the layers are built</span> <span aria-hidden="true">→</span></a>
-        </p>
       </div>
     </section>
 
@@ -471,7 +485,6 @@
     -->
     <section id="priority" class="sec sec-result" aria-labelledby="priority-title" data-act="4">
       <div class="shell">
-        <p class="kicker mono" data-i18n="act.priority.kicker">04 · The result</p>
         <h2 id="priority-title" data-i18n="act.priority.title">Where to look first.</h2>
         <p class="result-lead" data-i18n="act.priority.copy">The thermal and alteration evidence is combined into one ranking surface across the area of interest, 0 to 100, so a team can order the ground instead of guessing at it. High values mean “look here before there” — inside this area, for this baseline.</p>
 
@@ -670,9 +683,8 @@
     <section id="solutions" class="sec sec-domains" aria-labelledby="solutions-title">
       <div class="shell">
         <div class="sec-head">
-          <p class="kicker mono" data-i18n="solutions.kicker">Solutions</p>
           <h2 id="solutions-title" data-i18n="solutions.title">One workflow, applied where the evidence supports it.</h2>
-          <p class="act-statement" data-i18n="solutions.copy">Status is stated on every domain, and nothing in development is presented as a finished product.</p>
+          <p class="act-statement" data-i18n="solutions.copy">The same evidence-to-priority workflow, read against different ground. Each domain states where it actually stands, and nothing in development is presented as a finished product.</p>
         </div>
 
         <ul class="domains" aria-label="Solution domains" data-i18n-aria-label="solutions.listLabel">
@@ -691,7 +703,7 @@
             <span class="domain-shade" aria-hidden="true"></span>
             <div class="domain-copy">
               <h3 data-i18n="domain.geothermal.title">Geothermal</h3>
-              <p data-i18n="domain.geothermal.copy">Evidence-backed prioritization of geothermal exploration areas. Kızıldere is the running pilot and the first application of the workflow.</p>
+              <p data-i18n="domain.geothermal.copy">Evidence-backed prioritization of geothermal exploration ground — the application the workflow above was built and published against.</p>
               <p class="domain-status mono is-active" data-i18n="domain.geothermal.status">Active · First application</p>
             </div>
           </li>

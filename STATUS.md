@@ -1,6 +1,6 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v1.0.0-rc8-web-005b-r14-polish` — WEB-005B `REVIEW_READY` after the R11 accepted-final-design implementation (the whole homepage after the terminally accepted hero)
+**Canonical version:** `v1.0.0-rc9-web-005b-r15-final-polish` — WEB-005B `REVIEW_READY` after the R11 accepted-final-design implementation (the whole homepage after the terminally accepted hero)
 **Date:** 2026-09-20
 **Stage:** WEB-005B / MER-109 is `REVIEW_READY` at **R14** (see the R11 block below; the R3 text that follows is the superseded previous state). WEB-005A / MER-107 is **terminally accepted and published**: the visually approved checkpoint `1135e7a7e0b0f6db6348dee139d505550d8ca8b9` was fast-forwarded to `origin/feat/web-005a-hero-visual-fidelity` (remote HEAD verified) with site PASS and hero 420/0 on the accepted bytes. **WEB-005B / MER-109 (homepage visual fidelity, Acts 2-4) is `REVIEW_READY` after the R3 delivery pass** (`docs/web-005-polish-authority@4683bd3:tasks/WEB-005B_R3_REVIEW_AND_DELIVERY_OPTIMIZATION.md`): the Acts 3-4 panels gained visually-lossless lossy WebP delivery candidates where they earn it and keep their lossless derivative as the reference. Only Terrain qualified (q98, -84.6 / -82.2 / -79.5 %, PSNR 46.6-47.7 dB, NoData untouched); THM-01, ALT-01 and priority stay lossless because their per-pixel structure and mask boundaries cannot survive a block transform (priority at the best rung is PSNR 23.8 dB). Package 9.93 -> 8.68 MiB. Act 2, the hero and all copy are unchanged in that pass, and it also fixed a latent hero-lane write-surface failure left by the R1 commit. It was on `feat/web-005b-homepage-visual-fidelity`, branched from that exact commit, under `docs/web-005-polish-authority@e47da637:tasks/WEB-005B_R1_HOMEPAGE_DESIGN_IMPLEMENTATION_BOUNDARY.md`; evidence is `tasks/WEB-005B_EVIDENCE.md` and `evidence/web005b/`. Act 2 is a full-bleed natural-colour Landsat band (same USGS product, re-cropped wider at native 30 m to 3200 x 1800 px and tone-rendered on one common reflectance scale, with the true 36 km AOI marked); Act 3 is one analytical stage of three aligned squares; Act 4 is the priority result alone on its own stage at 600 CSS px, 2.2x the area of any evidence panel, with its own LUT as a coupled legend. Acts 3 and 4 now ship **MER-108 website display derivatives** of the governed MER-113 rasters (`11c32e8d` section 10 names WEB-005B as a consumer), so the page reads as one palette system from the hero payoff to the result; recomputing the priority layer reproduces the CTO-approved `priority_webhero_v1` raster exactly. The GEO-WEB-002 exports stay published for `/pilot/`. Gates: site PASS, hero 420/0, WEB-005 negatives 71/71, new WEB-005B negatives 24/24, copy preservation clean apart from two declared accessibility/legend additions, accepted hero byte- and pixel-identical, other routes unchanged. Not merged, nothing deployed, no DNS touched. *History of the hero revision follows.*
 **R11 (current):** the CTO-accepted final Claude Design homepage is implemented on
@@ -65,6 +65,44 @@ re-normalize or CSS-adjust it") with every tuning lever listed in `web_005b.anal
 hero-only. That is the post-WEB-006 WEB-007 programme. The two other asset packages in the repository
 are report figures with a north arrow and scale bar burned in, so they are not the answer either -
 see `evidence/web005b_r11/proof_sets_compare.webp`. Evidence refreshed in place.
+
+**R15 (current):** the bounded final-polish pass, on the accepted direction - concept, hero,
+section order and visual language are not reopened, and the hero markup is byte-identical. Evidence:
+`tasks/WEB-005B_R15_FINAL_POLISH_EVIDENCE.md` and `evidence/web005b_r15/`.
+**(A) The R14 evidence-imagery blocker is resolved.** Science issued
+`geothermal-prospectivity@e8aa5d65:tasks/MER-151_GEO-WEB-004_HOMEPAGE_EVIDENCE_PRESENTATION_PARITY_AUTHORITY.md`
+(`TERMINAL_ACCEPTED`, consumer WEB-005B / MER-109), which authorizes a bounded display window and one
+fixed monotonic gamma per layer on the homepage Evidence / Result / inspection surfaces. Acts 3-4 are
+rebuilt through it by the new `scripts/build_web005b_presentation.py`. ALT-01 gets `q_low 0.02 /
+q_high 0.98` (span 0.96) - 99.9% of its governed valid cells sat in the bottom 8.3% of the canonical
+range, so the unwindowed render spent the whole palette on outliers and published as a flat violet
+field. THM-01 gets `q_abs 0.998` (resolved M 0.7036, the smallest clean quantile clearing the
+mandatory 0.70 floor) plus gamma 0.85 with the centre fixed at 0. Terrain and priority keep their
+transfer DISABLED and are byte-identical to R14 - terrain because its rendering is also the accepted
+hero Terrain drape texture, priority because windowing it is prohibited and it must keep the colours
+the hero payoff ends on. The authority's 4K/HiDPI enlargement is implemented, bounded and validated
+but deliberately NOT published: every homepage analytical surface caps at 600 CSS px, which the native
+1200 px grid already serves at a true 2x DPR, and three of four layers cannot be re-encoded down from
+a 1800 px rung, so publishing one would ship 3-6 MB per panel for no density gain. That is a delivery
+decision; MER-151 section 7 lets Product swap conformant derivatives in without Science re-entry.
+**(B)** The numbered prep labels `02 The place` / `03 The evidence` / `04 The result` and the weak
+`Solutions` kicker are gone from the UI and from both dictionaries; each section leads on its
+headline. The one remaining piece of specialist vocabulary in visible copy (`clay and hydroxyl` in the
+ALT-01 alt text) is replaced with a plain description. The mandatory scientific warnings are
+untouched. **(C)** Act 03 is re-measured: the stage is sized to its content (1040 px: a 600 px map and
+a 394 px column) instead of running the full 1280 shell, and the subordinate data-gap footnote moved
+to the foot of the reading column, so the section no longer has empty ground on the right and under
+the column. **(D)** Act 04: the headline's 13ch cap is gone (it broke "Where to look first." after
+"look"), the definition strip's rules moved into real gutters inset from the type, and the section
+gives up height - headline to legend now fits one viewport at 1280x720 through 1920x1080 (was 73-76%
+of the section at R14). **(E)** Solutions drops the pilot framing from the card copy and all three
+cards share one copy-block height. **(F)** A tonal hierarchy replaces the flat post-hero ground:
+`--orb-lift` for reading sections, `--orb-deep` for the closing ones, one atmospheric tint behind the
+result, every section still starting and ending on `--orb-bg` so no boundary is a colour step, and
+boundary hairlines that fade out before the page gutter. Gates: site PASS, hero 420/0, WEB-005
+negatives 72/72, WEB-005B negatives 55/55 (12 new MER-151 bounds), copy preservation 28 declared
+differences and nothing else, no horizontal overflow at 13 widths x DPR 1/2/3, zero first-viewport
+leak. Not merged, nothing deployed, no DNS touched.
 
 **Site architecture:** static HTML + CSS + vanilla JavaScript
 **Public domain target:** `https://orbgss.com`

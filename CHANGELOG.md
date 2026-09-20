@@ -1,5 +1,45 @@
 # Changelog
 
+## WEB-005B R15 final polish — 2026-09-20 (MER-109, branch `feat/web-005b-homepage-visual-fidelity`; `REVIEW_READY`, nothing deployed)
+
+A bounded polish pass on the accepted direction. Concept, hero, section order and visual language are
+not reopened; the hero markup is byte-identical. Evidence:
+`tasks/WEB-005B_R15_FINAL_POLISH_EVIDENCE.md`, `evidence/web005b_r15/`.
+
+- **The R14 evidence-imagery blocker is resolved by Science authority.**
+  `geothermal-prospectivity@e8aa5d65:tasks/MER-151_GEO-WEB-004_HOMEPAGE_EVIDENCE_PRESENTATION_PARITY_AUTHORITY.md`
+  (`TERMINAL_ACCEPTED`, consumer WEB-005B / MER-109) authorizes a bounded display window and one fixed
+  monotonic gamma per layer on the homepage Evidence / Result / inspection surfaces. Acts 3-4 are
+  rebuilt through it by the new `scripts/build_web005b_presentation.py`.
+- **ALT-01 is legible for the first time.** 99.9 % of its governed valid cells sat in the bottom 8.3 %
+  of the canonical range, so the unwindowed render spent the whole palette on outliers and published
+  as a flat violet field. It now carries `q_low 0.02 / q_high 0.98` (span 0.96, 4.0 % clipped),
+  resolved over all valid cells of the governed source. THM-01 carries `q_abs 0.998` (resolved
+  M 0.7036, the smallest clean quantile clearing the mandatory 0.70 floor) plus gamma 0.85 with the
+  centre fixed at 0.
+- **Terrain and priority carry no transfer and are byte-identical to R14** — terrain because its
+  rendering is also the accepted hero Terrain drape texture, priority because windowing it is
+  prohibited and it must keep the colours the hero payoff ends on.
+- **The 4K/HiDPI enlargement is implemented, bounded and validated but not published.** Every
+  analytical surface caps at 600 CSS px, which the native 1200 px grid already serves at a true 2x
+  DPR, and three of four layers cannot be re-encoded down from a measured 1800 px rung (3.3-6.0 MB
+  lossless each). Delivery decision, not a Science one.
+- **Prototype labels gone.** `02 The place`, `03 The evidence`, `04 The result` and the weak
+  `Solutions` kicker are removed from the UI and both dictionaries; each section leads on its
+  headline. The ALT-01 alt text drops `clay and hydroxyl` for a plain description. The mandatory
+  scientific warnings are untouched.
+- **Act 03 re-measured** to a 1040 px stage (600 px map + 394 px column) instead of the full shell,
+  with the subordinate data-gap footnote moved to the foot of the reading column.
+- **Act 04 fits a laptop.** Headline to legend is inside one viewport at 1280x720 through 1920x1080;
+  the headline's 13ch cap is gone and the definition strip's rules sit in real gutters.
+- **Solutions** drops the pilot framing from the card copy; all three cards share one copy-block
+  height.
+- **A tonal hierarchy** replaces the flat post-hero ground: `--orb-lift`, `--orb-deep`, one
+  atmospheric tint behind the result, every section still starting and ending on `--orb-bg`, and
+  boundary hairlines that fade out before the page gutter.
+- Gates: site PASS, hero 420/0, WEB-005 negatives 72/72, WEB-005B negatives 55/55 (12 new MER-151
+  bounds), copy preservation 28 declared differences and nothing else.
+
 ## WEB-005B R3 delivery encoding — 2026-09-20 (MER-109, branch `feat/web-005b-homepage-visual-fidelity`; `REVIEW_READY`, nothing deployed)
 
 One bounded responsive-delivery pass over the Acts 3-4 analytical panels under MER-108 section 8,

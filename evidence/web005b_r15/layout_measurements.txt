@@ -1,0 +1,58 @@
+== safe density sweep ==
+dpr1   360 docW=  360 ctx=  800.00 dev=  800.00 (kizildere-aoi-context-2025-natural-1200.webp) | ev= 314.00 dev= 314.00 (terrain-600-d.webp) | pri= 286.00 dev= 286.00 (priority-600.webp) | insp=314.00 dev= 314.00  OVERFLOW ['IMG.']
+dpr1   375 docW=  375 ctx=  833.33 dev=  833.33 (kizildere-aoi-context-2025-natural-1200.webp) | ev= 329.00 dev= 329.00 (terrain-600-d.webp) | pri= 301.00 dev= 301.00 (priority-600.webp) | insp=329.00 dev= 329.00  OVERFLOW ['IMG.']
+dpr1   414 docW=  414 ctx=  920.00 dev=  920.00 (kizildere-aoi-context-2025-natural-1200.webp) | ev= 366.47 dev= 366.47 (terrain-600-d.webp) | pri= 338.47 dev= 338.47 (priority-600.webp) | insp=366.47 dev= 366.47  OVERFLOW ['IMG.']
+dpr1   768 docW=  768 ctx=  768.00 dev=  768.00 (kizildere-aoi-context-2025-natural-2400.webp) | ev= 598.00 dev= 598.00 (terrain-600-d.webp) | pri= 542.00 dev= 542.00 (priority-600.webp) | insp=598.00 dev= 598.00  OVERFLOW ['IMG.']
+dpr1   900 docW=  900 ctx=  900.00 dev=  900.00 (kizildere-aoi-context-2025-natural-2400.webp) | ev= 598.00 dev= 598.00 (terrain-900-d.webp) | pri= 542.00 dev= 542.00 (priority-900.webp) | insp=598.00 dev= 598.00  OVERFLOW ['IMG.']
+dpr1  1024 docW= 1024 ctx= 1024.00 dev= 1024.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 484.66 dev= 484.66 (terrain-900-d.webp) | pri= 542.02 dev= 542.02 (priority-900.webp) | insp=598.00 dev= 598.00  OVERFLOW ['IMG.']
+dpr1  1100 docW= 1100 ctx= 1100.00 dev= 1100.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 550.00 dev= 550.00 (terrain-900-d.webp) | pri= 542.00 dev= 542.00 (priority-900.webp) | insp=598.00 dev= 598.00  OVERFLOW ['IMG.']
+dpr1  1280 docW= 1280 ctx= 1280.00 dev= 1280.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev= 598.00 (terrain-900-d.webp) | pri= 542.00 dev= 542.00 (priority-900.webp) | insp=598.00 dev= 598.00  OVERFLOW ['IMG.']
+dpr1  1440 docW= 1440 ctx= 1440.00 dev= 1440.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev= 598.00 (terrain-900-d.webp) | pri= 542.00 dev= 542.00 (priority-900.webp) | insp=598.00 dev= 598.00  OVERFLOW ['IMG.']
+dpr1  1600 docW= 1600 ctx= 1600.00 dev= 1600.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev= 598.00 (terrain-900-d.webp) | pri= 542.00 dev= 542.00 (priority-900.webp) | insp=598.00 dev= 598.00  OVERFLOW ['IMG.']
+dpr1  1920 docW= 1920 ctx= 1600.00 dev= 1600.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev= 598.00 (terrain-900-d.webp) | pri= 542.00 dev= 542.00 (priority-900.webp) | insp=598.00 dev= 598.00  OVERFLOW ['IMG.']
+dpr1  2560 docW= 2560 ctx= 1600.00 dev= 1600.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev= 598.00 (terrain-900-d.webp) | pri= 542.00 dev= 542.00 (priority-900.webp) | insp=598.00 dev= 598.00  OVERFLOW ['IMG.']
+dpr1  3840 docW= 3840 ctx= 1600.00 dev= 1600.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev= 598.00 (terrain-900-d.webp) | pri= 542.00 dev= 542.00 (priority-900.webp) | insp=598.00 dev= 598.00
+dpr2   360 docW=  360 ctx=  800.00 dev= 1600.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 314.00 dev= 628.00 (terrain-900-d.webp) | pri= 286.00 dev= 572.00 (priority-900.webp) | insp=314.00 dev= 628.00  OVERFLOW ['IMG.']
+dpr2   375 docW=  375 ctx=  833.33 dev= 1666.66 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 329.00 dev= 658.00 (terrain-900-d.webp) | pri= 301.00 dev= 602.00 (priority-900.webp) | insp=329.00 dev= 658.00  OVERFLOW ['IMG.']
+dpr2   414 docW=  414 ctx=  920.00 dev= 1840.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 366.47 dev= 732.94 (terrain-900-d.webp) | pri= 338.47 dev= 676.94 (priority-900.webp) | insp=366.47 dev= 732.94  OVERFLOW ['IMG.']
+dpr2   768 docW=  768 ctx=  768.00 dev= 1536.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1196.00 (terrain-1200-d.webp) | pri= 542.00 dev=1084.00 (priority-1200.webp) | insp=598.00 dev=1196.00  OVERFLOW ['IMG.']
+dpr2   900 docW=  900 ctx=  900.00 dev= 1800.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1196.00 (terrain-1200-d.webp) | pri= 542.00 dev=1084.00 (priority-1200.webp) | insp=598.00 dev=1196.00  OVERFLOW ['IMG.']
+dpr2  1024 docW= 1024 ctx= 1024.00 dev= 2048.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 484.66 dev= 969.32 (terrain-1200-d.webp) | pri= 542.02 dev=1084.04 (priority-1200.webp) | insp=598.00 dev=1196.00  OVERFLOW ['IMG.']
+dpr2  1100 docW= 1100 ctx= 1100.00 dev= 2200.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 550.00 dev=1100.00 (terrain-1200-d.webp) | pri= 542.00 dev=1084.00 (priority-1200.webp) | insp=598.00 dev=1196.00  OVERFLOW ['IMG.']
+dpr2  1280 docW= 1280 ctx= 1280.00 dev= 2560.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1196.00 (terrain-1200-d.webp) | pri= 542.00 dev=1084.00 (priority-1200.webp) | insp=598.00 dev=1196.00  OVERFLOW ['IMG.']
+dpr2  1440 docW= 1440 ctx= 1440.00 dev= 2880.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1196.00 (terrain-1200-d.webp) | pri= 542.00 dev=1084.00 (priority-1200.webp) | insp=598.00 dev=1196.00  OVERFLOW ['IMG.']
+dpr2  1600 docW= 1600 ctx= 1600.00 dev= 3200.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1196.00 (terrain-1200-d.webp) | pri= 542.00 dev=1084.00 (priority-1200.webp) | insp=598.00 dev=1196.00  OVERFLOW ['IMG.']
+dpr2  1920 docW= 1920 ctx= 1600.00 dev= 3200.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1196.00 (terrain-1200-d.webp) | pri= 542.00 dev=1084.00 (priority-1200.webp) | insp=598.00 dev=1196.00  OVERFLOW ['IMG.']
+dpr2  2560 docW= 2560 ctx= 1600.00 dev= 3200.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1196.00 (terrain-1200-d.webp) | pri= 542.00 dev=1084.00 (priority-1200.webp) | insp=598.00 dev=1196.00  OVERFLOW ['IMG.']
+dpr2  3840 docW= 3840 ctx= 1600.00 dev= 3200.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1196.00 (terrain-1200-d.webp) | pri= 542.00 dev=1084.00 (priority-1200.webp) | insp=598.00 dev=1196.00
+dpr3   360 docW=  360 ctx=  800.00 dev= 2400.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 314.00 dev= 942.00 (terrain-1200-d.webp) | pri= 286.00 dev= 858.00 (priority-1200.webp) | insp=314.00 dev= 942.00  OVERFLOW ['IMG.']
+dpr3   375 docW=  375 ctx=  833.33 dev= 2499.99 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 329.00 dev= 987.00 (terrain-1200-d.webp) | pri= 301.00 dev= 903.00 (priority-1200.webp) | insp=329.00 dev= 987.00  OVERFLOW ['IMG.']
+dpr3   414 docW=  414 ctx=  920.00 dev= 2760.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 366.47 dev=1099.41 (terrain-1200-d.webp) | pri= 338.47 dev=1015.41 (priority-1200.webp) | insp=366.47 dev=1099.41  OVERFLOW ['IMG.']
+dpr3   768 docW=  768 ctx=  768.00 dev= 2304.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1794.00 (terrain-1200-d.webp) | pri= 542.00 dev=1626.00 (priority-1200.webp) | insp=598.00 dev=1794.00  OVERFLOW ['IMG.']
+dpr3   900 docW=  900 ctx=  900.00 dev= 2700.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1794.00 (terrain-1200-d.webp) | pri= 542.00 dev=1626.00 (priority-1200.webp) | insp=598.00 dev=1794.00  OVERFLOW ['IMG.']
+dpr3  1024 docW= 1024 ctx= 1024.00 dev= 3072.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 484.66 dev=1453.98 (terrain-1200-d.webp) | pri= 542.02 dev=1626.06 (priority-1200.webp) | insp=598.00 dev=1794.00  OVERFLOW ['IMG.']
+dpr3  1100 docW= 1100 ctx= 1100.00 dev= 3300.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 550.00 dev=1650.00 (terrain-1200-d.webp) | pri= 542.00 dev=1626.00 (priority-1200.webp) | insp=598.00 dev=1794.00  OVERFLOW ['IMG.']
+dpr3  1280 docW= 1280 ctx= 1280.00 dev= 3840.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1794.00 (terrain-1200-d.webp) | pri= 542.00 dev=1626.00 (priority-1200.webp) | insp=598.00 dev=1794.00  OVERFLOW ['IMG.']
+dpr3  1440 docW= 1440 ctx= 1440.00 dev= 4320.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1794.00 (terrain-1200-d.webp) | pri= 542.00 dev=1626.00 (priority-1200.webp) | insp=598.00 dev=1794.00  OVERFLOW ['IMG.']
+dpr3  1600 docW= 1600 ctx= 1600.00 dev= 4800.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1794.00 (terrain-1200-d.webp) | pri= 542.00 dev=1626.00 (priority-1200.webp) | insp=598.00 dev=1794.00  OVERFLOW ['IMG.']
+dpr3  1920 docW= 1920 ctx= 1600.00 dev= 4800.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1794.00 (terrain-1200-d.webp) | pri= 542.00 dev=1626.00 (priority-1200.webp) | insp=598.00 dev=1794.00  OVERFLOW ['IMG.']
+dpr3  2560 docW= 2560 ctx= 1600.00 dev= 4800.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1794.00 (terrain-1200-d.webp) | pri= 542.00 dev=1626.00 (priority-1200.webp) | insp=598.00 dev=1794.00  OVERFLOW ['IMG.']
+dpr3  3840 docW= 3840 ctx= 1600.00 dev= 4800.00 (kizildere-aoi-context-2025-natural-3200.webp) | ev= 598.00 dev=1794.00 (terrain-1200-d.webp) | pri= 542.00 dev=1626.00 (priority-1200.webp) | insp=598.00 dev=1794.00
+
+== Act 04 laptop fit (headline top -> legend bottom vs viewport height) ==
+1280x720: headline->legend 627px of 720px (87%)  map=362px  section=1174px  FITS
+1366x768: headline->legend 683px of 768px (89%)  map=410px  section=1228px  FITS
+1440x800: headline->legend 719px of 800px (90%)  map=442px  section=1237px  FITS
+1440x900: headline->legend 819px of 900px (91%)  map=542px  section=1337px  FITS
+1512x860: headline->legend 782px of 860px (91%)  map=502px  section=1307px  FITS
+1600x950: headline->legend 872px of 950px (92%)  map=592px  section=1400px  FITS
+1920x1080: headline->legend 932px of 1080px (86%)  map=598px  section=1500px  FITS
+2560x1440: headline->legend 932px of 1440px (65%)  map=598px  section=1500px  FITS
+
+== first viewport: does Act 02 leak under the hero? ==
+1280x720: hero bottom 720 of 720 -> leak 0px
+1440x900: hero bottom 900 of 900 -> leak 0px
+1920x1080: hero bottom 1080 of 1080 -> leak 0px
+1920x1440: hero bottom 1440 of 1440 -> leak 0px
+768x1024: hero bottom 1024 of 1024 -> leak 0px
+390x844: hero bottom 844 of 844 -> leak 0px

@@ -99,7 +99,7 @@ def widen_placement(t):
 
 
 case("safe density: lay out the priority map past its ceiling", SOURCES, widen_placement,
-     site, "above its native")
+     site, "above the 1200 px it publishes")
 
 
 def drop_placement(t):

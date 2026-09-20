@@ -81,16 +81,14 @@ const I18N = {
     'alt.terrain': 'Colour elevation map of the Kızıldere area of interest, with low ground in dark blue and high ridges in pale yellow',
     'alt.terrain.home': 'Colour elevation map of the Kızıldere area of interest, with low ground in dark green and high ridges in pale stone and white',
     'alt.thm01': 'Diverging thermal anomaly map of the Kızıldere area of interest, with cooler ground in blue and warmer ground in red',
-    'alt.alt01': 'Sequential map of the clay and hydroxyl spectral alteration proxy across the Kızıldere area of interest',
+    'alt.alt01': 'Map of the surface alteration signal across the Kızıldere area of interest, running from deep blue where the signal is weakest to yellow where it is strongest',
     'alt.alt02': 'Sequential map of the ferric iron spectral alteration proxy across the Kızıldere area of interest',
     'alt.priority': 'Relative priority map of the Kızıldere area of interest, ranking ground from 0 to 100 within the area',
     'alt.geothermal': 'Relative priority surface over shaded NASADEM relief across the Kızıldere geothermal pilot area',
-    'act.context.kicker': '02 · The place',
     'act.context.title': 'A real area, before any analysis.',
     'act.context.copy': 'Kızıldere sits in the Büyük Menderes graben in Denizli, Türkiye. This is the area as Landsat 8 photographed it — the ground the whole pilot is registered to, before a single layer is derived from it.',
     'act.context.note': 'Earth-observation context only. This is a natural-colour photographic composite of the area, not analytical evidence, not a scored input, and not the acquisition date of any evidence layer.',
     'act.context.meta': 'Landsat 8 OLI · 2025-05-05 · 30 m · natural colour',
-    'act.evidence.kicker': '03 · The evidence',
     'act.evidence.title': 'Three layers over the same ground.',
     'act.evidence.copy': 'The frame never moves. Same ground, same grid, same projection — only the evidence inside it changes, which is what makes the layers comparable at all.',
     'act.evidence.terrain.role': 'Context',
@@ -101,7 +99,6 @@ const I18N = {
     'act.evidence.gapLabel': 'Data gap',
     'act.evidence.gap': 'Structural and geological evidence would sharpen interpretation here. OrbGSS has no public-safe fault or lithology layer for this baseline, so the gap is stated rather than filled — it is optional support and does not change the priority result.',
     'act.evidence.deeper': 'How the layers are built',
-    'act.priority.kicker': '04 · The result',
     'act.priority.title': 'Where to look first.',
     'act.priority.copy': 'The thermal and alteration evidence is combined into one ranking surface across the area of interest, 0 to 100, so a team can order the ground instead of guessing at it. High values mean “look here before there” — inside this area, for this baseline.',
     'act.priority.note': 'AOI-relative experimental screening only. Not probability, reserve/resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a calibrated cross-AOI score.',
@@ -315,17 +312,16 @@ const I18N = {
 
     'act.evidence.alteration.name': 'Alteration signal',
 
-    'solutions.kicker': 'Solutions',
 
     'solutions.title': 'One workflow, applied where the evidence supports it.',
 
-    'solutions.copy': 'Status is stated on every domain, and nothing in development is presented as a finished product.',
+    'solutions.copy': 'The same evidence-to-priority workflow, read against different ground. Each domain states where it actually stands, and nothing in development is presented as a finished product.',
 
     'solutions.listLabel': 'Solution domains',
     /* WEB-005B R13 — the accepted homepage domain taxonomy. Separate from the app.* application
        ledger, which /solutions/ publishes with its own wording. */
     'domain.geothermal.title': 'Geothermal',
-    'domain.geothermal.copy': 'Evidence-backed prioritization of geothermal exploration areas. Kızıldere is the running pilot and the first application of the workflow.',
+    'domain.geothermal.copy': 'Evidence-backed prioritization of geothermal exploration ground — the application the workflow above was built and published against.',
     'domain.geothermal.status': 'Active · First application',
     'domain.mining.title': 'Mining',
     'domain.mining.copy': 'The same evidence-to-priority workflow extended to mineral exploration targets.',
@@ -401,16 +397,14 @@ const I18N = {
     'alt.terrain': 'Kızıldere ilgi alanının renkli yükselti haritası; alçak zemin koyu mavi, yüksek sırtlar soluk sarı',
     'alt.terrain.home': 'Kızıldere ilgi alanının renkli yükselti haritası; alçak zemin koyu yeşil, yüksek sırtlar açık taş rengi ve beyaz',
     'alt.thm01': 'Kızıldere ilgi alanının ıraksak termal anomali haritası; daha serin zemin mavi, daha sıcak zemin kırmızı',
-    'alt.alt01': 'Kızıldere ilgi alanı boyunca kil ve hidroksil spektral alterasyon vekilinin sıralı haritası',
+    'alt.alt01': 'Kızıldere ilgi alanı boyunca yüzey alterasyon sinyalinin haritası; sinyalin en zayıf olduğu yerde koyu mavi, en güçlü olduğu yerde sarı',
     'alt.alt02': 'Kızıldere ilgi alanı boyunca ferrik demir spektral alterasyon vekilinin sıralı haritası',
     'alt.priority': 'Kızıldere ilgi alanının göreli öncelik haritası; zemini alan içinde 0 ile 100 arasında sıralar',
     'alt.geothermal': 'Kızıldere jeotermal pilot alanında gölgelendirilmiş NASADEM rölyefi üzerindeki göreli öncelik yüzeyi',
-    'act.context.kicker': '02 · Alan',
     'act.context.title': 'Herhangi bir analizden önce, gerçek bir alan.',
     'act.context.copy': 'Kızıldere, Denizli, Türkiye’deki Büyük Menderes grabeninde yer alır. Bu, alanın Landsat 8 tarafından görüntülenmiş hâlidir — tek bir katman türetilmeden önce, pilot çalışmanın tamamının üzerine oturduğu zemin.',
     'act.context.note': 'Yalnızca Yer gözlem bağlamı. Bu, alanın doğal renkli fotografik bileşimidir; analitik kanıt değildir, skorlanan bir girdi değildir ve herhangi bir kanıt katmanının görüntüleme tarihi değildir.',
     'act.context.meta': 'Landsat 8 OLI · 2025-05-05 · 30 m · doğal renk',
-    'act.evidence.kicker': '03 · Kanıt',
     'act.evidence.title': 'Aynı zemin üzerinde üç katman.',
     'act.evidence.copy': 'Çerçeve hiç değişmiyor. Aynı zemin, aynı ızgara, aynı projeksiyon — yalnızca içindeki kanıt değişiyor; katmanları karşılaştırılabilir kılan da bu.',
     'act.evidence.terrain.role': 'Bağlam',
@@ -421,7 +415,6 @@ const I18N = {
     'act.evidence.gapLabel': 'Veri boşluğu',
     'act.evidence.gap': 'Yapısal ve jeolojik kanıt burada yorumu keskinleştirirdi. OrbGSS bu temel sürüm için kamuya açık kullanıma uygun bir fay veya litoloji katmanına sahip değildir; bu nedenle boşluk doldurulmak yerine açıkça belirtilir — isteğe bağlı destektir ve öncelik sonucunu değiştirmez.',
     'act.evidence.deeper': 'Katmanlar nasıl üretiliyor',
-    'act.priority.kicker': '04 · Sonuç',
     'act.priority.title': 'Önce nereye bakmalı.',
     'act.priority.copy': 'Termal ve alterasyon kanıtı, ilgi alanı genelinde 0–100 aralığında tek bir sıralama yüzeyinde birleştirilir; böylece bir ekip zemini tahmin etmek yerine sıralayabilir. Yüksek değerler, bu alan içinde ve bu temel sürüm için “önce şuraya bak” anlamına gelir.',
     'act.priority.note': 'Yalnızca alan içi deneysel ön eleme. Olasılık, rezerv veya kaynak tahmini, keşif olasılığı, sondaj başarısı olasılığı, Tam Prospektivite ya da alanlar arası kalibre edilmiş bir skor değildir.',
@@ -636,17 +629,16 @@ const I18N = {
 
     'act.evidence.alteration.name': 'Alterasyon işareti',
 
-    'solutions.kicker': 'Çözümler',
 
     'solutions.title': 'Tek bir iş akışı, kanıtın desteklediği her yerde uygulanır.',
 
-    'solutions.copy': 'Her alanda durum açıkça belirtilir; geliştirme aşamasındaki hiçbir şey tamamlanmış ürün olarak sunulmaz.',
+    'solutions.copy': 'Aynı kanıttan önceliğe iş akışı, farklı zeminler üzerinde okunur. Her alan bulunduğu noktayı açıkça belirtir; geliştirme aşamasındaki hiçbir şey tamamlanmış ürün olarak sunulmaz.',
 
     'solutions.listLabel': 'Çözüm alanları',
     /* WEB-005B R13 — the accepted homepage domain taxonomy. Separate from the app.* application
        ledger, which /solutions/ publishes with its own wording. */
     'domain.geothermal.title': 'Jeotermal',
-    'domain.geothermal.copy': 'Jeotermal arama alanlarının kanıta dayalı önceliklendirilmesi. Kızıldere yürüyen pilot çalışmadır ve iş akışının ilk uygulamasıdır.',
+    'domain.geothermal.copy': 'Jeotermal arama zemininin kanıta dayalı önceliklendirilmesi — yukarıdaki iş akışının üzerine kurulduğu ve yayımlandığı uygulama.',
     'domain.geothermal.status': 'Aktif · İlk uygulama',
     'domain.mining.title': 'Madencilik',
     'domain.mining.copy': 'Aynı kanıttan önceliğe iş akışının maden arama hedeflerine genişletilmesi.',

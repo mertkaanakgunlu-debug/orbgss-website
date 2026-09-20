@@ -10,7 +10,7 @@ when it introduces no visible false classes, ringing or colour shifts that chang
 
 Nothing upstream moves. This script never touches the governed rasters, the normalization, the
 palette, the hillshade, the analytical opacity or the mask: it re-encodes the ALREADY RENDERED
-lossless derivative built by `build_web005b_derivatives.py`, at the same dimensions, and keeps the
+lossless derivative built by `build_web005b_presentation.py`, at the same dimensions, and keeps the
 lossless file in the repository as the reference every candidate is judged against.
 
 The codec is lossy WebP, which the site already ships for every other image, so no `<picture>` type
@@ -61,17 +61,17 @@ import rasterio
 from PIL import Image, features
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
-import build_web005b_derivatives as base  # noqa: E402  (the lossless renderer this mirrors)
+import build_web005b_presentation as base  # noqa: E402  (the lossless renderer this mirrors)
 
 ROOT = base.ROOT
 MANIFEST = base.MANIFEST
 OUT = ROOT / "assets" / "proof" / "web005b"
 QUALITY_LADDER = (98, 95, 90, 85, 80)  # walked highest-first: fidelity, then payload
 MIN_REDUCTION = 0.50
-# The largest size each panel is ever rendered at, from the safe-density sweep
-# (evidence/web005b/safe_density_sweep.txt): 417 CSS px x 2 for an evidence panel, 598 x 2 for the
-# result map. Display-size fidelity is judged there, not only at native resolution.
-DISPLAY_PX = {"terrain": 834, "thm01": 834, "alt01": 834, "priority": 1196}
+# The largest size each panel is ever rendered at. R15 widened the Act 03 stage to a 720 CSS px cap
+# and the Act 04 result stage to 760, so at a 2x device pixel ratio those are 1440 and 1520 device
+# px. Display-size fidelity is judged there, not only at native resolution.
+DISPLAY_PX = {"terrain": 1440, "thm01": 1440, "alt01": 1440, "priority": 1520}
 LIMITS = {
     "mean_abs": 1.5, "p999_abs": 8.0, "max_abs": 24, "neg_psnr_db": -45.0,
     # 1.0 level out of 255 is 0.4 % of range, and for a file whose native size is already at or
@@ -105,12 +105,14 @@ def context_and_masks() -> tuple[np.ndarray, dict[str, np.ndarray]]:
     return context, masks
 
 
-def resize_plane(plane: np.ndarray, size: int) -> np.ndarray:
-    """Area (box) resample of a float plane, matching the derivative's own downsample."""
+def resize_plane(plane: np.ndarray, size: int, up: int = Image.Resampling.LANCZOS) -> np.ndarray:
+    """Resample a float plane exactly the way the derivative it is being compared against was built:
+    area (box) on the way down, and the MER-151 Lanczos3 enlargement on the way up."""
     if plane.shape[0] == size:
         return plane
     img = Image.fromarray((plane * 255.0).astype(np.float32), "F")
-    return np.asarray(img.resize((size, size), Image.Resampling.BOX)) / 255.0
+    mode = Image.Resampling.BOX if size < plane.shape[0] else up
+    return np.asarray(img.resize((size, size), mode)) / 255.0
 
 
 def _unblend(rgb: np.ndarray, context: np.ndarray, opacity: float) -> np.ndarray:
@@ -238,10 +240,15 @@ def main() -> int:
             ctx = np.repeat(resize_plane(context_full[:, :, 0], size)[:, :, None], 3, axis=2)
             if size == valid_full.shape[0]:
                 valid = valid_full
-            else:
+            elif size < valid_full.shape[0]:
                 # Governed coverage resampled by area: a delivery pixel counts as NoData only where
                 # no valid source cell contributes at all, so the boundary is never softened.
                 valid = resize_plane(valid_full.astype(np.float64), size) > 0.0
+            else:
+                # Enlarged candidates carry the same nearest-neighbour support the render used, so
+                # the gate measures NoData exactly where the shipped file has NoData.
+                valid = resize_plane(valid_full.astype(np.float64), size,
+                                     up=Image.Resampling.NEAREST) > 0.0
             idx_ref = implied_index(ref, ctx, opacity, lut)  # once per file, not per rung
             chosen = None
             rejected = None

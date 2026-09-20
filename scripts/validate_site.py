@@ -90,6 +90,9 @@ WEB005B_TOKENS = {
     "--orb-divider": "#183245", "--orb-text-primary": "#EAF2F8", "--orb-text-secondary": "#9EB1C1",
     "--orb-meta": "#6F8597", "--orb-cyan": "#73E7FF", "--orb-cyan-glow": "#8AF1FF",
     "--orb-beam-core": "#7FEFFF", "--orb-beam-glow": "#3CCBFF", "--orb-target-frame": "#98F5FF",
+    # R15 tonal hierarchy: the lifted and the settled ground the page moves between. Pinned for the
+    # same reason as the rest -- a quiet edit here changes the whole page's depth.
+    "--orb-lift": "#061420", "--orb-deep": "#020810",
 }
 # MER-108 governed-source pins and website-derivative bounds (B-VIS-04). The source SHA-256s are
 # the MER-113 identities in the terminal authority; normalization is d3a163bd's canonical kind per
@@ -105,6 +108,19 @@ WEB005B_TOPOLOGY = {
     "alt01": "alt_violet_blue_cyan_green_yellow_v1", "priority": "priority_deep_purple_red_orange_yellow_v1",
 }
 WEB005B_NATIVE_PX = 1200
+# MER-151 / GEO-WEB-004 (geothermal-prospectivity@e8aa5d65) authorizes PRESENTATION derivatives of
+# the same 1200 x 1200 / 30 m scientific master for the homepage Evidence, Result and inspection
+# surfaces: one final RGBA Lanczos3 resize, 0.50-4.00x per axis, 4800 px per axis at most, with
+# bounded display windows and one fixed monotonic gamma per layer. Everything below is a numeric
+# bound out of that authority, so a derivative cannot quietly drift past it.
+WEB005B_PRESENTATION_CEILING_PX = 4800
+WEB005B_PRESENTATION_SCALE = (0.50, 4.00)
+WEB005B_WINDOW_BOUNDS = {"q_low": (0.0, 0.02), "q_high": (0.98, 1.0), "min_span": 0.94,
+                         "q_abs": (0.98, 1.0), "min_M": 0.70}
+WEB005B_GAMMA_BOUNDS = {"terrain": (0.75, 1.35), "alt01": (0.75, 1.35),
+                        "priority": (0.75, 1.35), "thm01": (0.80, 1.25)}
+# MER-151 section 4: the homepage profile does NOT inherit these from the hero amendment, and
+# percentile/window clipping stays prohibited for priority specifically (section 3).
 # WEB-005B R14: the wording the domain-photography footnote may not lose. The per-card captions
 # that used to carry this are gone, so this footnote is the whole of the honesty now.
 DOMAIN_FOOTNOTE_TERMS = {
@@ -113,7 +129,8 @@ DOMAIN_FOOTNOTE_TERMS = {
 }
 # Transforms the terminal amendment allows for the hero surface only; a homepage derivative that
 # records using one of them is outside 11c32e8d.
-WEB005B_HERO_ONLY = ("display window", "gamma / tone transfer", "gaussian smoothing", "unsharp", "upsampling")
+WEB005B_HERO_ONLY = ("ai_super_resolution", "scalar_space_interpolation", "gaussian smoothing",
+                     "unsharp", "clahe_or_local_tone_mapping", "per_crop_autoscaling")
 
 HERO_RISE_STATE_CEILING = 512 * 1024
 HERO_RISE_TOTAL_CEILING = int(2.5 * 1024 * 1024)
@@ -760,8 +777,11 @@ def main() -> int:
     #             wider than its native frame, and its AOI corner marks are the recorded geometry.
     #   B-VIS-04  every Act 3/4 pixel is a MER-108 website derivative of a pinned governed source:
     #             canonical normalization, the pinned palette topology, a LUT recomputed here from
-    #             the recorded stops, bounded analytical opacity, lossless, never above the native
-    #             grid, and none of the hero-only transforms.
+    #             the recorded stops, bounded analytical opacity, lossless, and none of the
+    #             transforms MER-151 section 4 withholds from the homepage profile.
+    #   B-VIS-15  MER-151 presentation conformance: a derivative above the native grid is a single
+    #             Lanczos3 RGBA enlargement inside 0.50-4.00x and 4800 px per axis; every display
+    #             window and gamma sits inside its own numeric bound; priority carries neither.
     #   B-VIS-05  the Product palette tokens are defined once and hold their pinned values.
     #   B-VIS-06  the priority public label is exact; its warning terms are bound per placement.
     #   B-VIS-07  every placement's CSS width x DPR stays within its native pixels.
@@ -847,6 +867,7 @@ def main() -> int:
 
         ana = w5b.get("analytical", {})
         layers = ana.get("layers", {})
+        layer_widest: dict[str, int] = {}
         if set(layers) != set(WEB005B_SOURCES):
             fail(f"web_005b.analytical layers {sorted(layers)} != {sorted(WEB005B_SOURCES)}", errors)
         for item in WEB005B_HERO_ONLY:
@@ -874,14 +895,70 @@ def main() -> int:
             if key == "thm01" and (resolved.get("center") != 0.0 or resolved.get("vmin") != -resolved.get("vmax", 0)):
                 fail(f"{label}: THM-01 must stay symmetric about a 0.0 centre", errors)
             own = set()
+            widest = 0
             for deriv in layer.get("derivatives", []):
                 rel = web005b_file(label, deriv)
                 if rel:
                     own.add(rel)
-                if not isinstance(deriv.get("width"), int) or deriv["width"] > WEB005B_NATIVE_PX:
-                    fail(f"{label}: {rel} is above the native {WEB005B_NATIVE_PX} px grid", errors)
+                width = deriv.get("width")
+                if not isinstance(width, int) or width <= 0:
+                    fail(f"{label}: {rel} records no usable width", errors)
+                    continue
+                widest = max(widest, width)
+                scale = width / WEB005B_NATIVE_PX
+                lo, hi = WEB005B_PRESENTATION_SCALE
+                if width > WEB005B_PRESENTATION_CEILING_PX:
+                    fail(f"{label}: {rel} is {width} px, above the MER-151 "
+                         f"{WEB005B_PRESENTATION_CEILING_PX} px per-axis ceiling", errors)
+                if not lo <= scale <= hi:
+                    fail(f"{label}: {rel} is a {scale:.2f}x resize, outside the MER-151 "
+                         f"{lo}-{hi} per-axis bound", errors)
+                if width > WEB005B_NATIVE_PX and "Lanczos3" not in str(deriv.get("resize", "")):
+                    fail(f"{label}: {rel} is above the native {WEB005B_NATIVE_PX} px grid without "
+                         f"recording the single final RGBA Lanczos3 enlargement MER-151 requires "
+                         f"— an enlarged governed raster is only a presentation derivative when it "
+                         f"was made that one way", errors)
                 if "lossless" not in str(deriv.get("format", "")):
                     fail(f"{label}: {rel} is not a lossless encode", errors)
+            layer_widest[key] = widest or WEB005B_NATIVE_PX
+
+            # ---- MER-151 bounded transfer (B-VIS-15) ---------------------------------------
+            win, gam = layer.get("display_window"), layer.get("gamma")
+            if win is None or gam is None:
+                fail(f"{label}: records no MER-151 display-window / gamma decision; 'disabled' is a "
+                     f"decision and has to be stated", errors)
+            if key == "priority" and win != "disabled":
+                fail(f"{label}: priority carries a display window — percentile/window clipping is "
+                     f"prohibited on the fixed 0-100 score (MER-151 section 3)", errors)
+            if isinstance(win, dict):
+                b = WEB005B_WINDOW_BOUNDS
+                if win.get("kind") == "quantile":
+                    q_low, q_high = win.get("q_low"), win.get("q_high")
+                    ok = (isinstance(q_low, (int, float)) and isinstance(q_high, (int, float))
+                          and b["q_low"][0] <= q_low <= b["q_low"][1]
+                          and b["q_high"][0] <= q_high <= b["q_high"][1]
+                          and q_high - q_low >= b["min_span"])
+                    if not ok:
+                        fail(f"{label}: display window {q_low}/{q_high} is outside the MER-151 "
+                             f"quantile bounds or below the {b['min_span']} span floor", errors)
+                elif win.get("kind") == "symmetric_abs_quantile":
+                    q_abs, m = win.get("q_abs"), win.get("resolved_M")
+                    if not (isinstance(q_abs, (int, float)) and b["q_abs"][0] <= q_abs <= b["q_abs"][1]):
+                        fail(f"{label}: q_abs {q_abs} is outside the MER-151 {b['q_abs']} bound", errors)
+                    if not (isinstance(m, (int, float)) and m >= b["min_M"]):
+                        fail(f"{label}: resolved M {m} is below the mandatory {b['min_M']} floor", errors)
+                    if win.get("center") != 0.0 or win.get("independent_signed_windows") is not False:
+                        fail(f"{label}: the THM-01 window must keep the scientific centre at exactly "
+                             f"0 and may not window the two signs independently", errors)
+                else:
+                    fail(f"{label}: unknown display-window kind {win.get('kind')!r}", errors)
+            if isinstance(gam, dict):
+                g, (glo, ghi) = gam.get("gamma"), WEB005B_GAMMA_BOUNDS[key]
+                if not (isinstance(g, (int, float)) and glo <= g <= ghi):
+                    fail(f"{label}: gamma {g} is outside the MER-151 {glo}-{ghi} bound for {key}", errors)
+                if gam.get("adaptive") is not False:
+                    fail(f"{label}: gamma must be one fixed value per layer family, never local or "
+                         f"adaptive", errors)
             if key == "priority":
                 rel = web005b_file(f"{label}.legend", layer.get("legend", {}))
                 if rel:
@@ -916,8 +993,9 @@ def main() -> int:
                     if rel:
                         delivery_paths.add(rel)
                         w5b_own.setdefault(layer_key, set()).add(rel)
-                    if int(entry.get("width", 0)) > WEB005B_NATIVE_PX:
-                        fail(f"{label}: above the native {WEB005B_NATIVE_PX} px grid", errors)
+                    if int(entry.get("width", 0)) > layer_widest.get(layer_key, WEB005B_NATIVE_PX):
+                        fail(f"{label}: wider than any lossless derivative of this layer — a "
+                             f"delivery encode re-encodes a rendered file, it never adds pixels", errors)
                     if rel == str(entry.get("reference", "")):
                         # kept lossless: nothing more to prove than the checksum above
                         if "lossless" not in str(entry.get("format", "")):
@@ -967,7 +1045,10 @@ def main() -> int:
                 fail(f"web_005b asset {key!r} placement.rendered is incomplete", errors)
             elif css_w * dpr > native:
                 fail(f"web_005b asset {key!r} is laid out at {css_w} CSS px = {int(css_w * dpr)} device px "
-                     f"at {dpr}x, above its native {native} px", errors)
+                     f"at {dpr}x, above the {native} px it publishes", errors)
+            elif key in layer_widest and native > layer_widest[key]:
+                fail(f"web_005b asset {key!r} claims {native} px of published density but its widest "
+                     f"derivative is {layer_widest[key]} px", errors)
             if str(rendered.get("selected_derivative", "")) not in own:
                 fail(f"web_005b asset {key!r} names a selected derivative that is not its own", errors)
         # The CSS caps that make those records true. WEB-005B R11 renamed the Act-3 panel to the

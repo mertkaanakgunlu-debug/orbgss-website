@@ -1,0 +1,68 @@
+Copy preservation: working tree vs 5f11894
+  REMOVED en dictionary 'act.context.kicker'
+            - 02 · The place
+  REMOVED en dictionary 'act.evidence.kicker'
+            - 03 · The evidence
+  REMOVED en dictionary 'act.priority.kicker'
+            - 04 · The result
+  CHANGED en dictionary 'alt.alt01'
+            - Sequential map of the clay and hydroxyl spectral alteration proxy across the Kýzýldere area of interest
+            + Map of the surface alteration signal across the Kýzýldere area of interest, running from deep blue where the signal is weakest to yellow where it is strongest
+  CHANGED en dictionary 'domain.geothermal.copy'
+            - Evidence-backed prioritization of geothermal exploration areas. Kýzýldere is the running pilot and the first application of the workflow.
+            + Evidence-backed prioritization of geothermal exploration ground — the application the workflow above was built and published against.
+  CHANGED en dictionary 'solutions.copy'
+            - Status is stated on every domain, and nothing in development is presented as a finished product.
+            + The same evidence-to-priority workflow, read against different ground. Each domain states where it actually stands, and nothing in development is presented as a finished product.
+  REMOVED en dictionary 'solutions.kicker'
+            - Solutions
+  REMOVED tr dictionary 'act.context.kicker'
+            - 02 · Alan
+  REMOVED tr dictionary 'act.evidence.kicker'
+            - 03 · Kanýt
+  REMOVED tr dictionary 'act.priority.kicker'
+            - 04 · Sonuç
+  CHANGED tr dictionary 'alt.alt01'
+            - Kýzýldere ilgi alaný boyunca kil ve hidroksil spektral alterasyon vekilinin sýralý haritasý
+            + Kýzýldere ilgi alaný boyunca yüzey alterasyon sinyalinin haritasý; sinyalin en zayýf olduðu yerde koyu mavi, en güçlü olduðu yerde sarý
+  CHANGED tr dictionary 'domain.geothermal.copy'
+            - Jeotermal arama alanlarýnýn kanýta dayalý önceliklendirilmesi. Kýzýldere yürüyen pilot çalýþmadýr ve iþ akýþýnýn ilk uygulamasýdýr.
+            + Jeotermal arama zemininin kanýta dayalý önceliklendirilmesi — yukarýdaki iþ akýþýnýn üzerine kurulduðu ve yayýmlandýðý uygulama.
+  CHANGED tr dictionary 'solutions.copy'
+            - Her alanda durum açýkça belirtilir; geliþtirme aþamasýndaki hiçbir þey tamamlanmýþ ürün olarak sunulmaz.
+            + Ayný kanýttan önceliðe iþ akýþý, farklý zeminler üzerinde okunur. Her alan bulunduðu noktayý açýkça belirtir; geliþtirme aþamasýndaki hiçbir þey tamamlanmýþ ürün olarak sunulmaz.
+  REMOVED tr dictionary 'solutions.kicker'
+            - Çözümler
+  REMOVED homepage element 'act.context.kicker'
+            - 02 · The place
+  REMOVED homepage element 'act.evidence.kicker'
+            - 03 · The evidence
+  REMOVED homepage element 'act.priority.kicker'
+            - 04 · The result
+  CHANGED homepage element 'domain.geothermal.copy'
+            - Evidence-backed prioritization of geothermal exploration areas. Kýzýldere is the running pilot and the first application of the workflow.
+            + Evidence-backed prioritization of geothermal exploration ground — the application the workflow above was built and published against.
+  CHANGED homepage element 'solutions.copy'
+            - Status is stated on every domain, and nothing in development is presented as a finished product.
+            + The same evidence-to-priority workflow, read against different ground. Each domain states where it actually stands, and nothing in development is presented as a finished product.
+  REMOVED homepage element 'solutions.kicker'
+            - Solutions
+  CHANGED homepage attribute 'alt.alt01 -> @alt'
+            - Sequential map of the clay and hydroxyl spectral alteration proxy across the Kýzýldere area of interest
+            + Map of the surface alteration signal across the Kýzýldere area of interest, running from deep blue where the signal is weakest to yellow where it is strongest
+  REMOVED homepage text
+            - 02 · The place
+  REMOVED homepage text
+            - 03 · The evidence
+  REMOVED homepage text
+            - 04 · The result
+  REMOVED homepage text
+            - Status is stated on every domain, and nothing in development is presented as a finished product.
+  REMOVED homepage text
+            - Evidence-backed prioritization of geothermal exploration areas. Kýzýldere is the running pilot and the first application of the workflow.
+  ADDED   homepage text
+            + The same evidence-to-priority workflow, read against different ground. Each domain states where it actually stands, and nothing in development is presented as a finished product.
+  ADDED   homepage text
+            + Evidence-backed prioritization of geothermal exploration ground — the application the workflow above was built and published against.
+
+28 visible-copy difference(s)
