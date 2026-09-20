@@ -1,0 +1,152 @@
+Copy preservation: working tree vs 0af5b1ad0a56
+  REMOVED en dictionary 'app.environment.copy'
+            - Land and environmental change read as spatial evidence.
+  REMOVED en dictionary 'app.environment.status'
+            - Expansion direction
+  REMOVED en dictionary 'app.environment.title'
+            - Environmental & Land Intelligence
+  CHANGED en dictionary 'app.geothermal.title'
+            - Geothermal Exploration
+            + Geothermal
+  ADDED   en dictionary 'app.marine.copy'
+            + Coastal and marine ground read as spatial evidence on the same footing.
+  ADDED   en dictionary 'app.marine.status'
+            + Expansion direction
+  ADDED   en dictionary 'app.marine.title'
+            + Marine
+  REMOVED en dictionary 'app.mineral.copy'
+            - The same workflow extended to mineral exploration targets.
+  REMOVED en dictionary 'app.mineral.status'
+            - Expansion direction
+  REMOVED en dictionary 'app.mineral.title'
+            - Mineral Exploration
+  ADDED   en dictionary 'app.mining.copy'
+            + The same evidence-to-priority workflow extended to mineral exploration targets.
+  ADDED   en dictionary 'app.mining.status'
+            + Expansion direction
+  ADDED   en dictionary 'app.mining.title'
+            + Mining
+  CHANGED en dictionary 'companyPage.expansion'
+            - OrbGSS is built as a general geospatial-intelligence platform. Geothermal exploration is its first proving ground today; the same evidence-to-priority pattern is designed to extend into mineral exploration and environmental & land intelligence as those directions mature.
+            + OrbGSS is built as a general geospatial-intelligence platform. Geothermal is its first proving ground today; the same evidence-to-priority pattern is designed to extend into mining and marine domains as those directions mature.
+  REMOVED en dictionary 'nav.environment'
+            - Environmental & Land Intelligence
+  CHANGED en dictionary 'nav.geothermal'
+            - Geothermal Exploration
+            + Geothermal
+  ADDED   en dictionary 'nav.marine'
+            + Marine
+  REMOVED en dictionary 'nav.mineral'
+            - Mineral Exploration
+  ADDED   en dictionary 'nav.mining'
+            + Mining
+  REMOVED en dictionary 'solutionsPage.environment.body1'
+            - Environmental and land-use change can be read as spatial evidence the same way exploration evidence is: mapped, compared and prioritized across an area of interest.
+  REMOVED en dictionary 'solutionsPage.environment.body2'
+            - As with mineral exploration, this is an expansion direction, not a finished or deployed application.
+  CHANGED en dictionary 'solutionsPage.intro'
+            - OrbGSS applies the same evidence-to-priority pattern across domains. Geothermal exploration is where it runs today; mineral exploration and environmental & land intelligence are the directions it is built to extend into.
+            + OrbGSS applies the same evidence-to-priority pattern across domains. Geothermal is where it runs today; mining and marine are the directions it is built to extend into.
+  ADDED   en dictionary 'solutionsPage.marine.body1'
+            + Coastal and marine ground can be read as spatial evidence the same way exploration evidence is: mapped, compared and prioritized across an area of interest.
+  ADDED   en dictionary 'solutionsPage.marine.body2'
+            + As with mining, this is an expansion direction, not a finished or deployed application.
+  CHANGED en dictionary 'solutionsPage.meta.description'
+            - Geothermal exploration is OrbGSS's active first application. Mineral exploration and environmental & land intelligence are expansion directions built on the same evidence-to-priority pattern.
+            + Geothermal is OrbGSS's active first application. Mining and marine are expansion directions built on the same evidence-to-priority pattern.
+  CHANGED en dictionary 'solutionsPage.meta.ogDescription'
+            - One evidence-to-priority pattern. Geothermal active first; mineral and environmental intelligence next.
+            + One evidence-to-priority pattern. Geothermal active first; mining and marine next.
+  REMOVED en dictionary 'solutionsPage.mineral.body1'
+            - Mineral exploration follows the same underlying pattern — area of interest, evidence, explicit gaps, integrated priority — applied to the evidence families relevant to mineral targeting.
+  REMOVED en dictionary 'solutionsPage.mineral.body2'
+            - This is a direction the platform is built to extend into, not a deployed or validated product today.
+  ADDED   en dictionary 'solutionsPage.mining.body1'
+            + Mining follows the same underlying pattern — area of interest, evidence, explicit gaps, integrated priority — applied to the evidence families relevant to mineral targeting.
+  ADDED   en dictionary 'solutionsPage.mining.body2'
+            + This is a direction the platform is built to extend into, not a deployed or validated product today.
+  REMOVED tr dictionary 'app.environment.copy'
+            - Arazi ve çevre deðiþiminin mekânsal kanýt olarak okunmasý.
+  REMOVED tr dictionary 'app.environment.status'
+            - Geniþleme yönü
+  REMOVED tr dictionary 'app.environment.title'
+            - Çevre ve Arazi Zekâsý
+  CHANGED tr dictionary 'app.geothermal.title'
+            - Jeotermal Arama
+            + Jeotermal
+  ADDED   tr dictionary 'app.marine.copy'
+            + Kýyý ve deniz zemininin ayný temelde mekânsal kanýt olarak okunmasý.
+  ADDED   tr dictionary 'app.marine.status'
+            + Geniþleme yönü
+  ADDED   tr dictionary 'app.marine.title'
+            + Denizel
+  REMOVED tr dictionary 'app.mineral.copy'
+            - Ayný iþ akýþýnýn maden arama hedeflerine geniþletilmesi.
+  REMOVED tr dictionary 'app.mineral.status'
+            - Geniþleme yönü
+  REMOVED tr dictionary 'app.mineral.title'
+            - Maden Arama
+  ADDED   tr dictionary 'app.mining.copy'
+            + Ayný kanýttan önceliðe iþ akýþýnýn maden arama hedeflerine geniþletilmesi.
+  ADDED   tr dictionary 'app.mining.status'
+            + Geniþleme yönü
+  ADDED   tr dictionary 'app.mining.title'
+            + Madencilik
+  CHANGED tr dictionary 'companyPage.expansion'
+            - OrbGSS genel bir coðrafi zekâ platformu olarak kurgulanmýþtýr. Jeotermal arama bugün ilk deneme alanýdýr; ayný kanýttan önceliðe deseni, bu yönler olgunlaþtýkça maden arama ile çevre ve arazi zekâsýna geniþlemek üzere tasarlanmýþtýr.
+            + OrbGSS genel bir coðrafi zekâ platformu olarak kurgulanmýþtýr. Jeotermal bugün ilk deneme alanýdýr; ayný kanýttan önceliðe deseni, bu yönler olgunlaþtýkça madencilik ve denizel alanlara geniþlemek üzere tasarlanmýþtýr.
+  REMOVED tr dictionary 'nav.environment'
+            - Çevre ve Arazi Zekâsý
+  CHANGED tr dictionary 'nav.geothermal'
+            - Jeotermal Arama
+            + Jeotermal
+  ADDED   tr dictionary 'nav.marine'
+            + Denizel
+  REMOVED tr dictionary 'nav.mineral'
+            - Maden Arama
+  ADDED   tr dictionary 'nav.mining'
+            + Madencilik
+  REMOVED tr dictionary 'solutionsPage.environment.body1'
+            - Çevresel ve arazi kullanýmý deðiþimi de, arama kanýtý gibi mekânsal kanýt olarak okunabilir: bir ilgi alaný boyunca haritalanýr, karþýlaþtýrýlýr ve önceliklendirilir.
+  REMOVED tr dictionary 'solutionsPage.environment.body2'
+            - Maden aramada olduðu gibi, bu da bir geniþleme yönüdür; tamamlanmýþ ya da devreye alýnmýþ bir uygulama deðildir.
+  CHANGED tr dictionary 'solutionsPage.intro'
+            - OrbGSS ayný kanýttan önceliðe desenini farklý alanlarda uygular. Bugün çalýþtýðý yer jeotermal aramadýr; maden arama ile çevre ve arazi zekâsý, geniþleyeceði yönlerdir.
+            + OrbGSS ayný kanýttan önceliðe desenini farklý alanlarda uygular. Bugün çalýþtýðý yer jeotermaldir; madencilik ve denizel, geniþleyeceði yönlerdir.
+  ADDED   tr dictionary 'solutionsPage.marine.body1'
+            + Kýyý ve deniz zemini de, arama kanýtý gibi mekânsal kanýt olarak okunabilir: bir ilgi alaný boyunca haritalanýr, karþýlaþtýrýlýr ve önceliklendirilir.
+  ADDED   tr dictionary 'solutionsPage.marine.body2'
+            + Madencilikte olduðu gibi, bu da bir geniþleme yönüdür; tamamlanmýþ ya da devreye alýnmýþ bir uygulama deðildir.
+  CHANGED tr dictionary 'solutionsPage.meta.description'
+            - Jeotermal arama, OrbGSS’in aktif ilk uygulamasýdýr. Maden arama ile çevre ve arazi zekâsý, ayný kanýttan önceliðe deseni üzerine kurulan geniþleme yönleridir.
+            + Jeotermal, OrbGSS’in aktif ilk uygulamasýdýr. Madencilik ve denizel, ayný kanýttan önceliðe deseni üzerine kurulan geniþleme yönleridir.
+  CHANGED tr dictionary 'solutionsPage.meta.ogDescription'
+            - Tek bir kanýttan önceliðe deseni. Önce aktif jeotermal; ardýndan maden ve çevre zekâsý.
+            + Tek bir kanýttan önceliðe deseni. Önce aktif jeotermal; ardýndan madencilik ve denizel.
+  REMOVED tr dictionary 'solutionsPage.mineral.body1'
+            - Maden arama da ayný temel deseni izler — ilgi alaný, kanýt, açýk boþluklar, bütünleþik öncelik — maden hedeflemesiyle ilgili kanýt ailelerine uygulanmýþ hâliyle.
+  REMOVED tr dictionary 'solutionsPage.mineral.body2'
+            - Bu, platformun geniþlemek üzere kurgulandýðý bir yöndür; bugün devreye alýnmýþ ya da doðrulanmýþ bir ürün deðildir.
+  ADDED   tr dictionary 'solutionsPage.mining.body1'
+            + Madencilik de ayný temel deseni izler — ilgi alaný, kanýt, açýk boþluklar, bütünleþik öncelik — maden hedeflemesiyle ilgili kanýt ailelerine uygulanmýþ hâliyle.
+  ADDED   tr dictionary 'solutionsPage.mining.body2'
+            + Bu, platformun geniþlemek üzere kurgulandýðý bir yöndür; bugün devreye alýnmýþ ya da doðrulanmýþ bir ürün deðildir.
+  REMOVED homepage element 'nav.environment'
+            - Environmental & Land Intelligence
+  CHANGED homepage element 'nav.geothermal'
+            - Geothermal Exploration
+            + Geothermal
+  ADDED   homepage element 'nav.marine'
+            + Marine
+  REMOVED homepage element 'nav.mineral'
+            - Mineral Exploration
+  ADDED   homepage element 'nav.mining'
+            + Mining
+  REMOVED homepage text
+            - Geothermal Exploration
+  REMOVED homepage text
+            - Mineral Exploration
+  REMOVED homepage text
+            - Environmental & Land Intelligence
+
+68 visible-copy difference(s)

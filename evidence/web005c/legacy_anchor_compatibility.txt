@@ -1,0 +1,15 @@
+WEB-005C / MER-149 - superseded /solutions/ deep-link compatibility
+Viewport 1440x900, DPR 1, local static server, EN.
+
+/solutions/#mineral
+  lands at scrollY 866 px
+  /solutions/#mining lands at scrollY 866 px
+  identical landing: True
+  row heading shown: Mining
+
+/solutions/#environment
+  lands at scrollY 1013 px
+  /solutions/#marine lands at scrollY 1013 px
+  identical landing: True
+  row heading shown: Marine
+

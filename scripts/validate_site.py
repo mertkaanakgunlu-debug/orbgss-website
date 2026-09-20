@@ -53,10 +53,10 @@ def canonical_url(route: str) -> str:
 # WEB-005 four-act structure: the act anchors, the evidence trio, the data-gap note, the pilot
 # ledger and the trust/contact zone. The WEB-001/002 six-scene gallery anchors (observe/platform,
 # geothermal as separate full-width scenes) are deliberately gone.
-# WEB-005B R13: the homepage domain taxonomy is Geothermal / Mining / Marine. The #mineral and
-# #environment anchors belong to /solutions/, which keeps its own application-ledger vocabulary and
-# is still the target of every nav link; an existing route anchor is not authority to rename a
-# published homepage domain.
+# WEB-005B R13 / WEB-005C: the public domain taxonomy is Geothermal / Mining / Marine, on the
+# homepage and on /solutions/ alike. WEB-005C converged the two: the superseded application-ledger
+# labels are gone from visible copy, and #mineral / #environment survive only as compatibility
+# aliases on their renamed /solutions/ rows so existing deep links keep resolving.
 # WEB-005B R14: the section is "Solutions" and carries the #solutions anchor; it is no longer
 # framed as a pilot panel, so there is no #pilot section on the homepage. The /pilot/ ROUTE is
 # unaffected and is still required above.
@@ -66,6 +66,23 @@ REQUIRED_SECTION_IDS = {
 }
 # WEB-005: the homepage's primary visual hierarchy is exactly these four acts, in this order.
 REQUIRED_ACTS = ["1", "2", "3", "4"]
+# WEB-005C / MER-149: the canonical public domain taxonomy, its route destinations, and the
+# superseded labels that may never reappear in visible public copy. The Solutions submenu is the
+# one place all three names are published together on every route, so it is pinned in order.
+PUBLIC_TAXONOMY = [
+    ("geothermal", "nav.geothermal", "Geothermal", "Jeotermal"),
+    ("mining", "nav.mining", "Mining", "Madencilik"),
+    ("marine", "nav.marine", "Marine", "Denizel"),
+]
+# Superseded /solutions/ row anchors. They must stay resolvable on /solutions/ (as aliases on the
+# renamed rows) so an existing external deep link is not broken by the rename.
+LEGACY_DOMAIN_ANCHORS = ["mineral", "environment"]
+# Retired domain labels, EN and TR. Matched case-sensitively so the lowercase activity wording the
+# Mining row legitimately keeps ("... relevant to mineral targeting") is untouched.
+RETIRED_DOMAIN_LABELS = [
+    "Mineral Exploration", "Environmental & Land Intelligence",
+    "Environmental &amp; Land Intelligence", "Maden Arama", "Çevre ve Arazi Zekâsı",
+]
 REQUIRED_ACT_SECTION_IDS = ["hero", "context", "evidence", "priority"]
 PROHIBITED_COPY = ["how it works"]
 # Temporary gallery panels must never be labelled as scientific outputs (WEB-001 acceptance 9).
@@ -628,6 +645,56 @@ def main() -> int:
         for lang in ("en", "tr"):
             if dictionary_value(lang, key) is None:
                 fail(f"i18n key {key!r} is missing from the {lang!r} dictionary", errors)
+
+    # ------------------------------------------------------------------
+    # WEB-005C / MER-149: one public domain taxonomy across the whole site. A visitor must not meet
+    # Geothermal / Mining / Marine on the homepage and a different set of top-level domain names in
+    # the navigation or on /solutions/.
+    # ------------------------------------------------------------------
+    submenu_re = re.compile(r'<div class="submenu"[^>]*>(.*?)</div>', re.S)
+    item_re = re.compile(r'<a href="(/solutions/#[^"]+)" data-i18n="([^"]+)">([^<]+)</a>')
+    for route, text in route_html.items():
+        label = ROUTES[route]
+        menu = submenu_re.search(text)
+        if not menu:
+            fail(f"{label}: no Solutions submenu; the public domain taxonomy is not published", errors)
+            continue
+        got = item_re.findall(menu.group(1))
+        want = [(f"/solutions/#{anchor}", key, en) for anchor, key, en, _ in PUBLIC_TAXONOMY]
+        if got != want:
+            fail(f"{label}: Solutions submenu is not the canonical taxonomy in order; "
+                 f"expected {want}, found {got}", errors)
+
+    # The names themselves, in both languages, exactly as Product publishes them.
+    for _, key, en_name, tr_name in PUBLIC_TAXONOMY:
+        for lang, want_name in (("en", en_name), ("tr", tr_name)):
+            got_name = dictionary_value(lang, key)
+            if got_name != want_name:
+                fail(f"{key!r} in the {lang!r} dictionary is {got_name!r}, not the canonical "
+                     f"public domain name {want_name!r}", errors)
+
+    # /solutions/ publishes a row per domain, and keeps the superseded anchors resolvable.
+    solutions_ids = route_parsers.get("solutions", SiteParser()).ids
+    for anchor_id, _, en_name, _ in PUBLIC_TAXONOMY:
+        if anchor_id not in solutions_ids:
+            fail(f"solutions/index.html: no #{anchor_id} row for the {en_name!r} domain", errors)
+    for legacy in LEGACY_DOMAIN_ANCHORS:
+        if legacy not in solutions_ids:
+            fail(f"solutions/index.html: legacy anchor #{legacy} no longer resolves; existing deep "
+                 f"links to it would break (WEB-005C keeps it as an alias on the renamed row)", errors)
+
+    # No surface may still publish a superseded domain label -- not visible route copy, not the
+    # EN/TR dictionary, not a translated aria-label or meta description.
+    for route, text in route_html.items():
+        for retired in RETIRED_DOMAIN_LABELS:
+            if retired in text:
+                fail(f"{ROUTES[route]}: publishes the superseded domain label {retired!r}; the public "
+                     f"taxonomy is Geothermal / Mining / Marine", errors)
+    for lang in ("en", "tr"):
+        for retired in RETIRED_DOMAIN_LABELS:
+            if retired in lang_blocks.get(lang, ""):
+                fail(f"the {lang!r} dictionary still carries the superseded domain label "
+                     f"{retired!r}; the public taxonomy is Geothermal / Mining / Marine", errors)
 
     # ------------------------------------------------------------------
     # Scientific imagery provenance, site-wide. Every scientific raster on any public route must

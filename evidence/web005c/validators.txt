@@ -1,0 +1,52 @@
+WEB-005C / MER-149 - validator evidence
+HEAD at capture: 0af5b1ad0a5645f8ff3f39f818625944a096635d (working tree, pre-commit)
+Python: Python 3.14.6
+
+=== py -3.14 scripts/validate_site.py ===
+OrbGSS site validation
+  scenes: 4
+  html images: 29
+  routes: 6
+  i18n keys referenced site-wide: 268
+  geo-web-002 package assets: 6 (19 files)
+  warnings: 0
+RESULT: PASS
+exit=0
+
+=== py -3.14 hero/scripts/validate_hero.py ===
+  PASS  public-site changes since the baseline stay inside the integration write surface
+
+420 checks, 0 failed
+VALIDATION PASSED
+
+=== py -3.14 scripts/negative_tests_web005.py ===
+
+72/72 deliberate regressions caught
+Restored tree:
+  site: exit 0 — PASS — identical to baseline
+  hero: exit 0 — PASS — identical to baseline
+
+=== py -3.14 scripts/negative_tests_web005b.py ===
+
+55/55 deliberate regressions caught
+Restored tree: site exit 0 — PASS — identical to baseline
+
+=== py -3.14 scripts/negative_tests_web005c.py ===
+WEB-005C negative tests — public domain taxonomy parity
+
+  CAUGHT  legacy #mineral deep link stops resolving (exit 1)
+  CAUGHT  legacy #environment deep link stops resolving (exit 1)
+  CAUGHT  the /solutions/ #mining row anchor drifts (exit 1)
+  CAUGHT  the /solutions/ #marine row anchor drifts (exit 1)
+  CAUGHT  the nav republishes a superseded label (exit 1)
+  CAUGHT  the nav taxonomy order is swapped (exit 1)
+  CAUGHT  a nav item points away from its domain row (exit 1)
+  CAUGHT  the EN domain name reverts in the dictionary (exit 1)
+  CAUGHT  the TR domain name reverts in the dictionary (exit 1)
+  CAUGHT  the /solutions/ row heading reverts in EN (exit 1)
+  CAUGHT  the /solutions/ row heading reverts in TR (exit 1)
+  CAUGHT  a superseded label returns through /company/ body copy (exit 1)
+  CAUGHT  a superseded label returns through the TR dictionary (exit 1)
+
+13/13 deliberate regressions caught
+Restored tree: site exit 0 — PASS — identical to baseline
