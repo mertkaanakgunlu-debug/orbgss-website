@@ -53,9 +53,13 @@ def canonical_url(route: str) -> str:
 # WEB-005 four-act structure: the act anchors, the evidence trio, the data-gap note, the pilot
 # ledger and the trust/contact zone. The WEB-001/002 six-scene gallery anchors (observe/platform,
 # geothermal as separate full-width scenes) are deliberately gone.
+# WEB-005B R13: the homepage domain taxonomy is Geothermal / Mining / Marine. The #mineral and
+# #environment anchors belong to /solutions/, which keeps its own application-ledger vocabulary and
+# is still the target of every nav link; an existing route anchor is not authority to rename a
+# published homepage domain.
 REQUIRED_SECTION_IDS = {
     "hero", "context", "evidence", "terrain", "thermal", "alteration", "structure", "priority",
-    "pilot", "solutions", "mineral", "environment", "company", "contact",
+    "pilot", "solutions", "geothermal", "mining", "marine", "company", "contact",
 }
 # WEB-005: the homepage's primary visual hierarchy is exactly these four acts, in this order.
 REQUIRED_ACTS = ["1", "2", "3", "4"]

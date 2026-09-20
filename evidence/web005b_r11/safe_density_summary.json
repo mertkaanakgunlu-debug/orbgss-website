@@ -7,8 +7,8 @@
  "inspect_base_max_css": 1595.6,
  "inspect_layer_max_css": 598,
  "domain_lead_max_css": 1278,
- "domain_mineral_max_css": 727.81,
- "domain_env_max_css": 727.81,
+ "domain_mining_max_css": 727.81,
+ "domain_marine_max_css": 727.81,
  "first_viewport_leak": [],
  "horizontal_overflow": [],
  "aoi_mark_shown_only_at_16_9": [

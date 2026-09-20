@@ -424,6 +424,11 @@ body.home{background:var(--orb-bg)}
 .domain-shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(3,11,18,.94) 0%,rgba(3,11,18,.6) 34%,rgba(3,11,18,.06) 76%)}
 .domain-copy{position:relative;z-index:2;display:flex;flex-direction:column;gap:11px;width:100%;
   padding:clamp(22px,2.4vw,38px);padding-right:clamp(130px,20%,230px)}
+/* The caption is the same width on every card, but a secondary card is half of one — so measured
+   at 1440 its copy box ran 77-144 px into the caption. A half-width card clears the caption
+   vertically instead of horizontally, which is what the stacked card below 821px already does. */
+.domain-card:not(.is-lead) .domain-copy{padding-right:clamp(22px,2.4vw,38px);
+  padding-bottom:clamp(76px,6vw,92px)}
 .domain-copy h3{margin:0;font-size:clamp(20px,1.9vw,30px);font-weight:370;letter-spacing:-.025em;color:#fff}
 .domain-copy p{margin:0;max-width:46ch;font-size:14.5px;line-height:1.7;color:#ccd7dd}
 .domain-status{margin:2px 0 0;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(214,226,233,.82)}

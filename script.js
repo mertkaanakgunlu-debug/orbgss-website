@@ -122,7 +122,7 @@ const I18N = {
     'alt.priorityLegend': 'Colour scale for the relative priority map, running from 0 at the dark end to 100 at the pale end',
     'pilot.kicker': 'Pilot',
     'pilot.title': 'Geothermal first.',
-    'pilot.copy': 'Geothermal exploration is where OrbGSS is applied first. Mineral exploration and environmental & land intelligence follow the same evidence-to-priority workflow and are expansion directions, not finished products.',
+    'pilot.copy': 'Geothermal exploration is where OrbGSS is applied first. Mining and marine follow the same evidence-to-priority workflow and are in development, not finished products.',
     'pilot.listLabel': 'Applications',
     'app.geothermal.title': 'Geothermal Exploration',
     'app.geothermal.status': 'Active · First application',
@@ -299,7 +299,7 @@ const I18N = {
     'alt.inspectAlteration': 'Alteration proxy map of the same area of interest, revealed over the natural-colour view',
     'alt.inspectPriority': 'Relative priority map of the same area of interest, revealed over the natural-colour view',
     'domains.illustrativeLabel': 'Illustrative',
-    'domains.illustrative': 'The three photographs above are public-domain Landsat scenes chosen to show the kind of ground each application reads. They are not OrbGSS analytical outputs, not results, and not the Kızıldere pilot area.',
+    'domains.illustrative': 'The three photographs above are public-domain Landsat scenes chosen to show the kind of ground each domain reads. They are not OrbGSS analytical outputs, not results, and not the Kızıldere pilot area.',
     'proof.kicker': 'Why it holds up',
     'proof.title': 'Method, stated plainly.',
     'proof.copy': 'Six commitments that govern what OrbGSS publishes. None of them is a performance claim.',
@@ -317,7 +317,18 @@ const I18N = {
     'proof.decision.copy': 'OrbGSS helps decide where to investigate. Field investigation remains necessary.',
     'proof.foot': 'No accuracy, performance, deployment, customer or scale figures are published for this baseline.',
     'contact.endTitle': "Let's talk about where to look next.",
-    'contact.endCta': 'Start a Technical Conversation'
+    'contact.endCta': 'Start a Technical Conversation',
+    /* WEB-005B R13 — the accepted homepage domain taxonomy. Separate from the app.* application
+       ledger, which /solutions/ publishes with its own wording. */
+    'domain.geothermal.title': 'Geothermal',
+    'domain.geothermal.copy': 'Evidence-backed prioritization of geothermal exploration areas. Kızıldere is the running pilot and the first application of the workflow.',
+    'domain.geothermal.status': 'Active · First application',
+    'domain.mining.title': 'Mining',
+    'domain.mining.copy': 'The same evidence-to-priority workflow extended to mineral exploration targets.',
+    'domain.mining.status': 'In development',
+    'domain.marine.title': 'Marine',
+    'domain.marine.copy': 'Coastal and marine ground read as spatial evidence on the same footing.',
+    'domain.marine.status': 'In development'
   },
   tr: {
     'meta.title': 'OrbGSS — Coğrafi Zekâ',
@@ -427,7 +438,7 @@ const I18N = {
     'alt.priorityLegend': 'Göreli öncelik haritasının renk ölçeği; koyu uçta 0 değerinden açık uçta 100 değerine uzanır',
     'pilot.kicker': 'Pilot',
     'pilot.title': 'Önce jeotermal.',
-    'pilot.copy': 'OrbGSS ilk olarak jeotermal aramada uygulanıyor. Maden arama ile çevre ve arazi zekâsı aynı kanıttan önceliğe iş akışını izler; bunlar tamamlanmış ürünler değil, genişleme yönleridir.',
+    'pilot.copy': 'OrbGSS ilk olarak jeotermal aramada uygulanıyor. Madencilik ve denizel alanlar aynı kanıttan önceliğe iş akışını izler; bunlar geliştirme aşamasındadır, tamamlanmış ürünler değildir.',
     'pilot.listLabel': 'Uygulama alanları',
     'app.geothermal.title': 'Jeotermal Arama',
     'app.geothermal.status': 'Aktif · İlk uygulama',
@@ -605,7 +616,7 @@ const I18N = {
     'alt.inspectAlteration': 'Aynı ilgi alanının alterasyon vekili haritası, doğal renkli görünümün üzerinde açılmış',
     'alt.inspectPriority': 'Aynı ilgi alanının göreli öncelik haritası, doğal renkli görünümün üzerinde açılmış',
     'domains.illustrativeLabel': 'Örnekleme',
-    'domains.illustrative': 'Yukarıdaki üç fotoğraf, her uygulamanın okuduğu zemin türünü göstermek için seçilmiş, kamuya açık Landsat sahneleridir. OrbGSS analitik çıktısı değildir, sonuç değildir ve Kızıldere pilot alanı değildir.',
+    'domains.illustrative': 'Yukarıdaki üç fotoğraf, her alanın okuduğu zemin türünü göstermek için seçilmiş, kamuya açık Landsat sahneleridir. OrbGSS analitik çıktısı değildir, sonuç değildir ve Kızıldere pilot alanı değildir.',
     'proof.kicker': 'Neden sağlam',
     'proof.title': 'Yöntem, açıkça ifade edilmiş.',
     'proof.copy': "OrbGSS'in yayımladıklarını yöneten altı taahhüt. Hiçbiri bir performans iddiası değildir.",
@@ -623,7 +634,18 @@ const I18N = {
     'proof.decision.copy': 'OrbGSS nerenin inceleneceğine karar vermeye yardımcı olur. Saha incelemesi gerekli olmaya devam eder.',
     'proof.foot': 'Bu temel sürüm için doğruluk, performans, devreye alma, müşteri veya ölçek rakamı yayımlanmaz.',
     'contact.endTitle': 'Sırada nereye bakılacağını konuşalım.',
-    'contact.endCta': 'Teknik Görüşme Başlatın'
+    'contact.endCta': 'Teknik Görüşme Başlatın',
+    /* WEB-005B R13 — the accepted homepage domain taxonomy. Separate from the app.* application
+       ledger, which /solutions/ publishes with its own wording. */
+    'domain.geothermal.title': 'Jeotermal',
+    'domain.geothermal.copy': 'Jeotermal arama alanlarının kanıta dayalı önceliklendirilmesi. Kızıldere yürüyen pilot çalışmadır ve iş akışının ilk uygulamasıdır.',
+    'domain.geothermal.status': 'Aktif · İlk uygulama',
+    'domain.mining.title': 'Madencilik',
+    'domain.mining.copy': 'Aynı kanıttan önceliğe iş akışının maden arama hedeflerine genişletilmesi.',
+    'domain.mining.status': 'Geliştirme aşamasında',
+    'domain.marine.title': 'Denizel',
+    'domain.marine.copy': 'Kıyı ve deniz zemininin aynı temelde mekânsal kanıt olarak okunması.',
+    'domain.marine.status': 'Geliştirme aşamasında'
   }
 };
 

@@ -12,6 +12,49 @@ from the Claude Design handoff bundle the CTO shared into the session
 synced from this repository on 2026-09-20T02:25:53Z)
 **Immutable hero upstream:** `feat/web-005a-hero-visual-fidelity@1135e7a7e0b0f6db6348dee139d505550d8ca8b9`
 **Evidence artifacts:** `evidence/web005b_r11/`
+**R13 bounded revision authority:** `docs/web-005-polish-authority@ba8d99b8:tasks/WEB-005B_R13_IMPLEMENTATION_REVIEW_DOMAIN_REVISION.md`
+**R11 implementation HEAD (reviewed):** `4e6c7c106399140565c77da0febe59ffc14f3ab3`
+
+## 0. R13 revision — the accepted domain taxonomy
+
+Product reviewed the R11 implementation, accepted it for final visual review, and issued one
+mandatory correction: the homepage domain taxonomy is **Geothermal / Mining / Marine**, and the
+implementation's substitution of *Mineral Exploration* and *Environmental & Land Intelligence* is
+not accepted. An existing route anchor is not authority to rename a published domain.
+
+That correction is implemented. The three cards now read:
+
+| Card | Label | Status | Anchor | Navigates |
+| --- | --- | --- | --- | --- |
+| lead | Geothermal | Active · First application | `#geothermal` | no |
+| secondary | Mining | In development | `#mining` | no |
+| secondary | Marine | In development | `#marine` | no |
+
+No card navigates. The accepted design gives the domain cards no link, and Mining and Marine have
+no production-ready destination route, so each states its status instead of offering one — the
+option R13 section 2 allows. Nothing was disabled, because there was no control to disable.
+
+The homepage domain module now carries its own `domain.*` strings. The `app.*` keys it used before
+are **published by `/solutions/` as well**, and this revision is homepage-only, so repurposing them
+would have silently retitled that route. `/solutions/` is therefore unchanged and still publishes
+*Geothermal Exploration / Mineral Exploration / Environmental & Land Intelligence* under
+`#geothermal` / `#mineral` / `#environment` — which every route's nav links point at, and which all
+still resolve. **That divergence between the homepage taxonomy and the `/solutions/` taxonomy is now
+visible to a visitor and is worth a follow-up task; it is outside this revision's envelope.**
+
+Two things outside the taxonomy were also corrected, both defects rather than design changes:
+
+- **`hero/config/lane.json`** — the eleven R11 domain derivatives were not on the integration write
+  surface. The lane check only sees a public-site path once it is *tracked*, so the R11 gate run
+  passed while they were untracked and `validate_hero.py` began failing on the first run after the
+  commit. They are now declared, and the hero validator is back to 420 / 0.
+- **secondary domain-card copy padding** — measured at 1440 px, the copy box on each half-width card
+  ran 77-144 px into its own caption, in both languages. The caption is the same width on every card
+  but a secondary card is half of one, so those cards now clear the caption vertically, exactly as
+  the stacked card below 821 px already did. Verified overlap-free at 1440 / 1024 / 900 / 390 px in
+  EN and TR.
+
+Everything below is the R11 record, amended where R13 changed it.
 
 ## 1. Start verification
 
@@ -90,7 +133,7 @@ Each of these is a deliberate departure; nothing else in the design was changed.
 
 | # | Deviation | Why |
 | --- | --- | --- |
-| D1 | **Domain names stay canonical.** The design labels the three domains "Geothermal / Mining / Marine". The implementation ships **Geothermal Exploration / Mineral Exploration / Environmental & Land Intelligence**, with the accepted *visual* hierarchy unchanged. | "Marine" is not in any canonical OrbGSS material and would be a new solution direction — outside the content boundary. `scripts/validate_site.py` also requires the `#mineral` and `#environment` anchors, and `/solutions/` publishes those three names. **The CTO should confirm this reading of R10 section 8.** |
+| ~~D1~~ | **Withdrawn — overruled by R13.** R11 shipped canonical application names; Product ruled that the accepted homepage taxonomy is Geothermal / Mining / Marine and that route anchors do not override it. | Corrected in section 0. The homepage anchors are now `#geothermal` / `#mining` / `#marine`; `/solutions/` keeps its own vocabulary and every nav link still resolves. |
 | D2 | **No per-layer legend chip on the evidence plates.** The design shows a white legend plate on each Act 3 raster and on the result. | Only the priority layer has a governed legend asset (`priority-legend-ramp.png`, the map's own 256-entry LUT). Adding legends for Terrain/THM-01/ALT-01 would mean either inventing them or importing the GEO-WEB-002 `assets/proof/final/*-legend.png` files, which are bound to `/pilot/`. The result keeps its coupled legend exactly as the design shows. |
 | D3 | **Act 3 and 4 use the WEB-005B derivatives, not `assets/proof/final/*-1249.webp`.** The design prototype imported the GEO-WEB-002 masters. | R11 section 7: use the currently accepted WEB-005B presentation assets. The homepage binds `web_005b.analytical`; the `proof/final` package stays bound to `/pilot/`. |
 | D4 | **Mobile Act 02 puts the copy below the photograph** instead of over it. The design's appendix shows "copy fills the frame" at 390 px. | Measured at 390 px the overlaid copy left the headline, statement and mandatory warning sitting on bright irrigated fields with no usable contrast, and the caption collided with the specification lines. The photograph is now a 4:5 window you scroll into, with its caption on it, and the copy reads on the page ground below. Desktop (≥1101 px) is the accepted integrated composition exactly as designed. **Worth a look in review.** |
@@ -199,6 +242,7 @@ lead card asks for 2556 and carries the 2880 px master width. Raw data:
 | `first_viewport.txt` | the measured numbers behind those captures |
 | `evidence_state_terrain_1440.webp`, `…_thermal_…`, `…_alteration_…` | all three evidence states, each with the shown-marker / plate / reading column asserted in the capture log |
 | `inspect_thermal_25_1440.webp`, `inspect_alteration_50_1440.webp`, `inspect_priority_75_1440.webp` | the inspection aid on each pair at three wipe positions; the co-registration is visible where the terrain continues across the divider |
+| `domains_desktop_1440.webp`, `domains_desktop_1440_secondary.webp`, `…_tr.webp` | the R13 taxonomy on desktop in both languages, with each card's label, status and link count asserted in the capture log |
 | `mobile_390_place/evidence/result/inspect/domains.webp` | each section on a phone |
 | `scroll_hero_to_domains_1024.webp` | **the continuity artifact**: a real Chrome screencast of Hero → Place → Evidence → Result → Inspection → Domains, resampled by the scroll offset Chrome reports per frame |
 | `homepage_desktop_1440_full_reduced_motion.webp`, `top_desktop_1440_reduced_motion.webp`, `reduced_motion.txt` | reduced motion: no video source attached at all, no reveal class, transitions 0 s, `scroll-behavior:auto`, nothing left hidden |
@@ -229,8 +273,10 @@ that was a capture artifact, and stitching is what makes the evidence honest.
 
 ## 9. Remaining visual polish worth CTO attention
 
-1. **D1 — domain naming.** The one place where the implementation knowingly reads R10 differently
-   from its literal wording. Needs a yes/no.
+1. ~~D1 — domain naming.~~ **Resolved by R13**: the taxonomy is Geothermal / Mining /
+   Marine. What remains is that `/solutions/` still publishes the older application
+   vocabulary, so the site now says "Mining" on the homepage and "Mineral Exploration"
+   one click away. A follow-up task, not this revision.
 2. **D4 — mobile Act 02.** The accepted appendix wants the copy over the frame at 390 px; it is
    below it here for legibility. Compare `mobile_390_place.webp` against the design's mobile view.
 3. **Act 02 AOI square legibility.** The analysis square sits partly behind the copy column on

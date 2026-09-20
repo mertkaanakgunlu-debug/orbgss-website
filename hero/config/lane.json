@@ -49,7 +49,18 @@
     "assets/imagery/kizildere-aoi-context-2025-natural-2400.webp",
     "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
     "assets/imagery/kizildere-aoi-context-2025-natural-1200.webp",
-    "assets/imagery/kizildere-aoi-context-2025-natural-800.webp"
+    "assets/imagery/kizildere-aoi-context-2025-natural-800.webp",
+    "assets/imagery/yellowstone-2013-900.webp",
+    "assets/imagery/yellowstone-2013-1400.webp",
+    "assets/imagery/yellowstone-2013-1800.webp",
+    "assets/imagery/yellowstone-2013-2400.webp",
+    "assets/imagery/yellowstone-2013-2880.webp",
+    "assets/imagery/chuquicamata-2024-900.webp",
+    "assets/imagery/chuquicamata-2024-1400.webp",
+    "assets/imagery/chuquicamata-2024-1800.webp",
+    "assets/imagery/ili-delta-2020-900.webp",
+    "assets/imagery/ili-delta-2020-1400.webp",
+    "assets/imagery/ili-delta-2020-1800.webp"
   ],
   "integration_reference_allowlist": [
     "hero/config/scene.json",
@@ -57,7 +68,7 @@
     "hero/evidence/production_media.json",
     "hero/evidence/visual_quality_inventory.json"
   ],
-  "note": "WEB-HERO-001 ran isolated: protected_paths had to stay byte-identical to the pinned WEB-001 baseline for the whole lane, and WEB-005 was named as the only authorized integration gate. That gate is now open. The pin moves to the WEB-005 execution baseline, the mode becomes integration, and the boundary changes shape rather than disappearing: public-site changes must stay inside integration_write_surface, and only the allowlisted hero files may name a public-site path. Everything the hero lane was forbidden to do that WEB-005 does not own -- deployment, DNS, routes, backends -- stays forbidden. WEB-005A continues on its own branch from the accepted WEB-005 main; the write surface is unchanged. The public-site changes it owns are the hero media, the hero handoff markup/styles/script and the hero media records. WEB-005B continues on its own branch from the terminal WEB-005A head: the hero media, hero markup, styles and script stay byte-identical, and the surface grows only by the Act 2 context renders WEB-005B owns under the protected assets/imagery prefix. Everything still forbidden stays forbidden.",
+  "note": "WEB-HERO-001 ran isolated: protected_paths had to stay byte-identical to the pinned WEB-001 baseline for the whole lane, and WEB-005 was named as the only authorized integration gate. That gate is now open. The pin moves to the WEB-005 execution baseline, the mode becomes integration, and the boundary changes shape rather than disappearing: public-site changes must stay inside integration_write_surface, and only the allowlisted hero files may name a public-site path. Everything the hero lane was forbidden to do that WEB-005 does not own -- deployment, DNS, routes, backends -- stays forbidden. WEB-005A continues on its own branch from the accepted WEB-005 main; the write surface is unchanged. The public-site changes it owns are the hero media, the hero handoff markup/styles/script and the hero media records. WEB-005B continues on its own branch from the terminal WEB-005A head: the hero media, hero markup, styles and script stay byte-identical, and the surface grows only by the Act 2 context renders and the R11 domain-card derivatives WEB-005B owns under the protected assets/imagery prefix. The domain derivatives are resize-and-encode copies of locked WEB-001 scene masters, which themselves stay byte-identical. Everything still forbidden stays forbidden.",
   "rejected_review_checkpoint": "ffa2f2944ca5992afb9e9891b42745a9bd1105ad",
   "superseded_review_checkpoints": {
     "rejected_visually": "ffa2f2944ca5992afb9e9891b42745a9bd1105ad",

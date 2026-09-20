@@ -324,8 +324,8 @@
         "task": "WEB-005B / MER-109",
         "status": "placed",
         "section": "Domains",
-        "homepage_slot": "domain-mineral",
-        "anchor": "mineral",
+        "homepage_slot": "domain-mining",
+        "anchor": "mining",
         "routes": [
           "index.html"
         ],
@@ -440,8 +440,8 @@
         "task": "WEB-005B / MER-109",
         "status": "placed",
         "section": "Domains",
-        "homepage_slot": "domain-environment",
-        "anchor": "environment",
+        "homepage_slot": "domain-marine",
+        "anchor": "marine",
         "routes": [
           "index.html"
         ],

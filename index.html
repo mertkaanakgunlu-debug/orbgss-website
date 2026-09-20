@@ -649,15 +649,20 @@
       directions sit beneath it at half width, and every card states its own status. The
       photographs are illustrative locked WEB-001 Landsat scenes, not OrbGSS outputs and not the
       pilot area — each carries its own location, coordinates and "Natural-color composite" label,
-      and the footnote says plainly what they are. Canonical application names and the #mineral /
-      #environment anchors are kept; the design's short domain words are not product vocabulary.
+      and the footnote says plainly what they are.
+
+      The taxonomy is Geothermal / Mining / Marine (R13 section 2). The homepage domain module has
+      its own `domain.*` strings rather than reusing the `app.*` application-ledger keys, because
+      /solutions/ publishes those same keys and this revision is homepage-only. None of the three
+      cards navigates: Mining and Marine have no production-ready destination route yet, and the
+      accepted design gives the cards no link, so they state their status instead of offering one.
     -->
     <section id="pilot" class="sec sec-domains" aria-labelledby="pilot-title">
       <div class="shell">
         <div class="sec-head">
           <p class="kicker mono" data-i18n="pilot.kicker">Pilot</p>
           <h2 id="pilot-title" data-i18n="pilot.title">Geothermal first.</h2>
-          <p class="act-statement" data-i18n="pilot.copy">Geothermal exploration is where OrbGSS is applied first. Mineral exploration and environmental &amp; land intelligence follow the same evidence-to-priority workflow and are expansion directions, not finished products.</p>
+          <p class="act-statement" data-i18n="pilot.copy">Geothermal exploration is where OrbGSS is applied first. Mining and marine follow the same evidence-to-priority workflow and are in development, not finished products.</p>
         </div>
 
         <ul class="domains" id="solutions" aria-label="Applications" data-i18n-aria-label="pilot.listLabel">
@@ -675,9 +680,9 @@
             />
             <span class="domain-shade" aria-hidden="true"></span>
             <div class="domain-copy">
-              <h3 data-i18n="app.geothermal.title">Geothermal Exploration</h3>
-              <p data-i18n="app.geothermal.copy">Evidence-backed prioritization of geothermal exploration areas.</p>
-              <p class="domain-status mono is-active" data-i18n="app.geothermal.status">Active · First application</p>
+              <h3 data-i18n="domain.geothermal.title">Geothermal</h3>
+              <p data-i18n="domain.geothermal.copy">Evidence-backed prioritization of geothermal exploration areas. Kızıldere is the running pilot and the first application of the workflow.</p>
+              <p class="domain-status mono is-active" data-i18n="domain.geothermal.status">Active · First application</p>
             </div>
             <p class="scene-label">
               <span data-i18n="scene.yellowstone.place">Yellowstone National Park, USA</span>
@@ -685,7 +690,7 @@
               <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
             </p>
           </li>
-          <li class="domain-card" id="mineral" data-label-tone="light" data-label-tone-locked data-reveal>
+          <li class="domain-card" id="mining" data-label-tone="light" data-label-tone-locked data-reveal>
             <img
               src="assets/imagery/chuquicamata-2024-900.webp"
               srcset="assets/imagery/chuquicamata-2024-900.webp 900w, assets/imagery/chuquicamata-2024-1400.webp 1400w, assets/imagery/chuquicamata-2024-1800.webp 1800w"
@@ -699,9 +704,9 @@
             />
             <span class="domain-shade" aria-hidden="true"></span>
             <div class="domain-copy">
-              <h3 data-i18n="app.mineral.title">Mineral Exploration</h3>
-              <p data-i18n="app.mineral.copy">The same workflow extended to mineral exploration targets.</p>
-              <p class="domain-status mono" data-i18n="app.mineral.status">Expansion direction</p>
+              <h3 data-i18n="domain.mining.title">Mining</h3>
+              <p data-i18n="domain.mining.copy">The same evidence-to-priority workflow extended to mineral exploration targets.</p>
+              <p class="domain-status mono" data-i18n="domain.mining.status">In development</p>
             </div>
             <p class="scene-label">
               <span data-i18n="scene.chuquicamata.place">Chuquicamata, Antofagasta, Chile</span>
@@ -709,7 +714,7 @@
               <span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span>
             </p>
           </li>
-          <li class="domain-card" id="environment" data-label-tone="light" data-label-tone-locked data-reveal>
+          <li class="domain-card" id="marine" data-label-tone="light" data-label-tone-locked data-reveal>
             <img
               src="assets/imagery/ili-delta-2020-900.webp"
               srcset="assets/imagery/ili-delta-2020-900.webp 900w, assets/imagery/ili-delta-2020-1400.webp 1400w, assets/imagery/ili-delta-2020-1800.webp 1800w"
@@ -723,9 +728,9 @@
             />
             <span class="domain-shade" aria-hidden="true"></span>
             <div class="domain-copy">
-              <h3 data-i18n="app.environment.title">Environmental &amp; Land Intelligence</h3>
-              <p data-i18n="app.environment.copy">Land and environmental change read as spatial evidence.</p>
-              <p class="domain-status mono" data-i18n="app.environment.status">Expansion direction</p>
+              <h3 data-i18n="domain.marine.title">Marine</h3>
+              <p data-i18n="domain.marine.copy">Coastal and marine ground read as spatial evidence on the same footing.</p>
+              <p class="domain-status mono" data-i18n="domain.marine.status">In development</p>
             </div>
             <p class="scene-label">
               <span data-i18n="scene.ili.place">Ili River Delta &amp; Lake Balkhash, Kazakhstan</span>
@@ -737,7 +742,7 @@
 
         <p class="act-footnote domains-note">
           <span class="mono" data-i18n="domains.illustrativeLabel">Illustrative</span>
-          <span data-i18n="domains.illustrative">The three photographs above are public-domain Landsat scenes chosen to show the kind of ground each application reads. They are not OrbGSS analytical outputs, not results, and not the Kızıldere pilot area.</span>
+          <span data-i18n="domains.illustrative">The three photographs above are public-domain Landsat scenes chosen to show the kind of ground each domain reads. They are not OrbGSS analytical outputs, not results, and not the Kızıldere pilot area.</span>
         </p>
       </div>
     </section>
