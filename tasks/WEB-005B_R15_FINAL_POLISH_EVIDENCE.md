@@ -129,6 +129,13 @@ spectral alteration proxy". Alt text is read aloud, so it is visible copy. It no
 reader sees — and with the display window applied it is also simply more accurate, because the
 layer really does run the length of its ramp now.
 
+One visible claim did have to be tightened, in both languages. The inspection aid used to end
+*"nothing on either side is filtered or recoloured"*. Nothing on the page filters or re-colours
+anything, and it still doesn't — but with a bounded display transfer now inside two of the published
+files, that sentence could be read as a claim about the rasters rather than about the page. It now
+says what is both true and the stronger claim anyway: *"both sides are exactly the files published
+above."*
+
 The mandatory scientific warnings were **not** shortened, reworded or moved. They are the honesty
 anchors, the validator pins their required terms per placement in both languages, and R15 does not
 economise on them.
