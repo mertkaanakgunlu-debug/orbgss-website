@@ -1,0 +1,11 @@
+external links (not fetched): none
+NAV en ["Platform","Solutions Geothermal Mining Marine","Pilot","Company","Contact"] {"expanded":"true","items":["Geothermal -> /solutions/#geothermal","Mining -> /solutions/#mining","Marine -> /solutions/#marine"]}
+NAV tr ["Platform","Çözümler Jeotermal Madencilik Denizel","Pilot","Şirket","İletişim"] {"expanded":"true","items":["Jeotermal -> /solutions/#geothermal","Madencilik -> /solutions/#mining","Denizel -> /solutions/#marine"]}
+lang switch controls found: 2
+I18N home h1 {"en":"Know where to look next.","tr":{"h1":"Sırada nereye bakacağınızı bilin.","lang":"tr"}}
+HERO desktop motion {"state":"held","payoff":"on","src":"assets/hero/orbgss-hero.webm","t":11.5,"paused":true,"ended":true,"dur":11.5} media: orbgss-hero.webm 200 errs: none
+HERO reduced-motion {"state":"static","payoff":"on","src":null,"t":0,"paused":true,"ended":false,"dur":null} media:  errs: none
+HERO mobile 390 {"state":"static","payoff":false,"src":null,"t":0,"paused":true,"ended":false,"dur":null} media:  errs: none
+HERO no-JS {"posterLoaded":true,"h1":"Know where to look next."}
+
+DONE. defects=0 checks=0

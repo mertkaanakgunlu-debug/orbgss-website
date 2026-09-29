@@ -1,0 +1,1892 @@
+{
+ "findings": [],
+ "results": {
+  "pages": [
+   {
+    "where": "/ @desktop-1440 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "OrbGSS — Geospatial Intelligence",
+    "h1": [
+     "Know where to look next."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/platform/ @desktop-1440 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Platform — OrbGSS",
+    "h1": [
+     "How OrbGSS builds a spatial priority."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/solutions/ @desktop-1440 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Solutions — OrbGSS",
+    "h1": [
+     "One workflow, applied where evidence matters."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/pilot/ @desktop-1440 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Pilot — Kızıldere — OrbGSS",
+    "h1": [
+     "Kızıldere: the first OrbGSS application."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/company/ @desktop-1440 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Company — OrbGSS",
+    "h1": [
+     "OrbGSS — Orbital Geo-Spatial Solutions"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/contact/ @desktop-1440 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Contact — OrbGSS",
+    "h1": [
+     "Let's talk about where to look next."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/404.html @desktop-1440 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "404 — OrbGSS",
+    "h1": [
+     "404"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/ @laptop-1024 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "OrbGSS — Geospatial Intelligence",
+    "h1": [
+     "Know where to look next."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/platform/ @laptop-1024 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Platform — OrbGSS",
+    "h1": [
+     "How OrbGSS builds a spatial priority."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/solutions/ @laptop-1024 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Solutions — OrbGSS",
+    "h1": [
+     "One workflow, applied where evidence matters."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/pilot/ @laptop-1024 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Pilot — Kızıldere — OrbGSS",
+    "h1": [
+     "Kızıldere: the first OrbGSS application."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/company/ @laptop-1024 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Company — OrbGSS",
+    "h1": [
+     "OrbGSS — Orbital Geo-Spatial Solutions"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/contact/ @laptop-1024 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Contact — OrbGSS",
+    "h1": [
+     "Let's talk about where to look next."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/404.html @laptop-1024 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "404 — OrbGSS",
+    "h1": [
+     "404"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/ @tablet-768 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "OrbGSS — Geospatial Intelligence",
+    "h1": [
+     "Know where to look next."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [
+     "http://127.0.0.1:8099/assets/imagery/ili-delta-2020-900.webp"
+    ],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/platform/ @tablet-768 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Platform — OrbGSS",
+    "h1": [
+     "How OrbGSS builds a spatial priority."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/solutions/ @tablet-768 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Solutions — OrbGSS",
+    "h1": [
+     "One workflow, applied where evidence matters."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/pilot/ @tablet-768 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Pilot — Kızıldere — OrbGSS",
+    "h1": [
+     "Kızıldere: the first OrbGSS application."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/company/ @tablet-768 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Company — OrbGSS",
+    "h1": [
+     "OrbGSS — Orbital Geo-Spatial Solutions"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/contact/ @tablet-768 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Contact — OrbGSS",
+    "h1": [
+     "Let's talk about where to look next."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/404.html @tablet-768 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "404 — OrbGSS",
+    "h1": [
+     "404"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/ @mobile-390 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "OrbGSS — Geospatial Intelligence",
+    "h1": [
+     "Know where to look next."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/platform/ @mobile-390 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Platform — OrbGSS",
+    "h1": [
+     "How OrbGSS builds a spatial priority."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/solutions/ @mobile-390 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Solutions — OrbGSS",
+    "h1": [
+     "One workflow, applied where evidence matters."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/pilot/ @mobile-390 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Pilot — Kızıldere — OrbGSS",
+    "h1": [
+     "Kızıldere: the first OrbGSS application."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/company/ @mobile-390 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Company — OrbGSS",
+    "h1": [
+     "OrbGSS — Orbital Geo-Spatial Solutions"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/contact/ @mobile-390 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Contact — OrbGSS",
+    "h1": [
+     "Let's talk about where to look next."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/404.html @mobile-390 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "404 — OrbGSS",
+    "h1": [
+     "404"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/ @mobile-360 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "OrbGSS — Geospatial Intelligence",
+    "h1": [
+     "Know where to look next."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/platform/ @mobile-360 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Platform — OrbGSS",
+    "h1": [
+     "How OrbGSS builds a spatial priority."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/solutions/ @mobile-360 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Solutions — OrbGSS",
+    "h1": [
+     "One workflow, applied where evidence matters."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/pilot/ @mobile-360 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Pilot — Kızıldere — OrbGSS",
+    "h1": [
+     "Kızıldere: the first OrbGSS application."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/company/ @mobile-360 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Company — OrbGSS",
+    "h1": [
+     "OrbGSS — Orbital Geo-Spatial Solutions"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/contact/ @mobile-360 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "Contact — OrbGSS",
+    "h1": [
+     "Let's talk about where to look next."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/404.html @mobile-360 en",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "404 — OrbGSS",
+    "h1": [
+     "404"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/ @desktop-1440 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "OrbGSS — Coğrafi Zekâ",
+    "h1": [
+     "Sırada nereye bakacağınızı bilin."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/platform/ @desktop-1440 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Platform — OrbGSS",
+    "h1": [
+     "OrbGSS bir mekânsal önceliği nasıl kurar?"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/solutions/ @desktop-1440 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Çözümler — OrbGSS",
+    "h1": [
+     "Tek iş akışı, kanıtın önemli olduğu her yerde."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/pilot/ @desktop-1440 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Pilot — Kızıldere — OrbGSS",
+    "h1": [
+     "Kızıldere: ilk OrbGSS uygulaması."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/company/ @desktop-1440 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Şirket — OrbGSS",
+    "h1": [
+     "OrbGSS — Orbital Geo-Spatial Solutions"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/contact/ @desktop-1440 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "İletişim — OrbGSS",
+    "h1": [
+     "Sırada nereye bakacağımızı konuşalım."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/404.html @desktop-1440 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "404 — OrbGSS",
+    "h1": [
+     "404"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/ @laptop-1024 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "OrbGSS — Coğrafi Zekâ",
+    "h1": [
+     "Sırada nereye bakacağınızı bilin."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/platform/ @laptop-1024 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Platform — OrbGSS",
+    "h1": [
+     "OrbGSS bir mekânsal önceliği nasıl kurar?"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/solutions/ @laptop-1024 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Çözümler — OrbGSS",
+    "h1": [
+     "Tek iş akışı, kanıtın önemli olduğu her yerde."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/pilot/ @laptop-1024 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Pilot — Kızıldere — OrbGSS",
+    "h1": [
+     "Kızıldere: ilk OrbGSS uygulaması."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/company/ @laptop-1024 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Şirket — OrbGSS",
+    "h1": [
+     "OrbGSS — Orbital Geo-Spatial Solutions"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/contact/ @laptop-1024 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "İletişim — OrbGSS",
+    "h1": [
+     "Sırada nereye bakacağımızı konuşalım."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/404.html @laptop-1024 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "404 — OrbGSS",
+    "h1": [
+     "404"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/ @tablet-768 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "OrbGSS — Coğrafi Zekâ",
+    "h1": [
+     "Sırada nereye bakacağınızı bilin."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [
+     "http://127.0.0.1:8099/assets/imagery/ili-delta-2020-900.webp"
+    ],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/platform/ @tablet-768 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Platform — OrbGSS",
+    "h1": [
+     "OrbGSS bir mekânsal önceliği nasıl kurar?"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/solutions/ @tablet-768 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Çözümler — OrbGSS",
+    "h1": [
+     "Tek iş akışı, kanıtın önemli olduğu her yerde."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/pilot/ @tablet-768 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Pilot — Kızıldere — OrbGSS",
+    "h1": [
+     "Kızıldere: ilk OrbGSS uygulaması."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/company/ @tablet-768 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Şirket — OrbGSS",
+    "h1": [
+     "OrbGSS — Orbital Geo-Spatial Solutions"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/contact/ @tablet-768 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "İletişim — OrbGSS",
+    "h1": [
+     "Sırada nereye bakacağımızı konuşalım."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/404.html @tablet-768 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "404 — OrbGSS",
+    "h1": [
+     "404"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/ @mobile-390 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "OrbGSS — Coğrafi Zekâ",
+    "h1": [
+     "Sırada nereye bakacağınızı bilin."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/platform/ @mobile-390 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Platform — OrbGSS",
+    "h1": [
+     "OrbGSS bir mekânsal önceliği nasıl kurar?"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/solutions/ @mobile-390 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Çözümler — OrbGSS",
+    "h1": [
+     "Tek iş akışı, kanıtın önemli olduğu her yerde."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/pilot/ @mobile-390 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Pilot — Kızıldere — OrbGSS",
+    "h1": [
+     "Kızıldere: ilk OrbGSS uygulaması."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/company/ @mobile-390 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Şirket — OrbGSS",
+    "h1": [
+     "OrbGSS — Orbital Geo-Spatial Solutions"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/contact/ @mobile-390 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "İletişim — OrbGSS",
+    "h1": [
+     "Sırada nereye bakacağımızı konuşalım."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/404.html @mobile-390 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "404 — OrbGSS",
+    "h1": [
+     "404"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/ @mobile-360 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "OrbGSS — Coğrafi Zekâ",
+    "h1": [
+     "Sırada nereye bakacağınızı bilin."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/platform/ @mobile-360 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Platform — OrbGSS",
+    "h1": [
+     "OrbGSS bir mekânsal önceliği nasıl kurar?"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/solutions/ @mobile-360 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Çözümler — OrbGSS",
+    "h1": [
+     "Tek iş akışı, kanıtın önemli olduğu her yerde."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/pilot/ @mobile-360 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Pilot — Kızıldere — OrbGSS",
+    "h1": [
+     "Kızıldere: ilk OrbGSS uygulaması."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/company/ @mobile-360 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "Şirket — OrbGSS",
+    "h1": [
+     "OrbGSS — Orbital Geo-Spatial Solutions"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/contact/ @mobile-360 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "tr",
+    "title": "İletişim — OrbGSS",
+    "h1": [
+     "Sırada nereye bakacağımızı konuşalım."
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   },
+   {
+    "where": "/404.html @mobile-360 tr",
+    "overflow": 0,
+    "bodyOverflow": 0,
+    "lang": "en",
+    "title": "404 — OrbGSS",
+    "h1": [
+     "404"
+    ],
+    "brokenImgs": [],
+    "pendingImgs": [],
+    "rawKeys": [],
+    "imgNoAlt": [],
+    "errs": [],
+    "failed": []
+   }
+  ],
+  "links": [
+   {
+    "route": "/",
+    "href": "#main",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/",
+    "href": "/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/",
+    "href": "/platform/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/",
+    "href": "/solutions/#geothermal",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/",
+    "href": "/solutions/#mining",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/",
+    "href": "/solutions/#marine",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/",
+    "href": "/pilot/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/",
+    "href": "/company/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/",
+    "href": "/contact/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/",
+    "href": "#context",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/",
+    "href": "mailto:contact@orbgss.com?subject=OrbGSS%20Partnership%20Inquiry",
+    "ok": true,
+    "kind": "mailto"
+   },
+   {
+    "route": "/",
+    "href": "mailto:contact@orbgss.com?subject=OrbGSS%20Technical%20Inquiry",
+    "ok": true,
+    "kind": "mailto"
+   },
+   {
+    "route": "/",
+    "href": "mailto:contact@orbgss.com",
+    "ok": true,
+    "kind": "mailto"
+   },
+   {
+    "route": "/",
+    "href": "/solutions/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/platform/",
+    "href": "#main",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/platform/",
+    "href": "/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/platform/",
+    "href": "/platform/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/platform/",
+    "href": "/solutions/#geothermal",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/platform/",
+    "href": "/solutions/#mining",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/platform/",
+    "href": "/solutions/#marine",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/platform/",
+    "href": "/pilot/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/platform/",
+    "href": "/company/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/platform/",
+    "href": "/contact/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/platform/",
+    "href": "/solutions/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/solutions/",
+    "href": "#main",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/solutions/",
+    "href": "/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/solutions/",
+    "href": "/platform/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/solutions/",
+    "href": "/solutions/#geothermal",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/solutions/",
+    "href": "/solutions/#mining",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/solutions/",
+    "href": "/solutions/#marine",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/solutions/",
+    "href": "/pilot/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/solutions/",
+    "href": "/company/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/solutions/",
+    "href": "/contact/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/solutions/",
+    "href": "/solutions/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "#main",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "/platform/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "/solutions/#geothermal",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "/solutions/#mining",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "/solutions/#marine",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "/pilot/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "/company/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "/contact/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "/#context",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/pilot/",
+    "href": "/solutions/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/company/",
+    "href": "#main",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/company/",
+    "href": "/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/company/",
+    "href": "/platform/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/company/",
+    "href": "/solutions/#geothermal",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/company/",
+    "href": "/solutions/#mining",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/company/",
+    "href": "/solutions/#marine",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/company/",
+    "href": "/pilot/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/company/",
+    "href": "/company/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/company/",
+    "href": "/contact/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/company/",
+    "href": "/solutions/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/contact/",
+    "href": "#main",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/contact/",
+    "href": "/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/contact/",
+    "href": "/platform/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/contact/",
+    "href": "/solutions/#geothermal",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/contact/",
+    "href": "/solutions/#mining",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/contact/",
+    "href": "/solutions/#marine",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/contact/",
+    "href": "/pilot/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/contact/",
+    "href": "/company/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/contact/",
+    "href": "/contact/",
+    "ok": true,
+    "why": ""
+   },
+   {
+    "route": "/contact/",
+    "href": "mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Inquiry",
+    "ok": true,
+    "kind": "mailto"
+   },
+   {
+    "route": "/contact/",
+    "href": "mailto:contact@orbgss.com?subject=OrbGSS%20Partnership%20Inquiry",
+    "ok": true,
+    "kind": "mailto"
+   },
+   {
+    "route": "/contact/",
+    "href": "mailto:contact@orbgss.com?subject=OrbGSS%20Technical%20Inquiry",
+    "ok": true,
+    "kind": "mailto"
+   },
+   {
+    "route": "/contact/",
+    "href": "mailto:contact@orbgss.com",
+    "ok": true,
+    "kind": "mailto"
+   },
+   {
+    "route": "/contact/",
+    "href": "/solutions/",
+    "ok": true,
+    "why": ""
+   }
+  ],
+  "hero": [
+   {
+    "label": "desktop motion",
+    "final": {
+     "state": "held",
+     "payoff": "on",
+     "src": "assets/hero/orbgss-hero.webm",
+     "t": 11.5,
+     "paused": true,
+     "ended": true,
+     "dur": 11.5
+    },
+    "samples": [
+     {
+      "state": "playing",
+      "payoff": false,
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 1.5,
+      "paused": false,
+      "ended": false,
+      "dur": 11.5
+     },
+     {
+      "state": "playing",
+      "payoff": false,
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 3,
+      "paused": false,
+      "ended": false,
+      "dur": 11.5
+     },
+     {
+      "state": "playing",
+      "payoff": false,
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 4.5,
+      "paused": false,
+      "ended": false,
+      "dur": 11.5
+     },
+     {
+      "state": "playing",
+      "payoff": false,
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 6,
+      "paused": false,
+      "ended": false,
+      "dur": 11.5
+     },
+     {
+      "state": "playing",
+      "payoff": false,
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 7.5,
+      "paused": false,
+      "ended": false,
+      "dur": 11.5
+     },
+     {
+      "state": "playing",
+      "payoff": false,
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 9,
+      "paused": false,
+      "ended": false,
+      "dur": 11.5
+     },
+     {
+      "state": "playing",
+      "payoff": false,
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 10.5,
+      "paused": false,
+      "ended": false,
+      "dur": 11.5
+     },
+     {
+      "state": "held",
+      "payoff": "on",
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 11.5,
+      "paused": true,
+      "ended": true,
+      "dur": 11.5
+     },
+     {
+      "state": "held",
+      "payoff": "on",
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 11.5,
+      "paused": true,
+      "ended": true,
+      "dur": 11.5
+     },
+     {
+      "state": "held",
+      "payoff": "on",
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 11.5,
+      "paused": true,
+      "ended": true,
+      "dur": 11.5
+     },
+     {
+      "state": "held",
+      "payoff": "on",
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 11.5,
+      "paused": true,
+      "ended": true,
+      "dur": 11.5
+     },
+     {
+      "state": "held",
+      "payoff": "on",
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 11.5,
+      "paused": true,
+      "ended": true,
+      "dur": 11.5
+     },
+     {
+      "state": "held",
+      "payoff": "on",
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 11.5,
+      "paused": true,
+      "ended": true,
+      "dur": 11.5
+     },
+     {
+      "state": "held",
+      "payoff": "on",
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 11.5,
+      "paused": true,
+      "ended": true,
+      "dur": 11.5
+     },
+     {
+      "state": "held",
+      "payoff": "on",
+      "src": "assets/hero/orbgss-hero.webm",
+      "t": 11.5,
+      "paused": true,
+      "ended": true,
+      "dur": 11.5
+     }
+    ],
+    "media": [
+     "orbgss-hero.webm 200"
+    ],
+    "errs": [],
+    "attrs": [
+     "class=hero",
+     "id=hero",
+     "aria-labelledby=hero-title",
+     "data-hero-slot=cinematic",
+     "data-label-tone=light",
+     "data-label-tone-locked=",
+     "data-act=1",
+     "data-hero-anchor={\"frame\":[1920,1080],\"position",
+     "data-hero-state=held",
+     "data-hero-payoff=on",
+     "data-hero-layer=priority"
+    ]
+   },
+   {
+    "label": "reduced-motion",
+    "final": {
+     "state": "static",
+     "payoff": "on",
+     "src": null,
+     "t": 0,
+     "paused": true,
+     "ended": false,
+     "dur": null
+    },
+    "samples": [
+     {
+      "state": "static",
+      "payoff": "on",
+      "src": null,
+      "t": 0,
+      "paused": true,
+      "ended": false,
+      "dur": null
+     },
+     {
+      "state": "static",
+      "payoff": "on",
+      "src": null,
+      "t": 0,
+      "paused": true,
+      "ended": false,
+      "dur": null
+     },
+     {
+      "state": "static",
+      "payoff": "on",
+      "src": null,
+      "t": 0,
+      "paused": true,
+      "ended": false,
+      "dur": null
+     },
+     {
+      "state": "static",
+      "payoff": "on",
+      "src": null,
+      "t": 0,
+      "paused": true,
+      "ended": false,
+      "dur": null
+     }
+    ],
+    "media": [],
+    "errs": [],
+    "attrs": [
+     "class=hero",
+     "id=hero",
+     "aria-labelledby=hero-title",
+     "data-hero-slot=cinematic",
+     "data-label-tone=light",
+     "data-label-tone-locked=",
+     "data-act=1",
+     "data-hero-anchor={\"frame\":[1920,1080],\"position",
+     "data-hero-state=static",
+     "data-hero-reason=reduced-motion",
+     "data-hero-payoff=on",
+     "data-hero-layer=priority"
+    ]
+   },
+   {
+    "label": "mobile 390",
+    "final": {
+     "state": "static",
+     "payoff": false,
+     "src": null,
+     "t": 0,
+     "paused": true,
+     "ended": false,
+     "dur": null
+    },
+    "samples": [
+     {
+      "state": "static",
+      "payoff": false,
+      "src": null,
+      "t": 0,
+      "paused": true,
+      "ended": false,
+      "dur": null
+     },
+     {
+      "state": "static",
+      "payoff": false,
+      "src": null,
+      "t": 0,
+      "paused": true,
+      "ended": false,
+      "dur": null
+     },
+     {
+      "state": "static",
+      "payoff": false,
+      "src": null,
+      "t": 0,
+      "paused": true,
+      "ended": false,
+      "dur": null
+     },
+     {
+      "state": "static",
+      "payoff": false,
+      "src": null,
+      "t": 0,
+      "paused": true,
+      "ended": false,
+      "dur": null
+     }
+    ],
+    "media": [],
+    "errs": [],
+    "attrs": [
+     "class=hero",
+     "id=hero",
+     "aria-labelledby=hero-title",
+     "data-hero-slot=cinematic",
+     "data-label-tone=light",
+     "data-label-tone-locked=",
+     "data-act=1",
+     "data-hero-anchor={\"frame\":[1920,1080],\"position",
+     "data-hero-state=static",
+     "data-hero-reason=small-screen"
+    ]
+   }
+  ],
+  "nav": [
+   {
+    "lang": "en",
+    "top": [
+     "Platform",
+     "Solutions Geothermal Mining Marine",
+     "Pilot",
+     "Company",
+     "Contact"
+    ],
+    "menu": {
+     "expanded": "true",
+     "items": [
+      "Geothermal -> /solutions/#geothermal",
+      "Mining -> /solutions/#mining",
+      "Marine -> /solutions/#marine"
+     ]
+    }
+   },
+   {
+    "lang": "tr",
+    "top": [
+     "Platform",
+     "Çözümler Jeotermal Madencilik Denizel",
+     "Pilot",
+     "Şirket",
+     "İletişim"
+    ],
+    "menu": {
+     "expanded": "true",
+     "items": [
+      "Jeotermal -> /solutions/#geothermal",
+      "Madencilik -> /solutions/#mining",
+      "Denizel -> /solutions/#marine"
+     ]
+    }
+   }
+  ],
+  "i18n": [
+   {
+    "en": "Know where to look next.",
+    "tr": {
+     "h1": "Sırada nereye bakacağınızı bilin.",
+     "lang": "tr"
+    }
+   }
+  ]
+ }
+}

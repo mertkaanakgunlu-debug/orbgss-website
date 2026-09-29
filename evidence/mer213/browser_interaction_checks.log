@@ -1,0 +1,19 @@
+PASS en radio #ev-terrain: checked=true visibleImgs=3 loaded=true
+PASS en radio #ev-thermal: checked=true visibleImgs=3 loaded=true
+PASS en radio #ev-alteration: checked=true visibleImgs=3 loaded=true
+PASS en radio #cp-thermal: checked=true visibleImgs=4 loaded=true
+PASS en radio #cp-alteration: checked=true visibleImgs=4 loaded=true
+PASS en radio #cp-priority: checked=true visibleImgs=4 loaded=true
+PASS en console errors during interaction: none
+PASS tr radio #ev-terrain: checked=true visibleImgs=3 loaded=true
+PASS tr radio #ev-thermal: checked=true visibleImgs=3 loaded=true
+PASS tr radio #ev-alteration: checked=true visibleImgs=3 loaded=true
+PASS tr radio #cp-thermal: checked=true visibleImgs=4 loaded=true
+PASS tr radio #cp-alteration: checked=true visibleImgs=4 loaded=true
+PASS tr radio #cp-priority: checked=true visibleImgs=4 loaded=true
+PASS tr console errors during interaction: none
+PASS mobile menu opens (aria-expanded=true)
+PASS mobile menu shows top-level links: Platform, Pilot, Company, Contact
+PASS mobile Solutions disclosure shows: Geothermal->/solutions/#geothermal, Mining->/solutions/#mining, Marine->/solutions/#marine
+PASS mobile menu closes (aria-expanded=false)
+INTERACTION RESULT: PASS

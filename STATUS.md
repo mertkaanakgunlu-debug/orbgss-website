@@ -1,9 +1,50 @@
 # OrbGSS Website — CURRENT
 
-**Canonical version:** `v1.0.0-rc9-web-005b-r15-final-polish` — WEB-005B `REVIEW_READY` after the R11 accepted-final-design implementation (the whole homepage after the terminally accepted hero)
-**Date:** 2026-09-20
-**Stage:** WEB-005B / MER-109 is `REVIEW_READY` at **R14** (see the R11 block below; the R3 text that follows is the superseded previous state). WEB-005A / MER-107 is **terminally accepted and published**: the visually approved checkpoint `1135e7a7e0b0f6db6348dee139d505550d8ca8b9` was fast-forwarded to `origin/feat/web-005a-hero-visual-fidelity` (remote HEAD verified) with site PASS and hero 420/0 on the accepted bytes. **WEB-005B / MER-109 (homepage visual fidelity, Acts 2-4) is `REVIEW_READY` after the R3 delivery pass** (`docs/web-005-polish-authority@4683bd3:tasks/WEB-005B_R3_REVIEW_AND_DELIVERY_OPTIMIZATION.md`): the Acts 3-4 panels gained visually-lossless lossy WebP delivery candidates where they earn it and keep their lossless derivative as the reference. Only Terrain qualified (q98, -84.6 / -82.2 / -79.5 %, PSNR 46.6-47.7 dB, NoData untouched); THM-01, ALT-01 and priority stay lossless because their per-pixel structure and mask boundaries cannot survive a block transform (priority at the best rung is PSNR 23.8 dB). Package 9.93 -> 8.68 MiB. Act 2, the hero and all copy are unchanged in that pass, and it also fixed a latent hero-lane write-surface failure left by the R1 commit. It was on `feat/web-005b-homepage-visual-fidelity`, branched from that exact commit, under `docs/web-005-polish-authority@e47da637:tasks/WEB-005B_R1_HOMEPAGE_DESIGN_IMPLEMENTATION_BOUNDARY.md`; evidence is `tasks/WEB-005B_EVIDENCE.md` and `evidence/web005b/`. Act 2 is a full-bleed natural-colour Landsat band (same USGS product, re-cropped wider at native 30 m to 3200 x 1800 px and tone-rendered on one common reflectance scale, with the true 36 km AOI marked); Act 3 is one analytical stage of three aligned squares; Act 4 is the priority result alone on its own stage at 600 CSS px, 2.2x the area of any evidence panel, with its own LUT as a coupled legend. Acts 3 and 4 now ship **MER-108 website display derivatives** of the governed MER-113 rasters (`11c32e8d` section 10 names WEB-005B as a consumer), so the page reads as one palette system from the hero payoff to the result; recomputing the priority layer reproduces the CTO-approved `priority_webhero_v1` raster exactly. The GEO-WEB-002 exports stay published for `/pilot/`. Gates: site PASS, hero 420/0, WEB-005 negatives 71/71, new WEB-005B negatives 24/24, copy preservation clean apart from two declared accessibility/legend additions, accepted hero byte- and pixel-identical, other routes unchanged. Not merged, nothing deployed, no DNS touched. *History of the hero revision follows.*
-**R11 (current):** the CTO-accepted final Claude Design homepage is implemented on
+**Canonical version:** `v1.0.0-rc10-web-005c` — the accepted, launched baseline
+**Date:** 2026-09-29
+**Stage:** Milestone 5 (post-launch audit, media fidelity and runtime hardening). **MER-213 is `REVIEW_READY`** (post-launch state and defect audit, see `tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md`). WEB-007 / MER-143 and WEB-008 / MER-144 stay blocked until the CTO/Product review of MER-213 is accepted.
+
+## Launched baseline (reconciled 2026-09-29, MER-213)
+
+| Item | Value |
+| --- | --- |
+| Repository | `mertkaanakgunlu-debug/orbgss-website` (the legacy `baran-orbgss/website` is reference/upstream only) |
+| Accepted / live code baseline | `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084` — WEB-005 + WEB-005A (hero) + WEB-005B (homepage after the hero, R15) + WEB-005C (Geothermal / Mining / Marine taxonomy parity, R2) |
+| GitHub `main` | `00af0f232a8d7d77f5ca61d758461ff7316ba151` (WEB-005 terminal acceptance). A pure ancestor of the baseline: baseline is ahead 25 / behind 0, so publication is a non-force fast-forward. `main` has **not** been updated |
+| Production (as recorded in MER-213 on Linear; not re-read from Git) | Vercel project `orbgss-website`, scope `virga-soft`, deployment `dpl_FmP2d8LkVrst84SVzVnFEyuEDpLn`, target `production`, READY, source `cli`, Git SHA `79cc2cb82a4542461cbbfc1d0c349cf02b861084`. Vercel reads from the Claude Projects environment return 403, so this record is Linear-sourced, not independently re-verified there |
+| WEB-006 record | The WEB-006 / MER-95 cutover contract lives on `docs/web-005-polish-authority@e64d9fd` (`tasks/WEB-006_PRODUCTION_DOMAIN_CUTOVER.md`, state `READY_FOR_CTO_APPROVAL`). This repository holds no record of the deploy or DNS execution; production is therefore ahead of the repository record until the CTO reconciles it |
+| Task branch for MER-213 | `claude/mer-213-bp01w5`, created from exactly `79cc2cb`. It is a workspace branch, not canonical state; later issues branch from the baseline (or from `main` once it is fast-forwarded), never from the stale `00af0f2` |
+
+Product state at the baseline: hero (rendered orbital sequence with held frame and page-composited drape states, caption `Rendered orbital sequence — not sensor imagery`) → Act 02 real Kızıldere Landsat context → Act 03 three evidence layers over one frame → Act 04 priority result → co-registered inspection aid → Solutions (Geothermal active; Mining and Marine in development / expansion directions, native links to `/solutions/#geothermal|#mining|#marine`) → Method → Company → Contact. Routes: `/`, `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/` (+ `404.html`). Navigation: Platform → Solutions (Geothermal, Mining, Marine) → Pilot → Company → Contact → EN | TR. Architecture is unchanged: static HTML, CSS and vanilla JS, no package manager.
+
+## Task execution contract (`MER-###'e başla`)
+
+The short command `MER-###'e başla` authorizes exactly that Linear issue, in this order: resolve the issue from Linear → read its status, dependencies and project position → fetch Git and verify a clean tree, `origin`, `main` and the baseline the issue names → stop and report if Linear, Git and this repository disagree → create or use a bounded branch for the issue from the exact baseline → implement only the issue scope → run the acceptance the issue and this repository require → review the diff → commit and push the branch → report branch, HEAD, baseline, changed files, verification and remote/local HEAD match → stop at `REVIEW_READY`. The agent never merges or fast-forwards `main`, deploys, changes DNS, credentials or Vercel configuration, force-pushes, or closes its own issue; those are separate CTO-authorized gates. The auto-created session branch is plumbing, not canonical state.
+
+## Validators (baseline `79cc2cb`, run 2026-09-29 for MER-213)
+
+| Command | Result |
+| --- | --- |
+| `python3 scripts/validate_site.py` | PASS, 0 warnings (4 scenes, 6 routes, 268 i18n keys, 6 geo-web-002 assets / 19 files) |
+| `python3 scripts/negative_tests_web005.py` / `_web005b.py` / `_web005c.py` | 72/72, 55/55, 18/18 caught; restored tree identical |
+| `python3 hero/scripts/validate_hero.py` | 412 checks, 13 FAIL in a fresh clone — all 13 are the git-ignored local Blender source textures under `hero/assets/source/` (absent from any clone, present on the hero workstation where the accepted result is 420/0). No other hero check fails. Not a website defect; run the hero validator on the hero workstation for the authoritative result |
+
+## Open gates and decisions
+
+1. **`main` publication** — separate CTO-approved gate; exact operation in `tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md` section 7.
+2. **Information-architecture conflict** — the Claude Project instructions describe Home / Solutions (Geothermal, Mining, Marine) / About / Partner with us, while this repository and the live site use Platform / Solutions / Pilot / Company / Contact. Unresolved; the repository's `CLAUDE.md` invariants stay authoritative for implementation until the CTO decides.
+3. **`CONTACT_RELEASE_GATE`** — mailbox ownership/deliverability of `contact@orbgss.com` is not evidenced in this repository. Carried forward, not closed.
+4. **Production record** — WEB-006 execution and the Vercel/DNS state are not recorded in this repository (see the table above).
+5. **Not started, blocked behind MER-213 review:** WEB-007 / MER-143 (analytical visuals), WEB-008 / MER-144 (hero video quality and playback resilience).
+
+## Superseded pre-launch status (kept as history)
+
+The text below was the status before the launch and before MER-213. The WEB-005B/005C revision notes marked `(history)` and every later section describe earlier states; where they disagree with the sections above, the sections above win.
+
+**Previous stage text (WEB-005B R3, superseded):**
+
+WEB-005B / MER-109 is `REVIEW_READY` at **R14** (see the R11 block below; the R3 text that follows is the superseded previous state). WEB-005A / MER-107 is **terminally accepted and published**: the visually approved checkpoint `1135e7a7e0b0f6db6348dee139d505550d8ca8b9` was fast-forwarded to `origin/feat/web-005a-hero-visual-fidelity` (remote HEAD verified) with site PASS and hero 420/0 on the accepted bytes. **WEB-005B / MER-109 (homepage visual fidelity, Acts 2-4) is `REVIEW_READY` after the R3 delivery pass** (`docs/web-005-polish-authority@4683bd3:tasks/WEB-005B_R3_REVIEW_AND_DELIVERY_OPTIMIZATION.md`): the Acts 3-4 panels gained visually-lossless lossy WebP delivery candidates where they earn it and keep their lossless derivative as the reference. Only Terrain qualified (q98, -84.6 / -82.2 / -79.5 %, PSNR 46.6-47.7 dB, NoData untouched); THM-01, ALT-01 and priority stay lossless because their per-pixel structure and mask boundaries cannot survive a block transform (priority at the best rung is PSNR 23.8 dB). Package 9.93 -> 8.68 MiB. Act 2, the hero and all copy are unchanged in that pass, and it also fixed a latent hero-lane write-surface failure left by the R1 commit. It was on `feat/web-005b-homepage-visual-fidelity`, branched from that exact commit, under `docs/web-005-polish-authority@e47da637:tasks/WEB-005B_R1_HOMEPAGE_DESIGN_IMPLEMENTATION_BOUNDARY.md`; evidence is `tasks/WEB-005B_EVIDENCE.md` and `evidence/web005b/`. Act 2 is a full-bleed natural-colour Landsat band (same USGS product, re-cropped wider at native 30 m to 3200 x 1800 px and tone-rendered on one common reflectance scale, with the true 36 km AOI marked); Act 3 is one analytical stage of three aligned squares; Act 4 is the priority result alone on its own stage at 600 CSS px, 2.2x the area of any evidence panel, with its own LUT as a coupled legend. Acts 3 and 4 now ship **MER-108 website display derivatives** of the governed MER-113 rasters (`11c32e8d` section 10 names WEB-005B as a consumer), so the page reads as one palette system from the hero payoff to the result; recomputing the priority layer reproduces the CTO-approved `priority_webhero_v1` raster exactly. The GEO-WEB-002 exports stay published for `/pilot/`. Gates: site PASS, hero 420/0, WEB-005 negatives 71/71, new WEB-005B negatives 24/24, copy preservation clean apart from two declared accessibility/legend additions, accepted hero byte- and pixel-identical, other routes unchanged. Not merged, nothing deployed, no DNS touched. *History of the hero revision follows.*
+**R11 (history):** the CTO-accepted final Claude Design homepage is implemented on
 `feat/web-005b-homepage-visual-fidelity`, branched from the verified remote head `176e345`, under
 `docs/web-005-polish-authority@1334e757:tasks/WEB-005B_R11_CLAUDE_DESKTOP_IMPLEMENTATION_HANDOFF.md`
 and the R10 continuity contract `@4051c28f`. Evidence: `tasks/WEB-005B_R11_IMPLEMENTATION_EVIDENCE.md`
@@ -25,7 +66,7 @@ listed in section 3 of the evidence document — the domain names stay canonical
 its copy below the photograph, and the inspection aid is genuinely co-registered against the recorded
 analysis grid rather than "approximate common framing".
 
-**R13 (current):** Product reviewed the R11 implementation, accepted it for final visual review and
+**R13 (history):** Product reviewed the R11 implementation, accepted it for final visual review and
 issued one mandatory correction, now implemented
 (`docs/web-005-polish-authority@ba8d99b8:tasks/WEB-005B_R13_IMPLEMENTATION_REVIEW_DOMAIN_REVISION.md`).
 The homepage domain taxonomy is **Geothermal / Mining / Marine** — R11's substitution of Mineral
@@ -45,7 +86,7 @@ the commit), and the half-width domain cards now clear their own caption vertica
 and `evidence/web005b_r11/`. Nothing else changed — hero, Acts 02/03/04, the inspection aid, Company and
 Contact are all as accepted at R11.
 
-**R14 (current):** bounded polish pass on the accepted direction - no redesign, structure and
+**R14 (history):** bounded polish pass on the accepted direction - no redesign, structure and
 section order unchanged. (A) The domains section is now **Solutions** (`#solutions`), the "Geothermal
 first" pilot framing is gone, and all three cards share one composition; their per-card
 location/coordinate captions were removed at Product instruction, which makes the section footnote the
@@ -66,7 +107,7 @@ hero-only. That is the post-WEB-006 WEB-007 programme. The two other asset packa
 are report figures with a north arrow and scale bar burned in, so they are not the answer either -
 see `evidence/web005b_r11/proof_sets_compare.webp`. Evidence refreshed in place.
 
-**R15 (current):** the bounded final-polish pass, on the accepted direction - concept, hero,
+**R15 (history):** the bounded final-polish pass, on the accepted direction - concept, hero,
 section order and visual language are not reopened, and the hero markup is byte-identical. Evidence:
 `tasks/WEB-005B_R15_FINAL_POLISH_EVIDENCE.md` and `evidence/web005b_r15/`.
 **(A) The R14 evidence-imagery blocker is resolved.** Science issued
@@ -131,7 +172,7 @@ leak. Not merged, nothing deployed, no DNS touched.
 **Product authority:** OrbGSS Website vNext Product & Execution Authority v1.8 (`docs/WEB_VNEXT_AUTHORITY.md`); `docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md` (R2 visual lock) where newer.
 **Accepted WEB-HERO-001D evidence HEAD:** `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e` (terminal Product acceptance published at `573f4f1`)
 **WEB-005 execution baseline:** `main@d2421a772f2e4cfa38c85dd5ee71a419c5160838`
-**Tracking:** MER-90 (WEB-002 accepted); MER-91 (WEB-003 accepted); MER-92 (WEB-004 accepted); MER-102 / GEO-WEB-002 (Science-accepted); MER-101 / WEB-HERO-001D (terminally accepted); MER-93 / WEB-005 (terminally accepted); **MER-107 / WEB-005A (terminally accepted, published at `1135e7a`)**; **MER-109 / WEB-005B (REVIEW_READY)**; MER-108 / GEO-WEB-003 (Science terminal, consumed); MER-96 / GEO-WEB-001 resolved
+**Tracking:** MER-90 (WEB-002 accepted); MER-91 (WEB-003 accepted); MER-92 (WEB-004 accepted); MER-102 / GEO-WEB-002 (Science-accepted); MER-101 / WEB-HERO-001D (terminally accepted); MER-93 / WEB-005 (terminally accepted); **MER-107 / WEB-005A (terminally accepted, published at `1135e7a`)**; **MER-109 / WEB-005B (R15 is part of the accepted baseline)**; **MER-149 / WEB-005C (accepted at `79cc2cb`)**; MER-151 / GEO-WEB-004 (Science authority for the Acts 3-4 presentation); MER-108 / GEO-WEB-003 (Science terminal, consumed); MER-96 / GEO-WEB-001 resolved; MER-95 / WEB-006 (cutover; see above); **MER-213 (post-launch audit, `REVIEW_READY`)**; MER-143 / WEB-007 and MER-144 / WEB-008 (blocked behind MER-213)
 
 ## Authority
 
@@ -139,7 +180,7 @@ leak. Not merged, nothing deployed, no DNS touched.
 
 `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md` locks the final four-act homepage story for WEB-005 and supersedes the repeated full-width proof-scene rhythm where they conflict; it does not supersede accepted Science semantics, WEB-002 provenance constraints, WEB-004 performance/accessibility decisions or the accepted route architecture. GEO-WEB-002 / MER-102 is the Science & Geospatial publication dependency it named. It is terminally accepted under `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md` at implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`. Product may bind the package into WEB-005 while preserving its exact labels, warnings, provenance and maximum-safe-render constraints.
 
-## Current state (WEB-005A final production — `REVIEW_READY`)
+## State at WEB-005A final production (history; since terminally accepted)
 
 What the branch ships now is described in `tasks/WEB-005A_FINAL_PRODUCTION_EVIDENCE.md`: motion video ending on
 the held frame, four lossless drape states composited by the page, no legend / card / label in the hero. The
@@ -175,7 +216,7 @@ scientific asset, label and warning are unchanged and re-verified.
   remains the stated data gap and nothing is fabricated for it.
 - **Gates.** Site validator PASS 0 warnings; hero validator 292/292; negative tests 27/27; shot audit 18/18.
 
-## Current state (WEB-005, ACCEPTED)
+## State at WEB-005 (accepted; the four-act structure is still current)
 
 The homepage is now the locked four-act story from `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md`:
 **Act 1 cinematic acquisition hero → Act 2 real Kızıldere EO context → Act 3 compact evidence trio →
@@ -208,7 +249,7 @@ sections. The WEB-001/002 six-scene `beam → full-width raster` gallery is gone
 Remaining gates are unchanged and are **not** WEB-005's to close: `CONTACT_RELEASE_GATE`,
 `HOSTED_PREVIEW_NOT_RUN`, and the WEB-006 production DNS cutover human gate.
 
-## Current state (GEO-WEB-002, ACCEPTED / COMPLETE)
+## State at GEO-WEB-002 (accepted / complete)
 
 `tasks/GEO-WEB-002_FINAL_HOMEPAGE_VISUAL_MASTERS.md` is implemented and terminally accepted. The canonical package is
 `docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md` (`READY_FOR_PRODUCT_BINDING`), mirrored
@@ -243,7 +284,7 @@ this publishes the visual masters the locked four-act homepage in
   every public label and mandatory warning are carried from `docs/WEB-002_SCIENCE_ASSET_PACKAGE.md`.
   No structure or geology asset is published; nothing is fabricated to fill that gap.
 
-## Current state (WEB-004 accepted / complete)
+## State at WEB-004 (accepted / complete)
 
 WEB-004 hardened the accepted six-route site without redesigning it. Full measurements, tooling
 versions and negative tests are in `docs/WEB-004_HARDENING_EVIDENCE.md`; terminal Product acceptance is in `docs/WEB-004_PRODUCT_ACCEPTANCE.md`.
@@ -271,7 +312,7 @@ The engineering conditions WEB-004 measured under remain: one encode per client;
 `imagesrcset`/`imagesizes` matching the `<img>`; `prefers-reduced-motion: reduce` gets the static
 poster; the bottom-right caption region must keep ≥ 4.5:1; and hero media must be recorded and checksummed like the accepted derivatives.
 
-## Current state (WEB-003 accepted)
+## State at WEB-003 (accepted)
 
 Five public routes extend the homepage into a complete small public site, each as a real static directory (`<route>/index.html`, canonical trailing-slash URL):
 
@@ -285,7 +326,7 @@ The homepage and every deeper route share one persistent header/footer navigatio
 
 The MER-91 bounded Product review revision closed three findings before acceptance: every human-readable `aria-label` on canonical routes is bound to `data-i18n-aria-label`; `/pilot/` uses the accepted Kızıldere `assets/proof/geothermal-1400.webp` derivative for Open Graph instead of the unrelated Crater Lake hero; repository authority/status pointers were reconciled. Validator result remained PASS with 0 warnings and the implementation reported 185 site-wide i18n keys.
 
-## Current state (WEB-002 accepted)
+## State at WEB-002 (accepted; superseded by WEB-005 for the homepage)
 
 The homepage tells the evidence-to-intelligence story on one real area of interest. The rhythm is unchanged — dark technical beam → large full-width visual panel — and every scientific story panel shows the same Kızıldere pilot AOI (36 × 36 km, EPSG:32635, 30 m grid).
 
@@ -326,20 +367,17 @@ OrbGSS is a geospatial-intelligence platform. Geothermal Exploration is the acti
 
 ## Production blockers
 
-1. `CONTACT_RELEASE_GATE` (open, MER-92) — confirm `contact@orbgss.com` ownership and deliverability before public launch. Route/mailto correctness is verified; mailbox ownership requires Workspace/account evidence. Mandatory pre-WEB-006 gate.
-2. WEB-005 is terminally accepted. WEB-005A / MER-107 is `REVISION_REQUIRED` after the R3 review; its third low-cost preview gate (`tasks/WEB-005A_R3_PREVIEW_GATE_3.md`) awaits Product/CTO, and the production render, page integration and return to `REVIEW_READY` follow only after that gate is passed. It is not merged and not deployed. WEB-005B (Acts 2–4 polish) follows under the same visual-direction authority and has not begun.
-3. `HOSTED_PREVIEW_NOT_RUN` was accepted under WEB-004. A hosted Vercel preview still needs to be produced under already-authorized credentials before launch; WEB-004 recorded a reproducible local preview instead.
-4. WEB-006 only: connect `orbgss.com` / `www.orbgss.com` through Squarespace DNS while preserving Google Workspace MX/SPF/DKIM/DMARC and unrelated records.
+See "Open gates and decisions" at the top of this file. The pre-launch list that stood here
+(`HOSTED_PREVIEW_NOT_RUN`, the WEB-005A `REVISION_REQUIRED` state, WEB-006 not started) described states
+that no longer hold: the accepted baseline `79cc2cb` is the deployed one per MER-213. `CONTACT_RELEASE_GATE`
+remains carried, not closed. DNS remains outside every website task except a CTO-authorized WEB-006, and
+Google Workspace MX/SPF/DKIM/DMARC must never be touched.
 
 ## Next canonical task
 
-GEO-WEB-002 / MER-102 is **ACCEPTED / COMPLETE** at implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`; terminal acceptance is `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md`. Product may bind the accepted package into WEB-005 without reopening Science so long as the package constraints are preserved.
-
-WEB-004 is **PRODUCT_ACCEPTED / COMPLETE** under MER-92 at implementation HEAD `56cb53039b85a852110c737505bc2ae2282acb08` with acceptance publication `716104d677fea5021787b581470a436ed708f3a3`.
-
-WEB-005 / MER-93 is **terminally accepted** (`tasks/WEB-005_TERMINAL_PRODUCT_ACCEPTANCE.md`). WEB-005A / MER-107 is **REVISION_REQUIRED** on `feat/web-005a-hero-visual-fidelity` under `tasks/WEB-005A_HERO_VISUAL_FIDELITY.md`; the reviewed R3 evidence package is `tasks/WEB-005A_HERO_FIDELITY_EVIDENCE.md`. The next canonical step is Product/CTO review of the third preview gate, `tasks/WEB-005A_R3_PREVIEW_GATE_3.md`. Only after it passes: production render, page integration, `REVIEW_READY`, then Product terminal exact-head acceptance and publication to `main`; WEB-005B follows.
-
-WEB-006 / MER-95 production DNS cutover remains deferred behind its explicit CTO human gate and **may not begin from this publication alone**.
+1. **MER-213** — post-launch state and defect audit: `REVIEW_READY`, awaiting CTO/Product review.
+2. Then, one at a time and each only on an explicit `MER-###'e başla`: **WEB-007 / MER-143** (high-quality analytical visuals) and **WEB-008 / MER-144** (hero video quality and playback resilience). Both stay blocked until MER-213 is accepted.
+3. `main` fast-forward to `79cc2cb` and any production/DNS reconciliation are separate CTO-authorized gates, not part of any implementation task.
 
 ## History
 
@@ -354,3 +392,5 @@ WEB-006 / MER-95 production DNS cutover remains deferred behind its explicit CTO
 - WEB-005 (2026-09-16): four-act homepage, production cinematic hero and truthful fallbacks; terminally accepted at `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`.
 - WEB-005A (2026-09-16): hero visual fidelity. Checkpoint `ffa2f2944ca5992afb9e9891b42745a9bd1105ad` (circular orbit, thinned frame, single boresight, resolved tail, bitrate investigation) was technically green but visually rejected; R2 delivered the Product visual lock — derived orbital pass, volumetric generic EO satellite, readable sensing lines, lock event, recomposed approach, NASA BMNG 500 m regional albedo, coupled page-layer analytical handoff — `REVIEW_READY`.
 - GEO-WEB-002 (2026-09-16): final homepage visual master package for the locked four-act composition — Kızıldere Act-2 natural-colour Landsat context master at native 30 m (2400 × 1500 px), and renderer-native `terrain` / `thm01` / `alt01` / `alt02` / `priority` cartographic panels, card derivatives and in-frame legend crops from the accepted GEO-039 exports; per-asset provenance, checksums, rights, warnings and maximum safe rendered size published. Act-4 ≥2000 px target is not honestly achievable under accepted science and the task-authorized 1249-device-pixel contained-composition fallback is accepted. Implementation HEAD `ea693c29762279131fbed005e832c5ff2dca587b`; terminal Science acceptance `docs/GEO-WEB-002_SCIENCE_ACCEPTANCE.md`.
+- WEB-005A → WEB-005C (2026-09-16 → 2026-09-21): hero visual fidelity (terminal head `1135e7a`), homepage after the hero rebuilt to the accepted design (WEB-005B R15), public taxonomy converged on Geothermal / Mining / Marine (WEB-005C R2). Accepted release candidate `79cc2cb82a4542461cbbfc1d0c349cf02b861084`; never merged to `main`, and per MER-213 it is what production serves.
+- MER-213 (2026-09-29): post-launch reconciliation — baseline `79cc2cb` verified against `main`, repository docs reconciled, validators and a real-browser regression audit recorded in `tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md`.

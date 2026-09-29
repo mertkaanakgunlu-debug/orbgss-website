@@ -2,7 +2,7 @@
 
 Minimal, static public landing page for **OrbGSS — Orbital Geo-Spatial Solutions**.
 
-This package is prepared specifically so development can continue safely in **Claude Code** without reconstructing the design/product context from chat history.
+The repository is the authority for the current website. Development continues in Claude Code / Claude Projects without reconstructing context from chat history; Linear owns task status and order.
 
 ## Start here
 
@@ -22,10 +22,14 @@ For a fresh Claude session, `CLAUDE_SESSION_BOOTSTRAP.txt` contains a copy/paste
 ## Local validation
 
 ```bash
-python scripts/validate_site.py
+python3 scripts/validate_site.py                 # site: must PASS with 0 warnings
+python3 scripts/negative_tests_web005.py         # 72/72 deliberate regressions caught
+python3 scripts/negative_tests_web005b.py        # 55/55
+python3 scripts/negative_tests_web005c.py        # 18/18
+python3 hero/scripts/validate_hero.py            # hero workstation: 420/0
 ```
 
-On Windows machines where `python` is only the Store alias, use `py -3.14 scripts/validate_site.py`. The validator passes with zero warnings once the four production images exist; errors are never acceptable.
+On Windows machines where `python` is only the Store alias, use `py -3.14 scripts/validate_site.py`. The hero validator needs the git-ignored local source textures under `hero/assets/source/`; in a fresh clone exactly 13 of its checks fail for that reason alone, and any other failure is real. Errors from the site validator are never acceptable.
 
 ## Local preview
 
@@ -47,9 +51,9 @@ python -m venv .venv
 
 Use an isolated environment: recent rasterio wheels require numpy 2.
 
-## Current next task
+## Current state and next task
 
-WEB-001 (`tasks/WEB-001_VNEXT_FOUNDATION.md`) is REVIEW_READY on `feat/web-001-vnext-foundation`. After review: WEB-002 (product-proof imagery). No feature work on `main`.
+The accepted, launched baseline is `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084`; `main@00af0f2` is a stale ancestor of it until the CTO authorizes a fast-forward. `STATUS.md` is the current-state record. Work starts only from an explicit `MER-###'e başla` (rule in `CLAUDE.md`): MER-213 (post-launch audit) is `REVIEW_READY`; WEB-007 / MER-143 and WEB-008 / MER-144 follow only after its review. No feature work on `main`.
 
 ## Deployment target
 

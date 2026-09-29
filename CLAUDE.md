@@ -17,7 +17,7 @@ Before changing code, read in this order:
 Then inspect `index.html`, `styles.css`, `script.js`, and run the site validator before editing.
 
 Hero production work also reads `hero/README.md` and `hero/config/lane.json`, and is validated by
-`py -3.14 hero/scripts/validate_hero.py`. The production satellite pass and the camera are both derived from intents in `hero/config/scene.json` (`orbit_intent` with its `rate_profile`, `shot_intent`); edit the intent and re-derive, never type keyframes. The page-layer handoff is registered to the audited corners of the 36 km analysis frame (`hero/evidence/shot_audit_production.json` → `handoff_anchor` → `data-hero-anchor`); re-run the shot audit and rebind the anchor whenever the camera changes. Blender 4.5 LTS is local production tooling, never a
+`py -3.14 hero/scripts/validate_hero.py`. The hero validator needs the git-ignored local source textures under `hero/assets/source/`; in a fresh clone exactly 13 checks fail for that reason alone (the accepted result, 420/0, is from the hero workstation). Treat any other failure as real. The production satellite pass and the camera are both derived from intents in `hero/config/scene.json` (`orbit_intent` with its `rate_profile`, `shot_intent`); edit the intent and re-derive, never type keyframes. The page-layer handoff is registered to the audited corners of the 36 km analysis frame (`hero/evidence/shot_audit_production.json` → `handoff_anchor` → `data-hero-anchor`); re-run the shot audit and rebind the anchor whenever the camera changes. Blender 4.5 LTS is local production tooling, never a
 site runtime dependency.
 
 ## Repository intent
@@ -72,7 +72,24 @@ If a requested change conflicts with these rules, stop and ask for explicit desi
 
 ## Branching
 
-No feature work on `main`. vNext tasks (WEB-001 → WEB-006) land on feature branches and are reviewed before merge. WEB-001 is accepted at `677bfa7`; WEB-002 is accepted (implementation HEAD `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`, merged to `main`); WEB-003 and WEB-004 are accepted; GEO-WEB-002 is Science-accepted at `ea693c29762279131fbed005e832c5ff2dca587b`. WEB-HERO-001D is terminally accepted at evidence HEAD `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`. WEB-005 / MER-93 (cinematic hero + four-act homepage release candidate) is terminally accepted at `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`. WEB-005A / MER-107 (hero visual fidelity, Product R2 visual lock) is on `feat/web-005a-hero-visual-fidelity` under `tasks/WEB-005A_HERO_VISUAL_FIDELITY.md` and `docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md`; the `ffa2f29` checkpoint was rejected visually, the R2 package (`a689782`, implementation `b285c90`) did not pass the human visual gate, and both are retained as before-evidence; R3 (`37152222`) was reviewed `REVISION_REQUIRED`, went through three low-cost preview gates, and the accepted gate-3 direction is now delivered at final production quality and `REVIEW_READY` under `tasks/WEB-005A_FINAL_PRODUCTION_EVIDENCE.md` (motion video with no analytical pixel + four lossless page-composited drape states; no legend, card or label in the hero); Product accepted it in substance at `e7098de` and the bounded final polish (startup poster = opening frame with a separate held base; lossless relief-rise states between the held frame and Terrain) is `REVIEW_READY` under `tasks/WEB-005A_FINAL_RELIEF_RISE_POLISH_EVIDENCE.md`. WEB-005A is terminally accepted and published at `origin/feat/web-005a-hero-visual-fidelity@1135e7a7e0b0f6db6348dee139d505550d8ca8b9`, which is the baseline every later task branches from. WEB-005B / MER-109 (homepage visual fidelity, Acts 2-4) is on `feat/web-005b-homepage-visual-fidelity` under `tasks/WEB-005B_EVIDENCE.md` and the R1 boundary `docs/web-005-polish-authority@e47da637:tasks/WEB-005B_R1_HOMEPAGE_DESIGN_IMPLEMENTATION_BOUNDARY.md`; it is `REVIEW_READY` and the accepted hero is preserved byte- and pixel-identical. Its latest state is the R15 bounded final-polish pass, `tasks/WEB-005B_R15_FINAL_POLISH_EVIDENCE.md`. Production DNS cutover is WEB-006 / MER-95 and remains a separate human CTO gate.
+No feature work on `main`. Every task lands on a bounded branch for its own Linear issue and is reviewed before anything is merged.
+
+Current baseline (reconciled by MER-213, 2026-09-29; the day-to-day detail is in `STATUS.md`):
+
+- **Accepted and launched code baseline:** `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084` (WEB-005 + 005A hero + 005B homepage R15 + 005C taxonomy). Production serves this SHA per the MER-213 record. Branch new work from this exact commit (or from `main` once it has been fast-forwarded to it), never from the stale `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`, which is WEB-005's terminal acceptance and a pure ancestor of the baseline.
+- Earlier accepted heads, for provenance only: WEB-001 `677bfa7`; WEB-002 `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; WEB-003 `3670d43`; WEB-004 `56cb53039b85a852110c737505bc2ae2282acb08`; GEO-WEB-002 `ea693c29762279131fbed005e832c5ff2dca587b`; WEB-HERO-001D `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`; WEB-005A `1135e7a7e0b0f6db6348dee139d505550d8ca8b9`.
+- Updating `main`, production deployment and the WEB-006 / MER-95 DNS cutover are separate CTO-authorized gates. An auto-created session branch (for example `claude/...`) is workspace plumbing, not canonical state.
+
+## Task execution rule
+
+`MER-###'e başla` means: execute that exact Linear issue, and only its scope.
+
+1. Resolve the issue from Linear by ID; read its description, status, dependencies and project position. If Linear cannot be read, stop and report the environment blocker.
+2. Fetch Git; verify the repository identity, `origin`, a clean working tree, `main`, and the exact baseline the issue names. If Linear, Git and this repository disagree, stop and report the conflict instead of guessing.
+3. Create or use a bounded branch for the issue from that exact baseline.
+4. Implement only the issue scope. Run the acceptance the issue and this repository require (see Change discipline), review the exact diff, then commit and push the branch.
+5. Report the branch, HEAD SHA, baseline SHA, changed files, verification, remote/local HEAD match and remaining risks, and stop at `REVIEW_READY`.
+6. Never merge or fast-forward `main`, deploy, change DNS, credentials or Vercel configuration, force-push or rewrite history, close the Linear issue, or grant the work its own acceptance. The CTO/Product review does that.
 
 ## Deployment safety
 
