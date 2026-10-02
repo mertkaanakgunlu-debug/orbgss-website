@@ -18,7 +18,7 @@ Then inspect `index.html`, `styles.css`, `script.js`, and run the site validator
 
 Hero production work also reads `hero/README.md` and `hero/config/lane.json`, and is validated by
 `py -3.14 hero/scripts/validate_hero.py`. The hero validator needs the git-ignored local source textures under `hero/assets/source/`; in a fresh clone exactly 13 checks fail for that reason alone (the accepted result, 420/0, is from the hero workstation). Treat any other failure as real. The production satellite pass and the camera are both derived from intents in `hero/config/scene.json` (`orbit_intent` with its `rate_profile`, `shot_intent`); edit the intent and re-derive, never type keyframes. The page-layer handoff is registered to the audited corners of the 36 km analysis frame (`hero/evidence/shot_audit_production.json` → `handoff_anchor` → `data-hero-anchor`); re-run the shot audit and rebind the anchor whenever the camera changes. Blender 4.5 LTS is local production tooling, never a
-site runtime dependency.
+site runtime dependency. The delivered hero video is a two-tier WebM + MP4 ladder (1280 and 1920) of the same master frames, built by `hero/scripts/encode_responsive_media.py` with FFmpeg as local tooling (MER-216): the encodes are hash-named because `/assets/` is immutable-cached, MP4s are faststart, the 1920 tier keeps the WebM <= 3.0 MiB / MP4 <= 4.5 MiB envelope, `data-hero-tiers` in the markup must equal the recorded tiers, and `script.js` picks one tier and codec before any video byte and never swaps a source mid-play (enforced by `scripts/validate_site.py` and `scripts/negative_tests_mer216.py`).
 
 ## Repository intent
 
@@ -78,6 +78,7 @@ Current baseline (reconciled by MER-213, 2026-09-29; the day-to-day detail is in
 
 - **Accepted and launched code baseline:** `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084` (WEB-005 + 005A hero + 005B homepage R15 + 005C taxonomy). Production serves this SHA per the MER-213 record. Branch new work from this exact commit (or from `main` once it has been fast-forwarded to it), never from the stale `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`, which is WEB-005's terminal acceptance and a pure ancestor of the baseline.
 - Earlier accepted heads, for provenance only: WEB-001 `677bfa7`; WEB-002 `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; WEB-003 `3670d43`; WEB-004 `56cb53039b85a852110c737505bc2ae2282acb08`; GEO-WEB-002 `ea693c29762279131fbed005e832c5ff2dca587b`; WEB-HERO-001D `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`; WEB-005A `1135e7a7e0b0f6db6348dee139d505550d8ca8b9`.
+- **MER-216** (media fidelity and runtime hardening, Phases 1-4; supersedes MER-143..146) is `REVIEW_READY` on `claude/mer-216-s1r628`, created from `main@f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85`; evidence `tasks/MER-216_EVIDENCE.md`. It does not change `main`.
 - Updating `main`, production deployment and the WEB-006 / MER-95 DNS cutover are separate CTO-authorized gates. An auto-created session branch (for example `claude/...`) is workspace plumbing, not canonical state.
 
 ## Task execution rule

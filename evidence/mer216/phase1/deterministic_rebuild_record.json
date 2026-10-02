@@ -1,0 +1,360 @@
+﻿{
+ "export_id": "20260917T161155Z-5e7a0e53",
+ "project": "kizildere_mvp_v2",
+ "science": {
+  "presentation_authority": "geothermal-prospectivity@e8aa5d65f56556be928499c50936eb63db88a6ad:tasks/MER-151_GEO-WEB-004_HOMEPAGE_EVIDENCE_PRESENTATION_PARITY_AUTHORITY.md",
+  "terminal_authority": "geothermal-prospectivity@30779547ced0cbf047cb51fb6c2c6ed178547d56:tasks/MER-108_TERMINAL_WEBSITE_HERO_DISPLAY_AMENDMENT.yaml",
+  "website_derivative_authority": "geothermal-prospectivity@11c32e8d2d072aa709262e513c8888e6a745bb76:tasks/MER-108_PUBLIC_WEB_DISPLAY_DERIVATIVE_AUTHORITY.md",
+  "normalization_authority": "geothermal-prospectivity@d3a163bd6c6b2fe6a1a73fe28e5acf23cd9d4e87:tasks/MER-108_NORMALIZATION_AUTHORITY_CORRECTION.md",
+  "surface": "public website presentation only (homepage Acts 3 and 4 and the inspection aid); never a report, workbench, validation or quantitative-export surface",
+  "resolution_claim": "presentation-resolution derivative of a 1200 x 1200 / 30 m / EPSG:32635 scientific raster; the enlarged files carry no finer ground sampling and no additional scientific evidence"
+ },
+ "scientific_master": {
+  "crs": "EPSG:32635",
+  "width": 1200,
+  "height": 1200,
+  "gsd_m": 30.0,
+  "statement": "unchanged and authoritative; the derivatives below are presentation renderings of it"
+ },
+ "pipeline": [
+  "governed scalar + governed valid mask (MER-113 export, SHA-256 verified)",
+  "canonical normalization per d3a163bd, resolved once over the whole raster's valid cells",
+  "optional bounded display window (MER-151 section 3), resolved from the governed source",
+  "optional bounded fixed monotonic gamma (MER-151 section 3)",
+  "frozen MER-108 palette topology / exact approved LUT (256 entries, linear sRGB)",
+  "governed mask to RGBA: NoData analytical alpha 0; no fill, dilation or erosion",
+  "at most one final RGBA Lanczos3 resize, premultiplied and mask-aware (MER-151 section 2)",
+  "source-over onto the neutral grayscale DEM hillshade at a fixed analytical opacity",
+  "lossless WebP (exact), SHA-256 recorded"
+ ],
+ "not_used": [
+  "ai_super_resolution",
+  "scalar_space_interpolation",
+  "gaussian smoothing",
+  "unsharp",
+  "clahe_or_local_tone_mapping",
+  "per_crop_autoscaling",
+  "mask dilation/erosion/fill",
+  "hotspot emphasis",
+  "CSS filter or blend on the page"
+ ],
+ "resolution_claim": "presentation-resolution derivative of a 1200 x 1200 / 30 m / EPSG:32635 scientific raster; the enlarged files carry no finer ground sampling and no additional scientific evidence",
+ "hillshade": {
+  "source": "top-dem.tif",
+  "azimuth_deg": 315.0,
+  "altitude_deg": 45.0,
+  "z_factor": 1.0,
+  "gray_base": 0.07,
+  "gray_span": 0.32,
+  "nodata_fill": "median of valid DEM cells (DEM has no invalid cells here)",
+  "resize": "the neutral underlay is built at the native grid and enlarged as an IMAGE (Lanczos3) alongside the analytical RGBA; the DEM scalar itself is never interpolated"
+ },
+ "grid": {
+  "crs": "EPSG:32635",
+  "width": 1200,
+  "height": 1200,
+  "transform": [
+   30.0,
+   0.0,
+   639270.0,
+   0.0,
+   -30.0,
+   4223040.0
+  ]
+ },
+ "renderer": {
+  "python": "3.14.6",
+  "numpy": "2.5.3",
+  "rasterio": "1.5.1",
+  "pillow": "12.3.0",
+  "webp": "1.6.0"
+ },
+ "encoder": "Pillow WebP lossless=True quality=100 method=6 exact=True",
+ "layers": {
+  "terrain": {
+   "source": "top-dem.tif",
+   "source_sha256": "590f74322c6ad942e0d36b79446934da7a0938c7d87c06ab8c9bd27da73fb694",
+   "normalization": "linear_min_max",
+   "resolved": {
+    "vmin": 79.50806427001953,
+    "vmax": 1722.535400390625
+   },
+   "display_window": "disabled",
+   "gamma": "disabled",
+   "transfer_note": "disabled on purpose: this rendering is also the source of the accepted WEB-005A hero Terrain drape state, and its canonical range is already used end to end",
+   "topology_id": "terrain_natural_earth_relief_v1",
+   "stops": [
+    "#07131A",
+    "#173C35",
+    "#426447",
+    "#80744D",
+    "#B79B67",
+    "#D9C7A0",
+    "#F2E8D5",
+    "#FFFFFF"
+   ],
+   "stops_source": "webhero_publication_v1 terrain",
+   "lut_sha256": "3e787944d8f6097fb5c968f186532199d46b0ae96e386c4456ddf9163a400a10",
+   "analytical_opacity": 0.9,
+   "valid_fraction": 1.0,
+   "mask": "governed valid mask; nearest at the native grid, and a Lanczos3 enlargement may never create valid support the governed mask does not have",
+   "derivatives": [
+    {
+     "path": "assets/proof/web005b/terrain-600.webp",
+     "width": 600,
+     "height": 600,
+     "resize": "area (box) downsample of the final RGB",
+     "presentation_scale": 0.5,
+     "format": "image/webp (lossless)",
+     "bytes": 247172,
+     "sha256": "94e09d29cca411d626fae8d99443963b6c8d35487686d7f8069e5cb021b015c2"
+    },
+    {
+     "path": "assets/proof/web005b/terrain-900.webp",
+     "width": 900,
+     "height": 900,
+     "resize": "area (box) downsample of the final RGB",
+     "presentation_scale": 0.75,
+     "format": "image/webp (lossless)",
+     "bytes": 498538,
+     "sha256": "77ddb52d3928491b4c1ea005a0b9c073dc297e2e311dab016443a2d40c57320c"
+    },
+    {
+     "path": "assets/proof/web005b/terrain-1200.webp",
+     "width": 1200,
+     "height": 1200,
+     "resize": "none (native 1200 grid)",
+     "presentation_scale": 1.0,
+     "format": "image/webp (lossless)",
+     "bytes": 822168,
+     "sha256": "c0d60a8f9586bc01c4e8e5fb0c1c02a0bfcad90d6324686082efebcb1ec5d0aa"
+    }
+   ]
+  },
+  "thm01": {
+   "source": "thm-thm01.tif",
+   "source_sha256": "6a2850f9915c08ed56ae2731d54881d55ca145db6cda11a21ed7e6191e629583",
+   "normalization": "diverging_symmetric_from_data",
+   "resolved": {
+    "center": 0.0,
+    "M": 4.46240234375,
+    "vmin": -4.46240234375,
+    "vmax": 4.46240234375
+   },
+   "display_window": {
+    "kind": "symmetric_abs_quantile",
+    "q_abs": 0.998,
+    "resolved_M": 0.7036215781309845,
+    "center": 0.0,
+    "clipped_fraction": 0.002,
+    "resolved_over": "all valid cells of the governed source raster",
+    "independent_signed_windows": false
+   },
+   "gamma": {
+    "gamma": 0.85,
+    "formula": "u = sign(s) * |s| ** gamma, with u(0) = 0 exactly",
+    "bounds": [
+     0.8,
+     1.25
+    ],
+    "adaptive": false
+   },
+   "transfer_note": "signed window about a fixed 0 centre; independent positive/negative windows are prohibited and not used",
+   "topology_id": "thm_cool_neutral_warm_red_v1",
+   "stops": [
+    "#15365F",
+    "#235987",
+    "#3E82AC",
+    "#76AEC8",
+    "#BAD3DC",
+    "#E9E9DF",
+    "#F2D0B4",
+    "#F3A070",
+    "#ED704D",
+    "#E34232",
+    "#C51F24",
+    "#98151D"
+   ],
+   "stops_source": "webhero_publication_v4 thm01",
+   "lut_sha256": "fba5873e0ef2f6467404e429d4537da520ac104094cbfbaaa91aa63d3f25d9d0",
+   "analytical_opacity": 0.9,
+   "valid_fraction": 0.99686,
+   "mask": "governed valid mask; nearest at the native grid, and a Lanczos3 enlargement may never create valid support the governed mask does not have",
+   "derivatives": [
+    {
+     "path": "assets/proof/web005b/thm01-600.webp",
+     "width": 600,
+     "height": 600,
+     "resize": "area (box) downsample of the final RGB",
+     "presentation_scale": 0.5,
+     "format": "image/webp (lossless)",
+     "bytes": 551540,
+     "sha256": "f1a1407201dc45aa6c0f853239f3ae09e9f504e0b8f7d16009b215f4878b7580"
+    },
+    {
+     "path": "assets/proof/web005b/thm01-900.webp",
+     "width": 900,
+     "height": 900,
+     "resize": "area (box) downsample of the final RGB",
+     "presentation_scale": 0.75,
+     "format": "image/webp (lossless)",
+     "bytes": 1110906,
+     "sha256": "6eb6214fca8beeefdf16949a88c16f1e81bc2ef2df7bfc5578502d7536347721"
+    },
+    {
+     "path": "assets/proof/web005b/thm01-1200.webp",
+     "width": 1200,
+     "height": 1200,
+     "resize": "none (native 1200 grid)",
+     "presentation_scale": 1.0,
+     "format": "image/webp (lossless)",
+     "bytes": 1811444,
+     "sha256": "428335978db1b03430da62f98025ba07c05b494caa9f430150975f22d0958206"
+    }
+   ]
+  },
+  "alt01": {
+   "source": "alt-alt01.tif",
+   "source_sha256": "ac7f2dade5274d9fd81b7fdbc8bcf7ae828bb958de5c74b9847e6332675fbf14",
+   "normalization": "linear_min_max",
+   "resolved": {
+    "vmin": 0.7092198133468628,
+    "vmax": 21.00902557373047
+   },
+   "display_window": {
+    "kind": "quantile",
+    "q_low": 0.02,
+    "q_high": 0.98,
+    "span": 0.96,
+    "resolved_low": 0.02092295404644038,
+    "resolved_high": 0.0523433123209975,
+    "clipped_fraction": 0.040001,
+    "resolved_over": "all valid cells of the governed source raster"
+   },
+   "gamma": "disabled",
+   "transfer_note": "quantile span 0.96, resolved from all valid cells of the governed source; no gamma on top of it",
+   "topology_id": "alt_violet_blue_cyan_green_yellow_v1",
+   "stops": [
+    "#27104B",
+    "#362061",
+    "#3A377A",
+    "#30578D",
+    "#20799D",
+    "#159BA8",
+    "#18B2A0",
+    "#42C482",
+    "#7BD05E",
+    "#B7DC43",
+    "#E2E53B",
+    "#FFF05A"
+   ],
+   "stops_source": "webhero_publication_v4 alt01",
+   "lut_sha256": "ed32cf671a8701716fbf1f704a7428c0cce1a5f9fb349c3626a9d7c917443d70",
+   "analytical_opacity": 0.9,
+   "valid_fraction": 0.840325,
+   "mask": "governed valid mask; nearest at the native grid, and a Lanczos3 enlargement may never create valid support the governed mask does not have",
+   "derivatives": [
+    {
+     "path": "assets/proof/web005b/alt01-600.webp",
+     "width": 600,
+     "height": 600,
+     "resize": "area (box) downsample of the final RGB",
+     "presentation_scale": 0.5,
+     "format": "image/webp (lossless)",
+     "bytes": 799318,
+     "sha256": "3b302535f0f0bc0d9ddaa90c9660be43c0b6a33a70179479bb8ae9c0fd88e0b6"
+    },
+    {
+     "path": "assets/proof/web005b/alt01-900.webp",
+     "width": 900,
+     "height": 900,
+     "resize": "area (box) downsample of the final RGB",
+     "presentation_scale": 0.75,
+     "format": "image/webp (lossless)",
+     "bytes": 1675608,
+     "sha256": "c28da8873445dcfc0865070bb7c55373679fd5fc11a08cfd3864fb3a4bb0d8c0"
+    },
+    {
+     "path": "assets/proof/web005b/alt01-1200.webp",
+     "width": 1200,
+     "height": 1200,
+     "resize": "none (native 1200 grid)",
+     "presentation_scale": 1.0,
+     "format": "image/webp (lossless)",
+     "bytes": 2347070,
+     "sha256": "a51def6d55f792cce155eb2c036cfc059c22d897414d7e53edadb70a3e87b3f9"
+    }
+   ]
+  },
+  "priority": {
+   "source": "score-mvp-remote-sensing-priority.tif",
+   "source_sha256": "15065152f6f21eaf66236d51d6814acfb32326c5698bc2433dcb69653d8a9d1e",
+   "normalization": "fixed_range_0_100",
+   "resolved": {
+    "vmin": 0.0,
+    "vmax": 100.0
+   },
+   "display_window": "disabled",
+   "gamma": "disabled",
+   "transfer_note": "window prohibited by the authority; gamma deliberately unused so the published 0-100 score keeps exactly the colours the hero payoff ends on",
+   "topology_id": "priority_deep_purple_red_orange_yellow_v1",
+   "stops": [
+    "#13001F",
+    "#2B0A4A",
+    "#54106F",
+    "#8A176A",
+    "#C52A55",
+    "#E85B35",
+    "#F89A2B",
+    "#FFD84A",
+    "#FFF3A0"
+   ],
+   "stops_source": "webhero_publication_v1 priority",
+   "lut_sha256": "7babdc574d6d209a6d24162a3e5206bf16e5a39a74885c70d7ac659b1c01b43b",
+   "analytical_opacity": 0.95,
+   "valid_fraction": 0.833898,
+   "mask": "governed valid mask; nearest at the native grid, and a Lanczos3 enlargement may never create valid support the governed mask does not have",
+   "derivatives": [
+    {
+     "path": "assets/proof/web005b/priority-600.webp",
+     "width": 600,
+     "height": 600,
+     "resize": "area (box) downsample of the final RGB",
+     "presentation_scale": 0.5,
+     "format": "image/webp (lossless)",
+     "bytes": 758152,
+     "sha256": "2d29118439a44510d3f14be52e5cc1aa0b90ee27da43de964ca1fdf9a00da150"
+    },
+    {
+     "path": "assets/proof/web005b/priority-900.webp",
+     "width": 900,
+     "height": 900,
+     "resize": "area (box) downsample of the final RGB",
+     "presentation_scale": 0.75,
+     "format": "image/webp (lossless)",
+     "bytes": 1539562,
+     "sha256": "1989096b10215aa3db27d15948780db8600fd456081c434c45f6e3c9398b6375"
+    },
+    {
+     "path": "assets/proof/web005b/priority-1200.webp",
+     "width": 1200,
+     "height": 1200,
+     "resize": "none (native 1200 grid)",
+     "presentation_scale": 1.0,
+     "format": "image/webp (lossless)",
+     "bytes": 1948516,
+     "sha256": "7f1e53a96cb5765ad84f891d12afb1a06b42d4caad649cacef9b2cb3370f1c7b"
+    }
+   ],
+   "legend": {
+    "path": "assets/proof/web005b/priority-legend-ramp.png",
+    "width": 256,
+    "height": 8,
+    "content": "the unblended 256-entry priority LUT, 0 at left to 100 at right",
+    "coupled_to": "the map's own transfer: priority carries no window and no gamma, so position on the ramp is the score itself",
+    "bytes": 257,
+    "sha256": "dd7899460402459fd24bd9ecbf2ea9a329d2bfa9b9dfa422743f37bd1e1b64d8"
+   }
+  }
+ }
+}

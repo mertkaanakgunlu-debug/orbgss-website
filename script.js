@@ -1287,6 +1287,8 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   function settleStatic(reason) {
     hero.setAttribute('data-hero-state', 'static');
     if (hero.dataset.heroReason !== reason) hero.dataset.heroReason = reason;
+    /* A video that was playing is stopped, not swapped: the held still takes over (MER-216). */
+    if (video && !video.paused && typeof video.pause === 'function') video.pause();
     /* Static means the video is not what the visitor is looking at, so the startup poster is: cover
        it with the held base first, then the payoff. */
     showHeldBase(() => revealPayoff(true));
@@ -1307,19 +1309,107 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   if (saveData) return settleStatic('save-data');
   if (slowNetwork) return settleStatic('slow-network');
 
-  const candidates = [
-    { src: video.getAttribute('data-hero-webm'), type: 'video/webm', probe: 'video/webm; codecs="vp9"' },
-    { src: video.getAttribute('data-hero-mp4'), type: 'video/mp4', probe: 'video/mp4; codecs="avc1.4d4028"' },
-    { src: video.getAttribute('data-hero-mp4'), type: 'video/mp4', probe: 'video/mp4' },
-  ];
-  const chosen = candidates.find((c) => c.src && video.canPlayType(c.probe) === 'probably')
-    || candidates.find((c) => c.src && video.canPlayType(c.probe));
-  if (!chosen) return settleStatic('no-playable-encode');
+  /* ---- delivery tiers (MER-216) ------------------------------------------------------------ */
+  /* The sequence is published as a small ladder of encodes of the SAME frames (hero/evidence/
+     responsive_media.json), each in WebM and MP4. One tier and one codec are chosen here, once,
+     before a byte of video is requested, from signals that exist before playback: the device pixels
+     the 16:9 frame must cover, the network's own downlink hint, and what the decoder says it can play
+     smoothly. Nothing is ever swapped mid-play, and the largest encode is not forced on anyone. The
+     bare data-hero-webm / data-hero-mp4 pair is the middle tier and stays the fallback when the
+     ladder is absent or unreadable. */
+  function readTiers() {
+    let list = null;
+    try { list = JSON.parse(video.getAttribute('data-hero-tiers') || 'null'); } catch (e) { list = null; }
+    if (Array.isArray(list)) {
+      list = list.filter((t) => t && t.w > 0 && (t.webm || t.mp4)).sort((a, b) => a.w - b.w);
+    }
+    if (Array.isArray(list) && list.length) return list;
+    return [{
+      id: 'default', w: 1920,
+      webm: video.getAttribute('data-hero-webm'), mp4: video.getAttribute('data-hero-mp4'),
+      kbps: { webm: 2200, mp4: 3300 },
+      codecs: { webm: 'vp09.00.40.08', mp4: 'avc1.640028' },
+    }];
+  }
+  const tiers = readTiers();
+
+  /* Device pixels the frame has to cover: the hero is a cover-fit of a 16:9 frame, so the binding
+     axis is whichever of the width or the (height x 16/9) is larger. A tier may undershoot by 8%
+     (a 1366 px laptop is served the 1280 encode) but is never asked to stand in for a wider screen. */
+  function demandPx() {
+    const dpr = window.devicePixelRatio || 1;
+    return Math.max(hero.clientWidth, hero.clientHeight * 16 / 9) * dpr;
+  }
+  function firstTierIndex() {
+    const need = demandPx() * 0.92;
+    for (let i = 0; i < tiers.length; i += 1) if (tiers[i].w >= need) return i;
+    return tiers.length - 1;
+  }
+  /* Codec order: WebM (VP9) where the browser is confident, MP4 (H.264) otherwise. */
+  function codecOrder() {
+    const order = [];
+    const vp9 = video.canPlayType('video/webm; codecs="vp9"');
+    const avc = video.canPlayType('video/mp4; codecs="avc1.4d4028"') || video.canPlayType('video/mp4');
+    if (vp9 === 'probably') order.push('webm');
+    if (avc) order.push('mp4');
+    if (vp9 && vp9 !== 'probably') order.push('webm');
+    return order.filter((c, i) => order.indexOf(c) === i);
+  }
+  function codecString(tier, codec) {
+    const c = tier.codecs && tier.codecs[codec];
+    if (c) return (codec === 'webm' ? 'video/webm; codecs="' : 'video/mp4; codecs="') + c + '"';
+    return codec === 'webm' ? 'video/webm; codecs="vp09.00.40.08"' : 'video/mp4; codecs="avc1.640028"';
+  }
+  function tierBps(tier, codec) {
+    const k = tier.kbps && (tier.kbps[codec] || tier.kbps.webm || tier.kbps.mp4);
+    return (k || 2500) * 1000;
+  }
+  /* Downlink is a hint in Mbit/s (Chrome caps it at 10 and reports a conservative default until it has
+     measured something; other engines omit it). It only ever moves a visitor DOWN the ladder: a tier
+     needs 1.5x its own average bitrate (the encodes are VBR with peaks up to 1.6x), measured to be the
+     margin below which a 1.6 Mbit/s link stalls the smallest tier mid-play, and a visitor who cannot
+     sustain even that is better served by the still. Unknown downlink: no cap. */
+  function networkOk(tier, codec) {
+    const down = typeof connection.downlink === 'number' && connection.downlink > 0 ? connection.downlink * 1e6 : 0;
+    return !down || tierBps(tier, codec) * 1.5 <= down;
+  }
+  function pickDelivery() {
+    const order = codecOrder();
+    if (!order.length) return null;
+    let i = firstTierIndex();
+    const mc = navigator.mediaCapabilities;
+    const attempt = (index) => {
+      const tier = tiers[index];
+      const options = order.filter((codec) => tier[codec]);
+      const codec = options.find((c) => networkOk(tier, c)) || null;
+      if (!codec) return index > 0 ? attempt(index - 1) : Promise.resolve(null);
+      const fall = () => ({ tier, codec, src: tier[codec], type: codec === 'webm' ? 'video/webm' : 'video/mp4' });
+      if (!mc || typeof mc.decodingInfo !== 'function') return Promise.resolve(fall());
+      const probe = mc.decodingInfo({
+        type: 'file',
+        video: {
+          contentType: codecString(tier, codec), width: tier.w, height: Math.round(tier.w * 9 / 16),
+          bitrate: tierBps(tier, codec), framerate: SCENE_FPS,
+        },
+      }).then((info) => {
+        if (info && info.supported && info.smooth !== false) return fall();
+        /* Not smooth at this tier (or not supported): the next tier down, then the other codec. */
+        if (index > 0) return attempt(index - 1);
+        const other = options.find((c) => c !== codec);
+        return other ? { tier, codec: other, src: tier[other], type: other === 'webm' ? 'video/webm' : 'video/mp4' } : null;
+      }).catch(() => fall());
+      /* A capability query that never answers must not hold the hero: carry on with the pick. */
+      return Promise.race([probe, new Promise((resolve) => window.setTimeout(() => resolve(fall()), 1200))]);
+    };
+    return attempt(i);
+  }
 
   let started = false;
-  function start() {
+  function start(choice) {
     if (started) return;
     started = true;
+    hero.dataset.heroTier = choice.tier.id;
+    hero.dataset.heroCodec = choice.codec;
 
     video.addEventListener('timeupdate', function onTime() {
       if (video.currentTime >= HOLD_SECONDS) {
@@ -1332,29 +1422,70 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
       hero.setAttribute('data-hero-state', 'held');
       revealPayoff();
     });
-    video.addEventListener('playing', () => {
+    /* The video is shown only once it has presented a real frame (requestVideoFrameCallback where it
+       exists), so a decoder that reports "playing" and paints nothing can never put a black box over
+       the poster. If it never presents one, the held still is the hero. */
+    let shown = false;
+    function show() {
+      if (shown || hero.getAttribute('data-hero-state') === 'static') return;
+      shown = true;
+      if (!(video.videoWidth > 0)) { settleStatic('no-video-frame'); return; }
       hero.setAttribute('data-hero-state', 'playing');
       warmLayers();
+      watchPlayback();
+    }
+    video.addEventListener('playing', () => {
+      if (typeof video.requestVideoFrameCallback === 'function') {
+        video.requestVideoFrameCallback(show);
+        window.setTimeout(() => { if (!shown && !video.paused && video.readyState > 2) show(); }, 1500);
+      } else show();
     }, { once: true });
     video.addEventListener('error', () => settleStatic('encode-error'), { once: true });
 
+    /* Playback quality after it has started: a stall that lasts, or a decoder that drops a large share
+       of the first seconds, ends in the held still instead of a frozen or stuttering hero. The video is
+       paused and never swapped for another source. */
+    let stallTimer = 0;
+    function watchPlayback() {
+      video.addEventListener('waiting', () => {
+        if (video.ended || hero.getAttribute('data-hero-state') === 'static') return;
+        window.clearTimeout(stallTimer);
+        stallTimer = window.setTimeout(() => settleStatic('buffering'), 3000);
+      });
+      ['playing', 'timeupdate', 'ended'].forEach((name) => video.addEventListener(name, () => {
+        if (name === 'timeupdate' && video.readyState < 3) return;
+        window.clearTimeout(stallTimer);
+      }));
+      window.setTimeout(() => {
+        if (hero.getAttribute('data-hero-state') !== 'playing' || typeof video.getVideoPlaybackQuality !== 'function') return;
+        const q = video.getVideoPlaybackQuality();
+        if (q.totalVideoFrames >= 48 && q.droppedVideoFrames / q.totalVideoFrames > 0.4) settleStatic('dropped-frames');
+      }, 4500);
+    }
+
     video.muted = true;
     video.loop = false;
-    video.setAttribute('src', chosen.src);
+    video.setAttribute('src', choice.src);
     video.load();
 
     const attempt = video.play();
     if (attempt && typeof attempt.catch === 'function') {
       /* Autoplay refused by policy is a normal outcome, not a failure: fall back to the held base
          and hand off straight away rather than leaving a blank frame or nagging the visitor. */
-      attempt.catch(() => settleStatic('autoplay-blocked'));
+      attempt.catch((err) => settleStatic(err && err.name === 'NotAllowedError' ? 'autoplay-blocked' : 'encode-error'));
     }
   }
 
-  /* Never compete with the poster: the poster is the LCP element. */
+  /* Never compete with the poster: the poster is the LCP element. The delivery choice is made first
+     and the encode is requested only after it. */
+  function begin() {
+    Promise.resolve(pickDelivery()).then((choice) => {
+      if (choice) start(choice); else settleStatic(codecOrder().length ? 'slow-network' : 'no-playable-encode');
+    }, () => settleStatic('no-playable-encode'));
+  }
   function startWhenIdle() {
-    if (document.readyState === 'complete') start();
-    else window.addEventListener('load', start, { once: true });
+    if (document.readyState === 'complete') begin();
+    else window.addEventListener('load', begin, { once: true });
   }
 
   if (typeof IntersectionObserver === 'function') {

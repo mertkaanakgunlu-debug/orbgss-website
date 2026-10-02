@@ -2183,71 +2183,82 @@
     "delivery_rule": "The markup declares no <source> child and no src on the hero video; script.js attaches exactly one encode at runtime and attaches none at all for reduced-motion, small-screen, Save-Data or slow-network visitors. No browser is ever made to download both encodes.",
     "hero_media": [
       {
-        "role": "hero-webm",
-        "path": "assets/hero/orbgss-hero.webm",
+        "role": "hero-webm-sm",
+        "tier": "sm",
+        "path": "assets/hero/orbgss-hero-1280-21da1079.webm",
         "container": "WebM",
         "mime_type": "video/webm",
         "codec": "VP9",
-        "video_bitrate_kbps": 991,
-        "bytes": 2967086,
-        "mib": 2.83,
-        "ceiling_mib": 3.0,
-        "within_ceiling": true,
-        "sha256": "5907372ab5aea646dda9a33f5f6c473e817717aa1226a54df164c407b6ac6ddd",
-        "bitrate_search": [
-          {
-            "attempt": 1,
-            "video_bitrate_kbps": 1900,
-            "bytes": 5304313,
-            "mib": 5.059,
-            "ceiling_mib": 3.0,
-            "within_ceiling": false,
-            "wall_clock_seconds": 95.42
-          },
-          {
-            "attempt": 2,
-            "video_bitrate_kbps": 991,
-            "bytes": 2967086,
-            "mib": 2.83,
-            "ceiling_mib": 3.0,
-            "within_ceiling": true,
-            "wall_clock_seconds": 83.25
-          }
-        ],
-        "width": 1920,
-        "height": 1080,
+        "codec_string": "vp09.00.31.08",
+        "width": 1280,
+        "height": 720,
         "frame_rate": 24,
         "frame_count": 276,
-        "duration_seconds": 11.5
+        "duration_seconds": 11.5,
+        "bytes": 1646519,
+        "sha256": "21da10791259f45c3a7d68d86d6eb7c892a4a9f765ba961c57473eb46a97b2eb",
+        "average_kbps": 1145,
+        "record": "hero/evidence/responsive_media.json",
+        "source_master": "hero/renders/production/frame.png (276 frames, 2304x1296, SHA-256 verified against the render records)"
       },
       {
-        "role": "hero-mp4",
-        "path": "assets/hero/orbgss-hero.mp4",
+        "role": "hero-mp4-sm",
+        "tier": "sm",
+        "path": "assets/hero/orbgss-hero-1280-164c957f.mp4",
         "container": "MP4",
         "mime_type": "video/mp4",
         "codec": "H.264",
-        "video_bitrate_kbps": 2800,
-        "bytes": 4243770,
-        "mib": 4.047,
-        "ceiling_mib": 4.5,
-        "within_ceiling": true,
-        "sha256": "9180cbd1011147d74095793cd0cfe91a79744b77ad63ae8e51b636854b931ad5",
-        "bitrate_search": [
-          {
-            "attempt": 1,
-            "video_bitrate_kbps": 2800,
-            "bytes": 4243770,
-            "mib": 4.047,
-            "ceiling_mib": 4.5,
-            "within_ceiling": true,
-            "wall_clock_seconds": 32.13
-          }
-        ],
+        "codec_string": "avc1.64001f",
+        "width": 1280,
+        "height": 720,
+        "frame_rate": 24,
+        "frame_count": 276,
+        "duration_seconds": 11.5,
+        "bytes": 2062118,
+        "sha256": "164c957fbc3d62f60fa3824626a4a86ba7ac843db4af767708b96e4014bf9270",
+        "average_kbps": 1435,
+        "faststart": true,
+        "record": "hero/evidence/responsive_media.json",
+        "source_master": "hero/renders/production/frame.png (276 frames, 2304x1296, SHA-256 verified against the render records)"
+      },
+      {
+        "role": "hero-webm-md",
+        "tier": "md",
+        "path": "assets/hero/orbgss-hero-1920-ca741624.webm",
+        "container": "WebM",
+        "mime_type": "video/webm",
+        "codec": "VP9",
+        "codec_string": "vp09.00.40.08",
         "width": 1920,
         "height": 1080,
         "frame_rate": 24,
         "frame_count": 276,
-        "duration_seconds": 11.5
+        "duration_seconds": 11.5,
+        "bytes": 2920385,
+        "sha256": "ca741624fa25232ac95da083595139fb4a64470a2e037cd1edb8c260b1428f18",
+        "average_kbps": 2032,
+        "record": "hero/evidence/responsive_media.json",
+        "source_master": "hero/renders/production/frame.png (276 frames, 2304x1296, SHA-256 verified against the render records)"
+      },
+      {
+        "role": "hero-mp4-md",
+        "tier": "md",
+        "path": "assets/hero/orbgss-hero-1920-c8db4a5a.mp4",
+        "container": "MP4",
+        "mime_type": "video/mp4",
+        "codec": "H.264",
+        "codec_string": "avc1.640028",
+        "width": 1920,
+        "height": 1080,
+        "frame_rate": 24,
+        "frame_count": 276,
+        "duration_seconds": 11.5,
+        "bytes": 3584878,
+        "sha256": "c8db4a5a4dbd89d3f177da3c00fc736325c693c6c2e388131660386c4289af00",
+        "average_kbps": 2494,
+        "faststart": true,
+        "record": "hero/evidence/responsive_media.json",
+        "source_master": "hero/renders/production/frame.png (276 frames, 2304x1296, SHA-256 verified against the render records)"
       },
       {
         "role": "hero-poster",
@@ -2506,7 +2517,7 @@
       ],
       "note": "WEB-005A final relief-rise polish. The page must show the DEM relief RISING between the held frame and the Terrain state instead of jumping to it. These are the production scene's own frames inside its relief-rise interval (276 -> 292, eased by the scene), rendered exactly like a drape state -- same held camera, governed DEM, mapping, 3x exaggeration, production_drape profile, Standard view, no denoiser -- with the effects and contact-shadow passes rendered per frame, so the outline and the shadow rise with the block. Shipped as lossless WebP (VP8L): alpha and every visible pixel's RGB are verified identical to the composited PNG at write time, at about a quarter of the PNG's bytes. script.js interpolates between successive states on the scene's 24 fps clock (plus-lighter in an isolated group = exact linear interpolation; a flipbook where that is unsupported). Motion path on the desktop layout only: data-src, warmed while the video plays, never fetched by a static or phone visitor. No motion frame, drape state, camera, asset or palette changed. Evidence record: hero/evidence/production_relief_rise.json."
     },
-    "hero_media_note": "Two stills, two jobs (docs/web-005-polish-authority@1437fbb). hero-poster-opening is the first motion frame and is the startup poster wherever the motion is about to play, so poster -> video is continuous. hero-poster / hero-poster-narrow are the held frame (276): the poster where the motion never plays (reduced motion, phone widths -- chosen by the <picture> media query, so one still is fetched), the held base every other static state lays over the startup poster before the payoff, and the only frame the drape states register with. All three are derived from accepted render frames; nothing was re-rendered and no encode was touched."
+    "hero_media_note": "Two stills, two jobs (docs/web-005-polish-authority@1437fbb). hero-poster-opening is the first motion frame and is the startup poster wherever the motion is about to play, so poster -> video is continuous. hero-poster / hero-poster-narrow are the held frame (276): the poster where the motion never plays (reduced motion, phone widths -- chosen by the <picture> media query, so one still is fetched), the held base every other static state lays over the startup poster before the payoff, and the only frame the drape states register with. All three are derived from accepted render frames; nothing was re-rendered and no encode was touched. MER-216 (2026-10-02): the single 1920 WebM/MP4 pair was replaced by a two-tier ladder (1280 and 1920) of the SAME master frames, re-encoded with FFmpeg two-pass VP9 / CRF H.264 (hero/scripts/encode_responsive_media.py, record hero/evidence/responsive_media.json). The 1920 tier keeps the binding WEB-004 envelope (WebM <= 3.0 MiB, MP4 <= 4.5 MiB). File names carry the first 8 hex digits of their SHA-256 because /assets/ is immutable-cached."
   },
   "web_005b": {
     "task": "WEB-005B / MER-109 homepage visual fidelity",

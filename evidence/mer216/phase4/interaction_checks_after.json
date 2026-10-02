@@ -1,0 +1,120 @@
+{
+ "en": {
+  "h1": "Know where to look next.",
+  "lang": "en",
+  "nav": {
+   "links": [
+    "OrbGSS -> /",
+    "Platform -> /platform/",
+    "Pilot -> /pilot/",
+    "Company -> /company/",
+    "Contact -> /contact/"
+   ],
+   "toggle": true
+  },
+  "radios": {
+   "ev-terrain": {
+    "checked": true,
+    "visible": 1,
+    "loaded": true
+   },
+   "ev-thermal": {
+    "checked": true,
+    "visible": 1,
+    "loaded": true
+   },
+   "ev-alteration": {
+    "checked": true,
+    "visible": 1,
+    "loaded": true
+   },
+   "cp-thermal": {
+    "checked": true,
+    "visible": 2,
+    "loaded": true
+   },
+   "cp-alteration": {
+    "checked": true,
+    "visible": 2,
+    "loaded": true
+   },
+   "cp-priority": {
+    "checked": true,
+    "visible": 2,
+    "loaded": true
+   }
+  },
+  "wipe": {
+   "live": true,
+   "pos0": "0%",
+   "pos25": "25%",
+   "pos50": "50%",
+   "pos75": "75%",
+   "pos100": "100%"
+  }
+ },
+ "tr": {
+  "h1": "Sırada nereye bakacağınızı bilin.",
+  "lang": "tr",
+  "nav": {
+   "links": [
+    "OrbGSS -> /",
+    "Platform -> /platform/",
+    "Pilot -> /pilot/",
+    "Şirket -> /company/",
+    "İletişim -> /contact/"
+   ],
+   "toggle": true
+  },
+  "radios": {
+   "ev-terrain": {
+    "checked": true,
+    "visible": 1,
+    "loaded": true
+   },
+   "ev-thermal": {
+    "checked": true,
+    "visible": 1,
+    "loaded": true
+   },
+   "ev-alteration": {
+    "checked": true,
+    "visible": 1,
+    "loaded": true
+   },
+   "cp-thermal": {
+    "checked": true,
+    "visible": 2,
+    "loaded": true
+   },
+   "cp-alteration": {
+    "checked": true,
+    "visible": 2,
+    "loaded": true
+   },
+   "cp-priority": {
+    "checked": true,
+    "visible": 2,
+    "loaded": true
+   }
+  },
+  "wipe": {
+   "live": true,
+   "pos0": "0%",
+   "pos25": "25%",
+   "pos50": "50%",
+   "pos75": "75%",
+   "pos100": "100%"
+  }
+ },
+ "mobile_menu": {
+  "expanded": "true",
+  "visibleLinks": [
+   "/",
+   "/platform/",
+   "/pilot/",
+   "/company/",
+   "/contact/"
+  ]
+ }
+}

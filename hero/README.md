@@ -58,6 +58,7 @@ hero/
     materialize_earth_detail.py  Blender: cut the 500 m regional detail window from a Blue Marble tile
     materialize_earth_sharpen.py Blender: derive the 30 m regional detail multiplier from Sentinel-2 L2A tiles (R3)
     encode_production_media.py   Blender: WebM / MP4 / poster inside the accepted media envelope
+    encode_responsive_media.py   plain Python + FFmpeg: the MER-216 two-tier (1280 / 1920) WebM + MP4 delivery ladder from the same master frames
     materialize_analytical_assets.py  plain Python: ingest the pinned DEM + display textures by copy and SHA-256 (R3 gate)
     analysis_reveal.py    Blender: scan fan, persistent lock-frame morph, DEM relief and display-layer material (R3 gate)
     derive_presentation.py Blender: lock-frame span / line-weight ramps from the evaluated camera (R3 gate)
@@ -571,6 +572,30 @@ py -3.14 hero/scripts/package_drape_states.py --rise
 The motion render is about 70 s a frame on the workstation GPU (5.3 h); frames are independent stills, so
 an interrupted run resumes with `--frames <missing list>` into the same directory. The drape passes take
 seconds.
+
+## MER-216: the responsive delivery ladder
+
+The accepted master is the 276 rendered 2304 x 1296 frames in `hero/renders/production/frame.png`
+(git-ignored; every frame's SHA-256 is recorded in `render_record*.json`). MER-216 re-encodes exactly
+those frames for delivery; nothing is re-rendered and the choreography, camera and content are
+untouched. `hero/scripts/encode_responsive_media.py` refuses to run unless all 276 frames match their
+records, then writes `assets/hero/orbgss-hero-<width>-<sha8>.webm|mp4` for two tiers and records every
+FFmpeg argument list, byte count, SHA-256, average rate and (with `--bench`) PSNR / SSIM / VMAF against
+the master in `hero/evidence/responsive_media.json`.
+
+```
+py -3.14 hero/scripts/encode_responsive_media.py --bench --ffmpeg <ffmpeg with libvpx-vp9, libx264, libvmaf>
+```
+
+Why FFmpeg and not Blender's bundled encoder: Blender can only run one-pass average-bitrate VP9 and gives
+no control of MP4 atom order or keyframe placement. The accepted MP4 put its `moov` atom after 4.2 MB of
+media (a browser needs a second range request before it can start), and the accepted VP9 sat about six
+VMAF points below what two-pass buys at the same size. FFmpeg is local production tooling exactly as
+Blender is: nothing here is a site dependency. The tiers keep the binding WEB-004 / WEB-005 envelope
+(WebM <= 3.0 MiB, MP4 <= 4.5 MiB at 1920; smaller ceilings at 1280). `/assets/` is immutable-cached, so a
+re-encode must change the file name; the hash in the name does that and `validate_site.py` enforces it.
+The posters, the held frame and the drape / rise states are unchanged and are still produced by
+`encode_production_media.py` and `package_drape_states.py`.
 
 ## Geometry audit
 

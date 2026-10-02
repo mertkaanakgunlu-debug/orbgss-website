@@ -2,7 +2,7 @@
 
 **Canonical version:** `v1.0.0-rc10-web-005c` — the accepted, launched baseline
 **Date:** 2026-09-29
-**Stage:** Milestone 5 (post-launch audit, media fidelity and runtime hardening). **MER-213 is `REVIEW_READY`** (post-launch state and defect audit, see `tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md`). WEB-007 / MER-143 and WEB-008 / MER-144 stay blocked until the CTO/Product review of MER-213 is accepted.
+**Stage:** Milestone 5 (post-launch audit, media fidelity and runtime hardening). **MER-216 (media fidelity and runtime hardening, Phases 1-4) is `REVIEW_READY`** on `claude/mer-216-s1r628` (evidence `tasks/MER-216_EVIDENCE.md`); it supersedes MER-143..146, so WEB-007 / WEB-008 are no longer separate tasks. **MER-213 is `REVIEW_READY`** (post-launch state and defect audit, see `tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md`). WEB-007 / MER-143 and WEB-008 / MER-144 stay blocked until the CTO/Product review of MER-213 is accepted.
 
 ## Launched baseline (reconciled 2026-09-29, MER-213)
 
@@ -16,6 +16,19 @@
 | Task branch for MER-213 | `claude/mer-213-bp01w5`, created from exactly `79cc2cb`. It is a workspace branch, not canonical state; later issues branch from the baseline (or from `main` once it is fast-forwarded), never from the stale `00af0f2` |
 
 Product state at the baseline: hero (rendered orbital sequence with held frame and page-composited drape states, caption `Rendered orbital sequence — not sensor imagery`) → Act 02 real Kızıldere Landsat context → Act 03 three evidence layers over one frame → Act 04 priority result → co-registered inspection aid → Solutions (Geothermal active; Mining and Marine in development / expansion directions, native links to `/solutions/#geothermal|#mining|#marine`) → Method → Company → Contact. Routes: `/`, `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/` (+ `404.html`). Navigation: Platform → Solutions (Geothermal, Mining, Marine) → Pilot → Company → Contact → EN | TR. Architecture is unchanged: static HTML, CSS and vanilla JS, no package manager.
+
+## MER-216 — media fidelity and runtime hardening (`REVIEW_READY`, 2026-10-02)
+
+One bounded branch, `claude/mer-216-s1r628`, created from the verified `origin/main@f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85` and executed on the CTO workstation (the governed Kızıldere export `20260917T161155Z-5e7a0e53` and the 276-frame hero master live there). Nothing was merged to `main`, deployed, or changed in DNS / Vercel / credentials. Full evidence and the reviewer's decision list: `tasks/MER-216_EVIDENCE.md`, `evidence/mer216/`, `hero/evidence/responsive_media.json`.
+
+| Phase | Outcome |
+| --- | --- |
+| 1 analytical fidelity | `PASS`. The published Act 3 / 4 / inspection derivatives rebuild byte for byte from the governed rasters (4 / 4 SHA-256 match), an independent re-derivation matches every pixel, NoData is pure neutral hillshade, and measured device-pixel demand (max 1196 px) is served by the native 1200 px grid. No new derivative family and no 4K enlargement was warranted; nothing analytical changed |
+| 2 hero media | `PASS`. The single 1920 WebM / MP4 pair is replaced by a two-tier ladder (1280 and 1920, WebM + MP4) of the same 276 master frames: 1920 WebM 2.79 MiB VMAF 95.6 (was 2.83 MiB / 89.5), 1920 MP4 3.42 MiB / 95.2 (was 4.05 MiB / 90.3) with `moov` first (1 request, was 3); 1280 tier 1.57 / 1.97 MiB. WEB-004 / WEB-005 envelope kept. A 2304 tier was built, measured (+1 VMAF) and not published |
+| 3 integration | `PASS`. `script.js` chooses one tier and codec before any video byte (frame demand x DPR, `downlink`, `mediaCapabilities`), shows the video only after a presented frame, and ends in the held still on stalls, dropped frames, a decoder that paints nothing, errors or refused autoplay. Analytical `sizes` re-fit and Act 03 predecode were measured and **not** shipped (no gain) |
+| 4 browser acceptance | `PASS`. 10 viewport / DPR classes (375 @3x to 3840 @1x, three 4K scaling modes) x 7 routes: 0 overflow, 0 broken images, 0 console errors, homepage CLS 0, image bytes unchanged, hero bytes -44 % on 1280-class screens; EN / TR, reduced motion, no-JS, nav, evidence radios and the wipe verified. Emulated devices only (no physical phone or 4K panel) |
+
+Validators on this branch: `validate_site.py` PASS (0 warnings); `validate_hero.py` 420 / 0 (hero workstation); negatives 72 / 72, 55 / 55, 18 / 18 and the new `negative_tests_mer216.py` 16 / 16. `hero/config/lane.json` names MER-216 as the integration gate for the hero ladder.
 
 ## Task execution contract (`MER-###'e başla`)
 
@@ -35,7 +48,7 @@ The short command `MER-###'e başla` authorizes exactly that Linear issue, in th
 2. **Information-architecture conflict** — the Claude Project instructions describe Home / Solutions (Geothermal, Mining, Marine) / About / Partner with us, while this repository and the live site use Platform / Solutions / Pilot / Company / Contact. Unresolved; the repository's `CLAUDE.md` invariants stay authoritative for implementation until the CTO decides.
 3. **`CONTACT_RELEASE_GATE`** — mailbox ownership/deliverability of `contact@orbgss.com` is not evidenced in this repository. Carried forward, not closed.
 4. **Production record** — WEB-006 execution and the Vercel/DNS state are not recorded in this repository (see the table above).
-5. **Not started, blocked behind MER-213 review:** WEB-007 / MER-143 (analytical visuals), WEB-008 / MER-144 (hero video quality and playback resilience).
+5. **Superseded by MER-216:** WEB-007 / MER-143 (analytical visuals), WEB-008 / MER-144 (hero video) and MER-145 / MER-146 are consolidated into MER-216, which is `REVIEW_READY`; its acceptance, any publication and Linear closure are CTO / Product actions.
 
 ## Superseded pre-launch status (kept as history)
 

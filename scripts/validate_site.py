@@ -156,11 +156,16 @@ HERO_RISE_STATE_CEILING = 512 * 1024
 HERO_RISE_TOTAL_CEILING = int(2.5 * 1024 * 1024)
 HERO_STATIC_POSTER_MEDIA = "(prefers-reduced-motion: reduce), (max-width: 780px)"
 HERO_MOTION_POSTER_MEDIA = "(prefers-reduced-motion: no-preference) and (min-width: 781px)"
+# MER-216: the WEB-004 / WEB-005 envelope (WebM <= 3.0 MiB, MP4 <= 4.5 MiB) binds the 1920 tier; the
+# 1280 tier exists to cost less and carries smaller ceilings of its own.
 HERO_MEDIA_CEILINGS = {
-    "hero-webm": 3.0 * 1024 * 1024,
-    "hero-mp4": 4.5 * 1024 * 1024,
+    "hero-webm-md": 3.0 * 1024 * 1024,
+    "hero-mp4-md": 4.5 * 1024 * 1024,
+    "hero-webm-sm": 2.0 * 1024 * 1024,
+    "hero-mp4-sm": 3.0 * 1024 * 1024,
     "hero-poster": 180 * 1024,
 }
+HERO_TIER_WIDTHS = {"sm": 1280, "md": 1920}
 # WEB-002 claim discipline: wording that would overstate the accepted MVP score if it ever
 # appeared in visible homepage copy. The accepted profile is an AOI-relative screening surface.
 PROHIBITED_SCORE_COPY = [
@@ -205,6 +210,7 @@ class SiteParser(HTMLParser):
         self.video_count = 0
         self.eager_video_sources: list[str] = []
         self.hero_media: dict[str, str] = {}
+        self.hero_tiers: str = ""
         # Static text carried by each data-i18n element, so warning coverage can be proved for a
         # reader with JavaScript disabled, not just for the dictionary.
         self.i18n_text: dict[str, str] = {}
@@ -257,6 +263,8 @@ class SiteParser(HTMLParser):
             for attr in ("data-hero-webm", "data-hero-mp4"):
                 if data.get(attr):
                     self.hero_media[attr] = str(data[attr])
+            if data.get("data-hero-tiers"):
+                self.hero_tiers = str(data["data-hero-tiers"])
             if data.get("src"):
                 self.eager_video_sources.append(str(data["src"]))
         if tag == "source" and data.get("src") and "video" in str(data.get("type") or ""):
@@ -1327,6 +1335,53 @@ def main() -> int:
             if url.lstrip("/") not in recorded_media:
                 fail(f"hero {attr} points at {url!r}, which has no web_005.hero_media record",
                      errors)
+        # MER-216 delivery ladder. Every tier is a recorded, hash-named file; the markup's ladder
+        # (data-hero-tiers, read by script.js) must be exactly the recorded tiers, in both codecs;
+        # the bare data-hero-webm / data-hero-mp4 pair is the 1920 tier; assets are immutable-cached,
+        # so a file name that does not carry its own SHA-256 prefix could be served stale; and an MP4
+        # must be faststart (moov before mdat) or a browser needs a second range request to start.
+        try:
+            ladder = json.loads(parser.hero_tiers) if parser.hero_tiers else []
+        except ValueError:
+            ladder = None
+        if ladder is None or not ladder:
+            fail("the hero <video> must declare its delivery ladder as valid JSON in data-hero-tiers", errors)
+        else:
+            by_tier = {}
+            for m in hero_media:
+                role = str(m.get("role", ""))
+                if role.startswith(("hero-webm-", "hero-mp4-")):
+                    by_tier.setdefault(role.rsplit("-", 1)[1], {})[role.split("-")[1]] = m
+                    stem = pathlib.PurePosixPath(str(m.get("path", ""))).name
+                    if not re.fullmatch(r"orbgss-hero-\d+-" + str(m.get("sha256", ""))[:8] + r"\.(webm|mp4)", stem):
+                        fail(f"{stem}: an immutable-cached hero encode must be named orbgss-hero-<width>-<first 8 hex of its SHA-256>", errors)
+                    if m.get("width") * 9 != m.get("height") * 16:
+                        fail(f"{stem}: hero encodes must be 16:9", errors)
+                    if role.startswith("hero-mp4-") and (ROOT / str(m.get("path", ""))).exists():
+                        head = (ROOT / str(m["path"])).read_bytes()[:64 * 1024]
+                        if b"moov" not in head:
+                            fail(f"{stem}: the MP4 is not faststart (no moov atom in the first 64 KiB)", errors)
+            if set(by_tier) != set(HERO_TIER_WIDTHS):
+                fail(f"web_005.hero_media must record the tiers {sorted(HERO_TIER_WIDTHS)} in WebM and MP4; found {sorted(by_tier)}", errors)
+            widths = [t.get("w") for t in ladder]
+            if widths != sorted(widths) or len(set(widths)) != len(widths):
+                fail("data-hero-tiers must be ordered by ascending width, one entry per tier", errors)
+            for t in ladder:
+                rec = by_tier.get(str(t.get("id")))
+                if not rec or set(rec) != {"webm", "mp4"}:
+                    fail(f"data-hero-tiers entry {t.get('id')!r} has no matching WebM and MP4 record", errors)
+                    continue
+                for codec in ("webm", "mp4"):
+                    if str(t.get(codec, "")).lstrip("/") != rec[codec].get("path") or t.get("w") != rec[codec].get("width"):
+                        fail(f"data-hero-tiers {t.get('id')!r} {codec} does not match web_005.hero_media", errors)
+                    if (t.get("codecs") or {}).get(codec) != rec[codec].get("codec_string"):
+                        fail(f"data-hero-tiers {t.get('id')!r} {codec} codec string differs from the recorded encode", errors)
+                    if not isinstance((t.get("kbps") or {}).get(codec), int) or t["kbps"][codec] <= 0:
+                        fail(f"data-hero-tiers {t.get('id')!r} needs an integer kbps for {codec}", errors)
+            md = by_tier.get("md", {})
+            if md and (parser.hero_media.get("data-hero-webm", "").lstrip("/") != md.get("webm", {}).get("path")
+                       or parser.hero_media.get("data-hero-mp4", "").lstrip("/") != md.get("mp4", {}).get("path")):
+                fail("data-hero-webm / data-hero-mp4 must be the 1920 (md) tier, the fallback when the ladder is unreadable", errors)
         # The poster is real shipped imagery and the LCP element; it is checked like any other.
         poster_paths = {src.lstrip("/") for src in parser.img_srcs + parser.img_srcsets
                         if src.lstrip("/").startswith("assets/hero/")}
@@ -1635,6 +1690,25 @@ def main() -> int:
     if "revealPayoff" not in script_hero or "squareToQuad" in script_hero or "hero-handoff" in script_hero:
         fail("script.js must drive the drape states (revealPayoff) and carry none of the retired "
              "homography / handoff logic", errors)
+
+    # MER-216 runtime contract. The hero chooses ONE tier and codec before requesting any video byte
+    # (ladder + downlink hint + decoder capability), shows the video only after it has presented a
+    # real frame, never swaps a source mid-play, and ends in the held still when playback stalls or
+    # drops frames.
+    for token, why in (
+        ("data-hero-tiers", "read the delivery ladder"),
+        ("mediaCapabilities", "ask the decoder whether the chosen tier plays smoothly"),
+        ("connection.downlink", "weigh the network's downlink hint before choosing a tier"),
+        ("requestVideoFrameCallback", "show the video only after it has presented a real frame"),
+        ("settleStatic('buffering')", "end in the held still when playback stalls"),
+        ("settleStatic('dropped-frames')", "end in the held still when the decoder drops frames"),
+        ("settleStatic('no-video-frame')", "never show a video that has painted no frame"),
+    ):
+        if token not in script_hero:
+            fail(f"script.js must {why} ({token!r} is missing)", errors)
+    if script_hero.count("setAttribute('src'") != 1:
+        fail("script.js must attach a hero video source in exactly one place: a tier is chosen once, "
+             "before playback, and never swapped mid-play", errors)
 
     # Sensing lines are attention, not physics (A-HERO-04): the hero's own copy may not claim an
     # instrument. Checked on the dictionary in both languages and on the static markup.

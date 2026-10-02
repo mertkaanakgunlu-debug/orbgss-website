@@ -1,0 +1,326 @@
+[
+ {
+  "class": "1440x900@2x-cpu4x",
+  "act3_images": [
+   {
+    "src": "terrain-1200-d.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "thm01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "alt01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   }
+  ],
+  "act3_switch": [
+   {
+    "label": "label[for=\"ev-thermal\"]",
+    "max_gap_ms": 24.2,
+    "over_20ms": 1,
+    "over_34ms": 0,
+    "frames": 145,
+    "span_ms": 909
+   },
+   {
+    "label": "label[for=\"ev-alteration\"]",
+    "max_gap_ms": 12.3,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 149,
+    "span_ms": 909
+   },
+   {
+    "label": "label[for=\"ev-terrain\"]",
+    "max_gap_ms": 12.1,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 148,
+    "span_ms": 903
+   },
+   {
+    "label": "label[for=\"ev-thermal\"]",
+    "max_gap_ms": 12,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 148,
+    "span_ms": 903
+   }
+  ],
+  "inspect_images": [
+   {
+    "src": "kizildere-aoi-context-2025-natural-3200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "thm01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "alt01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "priority-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   }
+  ],
+  "inspect_pair_switch": [
+   {
+    "label": "label[for=\"cp-alteration\"]",
+    "max_gap_ms": 6.2,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 149,
+    "span_ms": 907
+   },
+   {
+    "label": "label[for=\"cp-priority\"]",
+    "max_gap_ms": 6.3,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 150,
+    "span_ms": 907
+   },
+   {
+    "label": "label[for=\"cp-thermal\"]",
+    "max_gap_ms": 6.4,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 149,
+    "span_ms": 903
+   }
+  ],
+  "inspect_drag": {
+   "max_gap_ms": 12.3,
+   "over_20ms": 0,
+   "over_34ms": 0,
+   "frames": 102
+  }
+ },
+ {
+  "class": "1440x900@2x-cpu6x",
+  "act3_images": [
+   {
+    "src": "terrain-1200-d.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "thm01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "alt01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   }
+  ],
+  "act3_switch": [
+   {
+    "label": "label[for=\"ev-thermal\"]",
+    "max_gap_ms": 18.1,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 139,
+    "span_ms": 913
+   },
+   {
+    "label": "label[for=\"ev-alteration\"]",
+    "max_gap_ms": 24.3,
+    "over_20ms": 1,
+    "over_34ms": 0,
+    "frames": 136,
+    "span_ms": 915
+   },
+   {
+    "label": "label[for=\"ev-terrain\"]",
+    "max_gap_ms": 18.2,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 146,
+    "span_ms": 905
+   },
+   {
+    "label": "label[for=\"ev-thermal\"]",
+    "max_gap_ms": 18.3,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 145,
+    "span_ms": 910
+   }
+  ],
+  "inspect_images": [
+   {
+    "src": "kizildere-aoi-context-2025-natural-3200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "thm01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "alt01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "priority-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   }
+  ],
+  "inspect_pair_switch": [
+   {
+    "label": "label[for=\"cp-alteration\"]",
+    "max_gap_ms": 18.4,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 126,
+    "span_ms": 922
+   },
+   {
+    "label": "label[for=\"cp-priority\"]",
+    "max_gap_ms": 12.1,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 145,
+    "span_ms": 906
+   },
+   {
+    "label": "label[for=\"cp-thermal\"]",
+    "max_gap_ms": 18.2,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 146,
+    "span_ms": 904
+   }
+  ],
+  "inspect_drag": {
+   "max_gap_ms": 18.3,
+   "over_20ms": 0,
+   "over_34ms": 0,
+   "frames": 102
+  }
+ },
+ {
+  "class": "390x844@3x-cpu6x",
+  "act3_images": [
+   {
+    "src": "terrain-1200-d.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "thm01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "alt01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   }
+  ],
+  "act3_switch": [
+   {
+    "label": "label[for=\"ev-thermal\"]",
+    "max_gap_ms": 18.2,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 130,
+    "span_ms": 910
+   },
+   {
+    "label": "label[for=\"ev-alteration\"]",
+    "max_gap_ms": 24.4,
+    "over_20ms": 1,
+    "over_34ms": 0,
+    "frames": 137,
+    "span_ms": 905
+   },
+   {
+    "label": "label[for=\"ev-terrain\"]",
+    "max_gap_ms": 36.3,
+    "over_20ms": 1,
+    "over_34ms": 1,
+    "frames": 144,
+    "span_ms": 915
+   },
+   {
+    "label": "label[for=\"ev-thermal\"]",
+    "max_gap_ms": 24.3,
+    "over_20ms": 1,
+    "over_34ms": 0,
+    "frames": 141,
+    "span_ms": 908
+   }
+  ],
+  "inspect_images": [
+   {
+    "src": "kizildere-aoi-context-2025-natural-3200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "thm01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "alt01-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   },
+   {
+    "src": "priority-1200.webp",
+    "complete": true,
+    "loading": "lazy"
+   }
+  ],
+  "inspect_pair_switch": [
+   {
+    "label": "label[for=\"cp-alteration\"]",
+    "max_gap_ms": 18.2,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 148,
+    "span_ms": 907
+   },
+   {
+    "label": "label[for=\"cp-priority\"]",
+    "max_gap_ms": 12.1,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 148,
+    "span_ms": 908
+   },
+   {
+    "label": "label[for=\"cp-thermal\"]",
+    "max_gap_ms": 12.1,
+    "over_20ms": 0,
+    "over_34ms": 0,
+    "frames": 149,
+    "span_ms": 907
+   }
+  ],
+  "inspect_drag": {
+   "max_gap_ms": 18.4,
+   "over_20ms": 0,
+   "over_34ms": 0,
+   "frames": 102
+  }
+ }
+]

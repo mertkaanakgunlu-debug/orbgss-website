@@ -1,0 +1,95 @@
+{
+ "layers": {
+  "terrain": {
+   "valid_fraction": 1.0,
+   "native": {
+    "path": "assets/proof/web005b/terrain-1200.webp",
+    "pixels_differing_from_independent_rederivation": 0
+   },
+   "box": [
+    {
+     "path": "assets/proof/web005b/terrain-600.webp",
+     "pixels_differing_from_box_of_native": 0
+    },
+    {
+     "path": "assets/proof/web005b/terrain-900.webp",
+     "pixels_differing_from_box_of_native": 0
+    }
+   ],
+   "nodata": {
+    "cells": 0,
+    "pixels_not_pure_neutral_hillshade": 0,
+    "max_chroma": 0
+   }
+  },
+  "thm01": {
+   "valid_fraction": 0.99686,
+   "native": {
+    "path": "assets/proof/web005b/thm01-1200.webp",
+    "pixels_differing_from_independent_rederivation": 0
+   },
+   "box": [
+    {
+     "path": "assets/proof/web005b/thm01-600.webp",
+     "pixels_differing_from_box_of_native": 0
+    },
+    {
+     "path": "assets/proof/web005b/thm01-900.webp",
+     "pixels_differing_from_box_of_native": 0
+    }
+   ],
+   "nodata": {
+    "cells": 4522,
+    "pixels_not_pure_neutral_hillshade": 0,
+    "max_chroma": 0
+   }
+  },
+  "alt01": {
+   "valid_fraction": 0.840325,
+   "native": {
+    "path": "assets/proof/web005b/alt01-1200.webp",
+    "pixels_differing_from_independent_rederivation": 0
+   },
+   "box": [
+    {
+     "path": "assets/proof/web005b/alt01-600.webp",
+     "pixels_differing_from_box_of_native": 0
+    },
+    {
+     "path": "assets/proof/web005b/alt01-900.webp",
+     "pixels_differing_from_box_of_native": 0
+    }
+   ],
+   "nodata": {
+    "cells": 229932,
+    "pixels_not_pure_neutral_hillshade": 0,
+    "max_chroma": 0
+   }
+  },
+  "priority": {
+   "valid_fraction": 0.833898,
+   "native": {
+    "path": "assets/proof/web005b/priority-1200.webp",
+    "pixels_differing_from_independent_rederivation": 0
+   },
+   "box": [
+    {
+     "path": "assets/proof/web005b/priority-600.webp",
+     "pixels_differing_from_box_of_native": 0
+    },
+    {
+     "path": "assets/proof/web005b/priority-900.webp",
+     "pixels_differing_from_box_of_native": 0
+    }
+   ],
+   "nodata": {
+    "cells": 239187,
+    "pixels_not_pure_neutral_hillshade": 0,
+    "max_chroma": 0
+   },
+   "legend_ramp_equals_lut": true
+  }
+ },
+ "failures": [],
+ "result": "PASS"
+}
