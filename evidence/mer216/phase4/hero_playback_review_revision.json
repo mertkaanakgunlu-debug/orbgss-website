@@ -1,0 +1,2851 @@
+[
+ {
+  "class": "1280x720@1x",
+  "spec": {
+   "w": 1280,
+   "h": 720,
+   "dpr": 1.0,
+   "net": "none",
+   "cpu": 1
+  },
+  "snapshot": {
+   "state": "held",
+   "reason": null,
+   "layer": "priority",
+   "payoff": "on",
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1280-21da1079.webm",
+   "videoW": 1280,
+   "videoH": 720,
+   "ct": 11.5,
+   "paused": true,
+   "ended": true,
+   "quality": {
+    "total": 276,
+    "dropped": 4,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 10,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 1,
+   "vw": 1280,
+   "vh": 720,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 218,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 258,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 258,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 261,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 262,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 263,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 299,
+    "name": "video:suspend",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 353,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0.007
+   },
+   {
+    "t": 353,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.007
+   },
+   {
+    "t": 354,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.007
+   },
+   {
+    "t": 354,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.007
+   },
+   {
+    "t": 378,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11676,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11682,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11848,
+    "name": "video:pause",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11849,
+    "name": "video:ended",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11849,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12354,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12655,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13409,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14157,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 372,
+    "mediaTime": 0,
+    "w": 1280,
+    "h": 720
+   },
+   {
+    "t": 463,
+    "mediaTime": 0.125,
+    "w": 1280,
+    "h": 720
+   },
+   {
+    "t": 530,
+    "mediaTime": 0.167,
+    "w": 1280,
+    "h": 720
+   },
+   {
+    "t": 560,
+    "mediaTime": 0.208,
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "waiting_events": 1,
+  "video_bytes": {
+   "_recv_orbgss-hero-1280-21da1079.webm": 1646519,
+   "orbgss-hero-1280-21da1079.webm": 1646824
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 22,
+    "end": 28
+   },
+   {
+    "n": "orbgss-hero-1280-21da1079.webm",
+    "enc": 1646519,
+    "tr": 1646819,
+    "start": 255,
+    "end": 264
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.52,
+    "lum_min_max": [
+     19.9,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 1.71,
+    "lum_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 4.09,
+    "lum_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 8.05,
+    "lum_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 12.24,
+    "lum_min_max": [
+     30.9,
+     0,
+     227
+    ]
+   }
+  ]
+ },
+ {
+  "class": "1366x768@1x",
+  "spec": {
+   "w": 1366,
+   "h": 768,
+   "dpr": 1.0,
+   "net": "none",
+   "cpu": 1
+  },
+  "snapshot": {
+   "state": "held",
+   "reason": null,
+   "layer": "priority",
+   "payoff": "on",
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1280-21da1079.webm",
+   "videoW": 1280,
+   "videoH": 720,
+   "ct": 11.5,
+   "paused": true,
+   "ended": true,
+   "quality": {
+    "total": 276,
+    "dropped": 0,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 10,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 1,
+   "vw": 1366,
+   "vh": 768,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 219,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 224,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 224,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 227,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 229,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 256,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0.005
+   },
+   {
+    "t": 256,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.005
+   },
+   {
+    "t": 256,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.005
+   },
+   {
+    "t": 256,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.005
+   },
+   {
+    "t": 266,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11646,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11647,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11752,
+    "name": "video:pause",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11752,
+    "name": "video:ended",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11752,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12320,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12623,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13374,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14125,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 259,
+    "mediaTime": 0,
+    "w": 1280,
+    "h": 720
+   },
+   {
+    "t": 289,
+    "mediaTime": 0.042,
+    "w": 1280,
+    "h": 720
+   },
+   {
+    "t": 332,
+    "mediaTime": 0.083,
+    "w": 1280,
+    "h": 720
+   },
+   {
+    "t": 374,
+    "mediaTime": 0.125,
+    "w": 1280,
+    "h": 720
+   }
+  ],
+  "waiting_events": 1,
+  "video_bytes": {
+   "_recv_orbgss-hero-1280-21da1079.webm": 1646519,
+   "orbgss-hero-1280-21da1079.webm": 1646824
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 23,
+    "end": 31
+   },
+   {
+    "n": "orbgss-hero-1280-21da1079.webm",
+    "enc": 1646519,
+    "tr": 1646819,
+    "start": 220,
+    "end": 225
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.53,
+    "lum_min_max": [
+     19.2,
+     0,
+     211
+    ]
+   },
+   {
+    "t": 1.68,
+    "lum_min_max": [
+     19.2,
+     0,
+     211
+    ]
+   },
+   {
+    "t": 4.07,
+    "lum_min_max": [
+     19.2,
+     0,
+     211
+    ]
+   },
+   {
+    "t": 8.26,
+    "lum_min_max": [
+     19.4,
+     0,
+     211
+    ]
+   },
+   {
+    "t": 12.22,
+    "lum_min_max": [
+     29.9,
+     1,
+     212
+    ]
+   }
+  ]
+ },
+ {
+  "class": "1440x900@1x",
+  "spec": {
+   "w": 1440,
+   "h": 900,
+   "dpr": 1.0,
+   "net": "none",
+   "cpu": 1
+  },
+  "snapshot": {
+   "state": "held",
+   "reason": null,
+   "layer": "priority",
+   "payoff": "on",
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1920-ca741624.webm",
+   "videoW": 1920,
+   "videoH": 1080,
+   "ct": 11.5,
+   "paused": true,
+   "ended": true,
+   "quality": {
+    "total": 276,
+    "dropped": 0,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 10,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 1,
+   "vw": 1440,
+   "vh": 900,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 198,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 200,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 201,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 208,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 209,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 239,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0.009
+   },
+   {
+    "t": 239,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.009
+   },
+   {
+    "t": 239,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.01
+   },
+   {
+    "t": 239,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.01
+   },
+   {
+    "t": 240,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11635,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11641,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11732,
+    "name": "video:pause",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11732,
+    "name": "video:ended",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11732,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12313,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12617,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13367,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14116,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 234,
+    "mediaTime": 0,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 271,
+    "mediaTime": 0.042,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 313,
+    "mediaTime": 0.083,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 356,
+    "mediaTime": 0.125,
+    "w": 1920,
+    "h": 1080
+   }
+  ],
+  "waiting_events": 1,
+  "video_bytes": {
+   "_recv_orbgss-hero-1920-ca741624.webm": 2920385,
+   "orbgss-hero-1920-ca741624.webm": 2920690
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 189,
+    "end": 191
+   },
+   {
+    "n": "orbgss-hero-1920-ca741624.webm",
+    "enc": 2920385,
+    "tr": 2920685,
+    "start": 200,
+    "end": 209
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.51,
+    "lum_min_max": [
+     10.6,
+     0,
+     174
+    ]
+   },
+   {
+    "t": 1.61,
+    "lum_min_max": [
+     10.6,
+     0,
+     174
+    ]
+   },
+   {
+    "t": 4.25,
+    "lum_min_max": [
+     10.6,
+     0,
+     174
+    ]
+   },
+   {
+    "t": 8.2,
+    "lum_min_max": [
+     10.6,
+     0,
+     174
+    ]
+   },
+   {
+    "t": 12.08,
+    "lum_min_max": [
+     21.3,
+     4,
+     176
+    ]
+   }
+  ]
+ },
+ {
+  "class": "1440x900@2x",
+  "spec": {
+   "w": 1440,
+   "h": 900,
+   "dpr": 2.0,
+   "net": "none",
+   "cpu": 1
+  },
+  "snapshot": {
+   "state": "held",
+   "reason": null,
+   "layer": "priority",
+   "payoff": "on",
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1920-ca741624.webm",
+   "videoW": 1920,
+   "videoH": 1080,
+   "ct": 11.5,
+   "paused": true,
+   "ended": true,
+   "quality": {
+    "total": 276,
+    "dropped": 0,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 10,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 2,
+   "vw": 1440,
+   "vh": 900,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 227,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 230,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 230,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 244,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 246,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 270,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 271,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 271,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 271,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 273,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11672,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11678,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11764,
+    "name": "video:pause",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11764,
+    "name": "video:ended",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11764,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12350,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12654,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13405,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14156,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 271,
+    "mediaTime": 0,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 296,
+    "mediaTime": 0.042,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 344,
+    "mediaTime": 0.083,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 387,
+    "mediaTime": 0.125,
+    "w": 1920,
+    "h": 1080
+   }
+  ],
+  "waiting_events": 1,
+  "video_bytes": {
+   "_recv_orbgss-hero-1920-ca741624.webm": 2920385,
+   "orbgss-hero-1920-ca741624.webm": 2920690
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 20,
+    "end": 29
+   },
+   {
+    "n": "orbgss-hero-1920-ca741624.webm",
+    "enc": 2920385,
+    "tr": 2920685,
+    "start": 230,
+    "end": 245
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.53,
+    "lum_min_max": [
+     10.5,
+     0,
+     161
+    ]
+   },
+   {
+    "t": 1.62,
+    "lum_min_max": [
+     10.4,
+     0,
+     161
+    ]
+   },
+   {
+    "t": 4.03,
+    "lum_min_max": [
+     10.4,
+     0,
+     161
+    ]
+   },
+   {
+    "t": 8.24,
+    "lum_min_max": [
+     10.5,
+     0,
+     161
+    ]
+   },
+   {
+    "t": 12.23,
+    "lum_min_max": [
+     21.1,
+     5,
+     163
+    ]
+   }
+  ]
+ },
+ {
+  "class": "1920x1080@1x",
+  "spec": {
+   "w": 1920,
+   "h": 1080,
+   "dpr": 1.0,
+   "net": "none",
+   "cpu": 1
+  },
+  "snapshot": {
+   "state": "held",
+   "reason": null,
+   "layer": "priority",
+   "payoff": "on",
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1920-ca741624.webm",
+   "videoW": 1920,
+   "videoH": 1080,
+   "ct": 11.5,
+   "paused": true,
+   "ended": true,
+   "quality": {
+    "total": 276,
+    "dropped": 0,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 10,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 1,
+   "vw": 1920,
+   "vh": 1080,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 217,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 219,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 219,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 230,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 232,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 237,
+    "name": "video:suspend",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 256,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 256,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 256,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 256,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 258,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11655,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11661,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11753,
+    "name": "video:pause",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11753,
+    "name": "video:ended",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11753,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12334,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12636,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13388,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14139,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 254,
+    "mediaTime": 0,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 285,
+    "mediaTime": 0.042,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 333,
+    "mediaTime": 0.083,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 376,
+    "mediaTime": 0.125,
+    "w": 1920,
+    "h": 1080
+   }
+  ],
+  "waiting_events": 1,
+  "video_bytes": {
+   "_recv_orbgss-hero-1920-ca741624.webm": 2920385,
+   "orbgss-hero-1920-ca741624.webm": 2920690
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 24,
+    "end": 34
+   },
+   {
+    "n": "orbgss-hero-1920-ca741624.webm",
+    "enc": 2920385,
+    "tr": 2920685,
+    "start": 219,
+    "end": 238
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.52,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 1.59,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 4.24,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.11,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.06,
+    "lum_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   }
+  ]
+ },
+ {
+  "class": "1920x1080@2x",
+  "spec": {
+   "w": 1920,
+   "h": 1080,
+   "dpr": 2.0,
+   "net": "none",
+   "cpu": 1
+  },
+  "snapshot": {
+   "state": "held",
+   "reason": null,
+   "layer": "priority",
+   "payoff": "on",
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1920-ca741624.webm",
+   "videoW": 1920,
+   "videoH": 1080,
+   "ct": 11.5,
+   "paused": true,
+   "ended": true,
+   "quality": {
+    "total": 276,
+    "dropped": 0,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 10,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 2,
+   "vw": 1920,
+   "vh": 1080,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 215,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 218,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 219,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 223,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 224,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 229,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 236,
+    "name": "video:suspend",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 256,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0.009
+   },
+   {
+    "t": 256,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.01
+   },
+   {
+    "t": 257,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.01
+   },
+   {
+    "t": 257,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.01
+   },
+   {
+    "t": 258,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11639,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11644,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11747,
+    "name": "video:pause",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11747,
+    "name": "video:ended",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11748,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12316,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12619,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13371,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14117,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 249,
+    "mediaTime": 0,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 286,
+    "mediaTime": 0.042,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 328,
+    "mediaTime": 0.083,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 370,
+    "mediaTime": 0.125,
+    "w": 1920,
+    "h": 1080
+   }
+  ],
+  "waiting_events": 1,
+  "video_bytes": {
+   "_recv_orbgss-hero-1920-ca741624.webm": 2920385,
+   "orbgss-hero-1920-ca741624.webm": 2920690
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 195,
+    "end": 199
+   },
+   {
+    "n": "orbgss-hero-1920-ca741624.webm",
+    "enc": 2920385,
+    "tr": 2920685,
+    "start": 217,
+    "end": 237
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.52,
+    "lum_min_max": [
+     10.0,
+     4,
+     137
+    ]
+   },
+   {
+    "t": 1.61,
+    "lum_min_max": [
+     10.0,
+     4,
+     137
+    ]
+   },
+   {
+    "t": 4.25,
+    "lum_min_max": [
+     10.0,
+     4,
+     137
+    ]
+   },
+   {
+    "t": 8.21,
+    "lum_min_max": [
+     10.0,
+     4,
+     137
+    ]
+   },
+   {
+    "t": 12.14,
+    "lum_min_max": [
+     16.0,
+     5,
+     137
+    ]
+   }
+  ]
+ },
+ {
+  "class": "2560x1440@1.5x",
+  "spec": {
+   "w": 2560,
+   "h": 1440,
+   "dpr": 1.5,
+   "net": "none",
+   "cpu": 1
+  },
+  "snapshot": {
+   "state": "held",
+   "reason": null,
+   "layer": "priority",
+   "payoff": "on",
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1920-ca741624.webm",
+   "videoW": 1920,
+   "videoH": 1080,
+   "ct": 11.5,
+   "paused": true,
+   "ended": true,
+   "quality": {
+    "total": 276,
+    "dropped": 0,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 10,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 1.5,
+   "vw": 2560,
+   "vh": 1440,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 225,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 229,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 229,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 233,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 234,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 234,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 236,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 244,
+    "name": "video:suspend",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 264,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 264,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 264,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 264,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.009
+   },
+   {
+    "t": 265,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11657,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11663,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11761,
+    "name": "video:pause",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11761,
+    "name": "video:ended",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11761,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12336,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12639,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13390,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14142,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 263,
+    "mediaTime": 0,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 293,
+    "mediaTime": 0.042,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 336,
+    "mediaTime": 0.083,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 378,
+    "mediaTime": 0.125,
+    "w": 1920,
+    "h": 1080
+   }
+  ],
+  "waiting_events": 1,
+  "video_bytes": {
+   "_recv_orbgss-hero-1920-ca741624.webm": 2920385,
+   "orbgss-hero-1920-ca741624.webm": 2920690
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 20,
+    "end": 29
+   },
+   {
+    "n": "orbgss-hero-1920-ca741624.webm",
+    "enc": 2920385,
+    "tr": 2920685,
+    "start": 228,
+    "end": 244
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.52,
+    "lum_min_max": [
+     9.2,
+     5,
+     163
+    ]
+   },
+   {
+    "t": 1.58,
+    "lum_min_max": [
+     9.2,
+     5,
+     163
+    ]
+   },
+   {
+    "t": 4.19,
+    "lum_min_max": [
+     9.2,
+     5,
+     163
+    ]
+   },
+   {
+    "t": 8.12,
+    "lum_min_max": [
+     9.2,
+     5,
+     163
+    ]
+   },
+   {
+    "t": 12.08,
+    "lum_min_max": [
+     13.6,
+     5,
+     163
+    ]
+   }
+  ]
+ },
+ {
+  "class": "3840x2160@1x",
+  "spec": {
+   "w": 3840,
+   "h": 2160,
+   "dpr": 1.0,
+   "net": "none",
+   "cpu": 1
+  },
+  "snapshot": {
+   "state": "held",
+   "reason": null,
+   "layer": "priority",
+   "payoff": "on",
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1920-ca741624.webm",
+   "videoW": 1920,
+   "videoH": 1080,
+   "ct": 11.5,
+   "paused": true,
+   "ended": true,
+   "quality": {
+    "total": 276,
+    "dropped": 0,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 10,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 1,
+   "vw": 3840,
+   "vh": 2160,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 215,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 218,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 218,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 223,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 227,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 227,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 232,
+    "name": "video:suspend",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 237,
+    "name": "video:suspend",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 252,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 253,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 253,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 253,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.008
+   },
+   {
+    "t": 254,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11648,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11652,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11750,
+    "name": "video:pause",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11750,
+    "name": "video:ended",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 11750,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12325,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12628,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13379,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14131,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 246,
+    "mediaTime": 0,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 288,
+    "mediaTime": 0.042,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 324,
+    "mediaTime": 0.083,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 361,
+    "mediaTime": 0.125,
+    "w": 1920,
+    "h": 1080
+   }
+  ],
+  "waiting_events": 1,
+  "video_bytes": {
+   "_recv_orbgss-hero-1920-ca741624.webm": 2920385,
+   "orbgss-hero-1920-ca741624.webm": 2920690
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 20,
+    "end": 28
+   },
+   {
+    "n": "orbgss-hero-1920-ca741624.webm",
+    "enc": 2920385,
+    "tr": 2920685,
+    "start": 217,
+    "end": 237
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.52,
+    "lum_min_max": [
+     9.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 1.6,
+    "lum_min_max": [
+     9.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 4.24,
+    "lum_min_max": [
+     9.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.16,
+    "lum_min_max": [
+     9.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.1,
+    "lum_min_max": [
+     12.9,
+     4,
+     147
+    ]
+   }
+  ]
+ },
+ {
+  "class": "1920x1080@1x-dsl4",
+  "spec": {
+   "w": 1920,
+   "h": 1080,
+   "dpr": 1.0,
+   "net": "dsl-4mbps",
+   "cpu": 1
+  },
+  "snapshot": {
+   "state": "playing",
+   "reason": null,
+   "layer": null,
+   "payoff": null,
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1920-ca741624.webm",
+   "videoW": 1920,
+   "videoH": 1080,
+   "ct": 7.205765,
+   "paused": false,
+   "ended": false,
+   "quality": {
+    "total": 181,
+    "dropped": 8,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 4,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 1,
+   "vw": 1920,
+   "vh": 1080,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 1711,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 1713,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 1714,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 2237,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 2253,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0
+   },
+   {
+    "t": 2253,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0
+   },
+   {
+    "t": 2253,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0
+   },
+   {
+    "t": 2253,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.001
+   },
+   {
+    "t": 2258,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 2288,
+    "name": "video:waiting",
+    "rs": 2,
+    "ct": 0.035
+   },
+   {
+    "t": 2301,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.035
+   },
+   {
+    "t": 2301,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.035
+   },
+   {
+    "t": 2301,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.035
+   },
+   {
+    "t": 4257,
+    "name": "video:waiting",
+    "rs": 2,
+    "ct": 1.991
+   },
+   {
+    "t": 6251,
+    "name": "video:canplay",
+    "rs": 3,
+    "ct": 1.992
+   },
+   {
+    "t": 6252,
+    "name": "video:playing",
+    "rs": 3,
+    "ct": 1.992
+   },
+   {
+    "t": 6791,
+    "name": "video:waiting",
+    "rs": 2,
+    "ct": 2.531
+   },
+   {
+    "t": 6938,
+    "name": "video:canplay",
+    "rs": 3,
+    "ct": 2.531
+   },
+   {
+    "t": 6938,
+    "name": "video:playing",
+    "rs": 3,
+    "ct": 2.531
+   },
+   {
+    "t": 7233,
+    "name": "video:waiting",
+    "rs": 2,
+    "ct": 2.826
+   },
+   {
+    "t": 7622,
+    "name": "video:canplay",
+    "rs": 3,
+    "ct": 2.826
+   },
+   {
+    "t": 7622,
+    "name": "video:playing",
+    "rs": 3,
+    "ct": 2.826
+   },
+   {
+    "t": 8785,
+    "name": "video:waiting",
+    "rs": 2,
+    "ct": 3.989
+   },
+   {
+    "t": 10566,
+    "name": "video:canplay",
+    "rs": 3,
+    "ct": 3.989
+   },
+   {
+    "t": 10566,
+    "name": "video:playing",
+    "rs": 3,
+    "ct": 3.989
+   },
+   {
+    "t": 11112,
+    "name": "video:waiting",
+    "rs": 2,
+    "ct": 4.534
+   },
+   {
+    "t": 11268,
+    "name": "video:canplay",
+    "rs": 3,
+    "ct": 4.534
+   },
+   {
+    "t": 11268,
+    "name": "video:playing",
+    "rs": 3,
+    "ct": 4.534
+   },
+   {
+    "t": 11936,
+    "name": "video:waiting",
+    "rs": 2,
+    "ct": 5.202
+   },
+   {
+    "t": 11985,
+    "name": "video:canplay",
+    "rs": 3,
+    "ct": 5.202
+   },
+   {
+    "t": 11985,
+    "name": "video:playing",
+    "rs": 3,
+    "ct": 5.202
+   },
+   {
+    "t": 12772,
+    "name": "video:waiting",
+    "rs": 2,
+    "ct": 5.989
+   },
+   {
+    "t": 14820,
+    "name": "video:canplay",
+    "rs": 3,
+    "ct": 5.989
+   },
+   {
+    "t": 14820,
+    "name": "video:playing",
+    "rs": 3,
+    "ct": 5.99
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 2257,
+    "mediaTime": 0,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 2300,
+    "mediaTime": 0.042,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 2348,
+    "mediaTime": 0.083,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 2390,
+    "mediaTime": 0.125,
+    "w": 1920,
+    "h": 1080
+   }
+  ],
+  "waiting_events": 9,
+  "video_bytes": {
+   "_recv_orbgss-hero-1920-ca741624.webm": 2079000
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 88,
+    "end": 142
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.59,
+    "lum_min_max": [
+     10.3,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 1.71,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 4.05,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.2,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.13,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   }
+  ]
+ },
+ {
+  "class": "1920x1080@1x-slow4g",
+  "spec": {
+   "w": 1920,
+   "h": 1080,
+   "dpr": 1.0,
+   "net": "slow-4g",
+   "cpu": 1
+  },
+  "snapshot": {
+   "state": "static",
+   "reason": "slow-network",
+   "layer": "priority",
+   "payoff": "on",
+   "src": "",
+   "videoW": 0,
+   "videoH": 0,
+   "ct": 0,
+   "paused": true,
+   "ended": false,
+   "quality": {
+    "total": 0,
+    "dropped": 0,
+    "corrupted": 0
+   },
+   "opacity": "0",
+   "conn": {
+    "type": "4g",
+    "downlink": 1.6,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 1,
+   "vw": 1920,
+   "vh": 1080,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 4165,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 4165,
+    "name": "attr:data-hero-reason",
+    "v": "slow-network"
+   },
+   {
+    "t": 4913,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 4913,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "rvfc": [],
+  "waiting_events": 0,
+  "video_bytes": {},
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 196,
+    "end": 387
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.45,
+    "lum_min_max": [
+     10.3,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 1.67,
+    "lum_min_max": [
+     10.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 4.01,
+    "lum_min_max": [
+     10.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.17,
+    "lum_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 12.16,
+    "lum_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ]
+ },
+ {
+  "class": "1440x900@2x-cpu4x",
+  "spec": {
+   "w": 1440,
+   "h": 900,
+   "dpr": 2.0,
+   "net": "none",
+   "cpu": 4
+  },
+  "snapshot": {
+   "state": "held",
+   "reason": null,
+   "layer": "priority",
+   "payoff": "on",
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1920-ca741624.webm",
+   "videoW": 1920,
+   "videoH": 1080,
+   "ct": 11.5,
+   "paused": true,
+   "ended": true,
+   "quality": {
+    "total": 276,
+    "dropped": 1,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 10,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 2,
+   "vw": 1440,
+   "vh": 900,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 1393,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 1403,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 1426,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 1475,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 1493,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 1539,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0.039
+   },
+   {
+    "t": 1539,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.04
+   },
+   {
+    "t": 1540,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.041
+   },
+   {
+    "t": 1541,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.041
+   },
+   {
+    "t": 1548,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 12778,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 12787,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 13014,
+    "name": "video:pause",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 13014,
+    "name": "video:ended",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 13015,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 13462,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 13765,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 14514,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 15263,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 1507,
+    "mediaTime": 0.042,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 1646,
+    "mediaTime": 0.125,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 1664,
+    "mediaTime": 0.167,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 1701,
+    "mediaTime": 0.208,
+    "w": 1920,
+    "h": 1080
+   }
+  ],
+  "waiting_events": 1,
+  "video_bytes": {
+   "_recv_orbgss-hero-1920-ca741624.webm": 2920385,
+   "orbgss-hero-1920-ca741624.webm": 2920690
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 204,
+    "end": 208
+   },
+   {
+    "n": "orbgss-hero-1920-ca741624.webm",
+    "enc": 2920385,
+    "tr": 2920685,
+    "start": 1402,
+    "end": 1424
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.52,
+    "lum_min_max": [
+     10.5,
+     0,
+     161
+    ]
+   },
+   {
+    "t": 1.64,
+    "lum_min_max": [
+     10.5,
+     0,
+     161
+    ]
+   },
+   {
+    "t": 4.04,
+    "lum_min_max": [
+     10.4,
+     0,
+     161
+    ]
+   },
+   {
+    "t": 8.0,
+    "lum_min_max": [
+     10.4,
+     0,
+     161
+    ]
+   },
+   {
+    "t": 12.22,
+    "lum_min_max": [
+     21.2,
+     4,
+     162
+    ]
+   }
+  ]
+ },
+ {
+  "class": "1920x1080@1x-cpu6x",
+  "spec": {
+   "w": 1920,
+   "h": 1080,
+   "dpr": 1.0,
+   "net": "none",
+   "cpu": 6
+  },
+  "snapshot": {
+   "state": "held",
+   "reason": null,
+   "layer": "alt01",
+   "payoff": "on",
+   "src": "http://127.0.0.1:62337/assets/hero/orbgss-hero-1920-ca741624.webm",
+   "videoW": 1920,
+   "videoH": 1080,
+   "ct": 11.5,
+   "paused": true,
+   "ended": true,
+   "quality": {
+    "total": 276,
+    "dropped": 2,
+    "corrupted": 0
+   },
+   "opacity": "1",
+   "conn": {
+    "type": "4g",
+    "downlink": 10,
+    "rtt": 50,
+    "saveData": false
+   },
+   "dpr": 1,
+   "vw": 1920,
+   "vh": 1080,
+   "tiers": "declared"
+  },
+  "events": [
+   {
+    "t": 2695,
+    "name": "video:emptied",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 2725,
+    "name": "video:waiting",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 2794,
+    "name": "video:loadstart",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 2806,
+    "name": "video:suspend",
+    "rs": 0,
+    "ct": 0
+   },
+   {
+    "t": 2889,
+    "name": "video:loadedmetadata",
+    "rs": 1,
+    "ct": 0
+   },
+   {
+    "t": 2955,
+    "name": "video:loadeddata",
+    "rs": 4,
+    "ct": 0.12
+   },
+   {
+    "t": 2956,
+    "name": "video:canplay",
+    "rs": 4,
+    "ct": 0.121
+   },
+   {
+    "t": 2957,
+    "name": "video:playing",
+    "rs": 4,
+    "ct": 0.123
+   },
+   {
+    "t": 2959,
+    "name": "video:canplaythrough",
+    "rs": 4,
+    "ct": 0.125
+   },
+   {
+    "t": 2978,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 14168,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 14194,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 14360,
+    "name": "video:pause",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 14361,
+    "name": "video:ended",
+    "rs": 4,
+    "ct": 11.5
+   },
+   {
+    "t": 14362,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 14874,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 15181,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 15926,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   }
+  ],
+  "rvfc": [
+   {
+    "t": 2881,
+    "mediaTime": 0.083,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 2960,
+    "mediaTime": 0.125,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 3164,
+    "mediaTime": 0.333,
+    "w": 1920,
+    "h": 1080
+   },
+   {
+    "t": 3220,
+    "mediaTime": 0.375,
+    "w": 1920,
+    "h": 1080
+   }
+  ],
+  "waiting_events": 1,
+  "video_bytes": {
+   "_recv_orbgss-hero-1920-ca741624.webm": 2920385,
+   "orbgss-hero-1920-ca741624.webm": 2920690
+  },
+  "video_resources": [
+   {
+    "n": "site.webmanifest",
+    "enc": 412,
+    "tr": 712,
+    "start": 390,
+    "end": 394
+   },
+   {
+    "n": "orbgss-hero-1920-ca741624.webm",
+    "enc": 2920385,
+    "tr": 2920685,
+    "start": 2720,
+    "end": 2749
+   }
+  ],
+  "luminance_samples": [
+   {
+    "t": 0.52,
+    "lum_min_max": [
+     10.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 2.03,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 4.11,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.08,
+    "lum_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.05,
+    "lum_min_max": [
+     14.9,
+     4,
+     147
+    ]
+   }
+  ]
+ }
+]

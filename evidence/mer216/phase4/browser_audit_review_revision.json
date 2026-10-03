@@ -1,0 +1,8520 @@
+{
+ "classes": [
+  {
+   "class": "mobile-375@3x",
+   "routes": {
+    "/": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "OrbGSS \u2014 Geospatial Intelligence",
+     "h1": [
+      "Know where to look next."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 8489455,
+     "videoBytes": 412
+    },
+    "/platform/": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "Platform \u2014 OrbGSS",
+     "h1": [
+      "How OrbGSS builds a spatial priority."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/solutions/": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "Solutions \u2014 OrbGSS",
+     "h1": [
+      "One workflow, applied where evidence matters."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/pilot/": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "Pilot \u2014 K\u0131z\u0131ldere \u2014 OrbGSS",
+     "h1": [
+      "K\u0131z\u0131ldere: the first OrbGSS application."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1439565,
+     "videoBytes": 412
+    },
+    "/company/": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "Company \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS \u2014 Orbital Geo-Spatial Solutions"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/contact/": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "Contact \u2014 OrbGSS",
+     "h1": [
+      "Let's talk about where to look next."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/404.html": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "404 \u2014 OrbGSS",
+     "h1": [
+      "404"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 0,
+     "videoBytes": 0
+    }
+   },
+   "home_images": {
+    "imgs": [
+     {
+      "alt": "Rendered view from orbit: Earth over the",
+      "cls": "panel-image hero-poster",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       374,
+       210
+      ],
+      "box": [
+       375,
+       736
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-held is-on",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       374,
+       210
+      ],
+      "box": [
+       375,
+       736
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "100vw"
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "terrain",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "thm01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "alt01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "Rendered terrain relief of the K\u0131z\u0131ldere",
+      "cls": "hero-drape-layer hero-drape-payoff",
+      "parent": "priority",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "Natural-colour Landsat 8 view of the B\u00fcy",
+      "cls": "panel-image",
+      "parent": "context",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       836,
+       470
+      ],
+      "box": [
+       375,
+       468.75
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(max-width: 560px) 223vw, (max-width: 700px) 134vw, min(100vw, 1600px)"
+     },
+     {
+      "alt": "Colour elevation map of the K\u0131z\u0131ldere ar",
+      "cls": "panel-image",
+      "parent": "terrain",
+      "src": "assets/proof/web005b/terrain-1200-d.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       330,
+       330
+      ],
+      "box": [
+       329,
+       329
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "Diverging thermal anomaly map of the K\u0131z",
+      "cls": "panel-image",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       330,
+       330
+      ],
+      "box": [
+       329,
+       329
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "Map of the surface alteration signal acr",
+      "cls": "panel-image",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       330,
+       330
+      ],
+      "box": [
+       329,
+       329
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "Relative priority map of the K\u0131z\u0131ldere a",
+      "cls": "panel-image",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       330,
+       330
+      ],
+      "box": [
+       301,
+       301
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 701px) 600px, 88vw"
+     },
+     {
+      "alt": "Colour scale for the relative priority m",
+      "cls": "priority-legend-ramp",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-legend-ramp.png",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       256,
+       8
+      ],
+      "box": [
+       186.61,
+       8
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     },
+     {
+      "alt": "Natural-colour Landsat view of the K\u0131z\u0131l",
+      "cls": "",
+      "parent": "",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1001,
+       563
+      ],
+      "box": [
+       877.33,
+       493.5
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) 1600px, 267vw"
+     },
+     {
+      "alt": "Thermal anomaly map of the same area of ",
+      "cls": "",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       330,
+       330
+      ],
+      "box": [
+       329,
+       329
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Alteration proxy map of the same area of",
+      "cls": "",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       330,
+       330
+      ],
+      "box": [
+       329,
+       329
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Relative priority map of the same area o",
+      "cls": "",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       330,
+       330
+      ],
+      "box": [
+       329,
+       329
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Satellite view of the geothermal landsca",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/yellowstone-2013-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       375,
+       234
+      ],
+      "box": [
+       329,
+       306.55
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(100vw, 1280px), 100vw"
+     },
+     {
+      "alt": "Satellite view of the Chuquicamata minin",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/chuquicamata-2024-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       375,
+       234
+      ],
+      "box": [
+       329,
+       306.55
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "Satellite view of the Ili River Delta an",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/ili-delta-2020-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       375,
+       234
+      ],
+      "box": [
+       329,
+       306.55
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "OrbGSS \u2014 Orbital Geo-Spatial Solutions",
+      "cls": "",
+      "parent": "",
+      "src": "assets/logo.svg",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       420,
+       120
+      ],
+      "box": [
+       205,
+       58.56
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     }
+    ],
+    "resources": [
+     {
+      "name": "assets/hero/hero-poster-1600.webp",
+      "encoded": 120764,
+      "transfer": 121064,
+      "decoded": 120764
+     },
+     {
+      "name": "assets/proof/web005b/priority-legend-ramp.png",
+      "encoded": 257,
+      "transfer": 557,
+      "decoded": 257
+     },
+     {
+      "name": "assets/logo.svg",
+      "encoded": 1154,
+      "transfer": 1454,
+      "decoded": 1154
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "encoded": 1313526,
+      "transfer": 1313826,
+      "decoded": 1313526
+     },
+     {
+      "name": "assets/proof/web005b/terrain-1200-d.webp",
+      "encoded": 126766,
+      "transfer": 127066,
+      "decoded": 126766
+     },
+     {
+      "name": "assets/proof/web005b/thm01-1200.webp",
+      "encoded": 1811444,
+      "transfer": 1811744,
+      "decoded": 1811444
+     },
+     {
+      "name": "assets/proof/web005b/alt01-1200.webp",
+      "encoded": 2347070,
+      "transfer": 2347370,
+      "decoded": 2347070
+     },
+     {
+      "name": "assets/proof/web005b/priority-1200.webp",
+      "encoded": 1948516,
+      "transfer": 1948816,
+      "decoded": 1948516
+     },
+     {
+      "name": "assets/imagery/yellowstone-2013-1400.webp",
+      "encoded": 217914,
+      "transfer": 218214,
+      "decoded": 217914
+     },
+     {
+      "name": "assets/imagery/chuquicamata-2024-1400.webp",
+      "encoded": 300272,
+      "transfer": 300572,
+      "decoded": 300272
+     },
+     {
+      "name": "assets/imagery/ili-delta-2020-1400.webp",
+      "encoded": 300306,
+      "transfer": 300606,
+      "decoded": 300306
+     }
+    ],
+    "dpr": 3,
+    "vw": 375,
+    "vh": 812,
+    "scrollW": 375,
+    "scrollH": 9470
+   },
+   "hero_motion": {
+    "state": "static",
+    "reason": "small-screen",
+    "tier": null,
+    "codec": null,
+    "layer": null,
+    "src": null,
+    "ended": false,
+    "vw": 0
+   },
+   "lang_en": {
+    "lang": "en",
+    "h1": "Know where to look next."
+   },
+   "lang_tr": {
+    "lang": "tr",
+    "h1": "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+   },
+   "nojs": {
+    "h1": "Know where to look next.",
+    "poster": [
+     {
+      "c": true,
+      "w": 374,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 374,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-drape-priority-1920.png"
+     }
+    ]
+   }
+  },
+  {
+   "class": "tablet-768@2x",
+   "routes": {
+    "/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "OrbGSS \u2014 Co\u011frafi Zek\u00e2",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+     ],
+     "broken": [],
+     "cls": 0.021,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 9411884,
+     "videoBytes": 412
+    },
+    "/platform/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Platform \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS bir mek\u00e2nsal \u00f6nceli\u011fi nas\u0131l kurar?"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/solutions/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u00c7\u00f6z\u00fcmler \u2014 OrbGSS",
+     "h1": [
+      "Tek i\u015f ak\u0131\u015f\u0131, kan\u0131t\u0131n \u00f6nemli oldu\u011fu her yerde."
+     ],
+     "broken": [],
+     "cls": 0.0262,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/pilot/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Pilot \u2014 K\u0131z\u0131ldere \u2014 OrbGSS",
+     "h1": [
+      "K\u0131z\u0131ldere: ilk OrbGSS uygulamas\u0131."
+     ],
+     "broken": [],
+     "cls": 0.017,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1439565,
+     "videoBytes": 412
+    },
+    "/company/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u015eirket \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS \u2014 Orbital Geo-Spatial Solutions"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/contact/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u0130leti\u015fim \u2014 OrbGSS",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131m\u0131z\u0131 konu\u015fal\u0131m."
+     ],
+     "broken": [],
+     "cls": 0.0341,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/404.html": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "404 \u2014 OrbGSS",
+     "h1": [
+      "404"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 0,
+     "videoBytes": 0
+    }
+   },
+   "home_images": {
+    "imgs": [
+     {
+      "alt": "Y\u00f6r\u00fcngeden g\u00f6rselle\u015ftirilmi\u015f g\u00f6r\u00fcn\u00fcm: Do",
+      "cls": "panel-image hero-poster",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       768,
+       432
+      ],
+      "box": [
+       768,
+       948
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-held is-on",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       768,
+       432
+      ],
+      "box": [
+       768,
+       948
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "100vw"
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "terrain",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "thm01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "alt01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere analiz alan\u0131n\u0131n g\u00f6rselle\u015ftiril",
+      "cls": "hero-drape-layer hero-drape-payoff",
+      "parent": "priority",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       0,
+       0
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere \u00e7evresindeki B\u00fcy\u00fck Menderes gr",
+      "cls": "panel-image",
+      "parent": "context",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       768,
+       432
+      ],
+      "box": [
+       768,
+       432
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(max-width: 560px) 223vw, (max-width: 700px) 134vw, min(100vw, 1600px)"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n renkli y\u00fckselti ",
+      "cls": "panel-image",
+      "parent": "terrain",
+      "src": "assets/proof/web005b/terrain-1200-d.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       537,
+       537
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n \u0131raksak termal a",
+      "cls": "panel-image",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       537,
+       537
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131 boyunca y\u00fczey alter",
+      "cls": "panel-image",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       537,
+       537
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik h",
+      "cls": "panel-image",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 701px) 600px, 88vw"
+     },
+     {
+      "alt": "G\u00f6reli \u00f6ncelik haritas\u0131n\u0131n renk \u00f6l\u00e7e\u011fi; ",
+      "cls": "priority-legend-ramp",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-legend-ramp.png",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       256,
+       8
+      ],
+      "box": [
+       256,
+       8
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n do\u011fal renkli Lan",
+      "cls": "",
+      "parent": "",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       2050,
+       1153
+      ],
+      "box": [
+       1594.66,
+       897
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) 1600px, 267vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n termal anomali harita",
+      "cls": "",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       675,
+       675
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n alterasyon vekili har",
+      "cls": "",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       675,
+       675
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik harita",
+      "cls": "",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       675,
+       675
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Yellowstone Ulusal Park\u0131 \u00e7evresindeki je",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/yellowstone-2013-1800.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       768,
+       480
+      ],
+      "box": [
+       681.53,
+       358
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(100vw, 1280px), 100vw"
+     },
+     {
+      "alt": "Kuzey \u015eili Chuquicamata madencilik b\u00f6lge",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/chuquicamata-2024-1800.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       768,
+       480
+      ],
+      "box": [
+       681.53,
+       358
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "Kazakistan \u0130li Nehri Deltas\u0131 ve Balka\u015f G",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/ili-delta-2020-1800.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       768,
+       480
+      ],
+      "box": [
+       681.53,
+       358
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "OrbGSS \u2014 Orbital Geo-Spatial Solutions",
+      "cls": "",
+      "parent": "",
+      "src": "assets/logo.svg",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       420,
+       120
+      ],
+      "box": [
+       225,
+       64.28
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     }
+    ],
+    "resources": [
+     {
+      "name": "assets/hero/hero-poster-1600.webp",
+      "encoded": 120764,
+      "transfer": 121064,
+      "decoded": 120764
+     },
+     {
+      "name": "assets/logo.svg",
+      "encoded": 1154,
+      "transfer": 1454,
+      "decoded": 1154
+     },
+     {
+      "name": "assets/proof/web005b/priority-legend-ramp.png",
+      "encoded": 257,
+      "transfer": 557,
+      "decoded": 257
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "encoded": 470180,
+      "transfer": 470480,
+      "decoded": 470180
+     },
+     {
+      "name": "assets/proof/web005b/terrain-1200-d.webp",
+      "encoded": 126766,
+      "transfer": 127066,
+      "decoded": 126766
+     },
+     {
+      "name": "assets/proof/web005b/thm01-1200.webp",
+      "encoded": 1811444,
+      "transfer": 1811744,
+      "decoded": 1811444
+     },
+     {
+      "name": "assets/proof/web005b/alt01-1200.webp",
+      "encoded": 2347070,
+      "transfer": 2347370,
+      "decoded": 2347070
+     },
+     {
+      "name": "assets/proof/web005b/priority-1200.webp",
+      "encoded": 1948516,
+      "transfer": 1948816,
+      "decoded": 1948516
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "encoded": 1313526,
+      "transfer": 1313826,
+      "decoded": 1313526
+     },
+     {
+      "name": "assets/imagery/yellowstone-2013-1800.webp",
+      "encoded": 343724,
+      "transfer": 344024,
+      "decoded": 343724
+     },
+     {
+      "name": "assets/imagery/chuquicamata-2024-1800.webp",
+      "encoded": 475452,
+      "transfer": 475752,
+      "decoded": 475452
+     },
+     {
+      "name": "assets/imagery/ili-delta-2020-1800.webp",
+      "encoded": 452298,
+      "transfer": 452598,
+      "decoded": 452298
+     }
+    ],
+    "dpr": 2,
+    "vw": 768,
+    "vh": 1024,
+    "scrollW": 768,
+    "scrollH": 9468
+   },
+   "hero_motion": {
+    "state": "static",
+    "reason": "small-screen",
+    "tier": null,
+    "codec": null,
+    "layer": null,
+    "src": null,
+    "ended": false,
+    "vw": 0
+   },
+   "lang_en": {
+    "lang": "en",
+    "h1": "Know where to look next."
+   },
+   "lang_tr": {
+    "lang": "tr",
+    "h1": "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+   },
+   "nojs": {
+    "h1": "Know where to look next.",
+    "poster": [
+     {
+      "c": true,
+      "w": 768,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 768,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-drape-priority-1920.png"
+     }
+    ]
+   }
+  },
+  {
+   "class": "w1024@1x",
+   "routes": {
+    "/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "OrbGSS \u2014 Co\u011frafi Zek\u00e2",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 4483110,
+     "videoBytes": 412
+    },
+    "/platform/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Platform \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS bir mek\u00e2nsal \u00f6nceli\u011fi nas\u0131l kurar?"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/solutions/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u00c7\u00f6z\u00fcmler \u2014 OrbGSS",
+     "h1": [
+      "Tek i\u015f ak\u0131\u015f\u0131, kan\u0131t\u0131n \u00f6nemli oldu\u011fu her yerde."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/pilot/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Pilot \u2014 K\u0131z\u0131ldere \u2014 OrbGSS",
+     "h1": [
+      "K\u0131z\u0131ldere: ilk OrbGSS uygulamas\u0131."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1439565,
+     "videoBytes": 412
+    },
+    "/company/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u015eirket \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS \u2014 Orbital Geo-Spatial Solutions"
+     ],
+     "broken": [],
+     "cls": 0.0005,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/contact/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u0130leti\u015fim \u2014 OrbGSS",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131m\u0131z\u0131 konu\u015fal\u0131m."
+     ],
+     "broken": [],
+     "cls": 0.0245,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/404.html": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "404 \u2014 OrbGSS",
+     "h1": [
+      "404"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 0,
+     "videoBytes": 0
+    }
+   },
+   "home_images": {
+    "imgs": [
+     {
+      "alt": "Y\u00f6r\u00fcngeden g\u00f6rselle\u015ftirilmi\u015f g\u00f6r\u00fcn\u00fcm: Do",
+      "cls": "panel-image hero-poster",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1024,
+       576
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-held is-on",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1024,
+       576
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "100vw"
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "terrain",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "thm01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "alt01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere analiz alan\u0131n\u0131n g\u00f6rselle\u015ftiril",
+      "cls": "hero-drape-layer hero-drape-payoff is-on",
+      "parent": "priority",
+      "src": "assets/hero/drape/hero-drape-priority-1920.png",
+      "loading": "eager",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere \u00e7evresindeki B\u00fcy\u00fck Menderes gr",
+      "cls": "panel-image",
+      "parent": "context",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1024,
+       576
+      ],
+      "box": [
+       1024,
+       576
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(max-width: 560px) 223vw, (max-width: 700px) 134vw, min(100vw, 1600px)"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n renkli y\u00fckselti ",
+      "cls": "panel-image",
+      "parent": "terrain",
+      "src": "assets/proof/web005b/terrain-600-d.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       460,
+       460
+      ],
+      "box": [
+       484.66,
+       484.66
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n \u0131raksak termal a",
+      "cls": "panel-image",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       460,
+       460
+      ],
+      "box": [
+       484.66,
+       484.66
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131 boyunca y\u00fczey alter",
+      "cls": "panel-image",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       460,
+       460
+      ],
+      "box": [
+       484.66,
+       484.66
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik h",
+      "cls": "panel-image",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       410.02,
+       410.02
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 701px) 600px, 88vw"
+     },
+     {
+      "alt": "G\u00f6reli \u00f6ncelik haritas\u0131n\u0131n renk \u00f6l\u00e7e\u011fi; ",
+      "cls": "priority-legend-ramp",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-legend-ramp.png",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       256,
+       8
+      ],
+      "box": [
+       254.2,
+       8
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n do\u011fal renkli Lan",
+      "cls": "",
+      "parent": "",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1594.66,
+       897
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) 1600px, 267vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n termal anomali harita",
+      "cls": "",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n alterasyon vekili har",
+      "cls": "",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik harita",
+      "cls": "",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Yellowstone Ulusal Park\u0131 \u00e7evresindeki je",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/yellowstone-2013-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1024,
+       640
+      ],
+      "box": [
+       909.38,
+       338
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(100vw, 1280px), 100vw"
+     },
+     {
+      "alt": "Kuzey \u015eili Chuquicamata madencilik b\u00f6lge",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/chuquicamata-2024-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       512,
+       319
+      ],
+      "box": [
+       444.47,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "Kazakistan \u0130li Nehri Deltas\u0131 ve Balka\u015f G",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/ili-delta-2020-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       512,
+       319
+      ],
+      "box": [
+       444.48,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "OrbGSS \u2014 Orbital Geo-Spatial Solutions",
+      "cls": "",
+      "parent": "",
+      "src": "assets/logo.svg",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       420,
+       120
+      ],
+      "box": [
+       209.36,
+       59.81
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     }
+    ],
+    "resources": [
+     {
+      "name": "assets/hero/hero-poster-1600.webp",
+      "encoded": 120764,
+      "transfer": 121064,
+      "decoded": 120764
+     },
+     {
+      "name": "assets/proof/web005b/priority-legend-ramp.png",
+      "encoded": 257,
+      "transfer": 557,
+      "decoded": 257
+     },
+     {
+      "name": "assets/logo.svg",
+      "encoded": 1154,
+      "transfer": 1454,
+      "decoded": 1154
+     },
+     {
+      "name": "assets/hero/drape/hero-drape-priority-1920.png",
+      "encoded": 974992,
+      "transfer": 975292,
+      "decoded": 974992
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-1200.webp",
+      "encoded": 274934,
+      "transfer": 275234,
+      "decoded": 274934
+     },
+     {
+      "name": "assets/proof/web005b/terrain-600-d.webp",
+      "encoded": 50662,
+      "transfer": 50962,
+      "decoded": 50662
+     },
+     {
+      "name": "assets/proof/web005b/thm01-600.webp",
+      "encoded": 551540,
+      "transfer": 551840,
+      "decoded": 551540
+     },
+     {
+      "name": "assets/proof/web005b/alt01-600.webp",
+      "encoded": 799318,
+      "transfer": 799618,
+      "decoded": 799318
+     },
+     {
+      "name": "assets/proof/web005b/priority-600.webp",
+      "encoded": 758152,
+      "transfer": 758452,
+      "decoded": 758152
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "encoded": 470180,
+      "transfer": 470480,
+      "decoded": 470180
+     },
+     {
+      "name": "assets/imagery/yellowstone-2013-1400.webp",
+      "encoded": 217914,
+      "transfer": 218214,
+      "decoded": 217914
+     },
+     {
+      "name": "assets/imagery/chuquicamata-2024-900.webp",
+      "encoded": 129918,
+      "transfer": 130218,
+      "decoded": 129918
+     },
+     {
+      "name": "assets/imagery/ili-delta-2020-900.webp",
+      "encoded": 132592,
+      "transfer": 132892,
+      "decoded": 132592
+     }
+    ],
+    "dpr": 1,
+    "vw": 1024,
+    "vh": 768,
+    "scrollW": 1024,
+    "scrollH": 7845
+   },
+   "hero_motion": {
+    "state": "held",
+    "reason": null,
+    "tier": "sm",
+    "codec": "webm",
+    "layer": "priority",
+    "src": "orbgss-hero-1280-21da1079.webm",
+    "ended": true,
+    "vw": 1280
+   },
+   "lang_en": {
+    "lang": "en",
+    "h1": "Know where to look next."
+   },
+   "lang_tr": {
+    "lang": "tr",
+    "h1": "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+   },
+   "nojs": {
+    "h1": "Know where to look next.",
+    "poster": [
+     {
+      "c": true,
+      "w": 1600,
+      "src": "hero-opening-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1024,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-drape-priority-1920.png"
+     }
+    ]
+   }
+  },
+  {
+   "class": "w1024@2x",
+   "routes": {
+    "/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "OrbGSS \u2014 Co\u011frafi Zek\u00e2",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 10679214,
+     "videoBytes": 412
+    },
+    "/platform/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Platform \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS bir mek\u00e2nsal \u00f6nceli\u011fi nas\u0131l kurar?"
+     ],
+     "broken": [],
+     "cls": 0.0005,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/solutions/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u00c7\u00f6z\u00fcmler \u2014 OrbGSS",
+     "h1": [
+      "Tek i\u015f ak\u0131\u015f\u0131, kan\u0131t\u0131n \u00f6nemli oldu\u011fu her yerde."
+     ],
+     "broken": [],
+     "cls": 0.0163,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/pilot/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Pilot \u2014 K\u0131z\u0131ldere \u2014 OrbGSS",
+     "h1": [
+      "K\u0131z\u0131ldere: ilk OrbGSS uygulamas\u0131."
+     ],
+     "broken": [],
+     "cls": 0.0111,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1439565,
+     "videoBytes": 412
+    },
+    "/company/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u015eirket \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS \u2014 Orbital Geo-Spatial Solutions"
+     ],
+     "broken": [],
+     "cls": 0.0005,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/contact/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u0130leti\u015fim \u2014 OrbGSS",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131m\u0131z\u0131 konu\u015fal\u0131m."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/404.html": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "404 \u2014 OrbGSS",
+     "h1": [
+      "404"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 0,
+     "videoBytes": 0
+    }
+   },
+   "home_images": {
+    "imgs": [
+     {
+      "alt": "Y\u00f6r\u00fcngeden g\u00f6rselle\u015ftirilmi\u015f g\u00f6r\u00fcn\u00fcm: Do",
+      "cls": "panel-image hero-poster",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1024,
+       576
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-held is-on",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1024,
+       576
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "100vw"
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "terrain",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "thm01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "alt01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere analiz alan\u0131n\u0131n g\u00f6rselle\u015ftiril",
+      "cls": "hero-drape-layer hero-drape-payoff is-on",
+      "parent": "priority",
+      "src": "assets/hero/drape/hero-drape-priority-1920.png",
+      "loading": "eager",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       1024,
+       680
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere \u00e7evresindeki B\u00fcy\u00fck Menderes gr",
+      "cls": "panel-image",
+      "parent": "context",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-2400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1024,
+       576
+      ],
+      "box": [
+       1024,
+       576
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(max-width: 560px) 223vw, (max-width: 700px) 134vw, min(100vw, 1600px)"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n renkli y\u00fckselti ",
+      "cls": "panel-image",
+      "parent": "terrain",
+      "src": "assets/proof/web005b/terrain-1200-d.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       460,
+       460
+      ],
+      "box": [
+       484.66,
+       484.66
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n \u0131raksak termal a",
+      "cls": "panel-image",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       460,
+       460
+      ],
+      "box": [
+       484.66,
+       484.66
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131 boyunca y\u00fczey alter",
+      "cls": "panel-image",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       460,
+       460
+      ],
+      "box": [
+       484.66,
+       484.66
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik h",
+      "cls": "panel-image",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       410.02,
+       410.02
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 701px) 600px, 88vw"
+     },
+     {
+      "alt": "G\u00f6reli \u00f6ncelik haritas\u0131n\u0131n renk \u00f6l\u00e7e\u011fi; ",
+      "cls": "priority-legend-ramp",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-legend-ramp.png",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       256,
+       8
+      ],
+      "box": [
+       254.2,
+       8
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n do\u011fal renkli Lan",
+      "cls": "",
+      "parent": "",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1594.66,
+       897
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) 1600px, 267vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n termal anomali harita",
+      "cls": "",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n alterasyon vekili har",
+      "cls": "",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik harita",
+      "cls": "",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Yellowstone Ulusal Park\u0131 \u00e7evresindeki je",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/yellowstone-2013-2400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1024,
+       640
+      ],
+      "box": [
+       909.38,
+       338
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(100vw, 1280px), 100vw"
+     },
+     {
+      "alt": "Kuzey \u015eili Chuquicamata madencilik b\u00f6lge",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/chuquicamata-2024-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       512,
+       320
+      ],
+      "box": [
+       444.47,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "Kazakistan \u0130li Nehri Deltas\u0131 ve Balka\u015f G",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/ili-delta-2020-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       512,
+       320
+      ],
+      "box": [
+       444.48,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "OrbGSS \u2014 Orbital Geo-Spatial Solutions",
+      "cls": "",
+      "parent": "",
+      "src": "assets/logo.svg",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       420,
+       120
+      ],
+      "box": [
+       209.36,
+       59.81
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     }
+    ],
+    "resources": [
+     {
+      "name": "assets/hero/hero-poster-1600.webp",
+      "encoded": 120764,
+      "transfer": 121064,
+      "decoded": 120764
+     },
+     {
+      "name": "assets/proof/web005b/priority-legend-ramp.png",
+      "encoded": 257,
+      "transfer": 557,
+      "decoded": 257
+     },
+     {
+      "name": "assets/logo.svg",
+      "encoded": 1154,
+      "transfer": 1454,
+      "decoded": 1154
+     },
+     {
+      "name": "assets/hero/drape/hero-drape-priority-1920.png",
+      "encoded": 974992,
+      "transfer": 975292,
+      "decoded": 974992
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-2400.webp",
+      "encoded": 900484,
+      "transfer": 900784,
+      "decoded": 900484
+     },
+     {
+      "name": "assets/proof/web005b/terrain-1200-d.webp",
+      "encoded": 126766,
+      "transfer": 127066,
+      "decoded": 126766
+     },
+     {
+      "name": "assets/proof/web005b/thm01-1200.webp",
+      "encoded": 1811444,
+      "transfer": 1811744,
+      "decoded": 1811444
+     },
+     {
+      "name": "assets/proof/web005b/alt01-1200.webp",
+      "encoded": 2347070,
+      "transfer": 2347370,
+      "decoded": 2347070
+     },
+     {
+      "name": "assets/proof/web005b/priority-1200.webp",
+      "encoded": 1948516,
+      "transfer": 1948816,
+      "decoded": 1948516
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "encoded": 1313526,
+      "transfer": 1313826,
+      "decoded": 1313526
+     },
+     {
+      "name": "assets/imagery/yellowstone-2013-2400.webp",
+      "encoded": 532930,
+      "transfer": 533230,
+      "decoded": 532930
+     },
+     {
+      "name": "assets/imagery/chuquicamata-2024-1400.webp",
+      "encoded": 300272,
+      "transfer": 300572,
+      "decoded": 300272
+     },
+     {
+      "name": "assets/imagery/ili-delta-2020-1400.webp",
+      "encoded": 300306,
+      "transfer": 300606,
+      "decoded": 300306
+     }
+    ],
+    "dpr": 2,
+    "vw": 1024,
+    "vh": 768,
+    "scrollW": 1024,
+    "scrollH": 7845
+   },
+   "hero_motion": {
+    "state": "held",
+    "reason": null,
+    "tier": "md",
+    "codec": "webm",
+    "layer": "priority",
+    "src": "orbgss-hero-1920-ca741624.webm",
+    "ended": true,
+    "vw": 1920
+   },
+   "lang_en": {
+    "lang": "en",
+    "h1": "Know where to look next."
+   },
+   "lang_tr": {
+    "lang": "tr",
+    "h1": "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+   },
+   "nojs": {
+    "h1": "Know where to look next.",
+    "poster": [
+     {
+      "c": true,
+      "w": 1600,
+      "src": "hero-opening-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1024,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-drape-priority-1920.png"
+     }
+    ]
+   }
+  },
+  {
+   "class": "w1440@1x",
+   "routes": {
+    "/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "OrbGSS \u2014 Co\u011frafi Zek\u00e2",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 4208176,
+     "videoBytes": 412
+    },
+    "/platform/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Platform \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS bir mek\u00e2nsal \u00f6nceli\u011fi nas\u0131l kurar?"
+     ],
+     "broken": [],
+     "cls": 0.0002,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/solutions/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u00c7\u00f6z\u00fcmler \u2014 OrbGSS",
+     "h1": [
+      "Tek i\u015f ak\u0131\u015f\u0131, kan\u0131t\u0131n \u00f6nemli oldu\u011fu her yerde."
+     ],
+     "broken": [],
+     "cls": 0.0105,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/pilot/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Pilot \u2014 K\u0131z\u0131ldere \u2014 OrbGSS",
+     "h1": [
+      "K\u0131z\u0131ldere: ilk OrbGSS uygulamas\u0131."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1439565,
+     "videoBytes": 412
+    },
+    "/company/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u015eirket \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS \u2014 Orbital Geo-Spatial Solutions"
+     ],
+     "broken": [],
+     "cls": 0.0002,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/contact/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u0130leti\u015fim \u2014 OrbGSS",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131m\u0131z\u0131 konu\u015fal\u0131m."
+     ],
+     "broken": [],
+     "cls": 0.0222,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/404.html": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "404 \u2014 OrbGSS",
+     "h1": [
+      "404"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 0,
+     "videoBytes": 0
+    }
+   },
+   "home_images": {
+    "imgs": [
+     {
+      "alt": "Y\u00f6r\u00fcngeden g\u00f6rselle\u015ftirilmi\u015f g\u00f6r\u00fcn\u00fcm: Do",
+      "cls": "panel-image hero-poster",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1440,
+       810
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-held is-on",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1440,
+       810
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "100vw"
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "terrain",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "thm01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "alt01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere analiz alan\u0131n\u0131n g\u00f6rselle\u015ftiril",
+      "cls": "hero-drape-layer hero-drape-payoff is-on",
+      "parent": "priority",
+      "src": "assets/hero/drape/hero-drape-priority-1920.png",
+      "loading": "eager",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere \u00e7evresindeki B\u00fcy\u00fck Menderes gr",
+      "cls": "panel-image",
+      "parent": "context",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1440,
+       810
+      ],
+      "box": [
+       1440,
+       810
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(max-width: 560px) 223vw, (max-width: 700px) 134vw, min(100vw, 1600px)"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n renkli y\u00fckselti ",
+      "cls": "panel-image",
+      "parent": "terrain",
+      "src": "assets/proof/web005b/terrain-600-d.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n \u0131raksak termal a",
+      "cls": "panel-image",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131 boyunca y\u00fczey alter",
+      "cls": "panel-image",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik h",
+      "cls": "panel-image",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       542,
+       542
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 701px) 600px, 88vw"
+     },
+     {
+      "alt": "G\u00f6reli \u00f6ncelik haritas\u0131n\u0131n renk \u00f6l\u00e7e\u011fi; ",
+      "cls": "priority-legend-ramp",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-legend-ramp.png",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       256,
+       8
+      ],
+      "box": [
+       256,
+       8
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n do\u011fal renkli Lan",
+      "cls": "",
+      "parent": "",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1594.66,
+       897
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) 1600px, 267vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n termal anomali harita",
+      "cls": "",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n alterasyon vekili har",
+      "cls": "",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik harita",
+      "cls": "",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Yellowstone Ulusal Park\u0131 \u00e7evresindeki je",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/yellowstone-2013-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1280,
+       800
+      ],
+      "box": [
+       1278,
+       358
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(100vw, 1280px), 100vw"
+     },
+     {
+      "alt": "Kuzey \u015eili Chuquicamata madencilik b\u00f6lge",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/chuquicamata-2024-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       631,
+       394
+      ],
+      "box": [
+       625.05,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "Kazakistan \u0130li Nehri Deltas\u0131 ve Balka\u015f G",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/ili-delta-2020-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       631,
+       394
+      ],
+      "box": [
+       625.05,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "OrbGSS \u2014 Orbital Geo-Spatial Solutions",
+      "cls": "",
+      "parent": "",
+      "src": "assets/logo.svg",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       420,
+       120
+      ],
+      "box": [
+       225,
+       64.28
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     }
+    ],
+    "resources": [
+     {
+      "name": "assets/hero/hero-poster-1600.webp",
+      "encoded": 120764,
+      "transfer": 121064,
+      "decoded": 120764
+     },
+     {
+      "name": "assets/proof/web005b/priority-legend-ramp.png",
+      "encoded": 257,
+      "transfer": 557,
+      "decoded": 257
+     },
+     {
+      "name": "assets/logo.svg",
+      "encoded": 1154,
+      "transfer": 1454,
+      "decoded": 1154
+     },
+     {
+      "name": "assets/hero/drape/hero-drape-priority-1920.png",
+      "encoded": 974992,
+      "transfer": 975292,
+      "decoded": 974992
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "encoded": 470180,
+      "transfer": 470480,
+      "decoded": 470180
+     },
+     {
+      "name": "assets/proof/web005b/terrain-600-d.webp",
+      "encoded": 50662,
+      "transfer": 50962,
+      "decoded": 50662
+     },
+     {
+      "name": "assets/proof/web005b/thm01-600.webp",
+      "encoded": 551540,
+      "transfer": 551840,
+      "decoded": 551540
+     },
+     {
+      "name": "assets/proof/web005b/alt01-600.webp",
+      "encoded": 799318,
+      "transfer": 799618,
+      "decoded": 799318
+     },
+     {
+      "name": "assets/proof/web005b/priority-600.webp",
+      "encoded": 758152,
+      "transfer": 758452,
+      "decoded": 758152
+     },
+     {
+      "name": "assets/imagery/yellowstone-2013-1400.webp",
+      "encoded": 217914,
+      "transfer": 218214,
+      "decoded": 217914
+     },
+     {
+      "name": "assets/imagery/chuquicamata-2024-900.webp",
+      "encoded": 129918,
+      "transfer": 130218,
+      "decoded": 129918
+     },
+     {
+      "name": "assets/imagery/ili-delta-2020-900.webp",
+      "encoded": 132592,
+      "transfer": 132892,
+      "decoded": 132592
+     }
+    ],
+    "dpr": 1,
+    "vw": 1440,
+    "vh": 900,
+    "scrollW": 1440,
+    "scrollH": 8569
+   },
+   "hero_motion": {
+    "state": "held",
+    "reason": null,
+    "tier": "md",
+    "codec": "webm",
+    "layer": "priority",
+    "src": "orbgss-hero-1920-ca741624.webm",
+    "ended": true,
+    "vw": 1920
+   },
+   "lang_en": {
+    "lang": "en",
+    "h1": "Know where to look next."
+   },
+   "lang_tr": {
+    "lang": "tr",
+    "h1": "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+   },
+   "nojs": {
+    "h1": "Know where to look next.",
+    "poster": [
+     {
+      "c": true,
+      "w": 1600,
+      "src": "hero-opening-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1440,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-drape-priority-1920.png"
+     }
+    ]
+   }
+  },
+  {
+   "class": "w1440@2x",
+   "routes": {
+    "/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "OrbGSS \u2014 Co\u011frafi Zek\u00e2",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 9970178,
+     "videoBytes": 412
+    },
+    "/platform/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Platform \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS bir mek\u00e2nsal \u00f6nceli\u011fi nas\u0131l kurar?"
+     ],
+     "broken": [],
+     "cls": 0.0002,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/solutions/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u00c7\u00f6z\u00fcmler \u2014 OrbGSS",
+     "h1": [
+      "Tek i\u015f ak\u0131\u015f\u0131, kan\u0131t\u0131n \u00f6nemli oldu\u011fu her yerde."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/pilot/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Pilot \u2014 K\u0131z\u0131ldere \u2014 OrbGSS",
+     "h1": [
+      "K\u0131z\u0131ldere: ilk OrbGSS uygulamas\u0131."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1439565,
+     "videoBytes": 412
+    },
+    "/company/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u015eirket \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS \u2014 Orbital Geo-Spatial Solutions"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/contact/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u0130leti\u015fim \u2014 OrbGSS",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131m\u0131z\u0131 konu\u015fal\u0131m."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/404.html": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "404 \u2014 OrbGSS",
+     "h1": [
+      "404"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 0,
+     "videoBytes": 0
+    }
+   },
+   "home_images": {
+    "imgs": [
+     {
+      "alt": "Y\u00f6r\u00fcngeden g\u00f6rselle\u015ftirilmi\u015f g\u00f6r\u00fcn\u00fcm: Do",
+      "cls": "panel-image hero-poster",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1440,
+       810
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-held is-on",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1440,
+       810
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "100vw"
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "terrain",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "thm01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "alt01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere analiz alan\u0131n\u0131n g\u00f6rselle\u015ftiril",
+      "cls": "hero-drape-layer hero-drape-payoff is-on",
+      "parent": "priority",
+      "src": "assets/hero/drape/hero-drape-priority-1920.png",
+      "loading": "eager",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       1440,
+       812
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere \u00e7evresindeki B\u00fcy\u00fck Menderes gr",
+      "cls": "panel-image",
+      "parent": "context",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1440,
+       810
+      ],
+      "box": [
+       1440,
+       810
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(max-width: 560px) 223vw, (max-width: 700px) 134vw, min(100vw, 1600px)"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n renkli y\u00fckselti ",
+      "cls": "panel-image",
+      "parent": "terrain",
+      "src": "assets/proof/web005b/terrain-1200-d.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n \u0131raksak termal a",
+      "cls": "panel-image",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131 boyunca y\u00fczey alter",
+      "cls": "panel-image",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik h",
+      "cls": "panel-image",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       542,
+       542
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 701px) 600px, 88vw"
+     },
+     {
+      "alt": "G\u00f6reli \u00f6ncelik haritas\u0131n\u0131n renk \u00f6l\u00e7e\u011fi; ",
+      "cls": "priority-legend-ramp",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-legend-ramp.png",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       256,
+       8
+      ],
+      "box": [
+       256,
+       8
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n do\u011fal renkli Lan",
+      "cls": "",
+      "parent": "",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1594.66,
+       897
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) 1600px, 267vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n termal anomali harita",
+      "cls": "",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n alterasyon vekili har",
+      "cls": "",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik harita",
+      "cls": "",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Yellowstone Ulusal Park\u0131 \u00e7evresindeki je",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/yellowstone-2013-2880.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1280,
+       800
+      ],
+      "box": [
+       1278,
+       358
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(100vw, 1280px), 100vw"
+     },
+     {
+      "alt": "Kuzey \u015eili Chuquicamata madencilik b\u00f6lge",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/chuquicamata-2024-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       632,
+       395
+      ],
+      "box": [
+       625.05,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "Kazakistan \u0130li Nehri Deltas\u0131 ve Balka\u015f G",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/ili-delta-2020-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       632,
+       395
+      ],
+      "box": [
+       625.05,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "OrbGSS \u2014 Orbital Geo-Spatial Solutions",
+      "cls": "",
+      "parent": "",
+      "src": "assets/logo.svg",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       420,
+       120
+      ],
+      "box": [
+       225,
+       64.28
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     }
+    ],
+    "resources": [
+     {
+      "name": "assets/hero/hero-poster-1600.webp",
+      "encoded": 120764,
+      "transfer": 121064,
+      "decoded": 120764
+     },
+     {
+      "name": "assets/proof/web005b/priority-legend-ramp.png",
+      "encoded": 257,
+      "transfer": 557,
+      "decoded": 257
+     },
+     {
+      "name": "assets/logo.svg",
+      "encoded": 1154,
+      "transfer": 1454,
+      "decoded": 1154
+     },
+     {
+      "name": "assets/hero/drape/hero-drape-priority-1920.png",
+      "encoded": 974992,
+      "transfer": 975292,
+      "decoded": 974992
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "encoded": 1313526,
+      "transfer": 1313826,
+      "decoded": 1313526
+     },
+     {
+      "name": "assets/proof/web005b/terrain-1200-d.webp",
+      "encoded": 126766,
+      "transfer": 127066,
+      "decoded": 126766
+     },
+     {
+      "name": "assets/proof/web005b/thm01-1200.webp",
+      "encoded": 1811444,
+      "transfer": 1811744,
+      "decoded": 1811444
+     },
+     {
+      "name": "assets/proof/web005b/alt01-1200.webp",
+      "encoded": 2347070,
+      "transfer": 2347370,
+      "decoded": 2347070
+     },
+     {
+      "name": "assets/proof/web005b/priority-1200.webp",
+      "encoded": 1948516,
+      "transfer": 1948816,
+      "decoded": 1948516
+     },
+     {
+      "name": "assets/imagery/yellowstone-2013-2880.webp",
+      "encoded": 724378,
+      "transfer": 724678,
+      "decoded": 724378
+     },
+     {
+      "name": "assets/imagery/chuquicamata-2024-1400.webp",
+      "encoded": 300272,
+      "transfer": 300572,
+      "decoded": 300272
+     },
+     {
+      "name": "assets/imagery/ili-delta-2020-1400.webp",
+      "encoded": 300306,
+      "transfer": 300606,
+      "decoded": 300306
+     }
+    ],
+    "dpr": 2,
+    "vw": 1440,
+    "vh": 900,
+    "scrollW": 1440,
+    "scrollH": 8569
+   },
+   "hero_motion": {
+    "state": "held",
+    "reason": null,
+    "tier": "md",
+    "codec": "webm",
+    "layer": "priority",
+    "src": "orbgss-hero-1920-ca741624.webm",
+    "ended": true,
+    "vw": 1920
+   },
+   "lang_en": {
+    "lang": "en",
+    "h1": "Know where to look next."
+   },
+   "lang_tr": {
+    "lang": "tr",
+    "h1": "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+   },
+   "nojs": {
+    "h1": "Know where to look next.",
+    "poster": [
+     {
+      "c": true,
+      "w": 1600,
+      "src": "hero-opening-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1440,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-drape-priority-1920.png"
+     }
+    ]
+   }
+  },
+  {
+   "class": "w1920@1x",
+   "routes": {
+    "/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "OrbGSS \u2014 Co\u011frafi Zek\u00e2",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 4208176,
+     "videoBytes": 412
+    },
+    "/platform/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Platform \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS bir mek\u00e2nsal \u00f6nceli\u011fi nas\u0131l kurar?"
+     ],
+     "broken": [],
+     "cls": 0.0001,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/solutions/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u00c7\u00f6z\u00fcmler \u2014 OrbGSS",
+     "h1": [
+      "Tek i\u015f ak\u0131\u015f\u0131, kan\u0131t\u0131n \u00f6nemli oldu\u011fu her yerde."
+     ],
+     "broken": [],
+     "cls": 0.0096,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/pilot/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Pilot \u2014 K\u0131z\u0131ldere \u2014 OrbGSS",
+     "h1": [
+      "K\u0131z\u0131ldere: ilk OrbGSS uygulamas\u0131."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1439565,
+     "videoBytes": 412
+    },
+    "/company/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u015eirket \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS \u2014 Orbital Geo-Spatial Solutions"
+     ],
+     "broken": [],
+     "cls": 0.0001,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/contact/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u0130leti\u015fim \u2014 OrbGSS",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131m\u0131z\u0131 konu\u015fal\u0131m."
+     ],
+     "broken": [],
+     "cls": 0.0197,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/404.html": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "404 \u2014 OrbGSS",
+     "h1": [
+      "404"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 0,
+     "videoBytes": 0
+    }
+   },
+   "home_images": {
+    "imgs": [
+     {
+      "alt": "Y\u00f6r\u00fcngeden g\u00f6rselle\u015ftirilmi\u015f g\u00f6r\u00fcn\u00fcm: Do",
+      "cls": "panel-image hero-poster",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-held is-on",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "100vw"
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "terrain",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "thm01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "alt01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere analiz alan\u0131n\u0131n g\u00f6rselle\u015ftiril",
+      "cls": "hero-drape-layer hero-drape-payoff is-on",
+      "parent": "priority",
+      "src": "assets/hero/drape/hero-drape-priority-1920.png",
+      "loading": "eager",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere \u00e7evresindeki B\u00fcy\u00fck Menderes gr",
+      "cls": "panel-image",
+      "parent": "context",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1600,
+       900
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(max-width: 560px) 223vw, (max-width: 700px) 134vw, min(100vw, 1600px)"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n renkli y\u00fckselti ",
+      "cls": "panel-image",
+      "parent": "terrain",
+      "src": "assets/proof/web005b/terrain-600-d.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n \u0131raksak termal a",
+      "cls": "panel-image",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131 boyunca y\u00fczey alter",
+      "cls": "panel-image",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik h",
+      "cls": "panel-image",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 701px) 600px, 88vw"
+     },
+     {
+      "alt": "G\u00f6reli \u00f6ncelik haritas\u0131n\u0131n renk \u00f6l\u00e7e\u011fi; ",
+      "cls": "priority-legend-ramp",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-legend-ramp.png",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       256,
+       8
+      ],
+      "box": [
+       256,
+       8
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n do\u011fal renkli Lan",
+      "cls": "",
+      "parent": "",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1594.66,
+       897
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) 1600px, 267vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n termal anomali harita",
+      "cls": "",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n alterasyon vekili har",
+      "cls": "",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik harita",
+      "cls": "",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Yellowstone Ulusal Park\u0131 \u00e7evresindeki je",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/yellowstone-2013-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1280,
+       800
+      ],
+      "box": [
+       1278,
+       430
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(100vw, 1280px), 100vw"
+     },
+     {
+      "alt": "Kuzey \u015eili Chuquicamata madencilik b\u00f6lge",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/chuquicamata-2024-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       631,
+       394
+      ],
+      "box": [
+       625,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "Kazakistan \u0130li Nehri Deltas\u0131 ve Balka\u015f G",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/ili-delta-2020-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       631,
+       394
+      ],
+      "box": [
+       625,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "OrbGSS \u2014 Orbital Geo-Spatial Solutions",
+      "cls": "",
+      "parent": "",
+      "src": "assets/logo.svg",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       420,
+       120
+      ],
+      "box": [
+       225,
+       64.28
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     }
+    ],
+    "resources": [
+     {
+      "name": "assets/hero/hero-poster-1600.webp",
+      "encoded": 120764,
+      "transfer": 121064,
+      "decoded": 120764
+     },
+     {
+      "name": "assets/logo.svg",
+      "encoded": 1154,
+      "transfer": 1454,
+      "decoded": 1154
+     },
+     {
+      "name": "assets/proof/web005b/priority-legend-ramp.png",
+      "encoded": 257,
+      "transfer": 557,
+      "decoded": 257
+     },
+     {
+      "name": "assets/hero/drape/hero-drape-priority-1920.png",
+      "encoded": 974992,
+      "transfer": 975292,
+      "decoded": 974992
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "encoded": 470180,
+      "transfer": 470480,
+      "decoded": 470180
+     },
+     {
+      "name": "assets/proof/web005b/terrain-600-d.webp",
+      "encoded": 50662,
+      "transfer": 50962,
+      "decoded": 50662
+     },
+     {
+      "name": "assets/proof/web005b/thm01-600.webp",
+      "encoded": 551540,
+      "transfer": 551840,
+      "decoded": 551540
+     },
+     {
+      "name": "assets/proof/web005b/alt01-600.webp",
+      "encoded": 799318,
+      "transfer": 799618,
+      "decoded": 799318
+     },
+     {
+      "name": "assets/proof/web005b/priority-600.webp",
+      "encoded": 758152,
+      "transfer": 758452,
+      "decoded": 758152
+     },
+     {
+      "name": "assets/imagery/yellowstone-2013-1400.webp",
+      "encoded": 217914,
+      "transfer": 218214,
+      "decoded": 217914
+     },
+     {
+      "name": "assets/imagery/chuquicamata-2024-900.webp",
+      "encoded": 129918,
+      "transfer": 130218,
+      "decoded": 129918
+     },
+     {
+      "name": "assets/imagery/ili-delta-2020-900.webp",
+      "encoded": 132592,
+      "transfer": 132892,
+      "decoded": 132592
+     }
+    ],
+    "dpr": 1,
+    "vw": 1920,
+    "vh": 1080,
+    "scrollW": 1920,
+    "scrollH": 9424
+   },
+   "hero_motion": {
+    "state": "held",
+    "reason": null,
+    "tier": "md",
+    "codec": "webm",
+    "layer": "priority",
+    "src": "orbgss-hero-1920-ca741624.webm",
+    "ended": true,
+    "vw": 1920
+   },
+   "lang_en": {
+    "lang": "en",
+    "h1": "Know where to look next."
+   },
+   "lang_tr": {
+    "lang": "tr",
+    "h1": "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+   },
+   "nojs": {
+    "h1": "Know where to look next.",
+    "poster": [
+     {
+      "c": true,
+      "w": 1600,
+      "src": "hero-opening-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-drape-priority-1920.png"
+     }
+    ]
+   }
+  },
+  {
+   "class": "w1920@2x (4K@200%)",
+   "routes": {
+    "/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "OrbGSS \u2014 Co\u011frafi Zek\u00e2",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+     ],
+     "broken": [],
+     "cls": 0.0083,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 9970178,
+     "videoBytes": 412
+    },
+    "/platform/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Platform \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS bir mek\u00e2nsal \u00f6nceli\u011fi nas\u0131l kurar?"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/solutions/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u00c7\u00f6z\u00fcmler \u2014 OrbGSS",
+     "h1": [
+      "Tek i\u015f ak\u0131\u015f\u0131, kan\u0131t\u0131n \u00f6nemli oldu\u011fu her yerde."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/pilot/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Pilot \u2014 K\u0131z\u0131ldere \u2014 OrbGSS",
+     "h1": [
+      "K\u0131z\u0131ldere: ilk OrbGSS uygulamas\u0131."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1439565,
+     "videoBytes": 412
+    },
+    "/company/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u015eirket \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS \u2014 Orbital Geo-Spatial Solutions"
+     ],
+     "broken": [],
+     "cls": 0.0001,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/contact/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u0130leti\u015fim \u2014 OrbGSS",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131m\u0131z\u0131 konu\u015fal\u0131m."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/404.html": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "404 \u2014 OrbGSS",
+     "h1": [
+      "404"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 0,
+     "videoBytes": 0
+    }
+   },
+   "home_images": {
+    "imgs": [
+     {
+      "alt": "Y\u00f6r\u00fcngeden g\u00f6rselle\u015ftirilmi\u015f g\u00f6r\u00fcn\u00fcm: Do",
+      "cls": "panel-image hero-poster",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-held is-on",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "100vw"
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "terrain",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "thm01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "alt01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere analiz alan\u0131n\u0131n g\u00f6rselle\u015ftiril",
+      "cls": "hero-drape-layer hero-drape-payoff is-on",
+      "parent": "priority",
+      "src": "assets/hero/drape/hero-drape-priority-1920.png",
+      "loading": "eager",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       1920,
+       992
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere \u00e7evresindeki B\u00fcy\u00fck Menderes gr",
+      "cls": "panel-image",
+      "parent": "context",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1600,
+       900
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(max-width: 560px) 223vw, (max-width: 700px) 134vw, min(100vw, 1600px)"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n renkli y\u00fckselti ",
+      "cls": "panel-image",
+      "parent": "terrain",
+      "src": "assets/proof/web005b/terrain-1200-d.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n \u0131raksak termal a",
+      "cls": "panel-image",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131 boyunca y\u00fczey alter",
+      "cls": "panel-image",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik h",
+      "cls": "panel-image",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 701px) 600px, 88vw"
+     },
+     {
+      "alt": "G\u00f6reli \u00f6ncelik haritas\u0131n\u0131n renk \u00f6l\u00e7e\u011fi; ",
+      "cls": "priority-legend-ramp",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-legend-ramp.png",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       256,
+       8
+      ],
+      "box": [
+       256,
+       8
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n do\u011fal renkli Lan",
+      "cls": "",
+      "parent": "",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1594.66,
+       897
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) 1600px, 267vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n termal anomali harita",
+      "cls": "",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n alterasyon vekili har",
+      "cls": "",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik harita",
+      "cls": "",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-1200.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Yellowstone Ulusal Park\u0131 \u00e7evresindeki je",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/yellowstone-2013-2880.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1280,
+       800
+      ],
+      "box": [
+       1278,
+       430
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(100vw, 1280px), 100vw"
+     },
+     {
+      "alt": "Kuzey \u015eili Chuquicamata madencilik b\u00f6lge",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/chuquicamata-2024-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       632,
+       395
+      ],
+      "box": [
+       625,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "Kazakistan \u0130li Nehri Deltas\u0131 ve Balka\u015f G",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/ili-delta-2020-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       632,
+       395
+      ],
+      "box": [
+       625,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "OrbGSS \u2014 Orbital Geo-Spatial Solutions",
+      "cls": "",
+      "parent": "",
+      "src": "assets/logo.svg",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       420,
+       120
+      ],
+      "box": [
+       225,
+       64.28
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     }
+    ],
+    "resources": [
+     {
+      "name": "assets/hero/hero-poster-1600.webp",
+      "encoded": 120764,
+      "transfer": 121064,
+      "decoded": 120764
+     },
+     {
+      "name": "assets/proof/web005b/priority-legend-ramp.png",
+      "encoded": 257,
+      "transfer": 557,
+      "decoded": 257
+     },
+     {
+      "name": "assets/logo.svg",
+      "encoded": 1154,
+      "transfer": 1454,
+      "decoded": 1154
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-3200.webp",
+      "encoded": 1313526,
+      "transfer": 1313826,
+      "decoded": 1313526
+     },
+     {
+      "name": "assets/hero/drape/hero-drape-priority-1920.png",
+      "encoded": 974992,
+      "transfer": 975292,
+      "decoded": 974992
+     },
+     {
+      "name": "assets/proof/web005b/terrain-1200-d.webp",
+      "encoded": 126766,
+      "transfer": 127066,
+      "decoded": 126766
+     },
+     {
+      "name": "assets/proof/web005b/thm01-1200.webp",
+      "encoded": 1811444,
+      "transfer": 1811744,
+      "decoded": 1811444
+     },
+     {
+      "name": "assets/proof/web005b/alt01-1200.webp",
+      "encoded": 2347070,
+      "transfer": 2347370,
+      "decoded": 2347070
+     },
+     {
+      "name": "assets/proof/web005b/priority-1200.webp",
+      "encoded": 1948516,
+      "transfer": 1948816,
+      "decoded": 1948516
+     },
+     {
+      "name": "assets/imagery/yellowstone-2013-2880.webp",
+      "encoded": 724378,
+      "transfer": 724678,
+      "decoded": 724378
+     },
+     {
+      "name": "assets/imagery/chuquicamata-2024-1400.webp",
+      "encoded": 300272,
+      "transfer": 300572,
+      "decoded": 300272
+     },
+     {
+      "name": "assets/imagery/ili-delta-2020-1400.webp",
+      "encoded": 300306,
+      "transfer": 300606,
+      "decoded": 300306
+     }
+    ],
+    "dpr": 2,
+    "vw": 1920,
+    "vh": 1080,
+    "scrollW": 1920,
+    "scrollH": 9424
+   },
+   "hero_motion": {
+    "state": "held",
+    "reason": null,
+    "tier": "md",
+    "codec": "webm",
+    "layer": "priority",
+    "src": "orbgss-hero-1920-ca741624.webm",
+    "ended": true,
+    "vw": 1920
+   },
+   "lang_en": {
+    "lang": "en",
+    "h1": "Know where to look next."
+   },
+   "lang_tr": {
+    "lang": "tr",
+    "h1": "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+   },
+   "nojs": {
+    "h1": "Know where to look next.",
+    "poster": [
+     {
+      "c": true,
+      "w": 1600,
+      "src": "hero-opening-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-drape-priority-1920.png"
+     }
+    ]
+   }
+  },
+  {
+   "class": "w2560@1.5x (4K@150%)",
+   "routes": {
+    "/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "OrbGSS \u2014 Co\u011frafi Zek\u00e2",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+     ],
+     "broken": [],
+     "cls": 0.0035,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 7546808,
+     "videoBytes": 412
+    },
+    "/platform/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Platform \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS bir mek\u00e2nsal \u00f6nceli\u011fi nas\u0131l kurar?"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/solutions/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u00c7\u00f6z\u00fcmler \u2014 OrbGSS",
+     "h1": [
+      "Tek i\u015f ak\u0131\u015f\u0131, kan\u0131t\u0131n \u00f6nemli oldu\u011fu her yerde."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/pilot/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Pilot \u2014 K\u0131z\u0131ldere \u2014 OrbGSS",
+     "h1": [
+      "K\u0131z\u0131ldere: ilk OrbGSS uygulamas\u0131."
+     ],
+     "broken": [],
+     "cls": 0.0119,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1439565,
+     "videoBytes": 412
+    },
+    "/company/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u015eirket \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS \u2014 Orbital Geo-Spatial Solutions"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/contact/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u0130leti\u015fim \u2014 OrbGSS",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131m\u0131z\u0131 konu\u015fal\u0131m."
+     ],
+     "broken": [],
+     "cls": 0.0162,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/404.html": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "404 \u2014 OrbGSS",
+     "h1": [
+      "404"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 0,
+     "videoBytes": 0
+    }
+   },
+   "home_images": {
+    "imgs": [
+     {
+      "alt": "Y\u00f6r\u00fcngeden g\u00f6rselle\u015ftirilmi\u015f g\u00f6r\u00fcn\u00fcm: Do",
+      "cls": "panel-image hero-poster",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       2560,
+       1440
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-held is-on",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       2560,
+       1440
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "100vw"
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "terrain",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "thm01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "alt01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere analiz alan\u0131n\u0131n g\u00f6rselle\u015ftiril",
+      "cls": "hero-drape-layer hero-drape-payoff is-on",
+      "parent": "priority",
+      "src": "assets/hero/drape/hero-drape-priority-1920.png",
+      "loading": "eager",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       2560,
+       1352
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere \u00e7evresindeki B\u00fcy\u00fck Menderes gr",
+      "cls": "panel-image",
+      "parent": "context",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-2400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1600,
+       900
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(max-width: 560px) 223vw, (max-width: 700px) 134vw, min(100vw, 1600px)"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n renkli y\u00fckselti ",
+      "cls": "panel-image",
+      "parent": "terrain",
+      "src": "assets/proof/web005b/terrain-900-d.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n \u0131raksak termal a",
+      "cls": "panel-image",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131 boyunca y\u00fczey alter",
+      "cls": "panel-image",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik h",
+      "cls": "panel-image",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 701px) 600px, 88vw"
+     },
+     {
+      "alt": "G\u00f6reli \u00f6ncelik haritas\u0131n\u0131n renk \u00f6l\u00e7e\u011fi; ",
+      "cls": "priority-legend-ramp",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-legend-ramp.png",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       256,
+       8
+      ],
+      "box": [
+       256,
+       8
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n do\u011fal renkli Lan",
+      "cls": "",
+      "parent": "",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-2400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1594.66,
+       897
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) 1600px, 267vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n termal anomali harita",
+      "cls": "",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n alterasyon vekili har",
+      "cls": "",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik harita",
+      "cls": "",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Yellowstone Ulusal Park\u0131 \u00e7evresindeki je",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/yellowstone-2013-2400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1280,
+       800
+      ],
+      "box": [
+       1278,
+       458
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(100vw, 1280px), 100vw"
+     },
+     {
+      "alt": "Kuzey \u015eili Chuquicamata madencilik b\u00f6lge",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/chuquicamata-2024-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       632,
+       395
+      ],
+      "box": [
+       625,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "Kazakistan \u0130li Nehri Deltas\u0131 ve Balka\u015f G",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/ili-delta-2020-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       632,
+       395
+      ],
+      "box": [
+       625,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "OrbGSS \u2014 Orbital Geo-Spatial Solutions",
+      "cls": "",
+      "parent": "",
+      "src": "assets/logo.svg",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       420,
+       120
+      ],
+      "box": [
+       225,
+       64.28
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     }
+    ],
+    "resources": [
+     {
+      "name": "assets/hero/hero-poster-1600.webp",
+      "encoded": 120764,
+      "transfer": 121064,
+      "decoded": 120764
+     },
+     {
+      "name": "assets/proof/web005b/priority-legend-ramp.png",
+      "encoded": 257,
+      "transfer": 557,
+      "decoded": 257
+     },
+     {
+      "name": "assets/logo.svg",
+      "encoded": 1154,
+      "transfer": 1454,
+      "decoded": 1154
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-2400.webp",
+      "encoded": 900484,
+      "transfer": 900784,
+      "decoded": 900484
+     },
+     {
+      "name": "assets/hero/drape/hero-drape-priority-1920.png",
+      "encoded": 974992,
+      "transfer": 975292,
+      "decoded": 974992
+     },
+     {
+      "name": "assets/proof/web005b/terrain-900-d.webp",
+      "encoded": 88840,
+      "transfer": 89140,
+      "decoded": 88840
+     },
+     {
+      "name": "assets/proof/web005b/thm01-900.webp",
+      "encoded": 1110906,
+      "transfer": 1111206,
+      "decoded": 1110906
+     },
+     {
+      "name": "assets/proof/web005b/alt01-900.webp",
+      "encoded": 1675608,
+      "transfer": 1675908,
+      "decoded": 1675608
+     },
+     {
+      "name": "assets/proof/web005b/priority-900.webp",
+      "encoded": 1539562,
+      "transfer": 1539862,
+      "decoded": 1539562
+     },
+     {
+      "name": "assets/imagery/yellowstone-2013-2400.webp",
+      "encoded": 532930,
+      "transfer": 533230,
+      "decoded": 532930
+     },
+     {
+      "name": "assets/imagery/chuquicamata-2024-1400.webp",
+      "encoded": 300272,
+      "transfer": 300572,
+      "decoded": 300272
+     },
+     {
+      "name": "assets/imagery/ili-delta-2020-1400.webp",
+      "encoded": 300306,
+      "transfer": 300606,
+      "decoded": 300306
+     }
+    ],
+    "dpr": 1.5,
+    "vw": 2560,
+    "vh": 1440,
+    "scrollW": 2560,
+    "scrollH": 9812
+   },
+   "hero_motion": {
+    "state": "held",
+    "reason": null,
+    "tier": "md",
+    "codec": "webm",
+    "layer": "priority",
+    "src": "orbgss-hero-1920-ca741624.webm",
+    "ended": true,
+    "vw": 1920
+   },
+   "lang_en": {
+    "lang": "en",
+    "h1": "Know where to look next."
+   },
+   "lang_tr": {
+    "lang": "tr",
+    "h1": "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+   },
+   "nojs": {
+    "h1": "Know where to look next.",
+    "poster": [
+     {
+      "c": true,
+      "w": 1600,
+      "src": "hero-opening-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 2560,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-drape-priority-1920.png"
+     }
+    ]
+   }
+  },
+  {
+   "class": "w3840@1x (4K@100%)",
+   "routes": {
+    "/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "OrbGSS \u2014 Co\u011frafi Zek\u00e2",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+     ],
+     "broken": [],
+     "cls": 0.001,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 4208176,
+     "videoBytes": 412
+    },
+    "/platform/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Platform \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS bir mek\u00e2nsal \u00f6nceli\u011fi nas\u0131l kurar?"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/solutions/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u00c7\u00f6z\u00fcmler \u2014 OrbGSS",
+     "h1": [
+      "Tek i\u015f ak\u0131\u015f\u0131, kan\u0131t\u0131n \u00f6nemli oldu\u011fu her yerde."
+     ],
+     "broken": [],
+     "cls": 0.0077,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/pilot/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "Pilot \u2014 K\u0131z\u0131ldere \u2014 OrbGSS",
+     "h1": [
+      "K\u0131z\u0131ldere: ilk OrbGSS uygulamas\u0131."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1439565,
+     "videoBytes": 412
+    },
+    "/company/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u015eirket \u2014 OrbGSS",
+     "h1": [
+      "OrbGSS \u2014 Orbital Geo-Spatial Solutions"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 1,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/contact/": {
+     "overflow": 0,
+     "lang": "tr",
+     "title": "\u0130leti\u015fim \u2014 OrbGSS",
+     "h1": [
+      "S\u0131rada nereye bakaca\u011f\u0131m\u0131z\u0131 konu\u015fal\u0131m."
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 1887,
+     "videoBytes": 412
+    },
+    "/404.html": {
+     "overflow": 0,
+     "lang": "en",
+     "title": "404 \u2014 OrbGSS",
+     "h1": [
+      "404"
+     ],
+     "broken": [],
+     "cls": 0,
+     "shifts": 0,
+     "errors": [],
+     "imgBytes": 0,
+     "videoBytes": 0
+    }
+   },
+   "home_images": {
+    "imgs": [
+     {
+      "alt": "Y\u00f6r\u00fcngeden g\u00f6rselle\u015ftirilmi\u015f g\u00f6r\u00fcn\u00fcm: Do",
+      "cls": "panel-image hero-poster",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       3840,
+       2160
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-held is-on",
+      "parent": "",
+      "src": "assets/hero/hero-poster-1600.webp",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       3840,
+       2160
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "100vw"
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer hero-drape-rise",
+      "parent": "",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "terrain",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "thm01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "",
+      "cls": "hero-drape-layer",
+      "parent": "alt01",
+      "src": "",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       0,
+       0
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "0",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere analiz alan\u0131n\u0131n g\u00f6rselle\u015ftiril",
+      "cls": "hero-drape-layer hero-drape-payoff is-on",
+      "parent": "priority",
+      "src": "assets/hero/drape/hero-drape-priority-1920.png",
+      "loading": "eager",
+      "complete": true,
+      "natural": [
+       1920,
+       1080
+      ],
+      "box": [
+       3840,
+       2072
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere \u00e7evresindeki B\u00fcy\u00fck Menderes gr",
+      "cls": "panel-image",
+      "parent": "context",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1600,
+       900
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(max-width: 560px) 223vw, (max-width: 700px) 134vw, min(100vw, 1600px)"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n renkli y\u00fckselti ",
+      "cls": "panel-image",
+      "parent": "terrain",
+      "src": "assets/proof/web005b/terrain-600-d.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n \u0131raksak termal a",
+      "cls": "panel-image",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131 boyunca y\u00fczey alter",
+      "cls": "panel-image",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(45vw, 600px), (min-width: 561px) 70vw, 88vw"
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik h",
+      "cls": "panel-image",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 701px) 600px, 88vw"
+     },
+     {
+      "alt": "G\u00f6reli \u00f6ncelik haritas\u0131n\u0131n renk \u00f6l\u00e7e\u011fi; ",
+      "cls": "priority-legend-ramp",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-legend-ramp.png",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       256,
+       8
+      ],
+      "box": [
+       256,
+       8
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     },
+     {
+      "alt": "K\u0131z\u0131ldere ilgi alan\u0131n\u0131n do\u011fal renkli Lan",
+      "cls": "",
+      "parent": "",
+      "src": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1600,
+       900
+      ],
+      "box": [
+       1594.66,
+       897
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) 1600px, 267vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n termal anomali harita",
+      "cls": "",
+      "parent": "thermal",
+      "src": "assets/proof/web005b/thm01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n alterasyon vekili har",
+      "cls": "",
+      "parent": "alteration",
+      "src": "assets/proof/web005b/alt01-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Ayn\u0131 ilgi alan\u0131n\u0131n g\u00f6reli \u00f6ncelik harita",
+      "cls": "",
+      "parent": "priority",
+      "src": "assets/proof/web005b/priority-600.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       600,
+       600
+      ],
+      "box": [
+       598,
+       598
+      ],
+      "display": "block",
+      "visibility": "hidden",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": "(min-width: 1001px) 600px, 88vw"
+     },
+     {
+      "alt": "Yellowstone Ulusal Park\u0131 \u00e7evresindeki je",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/yellowstone-2013-1400.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       1280,
+       800
+      ],
+      "box": [
+       1278,
+       458
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(100vw, 1280px), 100vw"
+     },
+     {
+      "alt": "Kuzey \u015eili Chuquicamata madencilik b\u00f6lge",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/chuquicamata-2024-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       631,
+       394
+      ],
+      "box": [
+       625,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "Kazakistan \u0130li Nehri Deltas\u0131 ve Balka\u015f G",
+      "cls": "",
+      "parent": "solutions",
+      "src": "assets/imagery/ili-delta-2020-900.webp",
+      "loading": "lazy",
+      "complete": true,
+      "natural": [
+       631,
+       394
+      ],
+      "box": [
+       625,
+       298
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "cover",
+      "sizes": "(min-width: 1001px) min(50vw, 632px), 100vw"
+     },
+     {
+      "alt": "OrbGSS \u2014 Orbital Geo-Spatial Solutions",
+      "cls": "",
+      "parent": "",
+      "src": "assets/logo.svg",
+      "loading": "auto",
+      "complete": true,
+      "natural": [
+       420,
+       120
+      ],
+      "box": [
+       225,
+       64.28
+      ],
+      "display": "block",
+      "visibility": "visible",
+      "opacity": "1",
+      "objectFit": "fill",
+      "sizes": ""
+     }
+    ],
+    "resources": [
+     {
+      "name": "assets/hero/hero-poster-1600.webp",
+      "encoded": 120764,
+      "transfer": 121064,
+      "decoded": 120764
+     },
+     {
+      "name": "assets/proof/web005b/priority-legend-ramp.png",
+      "encoded": 257,
+      "transfer": 557,
+      "decoded": 257
+     },
+     {
+      "name": "assets/logo.svg",
+      "encoded": 1154,
+      "transfer": 1454,
+      "decoded": 1154
+     },
+     {
+      "name": "assets/imagery/kizildere-aoi-context-2025-natural-1600.webp",
+      "encoded": 470180,
+      "transfer": 470480,
+      "decoded": 470180
+     },
+     {
+      "name": "assets/hero/drape/hero-drape-priority-1920.png",
+      "encoded": 974992,
+      "transfer": 975292,
+      "decoded": 974992
+     },
+     {
+      "name": "assets/proof/web005b/terrain-600-d.webp",
+      "encoded": 50662,
+      "transfer": 50962,
+      "decoded": 50662
+     },
+     {
+      "name": "assets/proof/web005b/thm01-600.webp",
+      "encoded": 551540,
+      "transfer": 551840,
+      "decoded": 551540
+     },
+     {
+      "name": "assets/proof/web005b/alt01-600.webp",
+      "encoded": 799318,
+      "transfer": 799618,
+      "decoded": 799318
+     },
+     {
+      "name": "assets/proof/web005b/priority-600.webp",
+      "encoded": 758152,
+      "transfer": 758452,
+      "decoded": 758152
+     },
+     {
+      "name": "assets/imagery/yellowstone-2013-1400.webp",
+      "encoded": 217914,
+      "transfer": 218214,
+      "decoded": 217914
+     },
+     {
+      "name": "assets/imagery/chuquicamata-2024-900.webp",
+      "encoded": 129918,
+      "transfer": 130218,
+      "decoded": 129918
+     },
+     {
+      "name": "assets/imagery/ili-delta-2020-900.webp",
+      "encoded": 132592,
+      "transfer": 132892,
+      "decoded": 132592
+     }
+    ],
+    "dpr": 1,
+    "vw": 3840,
+    "vh": 2160,
+    "scrollW": 3840,
+    "scrollH": 10532
+   },
+   "hero_motion": {
+    "state": "held",
+    "reason": null,
+    "tier": "md",
+    "codec": "webm",
+    "layer": "priority",
+    "src": "orbgss-hero-1920-ca741624.webm",
+    "ended": true,
+    "vw": 1920
+   },
+   "lang_en": {
+    "lang": "en",
+    "h1": "Know where to look next."
+   },
+   "lang_tr": {
+    "lang": "tr",
+    "h1": "S\u0131rada nereye bakaca\u011f\u0131n\u0131z\u0131 bilin."
+   },
+   "nojs": {
+    "h1": "Know where to look next.",
+    "poster": [
+     {
+      "c": true,
+      "w": 1600,
+      "src": "hero-opening-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 3840,
+      "src": "hero-poster-1600.webp"
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 0,
+      "src": ""
+     },
+     {
+      "c": true,
+      "w": 1920,
+      "src": "hero-drape-priority-1920.png"
+     }
+    ]
+   }
+  }
+ ]
+}

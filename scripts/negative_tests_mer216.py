@@ -98,6 +98,15 @@ for token, expect in (
     case(f"script.js loses {token}", SCRIPT,
          (lambda tok: lambda t: t.replace(tok, "ZZ" + tok[2:]))(token),
          expect)
+case("script.js drops the network gate from the candidate loop (an alternate codec could skip its 1.5x margin)", SCRIPT,
+     lambda t: t.replace("if (!networkOk(candidate.tier, candidate.codec)) {", "if (false) {", 1),
+     "gate every candidate on networkOk")
+case("script.js drops the decoder verdict from the candidate loop (an alternate codec could skip its capability check)", SCRIPT,
+     lambda t: t.replace("return decoderAccepts(candidate, deadline).then((ok) => {", "return Promise.resolve(true).then((ok) => {", 1),
+     "gate every candidate on networkOk")
+case("script.js returns a second delivery straight from a failed query", SCRIPT,
+     lambda t: t.replace("refusal = 'decoder-refused';", "refusal = 'decoder-refused'; return { tier: candidate.tier, codec: candidate.codec, src: candidate.tier[candidate.codec], type: 'video/mp4' };", 1),
+     "exactly one place")
 case("script.js attaches a hero video source in a second place", SCRIPT,
      lambda t: t.replace("    video.muted = true;", "    video.setAttribute('src', choice.src);\r\n    video.muted = true;", 1),
      "exactly one place")

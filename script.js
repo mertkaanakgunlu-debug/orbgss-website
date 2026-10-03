@@ -1373,35 +1373,65 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     const down = typeof connection.downlink === 'number' && connection.downlink > 0 ? connection.downlink * 1e6 : 0;
     return !down || tierBps(tier, codec) * 1.5 <= down;
   }
-  function pickDelivery() {
-    const order = codecOrder();
-    if (!order.length) return null;
-    let i = firstTierIndex();
+  /* The decoder's verdict on one (tier, codec) candidate, true or false, never a guess:
+       - no mediaCapabilities, or no answer inside the shared 1.2 s budget: unknown, so the candidate
+         stands on canPlayType and the network gate alone (the hero must not wait on a silent API);
+       - an answer that says unsupported or not smooth, or a query that REJECTS (the configuration
+         could not be evaluated): the candidate is not safe. */
+  function decoderAccepts(candidate, deadline) {
     const mc = navigator.mediaCapabilities;
-    const attempt = (index) => {
-      const tier = tiers[index];
-      const options = order.filter((codec) => tier[codec]);
-      const codec = options.find((c) => networkOk(tier, c)) || null;
-      if (!codec) return index > 0 ? attempt(index - 1) : Promise.resolve(null);
-      const fall = () => ({ tier, codec, src: tier[codec], type: codec === 'webm' ? 'video/webm' : 'video/mp4' });
-      if (!mc || typeof mc.decodingInfo !== 'function') return Promise.resolve(fall());
-      const probe = mc.decodingInfo({
+    if (!mc || typeof mc.decodingInfo !== 'function') return Promise.resolve(true);
+    const budget = deadline - Date.now();
+    if (budget <= 0) return Promise.resolve(true);
+    const { tier, codec } = candidate;
+    let query;
+    try {
+      query = mc.decodingInfo({
         type: 'file',
         video: {
           contentType: codecString(tier, codec), width: tier.w, height: Math.round(tier.w * 9 / 16),
           bitrate: tierBps(tier, codec), framerate: SCENE_FPS,
         },
-      }).then((info) => {
-        if (info && info.supported && info.smooth !== false) return fall();
-        /* Not smooth at this tier (or not supported): the next tier down, then the other codec. */
-        if (index > 0) return attempt(index - 1);
-        const other = options.find((c) => c !== codec);
-        return other ? { tier, codec: other, src: tier[other], type: other === 'webm' ? 'video/webm' : 'video/mp4' } : null;
-      }).catch(() => fall());
-      /* A capability query that never answers must not hold the hero: carry on with the pick. */
-      return Promise.race([probe, new Promise((resolve) => window.setTimeout(() => resolve(fall()), 1200))]);
+      });
+    } catch (e) { return Promise.resolve(false); }
+    const verdict = Promise.resolve(query).then((info) => !!(info && info.supported && info.smooth !== false), () => false);
+    return Promise.race([verdict, new Promise((resolve) => window.setTimeout(() => resolve(true), budget))]);
+  }
+  /* One delivery, chosen before any video byte. Every candidate that can be returned has passed BOTH
+     gates, the network margin and the decoder verdict, in this order of preference: the preferred codec
+     from the demanded tier down the ladder (the existing downshift policy), then each alternate codec
+     the same way. No candidate left means no delivery, and the caller falls back to the held still. */
+  let refusal = 'no-playable-encode';
+  function pickDelivery() {
+    const order = codecOrder();
+    if (!order.length) return null;
+    const candidates = [];
+    order.forEach((codec) => {
+      for (let index = firstTierIndex(); index >= 0; index -= 1) {
+        if (tiers[index][codec]) candidates.push({ tier: tiers[index], codec });
+      }
+    });
+    const deadline = Date.now() + 1200;
+    refusal = 'no-playable-encode';
+    const next = (k) => {
+      if (k >= candidates.length) return Promise.resolve(null);
+      const candidate = candidates[k];
+      if (!networkOk(candidate.tier, candidate.codec)) {
+        if (refusal !== 'decoder-refused') refusal = 'slow-network';
+        return next(k + 1);
+      }
+      return decoderAccepts(candidate, deadline).then((ok) => {
+        if (ok) {
+          return {
+            tier: candidate.tier, codec: candidate.codec, src: candidate.tier[candidate.codec],
+            type: candidate.codec === 'webm' ? 'video/webm' : 'video/mp4',
+          };
+        }
+        refusal = 'decoder-refused';
+        return next(k + 1);
+      });
     };
-    return attempt(i);
+    return next(0);
   }
 
   let started = false;
@@ -1480,7 +1510,7 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
      and the encode is requested only after it. */
   function begin() {
     Promise.resolve(pickDelivery()).then((choice) => {
-      if (choice) start(choice); else settleStatic(codecOrder().length ? 'slow-network' : 'no-playable-encode');
+      if (choice) start(choice); else settleStatic(refusal);
     }, () => settleStatic('no-playable-encode'));
   }
   function startWhenIdle() {

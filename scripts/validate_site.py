@@ -1706,6 +1706,13 @@ def main() -> int:
     ):
         if token not in script_hero:
             fail(f"script.js must {why} ({token!r} is missing)", errors)
+    # Review revision: a codec may only be returned once it has passed BOTH the network margin and the
+    # decoder verdict, in the same candidate loop (a codec must never be returned straight from a
+    # failed capability query for another one).
+    if not re.search(r"networkOk\(candidate\.tier, candidate\.codec\)[\s\S]{0,400}decoderAccepts\(candidate, deadline\)", script_hero):
+        fail("script.js pickDelivery must gate every candidate on networkOk and then decoderAccepts before it can be returned", errors)
+    if "function decoderAccepts" not in script_hero or script_hero.count("src: candidate.tier[candidate.codec]") != 1:
+        fail("script.js must build a delivery only from a candidate that passed the gates (exactly one place)", errors)
     if script_hero.count("setAttribute('src'") != 1:
         fail("script.js must attach a hero video source in exactly one place: a tier is chosen once, "
              "before playback, and never swapped mid-play", errors)

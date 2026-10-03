@@ -1,0 +1,2860 @@
+[
+ {
+  "scenario": "baseline-1920@1x-fast",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 6,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "webm",
+  "waiting_events": 2,
+  "video_src_assignments": [
+   "orbgss-hero-1920-ca741624.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 761,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11992,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11995,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 12142,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12667,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12971,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13718,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14473,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-ca741624.webm",
+    "range": "bytes=0-",
+    "bytes": 2920385
+   }
+  ],
+  "video_bytes_total": 2920385,
+  "luminance": [
+   {
+    "t": 0.6,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.0,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "mp4-only (no WebM support)",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 1,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "mp4",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1920-c8db4a5a.mp4"
+  ],
+  "state_timeline": [
+   {
+    "t": 468,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11814,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11821,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11948,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12493,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12796,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13548,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14296,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-c8db4a5a.mp4",
+    "range": "bytes=0-",
+    "bytes": 3584878
+   }
+  ],
+  "video_bytes_total": 3584878,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.3,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.2,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "mp4-only 1280",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "sm",
+  "codec": "mp4",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1280-164c957f.mp4"
+  ],
+  "state_timeline": [
+   {
+    "t": 467,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11833,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11844,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11955,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12517,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12821,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13572,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14323,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1280-164c957f.mp4",
+    "range": "bytes=0-",
+    "bytes": 2062118
+   }
+  ],
+  "video_bytes_total": 2062118,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     19.9,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 8.0,
+    "mean_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 12.2,
+    "mean_min_max": [
+     30.8,
+     0,
+     227
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "downlink 4 Mbps",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 9,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "webm",
+  "waiting_events": 10,
+  "video_src_assignments": [
+   "orbgss-hero-1920-ca741624.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 1719,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 19847,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 19853,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 20023,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 20526,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 20829,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 21580,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 22330,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-ca741624.webm",
+    "range": "bytes=0-",
+    "bytes": 2920385
+   }
+  ],
+  "video_bytes_total": 2920385,
+  "luminance": [
+   {
+    "t": 0.6,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 16.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 20.0,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "downlink 1.6 Mbps (-> sm)",
+  "state": "static",
+  "reason": "slow-network",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [
+   {
+    "t": 4207,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 4207,
+    "name": "attr:data-hero-reason",
+    "v": "slow-network"
+   },
+   {
+    "t": 4966,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 4966,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.7,
+    "mean_min_max": [
+     10.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 2.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     13.3,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.3,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 12.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 16.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 20.1,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "downlink 1.0 Mbps (-> still)",
+  "state": "static",
+  "reason": "slow-network",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [
+   {
+    "t": 228,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 228,
+    "name": "attr:data-hero-reason",
+    "v": "slow-network"
+   },
+   {
+    "t": 236,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 236,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     16.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.0,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "effectiveType 3g (-> still)",
+  "state": "static",
+  "reason": "slow-network",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [
+   {
+    "t": 357,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 357,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     15.3,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.0,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "Save-Data (-> still)",
+  "state": "static",
+  "reason": "save-data",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [
+   {
+    "t": 367,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 367,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     15.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.3,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "reduced motion (-> still)",
+  "state": "static",
+  "reason": "reduced-motion",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "phone 375@3x (-> still)",
+  "state": "static",
+  "reason": "small-screen",
+  "layer": null,
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     45.8,
+     4,
+     172
+    ]
+   },
+   {
+    "t": 2.0,
+    "mean_min_max": [
+     45.8,
+     4,
+     172
+    ]
+   },
+   {
+    "t": 5.0,
+    "mean_min_max": [
+     45.8,
+     4,
+     172
+    ]
+   },
+   {
+    "t": 8.0,
+    "mean_min_max": [
+     45.8,
+     4,
+     172
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "no JavaScript",
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "video blocked (404/encode error)",
+  "state": "static",
+  "reason": "encode-error",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "webm",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1920-ca741624.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 363,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 363,
+    "name": "attr:data-hero-reason",
+    "v": "encode-error"
+   },
+   {
+    "t": 365,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 375,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 375,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-ca741624.webm",
+    "range": "bytes=0-",
+    "bytes": 0
+   }
+  ],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     15.5,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "autoplay refused",
+  "state": "static",
+  "reason": "autoplay-blocked",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 4,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "webm",
+  "waiting_events": 0,
+  "video_src_assignments": [
+   "orbgss-hero-1920-ca741624.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 357,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 357,
+    "name": "attr:data-hero-reason",
+    "v": "autoplay-blocked"
+   },
+   {
+    "t": 370,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 370,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-ca741624.webm",
+    "range": "bytes=0-",
+    "bytes": 1114112
+   }
+  ],
+  "video_bytes_total": 1114112,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     15.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.0,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "decoder: unsupported",
+  "state": "static",
+  "reason": "decoder-refused",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [
+   {
+    "t": 349,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 349,
+    "name": "attr:data-hero-reason",
+    "v": "decoder-refused"
+   },
+   {
+    "t": 366,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 366,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     15.2,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.0,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "decoder: 1920 not smooth (-> sm)",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "sm",
+  "codec": "webm",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1280-21da1079.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 381,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11753,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11756,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11861,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12429,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12731,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13483,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14234,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1280-21da1079.webm",
+    "range": "bytes=0-",
+    "bytes": 1646519
+   }
+  ],
+  "video_bytes_total": 1646519,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.2,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "mediaCapabilities absent",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "webm",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1920-ca741624.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 490,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11836,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11841,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11971,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12514,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12817,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13569,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14321,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-ca741624.webm",
+    "range": "bytes=0-",
+    "bytes": 2920385
+   }
+  ],
+  "video_bytes_total": 2920385,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.0,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.2,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "mediaCapabilities never answers",
+  "state": "held",
+  "reason": null,
+  "layer": "alt01",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "webm",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1920-ca741624.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 1448,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 12848,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 12855,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 12941,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 13527,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 13830,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 14582,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-ca741624.webm",
+    "range": "bytes=0-",
+    "bytes": 2920385
+   }
+  ],
+  "video_bytes_total": 2920385,
+  "luminance": [
+   {
+    "t": 0.6,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.3,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.2,
+    "mean_min_max": [
+     16.6,
+     4,
+     147
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "dropped frames 60%",
+  "state": "static",
+  "reason": "dropped-frames",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 109,
+   "dropped": 65,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "webm",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1920-ca741624.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 277,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 4789,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 4789,
+    "name": "attr:data-hero-reason",
+    "v": "dropped-frames"
+   },
+   {
+    "t": 4797,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 4797,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-ca741624.webm",
+    "range": "bytes=0-",
+    "bytes": 2920385
+   }
+  ],
+  "video_bytes_total": 2920385,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     10.0,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.0,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 12.2,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "decoder paints nothing (videoWidth 0)",
+  "state": "static",
+  "reason": "no-video-frame",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 4,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "webm",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1920-ca741624.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 260,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 260,
+    "name": "attr:data-hero-reason",
+    "v": "no-video-frame"
+   },
+   {
+    "t": 267,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 267,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-ca741624.webm",
+    "range": "bytes=0-",
+    "bytes": 2920385
+   }
+  ],
+  "video_bytes_total": 2920385,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     16.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.1,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "A1 sm, 1.8 Mbps, WebM query rejects, MP4 over its margin -> still",
+  "state": "static",
+  "reason": "decoder-refused",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [
+   {
+    "t": 195,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 195,
+    "name": "attr:data-hero-reason",
+    "v": "decoder-refused"
+   },
+   {
+    "t": 210,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 210,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.6,
+    "mean_min_max": [
+     30.8,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     30.4,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     30.4,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     30.4,
+     0,
+     226
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "A2 sm, 1.8 Mbps, WebM not smooth, MP4 over its margin -> still",
+  "state": "static",
+  "reason": "decoder-refused",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [
+   {
+    "t": 193,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 193,
+    "name": "attr:data-hero-reason",
+    "v": "decoder-refused"
+   },
+   {
+    "t": 213,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 213,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.6,
+    "mean_min_max": [
+     30.8,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     30.4,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     30.4,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 8.0,
+    "mean_min_max": [
+     30.4,
+     0,
+     226
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "A3 sm, 1.8 Mbps, WebM unsupported, MP4 over its margin -> still",
+  "state": "static",
+  "reason": "decoder-refused",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [
+   {
+    "t": 191,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 191,
+    "name": "attr:data-hero-reason",
+    "v": "decoder-refused"
+   },
+   {
+    "t": 212,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 212,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.6,
+    "mean_min_max": [
+     30.8,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     30.4,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     30.4,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 8.0,
+    "mean_min_max": [
+     30.4,
+     0,
+     226
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "B1 sm, 2.3 Mbps, WebM query rejects, MP4 within its margin -> sm MP4",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "sm",
+  "codec": "mp4",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1280-164c957f.mp4"
+  ],
+  "state_timeline": [
+   {
+    "t": 257,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11645,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11647,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11750,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12320,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12623,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13374,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14120,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1280-164c957f.mp4",
+    "range": "bytes=0-",
+    "bytes": 2062118
+   }
+  ],
+  "video_bytes_total": 2062118,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     20.0,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 2.1,
+    "mean_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 5.0,
+    "mean_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     20.2,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 12.2,
+    "mean_min_max": [
+     30.9,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 16.1,
+    "mean_min_max": [
+     30.9,
+     0,
+     227
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "B2 sm, 2.3 Mbps, WebM not smooth, MP4 within its margin -> sm MP4",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "sm",
+  "codec": "mp4",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1280-164c957f.mp4"
+  ],
+  "state_timeline": [
+   {
+    "t": 245,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11625,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11630,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11739,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12303,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12606,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13355,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14109,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1280-164c957f.mp4",
+    "range": "bytes=0-",
+    "bytes": 2062118
+   }
+  ],
+  "video_bytes_total": 2062118,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     20.0,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     20.2,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 12.2,
+    "mean_min_max": [
+     30.9,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 16.1,
+    "mean_min_max": [
+     30.9,
+     0,
+     227
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "B3 sm, 2.3 Mbps, WebM unsupported, MP4 within its margin -> sm MP4",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "sm",
+  "codec": "mp4",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1280-164c957f.mp4"
+  ],
+  "state_timeline": [
+   {
+    "t": 284,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11639,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11641,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11744,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12313,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12616,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13368,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14119,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1280-164c957f.mp4",
+    "range": "bytes=0-",
+    "bytes": 2062118
+   }
+  ],
+  "video_bytes_total": 2062118,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     20.0,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 5.0,
+    "mean_min_max": [
+     20.0,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     20.2,
+     0,
+     226
+    ]
+   },
+   {
+    "t": 12.1,
+    "mean_min_max": [
+     30.9,
+     0,
+     227
+    ]
+   },
+   {
+    "t": 16.1,
+    "mean_min_max": [
+     30.9,
+     0,
+     227
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "C1 1920, fast, WebM never accepted, MP4 ok -> md MP4",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "mp4",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1920-c8db4a5a.mp4"
+  ],
+  "state_timeline": [
+   {
+    "t": 266,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11649,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11651,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11746,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12324,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12627,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13378,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14127,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-c8db4a5a.mp4",
+    "range": "bytes=0-",
+    "bytes": 3584878
+   }
+  ],
+  "video_bytes_total": 3584878,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.0,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.1,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 16.1,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "C2 1920, fast, WebM ok -> md WebM (preferred codec kept)",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "webm",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1920-ca741624.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 256,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11646,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11652,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11746,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12325,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12626,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13379,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14131,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-ca741624.webm",
+    "range": "bytes=0-",
+    "bytes": 2920385
+   }
+  ],
+  "video_bytes_total": 2920385,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     10.0,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.2,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 16.2,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "C3 1920, 4 Mbps, WebM not smooth at md, ok at sm (downshift first)",
+  "state": "held",
+  "reason": null,
+  "layer": "priority",
+  "video_opacity": "1",
+  "quality": {
+   "total": 276,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": "sm",
+  "codec": "webm",
+  "waiting_events": 1,
+  "video_src_assignments": [
+   "orbgss-hero-1280-21da1079.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 268,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 11652,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 11655,
+    "name": "attr:data-hero-layer",
+    "v": "rise"
+   },
+   {
+    "t": 11759,
+    "name": "attr:data-hero-state",
+    "v": "held"
+   },
+   {
+    "t": 12328,
+    "name": "attr:data-hero-layer",
+    "v": "terrain"
+   },
+   {
+    "t": 12631,
+    "name": "attr:data-hero-layer",
+    "v": "thm01"
+   },
+   {
+    "t": 13382,
+    "name": "attr:data-hero-layer",
+    "v": "alt01"
+   },
+   {
+    "t": 14132,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1280-21da1079.webm",
+    "range": "bytes=0-",
+    "bytes": 1646519
+   }
+  ],
+  "video_bytes_total": 1646519,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     10.0,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.1,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.0,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 12.1,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 16.1,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "D1 every codec rejected -> still",
+  "state": "static",
+  "reason": "decoder-refused",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [
+   {
+    "t": 200,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 200,
+    "name": "attr:data-hero-reason",
+    "v": "decoder-refused"
+   },
+   {
+    "t": 208,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 208,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.1,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "D2 every codec not smooth -> still",
+  "state": "static",
+  "reason": "decoder-refused",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 0,
+   "dropped": 0,
+   "corrupted": 0
+  },
+  "tier": null,
+  "codec": null,
+  "waiting_events": 0,
+  "video_src_assignments": [],
+  "state_timeline": [
+   {
+    "t": 199,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 199,
+    "name": "attr:data-hero-reason",
+    "v": "decoder-refused"
+   },
+   {
+    "t": 209,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 209,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [],
+  "video_bytes_total": 0,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     16.2,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 5.0,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     16.1,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ },
+ {
+  "scenario": "mid-play network collapse",
+  "state": "static",
+  "reason": "buffering",
+  "layer": "priority",
+  "video_opacity": "0",
+  "quality": {
+   "total": 53,
+   "dropped": 1,
+   "corrupted": 0
+  },
+  "tier": "md",
+  "codec": "webm",
+  "waiting_events": 2,
+  "video_src_assignments": [
+   "orbgss-hero-1920-ca741624.webm"
+  ],
+  "state_timeline": [
+   {
+    "t": 243,
+    "name": "attr:data-hero-state",
+    "v": "playing"
+   },
+   {
+    "t": 5235,
+    "name": "attr:data-hero-state",
+    "v": "static"
+   },
+   {
+    "t": 5235,
+    "name": "attr:data-hero-reason",
+    "v": "buffering"
+   },
+   {
+    "t": 5247,
+    "name": "attr:data-hero-payoff",
+    "v": "on"
+   },
+   {
+    "t": 5247,
+    "name": "attr:data-hero-layer",
+    "v": "priority"
+   }
+  ],
+  "video_requests": [
+   {
+    "file": "orbgss-hero-1920-ca741624.webm",
+    "range": "bytes=0-",
+    "bytes": 843776
+   }
+  ],
+  "video_bytes_total": 843776,
+  "luminance": [
+   {
+    "t": 0.5,
+    "mean_min_max": [
+     10.0,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 2.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 5.2,
+    "mean_min_max": [
+     10.1,
+     4,
+     147
+    ]
+   },
+   {
+    "t": 8.2,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 12.0,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 16.1,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   },
+   {
+    "t": 20.2,
+    "mean_min_max": [
+     16.0,
+     4,
+     136
+    ]
+   }
+  ],
+  "blank_samples": []
+ }
+]

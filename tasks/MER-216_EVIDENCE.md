@@ -1,7 +1,7 @@
 # MER-216 — Website media fidelity & runtime hardening: evidence
 
 **Linear:** MER-216 (consolidates and supersedes MER-143, MER-144, MER-145, MER-146)
-**State:** `REVIEW_READY` — Phases 1–4 evidenced; the implementation agent does not self-accept.
+**State:** `REVIEW_READY` — Phases 1–4 evidenced, plus the review revision in §5a (reviewed HEAD `1e58031ca4a8e0ecb77932eb580c3fd1447d9e2f`); the implementation agent does not self-accept.
 **Branch:** `claude/mer-216-s1r628`, created from the verified baseline `origin/main@f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85`
 **Executed on:** the CTO workstation (Windows 11, Claude Code over Remote Control), where the governed
 Kızıldere rasters and the authoritative hero master exist, as the Linear "Execution-environment decision — 2026-10-02" requires.
@@ -87,7 +87,7 @@ Playback was measured in real Chrome (§4): 276 / 276 frames presented in every 
 
 Changed in `script.js` (the hero IIFE only; the markup change is `data-hero-tiers` and the two bare attributes now naming the 1920 tier):
 
-1. **One choice, before any video byte.** Tier = the smallest encode at least 92 % as wide as the device pixels the 16:9 cover-fit frame must fill (`max(width, height × 16/9) × DPR`); codec = VP9 where the browser is confident, else H.264. The network `downlink` hint can only move a visitor **down** (a tier needs 1.5× its own average bitrate; measured below), and `navigator.mediaCapabilities.decodingInfo` (1.2 s time-boxed) steps down a tier when the decoder reports "not smooth" and falls back to the other codec when it reports "unsupported". Missing APIs (Safari, Firefox) mean no cap. Nothing is ever swapped mid-play: `setAttribute('src')` appears once (enforced by the validator).
+1. **One choice, before any video byte.** Tier = the smallest encode at least 92 % as wide as the device pixels the 16:9 cover-fit frame must fill (`max(width, height × 16/9) × DPR`); codec = VP9 where the browser is confident, else H.264. The network `downlink` hint can only move a visitor **down** (a tier needs 1.5× its own average bitrate; measured below), and `navigator.mediaCapabilities.decodingInfo` (one shared 1.2 s budget) gives a verdict on every candidate. Candidates are ordered preferred codec from the demanded tier down the ladder, then each alternate codec the same way; **a candidate can only be returned after it has passed both the network margin and the decoder verdict** (review revision, §5a). Missing APIs (Safari, Firefox) mean no cap and no verdict. Nothing is ever swapped mid-play: `setAttribute('src')` appears once (enforced by the validator).
 2. **No blank / black hero.** The video becomes visible only on its first *presented* frame (`requestVideoFrameCallback`, or `playing` where absent) and only if `videoWidth > 0`; the poster stays underneath.
 3. **Playback that goes wrong ends in the held still, not in a frozen frame.** A stall (`waiting`) of 3 s, or > 40 % dropped frames at 4.5 s, pauses the video and takes the existing static path (held base, then the priority payoff). Reasons are recorded on `data-hero-reason` / `data-hero-tier` / `data-hero-codec`.
 4. `play()` rejections are told apart (`NotAllowedError` → `autoplay-blocked`, anything else → `encode-error`).
@@ -115,7 +115,7 @@ The 1.5× margin is measured, not assumed: with a 1.2× margin a 1.6 Mbit/s link
 
 **Act 03 layer switching and the inspection aid.** Unchanged. A bounded predecode of the three Act 3 layers and the three inspection layers (`img.decode()` in idle slots when the stage nears the viewport) was implemented and measured and **was removed**: with 3 runs per class the worst first-switch frame gap at 4× CPU throttling was 30–42 ms with it versus 12–24 ms without (`phase4/layer_switch_predecode_experiment_run*.json` vs `layer_switch_baseline_run*.json`), i.e. no benefit and a possible cost, so it is not shipped. The final tree's switching, wipe drag and radios are therefore the baseline code path, and measure the same within noise: worst first-switch frame gap 12–42 ms (baseline) vs 12–30 ms (final) across 4× / 6× CPU throttling and 390 @3x (`layer_switch_after_run*.json`; the headless compositor ticks in 6.25 ms steps). Switching is compositor-only (opacity / visibility) and never touches a raster.
 
-Validators changed with the contract: `scripts/validate_site.py` now requires the tier records, hash-named files, faststart MP4s, a ladder in the markup that equals the records, the 1920 tier as the bare fallback, per-tier ceilings, and the runtime tokens above; `scripts/negative_tests_mer216.py` proves 16 / 16 deliberate regressions are caught.
+Validators changed with the contract: `scripts/validate_site.py` now requires the tier records, hash-named files, faststart MP4s, a ladder in the markup that equals the records, the 1920 tier as the bare fallback, per-tier ceilings, and the runtime tokens above; `scripts/negative_tests_mer216.py` proves 19 / 19 deliberate regressions are caught (16 at the reviewed HEAD, see §5a).
 
 ## 4. Phase 4 — terminal browser / 4K-HiDPI acceptance: `PHASE_4_PASS`
 
@@ -165,6 +165,45 @@ Environment: Chrome (headless, `--headless=new`) over CDP on the CTO workstation
 
 Not changed: `styles.css`, every other route, the posters, held frame, drape and rise states, all analytical rasters and derivatives, `vercel.json`, the Landsat context imagery.
 
+## 5a. Review revision (post-review, same branch; reviewed HEAD `1e58031ca4a8e0ecb77932eb580c3fd1447d9e2f`)
+
+Starting state verified before any edit: repository `mertkaanakgunlu-debug/orbgss-website`, `origin/main` still `f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85`, `origin/claude/mer-216-s1r628` = local = the reviewed HEAD, working tree clean apart from the pre-existing untracked `AGENTS.md`.
+
+**Blocker 1 — `STATUS.md` current state.** Reconciled to canonical state: MER-213 is **Done** (its documentation commit `f4f1d4d6…` is `main`); GitHub `main` is `f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85` (the old `00af0f2` is now history and the "has not been updated" claim is gone); MER-143 / 144 / 145 / 146 are canceled and consolidated into MER-216 and are not separately blocked tasks; the Stage line, the baseline table (`main` row and task-branch row), open gates 1 and 5, the "Tracking" line, "Next canonical task" and "History" were corrected. The superseded pre-launch and per-task historical sections were left as history. No product or science wording changed. (`CLAUDE.md`'s "Current baseline" bullet still describes the pre-fast-forward `main`; it was outside this revision's scope and is listed as a follow-up in the handoff.)
+
+**Blocker 2 — alternate-codec safety.** The defect was real: in the previous `pickDelivery`, when `decodingInfo()` rejected, or reported the selected codec unsupported / not smooth at the **smallest** tier, the alternate codec was returned directly, with neither `networkOk()` re-run for it nor a capability decision on it. Refactored in `script.js`:
+
+- `pickDelivery()` now builds an ordered candidate list — the preferred codec from the demanded tier down to the smallest (the existing downshift policy), then each alternate codec the same way — and walks it with one rule: **`networkOk(candidate)` then `decoderAccepts(candidate, deadline)`**. Only a candidate that passes both is returned; nothing else can return a delivery.
+- `decoderAccepts` is the single capability decision. No `mediaCapabilities`, or no answer inside the shared 1.2 s budget, is "unknown" and stands on `canPlayType` plus the network gate (a silent API cannot hold the hero, as before). An answer of unsupported or not smooth, **or a query that rejects**, is "not safe" for that candidate.
+- If no candidate at any eligible tier survives, `pickDelivery` resolves `null` and the existing held-still path runs, with an honest reason on `data-hero-reason` (`decoder-refused`, `slow-network` or `no-playable-encode`).
+- Unchanged: exactly one `setAttribute('src')` before playback and never a swap mid-play; Save-Data, slow-network (3g class), reduced-motion, small-screen, stall, dropped-frame, autoplay and blank-frame behaviour.
+- One deliberate behaviour change: a browser whose decoder reports **every** candidate unsupported / not smooth used to be sent a video anyway (the sm MP4); it is now served the held still (`decoder-refused`, 0 video bytes).
+
+New deterministic browser scenarios (real Chrome; `evidence/mer216/tools/measure_hero_scenarios.py`, results `evidence/mer216/phase3/hero_scenarios_review_revision_run1.json` and `…_run2.json`; 31 scenarios per run; viewport 1280 × 720 @1x so the demanded tier is the smallest; the sm tier needs 1.72 Mbit/s for WebM (1145 kbps × 1.5) and 2.15 Mbit/s for MP4 (1435 kbps × 1.5)). "`src` assignments" is the instrumented count of `video.setAttribute('src', …)`:
+
+| Case | Setup | Result (both runs) | Video requests | `src` assignments |
+| --- | --- | --- | --- | --- |
+| **A1** | sm, 4g, downlink 1.8 Mbit/s, WebM query **rejects**, MP4 over its 1.5× margin | `static / decoder-refused` | **0** | 0 |
+| **A2** | same, WebM **not smooth** | `static / decoder-refused` | **0** | 0 |
+| **A3** | same, WebM **unsupported** | `static / decoder-refused` | **0** | 0 |
+| **B1** | sm, 4g, downlink 2.3 Mbit/s, WebM query **rejects**, MP4 within its margin | `held`, sm **MP4**, 2,062,118 B | **1** | 1 (`orbgss-hero-1280-164c957f.mp4`) |
+| **B2** | same, WebM **not smooth** | `held`, sm MP4 | **1** | 1 |
+| **B3** | same, WebM **unsupported** | `held`, sm MP4 | **1** | 1 |
+| C1 | 1920, fast, WebM never accepted, MP4 ok | `held`, md MP4 | 1 | 1 |
+| C2 | 1920, fast, both ok | `held`, md WebM (preferred codec kept) | 1 | 1 |
+| C3 | 1920, 4 Mbit/s, WebM not smooth at md only | `held`, **sm WebM** (downshift preferred over a codec change) | 1 | 1 |
+| D1 / D2 | every codec rejected / not smooth | `static / decoder-refused` | 0 | 0 |
+
+B1–B3 "normal lifecycle": playing → `held` → payoff layer `priority`, 0 blank luminance samples, one request. The rest of the matrix was re-run on the revised tree and matches §3 (Save-Data, 3g, 1.0 and 1.6 Mbit/s, reduced motion, phone → still with 0 video bytes; 404 → `encode-error`; autoplay refused; `videoWidth` 0 → `no-video-frame`; 60 % dropped frames → `dropped-frames`; mid-play collapse → `buffering`; `mediaCapabilities` absent or never answering → plays; no JS; WebM-unsupported browser → md MP4 in one request); 0 blank samples in either run. **Stability note:** in run 1 the real-4-Mbit/s-throttled `downlink 4 Mbps` scenario ended `static / buffering` (228 of 276 frames presented, 72 dropped, 10 `waiting` events — the stall fallback working on a stuttering run, hero never blank); it was `held` in run 2, in 3 isolated reruns and in the §4 run, so it reads as a loaded-machine artifact rather than a selection defect. Both runs are kept.
+
+Guards: `scripts/validate_site.py` now also requires the `networkOk` → `decoderAccepts` pair in one candidate loop and a single delivery-construction site; `scripts/negative_tests_mer216.py` gained three cases (network gate removed, decoder verdict removed, a delivery returned straight from a failed query): **19 / 19 caught**.
+
+Affected Phase 4 / browser acceptance re-run on the revised tree (`evidence/mer216/phase4/*_review_revision.json`): 10 viewport / DPR classes × 7 routes: overflow 0, broken images 0, console errors 0; hero `held` with the `priority` payoff in all 8 desktop classes (sm WebM at 1024 @1x, md WebM elsewhere), still on phone and tablet; homepage image bytes identical to the baseline in every class; whole-site CLS ≤ 0.0341 (same noise band as before). Playback (16 s, 12 classes): 276 / 276 frames with 0–4 dropped in the unthrottled classes, 1 dropped at 4× and 2 at 6× CPU throttle; DSL 4 Mbit/s is still transfer-limited (181 frames, 8 dropped, as in §4); slow 4G → still. Interaction checks (EN / TR radios, pairs, wipe, mobile menu) pass.
+
+**Analytical assets are unchanged by this revision.** No file under `assets/` (including `assets/proof/web005b/` and `assets/imagery/`), no `index.html`, no `styles.css` and no `sources.json` differs from the reviewed HEAD (`git diff --stat 1e58031 -- assets/ index.html styles.css` is empty); `validate_site.py`, which recomputes every analytical checksum, LUT and MER-151 bound, passes. Phase 1 rasters were not rebuilt or re-verified because nothing they depend on moved.
+
+Changed in the revision: `STATUS.md`, `script.js`, `scripts/validate_site.py`, `scripts/negative_tests_mer216.py`, `evidence/mer216/tools/measure_hero_scenarios.py`, `evidence/mer216/phase3/hero_scenarios_review_revision_run{1,2}.json`, `evidence/mer216/phase4/{browser_audit,hero_playback,interaction_checks}_review_revision.json`, `tasks/MER-216_EVIDENCE.md`.
+
 ## 6. Decisions and deviations the reviewer should look at
 
 1. **FFmpeg instead of Blender's encoder** for the new ladder (`hero/README.md`, MER-216 section). It is local production tooling like Blender; the exact build (`7.1-essentials_build-www.gyan.dev`, obtained as the `imageio-ffmpeg` wheel into a scratch venv) and arguments are recorded. The earlier accepted files came from Blender and are replaced, not edited.
@@ -183,7 +222,7 @@ Not changed: `styles.css`, every other route, the posters, held frame, drape and
 | `py -3.14 scripts/negative_tests_web005.py` | 72 / 72 caught, restored tree identical |
 | `py -3.14 scripts/negative_tests_web005b.py` | 55 / 55 caught |
 | `py -3.14 scripts/negative_tests_web005c.py` | 18 / 18 caught |
-| `py -3.14 scripts/negative_tests_mer216.py` | 16 / 16 caught |
+| `py -3.14 scripts/negative_tests_mer216.py` | 19 / 19 caught (16 at the reviewed HEAD; +3 in the review revision) |
 | `node --check script.js` | exit 0 |
 | `scripts/build_web005b_presentation.py` (pinned venv) | 0 byte changes vs the committed derivatives |
 | `evidence/mer216/tools/verify_phase1_independent.py` | PASS, 0 differing pixels |

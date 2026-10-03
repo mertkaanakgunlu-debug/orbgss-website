@@ -25,6 +25,20 @@ MC_NOT_SMOOTH_HI = ("Object.defineProperty(navigator,'mediaCapabilities',{config
 MC_HANG = "Object.defineProperty(navigator,'mediaCapabilities',{configurable:true,get:()=>({decodingInfo:()=>new Promise(()=>{})})});"
 DROPS = ("HTMLVideoElement.prototype.getVideoPlaybackQuality=function(){return {totalVideoFrames:Math.round(this.currentTime*24),"
          "droppedVideoFrames:Math.round(this.currentTime*24*0.6),corruptedVideoFrames:0,creationTime:performance.now()}};")
+# MER-216 review revision: per-codec decoder verdicts, to exercise the preferred-codec-fails combinations.
+def mc_by_codec(webm, mp4):
+    """webm / mp4: 'ok' | 'reject' | 'notsmooth' | 'unsupported'."""
+    def js(v):
+        return {"ok": "Promise.resolve({supported:true,smooth:true,powerEfficient:true})",
+                "reject": "Promise.reject(new TypeError('configuration could not be evaluated'))",
+                "notsmooth": "Promise.resolve({supported:true,smooth:false,powerEfficient:false})",
+                "unsupported": "Promise.resolve({supported:false,smooth:false,powerEfficient:false})"}[v]
+    return ("Object.defineProperty(navigator,'mediaCapabilities',{configurable:true,get:()=>({decodingInfo:(c)=>"
+            "/webm/.test(c.video.contentType)?" + js(webm) + ":" + js(mp4) + "})});")
+
+
+SRC_COUNT = ("window.__srcSets=[];const _sa=Element.prototype.setAttribute;Element.prototype.setAttribute=function(n,v){"
+             "if(this.tagName==='VIDEO'&&n==='src')window.__srcSets.push(String(v).split('/').pop());return _sa.call(this,n,v)};")
 ZERO_W = "Object.defineProperty(HTMLVideoElement.prototype,'videoWidth',{configurable:true,get:()=>0});"
 
 
@@ -54,6 +68,21 @@ S = {
     "mediaCapabilities never answers": (1920, 1080, 1.0, MC_HANG + conn(), "none", False, 1, None, False, 15),
     "dropped frames 60%": (1920, 1080, 1.0, DROPS + conn(), "none", False, 1, None, False, 12),
     "decoder paints nothing (videoWidth 0)": (1920, 1080, 1.0, ZERO_W + conn(), "none", False, 1, None, False, 8),
+    # --- MER-216 review revision: the combined edge (smallest tier + marginal 4g downlink + preferred codec fails) ---
+    # sm WebM needs 1.72 Mbit/s (1145 kbps x 1.5), sm MP4 needs 2.15 Mbit/s (1435 kbps x 1.5).
+    "A1 sm, 1.8 Mbps, WebM query rejects, MP4 over its margin -> still": (1280, 720, 1.0, mc_by_codec("reject", "ok") + conn(down=1.8), "none", False, 1, None, False, 9),
+    "A2 sm, 1.8 Mbps, WebM not smooth, MP4 over its margin -> still": (1280, 720, 1.0, mc_by_codec("notsmooth", "ok") + conn(down=1.8), "none", False, 1, None, False, 9),
+    "A3 sm, 1.8 Mbps, WebM unsupported, MP4 over its margin -> still": (1280, 720, 1.0, mc_by_codec("unsupported", "ok") + conn(down=1.8), "none", False, 1, None, False, 9),
+    "B1 sm, 2.3 Mbps, WebM query rejects, MP4 within its margin -> sm MP4": (1280, 720, 1.0, mc_by_codec("reject", "ok") + conn(down=2.3), "none", False, 1, None, False, 16),
+    "B2 sm, 2.3 Mbps, WebM not smooth, MP4 within its margin -> sm MP4": (1280, 720, 1.0, mc_by_codec("notsmooth", "ok") + conn(down=2.3), "none", False, 1, None, False, 16),
+    "B3 sm, 2.3 Mbps, WebM unsupported, MP4 within its margin -> sm MP4": (1280, 720, 1.0, mc_by_codec("unsupported", "ok") + conn(down=2.3), "none", False, 1, None, False, 16),
+    "C1 1920, fast, WebM never accepted, MP4 ok -> md MP4": (1920, 1080, 1.0, mc_by_codec("notsmooth", "ok") + conn(), "none", False, 1, None, False, 16),
+    "C2 1920, fast, WebM ok -> md WebM (preferred codec kept)": (1920, 1080, 1.0, mc_by_codec("ok", "ok") + conn(), "none", False, 1, None, False, 16),
+    "C3 1920, 4 Mbps, WebM not smooth at md, ok at sm (downshift first)": (1920, 1080, 1.0, (
+        "Object.defineProperty(navigator,'mediaCapabilities',{configurable:true,get:()=>({decodingInfo:(c)=>Promise.resolve("
+        "{supported:true,smooth:!(/webm/.test(c.video.contentType)&&c.video.width>1280),powerEfficient:true})})});") + conn(down=4), "none", False, 1, None, False, 16),
+    "D1 every codec rejected -> still": (1920, 1080, 1.0, mc_by_codec("reject", "reject") + conn(), "none", False, 1, None, False, 8),
+    "D2 every codec not smooth -> still": (1920, 1080, 1.0, mc_by_codec("notsmooth", "notsmooth") + conn(), "none", False, 1, None, False, 8),
     "mid-play network collapse": (1920, 1080, 1.0, conn(), "none", False, 1, None, False, 30),
 }
 mh.NET["stall"] = {"offline": False, "latency": 400, "downloadThroughput": 8 * 1024, "uploadThroughput": 8 * 1024}
@@ -70,6 +99,7 @@ def run(chrome, srv, name, spec):
         page.send("Emulation.setScriptExecutionDisabled", {"value": True})
     else:
         page.send("Page.addScriptToEvaluateOnNewDocument", {"source": mh.INIT})
+        page.send("Page.addScriptToEvaluateOnNewDocument", {"source": SRC_COUNT})
         if init:
             page.send("Page.addScriptToEvaluateOnNewDocument", {"source": init})
     page.emulate(w, h, dpr, mobile=False, reduced_motion=reduced)
@@ -113,6 +143,7 @@ def run(chrome, srv, name, spec):
         out["tier"] = page.js("document.querySelector('.hero').dataset.heroTier||null")
         out["codec"] = page.js("document.querySelector('.hero').dataset.heroCodec||null")
         out["waiting_events"] = hero["waiting"]
+        out["video_src_assignments"] = page.js("window.__srcSets")
         out["state_timeline"] = [e for e in hero["events"] if e["name"].startswith("attr:")][:12]
     for ev in page.events:
         m, p = ev.get("method"), ev.get("params", {})
@@ -144,7 +175,7 @@ def main():
             r = run(chrome, srv, name, S[name])
             res.append(r)
             print(f"{name:42s} state={r.get('state')} reason={r.get('reason')} tier={r.get('tier')} codec={r.get('codec')} "
-                  f"vbytes={r['video_bytes_total']} reqs={len(r['video_requests'])} blank={len(r['blank_samples'])}", flush=True)
+                  f"vbytes={r['video_bytes_total']} reqs={len(r['video_requests'])} srcSets={r.get('video_src_assignments')} blank={len(r['blank_samples'])}", flush=True)
     finally:
         chrome.close()
         srv.close()
