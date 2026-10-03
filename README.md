@@ -53,7 +53,7 @@ Use an isolated environment: recent rasterio wheels require numpy 2.
 
 ## Current state and next task
 
-The accepted, launched baseline is `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084`; `main@00af0f2` is a stale ancestor of it until the CTO authorizes a fast-forward. `STATUS.md` is the current-state record. Work starts only from an explicit `MER-###'e başla` (rule in `CLAUDE.md`): MER-213 (post-launch audit) is `REVIEW_READY`; WEB-007 / MER-143 and WEB-008 / MER-144 follow only after its review. No feature work on `main`.
+Git `main` is `f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85` (the MER-213 documentation commit over the launched code `79cc2cb`). MER-216 (media fidelity and runtime hardening; supersedes MER-143..146) is accepted and Done at `claude/mer-216-s1r628@adf08186d3ee4a438bda73886272d05c970e670a` but not yet published; its docs-only publication closure MER-218 is `REVIEW_READY`. Fast-forwarding `main` and any deployment are separate CTO gates. `STATUS.md` is the current-state record. Work starts only from an explicit `MER-###'e başla` (rule in `CLAUDE.md`), from the exact baseline the issue names. No feature work on `main`.
 
 ## Deployment target
 

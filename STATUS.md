@@ -1,23 +1,26 @@
 # OrbGSS Website — CURRENT
 
 **Canonical version:** `v1.0.0-rc10-web-005c` — the accepted, launched baseline
-**Date:** 2026-09-29
-**Stage:** Milestone 5 (post-launch audit, media fidelity and runtime hardening). **MER-213 is Done** (post-launch state and defect audit; its documentation commit is `main`, see `tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md`). **MER-216 (media fidelity and runtime hardening, Phases 1-4) is `REVIEW_READY`** on `claude/mer-216-s1r628` (evidence `tasks/MER-216_EVIDENCE.md`, including its review revision); its acceptance, any `main` publication and its Linear closure are CTO / Product actions. MER-143, MER-144, MER-145 and MER-146 are canceled and consolidated into MER-216; they are not separate execution tasks and nothing is blocked behind MER-213.
+**Date:** 2026-10-03 (current state reconciled by MER-218)
+**Stage:** Milestone 5 (post-launch audit, media fidelity and runtime hardening). **MER-213 is Done** (post-launch state and defect audit; its documentation commit is `main`, see `tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md`). **MER-216 (media fidelity and runtime hardening, Phases 1-4) is Done** — independently accepted on 2026-10-03 at `claude/mer-216-s1r628@adf08186d3ee4a438bda73886272d05c970e670a` (evidence `tasks/MER-216_EVIDENCE.md`, including its review revision). It is accepted but **not published**: `main` is still `f4f1d4d6` and production does not serve it. **MER-218 (MER-216 canonical publication closure, docs only) is `REVIEW_READY`** on `mertkaanakgunlu/mer-218-website-mer-216-canonical-publication-closure` (evidence `tasks/MER-218_EVIDENCE.md`); the `main` fast-forward it documents, any deployment and its Linear closure are CTO / Product actions. MER-143, MER-144, MER-145 and MER-146 are canceled and consolidated into MER-216; they are not separate execution tasks and nothing is blocked behind MER-213.
 
-## Launched baseline (reconciled 2026-09-29, MER-213; `main` and task state re-reconciled 2026-10-03, MER-216 review revision)
+## Launched baseline (reconciled 2026-09-29, MER-213; `main` and task state re-reconciled 2026-10-03, MER-216 review revision; MER-216 acceptance reconciled 2026-10-03, MER-218)
 
 | Item | Value |
 | --- | --- |
 | Repository | `mertkaanakgunlu-debug/orbgss-website` (the legacy `baran-orbgss/website` is reference/upstream only) |
-| Accepted / live code baseline | `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084` — WEB-005 + WEB-005A (hero) + WEB-005B (homepage after the hero, R15) + WEB-005C (Geothermal / Mining / Marine taxonomy parity, R2) |
-| GitHub `main` | `f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85` — the MER-213 documentation commit on top of the baseline `79cc2cb` (the fast-forward the MER-213 evidence prepared; verified from Git on 2026-10-03). `79cc2cb` is its ancestor, so `main` carries the launched code plus the reconciled docs. The old `main@00af0f232a8d7d77f5ca61d758461ff7316ba151` (WEB-005 terminal acceptance) is history |
-| Production (as recorded in MER-213 on Linear; not re-read from Git) | Vercel project `orbgss-website`, scope `virga-soft`, deployment `dpl_FmP2d8LkVrst84SVzVnFEyuEDpLn`, target `production`, READY, source `cli`, Git SHA `79cc2cb82a4542461cbbfc1d0c349cf02b861084`. Vercel reads from the Claude Projects environment return 403, so this record is Linear-sourced, not independently re-verified there |
+| Launched / live code baseline | `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084` — WEB-005 + WEB-005A (hero) + WEB-005B (homepage after the hero, R15) + WEB-005C (Geothermal / Mining / Marine taxonomy parity, R2) |
+| GitHub `main` | `f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85` — the MER-213 documentation commit on top of the baseline `79cc2cb` (the fast-forward the MER-213 evidence prepared; verified from Git on 2026-10-03). `79cc2cb` is its ancestor, so `main` carries the launched code plus the reconciled docs. The old `main@00af0f232a8d7d77f5ca61d758461ff7316ba151` (WEB-005 terminal acceptance) is history. Re-verified 2026-10-03 (MER-218): `main` has **not** moved for MER-216 |
+| Accepted, unpublished artifact | MER-216 (Done, accepted 2026-10-03): `claude/mer-216-s1r628@adf08186d3ee4a438bda73886272d05c970e670a`, 3 commits above `main@f4f1d4d6` and 0 behind, so publication is a pure fast-forward. The MER-218 docs-only closure sits directly on top of it; the publication operation is recorded, not executed, in `tasks/MER-218_EVIDENCE.md` |
+| Production (Linear-sourced; MER-218 does not read or touch Vercel) | Latest record — the MER-216 independent review on Linear (2026-10-03): deployment `dpl_3NNNhqPozget7tpP1XfqCvMqWbJG`, READY, target `production`, source `git`, `githubCommitRef=main`, SHA `f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85`, which is code-identical to `79cc2cb` (`79cc2cb..f4f1d4d6` touches documentation and audit evidence only). Earlier record (MER-213 on Linear): Vercel project `orbgss-website`, scope `virga-soft`, deployment `dpl_FmP2d8LkVrst84SVzVnFEyuEDpLn`, target `production`, READY, source `cli`, Git SHA `79cc2cb82a4542461cbbfc1d0c349cf02b861084`; Vercel reads from the Claude Projects environment returned 403 then. Production does **not** serve MER-216 (`adf08186`) |
 | WEB-006 record | The WEB-006 / MER-95 cutover contract lives on `docs/web-005-polish-authority@e64d9fd` (`tasks/WEB-006_PRODUCTION_DOMAIN_CUTOVER.md`, state `READY_FOR_CTO_APPROVAL`). This repository holds no record of the deploy or DNS execution; production is therefore ahead of the repository record until the CTO reconciles it |
-| Task branches | MER-213 ran on `claude/mer-213-bp01w5` (created from exactly `79cc2cb`; its head is the current `main`). MER-216 runs on `claude/mer-216-s1r628`, created from `main@f4f1d4d6`. Session branches are workspace plumbing, not canonical state; new work branches from the verified `main`, never from the stale `00af0f2` |
+| Task branches | MER-213 ran on `claude/mer-213-bp01w5` (created from exactly `79cc2cb`; its head is the current `main`). MER-216 ran on `claude/mer-216-s1r628`, created from `main@f4f1d4d6`; its accepted head is `adf08186`. MER-218 runs on `mertkaanakgunlu/mer-218-website-mer-216-canonical-publication-closure`, created from exactly `adf08186`. Session branches are workspace plumbing, not canonical state. New work branches from the exact baseline its Linear issue names, verified by fetch; `79cc2cb` and `00af0f2` are history, not baselines. Until the CTO fast-forwards `main`, `main@f4f1d4d6` does not contain MER-216, so work that builds on it must name the accepted head explicitly |
 
 Product state at the baseline: hero (rendered orbital sequence with held frame and page-composited drape states, caption `Rendered orbital sequence — not sensor imagery`) → Act 02 real Kızıldere Landsat context → Act 03 three evidence layers over one frame → Act 04 priority result → co-registered inspection aid → Solutions (Geothermal active; Mining and Marine in development / expansion directions, native links to `/solutions/#geothermal|#mining|#marine`) → Method → Company → Contact. Routes: `/`, `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/` (+ `404.html`). Navigation: Platform → Solutions (Geothermal, Mining, Marine) → Pilot → Company → Contact → EN | TR. Architecture is unchanged: static HTML, CSS and vanilla JS, no package manager.
 
-## MER-216 — media fidelity and runtime hardening (`REVIEW_READY`, 2026-10-02)
+## MER-216 — media fidelity and runtime hardening (Done — accepted 2026-10-03; not yet published)
+
+Independently accepted on Linear on 2026-10-03 at `claude/mer-216-s1r628@adf08186d3ee4a438bda73886272d05c970e670a`; `main` remains `f4f1d4d6`. Residual, non-blocking items recorded by the reviewer: no physical Safari / Firefox / phone / 4K-panel acceptance, and production Vercel behaviour was not exercised. The section below is the state at its handoff.
 
 One bounded branch, `claude/mer-216-s1r628`, created from the verified `origin/main@f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85` and executed on the CTO workstation (the governed Kızıldere export `20260917T161155Z-5e7a0e53` and the 276-frame hero master live there). Nothing was merged to `main`, deployed, or changed in DNS / Vercel / credentials. Full evidence and the reviewer's decision list: `tasks/MER-216_EVIDENCE.md`, `evidence/mer216/`, `hero/evidence/responsive_media.json`.
 
@@ -28,7 +31,7 @@ One bounded branch, `claude/mer-216-s1r628`, created from the verified `origin/m
 | 3 integration | `PASS`. `script.js` chooses one tier and codec before any video byte (frame demand x DPR, `downlink`, `mediaCapabilities`), shows the video only after a presented frame, and ends in the held still on stalls, dropped frames, a decoder that paints nothing, errors or refused autoplay. Analytical `sizes` re-fit and Act 03 predecode were measured and **not** shipped (no gain) |
 | 4 browser acceptance | `PASS`. 10 viewport / DPR classes (375 @3x to 3840 @1x, three 4K scaling modes) x 7 routes: 0 overflow, 0 broken images, 0 console errors, homepage CLS 0, image bytes unchanged, hero bytes -44 % on 1280-class screens; EN / TR, reduced motion, no-JS, nav, evidence radios and the wipe verified. Emulated devices only (no physical phone or 4K panel) |
 
-Validators on this branch: `validate_site.py` PASS (0 warnings); `validate_hero.py` 420 / 0 (hero workstation); negatives 72 / 72, 55 / 55, 18 / 18 and the new `negative_tests_mer216.py` 16 / 16. `hero/config/lane.json` names MER-216 as the integration gate for the hero ladder.
+Validators on this branch: `validate_site.py` PASS (0 warnings); `validate_hero.py` 420 / 0 (hero workstation); negatives 72 / 72, 55 / 55, 18 / 18 and the new `negative_tests_mer216.py` 16 / 16 at the first reviewed head, 19 / 19 after the review revision (`tasks/MER-216_EVIDENCE.md` §5a). `hero/config/lane.json` names MER-216 as the integration gate for the hero ladder.
 
 ## Task execution contract (`MER-###'e başla`)
 
@@ -44,11 +47,11 @@ The short command `MER-###'e başla` authorizes exactly that Linear issue, in th
 
 ## Open gates and decisions
 
-1. **`main` publication of MER-216** — separate CTO-approved gate, after the independent review. (`main` already equals the MER-213 documentation head `f4f1d4d6`; production still serves the code baseline `79cc2cb` per the Linear-sourced record below, which differs from `main` only by those documents.)
+1. **`main` publication of MER-216** — MER-216 is accepted; publishing it is a non-force fast-forward of `main` from `f4f1d4d6` to the reviewed MER-218 closure head (exact operation and ancestry proof in `tasks/MER-218_EVIDENCE.md`; not executed). A separate CTO-approved gate, as is any production deployment after it. (Production serves `main@f4f1d4d6`, code-identical to `79cc2cb`, per the Linear-sourced record above.)
 2. **Information-architecture conflict** — the Claude Project instructions describe Home / Solutions (Geothermal, Mining, Marine) / About / Partner with us, while this repository and the live site use Platform / Solutions / Pilot / Company / Contact. Unresolved; the repository's `CLAUDE.md` invariants stay authoritative for implementation until the CTO decides.
 3. **`CONTACT_RELEASE_GATE`** — mailbox ownership/deliverability of `contact@orbgss.com` is not evidenced in this repository. Carried forward, not closed.
 4. **Production record** — WEB-006 execution and the Vercel/DNS state are not recorded in this repository (see the table above).
-5. **Superseded by MER-216:** WEB-007 / MER-143 (analytical visuals), WEB-008 / MER-144 (hero video), MER-145 and MER-146 are canceled in Linear and consolidated into MER-216, which is `REVIEW_READY`; its acceptance, any publication and Linear closure are CTO / Product actions.
+5. **Superseded by MER-216:** WEB-007 / MER-143 (analytical visuals), WEB-008 / MER-144 (hero video), MER-145 and MER-146 are canceled in Linear and consolidated into MER-216, which is Done (accepted 2026-10-03) and not yet published.
 
 ## Superseded pre-launch status (kept as history)
 
@@ -388,8 +391,8 @@ Google Workspace MX/SPF/DKIM/DMARC must never be touched.
 
 ## Next canonical task
 
-1. **MER-216** — media fidelity and runtime hardening (Phases 1-4): `REVIEW_READY`, awaiting independent CTO / Product review. MER-213 is Done; MER-143..146 are superseded by MER-216 and are not separate tasks.
-2. Publication of MER-216 to `main` (the current `main` is `f4f1d4d6`), any production deployment and any DNS reconciliation are separate CTO-authorized gates, not part of any implementation task.
+1. **MER-218** — MER-216 canonical publication closure (docs only): `REVIEW_READY` on `mertkaanakgunlu/mer-218-website-mer-216-canonical-publication-closure`, awaiting CTO / Product review. MER-216 is Done; MER-213 is Done; MER-143..146 are superseded by MER-216 and are not separate tasks.
+2. Publication of the accepted MER-216 / MER-218 head to `main` (a non-force fast-forward from the current `main@f4f1d4d6`, recorded in `tasks/MER-218_EVIDENCE.md`), any production deployment and any DNS reconciliation are separate CTO-authorized gates, not part of any implementation task.
 
 ## History
 
@@ -408,3 +411,5 @@ Google Workspace MX/SPF/DKIM/DMARC must never be touched.
 - MER-213 (2026-09-29): post-launch reconciliation — baseline `79cc2cb` verified against `main`, repository docs reconciled, validators and a real-browser regression audit recorded in `tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md`.
 - MER-213 (2026-10-02): reviewed and Done; its documentation commit `f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85` is `main`.
 - MER-216 (2026-10-02 / 2026-10-03): media fidelity and runtime hardening, Phases 1-4, `REVIEW_READY` on `claude/mer-216-s1r628`; supersedes MER-143..146. See `tasks/MER-216_EVIDENCE.md`.
+- MER-216 (2026-10-03): independently accepted and Done at `adf08186d3ee4a438bda73886272d05c970e670a`; not published (`main` remains `f4f1d4d6`).
+- MER-218 (2026-10-03): docs-only canonical publication closure of MER-216 from exactly `adf08186`; `REVIEW_READY`. See `tasks/MER-218_EVIDENCE.md`.

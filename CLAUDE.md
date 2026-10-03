@@ -74,11 +74,13 @@ If a requested change conflicts with these rules, stop and ask for explicit desi
 
 No feature work on `main`. Every task lands on a bounded branch for its own Linear issue and is reviewed before anything is merged.
 
-Current baseline (reconciled by MER-213, 2026-09-29; the day-to-day detail is in `STATUS.md`):
+Current baseline (reconciled by MER-218, 2026-10-03; the day-to-day detail is in `STATUS.md`). Three states are kept apart on purpose:
 
-- **Accepted and launched code baseline:** `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084` (WEB-005 + 005A hero + 005B homepage R15 + 005C taxonomy). Production serves this SHA per the MER-213 record. Branch new work from this exact commit (or from `main` once it has been fast-forwarded to it), never from the stale `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`, which is WEB-005's terminal acceptance and a pure ancestor of the baseline.
-- Earlier accepted heads, for provenance only: WEB-001 `677bfa7`; WEB-002 `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; WEB-003 `3670d43`; WEB-004 `56cb53039b85a852110c737505bc2ae2282acb08`; GEO-WEB-002 `ea693c29762279131fbed005e832c5ff2dca587b`; WEB-HERO-001D `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`; WEB-005A `1135e7a7e0b0f6db6348dee139d505550d8ca8b9`.
-- **MER-216** (media fidelity and runtime hardening, Phases 1-4; supersedes MER-143..146) is `REVIEW_READY` on `claude/mer-216-s1r628`, created from `main@f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85`; evidence `tasks/MER-216_EVIDENCE.md`. It does not change `main`.
+- **Git `main`:** `f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85` — the MER-213 documentation commit on top of the launched code `79cc2cb` (code-identical to it). `main` has **not** moved for MER-216.
+- **Accepted, unpublished artifact:** **MER-216** (media fidelity and runtime hardening, Phases 1-4; supersedes MER-143..146) is Done — accepted 2026-10-03 at `claude/mer-216-s1r628@adf08186d3ee4a438bda73886272d05c970e670a`, three commits above `main` and fast-forward-compatible; evidence `tasks/MER-216_EVIDENCE.md`. MER-218 adds a docs-only closure on top of it; publishing is a non-force fast-forward of `main` to the reviewed closure head (`tasks/MER-218_EVIDENCE.md`), a separate CTO gate.
+- **Production:** serves the launched code — the latest Linear record is a Git deployment of `main@f4f1d4d6`; it does **not** serve MER-216. Sourcing is in `STATUS.md`.
+- **Where new work branches from:** the exact baseline its Linear issue names, verified by fetch. `79cc2cb` and `00af0f2` are history, not baselines. Until `main` is fast-forwarded, `main@f4f1d4d6` does not contain MER-216, so work that builds on it must name the accepted head explicitly.
+- Earlier accepted heads, for provenance only: WEB-001 `677bfa7`; WEB-002 `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; WEB-003 `3670d43`; WEB-004 `56cb53039b85a852110c737505bc2ae2282acb08`; GEO-WEB-002 `ea693c29762279131fbed005e832c5ff2dca587b`; WEB-HERO-001D `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`; WEB-005 terminal acceptance `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`; WEB-005A `1135e7a7e0b0f6db6348dee139d505550d8ca8b9`; launched code baseline WEB-005C `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084` (WEB-005 + 005A hero + 005B homepage R15 + 005C taxonomy).
 - Updating `main`, production deployment and the WEB-006 / MER-95 DNS cutover are separate CTO-authorized gates. An auto-created session branch (for example `claude/...`) is workspace plumbing, not canonical state.
 
 ## Task execution rule
