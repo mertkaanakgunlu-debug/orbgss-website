@@ -1,6 +1,6 @@
 {
-  "version": "0.8-geo-web-002-final-visual-masters",
-  "policy": "This manifest covers two distinct asset classes. (1) Landsat gallery imagery under 'scenes': self-hosted OrbGSS natural-color composites generated from USGS Landsat Collection 2 Level-2 surface-reflectance products (public domain). Each scene's 'production' block pins the exact product identifiers, crop and stretch used; scripts/build_imagery.py reproduces the asset. NASA Earth Observatory pages are kept only as the reference that motivated each scene choice; no NASA-rendered pixels are served. Only the hero is still placed on the homepage. (2) WEB-002 product-proof imagery under 'web_002.proof_assets': OrbGSS cartographic exports of the accepted Kızıldere MVP project, materialized through the accepted GEO-039 Workbench export path and cropped/resized for web delivery only. These are scientific outputs, not photography: they are never re-coloured, re-projected, re-classified or value-changed, they carry mandatory warnings in visible page copy, and no raw provider raster or paid/closed/restricted data is redistributed. The two classes have different sources, different rights bases and different handling rules; do not describe one with the other's wording. (3) GEO-WEB-002 final homepage visual masters under 'geo_web_002': the package the locked four-act final homepage needs, published for WEB-005 and not yet placed on any route. Its 'context_scenes' entry is class (1) and is built by the same scripts/build_imagery.py production grammar; its 'assets' entries cover both classes and each one records its role, source/export identity, master and derivative dimensions and checksums, rights basis, attribution requirement, mandatory warning and the maximum size at which it may honestly be rendered. No asset in that package is ever enlarged past the native pixel density of its source.",
+  "version": "0.9-mer-239-reconciled",
+  "policy": "This manifest covers two distinct asset classes. (1) Landsat gallery imagery under 'scenes': self-hosted OrbGSS natural-color composites generated from USGS Landsat Collection 2 Level-2 surface-reflectance products (public domain). Each scene's 'production' block pins the exact product identifiers, crop and stretch used; scripts/build_imagery.py reproduces the asset. NASA Earth Observatory pages are kept only as the reference that motivated each scene choice; no NASA-rendered pixels are served. Yellowstone, Chuquicamata and the Ili Delta are placed only as the illustrative Solutions-card photographs (WEB-005B R11 derivatives); Crater Lake is retired and placed on no page. (2) WEB-002 product-proof imagery under 'web_002.proof_assets': OrbGSS cartographic exports of the accepted Kızıldere MVP project, materialized through the accepted GEO-039 Workbench export path and cropped/resized for web delivery only. These are scientific outputs, not photography: they are never re-coloured, re-projected, re-classified or value-changed, they carry mandatory warnings in visible page copy, and no raw provider raster or paid/closed/restricted data is redistributed. The two classes have different sources, different rights bases and different handling rules; do not describe one with the other's wording. (3) GEO-WEB-002 final homepage visual masters under 'geo_web_002': the package the locked four-act final homepage needed. Its Act 2 context master is superseded on the homepage by 'web_005b.context', and its 'assets' are deployed under assets/proof/final/ but placed on no page. Its 'context_scenes' entry is class (1) and is built by the same scripts/build_imagery.py production grammar; its 'assets' entries cover both classes and each one records its role, source/export identity, master and derivative dimensions and checksums, rights basis, attribution requirement, mandatory warning and the maximum size at which it may honestly be rendered. No asset in that package is ever enlarged past the native pixel density of its source. (4) The rendered hero under 'web_005' is class C: an OrbGSS render, never sensor imagery; since MER-216 it is a two-tier WebM / MP4 ladder of the same master frames. (5) The homepage Acts 3-4 and the inspection aid bind 'web_005b.analytical', MER-151 presentation derivatives of the governed rasters.",
   "scenes": [
     {
       "id": "crater-lake-2023",
@@ -103,7 +103,7 @@
       "coordinates": "44.4604° N, 110.8282° W",
       "acquired": "2013-06-09",
       "sensor": "Landsat 8 OLI",
-      "source_data": "U.S. Geological Survey Landsat; ASTER GDEM terrain rendering",
+      "source_data": "U.S. Geological Survey Landsat (the NASA Earth Observatory reference rendering also used ASTER GDEM terrain; this production composite does not)",
       "source_page": "https://science.nasa.gov/earth/earth-observatory/yellowstone-national-park-87881/",
       "local_file": "assets/imagery/yellowstone-2013.jpg",
       "reference_rendering": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/imagerecords/87000/87881/yellowstone_oli_2013160_lrg.jpg",
@@ -234,7 +234,7 @@
     },
     {
       "id": "chuquicamata-2024",
-      "role": "mineral",
+      "role": "mining",
       "location": "Chuquicamata, Antofagasta, Chile",
       "coordinates": "22.3150° S, 68.9010° W",
       "acquired": "2024-01-04",
@@ -350,7 +350,7 @@
     },
     {
       "id": "ili-delta-2020",
-      "role": "environment",
+      "role": "marine",
       "location": "Ili River Delta & Lake Balkhash, Kazakhstan",
       "coordinates": "45.0600° N, 74.5200° E",
       "acquired": "2020-03-07",
@@ -475,7 +475,7 @@
   },
   "web_vnext": {
     "task": "WEB-002",
-    "rule": "Story panels 01-06 are product proof or an explicit data gap. No temporary atmospheric image is presented as a DEM, evidence raster, structural map or score output. New public visuals must be added to web_002.proof_assets with export id, master checksum and derivative checksums before use."
+    "rule": "WEB-002 story panels (01-06 at WEB-002; on /pilot/ since WEB-005) are product proof or an explicit data gap. No temporary atmospheric image is presented as a DEM, evidence raster, structural map or score output. A new public scientific visual must be recorded with export id, master checksum and derivative checksums (web_002.proof_assets, geo_web_002.assets or web_005b.analytical) before use."
   },
   "web_002": {
     "task": "WEB-002",
@@ -2136,7 +2136,7 @@
   },
   "web_005": {
     "task": "WEB-005 / MER-93; revised under WEB-005A / MER-107",
-    "state": "review_ready",
+    "state": "accepted",
     "authority": "tasks/WEB-005_CINEMATIC_HERO.md; tasks/WEB-005A_HERO_VISUAL_FIDELITY.md",
     "presentation_authority": "docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md; docs/WEB_005_POLISH_VISUAL_DIRECTION_AUTHORITY.md",
     "asset_class": "C - rendered cinematic hero media",

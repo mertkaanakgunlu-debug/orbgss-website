@@ -2,11 +2,13 @@
 
 This folder is the isolated source workspace for `WEB-HERO-001` and later accepted hero-production phases.
 
-Canonical authority: `docs/WEB_HERO_001_AUTHORITY.md` and the linked Drive CURRENT authority.
+Canonical authority: the root `CLAUDE.md` (hero paragraph and design invariants) and `hero/config/lane.json` with the task authorities it names. The original WEB-HERO-001 authority, `docs/WEB_HERO_001_AUTHORITY.md`, lives on `feat/web-hero-001-predata-scene` and was never carried onto `main`; `lane.json` keeps it on the hero write surface for that reason. The linked Drive CURRENT authority applies as well.
 
 ## Current state
 
 `WEB-HERO-001` was pre-data and is accepted. `WEB-005` bound the accepted Kızıldere regional frame and shipped the production hero; `WEB-005A R2` revised its visual treatment (see [WEB-005A R2: the production hero](#web-005a-r2-the-production-hero)), and `WEB-005A R3` re-choreographed it after R2 did not pass the human visual gate (see [WEB-005A R3: settle, dive, analysis frame](#web-005a-r3-settle-dive-analysis-frame)). No scientific layer is baked into any frame.
+
+WEB-005A was terminally accepted at `1135e7a7e0b0f6db6348dee139d505550d8ca8b9` (final production: the motion video ends on the held frame 276, with four lossless drape states and the relief-rise frames composited by the page). MER-216 (accepted 2026-10-03, published 2026-10-15 in `main@2517369e`) re-encoded the same 276 master frames as a two-tier WebM + MP4 ladder (1280 and 1920) with `hero/scripts/encode_responsive_media.py`; evidence is in `hero/evidence/responsive_media.json`. `script.js` picks one tier and codec before any video byte. No frame, camera or choreography changed after WEB-005A, and `lane.json` names MER-216 as the current integration gate.
 
 `WEB-HERO-001A` established the scaffold below. `WEB-HERO-001B` added the Earth, atmosphere, satellite, starfield and establishing camera move. `WEB-HERO-001C` added the surface-conforming AOI acquisition system described under [AOI system](#aoi-system). `WEB-HERO-001D` assembled all of it into the continuous animatic described under [The continuous animatic](#the-continuous-animatic).
 
@@ -25,7 +27,7 @@ The earlier scenes are not superseded. They stay buildable and are re-rendered a
 
 ## Isolation rule
 
-Until a later Product authority explicitly joins this work into `WEB-005`, hero production must not modify the public-site HTML/CSS/JS, proof imagery, deployment configuration or DNS. `hero/config/lane.json` lists the protected paths, and the validator checks them against the pinned baseline commit on every run.
+Until a later Product authority explicitly joins this work into `WEB-005`, hero production must not modify the public-site HTML/CSS/JS, proof imagery, deployment configuration or DNS. `hero/config/lane.json` lists the protected paths, and the validator checks them against the pinned baseline commit on every run. Since WEB-005 the lane is in `integration` mode: public-site changes must stay inside `integration_write_surface`, and only the allowlisted hero files may name a public-site path.
 
 Nothing here is a website runtime dependency. Blender, FFmpeg and the Python in this folder are local production tooling only; the published site remains static HTML, CSS and vanilla JavaScript.
 

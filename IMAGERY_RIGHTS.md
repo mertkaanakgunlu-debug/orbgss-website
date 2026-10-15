@@ -1,4 +1,4 @@
-# OrbGSS imagery rights and provenance — v0.9
+# OrbGSS imagery rights and provenance — v0.9 (reconciled 2026-10-15, MER-239)
 
 ## Three asset classes
 
@@ -10,10 +10,10 @@ the other's wording.
 | --- | --- | --- |
 | What it is | Natural-colour photographic composites of a landscape | Cartographic renderings of scientific analysis output |
 | Source | USGS Landsat Collection 2 Level-2 surface reflectance (public domain) | OrbGSS cartographic exports of the accepted `kizildere_mvp_v2` project |
-| Produced by | `scripts/build_imagery.py` (crop / stretch / encode) | The accepted GEO-039 Workbench cartographic export path |
-| Recorded in | `sources.json` → `scenes`, and → `geo_web_002.context_scenes` | `sources.json` → `web_002.proof_assets`, and → `geo_web_002.assets` |
-| Where used | Act 2 of the homepage (the Kızıldere context master); the older gallery scenes are retired | Acts 3 and 4 of the homepage, and the deeper `/pilot/` route |
-| Permitted edits | Crop, contrast stretch, gamma, saturation, encoding | Crop and resize for presentation **only** — never re-colour, re-project, re-classify or change values, and no CSS colour/contrast/opacity transform on the served raster |
+| Produced by | `scripts/build_imagery.py` (crop / stretch / encode) | The accepted GEO-039 Workbench cartographic export path; the homepage derivatives by `scripts/build_web005b_presentation.py` under MER-151 |
+| Recorded in | `sources.json` → `scenes`, → `geo_web_002.context_scenes`, and → `web_005b.context` | `sources.json` → `web_002.proof_assets`, → `geo_web_002.assets`, and → `web_005b.analytical` |
+| Where used | Act 2 of the homepage and the inspection-aid base (the WEB-005B natural-colour Kızıldere master), and the three illustrative Solutions-card photographs; Crater Lake is retired | Acts 3 and 4 and the inspection aid on the homepage (`web_005b.analytical`), and `/pilot/` (`web_002.proof_assets`); the `geo_web_002.assets` are deployed but placed on no page |
+| Permitted edits | Crop, contrast stretch, gamma, saturation, encoding | Crop and resize for presentation **only** — never re-colour, re-project, re-classify or change values, and no CSS colour/contrast/opacity transform on the served raster. The one exception: the homepage surfaces may carry MER-151's bounded display window and one fixed monotonic gamma per layer, and priority is never windowed. |
 | Extra duties | USGS acknowledgement in the footer | Mandatory scientific warnings in visible EN/TR page copy; checksummed provenance |
 
 Class B is a scientific output, not photography. The gallery grade that class A may carry is
@@ -50,7 +50,7 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 
 ## Selected scenes
 
-### Crater Lake — hero
+### Crater Lake — former hero (retired; placed on no page)
 - Location: Crater Lake, Oregon, USA
 - Coordinates displayed: 42.9443° N, 122.1353° W
 - Acquisition: 18 March 2023
@@ -58,7 +58,7 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Production source product: `LC08_L2SP_045030_20230318_02_T1` (WRS-2 path 045 row 030, Tier 1)
 - Reference page: https://science.nasa.gov/earth/earth-observatory/a-clear-view-of-crater-lake-151161/
 
-### Yellowstone — geothermal
+### Yellowstone — geothermal (illustrative Solutions-card photograph)
 - Location: Yellowstone National Park, USA
 - Coordinates displayed: 44.4604° N, 110.8282° W
 - Acquisition: 9 June 2013
@@ -67,7 +67,7 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Reference page: https://science.nasa.gov/earth/earth-observatory/yellowstone-national-park-87881/
 - Note: the NASA reference rendering also used ASTER GDEM terrain. The production composite is a plain orthographic Landsat view with no ASTER data.
 
-### Chuquicamata — mineral
+### Chuquicamata — mining (illustrative Solutions-card photograph)
 - Location: Chuquicamata, Antofagasta, Chile
 - Coordinates displayed: 22.3150° S, 68.9010° W
 - Acquisition: 4 January 2024
@@ -84,9 +84,15 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Rendered frame: EPSG:32635, 30 m, 2400 × 1500 px = 72 × 45 km, 100 % valid coverage
 - No NASA Earth Observatory reference page: the scene was selected directly from the USGS Collection 2
   archive through the Planetary Computer STAC mirror on visual/contextual criteria only.
-- Published for WEB-005 under `docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md`; not yet placed on any route.
+- Published for WEB-005 under `docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md`. Superseded on the homepage by the WEB-005B natural-colour master below, it stays recorded and deployed but is placed on no page.
 
-### Ili River Delta / Lake Balkhash — environmental
+### Kızıldere natural-colour context — WEB-005B Act 2 (placed)
+- Same product and place as above: `LC08_L2SP_179034_20250505_02_T1`, Landsat 8 OLI, 5 May 2025, displayed at 37.9794° N, 28.7907° E.
+- Re-cropped wider at the native 30 m to 3200 × 1800 px and tone-rendered on one common reflectance scale. Master `assets/imagery/kizildere-aoi-context-2025-natural.jpg` (JPEG q90, 4:4:4), with WebP derivatives at 3200 / 2400 / 1600 / 1200 / 800.
+- Recorded in `sources.json` → `web_005b.context` (production, frame, checksums, rights basis).
+- Used for homepage Act 2 and as the base of the inspection aid. Public-domain USGS pixels: only the crop, tone rendering and encoding are OrbGSS work, and the USGS acknowledgement stays in the footer.
+
+### Ili River Delta / Lake Balkhash — marine (illustrative Solutions-card photograph; MER-238 D5 may replace it with a coastal scene)
 - Location: Ili River Delta & Lake Balkhash, Kazakhstan
 - Coordinates displayed: 45.0600° N, 74.5200° E
 - Acquisition: 7 March 2020
@@ -96,7 +102,7 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 
 ## Class B — WEB-002 product-proof visuals (2026-09-15)
 
-Story panels 01–06 no longer carry Landsat gallery material. They carry OrbGSS **cartographic
+Story panels 01–06 no longer carry Landsat gallery material. (Since WEB-005 these WEB-002 exports are shown on `/pilot/`, not on the homepage.) They carry OrbGSS **cartographic
 exports** of the Kızıldere MVP pilot AOI, produced through the accepted GEO-039 Workbench export
 path from the persisted `kizildere_mvp_v2` project in
 `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag
@@ -125,8 +131,11 @@ authorized, and that gap is score-invariant under ADR-0033 / GEO-037.
 ## GEO-WEB-002 — final homepage visual master package (2026-09-16)
 
 `docs/GEO-WEB-002_FINAL_VISUAL_MASTER_PACKAGE.md` publishes the visual masters the locked four-act final
-homepage needs, for WEB-005 to bind after Science acceptance. Nothing in that package is placed on a public
-route yet. It adds one class-A asset and five class-B assets; the rights bases above are unchanged.
+homepage needs, for WEB-005 to bind after Science acceptance. WEB-005B later took over its homepage role: Act 2
+uses the natural-colour master above, and Acts 3–4 use the MER-151 derivatives below. The package stays recorded
+and deployed (`assets/proof/final/`, `assets/imagery/kizildere-aoi-context-2025*`) but is placed on no page.
+MER-238 D1 / MER-242 decide whether its ALT-02 and priority-over-relief roles return, as MER-151-family
+derivatives. It adds one class-A asset and five class-B assets; the rights bases above are unchanged.
 
 **Class A — Act 2.** `assets/imagery/kizildere-aoi-context-2025.jpg` plus four responsive WebP candidates
 (2400 / 1800 / 1200 / 900). Same rule as every other gallery scene: public-domain USGS Landsat pixels, with
@@ -147,6 +156,25 @@ recolour or relabel.
 Structure and geology are still absent from this package. No public-safe fault or lithology master is
 authorized and the gap remains score-invariant.
 
+## Class B — WEB-005B homepage presentation derivatives under MER-151 (2026-09-20)
+
+Homepage Acts 3–4 and the inspection aid bind `sources.json` → `web_005b.analytical`: presentation
+derivatives of the governed rasters of the accepted `kizildere_mvp_v2` export `20260917T161155Z-5e7a0e53`
+(scientific master 1200 × 1200 at 30 m, EPSG:32635, unchanged and authoritative). They are built by
+`scripts/build_web005b_presentation.py` under MER-151 / GEO-WEB-004
+(`geothermal-prospectivity@e8aa5d65:tasks/MER-151_GEO-WEB-004_HOMEPAGE_EVIDENCE_PRESENTATION_PARITY_AUTHORITY.md`).
+
+* **Transforms:** canonical normalization, then a bounded display window and one fixed monotonic gamma per layer:
+  * Terrain and priority: transfer disabled; priority is never windowed.
+  * THM-01: `q_abs 0.998` window with gamma 0.85.
+  * ALT-01: `q_low 0.02 / q_high 0.98` window.
+* **Rendering:** the frozen hero palette stops; NoData transparent over a neutral hillshade; lossless WebP.
+* **Files:** `assets/proof/web005b/` → `terrain-{600,900,1200}-d.webp`, `thm01-*`, `alt01-*`, `priority-*` and `priority-legend-ramp.png`.
+* **Records:** each layer records its governed source SHA-256, its window and gamma decision, and a SHA-256 per derivative. `scripts/validate_site.py` recomputes the checksums and the palette LUT and re-checks every MER-151 bound.
+* **Rights:** the same basis as every class-B export. The output is OrbGSS's own analytical rendering: no raw provider raster is redistributed, and no paid, closed or restricted data is used. The underlying providers (NASADEM, Landsat thermal, Sentinel-2) are credited in the footer.
+* **Warnings:** each surface carries its mandatory scientific warning as visible EN/TR copy.
+* **Ceiling:** the native 1200 px grid, designed against 600 CSS px. MER-151 permits a 4K presentation derivative, but none is published.
+
 ## WEB-001 placement (2026-09-15, superseded by WEB-002, then by WEB-005)
 
 WEB-001 reused the four Landsat scenes as temporary gallery material across the story panels.
@@ -154,8 +182,10 @@ WEB-002 replaced every story slot with product proof, leaving only Crater Lake p
 poster. **WEB-005 retires that too:** the homepage hero is now the rendered cinematic acquisition
 sequence, and Act 2 uses the accepted Kızıldere context master instead. All four original scenes
 are now `retired-from-homepage`. They keep their files, full provenance and reuse rights in
-`assets/imagery/sources.json` and remain available for later use; nothing on any route references
-them. The USGS acknowledgement stays in the footer, because Act 2 is Landsat-derived.
+`assets/imagery/sources.json`. WEB-005B R11 then placed resize-and-encode derivatives of Yellowstone,
+Chuquicamata and the Ili Delta as the illustrative Solutions-card photographs. The scene masters are
+unchanged, and the cards' footnote says they show other places, not OrbGSS results. Crater Lake is placed on
+no page. The USGS acknowledgement stays in the footer, because Act 2 and the cards are Landsat-derived.
 
 ## Class C — WEB-005 rendered hero media (2026-09-16)
 
@@ -164,9 +194,9 @@ A third class joined the site with WEB-005, and it must not be described as eith
 | | **C — rendered cinematic hero** |
 | --- | --- |
 | What it is | A 3D render of Earth from orbit with an acquisition frame over the pilot region. **Not sensor imagery.** |
-| Files | `assets/hero/orbgss-hero.webm`, `assets/hero/orbgss-hero.mp4`, `assets/hero/hero-poster-1600.webp`, `assets/hero/hero-poster-900.webp` |
+| Files | Since MER-216, a two-tier ladder of the same 276 master frames, hash-named because `/assets/` is immutable-cached: `assets/hero/orbgss-hero-1280-21da1079.webm`, `orbgss-hero-1280-164c957f.mp4`, `orbgss-hero-1920-ca741624.webm`, `orbgss-hero-1920-c8db4a5a.mp4`. Stills: `hero-opening-1600.webp` (startup poster), `hero-poster-1600.webp` and `hero-poster-900.webp` (held frame). Lossless drape states `assets/hero/drape/hero-drape-{terrain,thm01,alt01,priority}-1920.png` and relief-rise frames `hero-rise-f278…f290-1920.webp` (WebP lossless), composited by the page over the held frame. The earlier single `orbgss-hero.webm` / `.mp4` pair is deleted. |
 | Produced by | The accepted WEB-HERO-001 Blender production lane (`hero/`), scene `hero_production_kizildere`, carried forward from `feat/web-hero-001-predata-scene@e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`; visual treatment revised under WEB-005A / MER-107 (`tasks/WEB-005A_HERO_VISUAL_FIDELITY.md`) |
-| Recorded in | `sources.json` → `web_005.hero_media`; render and encode evidence in `hero/evidence/production_media.json` |
+| Recorded in | `sources.json` → `web_005.hero_media`, `web_005.hero_drape_states` and `web_005.hero_relief_rise`. Render and encode evidence: `hero/evidence/production_media.json` and `hero/evidence/responsive_media.json` (MER-216). |
 | Underlying texture rights | NASA Earth Observatory imagery, public domain, recorded with checksums in `hero/assets/manifest.json`: since WEB-005A R2 the Blue Marble Next Generation July 2004 global composite with topography and bathymetry (21600 × 10800), a lossless OrbGSS crop of its 500 m C1 tile (8160 × 5520, lon 12–46 E / lat 27–50 N) as the regional detail window, the Blue Marble 8192 cloud composite, and the Earth-at-Night 2012 composite. Rights basis: NASA media usage guidelines (`https://www.nasa.gov/nasa-brand-center/images-and-media/`); no NASA insignia is used and no endorsement is implied. Since WEB-005A R3 the regional hold additionally multiplies the Blue Marble albedo by a greyscale **detail ratio derived from Copernicus Sentinel-2 L2A** (tiles T35SPC/T35SPB, 2025-09-25; `hero/assets/source/s2_kizildere_detail_30m.png`, record `hero/evidence/earth_detail_sharpen.json`): 30 m broadband reflectance divided by its own 510 m blur, so only ground structure is carried and no colour, season or value. Copernicus Sentinel data are free, full and open (Legal Notice on the use of Copernicus Sentinel Data and Service Information); the required attribution *Contains modified Copernicus Sentinel data (2025)* is carried by the site footer. The source tiles are not copied into this repository. The ratio texture has no units and no palette, is not a measured layer and is never delivered to the page. The satellite is a procedural OrbGSS original and introduces no external asset. |
 | Permitted edits | Re-render or re-encode from the accepted scene definition. The scene is configuration, so a change is a config change with a diff, not a retouch. |
 | Extra duties | The caption must say it is a render. `scene.hero.kind` carries "Rendered orbital sequence — not sensor imagery" in EN and TR, and that wording is not optional. |
@@ -176,7 +206,8 @@ look prettier than the science; class C must never be allowed to look like measu
 where OrbGSS is pointed, not what any instrument recorded.
 
 **No scientific raster is baked into class C.** The hero's real-data result handoff is a page
-element carrying the accepted class-B derivative as its own checksummed file. A governed raster
+element carrying the accepted class-B derivative as its own checksummed file. The drape and rise states
+carry the MER-108 hero display textures only as lossless stills, never inside the video. A governed raster
 inside a lossy video encode would have its colours and values changed by chroma subsampling and
 quantisation, which the accepted package forbids — so the encoder never sees one.
 
@@ -192,7 +223,8 @@ Each GEO-WEB-002 asset records its own `max_safe_rendered_px`.
 
 ## Deployment gate
 
-Before `orbgss.com` is made public:
+`orbgss.com` has been public since WEB-006, and these checks held at publication. Since MER-237, only the
+public site is deployed (`.vercelignore`), and the gate stays in force for every new asset:
 
 1. Every file listed in `assets/imagery/sources.json` under `local_file` exists and passes `python scripts/validate_site.py` (done in v0.5).
 2. Each image has been visually checked against its scene metadata (done in v0.5).

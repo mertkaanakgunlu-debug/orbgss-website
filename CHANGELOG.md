@@ -1,5 +1,37 @@
 # Changelog
 
+Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
+
+## MER-239 documentation and authority reconciliation — 2026-10-15 (branch `mertkaanakgunlu/mer-239-web-sitesi-belge-ve-otorite-uzlastirmasi`; `REVIEW_READY`, docs only)
+
+- `STATUS.md`, `CLAUDE.md`, `README.md` and `docs/HANDOFF.md` describe the published state: `main` = production = `2517369e`, the COUPLED Vercel topology, and the rollback target.
+- `CLAUDE.md` carries the approved Milestone 6 target and content rules R1–R8. The vNext, design and product authorities, `IMAGERY_RIGHTS.md`, `hero/README.md` and the `sources.json` metadata are brought up to date.
+- The CTO-approved MER-238 authority is merged onto the published line, and `AGENTS.md` becomes a pointer to `CLAUDE.md`.
+- No site file changes. Evidence: `tasks/MER-239_EVIDENCE.md`.
+
+## MER-238 information architecture and page content authority — 2026-10-15 (approved by the CTO)
+
+- Specifies the Milestone 6 site: Home / Solutions (Geothermal, Mining, Marine) / About / Partner with us, `/solutions/geothermal/` replacing `/pilot/`, 301 redirects, and static `/tr/` pages with Turkish slugs.
+- Sets the show-first, no-repeat content rules with text budgets, and provides mockups. Decisions D1 (Science derivatives, MER-242) and D2 (Turkish slugs) are taken.
+- Files: `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`, `docs/mockups/m6/`, `tasks/MER-238_EVIDENCE.md`.
+
+## Published 2026-10-15 — `main@2517369e` (MER-216 + MER-218 + MER-237, published by MER-219)
+
+- **Publication:** after a preflight (topology COUPLED: a push to `main` is a production deployment) and explicit CTO authorization, `main` was fast-forwarded `f4f1d4d6` → `2517369e` at 13:45:21Z. Vercel built production deployment `7094313382` / `orbgss-website-l0hjfxcdh` 12 s later. Production smoke passed 46/46 and browser checks 21/21; no rollback was needed. Evidence: `tasks/MER-219_PREFLIGHT.md`, `evidence/mer219/`.
+- **MER-237:** orbgss.com no longer serves the repository's internal files. A root `.vercelignore` allowlist deploys only the public site, `scripts/validate_site.py` enforces it, and `negative_tests_mer237.py` adds 29 cases. The four routes that advertised the retired Crater Lake scene as their `og:image` use the hero poster.
+- **MER-216 (accepted 2026-10-03):** the hero is a two-tier WebM + MP4 ladder (1280 and 1920) of the same master frames, chosen once before any video byte, with fallbacks to the held still. MP4s are faststart. The analytical derivatives were re-verified byte for byte. Supersedes MER-143..146; evidence `tasks/MER-216_EVIDENCE.md`.
+- **MER-218:** docs-only closure of MER-216 (`tasks/MER-218_EVIDENCE.md`).
+
+## MER-213 post-launch reconciliation — 2026-09-29 / 2026-10-02 (`main@f4f1d4d6`)
+
+- Repository docs reconciled with the launched baseline `79cc2cb`; real-browser regression audit; no confirmed defects. Evidence: `tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md`.
+
+## v1.0.0-rc10-web-005c — 2026-09-20 / 21 (WEB-005C, MER-149, `feat/web-005c-public-domain-taxonomy-parity@79cc2cb`; launched)
+
+- The public site converges on the Geothermal / Mining / Marine taxonomy on the homepage, in the navigation and on `/solutions/`. `#mineral` and `#environment` stay as compatibility aliases.
+- The homepage Solutions cards become native links (R2).
+- WEB-006 put this release candidate on `orbgss.com` (Vercel, apex canonical, `www` → apex). The DNS execution record lives outside this repository.
+
 ## WEB-005B R15 final polish — 2026-09-20 (MER-109, branch `feat/web-005b-homepage-visual-fidelity`; `REVIEW_READY`, nothing deployed)
 
 A bounded polish pass on the accepted direction. Concept, hero, section order and visual language are
