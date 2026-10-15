@@ -2,6 +2,8 @@
 
 > **WEB-001 (2026-09-15):** `docs/WEB_VNEXT_AUTHORITY.md` is the vNext authority and wins where the two disagree. Sections below marked *(WEB-001)* reflect the current homepage.
 
+> **MER-239 (2026-10-15):** the public taxonomy is Geothermal / Mining / Marine (WEB-005C). The *(WEB-001)* navigation and copy sections below are history: current copy is canonical in `script.js`, and the Milestone 6 pages, navigation and content rules are in `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`. Brand hierarchy, website job, positioning and the claims to avoid remain in force.
+
 ## Brand hierarchy
 
 **OrbGSS** is the product/brand presented to website visitors.  
@@ -20,13 +22,13 @@ Do not position OrbGSS as a geothermal-only company. The first pilot is geotherm
 
 Current public-facing solution taxonomy:
 
-1. **Geothermal Exploration** — first pilot/use case
-2. **Mineral Exploration** — platform extension / solution direction
-3. **Environmental & Land Intelligence** — platform extension / solution direction
+1. **Geothermal** — first active application (the Kızıldere pilot)
+2. **Mining** — expansion direction
+3. **Marine** — expansion direction
 
 The site should make the platform feel extensible without implying that every future vertical is already production-ready.
 
-### Navigation labels *(WEB-001)*
+### Navigation labels *(WEB-001 — history; superseded by WEB-005C and Milestone 6)*
 
 | Nav label (EN / TR) | Destination |
 | --- | --- |
@@ -91,4 +93,4 @@ Do not invent or publish:
 
 ## Contact
 
-`contact@orbgss.com` is wired into the current page but must be confirmed before production launch.
+`contact@orbgss.com` is the only public contact address. Its ownership and deliverability are not evidenced in this repository (`CONTACT_RELEASE_GATE`, now MER-238 D4, a ship gate for MER-240).

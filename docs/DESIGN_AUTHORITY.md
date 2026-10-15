@@ -2,11 +2,13 @@
 
 > **WEB-001 (2026-09-15):** `docs/WEB_VNEXT_AUTHORITY.md` is the vNext authority. Where this document and that one disagree (navigation order, homepage sequence, beam contents, monospace treatment), the vNext document wins. Everything below that is not restated there still applies.
 
+> **MER-239 (2026-10-15):** the WEB-001 structural rhythm below is superseded by the four-act homepage (WEB-005; `CLAUDE.md` design invariants) and kept as history. Navigation and Solutions labels follow `CLAUDE.md` (live) and `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (approved Milestone 6 target). Everything else here stays in force where `CLAUDE.md` does not say otherwise.
+
 ## Accepted direction
 
 The desired site is a cinematic, minimal Earth-observation landing page. Think of the page as alternating horizontal layers rather than a conventional SaaS homepage.
 
-### Structural rhythm
+### Structural rhythm (WEB-001 — superseded by the WEB-005 four-act homepage; history)
 
 ```text
 [ NAVIGATION: OrbGSS ........ Platform  Solutions⌄  Pilot  Company  Contact | EN | TR ]
@@ -80,12 +82,14 @@ Avoid:
 
 ## Navigation
 
-Desktop (≥ 981 px): logo far left; the whole navigation group right-aligned, never centered. Order is fixed (WEB-001):
+Desktop (≥ 981 px): logo far left; the whole navigation group right-aligned, never centered. Live order (until MER-240):
 
 `Platform` → `Solutions ⌄` → `Pilot` → `Company` → `Contact` → `|` → `EN | TR`
 
-- Every item is a plain text item resolving to a real anchor (`#platform`, `#pilot`, `#company`, `#contact`). The boxed CTA lives only in the hero.
-- Solutions is a compact disclosure dropdown with exactly Geothermal Exploration, Mineral Exploration, Environmental & Land Intelligence (→ `#geothermal`, `#mineral`, `#environment`): dark surface matching the header, no icons, no descriptions, no mega menu. Hover, keyboard focus and click open it; Escape and clicking outside close it; arrow keys move through items.
+Approved target order (MER-238): `Home` → `Solutions ⌄` → `About` → `Partner with us` → `|` → `EN | TR`.
+
+- Every item is a plain text item resolving to a real page (live: `/platform/`, `/pilot/`, `/company/`, `/contact/`; target: `/`, `/about/`, `/partner/`). The boxed CTA lives only in the hero.
+- Solutions is a compact disclosure dropdown with exactly Geothermal, Mining, Marine (WEB-005C; live → `/solutions/#geothermal`, `#mining`, `#marine`; target Geothermal → `/solutions/geothermal/`): dark surface matching the header, no icons, no descriptions, no mega menu. Hover, keyboard focus and click open it; Escape and clicking outside close it; arrow keys move through items.
 - The language switch is text only (`EN | TR`), active language in the cyan accent, inactive muted; no flags, no dropdown.
 
 Mobile (≤ 980 px): hamburger reveals a restrained stacked list in the same order; Solutions expands and collapses on tap (never hover); Escape and link selection close the menu; the language switch stays at the bottom with tap-sized targets.

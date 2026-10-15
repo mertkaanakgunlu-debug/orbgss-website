@@ -6,8 +6,10 @@
 **Accepted WEB-001 head:** `677bfa7672ac18c2c808ddaaf235ff12863de443`.  
 **Accepted WEB-002 implementation head:** `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`.  
 **Accepted WEB-003 implementation head:** `3670d43bece4ffba657a3d9645cbea20c7e698bf`.  
-**Current tracking:** Linear MER-90 — WEB-002 accepted/complete; MER-91 — WEB-003 accepted/complete; MER-92 — WEB-004 implemented, REVIEW_READY on `feat/web-004-preview-hardening`.  
+**Current tracking:** Linear MER-90 — WEB-002 accepted/complete; MER-91 — WEB-003 accepted/complete; MER-92 — WEB-004 accepted/complete at `56cb530`.  
 **Status:** WEB-001, WEB-002 and WEB-003 are accepted/complete. WEB-003 reached `REVIEW_READY`, completed one bounded conformant Product review revision, and was terminally accepted at `3670d43bece4ffba657a3d9645cbea20c7e698bf`; no Product/Science semantic change was required. Exact WEB-002 contract: `tasks/WEB-002_PRODUCT_PROOF.md`; exact WEB-003 contract: `tasks/WEB-003_PUBLIC_SITE_DEPTH.md`. Website implementation in this workstream proceeds directly through Claude Code Desktop under Product authority; E&D is reserved for the post-Control-Plane semi-automated/headless Claude execution flow. Where this document and older `docs/DESIGN_AUTHORITY.md` / `docs/PRODUCT_AND_CONTENT_AUTHORITY.md` disagree, this document wins for vNext work; older documents remain valid for non-superseded imagery, palette, on-image label, logo and claim-discipline rules.
+
+> **Reconciled 2026-10-15 (MER-239).** The header lines above are a history of acceptances; the current state is `STATUS.md`. The taxonomy (§2) is Geothermal / Mining / Marine since WEB-005C. The page set and navigation (§4) are live until MER-240 replaces them with the CTO-approved Milestone 6 set in `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`, which wins on pages, navigation, URLs and content rules. §10 now records the post-launch milestones.
 
 ## 1. Brand hierarchy
 
@@ -22,9 +24,11 @@ Application maturity is explicit:
 
 | Application | Public status |
 | --- | --- |
-| Geothermal Exploration | active first application / pilot |
-| Mineral Exploration | expansion direction |
-| Environmental & Land Intelligence | expansion direction |
+| Geothermal | active first application (Kızıldere pilot) |
+| Mining | expansion direction |
+| Marine | expansion direction |
+
+(WEB-005C / MER-149: the earlier labels Geothermal Exploration, Mineral Exploration and Environmental & Land Intelligence are superseded and must not return to visible copy.)
 
 Never imply expansion directions are production-ready. Never position OrbGSS as geothermal-only.
 
@@ -38,7 +42,7 @@ Prohibited unless later explicitly superseded by Product authority: generic SaaS
 
 ## 4. Accepted public site structure
 
-Canonical public routes after WEB-003:
+Canonical public routes after WEB-003 (live until MER-240 ships the Milestone 6 page set: `/`, `/solutions/`, `/solutions/geothermal/`, `/about/`, `/partner/`, with 301 redirects from the routes below):
 
 - `/` — accepted evidence-to-intelligence homepage;
 - `/platform/` — public workflow and decision-support framing;
@@ -47,11 +51,11 @@ Canonical public routes after WEB-003:
 - `/company/` — OrbGSS/VirgaSoft company context;
 - `/contact/` — restrained mailto-based contact/partnership path.
 
-Navigation order remains:
+Live navigation order (approved target, MER-238: `Home` → `Solutions ⌄` → `About` → `Partner with us` → `EN | TR`):
 
 `Platform` → `Solutions ⌄` → `Pilot` → `Company` → `Contact` → `EN | TR`
 
-Solutions remains an accessible disclosure for Geothermal Exploration, Mineral Exploration and Environmental & Land Intelligence. All routes/links are real; no placeholder navigation.
+Solutions remains an accessible disclosure for Geothermal, Mining and Marine (WEB-005C; `#mineral` and `#environment` survive as compatibility aliases). All routes/links are real; no placeholder navigation.
 
 ## 5. Science alignment
 
@@ -118,8 +122,9 @@ WEB-001 → WEB-002 → WEB-003 → WEB-004 → WEB-005 → WEB-006
 - **WEB-003** — public-site depth/credibility/conversion/bilingual content — **ACCEPTED / COMPLETE** at implementation HEAD `3670d43bece4ffba657a3d9645cbea20c7e698bf`.
 - **WEB-004** — responsive, accessibility, performance and hosted preview acceptance — **ACCEPTED / COMPLETE** at implementation HEAD `56cb53039b85a852110c737505bc2ae2282acb08` (`docs/WEB-004_PRODUCT_ACCEPTANCE.md`). Recorded product decisions (`tasks/WEB-004_PREVIEW_HARDENING.md`): homepage LCP 3.2 s under the local synthetic profile and the score-legend `image-aspect-ratio` finding are accepted bounded deviations; the hero media budget is WebM ≤ 3.0 MiB, MP4 ≤ 4.5 MiB, poster ≤ 180 KiB with an intentional static/poster fallback on mobile and reduced-data; `CONTACT_RELEASE_GATE` stays open.
 - **WEB-005** — cinematic hero integration and four-act homepage — **ACCEPTED** at `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`. Follow-ups **WEB-005A** (hero fidelity, `1135e7a`), **WEB-005B** (homepage after the hero, R15) and **WEB-005C** (Geothermal / Mining / Marine taxonomy) are accepted as the release candidate `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084`, which production serves per MER-213 and which is not yet merged to `main`.
-- **WEB-006** — production domain cutover (`orbgss.com` via Squarespace → Vercel) — explicit CTO human gate required for DNS writes. The contract is `docs/web-005-polish-authority@e64d9fd:tasks/WEB-006_PRODUCTION_DOMAIN_CUTOVER.md`; this repository holds no execution record (see `STATUS.md`).
-- **Milestone 5 (post-launch)** — **MER-213** post-launch audit (`REVIEW_READY`), then **WEB-007 / MER-143** (analytical visuals) and **WEB-008 / MER-144** (hero video quality and playback resilience), both blocked until MER-213 is accepted.
+- **WEB-006** — production domain cutover (`orbgss.com` via Squarespace → Vercel) — explicit CTO human gate required for DNS writes. The contract is `docs/web-005-polish-authority@e64d9fd:tasks/WEB-006_PRODUCTION_DOMAIN_CUTOVER.md`; this repository holds no record of the DNS execution itself. Executed: `orbgss.com` is live on Vercel (apex canonical, `www` → apex 308); production records are in `tasks/MER-219_PREFLIGHT.md`.
+- **Milestone 5 (post-launch)** — **MER-213** post-launch audit Done. **MER-216** media fidelity and runtime hardening Done (consolidates WEB-007..010 / MER-143..146). Published with **MER-237** (public-site-only deploy) in `main@2517369e` on 2026-10-15 by **MER-219**.
+- **Milestone 6 (information architecture and show-first pages)** — **MER-238** approved authority (`docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`); **MER-239** documentation reconciliation; **MER-240** English pages; **MER-241** static `/tr/`; **MER-242** Science derivatives for two Geothermal-page figures.
 
 ## 11. Later public-visual authority
 
