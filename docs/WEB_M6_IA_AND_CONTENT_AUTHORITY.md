@@ -1,7 +1,7 @@
 # WEB M6 — Information architecture and page content authority
 
 **Task:** MER-238 (Milestone 6 — Bilgi Mimarisi ve Gösterim Odaklı Sayfalar)
-**Status:** `REVIEW_READY` — a proposal for CTO / Product approval. Nothing here is implemented, and nothing here changes the live site.
+**Status:** approved by the CTO on 2026-10-15 (in the MER-238 session: "MER-238'i onaylıyorum; D1'de Science'tan MER-151 türevlerini isteyelim, D2 için Türkçe sözcükler olsun."). D1 and D2 are decided (§9); D3–D5 stay open. Nothing here is implemented yet, and nothing here changes the live site.
 **Baseline:** `mertkaanakgunlu/mer-218-website-mer-216-canonical-publication-closure@5ca7bdd4` (MER-216 is not yet published and MER-237 is not yet accepted, so this is the baseline MER-238 names).
 **Consumers once approved:** MER-239 (writes the approved rules into `CLAUDE.md` and the other authorities), MER-240 (builds the English pages), MER-241 (generates the static `/tr/` pages).
 **Mockups:** `docs/mockups/m6/` (open locally); screenshots in `evidence/mer238/`.
@@ -14,7 +14,8 @@
 * **Anasayfa:** dört ana bölüm ve inceleme aracı aynen kalır. Method ve Company bölümleri kalkar, içerikleri About'a taşınır. Contact bölümü tek satırlık bir Partner bağlantısına iner. Solutions kartları yalnızca görsel, alan adı ve durum etiketi taşır.
 * **Kurallar:** her bilgi tek bir sayfada; görsel tam boyutta tek yerde; her bölüm bir görsel, harita, grafik ya da tabloyla açılır; metin sınırlı (bölüm başına 40 kelime); yazılım ve geliştirme ayrıntısı yok.
 * **Türkçe:** `/tr/`, `/tr/cozumler/`, `/tr/cozumler/jeotermal/`, `/tr/hakkimizda/`, `/tr/is-birligi/`.
-* **Senden beklenen:** bu belgenin ve maketlerin onayı; bölüm 9'daki açık kararlar; `contact@orbgss.com` adresinin çalıştığının doğrulanması.
+* **Karar (2026-10-15):** belge ve maketler onaylandı. D1: kabartma üstü öncelik ve ALT-02 için Science'tan MER-151 türevleri istenir (MER-242); gelene kadar bu iki bölüm sayfada yer almaz. D2: Türkçe adreslerde Türkçe sözcükler.
+* **Hâlâ açık:** D3 (KVKK/gizlilik, hukuki karar), D4 (`contact@orbgss.com` doğrulaması), D5 (Marine için kıyı sahnesi).
 
 ## 1. Binding decisions
 
@@ -124,9 +125,9 @@ It replaces `/pilot/` and does not retell the homepage story. The homepage shows
 | --- | --- | --- | --- |
 | G0 | Header | **Locator map** — Türkiye outline with the 36 km area marked at Denizli (new, V1) | Kicker "Geothermal · Active · First application". Title (new): "Kızıldere: the first published pilot." / "Kızıldere: yayımlanan ilk pilot." Intro (new, 25 words): "Everything published for the pilot, in one place: where it is, which layers it holds, what each layer is not, and what is still missing." / "Pilot için yayımlanan her şey tek yerde: nerede olduğu, hangi katmanları içerdiği, her katmanın ne olmadığı ve neyin hâlâ eksik olduğu." |
 | G1 `#glance` (aliases `#pilot-observe`) | The pilot at a glance | **Facts table** (key · value) | Area · 36 × 36 km. Place · Büyük Menderes graben, Denizli, Türkiye. Centre · 37.9794° N, 28.7907° E. Grid · 30 m, EPSG:32635, 1,200 × 1,200 cells. Layers · 2 context, 3 evidence, 1 priority surface. Score · Remote-Sensing Relative Priority — Experimental Baseline, 0–100 within the area. Not available · Structure and geology. |
-| G2 `#layers` (aliases `#pilot-terrain`, `#pilot-evidence`) | Every layer, and what it is not | **Layer table with thumbnails** — Layer · From · Role · What it is not | Natural colour · Landsat 8 OLI, 2025-05-05 · Context. Elevation · NASADEM · Context. Thermal anomaly · Landsat thermal bands · Evidence. Alteration signal · Sentinel-2 · Evidence. Second alteration signal (iron) · Sentinel-2 · Evidence. Priority · the evidence layers · Score. "What it is not" carries each layer's mandatory warning verbatim (R6). Thumbnails: the homepage's MER-151 derivatives, and the GEO-WEB-002 `alt02` export for the iron signal (D1). Layer codes (THM-01, ALT-01, ALT-02) stay out of visible copy, as on the homepage since R14. |
-| G3 `#relief` (aliases `#pilot-priority`, `#pilot-geothermal`) | Priority over relief | **Large figure** — the priority surface over shaded NASADEM relief (V2; D1), 0–100 legend | One line (existing `pilotPage.closing.copy`, trimmed): "The priority surface read over NASADEM relief, so ranked ground can be seen against the valleys and ridges it sits on." The priority warning (R6). |
-| G4 `#iron` | The second alteration signal | **Large figure** — the iron alteration proxy (V3; D1) with its legend | One line (new): "A second Sentinel-2 proxy, sensitive to iron-bearing surfaces, mapped on the same frame." / "Aynı çerçevede haritalanan, demir içeren yüzeylere duyarlı ikinci bir Sentinel-2 göstergesi." Its warning (R6). If D1 resolves to "omit", G4 goes and the G2 row reads "Accepted, not shown yet". |
+| G2 `#layers` (aliases `#pilot-terrain`, `#pilot-evidence`) | Every layer, and what it is not | **Layer table with thumbnails** — Layer · From · Role · What it is not | Natural colour · Landsat 8 OLI, 2025-05-05 · Context. Elevation · NASADEM · Context. Thermal anomaly · Landsat thermal bands · Evidence. Alteration signal · Sentinel-2 · Evidence. Second alteration signal (iron) · Sentinel-2 · Evidence. Priority · the evidence layers · Score. "What it is not" carries each layer's mandatory warning verbatim (R6). Thumbnails: the homepage's MER-151 derivatives. The iron row shows no thumbnail and reads "Accepted, not shown yet" / "Kabul edildi, henüz gösterilmiyor" until MER-242 delivers its derivative (D1). Layer codes (THM-01, ALT-01, ALT-02) stay out of visible copy, as on the homepage since R14. |
+| G3 `#relief` (aliases `#pilot-priority`, `#pilot-geothermal`) | Priority over relief | **Large figure** — the priority surface over shaded NASADEM relief (V2), 0–100 legend. **Shown only once MER-242 delivers its MER-151-family derivative (D1);** until then G3 is absent and its alias anchors sit on G2. | One line (existing `pilotPage.closing.copy`, trimmed): "The priority surface read over NASADEM relief, so ranked ground can be seen against the valleys and ridges it sits on." The priority warning (R6). |
+| G4 `#iron` | The second alteration signal | **Large figure** — the iron alteration proxy (V3) with its legend | One line (new): "A second Sentinel-2 proxy, sensitive to iron-bearing surfaces, mapped on the same frame." / "Aynı çerçevede haritalanan, demir içeren yüzeylere duyarlı ikinci bir Sentinel-2 göstergesi." Its warning (R6). **Shown only once MER-242 delivers (D1);** until then G4 is absent and the G2 row reads "Accepted, not shown yet". |
 | G5 `#outputs` | What the pilot produced | **Table** — Output · What it is | Area definition · One boundary, grid and projection for every layer. Context layers · Natural colour and elevation, for orientation only. Evidence layers · Mapped remote-sensing signals, each with its limits. Data-gap statement · What is missing, stated instead of filled. Priority surface · One within-area ranking, 0 to 100. Provenance record · The source and export behind every visual. |
 | G6 `#gap` (alias `#pilot-structure`) | Not available: structure and geology | **Empty frame** — the panel outline at the same size as the figures, drawn empty with the label "No public-safe fault or lithology layer" | Existing `/pilot/` gap text trimmed to 40 words: "No public-safe fault or lithology layer is authorized for this pilot. The gap is shown, not filled, and it does not change the priority: structure and geology are optional support and score-invariant." |
 | G7 | Next | — | One link: "Discuss a pilot →" / "Pilot görüşün →" to `/partner/`. |
@@ -201,7 +202,7 @@ New navigation; one line and a link home. Bilingual in MER-241.
 | --- | --- |
 | `/pilot/#pilot-observe` | `/solutions/geothermal/#pilot-observe` → G1 |
 | `/pilot/#pilot-terrain`, `#pilot-evidence` | G2 |
-| `/pilot/#pilot-priority`, `#pilot-geothermal` | G3 |
+| `/pilot/#pilot-priority`, `#pilot-geothermal` | G3 (on G2 until MER-242 delivers G3) |
 | `/pilot/#pilot-structure` | G6 |
 | `/solutions/#geothermal` | S2 (still on the hub) |
 | `/solutions/#mineral`, `#environment` | S3, S4 (existing aliases, unchanged) |
@@ -215,8 +216,8 @@ The old routes had no `/tr/` versions, so no Turkish redirects are needed. Every
 | Id | Visual | Source and rights | Owner | Blocks |
 | --- | --- | --- | --- | --- |
 | V1 | Locator map: Türkiye outline, Denizli, the 36 km AOI square | Natural Earth 1:10m Admin 0 (public domain), rendered to SVG by a local script; recorded in `sources.json` and `IMAGERY_RIGHTS.md` as class A, not product proof. Downloading the dataset needs CTO approval at the time. | MER-240 | G0 |
-| V2 | Priority over shaded relief, in the MER-151 presentation family | Science request to `geothermal-prospectivity` (D1). Interim alternative: the accepted WEB-002 `geothermal-*` composite now on `/pilot/`, which uses the older report palette. | Science → MER-240 | G3 |
-| V3 | Iron (ALT-02) alteration proxy, in the MER-151 presentation family | Science request (D1). Interim alternative: the accepted GEO-WEB-002 `alt02-1249` / `alt02-800` export (report palette, 1249 px ceiling). | Science → MER-240 | G4 |
+| V2 | Priority over shaded relief, in the MER-151 presentation family | Science: **MER-242** (D1, decided 2026-10-15). The WEB-002 `geothermal-*` composite is not used. | Science → MER-240 | G3 (absent until delivered) |
+| V3 | Iron (ALT-02) alteration proxy, in the MER-151 presentation family | Science: **MER-242** (D1, decided 2026-10-15). The GEO-WEB-002 `alt02-*` export is not used. | Science → MER-240 | G4 (absent until delivered) |
 | V4 | A coastal Marine context scene to replace the inland Ili Delta | USGS Landsat Collection 2, natural colour, public domain, through the existing imagery pipeline. Suggested: the Büyük Menderes delta and the Aegean coast near Söke, the same river that crosses the Kızıldere graben. Illustrative only, never a result. | MER-240 | S4 (Ili Delta is the fallback) |
 | V5 | Layer-table thumbnails | Existing derivatives displayed at most 160 CSS px; no new files. | MER-240 | — |
 | V6 | Per-page social previews | Existing placed images: the hero poster for Solutions, About and Partner; the Kızıldere priority for Geothermal (MER-237's rule requires a placed image). | MER-240 | — |
@@ -236,26 +237,27 @@ The old routes had no `/tr/` versions, so no Turkish redirects are needed. Every
 
 The validator's `ROUTES` and `REQUIRED_FILES` follow the page set in section 2. MER-240 updates them together with the routes.
 
-## 9. Open decisions (recommendation first)
+## 9. Decisions (D1–D2 decided, D3–D5 open)
 
-| Id | Decision | Recommendation | Alternative |
+| Id | Decision | Decided, or recommended | Alternative |
 | --- | --- | --- | --- |
-| D1 | The palette of G3 (priority over relief) and G4 (iron proxy) | Ask Science for MER-151-family derivatives of both, so the Geothermal page reads in the homepage's palette. Until they exist, G3 and G4 are left out, and the G2 row says "Accepted, not shown yet". | Ship now with the accepted WEB-002 / GEO-WEB-002 exports (report palette), accepting a visible palette difference from the homepage. This is what the mockups show. |
-| D2 | Turkish URL slugs | Turkish slugs (`/tr/cozumler/jeotermal/`, `/tr/hakkimizda/`, `/tr/is-birligi/`), ASCII only. | English slugs under `/tr/` (`/tr/solutions/geothermal/`): simpler to generate, less natural for Turkish readers. |
+| D1 | The palette of G3 (priority over relief) and G4 (iron proxy) | **Decided 2026-10-15:** Science provides MER-151-family derivatives of both (**MER-242**). Until they exist, G3 and G4 are left out, and the G2 row says "Accepted, not shown yet". | (Not chosen: ship the WEB-002 / GEO-WEB-002 exports in the report palette, as the mockups show.) |
+| D2 | Turkish URL slugs | **Decided 2026-10-15:** Turkish slugs, ASCII only — `/tr/`, `/tr/cozumler/`, `/tr/cozumler/jeotermal/`, `/tr/hakkimizda/`, `/tr/is-birligi/`. | (Not chosen: English slugs under `/tr/`.) |
 | D3 | A privacy / KVKK notice page | A legal question for the company, not one this document can answer. Facts for that review: the site sets no cookies, has no forms, analytics or third-party scripts, and stores only the language choice in the visitor's own browser (`localStorage`). | — |
 | D4 | `contact@orbgss.com` deliverability | The CTO confirms the mailbox receives external mail before MER-240 ships. | — |
 | D5 | Marine imagery | Source a coastal scene (V4) during MER-240. | Keep the Ili Delta with its current illustrative footnote. |
 
 ## 10. Handoff
 
-* **MER-239:** apply section 8 and rules R1–R8 to `CLAUDE.md` and the other authorities; record D1–D5 as decided.
+* **MER-239:** apply section 8 and rules R1–R8 to `CLAUDE.md` and the other authorities; record D1 and D2 as decided (2026-10-15) and D3–D5 as they are decided.
 * **MER-240:**
   * build sections 2 and 4 in English;
   * add the section 6 redirects and alias ids;
   * source the section 7 visuals;
   * update `.vercelignore`, `ROUTES`, the sitemap and the per-route metadata;
   * enforce R1–R5 and R8 in the validator with a negative suite: word budgets, at most one full-size use per visual, a lead visual per section, no duplicate claim strings across routes, one status vocabulary.
-* **MER-241:** generate `/tr/` from the same dictionary under the D2 scheme.
+* **MER-241:** generate `/tr/` from the same dictionary under the D2 scheme (Turkish slugs).
+* **MER-242 (Science):** the G3 / G4 derivatives; MER-240 adds G3 and G4 when they are accepted.
 
 ## 11. Mockups
 
@@ -265,4 +267,4 @@ The validator's `ROUTES` and `REQUIRED_FILES` follow the page set in section 2. 
 * `solutions.html`, `geothermal.html`, `about.html`, `partner.html`;
 * `mockup.css` — the few mockup-only rules (tables, locator placeholder, empty-gap frame) MER-240 will turn into real components.
 
-To view them, serve the repository root (`py -3.14 -m http.server 8080`) and open `http://localhost:8080/docs/mockups/m6/solutions.html`. Desktop (1440 px) and mobile (390 px) screenshots of every mockup are in `evidence/mer238/`. The locator map (V1) is a labelled placeholder until MER-240 builds it from Natural Earth.
+To view them, serve the repository root (`py -3.14 -m http.server 8080`) and open `http://localhost:8080/docs/mockups/m6/solutions.html`. Desktop (1440 px) and mobile (390 px) screenshots of every mockup are in `evidence/mer238/`. The locator map (V1) is a labelled placeholder until MER-240 builds it from Natural Earth. G3 and G4 in the mockups show the interim report-palette exports, which D1 did not choose: the implementation leaves both out until MER-242 delivers.

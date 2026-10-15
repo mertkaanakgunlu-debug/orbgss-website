@@ -116,3 +116,20 @@ Those cells were trimmed and the authority records the trimmed wording.
 * **Inputs for D1 / D4.** D1 (Science derivatives for G3 / G4) and D4 (mailbox verification) are
   inputs MER-240 cannot proceed without. D3 (privacy / KVKK) is the company's legal call; §9
   records the facts that review needs.
+
+## 8. CTO decision (2026-10-15)
+
+In the MER-238 session, after the handoff above: "MER-238'i onaylıyorum; D1'de Science'tan MER-151
+türevlerini isteyelim, D2 için Türkçe sözcükler olsun."
+
+* **Approved:** the authority and the mockups.
+* **D1:** Science provides MER-151-family derivatives for G3 (priority over relief) and G4 (ALT-02),
+  requested as Linear **MER-242** in the Geothermal Domain project. Until they are accepted, G3 and
+  G4 are left out, the G2 row reads "Accepted, not shown yet", and the old `#pilot-priority` /
+  `#pilot-geothermal` aliases sit on G2. The mockups still show the interim report-palette exports
+  that D1 did not choose.
+* **D2:** Turkish slugs (`/tr/cozumler/`, `/tr/cozumler/jeotermal/`, `/tr/hakkimizda/`, `/tr/is-birligi/`).
+* **Still open:** D3 (privacy / KVKK, legal), D4 (mailbox verification), D5 (coastal Marine scene).
+
+The decision is recorded in `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (status line, §0, §4.3 G2–G4,
+§6, §7 V2–V3, §9, §10, §11) by a follow-up commit; no other content changed.
