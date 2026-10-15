@@ -3,7 +3,7 @@
 **Linear:** MER-237 "Web sitesi: iç dosyaları canlı yayından kaldır" (Milestone 6, created 2026-10-15 by CTO decision).
 **Branch:** `mertkaanakgunlu/mer-237-web-sitesi-ic-dosyalari-canli-yayindan-kaldir`
 **Baseline:** `mertkaanakgunlu/mer-218-website-mer-216-canonical-publication-closure@5ca7bdd4167020fc0f7dd5a58b017495de9002fe` (MER-218, accepted)
-**State at handoff:** `REVIEW_READY`. Implementation commit `58cbb7b8`; this record is completed by the follow-up commit that adds section 8. Nothing merged, published or deployed by this task (Vercel built a Preview on its own when the branch was pushed); no Vercel setting, DNS, domain or credential touched.
+**Outcome:** accepted by the CTO on 2026-10-15 and published in `main@2517369e` the same day (MER-219). Production smoke confirmed every internal path returns 404, which closes the open item in section 8. **State at handoff:** `REVIEW_READY`. Implementation commit `58cbb7b8`; this record is completed by the follow-up commit that adds section 8. Nothing merged, published or deployed by this task (Vercel built a Preview on its own when the branch was pushed); no Vercel setting, DNS, domain or credential touched.
 
 ## 1. Problem
 

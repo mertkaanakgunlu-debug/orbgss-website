@@ -7,12 +7,13 @@ This file is the first authority to read when continuing OrbGSS website work in 
 Before changing code, read in this order:
 
 1. `STATUS.md`
-2. `docs/WEB_VNEXT_AUTHORITY.md` (vNext authority; wins over 3–4 where they disagree)
-3. `docs/DESIGN_AUTHORITY.md`
-4. `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`
-5. `IMAGERY_RIGHTS.md`
-6. `assets/imagery/sources.json`
-7. the exact task file named by `STATUS.md`
+2. `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (Milestone 6, CTO-approved 2026-10-15; wins over 3–5 on pages, navigation, URLs and content rules)
+3. `docs/WEB_VNEXT_AUTHORITY.md` (vNext authority; wins over 4–5 where they disagree)
+4. `docs/DESIGN_AUTHORITY.md`
+5. `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`
+6. `IMAGERY_RIGHTS.md`
+7. `assets/imagery/sources.json`
+8. the exact task file named by `STATUS.md`
 
 Then inspect `index.html`, `styles.css`, `script.js`, and run the site validator before editing.
 
@@ -31,19 +32,19 @@ These are requirements, not suggestions:
 - The page is image-led and extremely restrained.
 - Full-width real Earth-observation imagery dominates the page.
 - Hero text may overlay the first image; story panels after the hero are clean.
-- The homepage has exactly **four major visual acts**, in this order: Act 1 cinematic acquisition hero → Act 2 real Kızıldere EO context → Act 3 compact three-card evidence trio → Act 4 priority/result climax (WEB-005, `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md`). Supporting pilot-ledger, company/trust and contact sections follow and must stay visually subordinate. The WEB-001/002 six-scene `dark beam → full-width raster` gallery is superseded and must not return; `scripts/validate_site.py` fails if it does.
+- The homepage has exactly **four major visual acts**, in this order: Act 1 cinematic acquisition hero → Act 2 real Kızıldere EO context → Act 3 compact three-card evidence trio → Act 4 priority/result climax (WEB-005, `docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md`). Supporting sections follow and must stay visually subordinate (live: Solutions cards, Method, Company, Contact; Milestone 6 target: Solutions cards and one Partner line — see "Milestone 6 target"). The WEB-001/002 six-scene `dark beam → full-width raster` gallery is superseded and must not return; `scripts/validate_site.py` fails if it does.
 - Each act owns a different composition on purpose — full-bleed hero, full-bleed natural-colour band (Act 2, WEB-005B), one analytical stage of three aligned squares (Act 3), contained result figure on its own stage (Act 4). Do not collapse them back into one repeated template. Act 3 is the single permitted card-like composition on the whole site: exactly three panels, never a feature grid.
-- The dark technical beam grammar survives on the deep routes (`/platform/`, `/pilot/`, …), not as a repeated homepage rhythm.
+- The dark technical beam grammar survives on the deep routes (live: `/platform/`, `/pilot/`; Milestone 6 target: `/solutions/geothermal/`), not as a repeated homepage rhythm.
 - Each image carries its location and coordinates directly on the image, bottom-right, as bare monospace text (no card, box, band or background container). The third line names what the layer is: the accepted public label on a product-proof panel, `Natural-color composite` on gallery imagery, and `Rendered orbital sequence — not sensor imagery` on the cinematic hero, which is a render and must always say so. Sensor and acquisition date stay in the manifest and are not shown on the homepage. There is no separate metadata strip below any image. Caption tone (`data-label-tone`) is chosen per panel from the measured luminance under the caption, because the cartographic exports are pale where the satellite photography was dark.
-- Every scientific visual is product proof: a real OrbGSS cartographic export of the Kızıldere pilot AOI, materialized through the accepted GEO-039 Workbench export path and recorded in `assets/imagery/sources.json` — under `web_002.proof_assets` (WEB-002), `geo_web_002.assets` (the accepted final master package, still bound by `/pilot/`) or `web_005b.analytical` (WEB-005B: presentation derivatives of the governed MER-113 rasters, which is what the homepage Acts 3 and 4 bind). Since R15 those are built by `scripts/build_web005b_presentation.py` under **MER-151 / GEO-WEB-004** (`geothermal-prospectivity@e8aa5d65:tasks/MER-151_GEO-WEB-004_HOMEPAGE_EVIDENCE_PRESENTATION_PARITY_AUTHORITY.md`), which supersedes the MER-108 website profile for these surfaces only: canonical normalization, a BOUNDED display window and one fixed monotonic gamma per layer, the frozen hero palette stops, NoData transparent over a neutral hillshade, lossless. A 4K/HiDPI presentation derivative is allowed (one final RGBA Lanczos3 resize, 0.50–4.00× per axis, 4800 px ceiling, premultiplied and mask-aware) but is currently not published — describe any such file as a "4K presentation derivative generated from the governed analytical raster", never as higher-resolution science: the scientific master stays 1200 × 1200 at 30 m, EPSG:32635. Priority may never be windowed and stays on the fixed 0–100 domain. Each layer carries export id / governed source SHA-256, its window and gamma decision, and per-derivative SHA-256. Never add a scientific visual without that record; the validator recomputes the checksums and the palette LUT and re-checks every MER-151 bound.
+- Every scientific visual is product proof: a real OrbGSS cartographic export of the Kızıldere pilot AOI, materialized through the accepted GEO-039 Workbench export path and recorded in `assets/imagery/sources.json` — under `web_002.proof_assets` (WEB-002), `geo_web_002.assets` (the accepted final master package, deployed under `assets/proof/final/` but placed on no page today; `/pilot/` shows the `web_002.proof_assets`) or `web_005b.analytical` (WEB-005B: presentation derivatives of the governed MER-113 rasters, which is what the homepage Acts 3 and 4 bind). Since R15 those are built by `scripts/build_web005b_presentation.py` under **MER-151 / GEO-WEB-004** (`geothermal-prospectivity@e8aa5d65:tasks/MER-151_GEO-WEB-004_HOMEPAGE_EVIDENCE_PRESENTATION_PARITY_AUTHORITY.md`), which supersedes the MER-108 website profile for these surfaces only: canonical normalization, a BOUNDED display window and one fixed monotonic gamma per layer, the frozen hero palette stops, NoData transparent over a neutral hillshade, lossless. A 4K/HiDPI presentation derivative is allowed (one final RGBA Lanczos3 resize, 0.50–4.00× per axis, 4800 px ceiling, premultiplied and mask-aware) but is currently not published — describe any such file as a "4K presentation derivative generated from the governed analytical raster", never as higher-resolution science: the scientific master stays 1200 × 1200 at 30 m, EPSG:32635. Priority may never be windowed and stays on the fixed 0–100 domain. Each layer carries export id / governed source SHA-256, its window and gamma decision, and per-derivative SHA-256. Never add a scientific visual without that record; the validator recomputes the checksums and the palette LUT and re-checks every MER-151 bound.
 - No class-B scientific raster may be baked into the hero video, or into any other lossy encode. Lossy compression changes governed colours and values. Ship the accepted derivative as its own checksummed file and composite it in the page.
 - Class-B assets have a hard honest-render ceiling on the long axis: **1249 device pixels** for the GEO-WEB-002 exports, and the **native 1200 px** grid for the WEB-005B homepage derivatives (design against 600 CSS px so a 2× display still fits; MER-151 would permit an enlarged presentation derivative, but none is published, so 600 CSS px remains the cap). Answer a bigger presentation with a contained composition, never a stretch — the homepage never upsamples a governed raster, even where MER-108 would permit it for the hero. Each asset records its own ceiling and its placement's measured `rendered` width, and the validator checks the layout against them.
 - Structure/geology is a deliberate data gap. No public-safe fault or lithology master is authorized, and the gap is score-invariant. Since WEB-005 it is a short subordinate footnote under Act 3 rather than a full scene. Do not fill it, and do not promote it back into an act.
 - The published score is `mvp_remote_sensing_priority_v1`, public label **Remote-Sensing Relative Priority — Experimental Baseline**: a deterministic 0–100 within-AOI screening surface. Never call it probability, Full Prospectivity, a reserve/resource estimate, discovery or drilling-success likelihood, or a cross-AOI calibrated score. Every proof panel carries its mandatory scientific warning as visible EN/TR copy.
 - The public domain taxonomy is exactly **Geothermal / Mining / Marine** (WEB-005C / MER-149), on the homepage, in the navigation and on `/solutions/` alike. The superseded application-ledger labels (Mineral Exploration, Environmental & Land Intelligence) must not return to visible copy. `/solutions/#mineral` and `/solutions/#environment` survive only as compatibility aliases on the renamed rows, and must keep resolving.
-- Desktop navigation is right-aligned in exactly this order: Platform → Solutions (dropdown: Geothermal, Mining, Marine) → Pilot → Company → Contact → EN | TR. Every item resolves to a real anchor; no flags in the language switch.
-- The three homepage Solutions cards are native links to `/solutions/#geothermal`, `/solutions/#mining` and `/solutions/#marine` (WEB-005C R2). They navigate without JavaScript and carry no CTA button, arrow or added copy — the card itself is the link.
-- The homepage is bilingual (English default, Turkish) via the lightweight client-side dictionary in `script.js`. Every new visible string needs both languages.
+- Desktop navigation is right-aligned; every item resolves to a real page or anchor; no flags in the language switch. Live order (until MER-240 ships): Platform → Solutions (dropdown: Geothermal, Mining, Marine) → Pilot → Company → Contact → EN | TR. Approved target order: Home → Solutions (dropdown: Geothermal, Mining, Marine) → About → Partner with us → EN | TR.
+- The three homepage Solutions cards are native links (WEB-005C R2). They navigate without JavaScript and carry no CTA button, arrow or added copy — the card itself is the link. Live targets: `/solutions/#geothermal`, `/solutions/#mining`, `/solutions/#marine`. Milestone 6 targets: `/solutions/geothermal/`, `/solutions/#mining`, `/solutions/#marine`, with each card showing only the image, the domain name and its status label.
+- The site is bilingual (English default, Turkish). Live: the lightweight client-side dictionary in `script.js`. Milestone 6 target (MER-241): static Turkish pages under `/tr/` with Turkish slugs, generated from the same dictionary. Every new visible string needs both languages.
 - No `How it works` section.
 - No icon wall, feature-card grid, fake dashboard overlay, HUD chrome or decorative map pins.
 - Keep generous horizontal/vertical scale on desktop. The user explicitly wants sections broader in both physical size and visual context.
@@ -51,6 +52,34 @@ These are requirements, not suggestions:
 - Do not replace the current aesthetic with generic blue-gradient SaaS styling.
 
 If a requested change conflicts with these rules, stop and ask for explicit design approval rather than silently drifting.
+
+## Milestone 6 target (approved MER-238, 2026-10-15)
+
+The CTO approved `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (mockups `docs/mockups/m6/`). It is the authority for MER-240 (English pages) and MER-241 (static `/tr/`). Where a "live" invariant above and the target differ, the live one describes production until the task that implements the target is accepted and published. From then on, the target is the invariant.
+
+- **Pages:** `/` (the four acts and the inspection aid unchanged), `/solutions/` (a hub with a comparison table and a full-bleed band per domain; `#mining` and `#marine` keep the `#mineral` / `#environment` aliases), `/solutions/geothermal/` (the Kızıldere reference sheet that replaces `/pilot/`), `/about/` (principles and data sources; no team, address or legal-entity details), `/partner/` (Partner with us: conversation table plus email; no form, backend, CRM, analytics or cookies).
+- **Redirects:** 301 `/platform/` → `/`, `/pilot/` → `/solutions/geothermal/`, `/company/` → `/about/`, `/contact/` → `/partner/`. The old `#pilot-*` anchors survive as aliases on the Geothermal page.
+- **Turkish URLs:** `/tr/`, `/tr/cozumler/`, `/tr/cozumler/jeotermal/`, `/tr/hakkimizda/`, `/tr/is-birligi/`. Anchor ids are identical in both languages.
+- **Homepage changes:** Method and Company leave the homepage for `/about/`; Contact becomes one "Partner with us →" line; the homepage carries no `mailto:` of its own; the Act 3 / Act 4 links into `/pilot/` point to the Geothermal page.
+- **Content rules (apply to every page built or changed from MER-240 on):**
+  - **R1** — every fact has exactly one home page; elsewhere it is only linked.
+  - **R2** — a visual appears full-size on one page; elsewhere only as a thumbnail of at most 160 CSS px inside an index table or a linking card.
+  - **R3** — no software or development content: no workflow steps, pipelines, tooling, file formats or export paths. Geospatial facts live once, in the Geothermal facts table.
+  - **R4** — every content section opens with its lead visual (image, map, chart or table).
+  - **R5** — budgets (EN; TR may run 15 % longer): headline 8 words, page intro 30, section body 40, table cell 12, at most 7 rows per table; at most 250 budgeted words per page (Geothermal 350).
+  - **R6** — mandatory scientific warnings, the illustrative-imagery footnote, captions, status labels, the footer attribution and the "Built by VirgaSoft" mark are fixed texts, exempt from R1 and R5.
+  - **R7** — claim discipline unchanged.
+  - **R8** — Mining and Marine are labelled "Expansion direction" / "Genişleme yönü" everywhere.
+
+  Tables are show-first elements, not cards; Act 3 and the Solutions cards remain the only card-like compositions.
+- **Decisions:**
+  - **Decided:**
+    - D1: the Geothermal page's priority-over-relief and ALT-02 figures use only MER-151-family derivatives from Science (MER-242). Until then they are left out, and the layer table says "Accepted, not shown yet".
+    - D2: Turkish slugs.
+  - **Open:**
+    - D3: privacy / KVKK page, a legal call.
+    - D4: `contact@orbgss.com` deliverability, a ship gate for MER-240.
+    - D5: a coastal Marine scene to replace the inland Ili Delta.
 
 ## Content / claim discipline
 
@@ -74,14 +103,13 @@ If a requested change conflicts with these rules, stop and ask for explicit desi
 
 No feature work on `main`. Every task lands on a bounded branch for its own Linear issue and is reviewed before anything is merged.
 
-Current baseline (reconciled by MER-218, 2026-10-03; the day-to-day detail is in `STATUS.md`). Three states are kept apart on purpose:
+Current baseline (reconciled by MER-239, 2026-10-15; the day-to-day detail is in `STATUS.md`):
 
-- **Git `main`:** `f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85` — the MER-213 documentation commit on top of the launched code `79cc2cb` (code-identical to it). `main` has **not** moved for MER-216.
-- **Accepted, unpublished artifact:** **MER-216** (media fidelity and runtime hardening, Phases 1-4; supersedes MER-143..146) is Done — accepted 2026-10-03 at `claude/mer-216-s1r628@adf08186d3ee4a438bda73886272d05c970e670a`, three commits above `main` and fast-forward-compatible; evidence `tasks/MER-216_EVIDENCE.md`. MER-218 adds a docs-only closure on top of it; publishing is a non-force fast-forward of `main` to the reviewed closure head (`tasks/MER-218_EVIDENCE.md`), a separate CTO gate.
-- **Production:** serves the launched code — the latest Linear record is a Git deployment of `main@f4f1d4d6`; it does **not** serve MER-216. Sourcing is in `STATUS.md`.
-- **Where new work branches from:** the exact baseline its Linear issue names, verified by fetch. `79cc2cb` and `00af0f2` are history, not baselines. Until `main` is fast-forwarded, `main@f4f1d4d6` does not contain MER-216, so work that builds on it must name the accepted head explicitly.
-- Earlier accepted heads, for provenance only: WEB-001 `677bfa7`; WEB-002 `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; WEB-003 `3670d43`; WEB-004 `56cb53039b85a852110c737505bc2ae2282acb08`; GEO-WEB-002 `ea693c29762279131fbed005e832c5ff2dca587b`; WEB-HERO-001D `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`; WEB-005 terminal acceptance `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`; WEB-005A `1135e7a7e0b0f6db6348dee139d505550d8ca8b9`; launched code baseline WEB-005C `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084` (WEB-005 + 005A hero + 005B homepage R15 + 005C taxonomy).
-- Updating `main`, production deployment and the WEB-006 / MER-95 DNS cutover are separate CTO-authorized gates. An auto-created session branch (for example `claude/...`) is workspace plumbing, not canonical state.
+- **Git `main` = production:** `2517369e0f0c4239d72603a3188227554053a6ea` — the launched code (`79cc2cb`, WEB-005C) plus MER-216 (media fidelity and runtime hardening), MER-218 (closure) and MER-237 (public-site-only deploy). Published 2026-10-15 by a non-force fast-forward from `f4f1d4d6` (MER-219).
+- **Production topology:** Vercel project `orbgss-website`, team `virga-soft`. The Git integration deploys `main` to production automatically (**COUPLED**), so a push to `main` *is* a production deployment. Every other pushed branch gets a protected Preview. The current production deployment, rollback target and smoke tooling are in `STATUS.md` and `tasks/MER-219_PREFLIGHT.md`.
+- **Where new work branches from:** the exact baseline its Linear issue names, verified by fetch. Normally that is `main`.
+- **Earlier accepted heads, for provenance only:** WEB-001 `677bfa7`; WEB-002 `a10cc141e3a7830c5e3c67a22e950ab16c0fe92b`; WEB-003 `3670d43`; WEB-004 `56cb53039b85a852110c737505bc2ae2282acb08`; GEO-WEB-002 `ea693c29762279131fbed005e832c5ff2dca587b`; WEB-HERO-001D `e95fdcac7cac82e597d40dab4cdc96ce1a6b319e`; WEB-005 terminal acceptance `main@00af0f232a8d7d77f5ca61d758461ff7316ba151`; WEB-005A `1135e7a7e0b0f6db6348dee139d505550d8ca8b9`; launched code baseline WEB-005C `feat/web-005c-public-domain-taxonomy-parity@79cc2cb82a4542461cbbfc1d0c349cf02b861084`; MER-213 `f4f1d4d6`; MER-216 `adf08186`; MER-218 `5ca7bdd4`; MER-237 `2517369e`.
+- **Gates:** updating `main` (a production deployment, given the topology), any other production deployment, and DNS are separate CTO-authorized gates. An auto-created session branch (for example `claude/...`) is workspace plumbing, not canonical state.
 
 ## Task execution rule
 
@@ -102,6 +130,8 @@ Target deployment:
 - hosting: Vercel
 - domain registrar/DNS: Squarespace
 - public domain: `orbgss.com`
+
+Publishing follows `tasks/MER-219_PREFLIGHT.md` §5: guard, non-force fast-forward, watch the production deployment, then run `evidence/mer219/smoke_production.py --expect-sha <sha>` and `evidence/mer219/browser_checks_production.py`. Rollback is Instant Rollback in the Vercel dashboard (§4). Task-execution rule 6 stands: an agent never fast-forwards `main` on its own. In MER-219 the CTO explicitly authorized the agent, in the conversation, to run one reviewed publication. That authorization does not carry over to any other publication.
 
 Only the public site is deployed (MER-237). `.vercelignore` is a root allowlist: `/*` first, then one `!<entry>` line per public root file or directory. A new public page or top-level file must be added there or it will not be deployed; `scripts/validate_site.py` fails when anything a public page, stylesheet, manifest, sitemap or robots.txt references falls outside the allowlist, when an internal path (`STATUS.md`, `CLAUDE.md`, `docs/`, `tasks/`, `evidence/`, `scripts/`, `hero/`, `references/` …) is let back in, when documentation or tooling sits inside a deployed directory, or when a route's `og:image` is not a deployed image some page shows.
 

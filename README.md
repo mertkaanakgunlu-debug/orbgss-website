@@ -10,12 +10,13 @@ Claude Code should automatically inspect `CLAUDE.md`. The canonical manual boots
 
 1. `CLAUDE.md`
 2. `STATUS.md`
-3. `docs/WEB_VNEXT_AUTHORITY.md`
-4. `docs/DESIGN_AUTHORITY.md`
-5. `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`
-6. `IMAGERY_RIGHTS.md`
-7. `assets/imagery/sources.json`
-8. task named by `STATUS.md`
+3. `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (Milestone 6 pages, navigation and content rules)
+4. `docs/WEB_VNEXT_AUTHORITY.md`
+5. `docs/DESIGN_AUTHORITY.md`
+6. `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`
+7. `IMAGERY_RIGHTS.md`
+8. `assets/imagery/sources.json`
+9. task named by `STATUS.md`
 
 For a fresh Claude session, `CLAUDE_SESSION_BOOTSTRAP.txt` contains a copy/paste bootstrap prompt.
 
@@ -55,7 +56,7 @@ Use an isolated environment: recent rasterio wheels require numpy 2.
 
 ## Current state and next task
 
-Git `main` is `f4f1d4d6cb6ff4acd4ad02129bb9ec13a50ade85` (the MER-213 documentation commit over the launched code `79cc2cb`). MER-216 (media fidelity and runtime hardening; supersedes MER-143..146) is accepted and Done at `claude/mer-216-s1r628@adf08186d3ee4a438bda73886272d05c970e670a` but not yet published; its docs-only publication closure MER-218 is `REVIEW_READY`. Fast-forwarding `main` and any deployment are separate CTO gates. `STATUS.md` is the current-state record. Work starts only from an explicit `MER-###'e başla` (rule in `CLAUDE.md`), from the exact baseline the issue names. No feature work on `main`.
+Git `main` is `2517369e0f0c4239d72603a3188227554053a6ea`, live on orbgss.com since 2026-10-15. It is the launched code `79cc2cb` plus MER-216 (media fidelity and runtime hardening) and MER-237 (only the public site is deployed), published by MER-219. Vercel deploys `main` to production automatically, so fast-forwarding `main` is a production deployment and a separate CTO gate. Milestone 6 (new information architecture, show-first pages, static `/tr/`) is planned in `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`; the next implementation task is MER-240. `STATUS.md` is the current-state record. Work starts only from an explicit `MER-###'e başla` (rule in `CLAUDE.md`), from the exact baseline the issue names. No feature work on `main`.
 
 ## Deployment target
 
