@@ -411,7 +411,7 @@ None. See "Open gates and decisions" at the top of this file. `main@2517369e` is
 
 ## Next canonical task
 
-1. **MER-239** (this reconciliation, docs only) — `REVIEW_READY` on `mertkaanakgunlu/mer-239-web-sitesi-belge-ve-otorite-uzlastirmasi`, awaiting CTO review. Publishing it is a fast-forward of `main`. Because production is COUPLED, that push redeploys production; the deployed file set is unchanged, since `.vercelignore` keeps every changed path out of the deploy.
+1. **MER-239** (this reconciliation, docs only) — `REVIEW_READY` on `mertkaanakgunlu/mer-239-web-sitesi-belge-ve-otorite-uzlastirmasi`, awaiting CTO review. Publishing it is a fast-forward of `main`. Because production is COUPLED, that push redeploys production. The only deployed file that changes is `assets/imagery/sources.json`, and only in its metadata (no page, asset, path or checksum). Every other changed path sits outside the deploy set (`.vercelignore`).
 2. **MER-240** — the new English pages from `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`, after MER-239 is accepted and published; D4 (mailbox) is its ship gate.
 3. **MER-241** — static `/tr/` pages, after MER-240.
 4. **MER-242** (Science, parallel) — MER-151-family derivatives for the Geothermal page's priority-over-relief and ALT-02 figures.
