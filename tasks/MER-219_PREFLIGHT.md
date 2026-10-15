@@ -7,17 +7,16 @@
 
 ## 0. Gate status
 
-**`BLOCKED_LIVE_VERCEL_STATE`** — not `READY_FOR_CTO_APPROVAL`.
+**`READY_FOR_CTO_APPROVAL`** (revised 2026-10-15). The first pass stopped at `BLOCKED_LIVE_VERCEL_STATE`, because the agent's environment cannot read the Vercel project:
 
-* **What is done:**
-  * Git preflight: complete and clean.
-  * Topology: classified **`COUPLED`** from live, observed behaviour.
-  * Production identity: verified.
-  * Rollback contract, publication sequence, an executable smoke check with its pre-publication baseline, and the reconciliation plan: all written.
-* **What blocks:** this environment cannot read the Vercel project. The Vercel connector is authorized for 0 teams. The built-in browser has no Vercel session, and signing in is not an agent action. No Vercel CLI is installed. Preview deployments sit behind Vercel Authentication.
-* **Unread as a result:** the project settings that confirm the observation, and the current production deployment's id and alias state (§2.2). §8 gives three ways to clear the block.
+* the Vercel connector is authorized for 0 teams, and reconnecting did not change that in this session;
+* the built-in browser has no Vercel session, and signing in is not an agent action;
+* no Vercel CLI is installed.
 
-Nothing in Git, Vercel, DNS, domains, credentials or production was changed by this preflight.
+The CTO then read the production overview in the Vercel dashboard (§2.1b), which supplies what the block was about: the current production deployment, its source branch and commit, its domains and its health. The settings still unread (§2.2) are recorded with the reason each one does not block.
+
+* **Done:** the Git preflight (clean); the topology, **`COUPLED`**, confirmed from both GitHub and the dashboard; production identity; the rollback contract; the publication sequence; an executable smoke check with its pre-publication baseline; the reconciliation plan.
+* **Changed by this preflight:** nothing in Git, Vercel, DNS, domains, credentials or production.
 
 ## 1. Git publication preflight (fresh fetch, 2026-10-15)
 
@@ -61,16 +60,32 @@ git push origin 2517369e0f0c4239d72603a3188227554053a6ea:refs/heads/main
 | `.vercelignore` build | Preview builds of `58cbb7b8` and `2517369e` (allowlist present) report success | The allowlist does not break the build |
 | Environment differences | The site is static; `script.js` and the pages read no environment variables | None the site depends on |
 
-### 2.2 Not readable from this environment
+### 2.1b Read by the CTO in the Vercel dashboard (2026-10-15)
 
-| Item | Why it matters |
+The CTO shared a screenshot of `vercel.com/virga-soft/orbgss-website` (Overview). The screenshot is not committed: the repository is public, and it shows the CTO's browser. Its content:
+
+| Field | Value |
 | --- | --- |
-| Production Branch setting | Confirms `main` is still the production branch |
-| Auto-assignment of production domains | An Instant Rollback since 2026-10-02 would have switched it off, and a `main` push would then not go live |
-| Framework preset, build command, output and root directory, ignored-build step | Confirms nothing overrides the repository-root static deploy |
-| Current production deployment id and aliases | The exact rollback target |
-| Plan tier | Hobby can roll back only to the immediately previous production deployment |
-| Deployment file tree | Direct proof that `.vercelignore` is applied to Git deployments. The preview is protected, so the smoke check (§5) proves it after publication instead |
+| Production deployment | `orbgss-website-p0heuwii3-virga-soft.vercel.app`, the same deployment as GitHub deployment `6803748076` |
+| Domains | `orbgss.com`, `orbgss-website.vercel.app` (`www` answers with a 308 to the apex, §2.1) |
+| Status | **Ready** |
+| Created | Oct 2, "by claude". This is the Git commit author of `f4f1d4d6` (`Claude <noreply@anthropic.com>`), not a Vercel account or a CLI deploy |
+| Source | branch **`main`**, commit **`f4f1d4d6`** "docs(mer-213): reconcile repository docs with the launched baseline an…" |
+| Build settings | On-Demand Concurrent Builds disabled; Build Machine Basic (2 vCPU / 8 GB); Prioritize Production Builds enabled |
+| Runtime settings | Fluid Compute enabled; Function CPU Standard. Not relevant to a static site with no functions |
+| Rollback state | No rolled-back state is visible on the production tile. The production deployment is also the newest production record (§2.1); a rollback since Oct 2 would point at an older one |
+
+### 2.2 Still not read, and why none of it blocks
+
+
+| Item | Why it does not block |
+| --- | --- |
+| Settings → Git → Production Branch (literal value) | The production deployment's source is `main` (dashboard), and the last `main` push created it within 17 s (GitHub). Both say the production branch is `main`. |
+| Settings → Environments → auto-assignment of custom production domains | The production deployment carries `orbgss.com` and was assigned when the push created it. No rollback is in effect (§2.1b), and that is the only automatic way the setting turns off. If it had been switched off by hand, the push would build without going live: §5 step 3 shows it within a minute, and §5 step 4 fails the identity check. |
+| Framework preset, build and output settings | Production serves the repository root as a static site today, byte-identical to `f4f1d4d6`, and the `2517369e` preview built successfully, so the same settings serve this release. |
+| Plan tier | Rollback to the immediately previous production deployment works on every plan. After publication that deployment is `p0heuwii3` (§4). |
+| Deployment file tree (`.vercelignore` applied) | The §5 smoke proves it on production; §4 restores the previous state if it fails. |
+| Deployment Protection (cut off in the screenshot) | Previews answer 302 to Vercel Authentication (observed), and production on `orbgss.com` is public (observed). |
 
 Attempts made: Vercel MCP `list_teams` → 0 teams, and `list_deployments` (scope `virga-soft`) → 403; protection-bypass fetch of the preview → 403; the built-in browser at `vercel.com/virga-soft/orbgss-website/settings/git` → login page (not signed in; signing in is not an agent action); no Vercel CLI.
 
@@ -78,7 +93,7 @@ Attempts made: Vercel MCP `list_teams` → 0 teams, and `list_deployments` (scop
 
 **`COUPLED`.** Fast-forwarding `main` deploys production by itself. The most recent `main` push produced a production deployment 17 seconds later, and that deployment is what orbgss.com serves today.
 
-This is observed behaviour, not a read of the settings. §2.2 is what would rule out a change since 2026-10-02 (for example a rollback that switched auto-assignment off).
+Confirmed by the dashboard (§2.1b): the deployment serving `orbgss.com` has source `main` / `f4f1d4d6` and no rolled-back state. The settings left unread are covered in §2.2.
 
 **Consequence:** the `git push` in §1 *is* the production deployment. No separate deploy step exists, and none may be added by an agent.
 
@@ -86,7 +101,7 @@ This is observed behaviour, not a read of the settings. §2.2 is what would rule
 
 | Layer | Pre-publication state | Rollback |
 | --- | --- | --- |
-| Production | GitHub deployment `6803748076` → `https://orbgss-website-p0heuwii3-virga-soft.vercel.app` (`f4f1d4d6`; Linear: `dpl_3NNNhqPozget7tpP1XfqCvMqWbJG`), aliased to `orbgss.com` | **Instant Rollback** to that deployment: Vercel dashboard → project → Production Deployment tile → Instant Rollback, or `vercel rollback <url>`. No rebuild, routing-level, seconds. It is eligible because it was aliased to production. On Hobby it qualifies only while it is the immediately previous production deployment, so roll back before anything else deploys to production. |
+| Production | `orbgss-website-p0heuwii3-virga-soft.vercel.app`: dashboard Ready, source `main` / `f4f1d4d6`, domains `orbgss.com` and `orbgss-website.vercel.app`; GitHub deployment `6803748076`; Linear `dpl_3NNNhqPozget7tpP1XfqCvMqWbJG` | **Instant Rollback** to that deployment: Vercel dashboard → project → Production Deployment tile → Instant Rollback, or `vercel rollback <url>`. No rebuild, routing-level, seconds. It is eligible because it was aliased to production. On Hobby it qualifies only while it is the immediately previous production deployment, so roll back before anything else deploys to production. |
 | After a rollback | — | Vercel switches off auto-assignment of production domains, so later `main` pushes do not go live until **Undo Rollback** (dashboard) or `vercel promote <deployment>` is used. Record which was used. |
 | Git | `main@f4f1d4d6` | Never force-push or reset `main`. If `main` must carry the rollback: `git revert --no-edit f4f1d4d6..2517369e` on a branch, reviewed, then a normal fast-forward push. Because the topology is COUPLED, that push deploys the reverted content. Normally: Instant Rollback first, then fix forward. |
 | DNS and mail | Squarespace DNS; Google Workspace MX / SPF / DKIM / DMARC | No rollback path touches DNS, domains or mail records |
@@ -138,20 +153,17 @@ These lines go stale once `main` = `2517369e` and production serves it (line num
 
 ## 7. Residual limitations and findings
 
-* **§2.2** is unread (the gate blocker).
+* **§2.2** settings are not read literally; each is covered as stated there.
 * **`.vercelignore` on Git deployments** has not been observed directly. The previews are protected and the dashboard is unreadable. The §5 smoke proves it on production within a minute of publication, and §4 restores the previous state if it fails.
 * **The GitHub repository is public.** Removing the internal files from orbgss.com (MER-237) does not make them private: `STATUS.md`, `tasks/`, `evidence/` and the rest stay readable on GitHub. Whether the repository should be private is a CTO decision. Vercel can deploy from a private repository, but it is a settings and plan question this preflight does not answer.
 * **No physical-device acceptance** (carried from MER-216).
 * **Production has been set outside `main` before** (the `79cc2cb` CLI deployment). Any future CLI or promote action bypasses this sequence.
 
-## 8. Clearing the block — the CTO picks one
+## 8. Next step
 
-1. **Authorize the Vercel connector for team `virga-soft`**, then reply "MER-219'a devam et". The agent then reads the §2.2 items (project, settings, current production deployment, plan) and the gate becomes `READY_FOR_CTO_APPROVAL` if they agree with §2.1.
-2. **Read the dashboard yourself** and report:
-   * Settings → Git → Production Branch;
-   * Settings → Build & Deployment → framework preset, build command, output and root directory;
-   * the production deployment tile: deployment id, commit `f4f1d4d6`, domains, and whether it shows a rolled-back state;
-   * the plan tier.
+The CTO approves publication in the conversation, after whatever independent review the CTO requires. Then one of two things happens:
 
-   The agent records them and closes the gate.
-3. **Accept the observed evidence** in §2.1 and §3 as sufficient, and approve publication with Instant Rollback (§4) as the safety net.
+* the CTO runs the §1 commands, or
+* the CTO explicitly authorizes the agent to run them, together with §5 steps 3–4 (watch and smoke).
+
+Either way, the §4 rollback is the CTO's action in the Vercel dashboard. The connector cannot reach `virga-soft`, so the agent has no rollback path.
