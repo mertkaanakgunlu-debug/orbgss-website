@@ -1,0 +1,5 @@
+MER-238 mockups measured against R5 (EN). Exempt per R6: warnings, captions, footnote, status labels, mockup flags.
+solutions   page   66/250 | headline max 7/8 | intro 19/30 | cell max 4/12 | rows max 3/7
+geothermal  page  280/350 | headline max 7/8 | intro 25/30 | cell max 10/12 | rows max 7/7
+about       page  218/250 | headline max 5/8 | intro 22/30 | cell max 12/12 | rows max 6/7
+partner     page   78/250 | headline max 7/8 | intro 22/30 | cell max 11/12 | rows max 3/7
