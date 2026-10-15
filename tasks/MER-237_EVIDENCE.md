@@ -3,7 +3,7 @@
 **Linear:** MER-237 "Web sitesi: iç dosyaları canlı yayından kaldır" (Milestone 6, created 2026-10-15 by CTO decision).
 **Branch:** `mertkaanakgunlu/mer-237-web-sitesi-ic-dosyalari-canli-yayindan-kaldir`
 **Baseline:** `mertkaanakgunlu/mer-218-website-mer-216-canonical-publication-closure@5ca7bdd4167020fc0f7dd5a58b017495de9002fe` (MER-218, accepted)
-**State at handoff:** `REVIEW_READY`. Nothing merged, published or deployed; no Vercel setting, DNS, domain or credential touched.
+**State at handoff:** `REVIEW_READY`. Implementation commit `58cbb7b8`; this record is completed by the follow-up commit that adds section 8. Nothing merged, published or deployed by this task (Vercel built a Preview on its own when the branch was pushed); no Vercel setting, DNS, domain or credential touched.
 
 ## 1. Problem
 
@@ -143,6 +143,27 @@ proves the allowlist is complete for what the pages use; it does not prove Verce
 
 ## 8. Branch preview deployment
 
-Recorded at handoff (see the Linear handoff and section 8a if added): whether Vercel created a
-preview deployment for this branch, and, if it did, the HTTP status of the site routes, the new
-`og:image` and the internal paths on it. No deployment is created, promoted or altered by this task.
+Pushing the branch made Vercel's Git integration create a Preview deployment on its own; this task
+created, promoted or altered no deployment. Read from GitHub (`gh api …/commits/58cbb7b8…/status`,
+`…/deployments?sha=…`, `…/deployments/7090277542/statuses`) on 2026-10-15:
+
+| Item | Value |
+| --- | --- |
+| Commit | `58cbb7b81dc142037b371c22beeb469be60c2783` |
+| GitHub deployment | `7090277542`, environment `Preview`, created 2026-10-15T10:37:08Z |
+| Vercel status context | `Vercel` — success, "Deployment has completed" |
+| Vercel deployment | `dpl_DMRAQX9uTKZDtQTcfqK8WuWeecme`, scope `virga-soft`, project `orbgss-website` |
+| Preview URL | `https://orbgss-website-lhsk8ab4d-virga-soft.vercel.app` |
+
+The build with the allowlist completed successfully. Every path on the preview, public or internal,
+answers `302` to the Vercel Authentication login, so the served file set cannot be read anonymously.
+This environment's Vercel connection is not authorized for the `virga-soft` scope (`403 forbidden`
+on `GET /v7/deployments` and on the protection-bypass request), and no Vercel CLI is installed, so
+the preview could not be read here. **Open item:** with an authorized Vercel session, open
+`<preview>/STATUS.md`, `<preview>/tasks/MER-237_EVIDENCE.md` and `<preview>/scripts/validate_site.py`
+(expected 404) and `<preview>/`, `<preview>/pilot/` and `<preview>/assets/hero/hero-poster-1600.webp`
+(expected 200). MER-219 must establish the same on production after publication.
+
+Observation for MER-219, not a conclusion: the same GitHub deployment list shows a `Production`
+deployment for `f4f1d4d6` (the current `main`) created 2026-10-02T07:43:02Z and a `Preview` for every
+pushed task branch head, which is consistent with `main` pushes deploying production automatically.
