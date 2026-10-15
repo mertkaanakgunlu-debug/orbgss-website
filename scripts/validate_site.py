@@ -26,6 +26,7 @@ REQUIRED_FILES = [
     "assets/imagery/sources.json",
     "IMAGERY_RIGHTS.md",
     "vercel.json",
+    ".vercelignore",
     "robots.txt",
     "sitemap.xml",
     # WEB-003 public routes
@@ -49,6 +50,34 @@ ROUTES = {
 
 def canonical_url(route: str) -> str:
     return f"https://orbgss.com/{route + '/' if route else ''}"
+
+# MER-237: the deployed file set. Vercel uploads and serves every repository file .vercelignore does
+# not exclude, so before MER-237 orbgss.com also served STATUS.md, CLAUDE.md, docs/, tasks/,
+# evidence/, scripts/ and hero/. .vercelignore is now a root allowlist; the validator models exactly
+# that form (one "/*" rule, then "!<root entry>" lines) and refuses any other syntax rather than
+# guess how Vercel would read it.
+DEPLOY_IGNORE = ".vercelignore"
+# vercel.json is project configuration: Vercel needs it in the upload but does not serve it.
+DEPLOY_REQUIRED_ENTRIES = ["index.html", "404.html", "vercel.json"]
+DEPLOY_EXCLUDED_PATHS = [
+    "STATUS.md", "CLAUDE.md", "AGENTS.md", "README.md", "CHANGELOG.md", "IMAGERY_RIGHTS.md",
+    "CLAUDE_SESSION_BOOTSTRAP.txt", "preview-local.bat", DEPLOY_IGNORE,
+    "docs/", "tasks/", "evidence/", "scripts/", "hero/", "references/",
+]
+# Documentation and tooling, never site content, wherever they sit.
+DEPLOY_INTERNAL_SUFFIXES = {".md", ".py", ".pyc", ".bat", ".ps1", ".sh", ".blend"}
+# Public text files whose references the browser (or a crawler) follows.
+DEPLOY_TEXT_SUFFIXES = {".html", ".css", ".js", ".webmanifest", ".xml", ".txt"}
+# A root-relative or absolute orbgss.com path in an attribute: "/", "/pilot/#x", "/styles.css".
+_ROOT_PATH_REF = re.compile(r"""(?<![\w-])(?:href|src|poster|content|data-src)=["'](?:https://orbgss\.com)?/([^"'#?\s]*)""")
+# A document-relative path in an attribute ("styles.css" on the homepage); resolved against the
+# referring file's directory, exactly as the browser does.
+_RELATIVE_PATH_REF = re.compile(r"""(?<![\w-])(?:href|src|poster|data-src)=["'](?![a-zA-Z][\w+.-]*:|/|#)([^"'#?\s]+)""")
+# Any assets/ path, relative or absolute, including srcset tokens and the hero ladder's JSON.
+_ASSET_REF = re.compile(r"(?<![\w./-])(?:https://orbgss\.com)?/?(assets/[\w./%-]*\w)")
+# Sitemap entries and the robots.txt sitemap pointer.
+_SITEMAP_REF = re.compile(r"(?:<loc>|^Sitemap:\s*)https://orbgss\.com/([^<\s#?]*)", re.M)
+_CSS_URL_REF = re.compile(r"""url\(\s*["']?([^"')\s]+)["']?\s*\)""")
 
 # WEB-005 four-act structure: the act anchors, the evidence trio, the data-gap note, the pilot
 # ledger and the trust/contact zone. The WEB-001/002 six-scene gallery anchors (observe/platform,
@@ -316,6 +345,91 @@ def fail(message: str, errors: list[str]) -> None:
     errors.append(message)
 
 
+def deploy_target(path: str) -> str:
+    """Map a site path to the repository file Vercel serves for it (cleanUrls, trailingSlash)."""
+    path = path.split("#", 1)[0].split("?", 1)[0].lstrip("/")
+    if path == "" or path.endswith("/"):
+        return path + "index.html"
+    if "." not in path.rsplit("/", 1)[-1]:
+        return path + "/index.html"
+    return path
+
+
+def public_references(rel: str, text: str) -> set[str]:
+    """Repository paths the public text file `rel` makes the browser or a crawler request."""
+    base = rel.rsplit("/", 1)[0] + "/" if "/" in rel else ""
+    found = {deploy_target(m.group(1)) for m in _ROOT_PATH_REF.finditer(text)}
+    found |= {deploy_target(base + m.group(1)) for m in _RELATIVE_PATH_REF.finditer(text)}
+    found |= {deploy_target(m.group(1)) for m in _SITEMAP_REF.finditer(text)}
+    found |= {m.group(1) for m in _ASSET_REF.finditer(text)}
+    for m in _CSS_URL_REF.finditer(text):
+        url = m.group(1)
+        if not url.startswith(("data:", "http:", "https:", "#")):
+            found.add(deploy_target(url if url.startswith("/") else base + url))
+    return found
+
+
+def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
+    """MER-237: only the public site is deployed, and everything it references is.
+
+    Returns the allowed root entries and the number of deployed files.
+    """
+    ignore = ROOT / DEPLOY_IGNORE
+    if not ignore.exists():
+        return set(), 0
+    rules = [ln.strip() for ln in ignore.read_text(encoding="utf-8").splitlines()]
+    rules = [ln for ln in rules if ln and not ln.startswith("#")]
+    if not rules or rules[0] != "/*":
+        fail(f"{DEPLOY_IGNORE}: the first rule must be '/*' (ignore the whole root, then allow "
+             f"each public entry), so nothing new is deployed by default", errors)
+        return set(), 0
+    allowed: set[str] = set()
+    for rule in rules[1:]:
+        name = rule[1:]
+        if not rule.startswith("!") or not name or any(c in name for c in "/\\*?[]!"):
+            fail(f"{DEPLOY_IGNORE}: unsupported rule {rule!r}; only '!<root file or directory>' "
+                 f"lines are modelled by the validator", errors)
+            continue
+        if not (ROOT / name).exists():
+            fail(f"{DEPLOY_IGNORE}: allows {name!r}, which does not exist", errors)
+        allowed.add(name)
+
+    def deployed(rel: str) -> bool:
+        return rel.split("/", 1)[0] in allowed
+
+    for name in DEPLOY_REQUIRED_ENTRIES:
+        if name not in allowed:
+            fail(f"{DEPLOY_IGNORE}: {name} is not deployed", errors)
+    for rel in ROUTES.values():
+        if not deployed(rel):
+            fail(f"{DEPLOY_IGNORE}: public route file {rel} is not deployed", errors)
+    for rel in DEPLOY_EXCLUDED_PATHS:
+        if deployed(rel):
+            fail(f"{DEPLOY_IGNORE}: internal path {rel} would be deployed and publicly served", errors)
+
+    files: list[pathlib.Path] = []
+    for name in sorted(allowed):
+        entry = ROOT / name
+        if entry.is_file():
+            files.append(entry)
+        elif entry.is_dir():
+            files.extend(sorted(p for p in entry.rglob("*") if p.is_file()))
+    for path in files:
+        rel = path.relative_to(ROOT).as_posix()
+        if path.suffix.lower() in DEPLOY_INTERNAL_SUFFIXES or "__pycache__" in path.parts:
+            fail(f"deploy set contains an internal file: {rel}", errors)
+    for path in files:
+        if path.suffix.lower() not in DEPLOY_TEXT_SUFFIXES:
+            continue
+        rel = path.relative_to(ROOT).as_posix()
+        for target in sorted(public_references(rel, path.read_text(encoding="utf-8", errors="ignore"))):
+            if not deployed(target):
+                fail(f"{rel}: references {target}, which {DEPLOY_IGNORE} does not deploy", errors)
+            elif not (ROOT / target).is_file():
+                fail(f"{rel}: references {target}, which does not exist", errors)
+    return allowed, len(files)
+
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
@@ -328,6 +442,9 @@ def main() -> int:
         for item in errors:
             print(f"ERROR: {item}")
         return 1
+
+    # Collected, not fatal here: a deploy-set error must not hide the rest of the validation.
+    deploy_allowed, deploy_files = check_deploy_set(errors)
 
     html = HTML.read_text(encoding="utf-8")
     parser = SiteParser()
@@ -623,6 +740,28 @@ def main() -> int:
         fail("pilot/index.html: og:image reuses the Crater Lake hero image, not a Kızıldere pilot visual", errors)
     if pilot_html and not re.search(r'property="og:image" content="https://orbgss\.com/assets/(proof|imagery)/', pilot_html):
         fail("pilot/index.html: og:image is not a self-hosted approved asset", errors)
+
+    # Social-preview truthfulness, every route (MER-237): the og:image is a deployed, self-hosted
+    # image that some page actually shows. Until MER-237 four routes still advertised the retired
+    # Crater Lake scene, which no page places any more.
+    placed_assets: set[str] = set()
+    for text in route_html.values():
+        placed_assets |= {m.group(1) for m in _ASSET_REF.finditer(re.sub(r"<meta\b[^>]*>", "", text))}
+    for route, text in route_html.items():
+        label = ROUTES[route]
+        og_image = re.search(r'property="og:image" content="https://orbgss\.com/(assets/[^"]+)"', text)
+        if not og_image:
+            fail(f"{label}: og:image is missing or is not a self-hosted https://orbgss.com/assets/ image",
+                 errors)
+            continue
+        target = og_image.group(1)
+        if not (ROOT / target).is_file():
+            fail(f"{label}: og:image {target} does not exist", errors)
+        elif target.split("/", 1)[0] not in deploy_allowed:
+            fail(f"{label}: og:image {target} is not deployed", errors)
+        elif target not in placed_assets:
+            fail(f"{label}: og:image {target} is not an image any page shows (retired or unused imagery)",
+                 errors)
 
     # Internal links: every root-relative href must resolve to a real canonical route, and any
     # #fragment it carries must resolve to a real id — on the target page for a "/route/#frag"
@@ -1864,6 +2003,7 @@ def main() -> int:
     print(f"  i18n keys referenced site-wide: {len(all_i18n_keys)}")
     print(f"  geo-web-002 package assets: {len(package.get('assets', []))} "
           f"({len(package_paths)} files)")
+    print(f"  deploy set: {len(deploy_allowed)} root entries, {deploy_files} files")
     print(f"  warnings: {len(warnings)}")
     for item in warnings:
         print(f"WARN: {item}")

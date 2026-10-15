@@ -1,0 +1,28 @@
+# MER-237: deploy the public site and nothing else.
+#
+# Vercel uploads and serves every repository file that is not ignored here, so before this file
+# existed orbgss.com also served STATUS.md, CLAUDE.md, docs/, tasks/, evidence/, scripts/ and hero/.
+# This is an allowlist (https://vercel.com/docs/deployments/vercel-ignore#allowlist): the first rule
+# ignores everything at the repository root, and each following "!" line re-includes one public
+# root entry, whole. A new public page or top-level file must be added here, or it will not be
+# deployed. scripts/validate_site.py parses this file and fails if a public page references
+# anything outside it, if an internal path is let back in, or if an entry names nothing.
+#
+# vercel.json is project configuration (clean URLs, headers, caching); Vercel reads it but does not
+# serve it.
+
+/*
+!index.html
+!404.html
+!styles.css
+!script.js
+!site.webmanifest
+!robots.txt
+!sitemap.xml
+!vercel.json
+!assets
+!platform
+!solutions
+!pilot
+!company
+!contact

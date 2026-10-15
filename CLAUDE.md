@@ -103,6 +103,8 @@ Target deployment:
 - domain registrar/DNS: Squarespace
 - public domain: `orbgss.com`
 
+Only the public site is deployed (MER-237). `.vercelignore` is a root allowlist: `/*` first, then one `!<entry>` line per public root file or directory. A new public page or top-level file must be added there or it will not be deployed; `scripts/validate_site.py` fails when anything a public page, stylesheet, manifest, sitemap or robots.txt references falls outside the allowlist, when an internal path (`STATUS.md`, `CLAUDE.md`, `docs/`, `tasks/`, `evidence/`, `scripts/`, `hero/`, `references/` …) is let back in, when documentation or tooling sits inside a deployed directory, or when a route's `og:image` is not a deployed image some page shows.
+
 When the custom domain is connected, only change DNS records needed for web hosting. Do not modify Google Workspace MX/SPF/DKIM/DMARC records.
 
 Never create/delete external resources, connect DNS, publish the production domain, or modify the user's email setup unless the user explicitly authorizes that external write.

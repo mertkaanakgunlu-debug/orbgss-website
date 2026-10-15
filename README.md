@@ -26,6 +26,8 @@ python3 scripts/validate_site.py                 # site: must PASS with 0 warnin
 python3 scripts/negative_tests_web005.py         # 72/72 deliberate regressions caught
 python3 scripts/negative_tests_web005b.py        # 55/55
 python3 scripts/negative_tests_web005c.py        # 18/18
+python3 scripts/negative_tests_mer216.py         # 19/19
+python3 scripts/negative_tests_mer237.py         # 29/29 (deploy allowlist, social previews)
 python3 hero/scripts/validate_hero.py            # hero workstation: 420/0
 ```
 
