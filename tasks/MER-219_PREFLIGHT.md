@@ -167,3 +167,21 @@ The CTO approves publication in the conversation, after whatever independent rev
 * the CTO explicitly authorizes the agent to run them, together with §5 steps 3–4 (watch and smoke).
 
 Either way, the §4 rollback is the CTO's action in the Vercel dashboard. The connector cannot reach `virga-soft`, so the agent has no rollback path.
+
+## 9. Publication record (2026-10-15)
+
+The CTO approved publication and authorized the agent to run it: "Yayını onaylıyorum ve sana yetki veriyorum: main'i 2517369e'ye fast-forward et (önce main'in hala f4f1d4d6 olduğunu doğrula), production deploy'u izle ve smoke betiğini çalıştır."
+
+| Step | Result |
+| --- | --- |
+| Guard (fresh fetch) | `origin/main` = `f4f1d4d6`; target `2517369e` present; `main` is its ancestor; 0 behind / 6 ahead |
+| Push | 13:45:21Z `git push origin 2517369e…:refs/heads/main`, giving `f4f1d4d..2517369` (non-force fast-forward); `origin/main` = `2517369e0f0c4239d72603a3188227554053a6ea` |
+| Production deployment | GitHub deployment `7094313382`, environment Production, status **success** at 13:45:33Z (+12 s); `https://orbgss-website-l0hjfxcdh-virga-soft.vercel.app`. The live `index.html` matched `2517369e` at 13:45:40Z. The Vercel `dpl_…` id is not readable here (connector has no team access). |
+| HTTP smoke | `evidence/mer219/post_publication_smoke_2026-10-15.txt`: **46 / 46**. Internal paths return 404 on production, so `.vercelignore` is applied to Git deployments (the open MER-237 item, now closed). All routes and the redirects work; the og images are fixed; the hero ladder answers with the right types, 206 ranges and immutable cache; `index.html`, `script.js` and `styles.css` are byte-identical to `2517369e`. |
+| Browser checks | `evidence/mer219/post_publication_browser_2026-10-15.txt` (`browser_checks_production.py`): **21 / 21**. Six routes × 1440 and 390 px show 0 console errors, 0 broken images and 0 overflow. On a 50 Mbit/s link the hero chose `md` / WebM, played, and requested one media file. Reduced motion keeps the held still with no video request; no-JS renders; Act 03 switches all three layers; EN → TR translates. |
+| Measurement note | A fresh headless profile first estimates ~1.5 Mbit/s. MER-216's network gate then keeps the held still with `data-hero-reason="slow-network"` and requests no video: the designed slow-link fallback, not a defect. The checks cover both paths. |
+| Not covered | Physical Safari / Firefox / phone / 4K panels (carried from MER-216). |
+
+**Rollback target**, should one be needed: the previous production deployment `orbgss-website-p0heuwii3-virga-soft.vercel.app` (`f4f1d4d6`), now the immediately previous production deployment, so eligible on any plan. Use Instant Rollback in the Vercel dashboard (§4). None was needed.
+
+**Next:** MER-239 applies §6 against the published `main`.

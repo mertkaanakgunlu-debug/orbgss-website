@@ -1,0 +1,25 @@
+MER-219 production browser checks — https://orbgss.com
+
+  PASS  / at 1440px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  /platform/ at 1440px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  /solutions/ at 1440px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  /pilot/ at 1440px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  /company/ at 1440px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  /contact/ at 1440px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  / at 390px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  /platform/ at 390px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  /solutions/ at 390px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  /pilot/ at 390px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  /company/ at 390px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  /contact/ at 390px: no console errors, broken images or overflow  [errors=0 broken=0 overflow=0]
+  PASS  hero settles cleanly on the browser's own network estimate (plays, or held still with a reason and no video bytes)  [{"state": "playing", "down": 10}]
+  PASS  hero chose a ladder tier  [https://orbgss.com/assets/hero/orbgss-hero-1920-ca741624.webm]
+  PASS  hero video advanced (playing or ended on the held frame)  [{"src": "https://orbgss.com/assets/hero/orbgss-hero-1920-ca741624.webm", "sources": 1, "t": 7.940692, "paused": false, "ready": 4, "shown": "1"}]
+  PASS  exactly one hero media file requested  [https://orbgss.com/assets/hero/orbgss-hero-1920-ca741624.webm]
+  PASS  no console errors with motion on
+  PASS  reduced motion: held still, no video requested
+  PASS  no-JS: page renders images  [29]
+  PASS  Act 03: all three layers can be selected  [['ev-terrain', 'ev-thermal', 'ev-alteration']]
+  PASS  EN → TR switch translates the page  [en->tr 'Herhangi bir analizden önce, gerçek bir ']
+
+21/21 browser checks passed
