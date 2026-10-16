@@ -33,10 +33,12 @@ MANIFEST = ROOT / "assets" / "imagery" / "sources.json"
 # 2880 px master width is the widest honest one. The two secondary cards sit at half the shell on
 # desktop but stack to the full content width below 821 px, where they measure 728 CSS px and ask
 # for 1456 at 2x — so 1400 is not enough for them and 1800 is.
+# MER-240: the Solutions hub shows all three as bands capped at 1440 CSS px, which asks for 2880 at
+# 2x, so the two secondary scenes gain 2400 and 2880 (the master width) as well.
 WIDTHS = {
     "yellowstone-2013": (900, 1400, 1800, 2400, 2880),
-    "chuquicamata-2024": (900, 1400, 1800),
-    "ili-delta-2020": (900, 1400, 1800),
+    "chuquicamata-2024": (900, 1400, 1800, 2400, 2880),
+    "ili-delta-2020": (900, 1400, 1800, 2400, 2880),
 }
 QUALITY = 82
 ROLE = "domain-card-responsive"
@@ -58,12 +60,20 @@ def main() -> int:
         scene = scenes[scene_id]
         master = ROOT / scene["local_file"]
         source = Image.open(master)
+        # A derivative that already exists and still matches its record is kept byte for byte:
+        # re-encoding it with another libwebp would change a published file for no reason.
+        recorded = {d["path"]: d for d in scene.get("derivatives", [])}
         records = []
         for width in widths:
             if width > source.width:
                 raise SystemExit(f"{scene_id}: {width} px would upscale the {source.width} px master")
             height = round(source.height * width / source.width)
             target = master.with_name(f"{master.stem}-{width}.webp")
+            known = recorded.get(target.relative_to(ROOT).as_posix())
+            if known and target.exists() and sha256_of(target) == known["sha256"]:
+                records.append(known)
+                print(f"  {known['path']}  kept")
+                continue
             source.resize((width, height), Image.LANCZOS).save(
                 target, "WEBP", quality=QUALITY, method=6
             )

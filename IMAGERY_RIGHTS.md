@@ -1,4 +1,4 @@
-# OrbGSS imagery rights and provenance — v0.9 (reconciled 2026-10-15, MER-239)
+# OrbGSS imagery rights and provenance — v0.10 (2026-10-16, MER-240)
 
 ## Three asset classes
 
@@ -12,7 +12,7 @@ the other's wording.
 | Source | USGS Landsat Collection 2 Level-2 surface reflectance (public domain) | OrbGSS cartographic exports of the accepted `kizildere_mvp_v2` project |
 | Produced by | `scripts/build_imagery.py` (crop / stretch / encode) | The accepted GEO-039 Workbench cartographic export path; the homepage derivatives by `scripts/build_web005b_presentation.py` under MER-151 |
 | Recorded in | `sources.json` → `scenes`, → `geo_web_002.context_scenes`, and → `web_005b.context` | `sources.json` → `web_002.proof_assets`, → `geo_web_002.assets`, and → `web_005b.analytical` |
-| Where used | Act 2 of the homepage and the inspection-aid base (the WEB-005B natural-colour Kızıldere master), and the three illustrative Solutions-card photographs; Crater Lake is retired | Acts 3 and 4 and the inspection aid on the homepage (`web_005b.analytical`), and `/pilot/` (`web_002.proof_assets`); the `geo_web_002.assets` are deployed but placed on no page |
+| Where used | Act 2 of the homepage and the inspection-aid base (the WEB-005B natural-colour Kızıldere master), and the three illustrative domain photographs (the homepage Solutions cards and, at full size, the `/solutions/` hub bands since MER-240); Crater Lake is retired. Since MER-240 class A also holds one cartographic illustration, the Kızıldere locator map (see below) | Acts 3 and 4 and the inspection aid on the homepage (`web_005b.analytical`). The `web_002.proof_assets` were shown on `/pilot/` until MER-240 retired that route; like the `geo_web_002.assets` they are deployed but placed on no page |
 | Permitted edits | Crop, contrast stretch, gamma, saturation, encoding | Crop and resize for presentation **only** — never re-colour, re-project, re-classify or change values, and no CSS colour/contrast/opacity transform on the served raster. The one exception: the homepage surfaces may carry MER-151's bounded display window and one fixed monotonic gamma per layer, and priority is never windowed. |
 | Extra duties | USGS acknowledgement in the footer | Mandatory scientific warnings in visible EN/TR page copy; checksummed provenance |
 
@@ -58,7 +58,7 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Production source product: `LC08_L2SP_045030_20230318_02_T1` (WRS-2 path 045 row 030, Tier 1)
 - Reference page: https://science.nasa.gov/earth/earth-observatory/a-clear-view-of-crater-lake-151161/
 
-### Yellowstone — geothermal (illustrative Solutions-card photograph)
+### Yellowstone — geothermal (illustrative domain photograph: homepage card, `/solutions/` hub band)
 - Location: Yellowstone National Park, USA
 - Coordinates displayed: 44.4604° N, 110.8282° W
 - Acquisition: 9 June 2013
@@ -67,7 +67,7 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Reference page: https://science.nasa.gov/earth/earth-observatory/yellowstone-national-park-87881/
 - Note: the NASA reference rendering also used ASTER GDEM terrain. The production composite is a plain orthographic Landsat view with no ASTER data.
 
-### Chuquicamata — mining (illustrative Solutions-card photograph)
+### Chuquicamata — mining (illustrative domain photograph: homepage card, `/solutions/` hub band)
 - Location: Chuquicamata, Antofagasta, Chile
 - Coordinates displayed: 22.3150° S, 68.9010° W
 - Acquisition: 4 January 2024
@@ -92,7 +92,7 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Recorded in `sources.json` → `web_005b.context` (production, frame, checksums, rights basis).
 - Used for homepage Act 2 and as the base of the inspection aid. Public-domain USGS pixels: only the crop, tone rendering and encoding are OrbGSS work, and the USGS acknowledgement stays in the footer.
 
-### Ili River Delta / Lake Balkhash — marine (illustrative Solutions-card photograph; MER-238 D5 may replace it with a coastal scene)
+### Ili River Delta / Lake Balkhash — marine (illustrative domain photograph: homepage card, `/solutions/` hub band; MER-238 D5 may replace it with a coastal scene)
 - Location: Ili River Delta & Lake Balkhash, Kazakhstan
 - Coordinates displayed: 45.0600° N, 74.5200° E
 - Acquisition: 7 March 2020
@@ -100,9 +100,19 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Production source products: `LC08_L2SP_152029_20200307_02_T1` and `LC08_L2SP_152028_20200307_02_T1` (path 152 rows 029 + 028, same overpass, mosaicked)
 - Reference page: https://earthobservatory.nasa.gov/images/146552/a-delta-oasis-in-southeastern-kazakhstan
 
+**Hub bands (MER-240).** The `/solutions/` hub shows the three photographs at full size, in bands capped at 1440 CSS px, so a 2× display is served the 2880 px master width and nothing is upscaled. Chuquicamata and the Ili Delta gained 2400 and 2880 px WebP derivatives for this, built by `scripts/build_domain_derivatives.py` with the same resize-and-encode operation as their existing ones (no crop, colour, tone or gamma change); the existing derivatives were kept byte for byte. Each scene records the placement in `sources.json` → `web_m6_placement`, and the page footnote frames the photographs as other places, not OrbGSS results.
+
+### Kızıldere locator map — Natural Earth (class A cartographic illustration, MER-240)
+- What it is: an outline map of Türkiye and its neighbours with the 36 km pilot area of interest drawn as a square at its declared centre (37.9794° N, 28.7907° E). A locator, not Earth-observation imagery and not product proof. It shows no analysis and carries no text; the page caption says `Locator map — Natural Earth`.
+- Source: Natural Earth 1:50m Cultural Vectors, Admin 0 – Countries, v5.1.2 (`ne_50m_admin_0_countries.geojson` from the `nvkelso/natural-earth-vector` v5.1.2 release, SHA-256 `3e458fc0…`). Downloaded on 2026-10-16 with CTO approval; the download is not committed, only the generated SVG is.
+- Rights: Natural Earth data are in the public domain (https://www.naturalearthdata.com/about/terms-of-use/). No permission or attribution is required; the About sources table credits it as "Made with Natural Earth".
+- Produced by: `scripts/build_locator_map.py` (Python standard library only): equirectangular projection true at 39° N, clipped outside the frame, lightly simplified. Türkiye is filled and outlined; neighbouring countries are filled in one colour with no borders between them, so the map draws no third-country boundary.
+- Recorded in: `sources.json` → `web_m6.locator_map` (source URL and checksum, licence, generator, output checksum). The file name carries its own checksum, because `/assets/` is served immutable.
+- Used on: the Geothermal page header (`/solutions/geothermal/`), only.
+
 ## Class B — WEB-002 product-proof visuals (2026-09-15)
 
-Story panels 01–06 no longer carry Landsat gallery material. (Since WEB-005 these WEB-002 exports are shown on `/pilot/`, not on the homepage.) They carry OrbGSS **cartographic
+Story panels 01–06 no longer carry Landsat gallery material. (Since WEB-005 these WEB-002 exports were shown on `/pilot/`, not on the homepage; since MER-240 retired `/pilot/` they are deployed but placed on no page.) They carry OrbGSS **cartographic
 exports** of the Kızıldere MVP pilot AOI, produced through the accepted GEO-039 Workbench export
 path from the persisted `kizildere_mvp_v2` project in
 `mertkaanakgunlu-debug/geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8` (tag

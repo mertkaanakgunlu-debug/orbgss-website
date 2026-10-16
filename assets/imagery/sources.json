@@ -1,6 +1,6 @@
 {
-  "version": "0.9-mer-239-reconciled",
-  "policy": "This manifest covers two distinct asset classes. (1) Landsat gallery imagery under 'scenes': self-hosted OrbGSS natural-color composites generated from USGS Landsat Collection 2 Level-2 surface-reflectance products (public domain). Each scene's 'production' block pins the exact product identifiers, crop and stretch used; scripts/build_imagery.py reproduces the asset. NASA Earth Observatory pages are kept only as the reference that motivated each scene choice; no NASA-rendered pixels are served. Yellowstone, Chuquicamata and the Ili Delta are placed only as the illustrative Solutions-card photographs (WEB-005B R11 derivatives); Crater Lake is retired and placed on no page. (2) WEB-002 product-proof imagery under 'web_002.proof_assets': OrbGSS cartographic exports of the accepted Kızıldere MVP project, materialized through the accepted GEO-039 Workbench export path and cropped/resized for web delivery only. These are scientific outputs, not photography: they are never re-coloured, re-projected, re-classified or value-changed, they carry mandatory warnings in visible page copy, and no raw provider raster or paid/closed/restricted data is redistributed. The two classes have different sources, different rights bases and different handling rules; do not describe one with the other's wording. (3) GEO-WEB-002 final homepage visual masters under 'geo_web_002': the package the locked four-act final homepage needed. Its Act 2 context master is superseded on the homepage by 'web_005b.context', and its 'assets' are deployed under assets/proof/final/ but placed on no page. Its 'context_scenes' entry is class (1) and is built by the same scripts/build_imagery.py production grammar; its 'assets' entries cover both classes and each one records its role, source/export identity, master and derivative dimensions and checksums, rights basis, attribution requirement, mandatory warning and the maximum size at which it may honestly be rendered. No asset in that package is ever enlarged past the native pixel density of its source. (4) The rendered hero under 'web_005' is class C: an OrbGSS render, never sensor imagery; since MER-216 it is a two-tier WebM / MP4 ladder of the same master frames. (5) The homepage Acts 3-4 and the inspection aid bind 'web_005b.analytical', MER-151 presentation derivatives of the governed rasters.",
+  "version": "0.10-mer-240",
+  "policy": "This manifest covers two distinct asset classes. (1) Landsat gallery imagery under 'scenes': self-hosted OrbGSS natural-color composites generated from USGS Landsat Collection 2 Level-2 surface-reflectance products (public domain). Each scene's 'production' block pins the exact product identifiers, crop and stretch used; scripts/build_imagery.py reproduces the asset. NASA Earth Observatory pages are kept only as the reference that motivated each scene choice; no NASA-rendered pixels are served. Yellowstone, Chuquicamata and the Ili Delta are placed only as illustrative photography: the homepage Solutions cards (WEB-005B R11 derivatives) and, at full size, the /solutions/ hub bands (MER-240, each scene's 'web_m6_placement'); Crater Lake is retired and placed on no page. (2) WEB-002 product-proof imagery under 'web_002.proof_assets': OrbGSS cartographic exports of the accepted Kızıldere MVP project, materialized through the accepted GEO-039 Workbench export path and cropped/resized for web delivery only. These are scientific outputs, not photography: they are never re-coloured, re-projected, re-classified or value-changed, they carry mandatory warnings in visible page copy (since MER-240 retired /pilot/ they are deployed but placed on no page), and no raw provider raster or paid/closed/restricted data is redistributed. The two classes have different sources, different rights bases and different handling rules; do not describe one with the other's wording. (3) GEO-WEB-002 final homepage visual masters under 'geo_web_002': the package the locked four-act final homepage needed. Its Act 2 context master is superseded on the homepage by 'web_005b.context', and its 'assets' are deployed under assets/proof/final/ but placed on no page. Its 'context_scenes' entry is class (1) and is built by the same scripts/build_imagery.py production grammar; its 'assets' entries cover both classes and each one records its role, source/export identity, master and derivative dimensions and checksums, rights basis, attribution requirement, mandatory warning and the maximum size at which it may honestly be rendered. No asset in that package is ever enlarged past the native pixel density of its source. (4) The rendered hero under 'web_005' is class C: an OrbGSS render, never sensor imagery; since MER-216 it is a two-tier WebM / MP4 ladder of the same master frames. (5) The homepage Acts 3-4 and the inspection aid bind 'web_005b.analytical', MER-151 presentation derivatives of the governed rasters. (6) MER-240 adds one class-A cartographic illustration under 'web_m6.locator_map': the Kizildere locator map, an SVG generated from Natural Earth public-domain vector data. It is neither Earth-observation imagery nor product proof.",
   "scenes": [
     {
       "id": "crater-lake-2023",
@@ -230,6 +230,32 @@
           "domains.illustrative"
         ],
         "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record."
+      },
+      "web_m6_placement": {
+        "task": "MER-240",
+        "status": "placed",
+        "section": "Solutions hub band",
+        "anchor": "geothermal",
+        "routes": [
+          "solutions/index.html"
+        ],
+        "public_role": "illustrative photography",
+        "r2_home": "The hub band is this photograph's one full-size appearance (M6 rule R2). The homepage card is the accepted exception: a card that links to the domain (authority 4.2).",
+        "caption_i18n_keys": [
+          "scene.yellowstone.place",
+          "scene.yellowstone.coords",
+          "scene.kind.naturalColor"
+        ],
+        "rendered": {
+          "max_css_width": 1440,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 2880,
+          "widest_candidate_px": 2880,
+          "selected_derivative": "assets/imagery/yellowstone-2013-2880.webp",
+          "measurement_method": "Headless Chrome on /solutions/, 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the object-fit image (max of the band width and the band height times the image aspect) is recorded, never the sizes attribute.",
+          "measured_max_css_width": 1440
+        },
+        "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results."
       }
     },
     {
@@ -319,6 +345,26 @@
           "operation": "lanczos3 downscale of assets/imagery/chuquicamata-2024.jpg, then WebP encode; no crop, no colour, tone or gamma change",
           "bytes": 475452,
           "sha256": "085a52d4834a752e0555b1988cffd03ff041c41b47ae087f73ba161b2e6bb716"
+        },
+        {
+          "path": "assets/imagery/chuquicamata-2024-2400.webp",
+          "role": "domain-card-responsive",
+          "width_px": 2400,
+          "height_px": 1500,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/chuquicamata-2024.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 759034,
+          "sha256": "201ed353f02bf7485d21ca933be6b59f874595f26819136872800394ec66aa6f"
+        },
+        {
+          "path": "assets/imagery/chuquicamata-2024-2880.webp",
+          "role": "domain-card-responsive",
+          "width_px": 2880,
+          "height_px": 1800,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/chuquicamata-2024.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 1026054,
+          "sha256": "9b49642d8c97146ab2189a8483f4db9635e94031b2f35a6dd5c14348c1983156"
         }
       ],
       "web_005b_placement": {
@@ -346,6 +392,32 @@
           "domains.illustrative"
         ],
         "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record."
+      },
+      "web_m6_placement": {
+        "task": "MER-240",
+        "status": "placed",
+        "section": "Solutions hub band",
+        "anchor": "mining",
+        "routes": [
+          "solutions/index.html"
+        ],
+        "public_role": "illustrative photography",
+        "r2_home": "The hub band is this photograph's one full-size appearance (M6 rule R2). The homepage card is the accepted exception: a card that links to the domain (authority 4.2).",
+        "caption_i18n_keys": [
+          "scene.chuquicamata.place",
+          "scene.chuquicamata.coords",
+          "scene.kind.naturalColor"
+        ],
+        "rendered": {
+          "max_css_width": 1440,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 2880,
+          "widest_candidate_px": 2880,
+          "selected_derivative": "assets/imagery/chuquicamata-2024-2880.webp",
+          "measurement_method": "Headless Chrome on /solutions/, 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the object-fit image (max of the band width and the band height times the image aspect) is recorded, never the sizes attribute.",
+          "measured_max_css_width": 1440
+        },
+        "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results."
       }
     },
     {
@@ -436,6 +508,26 @@
           "operation": "lanczos3 downscale of assets/imagery/ili-delta-2020.jpg, then WebP encode; no crop, no colour, tone or gamma change",
           "bytes": 452298,
           "sha256": "86520da7d3e744b2b1980c71f33fd414b7a34f7c75af4ee1f4932e5d31a48ff9"
+        },
+        {
+          "path": "assets/imagery/ili-delta-2020-2400.webp",
+          "role": "domain-card-responsive",
+          "width_px": 2400,
+          "height_px": 1500,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/ili-delta-2020.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 699058,
+          "sha256": "54325a57be265b1c8303d3e4f6e4d1f9c24952c50ef4bdaec34dead0efd354fb"
+        },
+        {
+          "path": "assets/imagery/ili-delta-2020-2880.webp",
+          "role": "domain-card-responsive",
+          "width_px": 2880,
+          "height_px": 1800,
+          "format": "image/webp",
+          "operation": "lanczos3 downscale of assets/imagery/ili-delta-2020.jpg, then WebP encode; no crop, no colour, tone or gamma change",
+          "bytes": 905910,
+          "sha256": "47680dde5849d304e14cb9a6183b3b8d7cefa085ac1954ab7bf9e1a9bafb4b82"
         }
       ],
       "web_005b_placement": {
@@ -463,6 +555,32 @@
           "domains.illustrative"
         ],
         "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record."
+      },
+      "web_m6_placement": {
+        "task": "MER-240",
+        "status": "placed",
+        "section": "Solutions hub band",
+        "anchor": "marine",
+        "routes": [
+          "solutions/index.html"
+        ],
+        "public_role": "illustrative photography",
+        "r2_home": "The hub band is this photograph's one full-size appearance (M6 rule R2). The homepage card is the accepted exception: a card that links to the domain (authority 4.2).",
+        "caption_i18n_keys": [
+          "scene.ili.place",
+          "scene.ili.coords",
+          "scene.kind.naturalColor"
+        ],
+        "rendered": {
+          "max_css_width": 1440,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 2880,
+          "widest_candidate_px": 2880,
+          "selected_derivative": "assets/imagery/ili-delta-2020-2880.webp",
+          "measurement_method": "Headless Chrome on /solutions/, 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the object-fit image (max of the band width and the band height times the image aspect) is recorded, never the sizes attribute.",
+          "measured_max_css_width": 1440
+        },
+        "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results."
       }
     }
   ],
@@ -3767,5 +3885,77 @@
       "visible_caveat_i18n_key": "inspect.note"
     },
     "science_authority_presentation": "geothermal-prospectivity@e8aa5d65f56556be928499c50936eb63db88a6ad:tasks/MER-151_GEO-WEB-004_HOMEPAGE_EVIDENCE_PRESENTATION_PARITY_AUTHORITY.md"
+  },
+  "web_m6": {
+    "task": "MER-240",
+    "authority": "docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md (approved by the CTO 2026-10-15), section 7 V1",
+    "locator_map": {
+      "id": "kizildere-locator",
+      "asset_class": "A (cartographic illustration from public-domain vector data); not Earth-observation imagery and not product proof",
+      "path": "assets/maps/kizildere-locator-23c85f44.svg",
+      "format": "image/svg+xml",
+      "bytes": 22523,
+      "sha256": "23c85f44ebeea6816a00b1795fa395da1ee3d4c67a4c1c0ed1eabd892c0d8478",
+      "viewbox": [
+        1200,
+        574
+      ],
+      "content_hash_named": "The file name carries the first 8 hex digits of its SHA-256, because /assets/ is served immutable for a year; a rebuilt map is a new file.",
+      "source": {
+        "dataset": "Natural Earth 1:50m Cultural Vectors, Admin 0 - Countries",
+        "version": "v5.1.2",
+        "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/v5.1.2/geojson/ne_50m_admin_0_countries.geojson",
+        "bytes": 3083490,
+        "sha256": "3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb",
+        "downloaded": "2026-10-16, with CTO approval in the MER-240 session; not committed (only the generated SVG is)"
+      },
+      "source_sha256": "3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb",
+      "license": {
+        "basis": "Public domain",
+        "terms": "https://www.naturalearthdata.com/about/terms-of-use/",
+        "license_file": "LICENSE.md of natural-earth-vector v5.1.2",
+        "license_file_sha256": "2631b5b39b6d1acc56de75235109b5af2dbb4b0ac5a127b6f06185977247fd4b",
+        "attribution": "Not required. Credited as 'Made with Natural Earth' in the About sources table."
+      },
+      "generator": {
+        "script": "scripts/build_locator_map.py",
+        "dependencies": "Python standard library only",
+        "projection": "equirectangular, standard parallel 39 N",
+        "extent_deg": {
+          "lon": [
+            24.6,
+            45.6
+          ],
+          "lat": [
+            35.0,
+            42.8
+          ]
+        },
+        "clip": "Sutherland-Hodgman, 24 units outside the frame so no clip edge is visible",
+        "simplify": "a vertex closer than 0.7 viewBox units to the last kept one is dropped; rings under 1.5 square units are dropped",
+        "drawn": "Turkiye filled and outlined; every other country filled and stroked in one colour, so no third-country border is drawn; no text in the file"
+      },
+      "aoi": {
+        "centre": "37.9794 N, 28.7907 E",
+        "side_km": 36,
+        "drawn_as": "a square of 18 km either side of the declared centre; a locator, not the 30 m analysis grid"
+      },
+      "placement": {
+        "route": "solutions/geothermal/index.html",
+        "section": "G0 page header (lead visual)",
+        "alt_i18n_key": "alt.locator",
+        "caption_i18n_keys": [
+          "scene.aoi.place",
+          "scene.aoi.coords",
+          "scene.kind.locator"
+        ],
+        "rendered": {
+          "max_css_width": 1100,
+          "measured_css_width_at_1440": 1098,
+          "note": "Vector artwork: no pixel ceiling applies."
+        }
+      },
+      "scale_note": "The authority named the 1:10m layer; the 1:50m layer is used. At the 1,100 CSS px the figure is drawn at, the 1:10m detail is not visible, and the source is much larger."
+    }
   }
 }
