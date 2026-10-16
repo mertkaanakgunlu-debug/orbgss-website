@@ -84,7 +84,7 @@ Measured on this branch:
 | Check | Result |
 | --- | --- |
 | `py -3.14 scripts/validate_site.py` | PASS, 0 warnings (4 scenes, 5 routes + 404, 277 i18n keys, deploy set 12 root entries / 114 files) |
-| `scripts/negative_tests_mer240.py` (new) | 45/45 caught; restored tree identical |
+| `scripts/negative_tests_mer240.py` (new) | 46/46 caught (45, plus one added in the review revision, §7); restored tree identical |
 | `negative_tests_web005.py` / `_web005b.py` / `_web005c.py` / `_mer216.py` / `_mer237.py` | 72/72, 55/55, 18/18, 19/19, 29/29; restored trees identical |
 | `py -3.14 hero/scripts/validate_hero.py` | 420 / 0 (hero workstation). `hero/config/lane.json` names MER-240 and adds `404.html`, `sitemap.xml` and the four new derivatives to the integration write surface. |
 | `node --check script.js` | OK |
@@ -109,7 +109,7 @@ The retired routes no longer exist, so these cases now mutate their successors. 
 ## 6. Not verified, and gates
 
 - **Scope 8 (retired assets):** no file qualified for removal. The issue allows removing an asset only where `sources.json` marks it retired and nothing references it. Crater Lake is marked retired, but its scene record and the validator's four-locked-scenes check still reference it. The WEB-002 proof derivatives under `assets/proof/` lost their last page with `/pilot/`, but they are a governed package record, not marked retired, and the validator re-checks their checksums. Both stay deployed and placed on no page; removing them is a separate decision.
-- **Redirects, local check:** the local static server does not apply `vercel.json`, so the 301s were checked statically (exactly four, each a 301 to a canonical route, the sources gone and not deployed) and the fragments by the alias-id check.
+- **Redirects, local check:** the local static server does not apply `vercel.json`, so the 301s were checked statically (exactly four, each a 301 to a canonical route, the sources gone and not deployed) and the fragments by the alias-id check (a static check that an id exists proved not to be enough: §7, B1).
 
 - **D4, the ship gate:** that `contact@orbgss.com` receives external mail is not evidenced. The CTO confirms it before publication.
 - **Redirects live:** the four 301s are validated statically, and Vercel documents `statusCode: 301`. Their live behaviour, including whether a slash-less `/pilot` answers 308 → `/pilot/` before the 301, is first observable on the protected branch Preview or after publication. `evidence/mer219/smoke_production.py` now checks both forms and the new routes; run it after publication.
@@ -117,3 +117,24 @@ The retired routes no longer exist, so these cases now mutate their successors. 
 - **Accessibility of tables on phones:** they become stacked blocks (`display:block`), which may drop the table semantics in some engines. The column headers stay in the markup.
 - **Waiting:** G3 / G4 and the G2 thumbnails (MER-242), the coastal Marine scene (D5), `/tr/` (MER-241), and D3 (privacy / KVKK, legal).
 - **Publication** is a CTO-authorized non-force fast-forward of `main` to the reviewed head. Given the COUPLED topology, that push is the production deployment. Rollback target after publication: the current production deployment `orbgss-website-29bzudvea` (`464a7354`).
+
+## 7. Review revision (independent review of `2bbb384a`: `REVISION_REQUIRED`, three blockers)
+
+The review reported three defects, all inside MER-240's scope. Nothing else changed: no optional polish, no new page, no new asset.
+
+- **B1: old `/pilot/#pilot-*` links landed at the top of the page.**
+  - Cause: `.anchor-alias` is `position:absolute`, and `.page-section` was static, so the alias resolved against the page (`scrollY` stayed 0 for all six aliases at 1440 and 390 px).
+  - Fix: `.page-section{position:relative}` (`styles.css`). The hub's `.domain-band` already was positioned.
+  - Guard: `validate_site.py` now requires every `.anchor-alias` on every page to sit in a container that an unconditional `styles.css` rule positions (a rule inside an `@media` block does not count). `negative_tests_mer240.py` has one new case for it, so the suite is 46 cases. A static check cannot scroll, so the browser run below is the real evidence.
+  - Real-browser run (Chromium 1440 and 390, `vercel.json` emulated, 301 chain followed): on `2bbb384a` all six aliases ended at `scrollY 0`. On the fix each one lands on its section: `#pilot-observe` on `#glance`, `#pilot-terrain`, `#pilot-evidence`, `#pilot-priority` and `#pilot-geothermal` on `#layers`, `#pilot-structure` on `#gap`. The page's own `#glance` / `#layers` / `#gap`, the hub's `#mineral` / `#environment` and `/#contact` still land as before.
+  - Side effect check: full-page screenshots of `/about/`, `/partner/`, `/solutions/`, `/solutions/geothermal/` and `404.html`, at 1440 and 390 (DPR 2), before and after. Every pair is pixel-identical except `/about/`, whose only differences are the B2 label and, on the phone, a sub-pixel text snap (section offsets are equal to 1/64 px; `position:relative` makes Chromium snap the paint origin to whole device pixels).
+  - A link now lands with the section's top edge about 100 px under the header, the same distance the hub's aliases already had; that spacing is the known double offset (`html{scroll-padding-top}` plus `scroll-margin-top`) and is left for a separate decision.
+- **B2: the About sources row named the wrong mission.**
+  - The row said "Landsat 8 (USGS)", but its uses (natural colour, thermal evidence, domain photographs) span more than Landsat 8: the Chuquicamata photograph is Landsat 9 OLI-2 (`IMAGERY_RIGHTS.md`, `sources.json`), and the thermal evidence records only "Landsat thermal" with no mission.
+  - It now reads "Landsat (USGS)" in both languages (`about/index.html`, `script.js` `aboutPage.source.landsat`, EN and TR). This is a deliberate, documented deviation from the wording in `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` §A2, which still says "Landsat 8 (USGS)": that section says each row's wording follows `IMAGERY_RIGHTS.md`, and a mission number is only honest per image. Specific missions stay where they are recorded: Landsat 8 on the Kızıldere pages, Landsat 9 in the manifest.
+- **B3: `negative_tests_mer240.py` only ran on CRLF checkouts.**
+  - The cases searched for hard-coded `\r\n`, so a clean Linux checkout stopped at the fifth case.
+  - The runner now mutates the LF form of each file and writes the file's own line ending back; the five literals are LF.
+  - Observed: 46/46 on this Linux (LF) checkout, and 46/46 on a copy of the tree with 172 text files converted to CRLF (the locator SVG, which is `-text`, left alone). The five earlier suites are untouched and pass as before (72/72, 55/55, 18/18, 19/19, 29/29).
+
+Still not verified here, unchanged by this revision: a real Vercel Preview (the redirects were followed on an emulation of `vercel.json`, not on Vercel), the D4 mailbox gate, and physical devices.

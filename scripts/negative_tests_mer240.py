@@ -30,6 +30,7 @@ GEOTHERMAL = ROOT / "solutions" / "geothermal" / "index.html"
 ABOUT = ROOT / "about" / "index.html"
 PARTNER = ROOT / "partner" / "index.html"
 SCRIPT = ROOT / "script.js"
+STYLES = ROOT / "styles.css"
 VERCEL = ROOT / "vercel.json"
 SITEMAP = ROOT / "sitemap.xml"
 SOURCES = ROOT / "assets" / "imagery" / "sources.json"
@@ -93,7 +94,7 @@ case("the Geothermal page stops marking itself in the menu", GEOTHERMAL,
      swap('data-i18n="nav.geothermal" aria-current="page">', 'data-i18n="nav.geothermal">'),
      "as the current page")
 case("the footer loses About", PARTNER,
-     swap('<a href="/about/" data-i18n="nav.about">About</a>\r\n        <a href="/partner/"',
+     swap('<a href="/about/" data-i18n="nav.about">About</a>\n        <a href="/partner/"',
           '<a href="/partner/"'),
      "footer navigation is")
 case("the footer attribution loses its link to the sources table", GEOTHERMAL,
@@ -125,11 +126,14 @@ case("a sitemap entry loses its date", SITEMAP,
 case("an old /pilot/ fragment stops landing", GEOTHERMAL,
      swap('<span class="anchor-alias" id="pilot-structure" aria-hidden="true"></span>', ""),
      "no #pilot-structure")
+case("an old /pilot/ fragment lands at the top: its container is not positioned", STYLES,
+     swap(".page-section{position:relative;", ".page-section{"),
+     "which styles.css does not position")
 
 # ---- the homepage's light trim (authority 4.1) ---------------------------------------------------
 case("the Company section returns to the homepage", INDEX,
      swap('<div id="contact" class="sec sec-contact">',
-          '<section id="company" class="sec"><h2>Company</h2></section>\r\n    <div id="contact" class="sec sec-contact">'),
+          '<section id="company" class="sec"><h2>Company</h2></section>\n    <div id="contact" class="sec sec-contact">'),
      "#company is back")
 case("the hero's Partner call becomes a mailto again", INDEX,
      swap('<a class="text-link" href="/partner/"><span data-i18n="hero.secondary">',
@@ -166,7 +170,7 @@ case("a section loses its lead visual", ABOUT,
           '<table class="data-table" aria-labelledby="sources-title">'),
      "not a marked lead")
 case("text sits in <main> outside a section", PARTNER,
-     swap("  </main>", '    <div class="intro-text"><p>Write to us.</p></div>\r\n  </main>'),
+     swap("  </main>", '    <div class="intro-text"><p>Write to us.</p></div>\n  </main>'),
      "outside a section")
 case("a paragraph is passed off as the lead visual", PARTNER,
      swap('<p class="mail-address mono" data-lead-visual>', '<p class="mono" data-lead-visual>'),
@@ -203,7 +207,7 @@ case("a page runs past its total budget", ABOUT,
            r"\1" + "".join(
                f'<section class="page-section"><div class="shell"><table class="data-table" data-lead-visual><tbody>'
                f'<tr><th scope="row">Row {i}</th><td>{" ".join(["word"] * 10)}</td><td>{" ".join(["word"] * 10)}</td></tr>'
-               f'</tbody></table></div></section>\r\n    ' for i in range(6)) + r"\2"),
+               f'</tbody></table></div></section>\n    ' for i in range(6)) + r"\2"),
      "budgeted words")
 
 # ---- R1 one home per fact ---------------------------------------------------------------------------
@@ -219,7 +223,7 @@ case("a principle is restated on the Geothermal page", GEOTHERMAL,
 
 # ---- R2 one full-size appearance per visual ------------------------------------------------------------
 case("a hub photograph is shown full size on another page", GEOTHERMAL,
-     swap("  </main>", '    <section class="page-section"><img data-lead-visual src="/assets/imagery/yellowstone-2013-1400.webp" alt="" data-i18n-alt="alt.yellowstone" /></section>\r\n  </main>'),
+     swap("  </main>", '    <section class="page-section"><img data-lead-visual src="/assets/imagery/yellowstone-2013-1400.webp" alt="" data-i18n-alt="alt.yellowstone" /></section>\n  </main>'),
      "R2: scene:yellowstone-2013 appears at full size")
 
 # ---- R3 no software detail ----------------------------------------------------------------------------------
@@ -280,8 +284,14 @@ def main() -> int:
         original = path.read_bytes().decode("utf-8") if existed else ""
         created_dir = None if path.parent.exists() else path.parent
         try:
-            mutated = mutate(original)
-            assert mutated != original, "mutation was a no-op: " + name
+            # The cases are written against LF text. A checkout may hold CRLF (Windows,
+            # core.autocrlf), so mutate the LF form and write the file's own line ending back.
+            crlf = "\r\n" in original
+            text = original.replace("\r\n", "\n")
+            mutated = mutate(text)
+            assert mutated != text, "mutation was a no-op: " + name
+            if crlf:
+                mutated = mutated.replace("\n", "\r\n")
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(mutated.encode("utf-8"))
             rc, out = site()

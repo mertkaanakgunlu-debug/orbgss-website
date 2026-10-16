@@ -494,6 +494,36 @@ def build_dom(text: str) -> DomNode:
     return builder.root
 
 
+def positioned_css_classes(css: str) -> set[str]:
+    """Classes an unconditional top-level rule positions (`.page-section{position:relative;...}`).
+
+    Only a rule whose whole selector is one class counts, and nothing inside an at-rule does: a
+    @media block applies at some widths only, so it cannot be what an alias relies on.
+    """
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    found: set[str] = set()
+    pos = 0
+    while True:
+        opened = css.find("{", pos)
+        if opened < 0:
+            break
+        prelude = css[pos:opened].strip()
+        depth, end = 1, opened + 1
+        while end < len(css) and depth:
+            depth += {"{": 1, "}": -1}.get(css[end], 0)
+            end += 1
+        body = css[opened + 1:end - 1]
+        pos = end
+        if prelude.startswith("@"):
+            continue
+        if re.search(r"(?:^|;)\s*position\s*:\s*(?:relative|absolute|fixed|sticky)\b", body):
+            for selector in prelude.split(","):
+                single = re.fullmatch(r"\.([\w-]+)", selector.strip())
+                if single:
+                    found.add(single.group(1))
+    return found
+
+
 def count_words(text: str) -> int:
     return sum(1 for token in text.split() if WORD_RE.search(token))
 
@@ -2335,6 +2365,21 @@ def main() -> int:
         if anchor not in geo_ids:
             fail(f"solutions/geothermal/index.html: no #{anchor}; links to /pilot/#{anchor} or the "
                  f"page's own sections would land at the top", errors)
+
+    # Section 6: an alias must also land. .anchor-alias is position:absolute at its container's
+    # origin; in a container that styles.css leaves static it resolves against the page, and every
+    # /pilot/#pilot-* link then scrolls to the top instead of its section (MER-240 review, B1). A
+    # static check cannot scroll, so it requires the next best thing: the alias's own parent is
+    # positioned by an unconditional rule. tasks/MER-240_EVIDENCE.md records the browser check.
+    positioned = positioned_css_classes(css_text)
+    for name, dom in doms.items():
+        for alias in dom.find_all(lambda n: "anchor-alias" in n.classes):
+            holder = alias.parent
+            if holder is None or not (holder.classes & positioned):
+                where = f"<{holder.tag} class=\"{' '.join(sorted(holder.classes))}\">" if holder else "the page"
+                fail(f"{m6_label(name)}: #{alias.attrs.get('id')} sits in {where}, which styles.css "
+                     f"does not position; the absolutely positioned .anchor-alias would resolve "
+                     f"against the page and its link would land at the top", errors)
 
     # Section 4.1: the homepage changes.
     for retired_id in sorted(RETIRED_HOMEPAGE_SECTION_IDS & parser.ids):

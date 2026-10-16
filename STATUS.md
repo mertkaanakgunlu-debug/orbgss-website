@@ -70,7 +70,7 @@ The short command `MER-###'e başla` authorizes exactly that Linear issue, in th
 | Command | Result |
 | --- | --- |
 | `py -3.14 scripts/validate_site.py` | PASS, 0 warnings (4 scenes, 5 routes + `404.html`, 277 i18n keys, 6 geo-web-002 assets / 19 files, deploy set 12 root entries). Since MER-240 it also enforces the Milestone 6 navigation, redirects, homepage trim, the locator-map record and content rules R1–R5 and R8. |
-| `negative_tests_web005.py` / `_web005b.py` / `_web005c.py` / `_mer216.py` / `_mer237.py` / `_mer240.py` | 72/72, 55/55, 18/18, 19/19, 29/29, 45/45 caught; restored trees identical. The web005b, web005c and mer237 cases that mutated the retired routes now mutate their successors (`tasks/MER-240_EVIDENCE.md` §5). |
+| `negative_tests_web005.py` / `_web005b.py` / `_web005c.py` / `_mer216.py` / `_mer237.py` / `_mer240.py` | 72/72, 55/55, 18/18, 19/19, 29/29, 46/46 caught (`_mer240.py` runs on LF and CRLF checkouts); restored trees identical. The web005b, web005c and mer237 cases that mutated the retired routes now mutate their successors (`tasks/MER-240_EVIDENCE.md` §5). |
 | `py -3.14 hero/scripts/validate_hero.py` | 420 / 0 on the hero workstation; in a fresh clone exactly the 13 git-ignored source-texture checks fail and nothing else |
 | `evidence/mer219/smoke_production.py --expect-sha 464a7354…` | 46/46 against production (2026-10-15). Since MER-240 the script expects the new routes and the four redirects, so it is for use after MER-240 is published. |
 

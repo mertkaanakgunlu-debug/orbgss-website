@@ -497,15 +497,17 @@ body.home{background:var(--orb-bg)}
 
 /* Single padded wrapper for every deep-page content block; children below carry no padding of
    their own so a page never has to reach for an inline style. */
-.page-section{padding:clamp(50px,6.5vw,96px) var(--pad);background:var(--bg);border-top:1px solid var(--line)}
+.page-section{position:relative;padding:clamp(50px,6.5vw,96px) var(--pad);background:var(--bg);border-top:1px solid var(--line)}
 .page-section.is-deep{background:#050d13}
 .page-section-head{max-width:760px;margin:0 0 clamp(28px,3.5vw,48px)}
 .page-section-head h2{margin:0 0 16px;font-size:clamp(22px,2.2vw,32px);font-weight:370;letter-spacing:-.02em;line-height:1.16}
 
 /* A renamed or moved section carries its superseded anchor along with it, so an existing deep
    link (/solutions/#mineral, /solutions/#environment, the old /pilot/#pilot-* fragments) still
-   lands on what it always meant. Absolutely positioned at the section origin, so it takes no part
-   in the layout; it inherits the header offset when it is the scroll target. */
+   lands on what it always meant. Absolutely positioned at the origin of its container, so it takes
+   no part in the layout; it inherits the header offset when it is the scroll target. The container
+   (.page-section, .domain-band) must therefore be positioned itself, or the alias
+   falls back to the top of the document and the link lands there (scripts/validate_site.py checks). */
 .anchor-alias{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;pointer-events:none;scroll-margin-top:calc(var(--header-h) + 12px)}
 
 /* ---------- MER-240 / Milestone 6: show-first pages ---------- */
