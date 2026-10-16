@@ -17,7 +17,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "evidence" / "mer216" / "tools"))
 from mer216_harness import Chrome  # noqa: E402
 
-ROUTES = ["/", "/platform/", "/solutions/", "/pilot/", "/company/", "/contact/"]
+# MER-240 / Milestone 6 page set.
+ROUTES = ["/", "/solutions/", "/solutions/geothermal/", "/about/", "/partner/"]
 results = []
 
 

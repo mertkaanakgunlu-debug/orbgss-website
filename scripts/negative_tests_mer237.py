@@ -23,9 +23,11 @@ import sys
 ROOT = pathlib.Path(".").resolve()
 IGNORE = ROOT / ".vercelignore"
 INDEX = ROOT / "index.html"
-PILOT = ROOT / "pilot" / "index.html"
-PLATFORM = ROOT / "platform" / "index.html"
-CONTACT = ROOT / "contact" / "index.html"
+# MER-240 retired platform/, pilot/, company/ and contact/ (they are redirects now); the same
+# cases run against their successors.
+GEOTHERMAL = ROOT / "solutions" / "geothermal" / "index.html"
+ABOUT = ROOT / "about" / "index.html"
+PARTNER = ROOT / "partner" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
 VALIDATOR = "scripts/validate_site.py"
 
@@ -69,7 +71,7 @@ case("a plain ignore line is added after the allowlist", IGNORE,
      add_rule("*.md"),
      "unsupported rule")
 case("the allowlist names an entry that does not exist", IGNORE,
-     add_rule("!about"),
+     add_rule("!press"),
      "which does not exist")
 
 # ---- internal paths let back in ----------------------------------------------------------------
@@ -84,8 +86,8 @@ case("vercel.json is dropped (the project configuration would not reach Vercel)"
      drop_rule("!vercel.json"),
      "vercel.json is not deployed")
 case("404.html is dropped", IGNORE, drop_rule("!404.html"), "404.html is not deployed")
-case("a public route directory is dropped", IGNORE, drop_rule("!pilot"),
-     "public route file pilot/index.html is not deployed")
+case("a public route directory is dropped", IGNORE, drop_rule("!about"),
+     "public route file about/index.html is not deployed")
 case("styles.css is dropped while every page links it", IGNORE, drop_rule("!styles.css"),
      "references styles.css, which .vercelignore does not deploy")
 case("assets/ is dropped while every page shows it", IGNORE, drop_rule("!assets"),
@@ -100,30 +102,30 @@ case("a page links an internal document", INDEX,
 case("the sitemap lists a path outside the deploy set", SITEMAP,
      swap("</urlset>", "<url><loc>https://orbgss.com/docs/</loc></url></urlset>"),
      "references docs/index.html, which .vercelignore does not deploy")
-case("a sub-route uses a document-relative asset path (it resolves under the route)", PILOT,
+case("a sub-route uses a document-relative asset path (it resolves under the route)", GEOTHERMAL,
      lambda t: re.sub(r'src="/assets/', 'src="assets/', t, count=1),
-     "references pilot/assets/")
-case("a page references a deployed path that does not exist", PLATFORM,
+     "references solutions/geothermal/assets/")
+case("a page references a deployed path that does not exist", ABOUT,
      swap("</body>", '<img src="/assets/imagery/missing-scene.webp" alt="" /></body>'),
      "references assets/imagery/missing-scene.webp, which does not exist")
 case("a Markdown note is left inside a deployed directory", ROOT / "assets" / "NOTES.md",
      lambda t: "# internal note\n",
      "deploy set contains an internal file: assets/NOTES.md")
-case("a Python tool is left inside a deployed route directory", ROOT / "contact" / "build.py",
+case("a Python tool is left inside a deployed route directory", ROOT / "partner" / "build.py",
      lambda t: "print('internal')\n",
-     "deploy set contains an internal file: contact/build.py")
+     "deploy set contains an internal file: partner/build.py")
 
 # ---- social previews ---------------------------------------------------------------------------
-case("a route advertises the retired Crater Lake scene again", PLATFORM,
+case("a route advertises the retired Crater Lake scene again", ABOUT,
      swap(OG, '<meta property="og:image" content="https://orbgss.com/assets/imagery/crater-lake-2023.jpg" />'),
      "is not an image any page shows")
-case("a route loses its og:image", CONTACT,
+case("a route loses its og:image", PARTNER,
      swap(OG, ""),
      "og:image is missing")
-case("a route's og:image is hosted elsewhere", CONTACT,
+case("a route's og:image is hosted elsewhere", PARTNER,
      swap(OG, '<meta property="og:image" content="https://example.com/preview.jpg" />'),
      "og:image is missing or is not a self-hosted")
-case("a route's og:image points at a file that does not exist", PLATFORM,
+case("a route's og:image points at a file that does not exist", ABOUT,
      swap(OG, '<meta property="og:image" content="https://orbgss.com/assets/hero/hero-poster-9999.webp" />'),
      "og:image assets/hero/hero-poster-9999.webp does not exist")
 

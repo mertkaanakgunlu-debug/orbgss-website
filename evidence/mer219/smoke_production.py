@@ -4,6 +4,7 @@
 
 Run from a checkout that contains the expected SHA. The check proves, over plain HTTP:
   * HTTPS and the apex redirects; every canonical route; a real 404;
+  * the routes MER-240 retired answer with a 301 to their successors;
   * internal repository paths are not served (MER-237);
   * every route's og:image is a self-hosted image that loads (MER-237);
   * the MER-216 hero ladder is in the markup and every tier answers with the right type,
@@ -23,7 +24,9 @@ import sys
 import urllib.error
 import urllib.request
 
-ROUTES = ["/", "/platform/", "/solutions/", "/pilot/", "/company/", "/contact/"]
+# MER-240 / Milestone 6 page set; the retired routes are 301 redirects (vercel.json).
+ROUTES = ["/", "/solutions/", "/solutions/geothermal/", "/about/", "/partner/"]
+REDIRECTS = {"/platform/": "/", "/pilot/": "/solutions/geothermal/", "/company/": "/about/", "/contact/": "/partner/"}
 INTERNAL = ["/STATUS.md", "/CLAUDE.md", "/README.md", "/AGENTS.md", "/CHANGELOG.md", "/IMAGERY_RIGHTS.md",
             "/docs/HANDOFF.md", "/tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md", "/tasks/", "/evidence/",
             "/scripts/validate_site.py", "/hero/config/scene.json", "/references/", "/.vercelignore",
@@ -74,6 +77,20 @@ def main() -> int:
         check(s == 200 and "text/html" in h.get("Content-Type", ""), f"route {r} serves HTML", str(s))
     s, _, _ = fetch(base + "/mer219-smoke-not-a-page/")
     check(s == 404, "an unknown path returns 404", str(s))
+
+    def same_path(location, path):
+        return location in (path, base + path)
+
+    for old, new in REDIRECTS.items():
+        s, h, _ = fetch(base + old, follow=False)
+        loc = h.get("Location", "")
+        check(s == 301 and same_path(loc, new), f"retired route {old} answers 301 to {new}", f"{s} {loc}")
+        # Without the slash, trailingSlash may answer first (308 to the slashed path) or the
+        # redirect may match directly (301 to the successor); either ends on the successor.
+        s, h, _ = fetch(base + old.rstrip("/"), follow=False)
+        loc = h.get("Location", "")
+        check((s == 308 and same_path(loc, old)) or (s == 301 and same_path(loc, new)),
+              f"retired route {old.rstrip('/')} is redirected", f"{s} {loc}")
 
     for p in INTERNAL:
         s, _, _ = fetch(base + p, follow=False)

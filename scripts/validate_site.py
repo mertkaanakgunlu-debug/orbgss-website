@@ -29,23 +29,26 @@ REQUIRED_FILES = [
     ".vercelignore",
     "robots.txt",
     "sitemap.xml",
-    # WEB-003 public routes
-    "platform/index.html",
+    "404.html",
+    # MER-240 / Milestone 6 public routes (docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md section 2)
     "solutions/index.html",
-    "pilot/index.html",
-    "company/index.html",
-    "contact/index.html",
+    "solutions/geothermal/index.html",
+    "about/index.html",
+    "partner/index.html",
 ]
 
-# WEB-003: canonical public route -> its file, relative to ROOT. "" is the homepage.
+# Canonical public route -> its file, relative to ROOT. "" is the homepage. MER-240 replaced the
+# WEB-003 set (platform, pilot, company, contact); those routes are 301 redirects now (REDIRECTS).
 ROUTES = {
     "": "index.html",
-    "platform": "platform/index.html",
     "solutions": "solutions/index.html",
-    "pilot": "pilot/index.html",
-    "company": "company/index.html",
-    "contact": "contact/index.html",
+    "solutions/geothermal": "solutions/geothermal/index.html",
+    "about": "about/index.html",
+    "partner": "partner/index.html",
 }
+# Served pages that are not canonical routes: no canonical URL, no sitemap entry, but the same
+# navigation, links and EN/TR parity as every route.
+AUX_PAGES = {"404": "404.html"}
 
 
 def canonical_url(route: str) -> str:
@@ -87,12 +90,14 @@ _CSS_URL_REF = re.compile(r"""url\(\s*["']?([^"')\s]+)["']?\s*\)""")
 # labels are gone from visible copy, and #mineral / #environment survive only as compatibility
 # aliases on their renamed /solutions/ rows so existing deep links keep resolving.
 # WEB-005B R14: the section is "Solutions" and carries the #solutions anchor; it is no longer
-# framed as a pilot panel, so there is no #pilot section on the homepage. The /pilot/ ROUTE is
-# unaffected and is still required above.
+# framed as a pilot panel, so there is no #pilot section on the homepage.
+# MER-240: Method (#proof) and Company (#company) moved to /about/; #contact stays as the one
+# Partner line, so existing /#contact links still land.
 REQUIRED_SECTION_IDS = {
     "hero", "context", "evidence", "terrain", "thermal", "alteration", "structure", "priority",
-    "solutions", "geothermal", "mining", "marine", "company", "contact",
+    "solutions", "geothermal", "mining", "marine", "contact",
 }
+RETIRED_HOMEPAGE_SECTION_IDS = {"proof", "company"}
 # WEB-005: the homepage's primary visual hierarchy is exactly these four acts, in this order.
 REQUIRED_ACTS = ["1", "2", "3", "4"]
 # WEB-005C / MER-149: the canonical public domain taxonomy, its route destinations, and the
@@ -107,8 +112,14 @@ PUBLIC_TAXONOMY = [
 # renamed rows) so an existing external deep link is not broken by the rename.
 LEGACY_DOMAIN_ANCHORS = ["mineral", "environment"]
 # WEB-005C R2: the three homepage Solutions cards are navigation surfaces. Each is a native link to
-# its own /solutions/ row, named by its own card title, so it works with JavaScript disabled and is
+# its domain's home, named by its own card title, so it works with JavaScript disabled and is
 # reachable and announced by keyboard. A card that loses its link silently stops being one.
+# MER-240: Geothermal's home is its own page; Mining and Marine are bands on the hub.
+NAV_TARGETS = {
+    "geothermal": "/solutions/geothermal/",
+    "mining": "/solutions/#mining",
+    "marine": "/solutions/#marine",
+}
 # Retired domain labels, EN and TR. Matched case-sensitively so the lowercase activity wording the
 # Mining row legitimately keeps ("... relevant to mineral targeting") is untouched.
 RETIRED_DOMAIN_LABELS = [
@@ -204,6 +215,72 @@ PROHIBITED_SCORE_COPY = [
     "proven reserve",
     "validated accuracy",
 ]
+
+
+# ---------------------------------------------------------------------------------------------
+# MER-240 / Milestone 6 (docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md). The page set, navigation,
+# redirects and the content rules R1-R5 and R8, enforced on the reworked routes.
+# ---------------------------------------------------------------------------------------------
+# Primary navigation, right-aligned, in exactly this order (authority section 2). None is the
+# Solutions menu trigger, which is a button, not a link.
+PRIMARY_NAV = [("/", "nav.home"), (None, "nav.solutions"), ("/about/", "nav.about"),
+               ("/partner/", "nav.partner")]
+FOOTER_NAV = [("/", "nav.home"), ("/solutions/", "nav.solutions"), ("/about/", "nav.about"),
+              ("/partner/", "nav.partner")]
+NAV_LABELS = {"nav.home": ("Home", "Ana Sayfa"), "nav.solutions": ("Solutions", "Çözümler"),
+              "nav.about": ("About", "Hakkımızda"), "nav.partner": ("Partner with us", "İş Birliği")}
+# Which navigation entries say aria-current="page" on each page ("menu" is the Solutions trigger).
+NAV_CURRENT = {
+    "": {"/"},
+    "solutions": {"menu"},
+    "solutions/geothermal": {"menu", "/solutions/geothermal/"},
+    "about": {"/about/"},
+    "partner": {"/partner/"},
+    "404": set(),
+}
+# Section 6: the retired routes answer with a permanent redirect, so no inbound link breaks.
+REDIRECTS = {
+    "/platform/": "/",
+    "/pilot/": "/solutions/geothermal/",
+    "/company/": "/about/",
+    "/contact/": "/partner/",
+}
+REDIRECT_STATUS = 301
+# The fragments old /pilot/ links carry land on the Geothermal page (G3 is absent until MER-242,
+# so its aliases sit on G2).
+GEOTHERMAL_ANCHORS = ["glance", "layers", "outputs", "gap", "pilot-observe", "pilot-terrain",
+                      "pilot-evidence", "pilot-priority", "pilot-geothermal", "pilot-structure"]
+# R8: one status vocabulary, everywhere.
+M6_STATUS = {
+    "app.geothermal.status": ("Active · First application", "Aktif · İlk uygulama"),
+    "app.mining.status": ("Expansion direction", "Genişleme yönü"),
+    "app.marine.status": ("Expansion direction", "Genişleme yönü"),
+}
+RETIRED_STATUS_LABELS = ["In development", "Geliştirme aşamasında"]
+# R5 text budgets (EN; TR may run up to 15 % longer).
+M6_BUDGET = {"headline": 8, "intro": 30, "section": 40, "cell": 12, "rows": 7, "page": 250}
+M6_PAGE_BUDGET = {"solutions/geothermal": 350}
+M6_TR_ALLOWANCE = 1.15
+# R6: fixed texts travel with what they qualify and are exempt from R1 and R5.
+M6_FIXED_CLASSES = {"beam-note", "scene-label", "act-footnote", "domain-status", "company-parent"}
+# R4: what may lead a section. A table, an image, a map or chart, or the two drawn blocks the
+# authority names (the empty data-gap frame and the address block).
+LEAD_VISUAL_TAGS = {"table", "img", "figure", "svg", "picture", "video", "canvas"}
+LEAD_VISUAL_CLASSES = {"gap-frame", "mail-address"}
+# Blocks that may sit in <main> outside a section: the one closing link and the footnote.
+M6_LOOSE_BLOCKS = {"page-closing", "page-note"}
+# R2: a thumbnail is at most 160 CSS px on its long side.
+THUMB_MAX_CSS_PX = 160
+# R3: no software or development detail on the reworked routes. Layer codes stay out of visible
+# copy as well (authority 4.3), as they have on the homepage since WEB-005B R14.
+M6_SOFTWARE_TERMS = [
+    "workflow", "pipeline", "workbench", "geo-039", "export path", "thm-01", "alt-01", "alt-02",
+    "mvp_remote_sensing", "kizildere_mvp", "geotiff", "stac", "blender", "ffmpeg", "github",
+    "python", "javascript", "how the layers are built", "how it's built", "iş akışı",
+]
+# R1: a sentence this long is a claim; it may be stated on one route only.
+M6_CLAIM_MIN_WORDS = 6
+WORD_RE = re.compile(r"[^\W_]", re.UNICODE)
 
 
 def sha256_of(path: pathlib.Path) -> str:
@@ -339,6 +416,86 @@ class SiteParser(HTMLParser):
         for key in self._key_stack:
             if key:
                 self.i18n_text[key] = self.i18n_text.get(key, "") + data
+
+
+class DomNode:
+    """A minimal element tree, enough for the M6 structure and text-budget rules."""
+
+    __slots__ = ("tag", "attrs", "children", "parent")
+
+    def __init__(self, tag: str, attrs: dict, parent: "DomNode | None") -> None:
+        self.tag = tag
+        self.attrs = attrs
+        self.children: list = []
+        self.parent = parent
+
+    @property
+    def classes(self) -> set[str]:
+        return set(str(self.attrs.get("class") or "").split())
+
+    def iter(self):
+        yield self
+        for child in self.children:
+            if isinstance(child, DomNode):
+                yield from child.iter()
+
+    def find_all(self, pred) -> list["DomNode"]:
+        return [node for node in self.iter() if pred(node)]
+
+    def text(self, skip=None) -> str:
+        parts: list[str] = []
+        for child in self.children:
+            if isinstance(child, str):
+                parts.append(child)
+            elif not (skip and skip(child)) and child.attrs.get("aria-hidden") != "true":
+                parts.append(child.text(skip))
+        return " ".join(" ".join(parts).split())
+
+    def ancestors(self):
+        node = self.parent
+        while node is not None:
+            yield node
+            node = node.parent
+
+
+class DomBuilder(HTMLParser):
+    VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source",
+            "track", "wbr"}
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.root = DomNode("#root", {}, None)
+        self._cur = self.root
+
+    def handle_starttag(self, tag: str, attrs) -> None:
+        node = DomNode(tag, dict(attrs), self._cur)
+        self._cur.children.append(node)
+        if tag not in self.VOID:
+            self._cur = node
+
+    def handle_startendtag(self, tag: str, attrs) -> None:
+        self._cur.children.append(DomNode(tag, dict(attrs), self._cur))
+
+    def handle_endtag(self, tag: str) -> None:
+        node = self._cur
+        while node is not self.root and node.tag != tag:
+            node = node.parent
+        if node is not self.root:
+            self._cur = node.parent
+
+    def handle_data(self, data: str) -> None:
+        if self._cur.tag not in ("script", "style"):
+            self._cur.children.append(data)
+
+
+def build_dom(text: str) -> DomNode:
+    builder = DomBuilder()
+    builder.feed(text)
+    return builder.root
+
+
+def count_words(text: str) -> int:
+    return sum(1 for token in text.split() if WORD_RE.search(token))
 
 
 def fail(message: str, errors: list[str]) -> None:
@@ -707,6 +864,14 @@ def main() -> int:
         route_parser = SiteParser()
         route_parser.feed(text)
         route_parsers[route] = route_parser
+    # The 404 page is served for every unknown path, so its links, navigation and EN/TR keys are
+    # held to the same standard as a route's, without the canonical/sitemap duties.
+    aux_html: dict[str, str] = {}
+    aux_parsers: dict[str, SiteParser] = {}
+    for name, rel in AUX_PAGES.items():
+        aux_html[name] = (ROOT / rel).read_text(encoding="utf-8")
+        aux_parsers[name] = SiteParser()
+        aux_parsers[name].feed(aux_html[name])
 
     # Metadata: every route needs a truthful, route-specific title/description/canonical/OG url.
     for route, text in route_html.items():
@@ -731,15 +896,6 @@ def main() -> int:
         for aria_label in route_parser.untranslated_aria_labels:
             fail(f"{label}: aria-label {aria_label!r} has no data-i18n-aria-label "
                  f"(untranslated accessibility text)", errors)
-
-    # Social-preview truthfulness (MER-91): /pilot/ must not borrow the homepage hero's Crater Lake
-    # image for its own Open Graph preview — its og:image must be a real Kızıldere asset (either an
-    # accepted WEB-002 proof derivative or the homepage's own on-topic imagery), never the hero.
-    pilot_html = route_html.get("pilot", "")
-    if 'property="og:image" content="https://orbgss.com/assets/imagery/crater-lake-2023.jpg"' in pilot_html:
-        fail("pilot/index.html: og:image reuses the Crater Lake hero image, not a Kızıldere pilot visual", errors)
-    if pilot_html and not re.search(r'property="og:image" content="https://orbgss\.com/assets/(proof|imagery)/', pilot_html):
-        fail("pilot/index.html: og:image is not a self-hosted approved asset", errors)
 
     # Social-preview truthfulness, every route (MER-237): the og:image is a deployed, self-hosted
     # image that some page actually shows. Until MER-237 four routes still advertised the retired
@@ -766,8 +922,8 @@ def main() -> int:
     # Internal links: every root-relative href must resolve to a real canonical route, and any
     # #fragment it carries must resolve to a real id — on the target page for a "/route/#frag"
     # link, or on the current page for a bare "#frag" link.
-    for route, route_parser in route_parsers.items():
-        label = ROUTES[route]
+    for route, route_parser in list(route_parsers.items()) + list(aux_parsers.items()):
+        label = ROUTES.get(route) or AUX_PAGES[route]
         for href in route_parser.links:
             if href.startswith(("mailto:", "tel:", "http://", "https://")):
                 continue
@@ -789,7 +945,7 @@ def main() -> int:
     # EN/TR parity: every data-i18n* key referenced anywhere on the public site must have a
     # value in BOTH dictionary languages, so a route can never ship half-translated.
     all_i18n_keys: set[str] = set()
-    for route_parser in route_parsers.values():
+    for route_parser in list(route_parsers.values()) + list(aux_parsers.values()):
         all_i18n_keys |= route_parser.i18n_keys
     for key in sorted(all_i18n_keys):
         for lang in ("en", "tr"):
@@ -802,15 +958,15 @@ def main() -> int:
     # the navigation or on /solutions/.
     # ------------------------------------------------------------------
     submenu_re = re.compile(r'<div class="submenu"[^>]*>(.*?)</div>', re.S)
-    item_re = re.compile(r'<a href="(/solutions/#[^"]+)" data-i18n="([^"]+)">([^<]+)</a>')
-    for route, text in route_html.items():
-        label = ROUTES[route]
+    item_re = re.compile(r'<a href="(/solutions/[^"]*)" data-i18n="([^"]+)"(?: aria-current="page")?>([^<]+)</a>')
+    for route, text in list(route_html.items()) + list(aux_html.items()):
+        label = ROUTES.get(route) or AUX_PAGES[route]
         menu = submenu_re.search(text)
         if not menu:
             fail(f"{label}: no Solutions submenu; the public domain taxonomy is not published", errors)
             continue
         got = item_re.findall(menu.group(1))
-        want = [(f"/solutions/#{anchor}", key, en) for anchor, key, en, _ in PUBLIC_TAXONOMY]
+        want = [(NAV_TARGETS[anchor], key, en) for anchor, key, en, _ in PUBLIC_TAXONOMY]
         if got != want:
             fail(f"{label}: Solutions submenu is not the canonical taxonomy in order; "
                  f"expected {want}, found {got}", errors)
@@ -823,11 +979,11 @@ def main() -> int:
                 fail(f"{key!r} in the {lang!r} dictionary is {got_name!r}, not the canonical "
                      f"public domain name {want_name!r}", errors)
 
-    # /solutions/ publishes a row per domain, and keeps the superseded anchors resolvable.
+    # /solutions/ publishes a band per domain, and keeps the superseded anchors resolvable.
     solutions_ids = route_parsers.get("solutions", SiteParser()).ids
     for anchor_id, _, en_name, _ in PUBLIC_TAXONOMY:
         if anchor_id not in solutions_ids:
-            fail(f"solutions/index.html: no #{anchor_id} row for the {en_name!r} domain", errors)
+            fail(f"solutions/index.html: no #{anchor_id} band for the {en_name!r} domain", errors)
     for legacy in LEGACY_DOMAIN_ANCHORS:
         if legacy not in solutions_ids:
             fail(f"solutions/index.html: legacy anchor #{legacy} no longer resolves; existing deep "
@@ -846,8 +1002,9 @@ def main() -> int:
                 fail(f"the {lang!r} dictionary still carries the superseded domain label "
                      f"{retired!r}; the public taxonomy is Geothermal / Mining / Marine", errors)
 
-    # WEB-005C R2: every homepage Solutions card navigates to its own /solutions/ row, as a native
-    # link (no JavaScript), named by its own title (no whole-card read-aloud, no untranslated label).
+    # WEB-005C R2: every homepage Solutions card navigates to its domain's home (NAV_TARGETS), as a
+    # native link (no JavaScript), named by its own title (no whole-card read-aloud, no untranslated
+    # label).
     card_re = re.compile(r'<li class="domain-card[^"]*" id="([^"]+)"(.*?)</li>', re.S)
     cards = {m.group(1): m.group(2) for m in card_re.finditer(html)}
     for anchor_id, _, en_name, _ in PUBLIC_TAXONOMY:
@@ -857,11 +1014,11 @@ def main() -> int:
             continue
         link = re.search(r'<a class="domain-link" href="([^"]+)" aria-labelledby="([^"]+)">', body)
         if not link:
-            fail(f"index.html: the {en_name!r} card is not a native link to its /solutions/ row "
+            fail(f"index.html: the {en_name!r} card is not a native link to its domain's home "
                  f"(WEB-005C R2: the card itself is the link, and it must work without JavaScript)",
                  errors)
             continue
-        want_href = f"/solutions/#{anchor_id}"
+        want_href = NAV_TARGETS[anchor_id]
         if link.group(1) != want_href:
             fail(f"index.html: the {en_name!r} card links to {link.group(1)!r}, not {want_href!r}", errors)
         labelled_by = link.group(2)
@@ -1335,21 +1492,50 @@ def main() -> int:
     # homepage by WEB-002 and are placed again by the accepted final design — as photography
     # beside a domain, never as evidence. Each declares that placement, and the layout may not
     # ask a 2x display for more pixels than the widest candidate it is offered.
+    # MER-240: the same scenes are the full-size bands of the /solutions/ hub, declared by a second
+    # placement record (web_m6_placement) held to the same pixel bound.
     # ------------------------------------------------------------------
     for scene in scenes:
         own = {str(d.get("path", "")) for d in scene.get("derivatives", [])}
         shown_on = [r for r, rp in route_parsers.items() if all_srcs(rp) & own]
         placement = scene.get("web_005b_placement")
+        m6_placement = scene.get("web_m6_placement") or {}
         sid = scene.get("id", "<unknown>")
         if not shown_on:
             if placement and placement.get("status") == "placed":
                 fail(f"scene {sid!r} claims a WEB-005B placement but appears on no route", errors)
+            if m6_placement.get("status") == "placed":
+                fail(f"scene {sid!r} claims a MER-240 placement but appears on no route", errors)
             continue
         if not placement:
             continue  # a scene placed by an earlier task keeps that task's contract
-        if [r for r in shown_on if r != ""]:
-            fail(f"scene {sid!r} is placed for the homepage but also appears on "
-                 f"{[ROUTES[r] for r in shown_on if r != '']}", errors)
+        m6_routes = [str(r) for r in m6_placement.get("routes", [])]
+        stray = [r for r in shown_on if r != "" and ROUTES[r] not in m6_routes]
+        if stray:
+            fail(f"scene {sid!r} is placed for the homepage and {m6_routes or 'no other route'} but "
+                 f"also appears on {[ROUTES[r] for r in stray]}", errors)
+        for route in shown_on:
+            if route and m6_placement.get("status") != "placed":
+                fail(f"scene {sid!r} appears on {ROUTES[route]} without a placed web_m6_placement",
+                     errors)
+        if m6_placement:
+            m6_rendered = m6_placement.get("rendered", {})
+            for field in ("max_css_width", "device_pixel_ratio_considered", "widest_candidate_px",
+                          "selected_derivative"):
+                if m6_rendered.get(field) in (None, ""):
+                    fail(f"scene {sid!r} web_m6_placement.rendered missing {field}", errors)
+            m_css, m_dpr = m6_rendered.get("max_css_width"), m6_rendered.get("device_pixel_ratio_considered")
+            m_widest = m6_rendered.get("widest_candidate_px")
+            if all(isinstance(v, (int, float)) for v in (m_css, m_dpr, m_widest)) and m_css * m_dpr > m_widest:
+                fail(f"scene {sid!r} is laid out on the hub at {m_css} CSS px = {int(m_css * m_dpr)} "
+                     f"device px at {m_dpr}x, above its widest {m_widest} px candidate", errors)
+            if str(m6_rendered.get("selected_derivative", "")) not in own:
+                fail(f"scene {sid!r} web_m6_placement names a selected derivative that is not its own",
+                     errors)
+            widths = {int(d.get("width_px", 0)) for d in scene.get("derivatives", [])}
+            if isinstance(m_widest, int) and m_widest not in widths:
+                fail(f"scene {sid!r} web_m6_placement claims a {m_widest} px candidate it does not ship",
+                     errors)
         rendered = placement.get("rendered", {})
         for field in ("max_css_width", "device_pixel_ratio_considered", "widest_candidate_px",
                       "selected_derivative"):
@@ -1369,9 +1555,10 @@ def main() -> int:
         # were: it must be rendered on the page, it must be in both dictionaries, and it must still
         # say the three things that make it work.
         for key in placement.get("visible_framing_i18n_keys", []):
-            if key not in parser.i18n_keys:
-                fail(f"scene {sid!r} is placed on the homepage but its framing key {key!r} is not "
-                     f"rendered there", errors)
+            for route in shown_on:
+                if key not in route_parsers[route].i18n_keys:
+                    fail(f"scene {sid!r} is shown on {ROUTES[route]} but its framing key {key!r} is "
+                         f"not rendered there", errors)
         for lang in ("en", "tr"):
             note = dictionary_value(lang, "domains.illustrative")
             if note is None:
@@ -1869,14 +2056,22 @@ def main() -> int:
         if term in hero_copy:
             fail(f"hero copy claims sensing physics: {term.strip()!r}", errors)
 
-    # sitemap.xml must list every canonical public route.
+    # sitemap.xml lists every canonical public route, with a date, and nothing else: a retired
+    # route is a redirect now and has no place in it (MER-240).
     sitemap_path = ROOT / "sitemap.xml"
     if sitemap_path.exists():
         sitemap_text = sitemap_path.read_text(encoding="utf-8")
-        for route in ROUTES:
-            url = canonical_url(route)
-            if f"<loc>{url}</loc>" not in sitemap_text:
-                fail(f"sitemap.xml is missing {url!r}", errors)
+        listed = re.findall(r"<url><loc>([^<]+)</loc><lastmod>(\d{4}-\d{2}-\d{2})</lastmod></url>", sitemap_text)
+        listed_urls = [url for url, _ in listed]
+        want_urls = [canonical_url(route) for route in ROUTES]
+        for url in want_urls:
+            if url not in listed_urls:
+                fail(f"sitemap.xml is missing {url!r} (or its <lastmod>)", errors)
+        for url in listed_urls:
+            if url not in want_urls:
+                fail(f"sitemap.xml lists {url!r}, which is not a canonical route", errors)
+        if sitemap_text.count("<loc>") != len(listed):
+            fail("sitemap.xml has an entry without a <lastmod> date", errors)
 
     # ------------------------------------------------------------------
     # GEO-WEB-002 / MER-102: the final homepage visual master package. These assets are published
@@ -1995,6 +2190,394 @@ def main() -> int:
                 if asset.get("derivatives") != scene.get("derivatives"):
                     fail(f"geo_web_002 context scene {sid!r} and asset {asset.get('id')!r} "
                          f"publish different derivative records", errors)
+
+    # ------------------------------------------------------------------
+    # MER-240 / Milestone 6 (docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md). The page set is Home,
+    # Solutions, Geothermal, About and Partner with us; the retired routes redirect; and the
+    # reworked routes are held to the content rules R1-R5 and R8.
+    # ------------------------------------------------------------------
+    m6_pages = dict(route_html)
+    m6_pages.update(aux_html)
+    m6_label = lambda name: ROUTES.get(name) or AUX_PAGES[name]  # noqa: E731
+    doms = {name: build_dom(text) for name, text in m6_pages.items()}
+
+    def first(node: DomNode, pred) -> DomNode | None:
+        found = node.find_all(pred)
+        return found[0] if found else None
+
+    def tr_words(node: DomNode, skip) -> int:
+        """Word count of a block as the Turkish dictionary renders it."""
+        total = 0
+
+        def walk(n: DomNode) -> None:
+            nonlocal total
+            for child in n.children:
+                if isinstance(child, str):
+                    total += count_words(child)
+                    continue
+                if skip(child) or child.attrs.get("aria-hidden") == "true":
+                    continue
+                key = child.attrs.get("data-i18n")
+                if key:
+                    value = dictionary_value("tr", str(key))
+                    total += count_words(value or "")
+                else:
+                    walk(child)
+
+        key = node.attrs.get("data-i18n")
+        if key:
+            return count_words(dictionary_value("tr", str(key)) or "")
+        walk(node)
+        return total
+
+    def is_fixed(n: DomNode) -> bool:
+        return bool(n.classes & M6_FIXED_CLASSES)
+
+    def first_content(node: DomNode):
+        """The first thing a reader meets in a section after its heading block."""
+        for child in node.children:
+            if isinstance(child, str):
+                if child.strip():
+                    return ("text", None)
+                continue
+            if child.classes & {"page-section-head", "anchor-alias"} or child.tag in ("h1", "h2", "h3"):
+                continue
+            if "data-lead-visual" in child.attrs:
+                return ("lead", child)
+            if child.tag in ("p", "ul", "ol", "dl", "blockquote", "table", "a", "figure", "img"):
+                return ("text", child)
+            inner = first_content(child)
+            if inner is not None:
+                return inner
+        return None
+
+    # Navigation: the same four entries and the Solutions menu on every page, in order, with the
+    # current page marked; the footer lists the same pages.
+    for name, dom in doms.items():
+        label = m6_label(name)
+        nav_list = first(dom, lambda n: n.tag == "ul" and "nav-list" in n.classes)
+        if nav_list is None:
+            fail(f"{label}: no primary navigation list", errors)
+            continue
+        items = [c for c in nav_list.children if isinstance(c, DomNode) and c.tag == "li"]
+        got = []
+        current = set()
+        for li in items:
+            link = next((c for c in li.children if isinstance(c, DomNode) and c.tag == "a"), None)
+            trigger = first(li, lambda n: n.tag == "button" and "nav-trigger" in n.classes)
+            if link is not None:
+                key = link.attrs.get("data-i18n")
+                got.append((link.attrs.get("href"), key))
+                if link.attrs.get("aria-current") == "page":
+                    current.add(str(link.attrs.get("href")))
+            elif trigger is not None:
+                span = first(trigger, lambda n: n.attrs.get("data-i18n"))
+                got.append((None, span.attrs.get("data-i18n") if span else None))
+                if trigger.attrs.get("aria-current") == "page":
+                    current.add("menu")
+        if got != PRIMARY_NAV:
+            fail(f"{label}: primary navigation is {got}, not {PRIMARY_NAV} (Home, Solutions, About, "
+                 f"Partner with us)", errors)
+        for sub_link in first(nav_list, lambda n: "submenu" in n.classes).find_all(lambda n: n.tag == "a") \
+                if first(nav_list, lambda n: "submenu" in n.classes) else []:
+            if sub_link.attrs.get("aria-current") == "page":
+                current.add(str(sub_link.attrs.get("href")))
+        if current != NAV_CURRENT.get(name, set()):
+            fail(f"{label}: navigation marks {sorted(current)} as the current page, expected "
+                 f"{sorted(NAV_CURRENT.get(name, set()))}", errors)
+        footer = first(dom, lambda n: n.tag == "footer")
+        footer_nav = first(footer, lambda n: n.tag == "nav") if footer else None
+        got_footer = [(a.attrs.get("href"), a.attrs.get("data-i18n"))
+                      for a in footer_nav.find_all(lambda n: n.tag == "a")] if footer_nav else []
+        if got_footer != FOOTER_NAV:
+            fail(f"{label}: footer navigation is {got_footer}, not {FOOTER_NAV}", errors)
+        sources_link = first(footer, lambda n: n.tag == "a" and n.attrs.get("href") == "/about/#sources") \
+            if footer else None
+        if sources_link is None or sources_link.attrs.get("data-i18n") != "footer.sources":
+            fail(f"{label}: the footer attribution does not end with the link to /about/#sources", errors)
+    for key, (en_label, tr_label) in NAV_LABELS.items():
+        for lang, want in (("en", en_label), ("tr", tr_label)):
+            if dictionary_value(lang, key) != want:
+                fail(f"{key!r} in the {lang!r} dictionary is {dictionary_value(lang, key)!r}, not "
+                     f"{want!r}", errors)
+
+    # Section 6: the retired routes are permanent redirects, their files are gone, and nothing
+    # still links to them.
+    try:
+        vercel = json.loads((ROOT / "vercel.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        vercel = {}
+        fail(f"vercel.json could not be read: {exc}", errors)
+    got_redirects = {}
+    for rule in vercel.get("redirects", []):
+        source, dest = str(rule.get("source", "")), str(rule.get("destination", ""))
+        if source in got_redirects:
+            fail(f"vercel.json redirects {source!r} twice", errors)
+        got_redirects[source] = dest
+        if rule.get("statusCode") != REDIRECT_STATUS or "permanent" in rule:
+            fail(f"vercel.json redirect {source!r} must carry statusCode {REDIRECT_STATUS} "
+                 f"(a 301, as the authority sets; 'permanent' would answer 308)", errors)
+    if got_redirects != REDIRECTS:
+        fail(f"vercel.json redirects are {got_redirects}, not {REDIRECTS}", errors)
+    for source in REDIRECTS:
+        old = source.strip("/")
+        if (ROOT / old).exists():
+            fail(f"{old}/ still exists; a redirected route must not also be served", errors)
+        if old in deploy_allowed:
+            fail(f".vercelignore still deploys the retired route {old}/", errors)
+    for source, dest in got_redirects.items():
+        if dest.strip("/") not in ROUTES:
+            fail(f"redirect {source!r} points at {dest!r}, which is not a canonical route", errors)
+
+    # Section 6: the Geothermal page carries the ids old /pilot/ links land on.
+    geo_ids = route_parsers.get("solutions/geothermal", SiteParser()).ids
+    for anchor in GEOTHERMAL_ANCHORS:
+        if anchor not in geo_ids:
+            fail(f"solutions/geothermal/index.html: no #{anchor}; links to /pilot/#{anchor} or the "
+                 f"page's own sections would land at the top", errors)
+
+    # Section 4.1: the homepage changes.
+    for retired_id in sorted(RETIRED_HOMEPAGE_SECTION_IDS & parser.ids):
+        fail(f"index.html: #{retired_id} is back; Method and Company content lives on /about/", errors)
+    if "mailto:" in html:
+        fail("index.html carries a mailto: link; the homepage's Partner calls point to /partner/", errors)
+    home_dom = doms[""]
+    contact = first(home_dom, lambda n: n.attrs.get("id") == "contact")
+    contact_links = contact.find_all(lambda n: n.tag == "a") if contact else []
+    if not contact or [a.attrs.get("href") for a in contact_links] != ["/partner/"] \
+            or count_words(contact.text()) > M6_BUDGET["headline"]:
+        fail("index.html: #contact must be the one Partner line, a single link to /partner/", errors)
+    for key, href in (("act.evidence.deeper", "/solutions/geothermal/#layers"),
+                      ("act.priority.deeper", "/solutions/geothermal/")):
+        span = first(home_dom, lambda n, k=key: n.attrs.get("data-i18n") == k)
+        link = next((a for a in span.ancestors() if a.tag == "a"), None) if span else None
+        if link is None or link.attrs.get("href") != href:
+            fail(f"index.html: the {key!r} link must point to {href}", errors)
+    for card in home_dom.find_all(lambda n: n.tag == "li" and "domain-card" in n.classes):
+        copy = first(card, lambda n: "domain-copy" in n.classes)
+        extra = [c for c in (copy.children if copy else []) if isinstance(c, DomNode)
+                 and c.tag not in ("h3",) and "domain-status" not in c.classes]
+        if extra:
+            fail(f"index.html: the {card.attrs.get('id')!r} card carries more than its name and status "
+                 f"(its description lives on /solutions/, rule R1)", errors)
+
+    # R8: one status vocabulary. Every status label is one of the three shared keys, worded as
+    # pinned, and the retired "In development" wording is gone from pages and dictionary alike.
+    for key, (en_value, tr_value) in M6_STATUS.items():
+        for lang, want in (("en", en_value), ("tr", tr_value)):
+            if dictionary_value(lang, key) != want:
+                fail(f"R8: {key!r} in the {lang!r} dictionary is {dictionary_value(lang, key)!r}, "
+                     f"not {want!r}", errors)
+    for name, dom in doms.items():
+        for status in dom.find_all(lambda n: "domain-status" in n.classes):
+            if status.attrs.get("data-i18n") not in M6_STATUS:
+                fail(f"R8: {m6_label(name)}: a status label uses {status.attrs.get('data-i18n')!r}, "
+                     f"not one of {sorted(M6_STATUS)}", errors)
+        for retired in RETIRED_STATUS_LABELS:
+            if retired in m6_pages[name]:
+                fail(f"R8: {m6_label(name)} still says {retired!r}; Mining and Marine are an "
+                     f"expansion direction", errors)
+    for lang in ("en", "tr"):
+        for retired in RETIRED_STATUS_LABELS:
+            if retired in lang_blocks.get(lang, ""):
+                fail(f"R8: the {lang!r} dictionary still carries {retired!r}", errors)
+
+    # The reworked routes (everything but the homepage, whose acts do not change).
+    m6_routes = [name for name in m6_pages if name != ""]
+    for name in m6_routes:
+        label = m6_label(name)
+        dom = doms[name]
+        main = first(dom, lambda n: n.tag == "main")
+        if main is None:
+            fail(f"{label}: no <main>", errors)
+            continue
+
+        # R4: every content section opens with its lead visual. Only the page header may be text
+        # alone, and outside sections <main> holds nothing but the closing link and the footnote.
+        for block in [c for c in main.children if isinstance(c, DomNode)]:
+            if block.tag == "section" and "page-hero" in block.classes:
+                continue
+            if block.tag == "div" and block.classes & M6_LOOSE_BLOCKS:
+                if "page-closing" in block.classes and \
+                        len(block.find_all(lambda n: n.tag == "a")) != 1:
+                    fail(f"R4: {label}: the closing block holds more than one link", errors)
+                if "page-note" in block.classes and not first(block, lambda n: "act-footnote" in n.classes):
+                    fail(f"R4: {label}: a page note that is not the fixed footnote", errors)
+                continue
+            if block.tag != "section":
+                fail(f"R4: {label}: <{block.tag} class={sorted(block.classes)}> sits in <main> outside "
+                     f"a section", errors)
+                continue
+            found = first_content(block)
+            section_name = block.attrs.get("id") or block.attrs.get("aria-labelledby") or block.tag
+            if found is None or found[0] != "lead":
+                what = f"<{found[1].tag}>" if found and found[1] is not None else "nothing"
+                fail(f"R4: {label}: section {section_name!r} opens with {what}, not a marked lead "
+                     f"visual (table, image, map, chart)", errors)
+            elif found[1].tag not in LEAD_VISUAL_TAGS and not (found[1].classes & LEAD_VISUAL_CLASSES):
+                fail(f"R4: {label}: section {section_name!r} marks <{found[1].tag}> as its lead visual",
+                     errors)
+
+        # R5: text budgets. Fixed texts (R6) and the lead visuals' own captions are exempt.
+        budget_page = M6_PAGE_BUDGET.get(name, M6_BUDGET["page"])
+        skip = lambda n: is_fixed(n) or n.tag in ("figcaption",)  # noqa: E731
+        for heading in main.find_all(lambda n: n.tag in ("h1", "h2", "h3")):
+            for lang, words, limit in (("en", count_words(heading.text(skip)), M6_BUDGET["headline"]),
+                                       ("tr", tr_words(heading, skip), M6_BUDGET["headline"] * M6_TR_ALLOWANCE)):
+                if words > limit:
+                    fail(f"R5: {label}: headline {heading.text(skip)!r} is {words} words in {lang} "
+                         f"(at most {limit:g})", errors)
+        for intro in main.find_all(lambda n: "page-hero-copy" in n.classes):
+            for lang, words, limit in (("en", count_words(intro.text(skip)), M6_BUDGET["intro"]),
+                                       ("tr", tr_words(intro, skip), M6_BUDGET["intro"] * M6_TR_ALLOWANCE)):
+                if words > limit:
+                    fail(f"R5: {label}: the page intro is {words} words in {lang} (at most {limit:g})",
+                         errors)
+        for section in main.find_all(lambda n: n.tag == "section" and "page-hero" not in n.classes):
+            body = [p_ for p_ in section.find_all(lambda n: n.tag == "p")
+                    if not is_fixed(p_) and not any(is_fixed(a) or a.tag in ("table", "figure")
+                                                     or "data-lead-visual" in a.attrs
+                                                     for a in p_.ancestors())
+                    and "data-lead-visual" not in p_.attrs]
+            en_words = sum(count_words(p_.text(skip)) for p_ in body)
+            tr_body = sum(tr_words(p_, skip) for p_ in body)
+            if en_words > M6_BUDGET["section"] or tr_body > M6_BUDGET["section"] * M6_TR_ALLOWANCE:
+                fail(f"R5: {label}: section {section.attrs.get('id') or section.attrs.get('aria-labelledby')!r} "
+                     f"body is {en_words} words in en / {tr_body} in tr (at most "
+                     f"{M6_BUDGET['section']})", errors)
+        for table in main.find_all(lambda n: n.tag == "table"):
+            rows = table.find_all(lambda n: n.tag == "tr" and n.parent is not None and n.parent.tag == "tbody")
+            if len(rows) > M6_BUDGET["rows"]:
+                fail(f"R5: {label}: a table has {len(rows)} rows (at most {M6_BUDGET['rows']})", errors)
+            for cell in table.find_all(lambda n: n.tag in ("td", "th")):
+                en_cell = count_words(cell.text(skip))
+                tr_cell = tr_words(cell, skip)
+                if en_cell > M6_BUDGET["cell"] or tr_cell > M6_BUDGET["cell"] * M6_TR_ALLOWANCE:
+                    fail(f"R5: {label}: table cell {cell.text(skip)!r} is {en_cell} words in en / "
+                         f"{tr_cell} in tr (at most {M6_BUDGET['cell']})", errors)
+        page_en = count_words(main.text(skip))
+        page_tr = tr_words(main, skip)
+        if page_en > budget_page or page_tr > budget_page * M6_TR_ALLOWANCE:
+            fail(f"R5: {label} carries {page_en} budgeted words in en / {page_tr} in tr (at most "
+                 f"{budget_page})", errors)
+
+        # R3: no software or development detail, in either language.
+        page_keys = (route_parsers.get(name) or aux_parsers[name]).i18n_keys
+        visible = (main.text() + " " + " ".join(
+            dictionary_value(lang, k) or "" for k in page_keys if not k.startswith("mail.")
+            for lang in ("en", "tr"))).lower()
+        for term in M6_SOFTWARE_TERMS:
+            if re.search(r"(?<!\w)" + re.escape(term) + r"(?!\w)", visible):
+                fail(f"R3: {label} mentions {term!r}; software and development detail stays off the "
+                     f"public pages", errors)
+
+    # R1: one home per fact. A sentence long enough to be a claim is stated on one route only;
+    # fixed texts (R6) travel with their visuals and are exempt.
+    claim_routes: dict[str, set[str]] = {}
+    for name in route_html:
+        main = first(doms[name], lambda n: n.tag == "main")
+        if main is None:
+            continue
+        blocks = main.find_all(lambda n: n.tag in ("p", "li", "td", "th", "dd", "h1", "h2", "h3"))
+        for block in blocks:
+            if is_fixed(block) or any(is_fixed(a) for a in block.ancestors()):
+                continue
+            if any(c.tag in ("p", "li", "td", "th", "dd") for c in block.iter() if c is not block):
+                continue
+            for sentence in re.split(r"(?<=[.!?])\s+", block.text(lambda n: is_fixed(n))):
+                normal = " ".join(sentence.lower().strip(" .!?").split())
+                if count_words(normal) >= M6_CLAIM_MIN_WORDS:
+                    claim_routes.setdefault(normal, set()).add(name)
+    for sentence, where in sorted(claim_routes.items()):
+        if len(where) > 1:
+            fail(f"R1: {sentence!r} is stated on {sorted(ROUTES[r] for r in where)}; a fact has one "
+                 f"home and is linked to from elsewhere", errors)
+
+    # R2: one full-size appearance per visual. A homepage domain card is the accepted exception
+    # (authority 4.2: the hub is the photographs' home and the cards link to the domains).
+    visual_of: dict[str, str] = {}
+    for scene in scenes:
+        for deriv in scene.get("derivatives", []):
+            visual_of[str(deriv.get("path", ""))] = f"scene:{scene.get('id')}"
+        visual_of[str(scene.get("local_file", ""))] = f"scene:{scene.get('id')}"
+    for layer_id, layer in manifest.get("web_005b", {}).get("analytical", {}).get("layers", {}).items():
+        for deriv in layer.get("derivatives", []):
+            visual_of[str(deriv.get("path", ""))] = f"web005b:{layer_id}"
+    for asset in proof_assets:
+        for deriv in asset.get("derivatives", []):
+            visual_of[str(deriv.get("path", ""))] = f"proof:{asset.get('id')}"
+    for asset in manifest.get("geo_web_002", {}).get("assets", []):
+        for deriv in asset.get("derivatives", []):
+            visual_of[str(deriv.get("path", ""))] = f"geo:{asset.get('id')}"
+    locator = manifest.get("web_m6", {}).get("locator_map", {})
+    if locator.get("path"):
+        visual_of[str(locator["path"])] = "map:locator"
+    full_size: dict[str, set[str]] = {}
+    for name in route_html:
+        for img in doms[name].find_all(lambda n: n.tag == "img"):
+            if any("domain-card" in a.classes for a in img.ancestors()):
+                continue
+            candidates = [str(img.attrs.get("src") or img.attrs.get("data-src") or "")]
+            candidates += [c.strip().split()[0] for c in str(img.attrs.get("srcset") or "").split(",") if c.strip()]
+            ids = {visual_of.get(c.lstrip("/")) for c in candidates} - {None}
+            is_thumb = "thumb" in img.classes and str(img.attrs.get("width", "")).isdigit() \
+                and int(img.attrs["width"]) <= THUMB_MAX_CSS_PX
+            for vid in ids:
+                if not is_thumb:
+                    full_size.setdefault(vid, set()).add(name)
+    for vid, where in sorted(full_size.items()):
+        if len(where) > 1:
+            fail(f"R2: {vid} appears at full size on {sorted(ROUTES[r] for r in where)}; elsewhere a "
+                 f"visual may only be a thumbnail of at most {THUMB_MAX_CSS_PX} CSS px", errors)
+
+    # V1: the locator map is recorded, checksummed, deployed and shown with its caption.
+    if not locator:
+        fail("sources.json has no web_m6.locator_map record for the Geothermal locator map", errors)
+    else:
+        lpath = ROOT / str(locator.get("path", ""))
+        for field in ("path", "sha256", "bytes", "source", "source_sha256", "license", "generator",
+                      "asset_class"):
+            if not locator.get(field):
+                fail(f"web_m6.locator_map is missing {field}", errors)
+        if not lpath.is_file():
+            fail(f"the locator map {locator.get('path')} does not exist", errors)
+        else:
+            if sha256_of(lpath) != locator.get("sha256"):
+                fail("the locator map does not match its recorded SHA-256", errors)
+            if lpath.stat().st_size != locator.get("bytes"):
+                fail("the locator map does not match its recorded byte size", errors)
+            if locator.get("sha256", "")[:8] not in lpath.name:
+                fail("the locator map is not content-hash named (/assets/ is immutable-cached)", errors)
+        geo_dom = doms.get("solutions/geothermal")
+        shown = geo_dom.find_all(lambda n: n.tag == "img" and str(n.attrs.get("src", "")).lstrip("/")
+                                 == str(locator.get("path"))) if geo_dom else []
+        if len(shown) != 1:
+            fail("the Geothermal page must show the recorded locator map exactly once", errors)
+        else:
+            fig = next((a for a in shown[0].ancestors() if a.tag == "figure"), None)
+            caption = first(fig, lambda n: n.tag == "figcaption" and "scene-label" in n.classes) if fig else None
+            spans = [c for c in caption.children if isinstance(c, DomNode)] if caption else []
+            if len(spans) != 3 or "scene-kind" not in spans[-1].classes:
+                fail("the locator map must carry the bottom-right caption: place, coordinates, kind",
+                     errors)
+        for name in route_html:
+            if name != "solutions/geothermal" and locator.get("path", "") in route_html[name]:
+                fail(f"the locator map appears on {ROUTES[name]}; its home is the Geothermal page", errors)
+
+    # Partner with us: three conversations, one table, each a mailto with its own subject; the
+    # address set large. The page is the one home of the conversation types and the address.
+    partner_dom = doms.get("partner")
+    if partner_dom is not None:
+        table = first(partner_dom, lambda n: n.tag == "table")
+        mails = [a.attrs.get("data-i18n-href") for a in table.find_all(
+            lambda n: n.tag == "a" and str(n.attrs.get("href", "")).startswith("mailto:"))] if table else []
+        if mails != ["mail.pilot", "mail.partner", "mail.technical"]:
+            fail(f"partner/index.html: the conversation table's mail links are {mails}", errors)
+        if not first(partner_dom, lambda n: "mail-address" in n.classes):
+            fail("partner/index.html: no address block", errors)
+    for name in route_html:
+        if name != "partner" and "mailto:" in route_html[name]:
+            fail(f"{ROUTES[name]} carries a mailto: link; conversations start on /partner/ (R1)", errors)
 
     print("OrbGSS site validation")
     print(f"  scenes: {len(scenes)}")

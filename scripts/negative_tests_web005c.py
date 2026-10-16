@@ -19,8 +19,9 @@ import sys
 
 ROOT = pathlib.Path(".").resolve()
 INDEX = ROOT / "index.html"
-PLATFORM = ROOT / "platform" / "index.html"
-COMPANY = ROOT / "company" / "index.html"
+# MER-240: /platform/ and /company/ are redirects now; About carries the same navigation and
+# body copy duties.
+ABOUT = ROOT / "about" / "index.html"
 SOLUTIONS = ROOT / "solutions" / "index.html"
 SCRIPT = ROOT / "script.js"
 STYLES = ROOT / "styles.css"
@@ -43,26 +44,26 @@ def case(name, path, old, new, expect):
 
 # --- route compatibility: the superseded anchors must keep resolving -------------------------
 case("legacy #mineral deep link stops resolving", SOLUTIONS,
-     '<span class="anchor-alias" id="mineral" aria-hidden="true"></span>\n          ', "",
+     '\n      <span class="anchor-alias" id="mineral" aria-hidden="true"></span>', "",
      "legacy anchor #mineral no longer resolves")
 case("legacy #environment deep link stops resolving", SOLUTIONS,
-     '<span class="anchor-alias" id="environment" aria-hidden="true"></span>\n          ', "",
+     '\n      <span class="anchor-alias" id="environment" aria-hidden="true"></span>', "",
      "legacy anchor #environment no longer resolves")
 
-# --- the canonical rows themselves ------------------------------------------------------------
-case("the /solutions/ #mining row anchor drifts", SOLUTIONS,
-     '<li class="ledger-row" id="mining">', '<li class="ledger-row" id="mining-exploration">',
-     "no #mining row")
-case("the /solutions/ #marine row anchor drifts", SOLUTIONS,
-     '<li class="ledger-row" id="marine">', '<li class="ledger-row" id="marine-intelligence">',
-     "no #marine row")
+# --- the canonical bands themselves (rows until MER-240) --------------------------------------
+case("the /solutions/ #mining band anchor drifts", SOLUTIONS,
+     '<section class="domain-band" id="mining"', '<section class="domain-band" id="mining-exploration"',
+     "no #mining band")
+case("the /solutions/ #marine band anchor drifts", SOLUTIONS,
+     '<section class="domain-band" id="marine"', '<section class="domain-band" id="marine-intelligence"',
+     "no #marine band")
 
 # --- the navigation publishes the taxonomy on every route -------------------------------------
 case("the nav republishes a superseded label", INDEX,
      '<a href="/solutions/#mining" data-i18n="nav.mining">Mining</a>',
      '<a href="/solutions/#mining" data-i18n="nav.mining">Mineral Exploration</a>',
      "superseded domain label")
-case("the nav taxonomy order is swapped", PLATFORM,
+case("the nav taxonomy order is swapped", ABOUT,
      '<li><a href="/solutions/#mining" data-i18n="nav.mining">Mining</a></li>\n'
      '              <li><a href="/solutions/#marine" data-i18n="nav.marine">Marine</a></li>',
      '<li><a href="/solutions/#marine" data-i18n="nav.marine">Marine</a></li>\n'
@@ -88,21 +89,19 @@ case("the /solutions/ row heading reverts in TR", SCRIPT,
      "superseded domain label")
 
 # --- superseded vocabulary must not return through body copy either ----------------------------
-case("a superseded label returns through /company/ body copy", COMPANY,
-     "extend into mining and marine domains",
-     "extend into Mineral Exploration and Environmental &amp; Land Intelligence",
+case("a superseded label returns through /about/ body copy", ABOUT,
+     "Natural colour, thermal evidence, domain photographs",
+     "Natural colour, thermal evidence, Mineral Exploration photographs",
      "superseded domain label")
 case("a superseded label returns through the TR dictionary", SCRIPT,
-     "'solutionsPage.meta.ogDescription': 'Tek bir kanıttan önceliğe deseni. "
-     "Önce aktif jeotermal; ardından madencilik ve denizel.',",
-     "'solutionsPage.meta.ogDescription': 'Tek bir kanıttan önceliğe deseni. "
-     "Önce aktif jeotermal; ardından Maden Arama.',",
+     "'solutionsPage.meta.ogDescription': 'Jeotermal aktif; sırada madencilik ve denizel var.',",
+     "'solutionsPage.meta.ogDescription': 'Jeotermal aktif; sırada Maden Arama var.',",
      "superseded domain label")
 
 # --- WEB-005C R2: the homepage cards are navigation surfaces --------------------------------------
 case("the Geothermal card stops being a link", INDEX,
-     '<a class="domain-link" href="/solutions/#geothermal" aria-labelledby="domain-geothermal-title">',
-     "<span>", "is not a native link to its /solutions/ row")
+     '<a class="domain-link" href="/solutions/geothermal/" aria-labelledby="domain-geothermal-title">',
+     "<span>", "is not a native link to its domain's home")
 case("the Mining card links to the wrong domain", INDEX,
      '<a class="domain-link" href="/solutions/#mining"',
      '<a class="domain-link" href="/solutions/#marine"',
