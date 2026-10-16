@@ -1,0 +1,33 @@
+{
+  "loads": 180,
+  "failures": [],
+  "homepage_cls": {
+    "1440": 0,
+    "390": 0
+  },
+  "pages": [
+    "/",
+    "/solutions/",
+    "/solutions/geothermal/",
+    "/about/",
+    "/partner/",
+    "/404.html"
+  ],
+  "widths": [
+    375,
+    390,
+    414,
+    768,
+    1024,
+    1280,
+    1440,
+    1920,
+    2560,
+    3840
+  ],
+  "dprs": [
+    1,
+    2,
+    3
+  ]
+}

@@ -88,6 +88,7 @@ Measured on this branch:
 | `negative_tests_web005.py` / `_web005b.py` / `_web005c.py` / `_mer216.py` / `_mer237.py` | 72/72, 55/55, 18/18, 19/19, 29/29; restored trees identical |
 | `py -3.14 hero/scripts/validate_hero.py` | 420 / 0 (hero workstation). `hero/config/lane.json` names MER-240 and adds `404.html`, `sitemap.xml` and the four new derivatives to the integration write surface. |
 | `node --check script.js` | OK |
+| Acceptance sweep (`evidence/mer240/tools/sweep_mer240.py`) | 6 pages × 10 widths (375–3840 CSS px) × DPR 1 / 2 / 3 = 180 loads: 0 horizontal overflow, 0 broken images. Homepage CLS 0 at 1440 and 390 (`sweep_report.json`). |
 | Visual QA (`evidence/mer240/tools/capture_mer240.py`) | 6 pages × desktop 1440 / phone 390 × EN / TR. No horizontal overflow, broken image or console error anywhere. `lang` switches, the current-page marker is right on every page, and a JavaScript-disabled pass renders each page's English `h1` with native links. Captures are in `evidence/mer240/*.webp`, findings in `capture_report.json`. Strings reported as "same in both languages" are names, numbers and the required English Copernicus attribution. |
 
 ## 5. Earlier suites, retargeted
@@ -106,6 +107,9 @@ The retired routes no longer exist, so these cases now mutate their successors. 
   - the og:image and stray-tool cases run on `/about/` and `/partner/`.
 
 ## 6. Not verified, and gates
+
+- **Scope 8 (retired assets):** no file qualified for removal. The issue allows removing an asset only where `sources.json` marks it retired and nothing references it. Crater Lake is marked retired, but its scene record and the validator's four-locked-scenes check still reference it. The WEB-002 proof derivatives under `assets/proof/` lost their last page with `/pilot/`, but they are a governed package record, not marked retired, and the validator re-checks their checksums. Both stay deployed and placed on no page; removing them is a separate decision.
+- **Redirects, local check:** the local static server does not apply `vercel.json`, so the 301s were checked statically (exactly four, each a 301 to a canonical route, the sources gone and not deployed) and the fragments by the alias-id check.
 
 - **D4, the ship gate:** that `contact@orbgss.com` receives external mail is not evidenced. The CTO confirms it before publication.
 - **Redirects live:** the four 301s are validated statically, and Vercel documents `statusCode: 301`. Their live behaviour, including whether a slash-less `/pilot` answers 308 → `/pilot/` before the 301, is first observable on the protected branch Preview or after publication. `evidence/mer219/smoke_production.py` now checks both forms and the new routes; run it after publication.
