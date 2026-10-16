@@ -1,43 +1,50 @@
 # OrbGSS Website — CURRENT
 
-**Published:** `main@2517369e0f0c4239d72603a3188227554053a6ea`, live on orbgss.com since 2026-10-15 13:45 UTC. It is the launched WEB-005C baseline (`v1.0.0-rc10-web-005c`, code `79cc2cb`) plus MER-216 (media fidelity and runtime hardening) and MER-237 (only the public site is deployed).
-**Date:** 2026-10-15 (reconciled by MER-239)
-**Stage:** Milestone 6 — information architecture and show-first pages. Milestone 5 (post-launch audit, media fidelity and runtime hardening) is complete and published.
+**Published:** `main@464a73543a440f7d51a1600599998e97b53e982f`, live on orbgss.com since 2026-10-15 22:24 UTC. It is the launched WEB-005C baseline (`v1.0.0-rc10-web-005c`, code `79cc2cb`) plus MER-216 (media fidelity and runtime hardening), MER-237 (only the public site is deployed) and the MER-239 documentation reconciliation.
+**Date:** 2026-10-16 (MER-240)
+**Stage:** Milestone 6 — information architecture and show-first pages. The English pages (MER-240) are `REVIEW_READY` on their branch and not published. Milestone 5 (post-launch audit, media fidelity and runtime hardening) is complete and published.
 
-## Current state (reconciled 2026-10-15, MER-239)
+## Current state (2026-10-16, MER-240)
 
 | Item | Value |
 | --- | --- |
-| Repository | `mertkaanakgunlu-debug/orbgss-website`. **Public on GitHub**, so everything committed here, `docs/`, `tasks/` and `evidence/` included, is world-readable there even though orbgss.com no longer serves it (open decision 5). The legacy `baran-orbgss/website` is reference / upstream only. |
-| GitHub `main` | `2517369e0f0c4239d72603a3188227554053a6ea`. History: `f4f1d4d6` (MER-213 docs over the launched code `79cc2cb`) → `adf08186` (MER-216) → `5ca7bdd4` (MER-218 closure) → `2517369e` (MER-237). Published as one non-force fast-forward at 2026-10-15T13:45:21Z by a CTO-authorized push (MER-219 §9). |
-| Production | Vercel project `orbgss-website`, team `virga-soft`. The Git integration deploys `main` to production automatically (**COUPLED**: a push to `main` *is* a production deploy) and builds a protected Preview for every other branch. Current production: GitHub deployment `7094313382` → `orbgss-website-l0hjfxcdh-virga-soft.vercel.app`, success at 13:45:33Z, serving `2517369e` (smoke 46/46, browser checks 21/21). Domains: `orbgss.com` (canonical apex, HSTS), `www` → apex 308, `orbgss-website.vercel.app`. |
-| Rollback target | The previous production deployment `orbgss-website-p0heuwii3-virga-soft.vercel.app` (`f4f1d4d6`), by Instant Rollback in the Vercel dashboard. A rollback switches off automatic domain assignment until "Undo Rollback" (`tasks/MER-219_PREFLIGHT.md` §4). |
+| Repository | `mertkaanakgunlu-debug/orbgss-website`. **Public on GitHub**, so everything committed here, `docs/`, `tasks/` and `evidence/` included, is world-readable there even though orbgss.com does not serve it (open decision 5). The legacy `baran-orbgss/website` is reference / upstream only. |
+| GitHub `main` | `464a73543a440f7d51a1600599998e97b53e982f`. History: `f4f1d4d6` (MER-213 docs over the launched code `79cc2cb`) → `adf08186` (MER-216) → `5ca7bdd4` (MER-218 closure) → `2517369e` (MER-237; published 2026-10-15T13:45:21Z, MER-219 §9) → `464a7354` (MER-219 records, the MER-238 merge and MER-239; published 2026-10-15T22:24:13Z). Both publications were CTO-authorized non-force fast-forwards. |
+| Production | Vercel project `orbgss-website`, team `virga-soft`. The Git integration deploys `main` to production automatically (**COUPLED**: a push to `main` *is* a production deploy) and builds a protected Preview for every other branch. Current production: GitHub deployment `7105858029` → `orbgss-website-29bzudvea-virga-soft.vercel.app`, serving `464a7354` (smoke 46/46). Domains: `orbgss.com` (canonical apex, HSTS), `www` → apex 308, `orbgss-website.vercel.app`. |
+| Rollback target | The previous production deployment `orbgss-website-l0hjfxcdh-virga-soft.vercel.app` (`2517369e`; site files identical apart from the `sources.json` metadata), by Instant Rollback in the Vercel dashboard. A rollback switches off automatic domain assignment until "Undo Rollback" (`tasks/MER-219_PREFLIGHT.md` §4). |
 | Deploy set | `.vercelignore` root allowlist (MER-237): only the public site is uploaded and served. Internal paths return 404 in production (verified). |
 | Agent access to Vercel | The Vercel connector in Claude is signed in as the CTO's account, but its OAuth grant covers 0 teams, so agents cannot read `virga-soft`. Production state is read through GitHub deployment records, public HTTP, and dashboard reads the CTO provides. |
-| Task branches | MER-237 `mertkaanakgunlu/mer-237-…@2517369e` (published). MER-219 `mertkaanakgunlu/mer-219-…@bd105ce2` (preflight and publication record, on top of `main`). MER-238 `mertkaanakgunlu/mer-238-…@0041203` (approved authority; sibling from `5ca7bdd4`). MER-239 `mertkaanakgunlu/mer-239-web-sitesi-belge-ve-otorite-uzlastirmasi` carries the MER-219 records, merges MER-238 and applies this reconciliation. New work branches from the exact baseline its Linear issue names, verified by fetch. |
+| Task branches | MER-240 `mertkaanakgunlu/mer-240-web-sitesi-yeni-sayfalarin-uygulanmasi-en`, from `main@464a7354`: the English Milestone 6 pages, `REVIEW_READY` (head SHA in the Linear issue and `tasks/MER-240_EVIDENCE.md`). Published task branches are history. New work branches from the exact baseline its Linear issue names, verified by fetch. |
 
-**Live product (unchanged by Milestone 6 so far):**
+**Live product (production, `main@464a7354`; MER-240 changes it only when published):**
 
 * **Page flow:** hero (rendered orbital sequence, a two-tier WebM/MP4 ladder chosen once before any video byte, held frame and page-composited drape states; caption `Rendered orbital sequence — not sensor imagery`) → Act 02 real Kızıldere Landsat context → Act 03 three evidence layers over one frame → Act 04 priority result → co-registered inspection aid → Solutions cards → Method → Company → Contact.
 * **Routes:** `/`, `/platform/`, `/solutions/`, `/pilot/`, `/company/`, `/contact/` (+ `404.html`).
 * **Navigation:** Platform → Solutions (Geothermal, Mining, Marine) → Pilot → Company → Contact → EN | TR.
 * **Stack:** static HTML, CSS and vanilla JS; no package manager.
 
-**Approved target (MER-238, not yet implemented):** Home / Solutions (Geothermal, Mining, Marine) / About / Partner with us / EN | TR, static `/tr/` pages, and the show-first, no-repeat content rules. The authority is `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`. `CLAUDE.md` § "Milestone 6 target" states how the current invariants hand over to it when MER-240 and MER-241 land.
+**On the MER-240 branch (the approved MER-238 target, English):**
+
+* **Routes:** `/`, `/solutions/`, `/solutions/geothermal/`, `/about/`, `/partner/` (+ `404.html` with the new navigation). `/platform/`, `/pilot/`, `/company/` and `/contact/` answer with a 301 (`vercel.json`) to `/`, `/solutions/geothermal/`, `/about/` and `/partner/`; the old `#pilot-*` fragments land on the Geothermal page.
+* **Navigation:** Home → Solutions (Geothermal, Mining, Marine) → About → Partner with us → EN | TR, on every page and in the footer.
+* **Homepage:** the four acts and the inspection aid unchanged. Method and Company moved to `/about/`, Contact is one Partner line, the cards show image, name and status only ("Expansion direction" for Mining and Marine), and the homepage carries no `mailto:`.
+* **Not in this change:** the Geothermal page's G3 (priority over relief) and G4 (iron proxy) and the layer-table thumbnails wait for MER-242 (MER-151 derivatives are authorized for the homepage only). Marine keeps the Ili Delta (D5 deferred). Static `/tr/` is MER-241.
+
+The authority is `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`. `CLAUDE.md` § "Milestone 6 target" states how the live invariants hand over to it once MER-240 is accepted and published.
 
 ## Milestone 6 — Bilgi Mimarisi ve Gösterim Odaklı Sayfalar (Linear)
 
-| Issue | State on 2026-10-15 |
+| Issue | State on 2026-10-16 |
 | --- | --- |
 | MER-237 — internal files off the live site; route-wide og images | Accepted by the CTO; published in `2517369e`. Evidence `tasks/MER-237_EVIDENCE.md`. |
-| MER-219 — publication and production preflight | `READY_FOR_CTO_APPROVAL`, then publication executed with CTO authorization. Record in `tasks/MER-219_PREFLIGHT.md` §9 and `evidence/mer219/`. |
+| MER-219 — publication and production preflight | Publications of `2517369e` and `464a7354` executed with CTO authorization. Record in `tasks/MER-219_PREFLIGHT.md` §9 and `evidence/mer219/`. |
 | MER-238 — IA and page-content authority | Approved by the CTO, with D1 (Science derivatives, MER-242) and D2 (Turkish slugs) decided; D3 (privacy / KVKK, legal), D4 (`contact@orbgss.com` deliverability) and D5 (coastal Marine scene) open. Evidence `tasks/MER-238_EVIDENCE.md`. |
-| MER-239 — documentation and authority reconciliation | This change; `REVIEW_READY`. Evidence `tasks/MER-239_EVIDENCE.md`. |
-| MER-240 — new pages (EN) | Next, after MER-239 is accepted and published. D4 is a ship gate. |
+| MER-239 — documentation and authority reconciliation | Accepted by the CTO; published in `464a7354`. Evidence `tasks/MER-239_EVIDENCE.md`. |
+| MER-240 — new pages (EN) | `REVIEW_READY` on its branch, not published. D4 is a ship gate. Evidence `tasks/MER-240_EVIDENCE.md`. |
 | MER-241 — static `/tr/` pages | After MER-240. |
-| MER-242 — Science: MER-151-family derivatives for priority over relief and ALT-02 | Geothermal Domain project; the Geothermal page leaves those two figures out until it is accepted. |
+| MER-242 — Science: MER-151-family derivatives for priority over relief, ALT-02 and the layer-table thumbnails | Geothermal Domain project; the Geothermal page leaves those figures and thumbnails out until it is accepted. |
 
-Linear closure of MER-237, MER-238 and MER-219 is the CTO's action. Agents record acceptance comments and never close issues.
+Linear closure is the CTO's action. Agents record acceptance comments and never close issues.
 
 ## MER-216 — media fidelity and runtime hardening (Done — accepted 2026-10-03; published 2026-10-15)
 
@@ -58,20 +65,20 @@ Validators on this branch: `validate_site.py` PASS (0 warnings); `validate_hero.
 
 The short command `MER-###'e başla` authorizes exactly that Linear issue, in this order: resolve the issue from Linear → read its status, dependencies and project position → fetch Git and verify a clean tree, `origin`, `main` and the baseline the issue names → stop and report if Linear, Git and this repository disagree → create or use a bounded branch for the issue from the exact baseline → implement only the issue scope → run the acceptance the issue and this repository require → review the diff → commit and push the branch → report branch, HEAD, baseline, changed files, verification and remote/local HEAD match → stop at `REVIEW_READY`. The agent never merges or fast-forwards `main`, deploys, changes DNS, credentials or Vercel configuration, force-pushes, or closes its own issue; those are separate CTO-authorized gates. The auto-created session branch is plumbing, not canonical state.
 
-## Validators (`main@2517369e` + MER-239 docs, run 2026-10-15)
+## Validators (MER-240 branch, run 2026-10-16)
 
 | Command | Result |
 | --- | --- |
-| `py -3.14 scripts/validate_site.py` | PASS, 0 warnings (4 scenes, 6 routes, 268 i18n keys, 6 geo-web-002 assets / 19 files, deploy set 14 root entries) |
-| `negative_tests_web005.py` / `_web005b.py` / `_web005c.py` / `_mer216.py` / `_mer237.py` | 72/72, 55/55, 18/18, 19/19, 29/29 caught; restored trees identical |
+| `py -3.14 scripts/validate_site.py` | PASS, 0 warnings (4 scenes, 5 routes + `404.html`, 277 i18n keys, 6 geo-web-002 assets / 19 files, deploy set 12 root entries). Since MER-240 it also enforces the Milestone 6 navigation, redirects, homepage trim, the locator-map record and content rules R1–R5 and R8. |
+| `negative_tests_web005.py` / `_web005b.py` / `_web005c.py` / `_mer216.py` / `_mer237.py` / `_mer240.py` | 72/72, 55/55, 18/18, 19/19, 29/29, 45/45 caught; restored trees identical. The web005b, web005c and mer237 cases that mutated the retired routes now mutate their successors (`tasks/MER-240_EVIDENCE.md` §5). |
 | `py -3.14 hero/scripts/validate_hero.py` | 420 / 0 on the hero workstation; in a fresh clone exactly the 13 git-ignored source-texture checks fail and nothing else |
-| `evidence/mer219/smoke_production.py --expect-sha 2517369e…` | 46/46 against production (2026-10-15) |
+| `evidence/mer219/smoke_production.py --expect-sha 464a7354…` | 46/46 against production (2026-10-15). Since MER-240 the script expects the new routes and the four redirects, so it is for use after MER-240 is published. |
 
 ## Open gates and decisions
 
-1. **MER-216 publication:** closed. Published 2026-10-15 in `main@2517369e` (MER-219).
-2. **Information-architecture conflict:** resolved. The CTO chose Home / Solutions / About / Partner with us on 2026-10-15 (MER-238). The live navigation changes in MER-240; until then the current invariants hold for the live site.
-3. **`CONTACT_RELEASE_GATE`:** mailbox ownership and deliverability of `contact@orbgss.com` are not evidenced in this repository. Now MER-238 D4, a ship gate for MER-240.
+1. **MER-240 publication:** a CTO-authorized fast-forward of `main` to the reviewed MER-240 head (a production deployment, given the topology). Not done.
+2. **`CONTACT_RELEASE_GATE` (MER-238 D4):** mailbox ownership and deliverability of `contact@orbgss.com` are not evidenced in this repository. A ship gate for MER-240: the CTO confirms the mailbox receives external mail.
+3. **Redirect behaviour on Vercel:** the four 301s are configured in `vercel.json` and validated statically. Their live behaviour (including the `trailingSlash` hop for the slash-less forms) is first observable on the branch Preview (protected) or after publication, where `evidence/mer219/smoke_production.py` checks it.
 4. **Production record:** recorded (MER-219: project, team, topology, deployments, rollback target). The WEB-006 DNS execution itself is still not recorded here; its observable result is (apex served by Vercel, `www` → apex 308, HSTS).
 5. **Public repository:** whether `orbgss-website` should be private is a CTO decision. Vercel can deploy a private repository; the plan and permissions question is open.
 6. **Agent access to Vercel:** the connector's OAuth grant has no team access. Until the CTO grants `virga-soft`, Vercel state comes from GitHub, HTTP and the CTO.

@@ -1,0 +1,93 @@
+{
+ "max_drawn_css": {
+  "geothermal": 1440,
+  "mining": 1440,
+  "marine": 1440
+ },
+ "samples": {
+  "390@2": {
+   "geothermal": {
+    "band_w": 390,
+    "band_h": 340,
+    "drawn_w": 545.679012345679,
+    "current": "yellowstone-2013-1800.webp"
+   },
+   "mining": {
+    "band_w": 390,
+    "band_h": 340,
+    "drawn_w": 545.679012345679,
+    "current": "chuquicamata-2024-1800.webp"
+   },
+   "marine": {
+    "band_w": 390,
+    "band_h": 340,
+    "drawn_w": 545.679012345679,
+    "current": "ili-delta-2020-1800.webp"
+   }
+  },
+  "1440@2": {
+   "geothermal": {
+    "band_w": 1440,
+    "band_h": 620,
+    "drawn_w": 1440,
+    "current": "yellowstone-2013-2880.webp"
+   },
+   "mining": {
+    "band_w": 1440,
+    "band_h": 620,
+    "drawn_w": 1440,
+    "current": "chuquicamata-2024-2880.webp"
+   },
+   "marine": {
+    "band_w": 1440,
+    "band_h": 620,
+    "drawn_w": 1440,
+    "current": "ili-delta-2020-2880.webp"
+   }
+  },
+  "3840@1": {
+   "geothermal": {
+    "band_w": 1440,
+    "band_h": 620,
+    "drawn_w": 1440,
+    "current": "yellowstone-2013-1800.webp"
+   },
+   "mining": {
+    "band_w": 1440,
+    "band_h": 620,
+    "drawn_w": 1440,
+    "current": "chuquicamata-2024-1800.webp"
+   },
+   "marine": {
+    "band_w": 1440,
+    "band_h": 620,
+    "drawn_w": 1440,
+    "current": "ili-delta-2020-1800.webp"
+   }
+  },
+  "3840@2": {
+   "geothermal": {
+    "band_w": 1440,
+    "band_h": 620,
+    "drawn_w": 1440,
+    "current": "yellowstone-2013-2880.webp"
+   },
+   "mining": {
+    "band_w": 1440,
+    "band_h": 620,
+    "drawn_w": 1440,
+    "current": "chuquicamata-2024-2880.webp"
+   },
+   "marine": {
+    "band_w": 1440,
+    "band_h": 620,
+    "drawn_w": 1440,
+    "current": "ili-delta-2020-2880.webp"
+   }
+  }
+ },
+ "locator": {
+  "w": 1098,
+  "h": 525.203125
+ }
+}

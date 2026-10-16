@@ -2,6 +2,14 @@
 
 Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
 
+## MER-240 Milestone 6 English pages — 2026-10-16 (branch `mertkaanakgunlu/mer-240-web-sitesi-yeni-sayfalarin-uygulanmasi-en`; `REVIEW_READY`, not published)
+
+- New page set from `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`: the `/solutions/` hub (comparison table and one photograph band per domain), `/solutions/geothermal/` (locator map, facts, every layer and what it is not, outputs, the structure/geology gap), `/about/` (principles and data sources) and `/partner/` (conversation table and address). `/platform/`, `/pilot/`, `/company/` and `/contact/` are removed and answer with 301 redirects; the old `#pilot-*` fragments land on the Geothermal page.
+- Navigation Home → Solutions → About → Partner with us on every page, the footer and `404.html`. Homepage light trim: Method and Company moved to About, Contact is one Partner line, cards show image, name and status ("Expansion direction"), no `mailto:` on the homepage; the four acts and the inspection aid are unchanged.
+- New visuals: a Natural Earth locator map (`scripts/build_locator_map.py`, class A) and 2400 / 2880 px derivatives of the Chuquicamata and Ili Delta photographs for the hub bands. Recorded in `sources.json` and `IMAGERY_RIGHTS.md`.
+- `scripts/validate_site.py` enforces the new routes, navigation, redirects and content rules R1–R5 and R8; `scripts/negative_tests_mer240.py` adds 45 cases, and three earlier suites now mutate the successor pages.
+- Waiting: G3 / G4 and the layer-table thumbnails (MER-242), the coastal Marine scene (D5), `/tr/` (MER-241). Ship gate: `contact@orbgss.com` deliverability (D4). Evidence: `tasks/MER-240_EVIDENCE.md`.
+
 ## MER-239 documentation and authority reconciliation — 2026-10-15 (branch `mertkaanakgunlu/mer-239-web-sitesi-belge-ve-otorite-uzlastirmasi`; `REVIEW_READY`, docs only)
 
 - `STATUS.md`, `CLAUDE.md`, `README.md` and `docs/HANDOFF.md` describe the published state: `main` = production = `2517369e`, the COUPLED Vercel topology, and the rollback target.

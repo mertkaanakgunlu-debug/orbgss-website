@@ -1,7 +1,7 @@
 # WEB M6 — Information architecture and page content authority
 
 **Task:** MER-238 (Milestone 6 — Bilgi Mimarisi ve Gösterim Odaklı Sayfalar)
-**Status:** approved by the CTO on 2026-10-15 (in the MER-238 session: "MER-238'i onaylıyorum; D1'de Science'tan MER-151 türevlerini isteyelim, D2 için Türkçe sözcükler olsun."). D1 and D2 are decided (§9); D3–D5 stay open. Nothing here is implemented yet, and nothing here changes the live site.
+**Status:** approved by the CTO on 2026-10-15 (in the MER-238 session: "MER-238'i onaylıyorum; D1'de Science'tan MER-151 türevlerini isteyelim, D2 için Türkçe sözcükler olsun."). D1 and D2 are decided (§9); D3–D5 stay open. **Implementation:** MER-240 builds the English pages on its own branch (`REVIEW_READY` 2026-10-16, not published; `tasks/MER-240_EVIDENCE.md`); G3, G4 and the G2 thumbnails wait for MER-242, V4 waits for D5, and `/tr/` is MER-241. Until MER-240 is published, the live site is unchanged.
 **Baseline:** `mertkaanakgunlu/mer-218-website-mer-216-canonical-publication-closure@5ca7bdd4` (MER-216 is not yet published and MER-237 is not yet accepted, so this is the baseline MER-238 names).
 **Consumers once approved:** MER-239 (writes the approved rules into `CLAUDE.md` and the other authorities), MER-240 (builds the English pages), MER-241 (generates the static `/tr/` pages).
 **Mockups:** `docs/mockups/m6/` (open locally); screenshots in `evidence/mer238/`.

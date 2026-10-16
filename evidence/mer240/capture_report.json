@@ -1,0 +1,386 @@
+{
+  "home/desktop-1440/en": {
+    "height": 6889,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "OrbGSS — Geospatial Intelligence",
+    "current": [
+      "/"
+    ],
+    "h1": "Know where to look next.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "home/desktop-1440/tr": {
+    "height": 6861,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "OrbGSS — Coğrafi Zekâ",
+    "current": [
+      "/"
+    ],
+    "h1": "Sırada nereye bakacağınızı bilin.",
+    "untranslated": [
+      "act.evidence.terrain.index",
+      "act.evidence.thermal.index",
+      "act.evidence.alteration.index",
+      "act.priority.meta"
+    ],
+    "console_errors": []
+  },
+  "home/mobile-390/en": {
+    "height": 7361,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "OrbGSS — Geospatial Intelligence",
+    "current": [
+      "/"
+    ],
+    "h1": "Know where to look next.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "home/mobile-390/tr": {
+    "height": 7378,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "OrbGSS — Coğrafi Zekâ",
+    "current": [
+      "/"
+    ],
+    "h1": "Sırada nereye bakacağınızı bilin.",
+    "untranslated": [
+      "act.evidence.terrain.index",
+      "act.evidence.thermal.index",
+      "act.evidence.alteration.index",
+      "act.priority.meta"
+    ],
+    "console_errors": []
+  },
+  "home/nojs": {
+    "h1": "Know where to look next.",
+    "links": 22,
+    "overflowX": 0
+  },
+  "solutions/desktop-1440/en": {
+    "height": 3279,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "Solutions — OrbGSS",
+    "current": [
+      "menu"
+    ],
+    "h1": "Where OrbGSS works today, and where next.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "solutions/desktop-1440/tr": {
+    "height": 3279,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "Çözümler — OrbGSS",
+    "current": [
+      "menu"
+    ],
+    "h1": "OrbGSS bugün nerede çalışıyor, sırada ne var.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "solutions/mobile-390/en": {
+    "height": 2568,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "Solutions — OrbGSS",
+    "current": [
+      "menu"
+    ],
+    "h1": "Where OrbGSS works today, and where next.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "solutions/mobile-390/tr": {
+    "height": 2548,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "Çözümler — OrbGSS",
+    "current": [
+      "menu"
+    ],
+    "h1": "OrbGSS bugün nerede çalışıyor, sırada ne var.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "solutions/nojs": {
+    "h1": "Where OrbGSS works today, and where next.",
+    "links": 15,
+    "overflowX": 0
+  },
+  "geothermal/desktop-1440/en": {
+    "height": 4555,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "Geothermal — Kızıldere pilot — OrbGSS",
+    "current": [
+      "menu",
+      "/solutions/geothermal/"
+    ],
+    "h1": "Kızıldere: the first published pilot.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "geothermal/desktop-1440/tr": {
+    "height": 4536,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "Jeotermal — Kızıldere pilotu — OrbGSS",
+    "current": [
+      "menu",
+      "/solutions/geothermal/"
+    ],
+    "h1": "Kızıldere: yayımlanan ilk pilot.",
+    "untranslated": [
+      "scene.aoi.place",
+      "geothermalPage.fact.areaValue",
+      "geothermalPage.from.natural",
+      "geothermalPage.from.elevation",
+      "geothermalPage.from.sentinel",
+      "geothermalPage.from.sentinel"
+    ],
+    "console_errors": []
+  },
+  "geothermal/mobile-390/en": {
+    "height": 4389,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "Geothermal — Kızıldere pilot — OrbGSS",
+    "current": [
+      "menu",
+      "/solutions/geothermal/"
+    ],
+    "h1": "Kızıldere: the first published pilot.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "geothermal/mobile-390/tr": {
+    "height": 4394,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "Jeotermal — Kızıldere pilotu — OrbGSS",
+    "current": [
+      "menu",
+      "/solutions/geothermal/"
+    ],
+    "h1": "Kızıldere: yayımlanan ilk pilot.",
+    "untranslated": [
+      "scene.aoi.place",
+      "geothermalPage.fact.areaValue",
+      "geothermalPage.from.natural",
+      "geothermalPage.from.elevation",
+      "geothermalPage.from.sentinel",
+      "geothermalPage.from.sentinel"
+    ],
+    "console_errors": []
+  },
+  "geothermal/nojs": {
+    "h1": "Kızıldere: the first published pilot.",
+    "links": 19,
+    "overflowX": 0
+  },
+  "about/desktop-1440/en": {
+    "height": 2355,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "About — OrbGSS",
+    "current": [
+      "/about/"
+    ],
+    "h1": "OrbGSS — Orbital Geo-Spatial Solutions",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "about/desktop-1440/tr": {
+    "height": 2355,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "Hakkımızda — OrbGSS",
+    "current": [
+      "/about/"
+    ],
+    "h1": "OrbGSS — Orbital Geo-Spatial Solutions",
+    "untranslated": [
+      "company.title",
+      "aboutPage.source.landsat",
+      "aboutPage.source.nasadem",
+      "aboutPage.source.sentinel",
+      "aboutPage.source.sentinelCredit",
+      "aboutPage.source.bluemarble",
+      "aboutPage.source.crameri",
+      "aboutPage.source.naturalearth"
+    ],
+    "console_errors": []
+  },
+  "about/mobile-390/en": {
+    "height": 2869,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "About — OrbGSS",
+    "current": [
+      "/about/"
+    ],
+    "h1": "OrbGSS — Orbital Geo-Spatial Solutions",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "about/mobile-390/tr": {
+    "height": 2871,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "Hakkımızda — OrbGSS",
+    "current": [
+      "/about/"
+    ],
+    "h1": "OrbGSS — Orbital Geo-Spatial Solutions",
+    "untranslated": [
+      "company.title",
+      "aboutPage.source.landsat",
+      "aboutPage.source.nasadem",
+      "aboutPage.source.sentinel",
+      "aboutPage.source.sentinelCredit",
+      "aboutPage.source.bluemarble",
+      "aboutPage.source.crameri",
+      "aboutPage.source.naturalearth"
+    ],
+    "console_errors": []
+  },
+  "about/nojs": {
+    "h1": "OrbGSS — Orbital Geo-Spatial Solutions",
+    "links": 19,
+    "overflowX": 0
+  },
+  "partner/desktop-1440/en": {
+    "height": 1526,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "Partner with us — OrbGSS",
+    "current": [
+      "/partner/"
+    ],
+    "h1": "Let's talk about where to look next.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "partner/desktop-1440/tr": {
+    "height": 1593,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "İş Birliği — OrbGSS",
+    "current": [
+      "/partner/"
+    ],
+    "h1": "Sırada nereye bakacağımızı konuşalım.",
+    "untranslated": [
+      "partnerPage.pilot.title"
+    ],
+    "console_errors": []
+  },
+  "partner/mobile-390/en": {
+    "height": 1470,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "Partner with us — OrbGSS",
+    "current": [
+      "/partner/"
+    ],
+    "h1": "Let's talk about where to look next.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "partner/mobile-390/tr": {
+    "height": 1486,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "İş Birliği — OrbGSS",
+    "current": [
+      "/partner/"
+    ],
+    "h1": "Sırada nereye bakacağımızı konuşalım.",
+    "untranslated": [
+      "partnerPage.pilot.title"
+    ],
+    "console_errors": []
+  },
+  "partner/nojs": {
+    "h1": "Let's talk about where to look next.",
+    "links": 17,
+    "overflowX": 0
+  },
+  "404/desktop-1440/en": {
+    "height": 900,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "Page not found — OrbGSS",
+    "current": [],
+    "h1": "This page is outside the area of interest.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "404/desktop-1440/tr": {
+    "height": 900,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "Sayfa bulunamadı — OrbGSS",
+    "current": [],
+    "h1": "Bu sayfa ilgi alanının dışında.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "404/mobile-390/en": {
+    "height": 872,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "en",
+    "title": "Page not found — OrbGSS",
+    "current": [],
+    "h1": "This page is outside the area of interest.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "404/mobile-390/tr": {
+    "height": 874,
+    "overflowX": 0,
+    "broken": [],
+    "lang": "tr",
+    "title": "Sayfa bulunamadı — OrbGSS",
+    "current": [],
+    "h1": "Bu sayfa ilgi alanının dışında.",
+    "untranslated": [],
+    "console_errors": []
+  },
+  "404/nojs": {
+    "h1": "This page is outside the area of interest.",
+    "links": 14,
+    "overflowX": 0
+  }
+}
