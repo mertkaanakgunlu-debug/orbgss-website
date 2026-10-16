@@ -1,6 +1,12 @@
 {
   "cleanUrls": true,
   "trailingSlash": true,
+  "redirects": [
+    { "source": "/platform/", "destination": "/", "statusCode": 301 },
+    { "source": "/pilot/", "destination": "/solutions/geothermal/", "statusCode": 301 },
+    { "source": "/company/", "destination": "/about/", "statusCode": 301 },
+    { "source": "/contact/", "destination": "/partner/", "statusCode": 301 }
+  ],
   "headers": [
     {
       "source": "/(.*)",

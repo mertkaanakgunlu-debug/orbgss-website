@@ -147,32 +147,18 @@ button,a{-webkit-tap-highlight-color:transparent}
 .scene-label span+span{color:rgba(214,226,233,.82)}
 .scene-label .scene-kind{color:rgba(214,226,233,.55)}
 
-/* ---------- story sections: technical beam + full-width visual panel ---------- */
-/* Deep-route grammar (/platform/, /pilot/, ...). The homepage no longer uses it: WEB-005 replaced
-   the six-scene gallery rhythm, and scripts/validate_site.py fails if it returns to index.html. */
-.story-section{background:#02070b}
-.story-beam{padding:clamp(34px,4.2vw,60px) var(--pad);display:grid;grid-template-columns:minmax(200px,.85fr) minmax(0,1.55fr) minmax(200px,auto);gap:clamp(28px,5vw,88px);align-items:start;background:linear-gradient(90deg,#061018,#08131b);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.beam-head{display:flex;align-items:baseline;gap:clamp(16px,2vw,28px)}
-.beam-index{font-size:11px;color:var(--accent-soft);letter-spacing:.14em}
-.beam-head h2{margin:0;font-size:clamp(14px,1.25vw,18px);font-weight:430;text-transform:uppercase;letter-spacing:.28em;line-height:1.4}
-.beam-statement{margin:0;max-width:58ch;font-size:clamp(15px,1.15vw,18px);line-height:1.65;color:#c2cbd0;font-weight:350}
-.beam-meta{margin:0;justify-self:end;text-align:right;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);line-height:1.8;padding-top:5px}
-.story-panel{position:relative;margin:0;background:#0b141a;--panel-h:clamp(540px,64vh,880px)}
-.story-panel>img{width:100%;height:var(--panel-h);object-fit:cover}
 
 /* ---------- WEB-002 product proof ---------- */
 /* Scientific rasters and the score colour ramp are published exactly as the accepted GEO-039
    export rendered them. Any saturation, contrast, brightness or opacity change would alter the
    rendered scientific content, so proof imagery is explicitly exempt from the gallery grade that
    the hero still uses. Do not remove this guard. */
-[data-visual-status="product-proof"] img,
-.scale-strip>img{filter:none;opacity:1}
+[data-visual-status="product-proof"] img{filter:none;opacity:1}
 
 /* The WEB-001 label was tuned for dark satellite photography. The accepted cartographic exports
    are pale over much of the frame, so the same white text vanished on them. Still bare monospace
    text in the same place, with no card, box or band: legibility comes from a tight halo, and the
    tone is chosen per panel from the measured luminance of the region the label sits over. */
-.story-panel[data-visual-status="product-proof"] .scene-label{font-size:10px;letter-spacing:.13em}
 [data-label-tone="light"] .scene-label{color:#fbfdfe;
   text-shadow:0 0 1px rgba(2,7,11,1),0 0 2px rgba(2,7,11,1),0 0 3px rgba(2,7,11,1),
               0 0 5px rgba(2,7,11,1),0 0 9px rgba(2,7,11,.95),0 0 18px rgba(2,7,11,.85),
@@ -191,13 +177,8 @@ button,a{-webkit-tap-highlight-color:transparent}
 [data-label-tone="dark"] .scene-label .scene-kind{color:#050d13}
 [data-label-tone="dark"] .scene-label .scene-kind{letter-spacing:.17em}
 /* Mandatory scientific warning carried in visible copy next to every proof visual. */
-.beam-body{display:flex;flex-direction:column;gap:14px;min-width:0}
 .beam-note{margin:0;max-width:62ch;padding-left:14px;border-left:2px solid rgba(200,169,122,.5);font-size:clamp(12px,.82vw,13px);line-height:1.6;color:#9aa7b0;font-weight:350}
 
-/* Legend colourbar, cropped from the same accepted export as the panel it describes. */
-.beam-meta-line{margin:0}
-.scale-strip{display:inline-block;width:clamp(110px,9vw,150px);margin-top:10px}
-.scale-strip>img{width:100%;height:9px;border-radius:1px}
 .scale-ends{display:flex;justify-content:space-between;margin-top:5px;font-size:9px;letter-spacing:.1em;color:var(--dim)}
 
 /* ================================================================================
@@ -225,16 +206,14 @@ body.home{background:var(--orb-bg)}
   radial-gradient(86% 56% at 50% 44%,var(--orb-atmos) 0%,rgba(28,74,104,.09) 44%,transparent 74%),
   linear-gradient(180deg,var(--orb-bg) 0%,var(--orb-deep) 26%,var(--orb-deep) 76%,var(--orb-bg) 100%)}
 .sec-inspect{background:linear-gradient(180deg,var(--orb-bg) 0%,var(--orb-lift) 28%,var(--orb-lift) 76%,var(--orb-bg) 100%)}
-.sec-proof{background:linear-gradient(180deg,var(--orb-bg) 0%,var(--orb-lift) 22%,var(--orb-lift) 80%,var(--orb-bg) 100%)}
-.sec-company{background:linear-gradient(180deg,var(--orb-bg) 0%,#040F18 48%,#030C14 100%)}
-.sec-contact{background:linear-gradient(180deg,#030C14 0%,var(--orb-deep) 100%)}
+.sec-contact{background:linear-gradient(180deg,var(--orb-bg) 0%,var(--orb-deep) 100%)}
 
 /* One hairline per boundary, and it fades out before the page edge instead of cutting the width
    in half — a rule the eye reads as a handoff, not a seam. The first post-hero act deliberately
    has none: the hero already ends on its own bottom shade, and a line there would be exactly the
    hard edge R10 section 4 asks for the absence of. */
 .sec-evidence::before,.sec-result::before,.sec-inspect::before,.sec-domains::before,
-.sec-proof::before,.sec-company::before,.sec-contact::before{content:"";position:absolute;
+.sec-contact::before{content:"";position:absolute;
   left:var(--pad);right:var(--pad);top:0;height:1px;pointer-events:none;
   background:linear-gradient(90deg,transparent 0%,var(--line-soft) 14%,var(--line-soft) 86%,transparent 100%)}
 .sec-result{padding-top:clamp(52px,5.4vw,88px);padding-bottom:clamp(52px,5.4vw,88px)}
@@ -499,30 +478,13 @@ body.home{background:var(--orb-bg)}
 .domain-link:focus-visible::after{outline:2px solid var(--accent);outline-offset:-2px}
 .domains-note{margin-top:clamp(22px,2.4vw,34px)}
 
-/* ---------- differentiators: six method commitments, hairlines, no icons, no figures ---------- */
-.proof{list-style:none;margin:clamp(34px,4vw,60px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--orb-divider);border-left:1px solid var(--orb-divider)}
-.proof li{padding:clamp(20px,2.2vw,34px);border-right:1px solid var(--orb-divider);border-bottom:1px solid var(--orb-divider)}
-.proof h3{margin:0 0 10px;font-size:15px;font-weight:450;letter-spacing:-.005em;color:var(--orb-text-primary)}
-.proof p{margin:0;font-size:14px;line-height:1.72;color:#a9b5bd}
-.proof-foot{margin-top:24px}
 
-/* ---------- trust / company ---------- */
-.sec-company .shell{display:grid;grid-template-columns:minmax(260px,.95fr) minmax(0,1.35fr);gap:clamp(34px,5vw,96px);align-items:start}
-.company-col h2{margin:0 0 22px;font-size:clamp(26px,2.6vw,40px);font-weight:370;letter-spacing:-.03em;line-height:1.12}
-.company-copy{margin:0 0 26px;max-width:46ch;font-size:clamp(15px,1.1vw,17px);line-height:1.7;color:#c2cbd0}
+/* ---------- company mark (the About header) ---------- */
 .company-parent{margin:0;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
-.trust-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.trust-list li{display:grid;grid-template-columns:minmax(160px,.75fr) minmax(0,1.6fr);gap:clamp(16px,3vw,40px);padding:20px 0;border-bottom:1px solid var(--line)}
-.trust-list strong{font-weight:450;font-size:14.5px;letter-spacing:-.005em;line-height:1.5}
-.trust-list span{font-size:14.5px;line-height:1.65;color:#a9b5bd}
 
-/* ---------- contact: one quiet centred ending ---------- */
-.sec-contact .shell{display:flex;flex-direction:column;align-items:center;text-align:center;gap:20px}
-.sec-contact .kicker{margin:0}
-.sec-contact h2{font-size:clamp(28px,3.1vw,48px);font-weight:370;letter-spacing:-.035em;line-height:1.1;max-width:20ch}
-.contact-copy{margin:0;max-width:48ch;font-size:clamp(15px,1.1vw,17px);line-height:1.75;color:#c2cbd0}
-.contact-actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(22px,3vw,44px);margin-top:10px}
-.contact-mail{display:inline-block;font-size:13px;letter-spacing:.06em;padding:4px 0 4px;border-bottom:1px solid rgba(255,255,255,.35);transition:border-color .2s ease}.contact-mail:hover{border-bottom-color:#fff}
+/* ---------- contact: one centred Partner line (MER-240) ---------- */
+.sec-contact{padding-top:clamp(44px,5vw,72px);padding-bottom:clamp(52px,6vw,88px)}
+.sec-contact .shell{display:flex;justify-content:center}
 
 /* ---------- WEB-003: deep public route pages ---------- */
 /* Shared page header: kicker + H1 + intro, used at the top of every deep route.
@@ -539,58 +501,62 @@ body.home{background:var(--orb-bg)}
 .page-section.is-deep{background:#050d13}
 .page-section-head{max-width:760px;margin:0 0 clamp(28px,3.5vw,48px)}
 .page-section-head h2{margin:0 0 16px;font-size:clamp(22px,2.2vw,32px);font-weight:370;letter-spacing:-.02em;line-height:1.16}
-.page-section-copy{margin:0;font-size:clamp(15px,1.1vw,17px);line-height:1.7;color:#c2cbd0}
-.page-actions{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(22px,3vw,40px);margin-top:clamp(28px,3.5vw,44px)}
 
-/* Application maturity ledger (deep routes). */
-.ledger{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.ledger-row{position:relative;display:grid;grid-template-columns:36px minmax(0,1fr) auto;grid-template-areas:"idx title status" "idx copy copy";column-gap:clamp(18px,2.5vw,40px);row-gap:10px;padding:26px 0;border-bottom:1px solid var(--line);align-items:baseline;scroll-margin-top:calc(var(--header-h) + 12px)}
-/* WEB-005C: a renamed ledger row carries its superseded anchor along with it, so an existing
-   /solutions/#mineral or /solutions/#environment deep link still lands on the domain it always
-   meant. Absolutely positioned at the row origin, so it is not a grid item and nothing about the
-   row's layout, gaps or baselines changes; it inherits the row's own header offset when it is
-   the scroll target. */
+/* A renamed or moved section carries its superseded anchor along with it, so an existing deep
+   link (/solutions/#mineral, /solutions/#environment, the old /pilot/#pilot-* fragments) still
+   lands on what it always meant. Absolutely positioned at the section origin, so it takes no part
+   in the layout; it inherits the header offset when it is the scroll target. */
 .anchor-alias{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;pointer-events:none;scroll-margin-top:calc(var(--header-h) + 12px)}
-.ledger-index{grid-area:idx;font-size:10px;color:var(--dim);letter-spacing:.14em}
-.ledger-row h3{grid-area:title;margin:0;font-size:clamp(15px,1.2vw,19px);font-weight:430;letter-spacing:-.01em}
-.ledger-status{grid-area:status;justify-self:end;text-align:right;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
-.ledger-status.is-active{color:var(--accent)}
-.ledger-row p{grid-area:copy;margin:0;font-size:14.5px;line-height:1.65;color:#a9b5bd;max-width:60ch}
-/* WEB-003: deep-page ledger rows carry more than one paragraph plus an optional inline CTA, so the
-   "copy" grid area holds one flex column instead of a single <p> directly. */
-.ledger-copy-group{grid-area:copy;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
-.ledger-copy-group p{max-width:60ch}
 
-/* The structural layer that does not exist, on /pilot/. Shown as an absence, never invented. */
-.story-panel.data-gap{display:flex;align-items:center;min-height:clamp(300px,34vh,430px);padding:clamp(40px,5vw,72px) var(--pad);background:
-  repeating-linear-gradient(90deg,rgba(205,226,239,.045) 0 1px,transparent 1px 88px),
-  linear-gradient(180deg,#040b11,#071019)}
-.gap-inner{max-width:52ch}
-.gap-mark{margin:0 0 16px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,169,122,.9)}
-.gap-copy{margin:0;font-size:clamp(15px,1.15vw,18px);line-height:1.65;color:#c2cbd0;font-weight:350}
-.gap-meta{margin:18px 0 0;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+/* ---------- MER-240 / Milestone 6: show-first pages ---------- */
+/* Tables are show-first elements, not cards: hairline rows, a mono header, no boxes. */
+.data-table{width:100%;border-collapse:collapse;border-top:1px solid var(--line)}
+.data-table th,.data-table td{padding:18px 24px 18px 0;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.data-table thead th{padding:14px 24px 14px 0;vertical-align:bottom;font-family:var(--mono);font-weight:400;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.data-table tbody th{font-size:14.5px;line-height:1.55;font-weight:430;letter-spacing:-.005em;color:var(--text)}
+.data-table td{font-size:14.5px;line-height:1.6;color:#b9c4cb}
+.data-table td.mono{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;line-height:2;color:var(--dim)}
+.data-table td.is-active{color:var(--orb-cyan)}
+.data-table a{color:#d5dee3;border-bottom:1px solid rgba(255,255,255,.3);transition:color .2s ease,border-color .2s ease}
+.data-table a:hover{color:#fff;border-bottom-color:rgba(255,255,255,.7)}
+.data-table .beam-note{max-width:54ch}
+.data-table .cell-note{display:block;margin-top:8px;font-family:var(--mono);font-size:9.5px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:rgba(200,169,122,.9)}
+.data-table.is-facts tbody th{width:30%;font-family:var(--mono);font-weight:400;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;line-height:2;color:var(--dim)}
+.data-table.is-facts td{color:#e3e9ed}
+.table-foot{margin:22px 0 0;max-width:72ch;font-size:13px;line-height:1.6;color:#93a1aa}
 
-/* Numbered step / evidence-family list: platform workflow, pilot evidence walkthrough. */
-.workflow-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.workflow-row{display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-areas:"idx title" "idx copy";column-gap:clamp(18px,2.5vw,40px);row-gap:8px;padding:26px 0;border-bottom:1px solid var(--line)}
-.workflow-index{grid-area:idx;font-size:11px;color:var(--accent-soft);letter-spacing:.14em}
-.workflow-row h3{grid-area:title;margin:0;font-size:clamp(15px,1.2vw,19px);font-weight:430;letter-spacing:-.01em}
-.workflow-row p{grid-area:copy;margin:0;font-size:14.5px;line-height:1.68;color:#a9b5bd;max-width:62ch}
-.editorial-note{margin:24px 0 0;max-width:70ch;padding-left:14px;border-left:2px solid rgba(200,169,122,.5);font-size:clamp(12px,.82vw,13px);line-height:1.6;color:#9aa7b0}
+/* Solutions hub bands: one photograph per domain at full size. Capped at 1440 CSS px, which a 2x
+   display fills from the 2880 px master width, so a wide screen gets a contained band rather than
+   an upscaled one (sources.json -> scenes -> web_m6_placement). */
+.domain-band{position:relative;overflow:hidden;display:flex;align-items:flex-end;max-width:1440px;margin-inline:auto;min-height:clamp(340px,44vw,620px);background:#0b141a;border-top:1px solid var(--line);scroll-margin-top:calc(var(--header-h) + 12px)}
+.domain-band>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.domain-band-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,11,18,0) 38%,rgba(3,11,18,.84) 100%)}
+.domain-band-copy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:0 var(--pad) clamp(28px,3.2vw,48px)}
+.domain-band-copy h2{margin:0;font-size:clamp(28px,3vw,46px);font-weight:360;letter-spacing:-.03em;line-height:1.05;color:#fff}
+.domain-band-copy .domain-status{margin:0}
+.page-note{padding:clamp(28px,3.4vw,44px) var(--pad) clamp(48px,6vw,88px);background:var(--bg)}
+.page-note .act-footnote{margin-top:0}
 
-/* Editorial figure: reused WEB-002 proof imagery inside a deep page. Identical sizing/caption
-   system to .story-panel so the "no CSS transform on scientific rasters" guard travels with it. */
-.editorial-figure{position:relative;margin:24px 0 0;background:#0b141a;--panel-h:clamp(360px,52vh,620px)}
-.editorial-figure>img{width:100%;height:var(--panel-h);object-fit:cover}
+/* The Geothermal locator map (Natural Earth, class A): the header's lead visual. */
+.locator-figure{position:relative;max-width:1100px;margin:clamp(34px,4vw,56px) 0 0;border:1px solid var(--line);background:#030b12}
+.locator-figure>img{display:block;width:100%;height:auto}
+.locator-figure .scene-label{right:18px;bottom:14px}
 
-/* Contact routes: one clear next action per row, no form, no backend. */
-.contact-options{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-.contact-option{display:grid;grid-template-columns:minmax(160px,.6fr) minmax(0,1.4fr) auto;gap:clamp(16px,3vw,40px);align-items:center;padding:28px 0;border-bottom:1px solid var(--line)}
-/* These are the first headings under the page H1, so they are H2s: /contact/ has no intermediate
-   section heading to hang an H3 from, and skipping a level broke the document outline. */
-.contact-option h2{margin:0;font-size:clamp(15px,1.2vw,19px);font-weight:430;letter-spacing:-.01em}
-.contact-option p{margin:6px 0 0;font-size:14.5px;line-height:1.6;color:#a9b5bd;max-width:52ch}
-.contact-direct{margin-top:28px;display:flex;align-items:baseline;gap:16px;color:var(--dim);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+/* The structure/geology gap: the empty frame at the figures' size, with the statement beside it. */
+.gap-split{display:grid;grid-template-columns:minmax(0,600px) minmax(0,1fr);gap:clamp(28px,4vw,64px);align-items:start}
+.gap-frame{width:100%;max-width:600px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;border:1px dashed rgba(205,226,239,.3);background:repeating-linear-gradient(90deg,rgba(205,226,239,.035) 0 1px,transparent 1px 60px)}
+.gap-frame p{margin:0;max-width:26ch;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;line-height:1.8;color:var(--dim)}
+.gap-text{margin:0;max-width:46ch;font-size:clamp(15px,1.1vw,17px);line-height:1.7;color:#c2cbd0}
+
+/* Partner with us: the address, set large. */
+.mail-address{margin:0;font-family:var(--mono);font-size:clamp(22px,3vw,40px);letter-spacing:.02em;line-height:1.3;overflow-wrap:anywhere}
+.mail-address a{color:var(--text);border-bottom:1px solid rgba(255,255,255,.3);transition:border-color .2s ease}
+.mail-address a:hover{border-bottom-color:#fff}
+
+/* One closing link per page. */
+.page-closing{padding:clamp(40px,5vw,72px) var(--pad);display:flex;justify-content:center;border-top:1px solid var(--line);background:var(--bg)}
+.not-found .page-hero{border-bottom:0;min-height:52svh}
+.not-found .text-link{margin-top:30px}
 
 /* ---------- footer ---------- */
 .site-footer{min-height:180px;padding:34px var(--pad) 46px;display:flex;justify-content:space-between;align-items:flex-end;gap:60px;background:#050d13;border-top:1px solid var(--line)}
@@ -600,7 +566,7 @@ body.home .site-footer{background:var(--orb-deep);border-top:1px solid var(--lin
 /* The footer links sit at 8.5px, so their bare line box was only 11px tall — well under the 24px
    WCAG 2.5.8 activation target. Vertical padding gives them a real target without enlarging the
    type or loosening the footer's density; the negative block margin keeps the original spacing. */
-.footer-right{max-width:760px;text-align:right}.footer-right nav{display:flex;justify-content:flex-end;gap:30px;font-size:8.5px;text-transform:uppercase;letter-spacing:.16em;margin:-7px 0 11px}.footer-right nav a{opacity:.8;padding:7px 0}.footer-right nav a:hover{opacity:1}.footer-right p{font-size:9px;line-height:1.65;color:#73838d;margin:6px 0}.footer-right .attribution{max-width:690px;margin-left:auto}
+.footer-right{max-width:760px;text-align:right}.footer-right nav{display:flex;justify-content:flex-end;gap:30px;font-size:8.5px;text-transform:uppercase;letter-spacing:.16em;margin:-7px 0 11px}.footer-right nav a{opacity:.8;padding:7px 0}.footer-right nav a:hover{opacity:1}.footer-right p{font-size:9px;line-height:1.65;color:#73838d;margin:6px 0}.footer-right .attribution{max-width:690px;margin-left:auto}.footer-right .attribution a{color:#93a1aa;border-bottom:1px solid rgba(147,161,170,.45);transition:color .2s ease,border-color .2s ease}.footer-right .attribution a:hover{color:#d5dee3;border-bottom-color:#d5dee3}
 
 /* ---------- desktop refinements ---------- */
 @media(min-width:701px){
@@ -638,11 +604,6 @@ body.home .site-footer{background:var(--orb-deep);border-top:1px solid var(--lin
   .result-lead{font-size:16px;line-height:1.62;max-width:66ch;margin-bottom:clamp(20px,2.2vw,30px)}
 }
 @media(max-width:1180px){
-  .story-beam{grid-template-columns:minmax(180px,.8fr) minmax(0,1.6fr);grid-template-areas:"head statement" "meta statement"}
-  .story-beam .beam-head{grid-area:head}
-  .story-beam .beam-statement{grid-area:statement}
-  .story-beam .beam-body{grid-area:statement}
-  .beam-meta{grid-area:meta;justify-self:start;text-align:left;padding-top:0;margin-top:-10px}
   /* 2 x 2: only the right-hand cell of each row carries a vertical rule, and the first row carries
      the horizontal one. A rule inherited from the 4-column layout would land mid-row. */
   .result-defs{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:2px}
@@ -655,8 +616,6 @@ body.home .site-footer{background:var(--orb-deep);border-top:1px solid var(--lin
   .evidence-side{border-top:1px solid var(--orb-divider)}
   .sec-inspect .shell{grid-template-columns:minmax(0,1fr);gap:30px}
   .inspect-switch{justify-self:start}
-  .sec-company .shell{grid-template-columns:1fr;gap:36px}
-  .proof{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:980px){
   :root{--header-h:76px}
@@ -679,16 +638,21 @@ body.home .site-footer{background:var(--orb-deep);border-top:1px solid var(--lin
      footprint is centred at x = 0.70, so the crop is biased right to keep its outline whole;
      script.js places nothing by geometry below 981px. */
   .hero-poster,.hero-held,.hero-video{object-position:79% 46%}
-  .story-beam{grid-template-columns:1fr;grid-template-areas:"head" "statement" "meta";gap:14px;padding-top:28px;padding-bottom:28px}
-  .beam-meta{margin-top:4px}
-  .story-panel{--panel-h:max(56svh,400px)}
   .scene-label{bottom:16px;font-size:8.5px}
   .sec{padding-top:clamp(56px,8vw,92px);padding-bottom:clamp(56px,8vw,92px)}
   .sec-place{padding:0}
-  .trust-list li{grid-template-columns:1fr;gap:6px}
-  .contact-option{grid-template-columns:1fr;gap:10px;align-items:start}
   .page-hero{padding-top:44px}
   .site-footer{align-items:flex-start;flex-direction:column}.footer-right{text-align:left}.footer-right nav{justify-content:flex-start;flex-wrap:wrap}.footer-right .attribution{margin-left:0}
+}
+@media(max-width:860px){
+  .gap-split{grid-template-columns:1fr}
+  /* Small screens read a table row by row: each row becomes a stacked group, with its header
+     cell first. The column headers are kept for assistive technology only. */
+  .data-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .data-table,.data-table tbody,.data-table tr,.data-table th,.data-table td{display:block;width:100%}
+  .data-table tr{padding:16px 0;border-bottom:1px solid var(--line)}
+  .data-table th,.data-table td,.data-table tbody th{padding:3px 0;border:0}
+  .data-table.is-facts tbody th{width:100%}
 }
 @media(max-width:820px){
   .domains{grid-template-columns:1fr}
@@ -707,21 +671,19 @@ body.home .site-footer{background:var(--orb-deep);border-top:1px solid var(--lin
   .result-defs>div:nth-child(even)::before{content:none}
   .result-defs>div+div{border-top:1px solid var(--line-soft)}
   .result-defs>div:nth-child(-n+2){border-bottom:0;padding-bottom:6px}
-  .proof{grid-template-columns:1fr}
   .act-footnote{gap:8px}
   .place-copy{padding-left:var(--pad);padding-right:var(--pad)}
   .context-band{--place-pad:var(--pad)}
+  /* The band's caption sits bottom-right; on a phone the name and status stand above it. */
+  .domain-band-copy{padding-bottom:92px}
 }
 @media(max-width:560px){
   .brand-wordmark{font-size:21px}.hero-content{padding-top:40px;padding-bottom:70px}.hero h1{font-size:44px}.hero-copy{font-size:15px}.button{gap:22px}
   .hero-actions{gap:18px}
   .scene-label{bottom:14px;font-size:8px;letter-spacing:.12em}
-  .beam-head{gap:14px}.beam-head h2{font-size:13px;letter-spacing:.22em}.beam-statement{font-size:15px}
-  .story-panel{--panel-h:max(50svh,350px)}
   .beam-note{font-size:12px}
   .sec-head h2,.place-copy h2{font-size:29px;max-width:none}
   .sec-result h2{font-size:32px}
-  .sec-contact h2{font-size:27px}
   .act-statement{font-size:15px}
   .priority-stage{--stage-pad:14px}
   .target-frame{inset:-6px}.target-frame i{width:16px;height:16px}
