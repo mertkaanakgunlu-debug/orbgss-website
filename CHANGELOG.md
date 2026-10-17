@@ -2,6 +2,13 @@
 
 Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
 
+## Published 2026-10-16 — `main@a2045344` (MER-240)
+
+- **Acceptance:** an independent review returned PASS at `a2045344` after one revision. The live 301s were checked on the real Vercel Preview, and D4 was settled by the CTO's external test mail (received, in spam).
+- **Publication:** the CTO approved it, and `main` was fast-forwarded `464a7354` → `a2045344` at 14:49:34Z. Vercel production deployment `dpl_84PppxpmyRxhqPRgag2LsHGk21eZ` / `orbgss-website-ni854m1xn` was ready 10 s later.
+- **Checks:** production smoke 52/52, browser checks 19/19, and the old `#pilot-*` links land on their Geothermal sections. No rollback was needed. Evidence: `tasks/MER-240_EVIDENCE.md` §8, `evidence/mer240/publication/`.
+- **Closure (2026-10-17):** the CTO tried the site and MER-240 was set Done. A docs-only commit on `main` brings `STATUS.md`, `CLAUDE.md`, `README.md` and `docs/HANDOFF.md` to the published state; no deployed file changes.
+
 ## MER-240 Milestone 6 English pages — 2026-10-16 (branch `mertkaanakgunlu/mer-240-web-sitesi-yeni-sayfalarin-uygulanmasi-en`; `REVIEW_READY`, not published)
 
 - New page set from `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`: the `/solutions/` hub (comparison table and one photograph band per domain), `/solutions/geothermal/` (locator map, facts, every layer and what it is not, outputs, the structure/geology gap), `/about/` (principles and data sources) and `/partner/` (conversation table and address). `/platform/`, `/pilot/`, `/company/` and `/contact/` are removed and answer with 301 redirects; the old `#pilot-*` fragments land on the Geothermal page.

@@ -3,7 +3,7 @@
 **Issue:** MER-240 (Milestone 6 — Bilgi Mimarisi ve Gösterim Odaklı Sayfalar).
 **Authority:** `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (MER-238, CTO-approved 2026-10-15), with the rules codified in `CLAUDE.md` § "Milestone 6 target".
 **Branch:** `mertkaanakgunlu/mer-240-web-sitesi-yeni-sayfalarin-uygulanmasi-en`, from `main@464a73543a440f7d51a1600599998e97b53e982f` (= `origin/main`, verified by fetch on 2026-10-16).
-**State:** `REVIEW_READY`. Nothing is merged, published or deployed. `main`, Vercel, DNS and credentials are untouched.
+**State:** Done. Independently accepted (PASS) at `a2045344f4cc70fe189160ffd7254fe61020cad9` and published to production on 2026-10-16 (§8). §1–§7 record the state at review time.
 
 ## 1. Decisions taken in this task (CTO, 2026-10-16)
 
@@ -138,3 +138,48 @@ The review reported three defects, all inside MER-240's scope. Nothing else chan
   - Observed: 46/46 on this Linux (LF) checkout, and 46/46 on a copy of the tree with 172 text files converted to CRLF (the locator SVG, which is `-text`, left alone). The five earlier suites are untouched and pass as before (72/72, 55/55, 18/18, 19/19, 29/29).
 
 Still not verified here, unchanged by this revision: a real Vercel Preview (the redirects were followed on an emulation of `vercel.json`, not on Vercel), the D4 mailbox gate, and physical devices.
+
+## 8. Acceptance and publication (2026-10-16 / 2026-10-17)
+
+**Acceptance.** An independent review session that did not implement MER-240 re-reviewed `a2045344` and returned **PASS** on 2026-10-16 (report kept in the project's shared review folder). The two items §6 and §7 left open were closed before publication:
+
+- **Live redirects, on the real Vercel Preview** (`orbgss-website-7p75crwjj`, `githubCommitSha = a2045344`):
+  - each hop was requested on its own;
+  - `/platform/`, `/pilot/`, `/company/` and `/contact/` answer `301` to `/`, `/solutions/geothermal/`, `/about/` and `/partner/`;
+  - the slash-less forms take a `308` to the slashed form first;
+  - the query string is kept;
+  - of the 113 deployed files compared, 112 are byte-identical to the commit; the one difference, `index.html`, carries the Preview-only Vercel toolbar script.
+- **D4.** The CTO sent an external test mail to `contact@orbgss.com` on 2026-10-16. It arrived, in the spam folder. A Gmail filter that never sends this address to spam is recommended; it is the CTO's action.
+
+**Publication.** The CTO approved it in the conversation ("onaylıyorum", 14:45:14Z).
+
+| Step | Result |
+| --- | --- |
+| Guard (fresh fetch) | `origin/main` = `464a73543a440f7d51a1600599998e97b53e982f`, an ancestor of `a2045344` (0 behind, 7 ahead). `validate_site.py` PASS, 0 warnings. |
+| Push | 14:49:34Z, `git push origin a2045344…:refs/heads/main`, giving `464a735..a204534`. A non-force fast-forward. |
+| Production deployment | `dpl_84PppxpmyRxhqPRgag2LsHGk21eZ` / `orbgss-website-ni854m1xn-virga-soft.vercel.app`, target production, READY at 14:49:44Z. Aliases `orbgss.com`, `www.orbgss.com` and `orbgss-website.vercel.app`. `githubCommitSha = a2045344`. |
+| HTTP smoke | `evidence/mer240/publication/post_publication_smoke_2026-10-16.txt`: **52 / 52**. Covers HTTPS and `www` redirects, HSTS, the five routes, a real 404, the four 301s and their 308 forms, internal paths not served, og images, the hero ladder (types, 206, immutable), every homepage asset, sitemap / robots, and `index.html`, `script.js` and `styles.css` byte-identical to `a2045344`. |
+| Browser checks | `evidence/mer240/publication/post_publication_browser_2026-10-16.txt`: **19 / 19**. Five routes × 1440 and 390 px show 0 console errors, 0 broken images and 0 overflow. The hero picks one tier, or holds the still on a low network estimate (`slow-network`, by design). Reduced motion, no-JS, the Act 03 layers and EN → TR work. |
+| Old links in production | `evidence/mer240/publication/report-legacy-production.json`. In Chromium, following the real 301:<br>• `/pilot/#pilot-observe` lands on `#glance`;<br>• `#pilot-terrain`, `-evidence`, `-priority` and `-geothermal` land on `#layers`;<br>• `#pilot-structure` lands on `#gap`;<br>• `/solutions/#mineral` and `#environment` land on `#mining` and `#marine`.<br>Section tops sit at 187 px (1440) and 163 px (390), the same as on the Preview. |
+| Rollback | Not needed. The target was the previous production deployment `orbgss-website-29bzudvea` (`464a7354`), by Instant Rollback in the dashboard (`tasks/MER-219_PREFLIGHT.md` §4). |
+
+**How the tooling was run.** The production scripts ran from a cloud container, where two things differ from a workstation:
+
+- the egress proxy lowercases header names on plain-http hops;
+- some TLS connects to `orbgss.com` are reset.
+
+So the copies that were run carry two local changes, kept here as patches:
+
+- `smoke_production_ci.patch`: case-insensitive header lookup, and up to three retries on transport errors only (an HTTP status is never retried);
+- `mer216_harness_container.patch`: the Chromium path and the proxy flag.
+
+The repository scripts are unchanged.
+
+**Closure.** The CTO tried the site, and MER-240 was set Done in Linear on the CTO's instruction (2026-10-17). The repository records (`STATUS.md`, `CLAUDE.md`, `README.md`, `docs/HANDOFF.md`, `CHANGELOG.md`) were then brought to the published state in a docs-only commit on `main`. That commit changes no deployed file.
+
+**Still not shown, unchanged:**
+
+- G3 / G4 and the layer-table thumbnails (MER-242);
+- the coastal Marine scene (D5);
+- `/tr/` (MER-241);
+- D3 (privacy / KVKK, legal).

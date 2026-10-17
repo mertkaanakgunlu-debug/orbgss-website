@@ -1,0 +1,390 @@
+[
+ {
+  "url": "/solutions/geothermal/#pilot-observe",
+  "scrollY": 922,
+  "header": 88,
+  "top": 187,
+  "heading": "The pilot at a glance",
+  "view": "desktop",
+  "old": "/pilot/#pilot-observe",
+  "expected": "glance",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-terrain",
+  "scrollY": 1617,
+  "header": 88,
+  "top": 187,
+  "heading": "Every layer, and what it is not",
+  "view": "desktop",
+  "old": "/pilot/#pilot-terrain",
+  "expected": "layers",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-evidence",
+  "scrollY": 1617,
+  "header": 88,
+  "top": 187,
+  "heading": "Every layer, and what it is not",
+  "view": "desktop",
+  "old": "/pilot/#pilot-evidence",
+  "expected": "layers",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-priority",
+  "scrollY": 1617,
+  "header": 88,
+  "top": 187,
+  "heading": "Every layer, and what it is not",
+  "view": "desktop",
+  "old": "/pilot/#pilot-priority",
+  "expected": "layers",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-geothermal",
+  "scrollY": 1617,
+  "header": 88,
+  "top": 187,
+  "heading": "Every layer, and what it is not",
+  "view": "desktop",
+  "old": "/pilot/#pilot-geothermal",
+  "expected": "layers",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-structure",
+  "scrollY": 3103,
+  "header": 88,
+  "top": 187,
+  "heading": "Not available: structure and geology",
+  "view": "desktop",
+  "old": "/pilot/#pilot-structure",
+  "expected": "gap",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-structure",
+  "scrollY": 3103,
+  "header": 88,
+  "top": 187,
+  "heading": "Not available: structure and geology",
+  "view": "desktop",
+  "old": "/pilot#pilot-structure",
+  "expected": "gap",
+  "chain": [
+   "308 /pilot",
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/#mineral",
+  "scrollY": 1453,
+  "header": 88,
+  "top": 187,
+  "heading": "Mining",
+  "view": "desktop",
+  "old": "/solutions/#mineral",
+  "expected": "mining",
+  "chain": [
+   "200 /solutions/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/#environment",
+  "scrollY": 2073,
+  "header": 88,
+  "top": 187,
+  "heading": "Marine",
+  "view": "desktop",
+  "old": "/solutions/#environment",
+  "expected": "marine",
+  "chain": [
+   "200 /solutions/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/partner/",
+  "scrollY": 0,
+  "header": 88,
+  "top": null,
+  "heading": null,
+  "view": "desktop",
+  "old": "/contact/",
+  "expected": null,
+  "chain": [
+   "301 /contact/",
+   "200 /partner/"
+  ],
+  "lands_on_section": null
+ },
+ {
+  "url": "/about/",
+  "scrollY": 0,
+  "header": 88,
+  "top": null,
+  "heading": null,
+  "view": "desktop",
+  "old": "/company/",
+  "expected": null,
+  "chain": [
+   "301 /company/",
+   "200 /about/"
+  ],
+  "lands_on_section": null
+ },
+ {
+  "url": "/",
+  "scrollY": 0,
+  "header": 88,
+  "top": null,
+  "heading": null,
+  "view": "desktop",
+  "old": "/platform/",
+  "expected": null,
+  "chain": [
+   "301 /platform/",
+   "200 /"
+  ],
+  "lands_on_section": null
+ },
+ {
+  "url": "/solutions/geothermal/",
+  "scrollY": 0,
+  "header": 88,
+  "top": null,
+  "heading": null,
+  "view": "desktop",
+  "old": "/pilot/",
+  "expected": null,
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": null
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-observe",
+  "scrollY": 406,
+  "header": 76,
+  "top": 163,
+  "heading": "The pilot at a glance",
+  "view": "mobile",
+  "old": "/pilot/#pilot-observe",
+  "expected": "glance",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-terrain",
+  "scrollY": 1209,
+  "header": 76,
+  "top": 163,
+  "heading": "Every layer, and what it is not",
+  "view": "mobile",
+  "old": "/pilot/#pilot-terrain",
+  "expected": "layers",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-evidence",
+  "scrollY": 1209,
+  "header": 76,
+  "top": 163,
+  "heading": "Every layer, and what it is not",
+  "view": "mobile",
+  "old": "/pilot/#pilot-evidence",
+  "expected": "layers",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-priority",
+  "scrollY": 1209,
+  "header": 76,
+  "top": 163,
+  "heading": "Every layer, and what it is not",
+  "view": "mobile",
+  "old": "/pilot/#pilot-priority",
+  "expected": "layers",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-geothermal",
+  "scrollY": 1209,
+  "header": 76,
+  "top": 163,
+  "heading": "Every layer, and what it is not",
+  "view": "mobile",
+  "old": "/pilot/#pilot-geothermal",
+  "expected": "layers",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-structure",
+  "scrollY": 3172,
+  "header": 76,
+  "top": 163,
+  "heading": "Not available: structure and geology",
+  "view": "mobile",
+  "old": "/pilot/#pilot-structure",
+  "expected": "gap",
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/geothermal/#pilot-structure",
+  "scrollY": 3172,
+  "header": 76,
+  "top": 163,
+  "heading": "Not available: structure and geology",
+  "view": "mobile",
+  "old": "/pilot#pilot-structure",
+  "expected": "gap",
+  "chain": [
+   "308 /pilot",
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/#mineral",
+  "scrollY": 1138,
+  "header": 76,
+  "top": 163,
+  "heading": "Mining",
+  "view": "mobile",
+  "old": "/solutions/#mineral",
+  "expected": "mining",
+  "chain": [
+   "200 /solutions/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/solutions/#environment",
+  "scrollY": 1478,
+  "header": 76,
+  "top": 163,
+  "heading": "Marine",
+  "view": "mobile",
+  "old": "/solutions/#environment",
+  "expected": "marine",
+  "chain": [
+   "200 /solutions/"
+  ],
+  "lands_on_section": true
+ },
+ {
+  "url": "/partner/",
+  "scrollY": 0,
+  "header": 76,
+  "top": null,
+  "heading": null,
+  "view": "mobile",
+  "old": "/contact/",
+  "expected": null,
+  "chain": [
+   "301 /contact/",
+   "200 /partner/"
+  ],
+  "lands_on_section": null
+ },
+ {
+  "url": "/about/",
+  "scrollY": 0,
+  "header": 76,
+  "top": null,
+  "heading": null,
+  "view": "mobile",
+  "old": "/company/",
+  "expected": null,
+  "chain": [
+   "301 /company/",
+   "200 /about/"
+  ],
+  "lands_on_section": null
+ },
+ {
+  "url": "/",
+  "scrollY": 0,
+  "header": 76,
+  "top": null,
+  "heading": null,
+  "view": "mobile",
+  "old": "/platform/",
+  "expected": null,
+  "chain": [
+   "301 /platform/",
+   "200 /"
+  ],
+  "lands_on_section": null
+ },
+ {
+  "url": "/solutions/geothermal/",
+  "scrollY": 0,
+  "header": 76,
+  "top": null,
+  "heading": null,
+  "view": "mobile",
+  "old": "/pilot/",
+  "expected": null,
+  "chain": [
+   "301 /pilot/",
+   "200 /solutions/geothermal/"
+  ],
+  "lands_on_section": null
+ }
+]

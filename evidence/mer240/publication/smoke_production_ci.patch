@@ -1,0 +1,34 @@
+41a42,53
+> class CIDict(dict):
+>     """Case-insensitive header lookup (the agent proxy lower-cases header names on plain-http hops)."""
+>     def __init__(self, items):
+>         super().__init__((k.lower(), v) for k, v in items)
+>     def get(self, k, d=None):
+>         return super().get(k.lower(), d)
+>     def __getitem__(self, k):
+>         return super().__getitem__(k.lower())
+>     def __contains__(self, k):
+>         return super().__contains__(k.lower())
+> 
+> 
+42a55
+>     import time
+44,49c57,67
+<     req = urllib.request.Request(url, method=method, headers={"User-Agent": "orbgss-mer219-smoke", **(headers or {})})
+<     try:
+<         with opener.open(req, timeout=30) as r:
+<             return r.status, dict(r.headers), r.read() if method == "GET" else b""
+<     except urllib.error.HTTPError as e:
+<         return e.code, dict(e.headers), e.read() if method == "GET" else b""
+---
+>     for attempt in range(4):  # transport-level retries only (connection reset / timeout); HTTP statuses are never retried
+>         req = urllib.request.Request(url, method=method, headers={"User-Agent": "orbgss-mer219-smoke", **(headers or {})})
+>         try:
+>             with opener.open(req, timeout=30) as r:
+>                 return r.status, CIDict(r.headers.items()), r.read() if method == "GET" else b""
+>         except urllib.error.HTTPError as e:
+>             return e.code, CIDict(e.headers.items()), e.read() if method == "GET" else b""
+>         except (urllib.error.URLError, ConnectionError, TimeoutError) as e:
+>             print(f"  (transport retry {attempt + 1} for {url}: {e})", flush=True)
+>             time.sleep(2 * (attempt + 1))
+>     raise RuntimeError(f"transport failed 4 times: {url}")

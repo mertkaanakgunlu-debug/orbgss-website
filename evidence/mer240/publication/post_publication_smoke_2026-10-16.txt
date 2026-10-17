@@ -1,0 +1,63 @@
+MER-219 production smoke — https://orbgss.com — expecting a2045344f4cc70fe189160ffd7254fe61020cad9
+
+  PASS  http redirects to https  [308 https://orbgss.com/]
+  PASS  www redirects to the apex  [308 https://orbgss.com/]
+  PASS  HSTS header present  [max-age=63072000]
+  PASS  route / serves HTML  [200]
+  PASS  route /solutions/ serves HTML  [200]
+  PASS  route /solutions/geothermal/ serves HTML  [200]
+  PASS  route /about/ serves HTML  [200]
+  PASS  route /partner/ serves HTML  [200]
+  PASS  an unknown path returns 404  [404]
+  PASS  retired route /platform/ answers 301 to /  [301 /]
+  PASS  retired route /platform is redirected  [308 /platform/]
+  PASS  retired route /pilot/ answers 301 to /solutions/geothermal/  [301 /solutions/geothermal/]
+  PASS  retired route /pilot is redirected  [308 /pilot/]
+  PASS  retired route /company/ answers 301 to /about/  [301 /about/]
+  PASS  retired route /company is redirected  [308 /company/]
+  PASS  retired route /contact/ answers 301 to /partner/  [301 /partner/]
+  PASS  retired route /contact is redirected  [308 /contact/]
+  PASS  internal path /STATUS.md is not served  [404]
+  PASS  internal path /CLAUDE.md is not served  [404]
+  PASS  internal path /README.md is not served  [404]
+  PASS  internal path /AGENTS.md is not served  [404]
+  (transport retry 1 for https://orbgss.com/CHANGELOG.md: <urlopen error [Errno 104] Connection reset by peer>)
+  (transport retry 2 for https://orbgss.com/CHANGELOG.md: <urlopen error _ssl.c:1015: The handshake operation timed out>)
+  PASS  internal path /CHANGELOG.md is not served  [404]
+  PASS  internal path /IMAGERY_RIGHTS.md is not served  [404]
+  PASS  internal path /docs/HANDOFF.md is not served  [404]
+  PASS  internal path /tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md is not served  [404]
+  PASS  internal path /tasks/ is not served  [404]
+  PASS  internal path /evidence/ is not served  [404]
+  PASS  internal path /scripts/validate_site.py is not served  [404]
+  PASS  internal path /hero/config/scene.json is not served  [404]
+  PASS  internal path /references/ is not served  [404]
+  (transport retry 1 for https://orbgss.com/.vercelignore: <urlopen error [Errno 104] Connection reset by peer>)
+  PASS  internal path /.vercelignore is not served  [404]
+  PASS  internal path /vercel.json is not served  [404]
+  PASS  route / og:image loads  [200 https://orbgss.com/assets/hero/hero-poster-1600.webp]
+  PASS  route /solutions/ og:image loads  [200 https://orbgss.com/assets/hero/hero-poster-1600.webp]
+  PASS  route /solutions/geothermal/ og:image loads  [200 https://orbgss.com/assets/hero/hero-poster-1600.webp]
+  PASS  route /about/ og:image loads  [200 https://orbgss.com/assets/hero/hero-poster-1600.webp]
+  PASS  route /partner/ og:image loads  [200 https://orbgss.com/assets/hero/hero-poster-1600.webp]
+  PASS  homepage carries the MER-216 hero ladder (data-hero-tiers)
+  PASS  hero sm webm type and cache  [200 video/webm]
+  PASS  hero sm webm answers a range request  [206]
+  PASS  hero sm mp4 type and cache  [200 video/mp4]
+  PASS  hero sm mp4 answers a range request  [206]
+  PASS  hero md webm type and cache  [200 video/webm]
+  (transport retry 1 for https://orbgss.com/assets/hero/orbgss-hero-1920-ca741624.webm: <urlopen error _ssl.c:1015: The handshake operation timed out>)
+  (transport retry 2 for https://orbgss.com/assets/hero/orbgss-hero-1920-ca741624.webm: <urlopen error _ssl.c:1015: The handshake operation timed out>)
+  PASS  hero md webm answers a range request  [206]
+  PASS  hero md mp4 type and cache  [200 video/mp4]
+  PASS  hero md mp4 answers a range request  [206]
+  (transport retry 1 for https://orbgss.com/assets/proof/web005b/alt01-900.webp: <urlopen error [Errno 104] Connection reset by peer>)
+  (transport retry 1 for https://orbgss.com/assets/proof/web005b/priority-legend-ramp.png: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)>)
+  PASS  all 50 homepage assets load
+  PASS  /sitemap.xml served  [200]
+  PASS  /robots.txt served  [200]
+  PASS  served index.html is byte-identical to a2045344  [live 0a50b9da4d59 / git 0a50b9da4d59]
+  PASS  served script.js is byte-identical to a2045344  [live d3851b7328b9 / git d3851b7328b9]
+  PASS  served styles.css is byte-identical to a2045344  [live b88114ecca86 / git b88114ecca86]
+
+52/52 checks passed

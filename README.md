@@ -56,7 +56,7 @@ Use an isolated environment: recent rasterio wheels require numpy 2.
 
 ## Current state and next task
 
-Git `main` is `2517369e0f0c4239d72603a3188227554053a6ea`, live on orbgss.com since 2026-10-15. It is the launched code `79cc2cb` plus MER-216 (media fidelity and runtime hardening) and MER-237 (only the public site is deployed), published by MER-219. Vercel deploys `main` to production automatically, so fast-forwarding `main` is a production deployment and a separate CTO gate. Milestone 6 (new information architecture, show-first pages, static `/tr/`) is planned in `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`; the next implementation task is MER-240. `STATUS.md` is the current-state record. Work starts only from an explicit `MER-###'e başla` (rule in `CLAUDE.md`), from the exact baseline the issue names. No feature work on `main`.
+Production serves the MER-240 English Milestone 6 pages, `main@a2045344f4cc70fe189160ffd7254fe61020cad9`, live on orbgss.com since 2026-10-16: Home, Solutions (Geothermal, Mining, Marine), About and Partner with us, with 301s from the retired `/platform/`, `/pilot/`, `/company/` and `/contact/`. Vercel deploys `main` to production automatically, so fast-forwarding `main` is a production deployment and a separate CTO gate. The rest of Milestone 6 is in `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`; the next implementation task is MER-241 (static `/tr/` pages). `STATUS.md` is the current-state record. Work starts only from an explicit `MER-###'e başla` (rule in `CLAUDE.md`), from the exact baseline the issue names. No feature work on `main`.
 
 ## Deployment target
 
