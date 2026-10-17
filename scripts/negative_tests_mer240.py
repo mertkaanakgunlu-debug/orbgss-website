@@ -118,10 +118,10 @@ case("a retired route directory comes back", ROOT / "pilot" / "index.html",
      lambda t: "<!doctype html><title>Pilot</title>\n",
      "pilot/ still exists")
 case("the sitemap lists a retired route", SITEMAP,
-     swap("</urlset>", "  <url><loc>https://orbgss.com/pilot/</loc><lastmod>2026-10-16</lastmod></url>\n</urlset>"),
+     swap("</urlset>", "  <url>\n    <loc>https://orbgss.com/pilot/</loc>\n    <lastmod>2026-10-17</lastmod>\n  </url>\n</urlset>"),
      "which is not a canonical route")
 case("a sitemap entry loses its date", SITEMAP,
-     swap("<loc>https://orbgss.com/about/</loc><lastmod>2026-10-16</lastmod>", "<loc>https://orbgss.com/about/</loc>"),
+     regex(r"(<loc>https://orbgss.com/about/</loc>)\s*<lastmod>[^<]+</lastmod>", r"\1"),
      "<lastmod>")
 case("an old /pilot/ fragment stops landing", GEOTHERMAL,
      swap('<span class="anchor-alias" id="pilot-structure" aria-hidden="true"></span>', ""),

@@ -44,7 +44,7 @@ These are requirements, not suggestions:
 - The public domain taxonomy is exactly **Geothermal / Mining / Marine** (WEB-005C / MER-149), on the homepage, in the navigation and on `/solutions/` alike. The superseded application-ledger labels (Mineral Exploration, Environmental & Land Intelligence) must not return to visible copy. `/solutions/#mineral` and `/solutions/#environment` survive only as compatibility aliases on the renamed rows, and must keep resolving.
 - Desktop navigation is right-aligned; every item resolves to a real page or anchor; no flags in the language switch. Order (since MER-240): Home → Solutions (dropdown: Geothermal, Mining, Marine) → About → Partner with us → EN | TR. Geothermal links `/solutions/geothermal/`; Mining and Marine link `/solutions/#mining` and `/solutions/#marine`.
 - The three homepage Solutions cards are native links (WEB-005C R2). They navigate without JavaScript and carry no CTA button, arrow or added copy — the card itself is the link. Targets (since MER-240): `/solutions/geothermal/`, `/solutions/#mining`, `/solutions/#marine`. A card shows the image, the domain name and its status label only.
-- The site is bilingual (English default, Turkish). Live: the lightweight client-side dictionary in `script.js`. Milestone 6 target (MER-241): static Turkish pages under `/tr/` with Turkish slugs, generated from the same dictionary. Every new visible string needs both languages.
+- The site is bilingual (English default, Turkish). Live in production: the lightweight client-side dictionary in `script.js`. Implemented on the MER-241 branch and waiting for acceptance and publication: static Turkish pages under `/tr/` with Turkish slugs, generated from the same dictionary by `scripts/build_tr_pages.py`. Every new visible string needs both languages. **From MER-241 on, `/tr/*`, the Turkish `404.html` line and `sitemap.xml` are generated files: never hand-edit them.** After any change to an English page or to the `I18N` dictionary in `script.js`, run `python3 scripts/build_tr_pages.py` and commit the result; `scripts/validate_site.py` fails when the tree is not byte-identical to the generator's output. The language switch is a pair of real links (EN → the English page, TR → the Turkish one); the site neither redirects by browser language nor stores a language preference.
 - No `How it works` section.
 - No icon wall, feature-card grid, fake dashboard overlay, HUD chrome or decorative map pins.
 - Keep generous horizontal/vertical scale on desktop. The user explicitly wants sections broader in both physical size and visual context.
@@ -57,11 +57,11 @@ If a requested change conflicts with these rules, stop and ask for explicit desi
 
 The CTO approved `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (mockups `docs/mockups/m6/`). It is the authority for MER-240 (English pages) and MER-241 (static `/tr/`). Where a "live" invariant above and the target differ, the live one describes production until the task that implements the target is accepted and published. From then on, the target is the invariant.
 
-MER-240 implemented the English target. It was independently accepted at `a2045344` and published on 2026-10-16, so the English pages, navigation, redirects and homepage trim below are now the live invariants (`tasks/MER-240_EVIDENCE.md`, §8 for the publication). `scripts/validate_site.py` enforces the page set, the navigation, the redirects, the homepage trim and rules R1–R5 and R8, and `scripts/negative_tests_mer240.py` proves each check fires. Three parts of the target wait: the Geothermal page's G3 / G4 figures and the layer-table thumbnails (MER-242; the MER-151 derivatives are authorized for the homepage only), the coastal Marine scene (D5), and `/tr/` (MER-241).
+MER-240 implemented the English target. It was independently accepted at `a2045344` and published on 2026-10-16, so the English pages, navigation, redirects and homepage trim below are now the live invariants (`tasks/MER-240_EVIDENCE.md`, §8 for the publication). `scripts/validate_site.py` enforces the page set, the navigation, the redirects, the homepage trim and rules R1–R5 and R8, and `scripts/negative_tests_mer240.py` proves each check fires. Three parts of the target wait: the Geothermal page's G3 / G4 figures and the layer-table thumbnails (MER-242; the MER-151 derivatives are authorized for the homepage only), the coastal Marine scene (D5), and `/tr/` (MER-241: implemented on `claude/mer-241-turkish-static-pages-sihwiy`, `REVIEW_READY`, not published; `tasks/MER-241_EVIDENCE.md`).
 
 - **Pages:** `/` (the four acts and the inspection aid unchanged), `/solutions/` (a hub with a comparison table and a full-bleed band per domain; `#mining` and `#marine` keep the `#mineral` / `#environment` aliases), `/solutions/geothermal/` (the Kızıldere reference sheet that replaces `/pilot/`), `/about/` (principles and data sources; no team, address or legal-entity details), `/partner/` (Partner with us: conversation table plus email; no form, backend, CRM, analytics or cookies).
 - **Redirects:** 301 `/platform/` → `/`, `/pilot/` → `/solutions/geothermal/`, `/company/` → `/about/`, `/contact/` → `/partner/`. The old `#pilot-*` anchors survive as aliases on the Geothermal page.
-- **Turkish URLs:** `/tr/`, `/tr/cozumler/`, `/tr/cozumler/jeotermal/`, `/tr/hakkimizda/`, `/tr/is-birligi/`. Anchor ids are identical in both languages.
+- **Turkish URLs:** `/tr/`, `/tr/cozumler/`, `/tr/cozumler/jeotermal/`, `/tr/hakkimizda/`, `/tr/is-birligi/`. Anchor ids are identical in both languages. Generated by `scripts/build_tr_pages.py` (MER-241); `/tr/` is in the `.vercelignore` allowlist; `scripts/negative_tests_mer241.py` proves the language checks in `scripts/validate_site.py` fire.
 - **Homepage changes:** Method and Company leave the homepage for `/about/`; Contact becomes one "Partner with us →" line; the homepage carries no `mailto:` of its own; the Act 3 / Act 4 links into `/pilot/` point to the Geothermal page.
 - **Content rules (apply to every page built or changed from MER-240 on):**
   - **R1** — every fact has exactly one home page; elsewhere it is only linked.
@@ -147,8 +147,8 @@ For each bounded task:
 
 1. state the task and files expected to change;
 2. run `python scripts/validate_site.py` before changes;
-3. make the smallest coherent change;
-4. run the validator again;
+3. make the smallest coherent change (after editing an English page or the `I18N` dictionary, regenerate `/tr/` with `python3 scripts/build_tr_pages.py`);
+4. run the validator again (and `python3 scripts/negative_tests_mer241.py` when a language check is touched);
 5. preview locally if visual behavior changed;
 6. report changed paths, validation result, remaining blockers and the next safe action.
 

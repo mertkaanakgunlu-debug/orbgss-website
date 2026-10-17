@@ -2,7 +2,7 @@
 
 **Published:** `main@a2045344f4cc70fe189160ffd7254fe61020cad9` (MER-240, the English Milestone 6 pages), live on orbgss.com since 2026-10-16 14:49 UTC, plus the docs-only records commit on top of it (2026-10-17), which changes no deployed file.
 **Date:** 2026-10-17 (MER-240 publication records)
-**Stage:** Milestone 6 — information architecture and show-first pages. The English pages (MER-240) are accepted, published and Done. Next: the static Turkish pages (MER-241); Science's MER-242 runs in parallel. Milestone 5 (post-launch audit, media fidelity and runtime hardening) is complete and published.
+**Stage:** Milestone 6 — information architecture and show-first pages. The English pages (MER-240) are accepted, published and Done. The static Turkish pages (MER-241) are implemented on a task branch and `REVIEW_READY` (not published); Science's MER-242 runs in parallel. Milestone 5 (post-launch audit, media fidelity and runtime hardening) is complete and published.
 
 ## Current state (2026-10-17, after the MER-240 publication)
 
@@ -14,7 +14,7 @@
 | Rollback target | The pre-Milestone 6 site is `orbgss-website-29bzudvea-virga-soft.vercel.app` (`464a7354`); the MER-240 deployment `orbgss-website-ni854m1xn` serves the same site as the records commit. Instant Rollback in the Vercel dashboard; on Hobby only the immediately previous production deployment qualifies, so after the records redeploy the way back to the pre-Milestone 6 site may be a reviewed `git revert` fast-forward instead. A rollback switches off automatic domain assignment until "Undo Rollback" (`tasks/MER-219_PREFLIGHT.md` §4). No agent rolls back. |
 | Deploy set | `.vercelignore` root allowlist (MER-237): only the public site is uploaded and served. Internal paths return 404 in production (verified). |
 | Agent access to Vercel | The Vercel connector in Claude is signed in as the CTO's account. Team listings (for example `list_deployments`) return 403 for `virga-soft`, but `get_deployment` by hostname (`orbgss.com`, a branch alias or a deployment URL) works and returns the `dpl_…` id, state, aliases and `githubCommitSha`. Branch Previews are protected; cloud sessions reach them through the bypass header the project environment injects. |
-| Task branches | None in review. Published task branches (MER-240 `mertkaanakgunlu/mer-240-web-sitesi-yeni-sayfalarin-uygulanmasi-en` included) are history. New work branches from the exact baseline its Linear issue names, verified by fetch. |
+| Task branches | In review: `claude/mer-241-turkish-static-pages-sihwiy` (MER-241, static `/tr/`; baseline `main@81d1f911`; `REVIEW_READY`, never merged or deployed; `tasks/MER-241_EVIDENCE.md`). Published task branches (MER-240 `mertkaanakgunlu/mer-240-web-sitesi-yeni-sayfalarin-uygulanmasi-en` included) are history. New work branches from the exact baseline its Linear issue names, verified by fetch. |
 
 **Live product (production, `main@a2045344`, the MER-240 English Milestone 6 pages):**
 
@@ -22,10 +22,10 @@
 * **Routes:** `/`, `/solutions/`, `/solutions/geothermal/`, `/about/`, `/partner/` (+ `404.html`). `/platform/`, `/pilot/`, `/company/` and `/contact/` answer with a 301 (`vercel.json`) to `/`, `/solutions/geothermal/`, `/about/` and `/partner/`; the slash-less forms take a 308 to the slashed form first, and the query string is kept. The old `/pilot/#pilot-*` fragments land on the Geothermal page's `#glance`, `#layers` and `#gap`; `/solutions/#mineral` and `#environment` land on `#mining` and `#marine`.
 * **Navigation:** Home → Solutions (Geothermal, Mining, Marine) → About → Partner with us → EN | TR, on every page, in the footer and on `404.html`.
 * **Contact:** `/partner/` links `mailto:contact@orbgss.com`. The mailbox receives external mail (D4, CTO test 2026-10-16); the test mail landed in spam, and a Gmail "never send to spam" filter is the CTO's action.
-* **Not shown yet:** the Geothermal page's G3 (priority over relief) and G4 (iron proxy) and the layer-table thumbnails wait for MER-242 (MER-151 derivatives are authorized for the homepage only). Marine keeps the Ili Delta (D5). Turkish is still the client-side dictionary; static `/tr/` is MER-241.
+* **Not shown yet:** the Geothermal page's G3 (priority over relief) and G4 (iron proxy) and the layer-table thumbnails wait for MER-242 (MER-151 derivatives are authorized for the homepage only). Marine keeps the Ili Delta (D5). In production Turkish is still the client-side dictionary; the static `/tr/` pages (MER-241) are on the review branch and go live only with a CTO-authorized publication.
 * **Stack:** static HTML, CSS and vanilla JS; no package manager.
 
-The authority is `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`. Its English part is now the live invariant (`CLAUDE.md` § "Milestone 6 target"); the `/tr/` part becomes live with MER-241.
+The authority is `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`. Its English part is now the live invariant (`CLAUDE.md` § "Milestone 6 target"); the `/tr/` part becomes live when MER-241 is accepted and published.
 
 ## Milestone 6 — Bilgi Mimarisi ve Gösterim Odaklı Sayfalar (Linear)
 
@@ -36,7 +36,7 @@ The authority is `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`. Its English part is 
 | MER-238 — IA and page-content authority | Done. D1 (Science derivatives, MER-242) and D2 (Turkish slugs) decided; D4 (`contact@orbgss.com` deliverability) settled by the CTO's test on 2026-10-16 (received, in spam); D3 (privacy / KVKK, legal) and D5 (coastal Marine scene) open. Evidence `tasks/MER-238_EVIDENCE.md`. |
 | MER-239 — documentation and authority reconciliation | Done; published in `464a7354`. Evidence `tasks/MER-239_EVIDENCE.md`. |
 | MER-240 — new pages (EN) | Done. Independently accepted (PASS) at `a2045344` after one review revision; published 2026-10-16 (smoke 52/52, browser 19/19, live 301s and `#pilot-*` landings checked in production); the CTO tried the site and had it set Done on 2026-10-17. Evidence `tasks/MER-240_EVIDENCE.md` (§8 publication). |
-| MER-241 — static `/tr/` pages | Backlog; next, now that MER-240 is published. |
+| MER-241 — static `/tr/` pages | In Progress → `REVIEW_READY` on `claude/mer-241-turkish-static-pages-sihwiy` (baseline `main@81d1f911`; the branch HEAD is in the Linear report). Five Turkish pages, a Turkish line on the bilingual 404, hreflang and a sitemap with alternates, real EN \| TR links; the browser language preference is retired. Awaits the independent review, the CTO's reading of the Turkish copy and the CTO-authorized publication. Evidence `tasks/MER-241_EVIDENCE.md`. |
 | MER-242 — Science: MER-151-family derivatives for priority over relief, ALT-02 and the layer-table thumbnails | Geothermal Domain project; the Geothermal page leaves those figures and thumbnails out until it is accepted. |
 
 Linear closure is the CTO's action. Agents record acceptance comments and close an issue only when the CTO says so in the conversation (MER-240, 2026-10-17).
@@ -66,6 +66,7 @@ The short command `MER-###'e başla` authorizes exactly that Linear issue, in th
 | --- | --- |
 | `py -3.14 scripts/validate_site.py` | PASS, 0 warnings (4 scenes, 5 routes + `404.html`, 277 i18n keys, 6 geo-web-002 assets / 19 files, deploy set 12 root entries). Since MER-240 it also enforces the Milestone 6 navigation, redirects, homepage trim, the locator-map record and content rules R1–R5 and R8. |
 | `negative_tests_web005.py` / `_web005b.py` / `_web005c.py` / `_mer216.py` / `_mer237.py` / `_mer240.py` | 72/72, 55/55, 18/18, 19/19, 29/29, 46/46 caught (`_mer240.py` runs on LF and CRLF checkouts); restored trees identical. The web005b, web005c and mer237 cases that mutated the retired routes now mutate their successors (`tasks/MER-240_EVIDENCE.md` §5). |
+| On the MER-241 branch (2026-10-17, container) | `build_tr_pages.py --check` byte-identical; `validate_site.py` PASS, 0 warnings (5 Turkish routes, 844 strings checked, deploy set 13 root entries / 119 files); `negative_tests_mer241.py` 44/44 and the six older suites 72/55/18/19/29/46; `validate_hero.py` 412 checks with exactly the 13 source-texture failures; browser sweep 240 loads / 0 failures (`tasks/MER-241_EVIDENCE.md`). |
 | `py -3.14 hero/scripts/validate_hero.py` | 420 / 0 on the hero workstation; in a fresh clone exactly the 13 git-ignored source-texture checks fail and nothing else |
 | `evidence/mer219/smoke_production.py --expect-sha a2045344…` | 52/52 against production (2026-10-16, after the MER-240 publication). In a cloud container it needs the two local adjustments recorded in `evidence/mer240/publication/` (case-insensitive headers, transport-only retries); the repository copy is unchanged. |
 

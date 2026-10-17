@@ -1,0 +1,553 @@
+{
+  "sweep": {
+    "loads": 240,
+    "failures": []
+  },
+  "no_js": [
+    {
+      "en": "/",
+      "tr": "/tr/",
+      "en_lang": "en",
+      "after_click": "/tr/",
+      "tr_lang": "tr",
+      "tr_title": "OrbGSS — Coğrafi Zekâ",
+      "tr_h1": "Sırada nereye bakacağınızı bilin.",
+      "tr_nav": [
+        "ANA",
+        "SAYFA",
+        "ÇÖZÜMLER",
+        "HAKKIMIZDA",
+        "İŞ",
+        "BİRLİĞİ"
+      ],
+      "tr_hreflang": [
+        [
+          "en",
+          "https://orbgss.com/"
+        ],
+        [
+          "tr",
+          "https://orbgss.com/tr/"
+        ],
+        [
+          "x-default",
+          "https://orbgss.com/"
+        ]
+      ],
+      "back": "/"
+    },
+    {
+      "en": "/solutions/",
+      "tr": "/tr/cozumler/",
+      "en_lang": "en",
+      "after_click": "/tr/cozumler/",
+      "tr_lang": "tr",
+      "tr_title": "Çözümler — OrbGSS",
+      "tr_h1": "OrbGSS bugün nerede çalışıyor, sırada ne var.",
+      "tr_nav": [
+        "ANA",
+        "SAYFA",
+        "ÇÖZÜMLER",
+        "HAKKIMIZDA",
+        "İŞ",
+        "BİRLİĞİ"
+      ],
+      "tr_hreflang": [
+        [
+          "en",
+          "https://orbgss.com/solutions/"
+        ],
+        [
+          "tr",
+          "https://orbgss.com/tr/cozumler/"
+        ],
+        [
+          "x-default",
+          "https://orbgss.com/solutions/"
+        ]
+      ],
+      "back": "/solutions/"
+    },
+    {
+      "en": "/solutions/geothermal/",
+      "tr": "/tr/cozumler/jeotermal/",
+      "en_lang": "en",
+      "after_click": "/tr/cozumler/jeotermal/",
+      "tr_lang": "tr",
+      "tr_title": "Jeotermal — Kızıldere pilotu — OrbGSS",
+      "tr_h1": "Kızıldere: yayımlanan ilk pilot.",
+      "tr_nav": [
+        "ANA",
+        "SAYFA",
+        "ÇÖZÜMLER",
+        "HAKKIMIZDA",
+        "İŞ",
+        "BİRLİĞİ"
+      ],
+      "tr_hreflang": [
+        [
+          "en",
+          "https://orbgss.com/solutions/geothermal/"
+        ],
+        [
+          "tr",
+          "https://orbgss.com/tr/cozumler/jeotermal/"
+        ],
+        [
+          "x-default",
+          "https://orbgss.com/solutions/geothermal/"
+        ]
+      ],
+      "back": "/solutions/geothermal/"
+    },
+    {
+      "en": "/about/",
+      "tr": "/tr/hakkimizda/",
+      "en_lang": "en",
+      "after_click": "/tr/hakkimizda/",
+      "tr_lang": "tr",
+      "tr_title": "Hakkımızda — OrbGSS",
+      "tr_h1": "OrbGSS — Orbital Geo-Spatial Solutions",
+      "tr_nav": [
+        "ANA",
+        "SAYFA",
+        "ÇÖZÜMLER",
+        "HAKKIMIZDA",
+        "İŞ",
+        "BİRLİĞİ"
+      ],
+      "tr_hreflang": [
+        [
+          "en",
+          "https://orbgss.com/about/"
+        ],
+        [
+          "tr",
+          "https://orbgss.com/tr/hakkimizda/"
+        ],
+        [
+          "x-default",
+          "https://orbgss.com/about/"
+        ]
+      ],
+      "back": "/about/"
+    },
+    {
+      "en": "/partner/",
+      "tr": "/tr/is-birligi/",
+      "en_lang": "en",
+      "after_click": "/tr/is-birligi/",
+      "tr_lang": "tr",
+      "tr_title": "İş Birliği — OrbGSS",
+      "tr_h1": "Sırada nereye bakacağımızı konuşalım.",
+      "tr_nav": [
+        "ANA",
+        "SAYFA",
+        "ÇÖZÜMLER",
+        "HAKKIMIZDA",
+        "İŞ",
+        "BİRLİĞİ"
+      ],
+      "tr_hreflang": [
+        [
+          "en",
+          "https://orbgss.com/partner/"
+        ],
+        [
+          "tr",
+          "https://orbgss.com/tr/is-birligi/"
+        ],
+        [
+          "x-default",
+          "https://orbgss.com/partner/"
+        ]
+      ],
+      "back": "/partner/"
+    }
+  ],
+  "preference": [
+    {
+      "stored": "tr",
+      "page": "/about/",
+      "lang": "en",
+      "h1": "OrbGSS — Orbital Geo-Spatial Solutions",
+      "left_in_storage": null
+    },
+    {
+      "stored": "tr",
+      "page": "/",
+      "lang": "en",
+      "h1": "Know where to look next.",
+      "left_in_storage": null
+    },
+    {
+      "stored": "en",
+      "page": "/tr/hakkimizda/",
+      "lang": "tr",
+      "h1": "OrbGSS — Orbital Geo-Spatial Solutions",
+      "left_in_storage": null
+    }
+  ],
+  "menu": [
+    {
+      "page": "/about/",
+      "closed": "Open navigation",
+      "open": "Close navigation",
+      "switch_visible": true
+    },
+    {
+      "page": "/tr/hakkimizda/",
+      "closed": "Menüyü aç",
+      "open": "Menüyü kapat",
+      "switch_visible": true
+    }
+  ],
+  "hero": {
+    "/": {
+      "hero_media": [
+        "/assets/hero/orbgss-hero-1920-ca741624.webm"
+      ],
+      "state": {
+        "state": "playing",
+        "tier": "md",
+        "codec": "webm",
+        "reason": null
+      },
+      "bad": [],
+      "nested": []
+    },
+    "/tr/": {
+      "hero_media": [
+        "/assets/hero/orbgss-hero-1920-ca741624.webm"
+      ],
+      "state": {
+        "state": "playing",
+        "tier": "md",
+        "codec": "webm",
+        "reason": null
+      },
+      "bad": [],
+      "nested": []
+    },
+    "same_asset_requests": true
+  },
+  "not_found": [
+    {
+      "url": "/no-such-page/",
+      "status": 404,
+      "h1": "This page is outside the area of interest.",
+      "tr_line": "Bu sayfa ilgi alanının dışında.",
+      "links": [
+        "/",
+        "/tr/"
+      ]
+    },
+    {
+      "url": "/tr/yok/",
+      "status": 404,
+      "h1": "This page is outside the area of interest.",
+      "tr_line": "Bu sayfa ilgi alanının dışında.",
+      "links": [
+        "/",
+        "/tr/"
+      ]
+    },
+    {
+      "url": "/tr/cozumler/yok/",
+      "status": 404,
+      "h1": "This page is outside the area of interest.",
+      "tr_line": "Bu sayfa ilgi alanının dışında.",
+      "links": [
+        "/",
+        "/tr/"
+      ]
+    },
+    {
+      "url": "/STATUS.md",
+      "status": 404,
+      "h1": "This page is outside the area of interest.",
+      "tr_line": "Bu sayfa ilgi alanının dışında.",
+      "links": [
+        "/",
+        "/tr/"
+      ]
+    },
+    {
+      "url": "/tr/index.html.bak",
+      "status": 404,
+      "h1": "This page is outside the area of interest.",
+      "tr_line": "Bu sayfa ilgi alanının dışında.",
+      "links": [
+        "/",
+        "/tr/"
+      ]
+    }
+  ],
+  "screenshots": [
+    "home-desktop-1440-en.webp",
+    "solutions-desktop-1440-en.webp",
+    "geothermal-desktop-1440-en.webp",
+    "about-desktop-1440-en.webp",
+    "partner-desktop-1440-en.webp",
+    "home-desktop-1440-tr.webp",
+    "solutions-desktop-1440-tr.webp",
+    "geothermal-desktop-1440-tr.webp",
+    "about-desktop-1440-tr.webp",
+    "partner-desktop-1440-tr.webp",
+    "404-desktop-1440-en.webp",
+    "home-mobile-390-en.webp",
+    "solutions-mobile-390-en.webp",
+    "geothermal-mobile-390-en.webp",
+    "about-mobile-390-en.webp",
+    "partner-mobile-390-en.webp",
+    "home-mobile-390-tr.webp",
+    "solutions-mobile-390-tr.webp",
+    "geothermal-mobile-390-tr.webp",
+    "about-mobile-390-tr.webp",
+    "partner-mobile-390-tr.webp",
+    "404-mobile-390-en.webp"
+  ],
+  "header_height": {
+    "/@375x1": 76,
+    "/@390x1": 76,
+    "/@414x1": 76,
+    "/@768x1": 76,
+    "/@1024x1": 88,
+    "/@1280x1": 88,
+    "/@1440x1": 88,
+    "/@1920x1": 88,
+    "/@2560x1": 88,
+    "/@3840x1": 88,
+    "/@375x2": 76,
+    "/@390x2": 76,
+    "/@414x2": 76,
+    "/@768x2": 76,
+    "/@1024x2": 88,
+    "/@1280x2": 88,
+    "/@1440x2": 88,
+    "/@1920x2": 88,
+    "/@2560x2": 88,
+    "/@3840x2": 88,
+    "/@375x3": 76,
+    "/@390x3": 76,
+    "/@414x3": 76,
+    "/@768x3": 76,
+    "/solutions/@375x1": 76,
+    "/solutions/@390x1": 76,
+    "/solutions/@414x1": 76,
+    "/solutions/@768x1": 76,
+    "/solutions/@1024x1": 88,
+    "/solutions/@1280x1": 88,
+    "/solutions/@1440x1": 88,
+    "/solutions/@1920x1": 88,
+    "/solutions/@2560x1": 88,
+    "/solutions/@3840x1": 88,
+    "/solutions/@375x2": 76,
+    "/solutions/@390x2": 76,
+    "/solutions/@414x2": 76,
+    "/solutions/@768x2": 76,
+    "/solutions/@1024x2": 88,
+    "/solutions/@1280x2": 88,
+    "/solutions/@1440x2": 88,
+    "/solutions/@1920x2": 88,
+    "/solutions/@2560x2": 88,
+    "/solutions/@3840x2": 88,
+    "/solutions/@375x3": 76,
+    "/solutions/@390x3": 76,
+    "/solutions/@414x3": 76,
+    "/solutions/@768x3": 76,
+    "/solutions/geothermal/@375x1": 76,
+    "/solutions/geothermal/@390x1": 76,
+    "/solutions/geothermal/@414x1": 76,
+    "/solutions/geothermal/@768x1": 76,
+    "/solutions/geothermal/@1024x1": 88,
+    "/solutions/geothermal/@1280x1": 88,
+    "/solutions/geothermal/@1440x1": 88,
+    "/solutions/geothermal/@1920x1": 88,
+    "/solutions/geothermal/@2560x1": 88,
+    "/solutions/geothermal/@3840x1": 88,
+    "/solutions/geothermal/@375x2": 76,
+    "/solutions/geothermal/@390x2": 76,
+    "/solutions/geothermal/@414x2": 76,
+    "/solutions/geothermal/@768x2": 76,
+    "/solutions/geothermal/@1024x2": 88,
+    "/solutions/geothermal/@1280x2": 88,
+    "/solutions/geothermal/@1440x2": 88,
+    "/solutions/geothermal/@1920x2": 88,
+    "/solutions/geothermal/@2560x2": 88,
+    "/solutions/geothermal/@3840x2": 88,
+    "/solutions/geothermal/@375x3": 76,
+    "/solutions/geothermal/@390x3": 76,
+    "/solutions/geothermal/@414x3": 76,
+    "/solutions/geothermal/@768x3": 76,
+    "/about/@375x1": 76,
+    "/about/@390x1": 76,
+    "/about/@414x1": 76,
+    "/about/@768x1": 76,
+    "/about/@1024x1": 88,
+    "/about/@1280x1": 88,
+    "/about/@1440x1": 88,
+    "/about/@1920x1": 88,
+    "/about/@2560x1": 88,
+    "/about/@3840x1": 88,
+    "/about/@375x2": 76,
+    "/about/@390x2": 76,
+    "/about/@414x2": 76,
+    "/about/@768x2": 76,
+    "/about/@1024x2": 88,
+    "/about/@1280x2": 88,
+    "/about/@1440x2": 88,
+    "/about/@1920x2": 88,
+    "/about/@2560x2": 88,
+    "/about/@3840x2": 88,
+    "/about/@375x3": 76,
+    "/about/@390x3": 76,
+    "/about/@414x3": 76,
+    "/about/@768x3": 76,
+    "/partner/@375x1": 76,
+    "/partner/@390x1": 76,
+    "/partner/@414x1": 76,
+    "/partner/@768x1": 76,
+    "/partner/@1024x1": 88,
+    "/partner/@1280x1": 88,
+    "/partner/@1440x1": 88,
+    "/partner/@1920x1": 88,
+    "/partner/@2560x1": 88,
+    "/partner/@3840x1": 88,
+    "/partner/@375x2": 76,
+    "/partner/@390x2": 76,
+    "/partner/@414x2": 76,
+    "/partner/@768x2": 76,
+    "/partner/@1024x2": 88,
+    "/partner/@1280x2": 88,
+    "/partner/@1440x2": 88,
+    "/partner/@1920x2": 88,
+    "/partner/@2560x2": 88,
+    "/partner/@3840x2": 88,
+    "/partner/@375x3": 76,
+    "/partner/@390x3": 76,
+    "/partner/@414x3": 76,
+    "/partner/@768x3": 76,
+    "/tr/@375x1": 76,
+    "/tr/@390x1": 76,
+    "/tr/@414x1": 76,
+    "/tr/@768x1": 76,
+    "/tr/@1024x1": 88,
+    "/tr/@1280x1": 88,
+    "/tr/@1440x1": 88,
+    "/tr/@1920x1": 88,
+    "/tr/@2560x1": 88,
+    "/tr/@3840x1": 88,
+    "/tr/@375x2": 76,
+    "/tr/@390x2": 76,
+    "/tr/@414x2": 76,
+    "/tr/@768x2": 76,
+    "/tr/@1024x2": 88,
+    "/tr/@1280x2": 88,
+    "/tr/@1440x2": 88,
+    "/tr/@1920x2": 88,
+    "/tr/@2560x2": 88,
+    "/tr/@3840x2": 88,
+    "/tr/@375x3": 76,
+    "/tr/@390x3": 76,
+    "/tr/@414x3": 76,
+    "/tr/@768x3": 76,
+    "/tr/cozumler/@375x1": 76,
+    "/tr/cozumler/@390x1": 76,
+    "/tr/cozumler/@414x1": 76,
+    "/tr/cozumler/@768x1": 76,
+    "/tr/cozumler/@1024x1": 88,
+    "/tr/cozumler/@1280x1": 88,
+    "/tr/cozumler/@1440x1": 88,
+    "/tr/cozumler/@1920x1": 88,
+    "/tr/cozumler/@2560x1": 88,
+    "/tr/cozumler/@3840x1": 88,
+    "/tr/cozumler/@375x2": 76,
+    "/tr/cozumler/@390x2": 76,
+    "/tr/cozumler/@414x2": 76,
+    "/tr/cozumler/@768x2": 76,
+    "/tr/cozumler/@1024x2": 88,
+    "/tr/cozumler/@1280x2": 88,
+    "/tr/cozumler/@1440x2": 88,
+    "/tr/cozumler/@1920x2": 88,
+    "/tr/cozumler/@2560x2": 88,
+    "/tr/cozumler/@3840x2": 88,
+    "/tr/cozumler/@375x3": 76,
+    "/tr/cozumler/@390x3": 76,
+    "/tr/cozumler/@414x3": 76,
+    "/tr/cozumler/@768x3": 76,
+    "/tr/cozumler/jeotermal/@375x1": 76,
+    "/tr/cozumler/jeotermal/@390x1": 76,
+    "/tr/cozumler/jeotermal/@414x1": 76,
+    "/tr/cozumler/jeotermal/@768x1": 76,
+    "/tr/cozumler/jeotermal/@1024x1": 88,
+    "/tr/cozumler/jeotermal/@1280x1": 88,
+    "/tr/cozumler/jeotermal/@1440x1": 88,
+    "/tr/cozumler/jeotermal/@1920x1": 88,
+    "/tr/cozumler/jeotermal/@2560x1": 88,
+    "/tr/cozumler/jeotermal/@3840x1": 88,
+    "/tr/cozumler/jeotermal/@375x2": 76,
+    "/tr/cozumler/jeotermal/@390x2": 76,
+    "/tr/cozumler/jeotermal/@414x2": 76,
+    "/tr/cozumler/jeotermal/@768x2": 76,
+    "/tr/cozumler/jeotermal/@1024x2": 88,
+    "/tr/cozumler/jeotermal/@1280x2": 88,
+    "/tr/cozumler/jeotermal/@1440x2": 88,
+    "/tr/cozumler/jeotermal/@1920x2": 88,
+    "/tr/cozumler/jeotermal/@2560x2": 88,
+    "/tr/cozumler/jeotermal/@3840x2": 88,
+    "/tr/cozumler/jeotermal/@375x3": 76,
+    "/tr/cozumler/jeotermal/@390x3": 76,
+    "/tr/cozumler/jeotermal/@414x3": 76,
+    "/tr/cozumler/jeotermal/@768x3": 76,
+    "/tr/hakkimizda/@375x1": 76,
+    "/tr/hakkimizda/@390x1": 76,
+    "/tr/hakkimizda/@414x1": 76,
+    "/tr/hakkimizda/@768x1": 76,
+    "/tr/hakkimizda/@1024x1": 88,
+    "/tr/hakkimizda/@1280x1": 88,
+    "/tr/hakkimizda/@1440x1": 88,
+    "/tr/hakkimizda/@1920x1": 88,
+    "/tr/hakkimizda/@2560x1": 88,
+    "/tr/hakkimizda/@3840x1": 88,
+    "/tr/hakkimizda/@375x2": 76,
+    "/tr/hakkimizda/@390x2": 76,
+    "/tr/hakkimizda/@414x2": 76,
+    "/tr/hakkimizda/@768x2": 76,
+    "/tr/hakkimizda/@1024x2": 88,
+    "/tr/hakkimizda/@1280x2": 88,
+    "/tr/hakkimizda/@1440x2": 88,
+    "/tr/hakkimizda/@1920x2": 88,
+    "/tr/hakkimizda/@2560x2": 88,
+    "/tr/hakkimizda/@3840x2": 88,
+    "/tr/hakkimizda/@375x3": 76,
+    "/tr/hakkimizda/@390x3": 76,
+    "/tr/hakkimizda/@414x3": 76,
+    "/tr/hakkimizda/@768x3": 76,
+    "/tr/is-birligi/@375x1": 76,
+    "/tr/is-birligi/@390x1": 76,
+    "/tr/is-birligi/@414x1": 76,
+    "/tr/is-birligi/@768x1": 76,
+    "/tr/is-birligi/@1024x1": 88,
+    "/tr/is-birligi/@1280x1": 88,
+    "/tr/is-birligi/@1440x1": 88,
+    "/tr/is-birligi/@1920x1": 88,
+    "/tr/is-birligi/@2560x1": 88,
+    "/tr/is-birligi/@3840x1": 88,
+    "/tr/is-birligi/@375x2": 76,
+    "/tr/is-birligi/@390x2": 76,
+    "/tr/is-birligi/@414x2": 76,
+    "/tr/is-birligi/@768x2": 76,
+    "/tr/is-birligi/@1024x2": 88,
+    "/tr/is-birligi/@1280x2": 88,
+    "/tr/is-birligi/@1440x2": 88,
+    "/tr/is-birligi/@1920x2": 88,
+    "/tr/is-birligi/@2560x2": 88,
+    "/tr/is-birligi/@3840x2": 88,
+    "/tr/is-birligi/@375x3": 76,
+    "/tr/is-birligi/@390x3": 76,
+    "/tr/is-birligi/@414x3": 76,
+    "/tr/is-birligi/@768x3": 76
+  },
+  "problems": []
+}

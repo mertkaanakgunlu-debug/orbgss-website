@@ -1,10 +1,17 @@
-/* OrbGSS — minimal vanilla JS: navigation, Solutions dropdown, EN/TR language switch, image-failure handling. */
+/* OrbGSS — minimal vanilla JS: navigation, Solutions dropdown, image-failure handling, hero. */
 
 /* ------------------------------------------------------------------ */
 /* Translations. Keys map to data-i18n* attributes on the public pages. */
 /* data-i18n        -> textContent                                     */
 /* data-i18n-html   -> innerHTML (static, trusted strings with <br />) */
 /* data-i18n-alt / -aria-label / -content / -href -> that attribute     */
+/*                                                                      */
+/* MER-241: this dictionary is the single source for BOTH languages, but */
+/* it is applied at build time, not in the browser. scripts/            */
+/* build_tr_pages.py reads it and writes the static Turkish pages under */
+/* /tr/; the English pages carry their own text. The browser never      */
+/* swaps text, so every page is complete in its own language with no    */
+/* JavaScript. At runtime only the menu-toggle label below is read.     */
 /* ------------------------------------------------------------------ */
 const MAIL_EN = 'mailto:contact@orbgss.com?subject=OrbGSS%20Partnership%20Inquiry';
 const MAIL_TR = 'mailto:contact@orbgss.com?subject=OrbGSS%20%C4%B0%C5%9F%20Birli%C4%9Fi%20Talebi';
@@ -621,55 +628,20 @@ const I18N = {
 
 
 const DEFAULT_LANG = 'en';
-const LANG_KEY = 'orbgss.lang';
-const ATTR_MAP = [
-  ['data-i18n-alt', 'alt'],
-  ['data-i18n-aria-label', 'aria-label'],
-  ['data-i18n-content', 'content'],
-  ['data-i18n-href', 'href']
-];
-
-let currentLang = DEFAULT_LANG;
+/* MER-241: the language is the page. <html lang> is "en" or "tr" in the static markup, and a
+   visitor changes language by following the EN | TR links in the header (real pages, so it works
+   without JavaScript and crawlers see each language at its own URL). Nothing is read from or
+   written to storage, and nothing redirects by browser language. */
+const currentLang = document.documentElement.lang === 'tr' ? 'tr' : DEFAULT_LANG;
 const t = (key) => (I18N[currentLang] && I18N[currentLang][key]) || I18N[DEFAULT_LANG][key] || '';
 
-function readStoredLang() {
-  try {
-    const stored = window.localStorage.getItem(LANG_KEY);
-    return stored && I18N[stored] ? stored : DEFAULT_LANG;
-  } catch (error) {
-    return DEFAULT_LANG;
-  }
-}
-
-function applyLanguage(lang) {
-  if (!I18N[lang]) return;
-  currentLang = lang;
-  document.documentElement.lang = lang;
-
-  document.querySelectorAll('[data-i18n]').forEach((el) => {
-    el.textContent = t(el.getAttribute('data-i18n'));
-  });
-  document.querySelectorAll('[data-i18n-html]').forEach((el) => {
-    el.innerHTML = t(el.getAttribute('data-i18n-html'));
-  });
-  ATTR_MAP.forEach(([dataAttr, target]) => {
-    document.querySelectorAll(`[${dataAttr}]`).forEach((el) => {
-      el.setAttribute(target, t(el.getAttribute(dataAttr)));
-    });
-  });
-
-  // The menu toggle label depends on both language and open state.
-  syncMenuToggleLabel();
-
-  document.querySelectorAll('.lang-btn').forEach((button) => {
-    button.setAttribute('aria-pressed', String(button.dataset.lang === lang));
-  });
-
-  try {
-    window.localStorage.setItem(LANG_KEY, lang);
-  } catch (error) {
-    /* storage unavailable: language still applies for this page view */
-  }
+/* The earlier client-side switch kept the choice in localStorage under this key. It is retired:
+   the preference is never read (a stored "tr" would otherwise contradict the English URL and its
+   canonical), and the leftover entry is removed so the site stores nothing in the browser. */
+try {
+  window.localStorage.removeItem('orbgss.lang');
+} catch (error) {
+  /* storage unavailable: nothing to remove */
 }
 
 /* ------------------------------------------------------------------ */
@@ -826,12 +798,10 @@ document.addEventListener('keydown', (event) => {
 });
 
 /* ------------------------------------------------------------------ */
-/* Language switch                                                      */
+/* Language: the page is already in its language (see above); only the   */
+/* menu-toggle label, which depends on language and open state, is set.  */
 /* ------------------------------------------------------------------ */
-document.querySelectorAll('.lang-btn').forEach((button) => {
-  button.addEventListener('click', () => applyLanguage(button.dataset.lang));
-});
-applyLanguage(readStoredLang());
+syncMenuToggleLabel();
 
 /* ------------------------------------------------------------------ */
 /* Graceful failure for self-hosted imagery: hide a scene that fails    */

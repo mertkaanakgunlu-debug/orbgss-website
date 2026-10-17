@@ -79,9 +79,10 @@ button,a{-webkit-tap-highlight-color:transparent}
 .lang-switch{display:flex;align-items:center;gap:8px;padding-left:clamp(20px,2.6vw,40px);border-left:1px solid var(--line)}
 /* min-width, not a bigger label: at 10px uppercase the two-letter codes measured 21-22px wide on
    desktop, just under the 24px WCAG 2.5.8 target. The mobile rules below already raise them to 44px. */
-.lang-btn{background:none;border:0;padding:6px 5px;min-width:24px;color:var(--dim);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;transition:color .2s ease}
+/* MER-241: the switch is two real links (EN and TR are separate pages), not two buttons. */
+.lang-btn{display:inline-block;text-align:center;background:none;border:0;padding:6px 5px;min-width:24px;color:var(--dim);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;transition:color .2s ease}
 .lang-btn:hover{color:var(--text)}
-.lang-btn[aria-pressed="true"]{color:var(--accent)}
+.lang-btn[aria-current="true"]{color:var(--accent)}
 .lang-sep{color:var(--dim);opacity:.55}
 .menu-toggle{display:none;background:none;border:0;padding:10px;margin-right:-10px;cursor:pointer}.menu-toggle span{display:block;width:25px;height:1px;background:#fff;margin:6px}
 
@@ -559,6 +560,9 @@ body.home{background:var(--orb-bg)}
 .page-closing{padding:clamp(40px,5vw,72px) var(--pad);display:flex;justify-content:center;border-top:1px solid var(--line);background:var(--bg)}
 .not-found .page-hero{border-bottom:0;min-height:52svh}
 .not-found .text-link{margin-top:30px}
+/* MER-241: one 404 serves every path, so it answers in both languages. */
+.not-found-links{display:flex;flex-wrap:wrap;gap:14px 38px;margin-top:30px}
+.not-found-links .text-link{margin-top:0}
 
 /* ---------- footer ---------- */
 .site-footer{min-height:180px;padding:34px var(--pad) 46px;display:flex;justify-content:space-between;align-items:flex-end;gap:60px;background:#050d13;border-top:1px solid var(--line)}

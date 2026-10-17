@@ -41,9 +41,9 @@
         <li><a href="/partner/" data-i18n="nav.partner">Partner with us</a></li>
       </ul>
       <div class="lang-switch" role="group" aria-label="Language" data-i18n-aria-label="nav.language">
-        <button class="lang-btn" type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+        <a class="lang-btn" href="/" hreflang="en" lang="en">EN</a>
         <span class="lang-sep" aria-hidden="true">|</span>
-        <button class="lang-btn" type="button" data-lang="tr" lang="tr" aria-pressed="false">TR</button>
+        <a class="lang-btn" href="/tr/" hreflang="tr" lang="tr">TR</a>
       </div>
     </nav>
   </header>
@@ -53,7 +53,11 @@
       <div class="page-hero-inner">
         <p class="kicker mono">404</p>
         <h1 id="not-found-title" data-i18n="notFound.title">This page is outside the area of interest.</h1>
-        <a class="text-link" href="/"><span data-i18n="notFound.home">Return to OrbGSS</span> <span aria-hidden="true">→</span></a>
+        <p class="page-hero-copy" lang="tr" data-i18n="notFound.title">Bu sayfa ilgi alanının dışında.</p>
+        <div class="not-found-links">
+          <a class="text-link" href="/"><span data-i18n="notFound.home">Return to OrbGSS</span> <span aria-hidden="true">→</span></a>
+          <a class="text-link" href="/tr/" lang="tr"><span data-i18n="notFound.home">OrbGSS'e dönün</span> <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </section>
   </main>

@@ -243,7 +243,7 @@ The validator's `ROUTES` and `REQUIRED_FILES` follow the page set in section 2. 
 | --- | --- | --- | --- |
 | D1 | The palette of G3 (priority over relief) and G4 (iron proxy) | **Decided 2026-10-15:** Science provides MER-151-family derivatives of both (**MER-242**). Until they exist, G3 and G4 are left out, and the G2 row says "Accepted, not shown yet". | (Not chosen: ship the WEB-002 / GEO-WEB-002 exports in the report palette, as the mockups show.) |
 | D2 | Turkish URL slugs | **Decided 2026-10-15:** Turkish slugs, ASCII only — `/tr/`, `/tr/cozumler/`, `/tr/cozumler/jeotermal/`, `/tr/hakkimizda/`, `/tr/is-birligi/`. | (Not chosen: English slugs under `/tr/`.) |
-| D3 | A privacy / KVKK notice page | A legal question for the company, not one this document can answer. Facts for that review: the site sets no cookies, has no forms, analytics or third-party scripts, and stores only the language choice in the visitor's own browser (`localStorage`). | — |
+| D3 | A privacy / KVKK notice page | A legal question for the company, not one this document can answer. Facts for that review: the site sets no cookies, has no forms, analytics or third-party scripts, and, from MER-241 on, stores nothing in the visitor's own browser (until then only the language choice, in `localStorage`). | — |
 | D4 | `contact@orbgss.com` deliverability | The CTO confirms the mailbox receives external mail before MER-240 ships. | — |
 | D5 | Marine imagery | Source a coastal scene (V4) during MER-240. | Keep the Ili Delta with its current illustrative footnote. |
 

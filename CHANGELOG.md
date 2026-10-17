@@ -2,6 +2,14 @@
 
 Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
 
+## MER-241 static Turkish pages — 2026-10-17 (branch `claude/mer-241-turkish-static-pages-sihwiy`; `REVIEW_READY`, not published)
+
+- **Pages:** `/tr/`, `/tr/cozumler/`, `/tr/cozumler/jeotermal/`, `/tr/hakkimizda/` and `/tr/is-birligi/` (D2 slugs; anchor ids unchanged), generated from the English pages and the `script.js` dictionary by `scripts/build_tr_pages.py` (no dependency, deterministic, `--check`). The Turkish copy says exactly what the English copy says; nothing was added, redesigned or reworded.
+- **Language switch:** EN and TR are real links to the equivalent page on every page and on `404.html`. There is no redirect by browser language and no stored preference: `script.js` no longer reads or writes `localStorage` (a legacy `orbgss.lang` entry is removed once). The runtime language switch is gone from `script.js`.
+- **Search and sharing:** per-page `lang`, title, description, canonical, `og:locale` and `og:url`, `hreflang` en / tr / x-default on both languages, and a sitemap with `xhtml:link` alternates. `404.html` carries one Turkish line and a Turkish way back.
+- **Checks:** `scripts/validate_site.py` verifies route parity, every dictionary key, hreflang reciprocity, identical asset and science references, the Turkish mandatory warnings, and that the tree equals the generator's output; `scripts/negative_tests_mer241.py` adds 44 cases (`negative_tests_mer240.py` sitemap cases follow the new format). The production smoke and browser tools in `evidence/mer219/` understand `/tr/` (edited, not executed in this container).
+- Not done on purpose: no redesign, no theme toggle, no new claims. Waiting for the independent review, the CTO's reading of the Turkish copy and a CTO-authorized publication. Evidence: `tasks/MER-241_EVIDENCE.md`.
+
 ## Published 2026-10-16 — `main@a2045344` (MER-240)
 
 - **Acceptance:** an independent review returned PASS at `a2045344` after one revision. The live 301s were checked on the real Vercel Preview, and D4 was settled by the CTO's external test mail (received, in spam).

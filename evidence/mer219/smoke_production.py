@@ -25,13 +25,16 @@ import urllib.error
 import urllib.request
 
 # MER-240 / Milestone 6 page set; the retired routes are 301 redirects (vercel.json).
-ROUTES = ["/", "/solutions/", "/solutions/geothermal/", "/about/", "/partner/"]
+# MER-241: every route has a static Turkish twin under /tr/ (MER-238 D2 slugs).
+EN_ROUTES = ["/", "/solutions/", "/solutions/geothermal/", "/about/", "/partner/"]
+TR_ROUTES = ["/tr/", "/tr/cozumler/", "/tr/cozumler/jeotermal/", "/tr/hakkimizda/", "/tr/is-birligi/"]
+ROUTES = EN_ROUTES + TR_ROUTES
 REDIRECTS = {"/platform/": "/", "/pilot/": "/solutions/geothermal/", "/company/": "/about/", "/contact/": "/partner/"}
 INTERNAL = ["/STATUS.md", "/CLAUDE.md", "/README.md", "/AGENTS.md", "/CHANGELOG.md", "/IMAGERY_RIGHTS.md",
             "/docs/HANDOFF.md", "/tasks/MER-213_POST_LAUNCH_AUDIT_EVIDENCE.md", "/tasks/", "/evidence/",
             "/scripts/validate_site.py", "/hero/config/scene.json", "/references/", "/.vercelignore",
             "/vercel.json"]
-IDENTITY = ["index.html", "script.js", "styles.css"]
+IDENTITY = ["index.html", "script.js", "styles.css", "tr/index.html"]
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -77,6 +80,14 @@ def main() -> int:
         check(s == 200 and "text/html" in h.get("Content-Type", ""), f"route {r} serves HTML", str(s))
     s, _, _ = fetch(base + "/mer219-smoke-not-a-page/")
     check(s == 404, "an unknown path returns 404", str(s))
+    s, _, body = fetch(base + "/tr/mer241-smoke-not-a-page/")
+    check(s == 404 and "lang=\"tr\"" in body.decode("utf-8", "replace"), "an unknown /tr/ path returns the bilingual 404", str(s))
+    s, h, _ = fetch(base + "/tr", follow=False)
+    check(s in (301, 308) and h.get("Location", "") in ("/tr/", base + "/tr/"), "/tr is redirected to /tr/", f"{s} {h.get('Location', '')}")
+    for en, tr in zip(EN_ROUTES, TR_ROUTES):
+        check('<html lang="tr">' in pages[tr] and '<html lang="en">' in pages[en], f"{tr} is Turkish and {en} is English")
+        check(f'hreflang="tr" href="{base}{tr}"' in pages[en] and f'hreflang="en" href="{base}{en}"' in pages[tr],
+              f"{en} and {tr} reference each other with hreflang")
 
     def same_path(location, path):
         return location in (path, base + path)
