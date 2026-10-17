@@ -11,7 +11,8 @@ lang, canonical, og:url, og:locale and a reciprocal hreflang set, mirrored in th
 switch is two real links; every string is the dictionary's Turkish value and nothing is left
 untranslated; the Turkish page keeps the English page's structure, ids, links (all to Turkish pages)
 and assets, so the science and the mandatory warnings are identical; script.js no longer swaps text,
-stores a preference or redirects; and 404.html answers in both languages.
+stores a preference or redirects; 404.html answers in both languages; and no deployed file, in any
+spelling or file type, names the former parent brand (the CTO's decision of 2026-10-17).
 
 Same discipline as scripts/negative_tests_mer240.py: each case mutates one real file (or creates or
 deletes one), runs the site validator, and restores the original in a `finally` block. A case counts
@@ -36,6 +37,8 @@ TR_ABOUT = ROOT / "tr" / "hakkimizda" / "index.html"
 TR_PARTNER = ROOT / "tr" / "is-birligi" / "index.html"
 SCRIPT = ROOT / "script.js"
 SITEMAP = ROOT / "sitemap.xml"
+STYLES = ROOT / "styles.css"
+MANIFEST = ROOT / "site.webmanifest"
 VERCELIGNORE = ROOT / ".vercelignore"
 VALIDATOR = "scripts/validate_site.py"
 
@@ -152,8 +155,8 @@ case("a Turkish mail link keeps the English subject", TR_PARTNER,
      swap("mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Talebi",
           "mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Inquiry"), "href= of 'mail.pilot'")
 case("an English page gains text with no i18n key", ABOUT,
-     swap('<p class="company-parent mono" data-i18n="footer.builtBy">Built by VirgaSoft</p>',
-          '<p class="company-parent mono" data-i18n="footer.builtBy">Built by VirgaSoft</p><p>Hello</p>'),
+     swap('<p class="kicker mono" data-i18n="aboutPage.kicker">About</p>',
+          '<p class="kicker mono" data-i18n="aboutPage.kicker">About</p><p>Hello</p>'),
      "has no i18n key")
 case("an image gains an alt text with no i18n key", SOLUTIONS,
      swap('data-i18n-alt="alt.yellowstone"', 'data-i18n-aria-label="alt.yellowstone"'),
@@ -217,6 +220,23 @@ case("the 404 loses its Turkish way back", NOT_FOUND,
      "has no Turkish way back")
 case("the 404's Turkish line drifts from the dictionary", NOT_FOUND,
      swap("Bu sayfa ilgi alanının dışında.", "Bu sayfa bulunamadı."), "not its 'tr' dictionary value")
+
+# ---- the former parent brand never appears on the public site (CTO decision, 2026-10-17) --------------
+NO_BRAND = "retired parent brand"
+case("an English footer names VirgaSoft again", PARTNER,
+     swap("</footer>", "<p>Built by VirgaSoft</p></footer>"), NO_BRAND)
+case("a Turkish page names it with Turkish capitals (VİRGASOFT)", TR_ABOUT,
+     swap("</footer>", "<p>VİRGASOFT tarafından geliştirildi</p></footer>"), NO_BRAND)
+case("the 404 names it with a space and an entity", NOT_FOUND,
+     swap("</footer>", "<p>Virga&#32;Soft</p></footer>"), NO_BRAND)
+case("the dictionary names it again", SCRIPT,
+     swap("'nav.home': 'Home',", "'nav.home': 'Home',\n    'footer.builtBy': 'Built by VirgaSoft',"), NO_BRAND)
+case("a stylesheet comment names it with a hyphen", STYLES,
+     swap(".footer-brand img{", "/* virga-soft */.footer-brand img{"), NO_BRAND)
+case("the web manifest names it", MANIFEST,
+     swap('"name": "OrbGSS"', '"name": "OrbGSS by VirgaSoft"'), NO_BRAND)
+case("a deployed file of another type carries it as metadata", ROOT / "assets" / "maps" / "probe.bin",
+     lambda _t: "XMP creator: VIRGASOFT", NO_BRAND)
 
 
 def main() -> int:

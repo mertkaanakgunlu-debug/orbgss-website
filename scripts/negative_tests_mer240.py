@@ -214,7 +214,7 @@ case("a page runs past its total budget", ABOUT,
 case("the company sentence is repeated on Partner", PARTNER,
      swap('<p class="mail-address mono" data-lead-visual><a href="mailto:contact@orbgss.com">contact@orbgss.com</a></p>',
           '<p class="mail-address mono" data-lead-visual><a href="mailto:contact@orbgss.com">contact@orbgss.com</a></p>'
-          "<p>OrbGSS is a geospatial-intelligence platform built by VirgaSoft.</p>"),
+          "<p>It exists to make exploration and land decisions evidence-based, traceable and easier to prioritize.</p>"),
      "R1:")
 case("a principle is restated on the Geothermal page", GEOTHERMAL,
      swap("structure and geology are optional support and score-invariant.</p>",

@@ -69,7 +69,7 @@ MER-240 implemented the English target. It was independently accepted at `a20453
   - **R3** — no software or development content: no workflow steps, pipelines, tooling, file formats or export paths. Geospatial facts live once, in the Geothermal facts table.
   - **R4** — every content section opens with its lead visual (image, map, chart or table).
   - **R5** — budgets (EN; TR may run 15 % longer): headline 8 words, page intro 30, section body 40, table cell 12, at most 7 rows per table; at most 250 budgeted words per page (Geothermal 350).
-  - **R6** — mandatory scientific warnings, the illustrative-imagery footnote, captions, status labels, the footer attribution and the "Built by VirgaSoft" mark are fixed texts, exempt from R1 and R5.
+  - **R6** — mandatory scientific warnings, the illustrative-imagery footnote, captions, status labels, the footer attribution are fixed texts, exempt from R1 and R5.
   - **R7** — claim discipline unchanged.
   - **R8** — Mining and Marine are labelled "Expansion direction" / "Genişleme yönü" everywhere.
 
@@ -89,6 +89,7 @@ MER-240 implemented the English target. It was independently accepted at `a20453
 - Mining and marine may be presented as solution directions.
 - Do not claim a capability, customer, pilot result, AI feature, benchmark, accuracy figure or production integration unless it is explicitly supported by current canonical material supplied by the user.
 - Keep copy concise. The design is not intended to explain the entire platform on the landing page.
+- **Brand (CTO decision, 2026-10-17):** the public site names only **OrbGSS** (expanded name "Orbital Geo-Spatial Solutions" stays in the logo tagline and the About title). It never names VirgaSoft, in any language, spelling or file, and it does not publish the planned legal name or any legal-entity text. `scripts/validate_site.py` scans every deployed file for the former parent brand and `scripts/negative_tests_mer241.py` proves it. Internal records, provenance files and Vercel / hosting identifiers (the `virga-soft` team in deployment hostnames) are not site content and stay as they are.
 - Geothermal is the first active application; Mining and Marine are expansion directions and must be labelled as such.
 
 ## Imagery policy

@@ -14,7 +14,7 @@
 ## 1. Brand hierarchy
 
 - **OrbGSS** (Orbital Geo-Spatial Solutions) is the primary public brand.
-- **VirgaSoft** is secondary parent attribution only (`Built by VirgaSoft`). It never leads.
+- No parent-company attribution is shown: the public site names only OrbGSS (CTO decision, 2026-10-17; this replaces the earlier secondary "Built by" mark).
 
 ## 2. Positioning
 
@@ -48,7 +48,7 @@ Canonical public routes after WEB-003 (live until MER-240 ships the Milestone 6 
 - `/platform/` — public workflow and decision-support framing;
 - `/solutions/` — application portfolio and maturity;
 - `/pilot/` — Kızıldere first-application proof;
-- `/company/` — OrbGSS/VirgaSoft company context;
+- `/company/` — OrbGSS company context;
 - `/contact/` — restrained mailto-based contact/partnership path.
 
 Live navigation order (approved target, MER-238: `Home` → `Solutions ⌄` → `About` → `Partner with us` → `EN | TR`):

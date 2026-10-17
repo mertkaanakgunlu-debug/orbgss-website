@@ -9,7 +9,7 @@
 
 In scope: the five static Turkish pages, the language switch as real links, the per-page language metadata, the sitemap, a bilingual 404, the validator rules and their negative suite, and the `.vercelignore` / lane records.
 
-Not done, on the CTO's instruction: no redesign of any page, no dark / light theme toggle (the CTO will plan the pages one by one later), no new copy, no new claim. The Turkish text on every page is the Turkish value the `I18N` dictionary already held in production; this task added **no dictionary key and changed no Turkish string**. No company, legal or Esri-partnership statement was added.
+Not done, on the CTO's instruction: no redesign of any page, no dark / light theme toggle (the CTO will plan the pages one by one later), no new copy, no new claim. The Turkish text on every page is the Turkish value the `I18N` dictionary already held in production; the language work added **no dictionary key and changed no Turkish string**. The only text changes are the VirgaSoft removals of §8 (the CTO's instruction of 2026-10-17). No company, legal or Esri-partnership statement was added.
 
 ## 2. What changed
 
@@ -23,8 +23,9 @@ Not done, on the CTO's instruction: no redesign of any page, no dark / light the
 | 404 | One page serves every unknown path on Vercel, so `404.html` answers in both languages: the English headline, one Turkish line (`Bu sayfa ilgi alanının dışında.`) and two ways back (`/` and `/tr/`). Its navigation chrome stays English (limitation, §6). No Turkish redirects exist or were needed: the old routes never had `/tr/` versions. |
 | Styles | `.lang-btn` as a link (inline-block, centred) with an accent colour for `aria-current="true"` (replaces the `aria-pressed` rule), and `.not-found-links`. No visual change otherwise. |
 | `.vercelignore` | `!tr` added to the allowlist (deploy set: 13 root entries, 119 files). |
+| VirgaSoft removal | §8: no served file names the former parent company any more; the validator scans every deployed file for it. |
 | Validator | `scripts/validate_site.py` gains the MER-241 block: stray files under `tr/`; the committed tree equals the generator's output byte for byte; per-page lang, canonical, og:url, og:locale, hreflang set equality and reciprocity; the two switch links; every visible string and translated attribute equals the dictionary's value in the page's effective language (a small, explicit allowlist covers brand names, numbers and coordinates), for English, Turkish and 404; English / Turkish parity of skeleton, assets, ids, hero ladder and data slots (the science is identical); internal links map to Turkish pages and every fragment resolves; the Turkish mandatory scientific warnings are present; sitemap alternates; `script.js` has no language swap, no stored preference, no browser-language redirect, and the 404 carries both languages. 844 strings were checked on the final run. |
-| Negative suite | New `scripts/negative_tests_mer241.py`, 44 deliberate regressions (missing twin, stray `/tr/` file, hand-edited generated page, dictionary change not regenerated, wrong or missing hreflang / canonical / og:locale, English text left on a Turkish page, switch not a link, lost warning, changed asset or id, English link left on a Turkish page, sitemap alternate missing, `script.js` stores a preference or redirects, 404 loses a language, `.vercelignore` loses `!tr`, …). Two sitemap cases in `negative_tests_mer240.py` follow the new sitemap format (still 46/46). |
+| Negative suite | New `scripts/negative_tests_mer241.py`, 51 deliberate regressions: 44 for the language work and 7 for the brand rule of §8 (missing twin, stray `/tr/` file, hand-edited generated page, dictionary change not regenerated, wrong or missing hreflang / canonical / og:locale, English text left on a Turkish page, switch not a link, lost warning, changed asset or id, English link left on a Turkish page, sitemap alternate missing, `script.js` stores a preference or redirects, 404 loses a language, `.vercelignore` loses `!tr`, …). Two sitemap cases in `negative_tests_mer240.py` follow the new sitemap format (still 46/46). |
 | Production tools | `evidence/mer219/smoke_production.py` and `browser_checks_production.py` understand `/tr/` (routes, the real switch links, the bilingual 404). **They were edited but not executed** in this container (the browser tool is a Windows CDP harness and the smoke tool needs production); the reviewer should run `smoke_production.py` on the Preview before any publication. |
 | Records | `CLAUDE.md` (generated-file rule, change discipline), `STATUS.md`, `README.md`, `docs/HANDOFF.md`, `CHANGELOG.md`, `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (D3 fact) and the text fields of `hero/config/lane.json`. |
 
@@ -35,9 +36,9 @@ Diff against the baseline: the English pages change only by the language-switch 
 | Check | Result |
 | --- | --- |
 | `python3 scripts/build_tr_pages.py --check` | OK, byte-identical |
-| `python3 scripts/validate_site.py` | **PASS, 0 warnings** (5 routes + 404, 277 i18n keys, 844 strings checked on the Turkish pages and 404, 13 deploy-set root entries / 119 files) |
+| `python3 scripts/validate_site.py` | **PASS, 0 warnings** (5 routes + 404, 276 i18n keys, 831 strings checked on the Turkish pages and 404, 13 deploy-set root entries / 119 files) |
 | `negative_tests_web005.py` / `_web005b.py` / `_web005c.py` / `_mer216.py` / `_mer237.py` / `_mer240.py` | 72/72, 55/55, 18/18, 19/19, 29/29, 46/46 caught; restored tree identical |
-| `negative_tests_mer241.py` | **44/44 caught**; restored tree validates identically (CRLF-safe) |
+| `negative_tests_mer241.py` | **51/51 caught**; restored tree validates identically (CRLF-safe) |
 | `python3 hero/scripts/validate_hero.py` | 412 checks, 13 failed: exactly the git-ignored source-texture checks (eight `materialized local path exists`, five SHA-256 on disk), the accepted fresh-clone result; the lane-boundary checks pass. Identical with and without this change. (The accepted 420/0 is the hero workstation's.) |
 
 ## 4. Browser acceptance (Chromium via Playwright, `evidence/mer241/tools/`)
@@ -81,3 +82,20 @@ Diff against the baseline: the English pages change only by the language-switch 
 2. Open the Preview: five Turkish routes, the EN | TR links both ways, `/tr/` no-JS, a 404 under `/tr/`, the hero video on `/tr/`, `#pilot-*` and `#mineral` aliases under `/tr/cozumler/…`, and the page source of two Turkish pages (lang, canonical, hreflang, og:locale).
 3. Confirm no hero file, media, analytical derivative or English copy changed (diff of the hero lane, `assets/`, `hero/`).
 4. Run `smoke_production.py` against the Preview host, then decide whether the unexecuted `browser_checks_production.py` edit needs a Windows run.
+
+## 8. VirgaSoft removed from the public site (CTO, 2026-10-17)
+
+**Instruction (CTO, in the review thread):** the public site never uses the name VirgaSoft, because the company relationship has ended; the brand is OrbGSS, which is intended to become a company in its own right. The planned legal name is not used on the site for now, and no legal-entity text is invented. Done on this branch as its own commit, so it ships with the Turkish pages in one release.
+
+| Where | Before | After |
+| --- | --- | --- |
+| Footer mark on every page and `404.html`, EN and TR (`footer.builtBy`) | "Built by VirgaSoft" / "VirgaSoft tarafından geliştirildi" | Removed (element and dictionary key); `.footer-brand span` CSS removed, the logo image is `display:block` so the footer keeps its alignment |
+| About page header line (`company-parent`) | The same mark under the introduction | Element, CSS and the validator's fixed-class exemption removed |
+| About introduction (`company.copy`) | "… platform built by VirgaSoft. It exists …" / "OrbGSS, VirgaSoft tarafından geliştirilen bir coğrafi zekâ platformudur. …" | "OrbGSS is a geospatial-intelligence platform. It exists …" / "OrbGSS bir coğrafi zekâ platformudur. …" (the clause is dropped, nothing added) |
+| About `<meta description>` and `og:description` | "…Solutions, built by VirgaSoft: …" / "…, VirgaSoft tarafından geliştirildi: …" | "OrbGSS — Orbital Geo-Spatial Solutions: the principles it publishes by and every data source it uses." / "OrbGSS — Orbital Geo-Spatial Solutions: yayın ilkeleri ve kullandığı tüm veri kaynakları." (both tags carry the same sentence; no new words) |
+
+**Check:** `scripts/validate_site.py` reads every file in the deploy set. Text files (html, css, js, json, svg, webmanifest, xml, txt) are decoded, HTML entities resolved, case-folded, the Turkish dotted İ and combining marks removed, and reduced to letters and digits, so `VirgaSoft`, `VİRGASOFT`, `Virga Soft`, `virga-soft` and `Virga&#32;Soft` all match; other files (images, video, fonts) are searched as raw bytes in ASCII and both UTF-16 forms, which covers embedded metadata. `negative_tests_mer241.py` has 7 new cases for these routes (51/51); the old `negative_tests_mer240.py` and `_mer241.py` cases that used the removed element or sentence were re-anchored. The result on the final tree is **zero** occurrences in any deployed file.
+
+**Left as it is (not site content):** `tasks/`, `evidence/` and `docs/mockups/` history; `STATUS.md` and `docs/` history sections; the `virga-soft` Vercel team in deployment hostnames (`STATUS.md`, `CLAUDE.md`, `tasks/MER-219_PREFLIGHT.md`). None of them is deployed (`.vercelignore`). `CLAUDE.md`, `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`, `docs/WEB_VNEXT_AUTHORITY.md` and `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (new decision D6) now state the rule.
+
+**Kept deliberately:** the expanded name "Orbital Geo-Spatial Solutions" in the logo tagline and the About title. It is the product's expanded name, not the planned legal name, and the CTO did not ask for it to go.

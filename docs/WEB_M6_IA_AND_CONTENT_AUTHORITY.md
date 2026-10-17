@@ -81,8 +81,9 @@ These operationalise decisions 2–4. MER-240 enforces R1–R5 in `scripts/valid
   * the illustrative-imagery footnote wherever the domain photographs appear;
   * the bottom-right captions;
   * a domain's status label next to its name ("Active · First application" / "Expansion direction");
-  * the footer's short attribution and copyright;
-  * the "Built by VirgaSoft" mark.
+  * the footer's short attribution and copyright.
+
+  (The "Built by VirgaSoft" mark that stood here is removed from the site, CTO decision 2026-10-17: the public site names only OrbGSS.)
 * **R7 — claim discipline is unchanged.** No customer, partner, revenue, accuracy, AI, deployment, field-validation, discovery, reserve or drilling claims. The score is never a probability. Mining and Marine are always expansion directions.
 * **R8 — one status vocabulary.** Mining and Marine are labelled "Expansion direction" / "Genişleme yönü" everywhere. The homepage's "In development" goes, which ends the divergence WEB-005C recorded as acceptable.
 
@@ -138,7 +139,7 @@ Every figure on this page keeps the bottom-right caption: place, coordinates and
 
 | # | Section | Lead visual | Copy |
 | --- | --- | --- | --- |
-| A0 | Header | — | Kicker "About". Title (existing `company.title`): "OrbGSS — Orbital Geo-Spatial Solutions". Intro (existing `company.copy`, 22 words). The existing "Built by VirgaSoft" mark. |
+| A0 | Header | — | Kicker "About". Title (existing `company.title`): "OrbGSS — Orbital Geo-Spatial Solutions". Intro (existing `company.copy`, now without the parent-company clause, 19 words). No parent-company mark (CTO decision 2026-10-17). |
 | A1 `#principles` | How OrbGSS publishes | **Principles table** — Principle · What it means · See it | The six existing `proof.*` commitments, one row each. Titles are kept; the meaning is trimmed to the 12-word cell budget. Each "See it" link points to where the site shows the principle. Evidence-backed screening · "Priorities come from mapped layers, not an unexplained model output." · `/#evidence`. Traceable provenance · "Every published visual maps back to a source and a recorded export." · `#sources`. Explicit data gaps · "A missing layer is published as missing, never invented." · `/solutions/geothermal/#gap`. AOI-first analysis · "One declared area, projection and grid before any interpretation." · `/solutions/geothermal/#glance`. Remote narrowing · "Large areas are ordered from orbit before field time is committed." · `/#priority`. Decision support · "Helps decide where to investigate; field investigation remains necessary." · no link. Below the table, existing `proof.foot`: "No accuracy, performance, deployment, customer or scale figures are published for this baseline." |
 | A2 `#sources` | Data and imagery sources | **Sources table** — Source · Used for · Credit | Landsat 8 (USGS) · natural colour, thermal evidence, domain photographs · courtesy of the U.S. Geological Survey, public domain. NASADEM (NASA) · elevation and relief · NASA Earthdata. Copernicus Sentinel-2 · alteration evidence; hero ground detail · "Contains modified Copernicus Sentinel data (2025)". NASA Blue Marble · the rendered hero's Earth texture · NASA, public domain. Scientific colour maps v8.0 · map palettes · Fabio Crameri, MIT. Each row's wording follows `IMAGERY_RIGHTS.md` exactly; MER-240 copies it from there rather than from this table. |
 | A3 | Next | — | "Partner with us →" to `/partner/`. |
@@ -166,7 +167,7 @@ New navigation; one line and a link home. Bilingual in MER-241.
 | Fact or claim | Home | Solutions | Geothermal | About | Partner |
 | --- | --- | --- | --- | --- | --- |
 | Positioning line ("turns Earth observation … where to investigate next") | ● hero | | | | |
-| Company sentence ("a geospatial-intelligence platform built by VirgaSoft …") | | | | ● | |
+| Company sentence ("a geospatial-intelligence platform …") | | | | ● | |
 | Natural-colour view of Kızıldere | ● Act 2 | | → thumbnail | | |
 | Terrain, thermal and alteration shown together | ● Act 3 | | → thumbnails | | |
 | Priority result and its four-part definition | ● Act 4 | | → thumbnail; G3 is a different figure | | |
@@ -246,6 +247,7 @@ The validator's `ROUTES` and `REQUIRED_FILES` follow the page set in section 2. 
 | D3 | A privacy / KVKK notice page | A legal question for the company, not one this document can answer. Facts for that review: the site sets no cookies, has no forms, analytics or third-party scripts, and, from MER-241 on, stores nothing in the visitor's own browser (until then only the language choice, in `localStorage`). | — |
 | D4 | `contact@orbgss.com` deliverability | The CTO confirms the mailbox receives external mail before MER-240 ships. | — |
 | D5 | Marine imagery | Source a coastal scene (V4) during MER-240. | Keep the Ili Delta with its current illustrative footnote. |
+| D6 | Parent-company attribution | **Decided 2026-10-17 (CTO):** the public site never names VirgaSoft; the brand is OrbGSS. The planned legal name is not published either. Implemented with MER-241; enforced by `scripts/validate_site.py`. | — |
 
 ## 10. Handoff
 

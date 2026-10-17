@@ -8,7 +8,7 @@
 
 **OrbGSS** is the product/brand presented to website visitors.  
 Expanded name: **Orbital Geo-Spatial Solutions**.  
-**VirgaSoft** is the parent/company identity and should remain secondary (`Built by VirgaSoft` is appropriate).
+The public site names no parent company: OrbGSS is the only brand it shows (CTO decision, 2026-10-17). The planned legal name is not published.
 
 ## Website job
 

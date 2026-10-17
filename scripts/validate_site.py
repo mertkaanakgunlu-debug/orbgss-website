@@ -11,6 +11,8 @@ import json
 import pathlib
 import re
 import sys
+import unicodedata
+from html import unescape
 from html.parser import HTMLParser
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -92,6 +94,11 @@ DEPLOY_EXCLUDED_PATHS = [
 DEPLOY_INTERNAL_SUFFIXES = {".md", ".py", ".pyc", ".bat", ".ps1", ".sh", ".blend"}
 # Public text files whose references the browser (or a crawler) follows.
 DEPLOY_TEXT_SUFFIXES = {".html", ".css", ".js", ".webmanifest", ".xml", ".txt"}
+# CTO decision (2026-10-17): the public site never names the former parent company. The brand is
+# OrbGSS; the planned legal name is not published either. Every deployed file is scanned, in any
+# spelling a person could type (case, Turkish dotted I, spaces, hyphens, entities, UTF-16 metadata).
+RETIRED_BRAND = "virgasoft"
+BRAND_TEXT_SUFFIXES = DEPLOY_TEXT_SUFFIXES | {".svg", ".json"}
 # A root-relative or absolute orbgss.com path in an attribute: "/", "/pilot/#x", "/styles.css".
 _ROOT_PATH_REF = re.compile(r"""(?<![\w-])(?:href|src|poster|content|data-src)=["'](?:https://orbgss\.com)?/([^"'#?\s]*)""")
 # A document-relative path in an attribute ("styles.css" on the homepage); resolved against the
@@ -283,7 +290,7 @@ M6_BUDGET = {"headline": 8, "intro": 30, "section": 40, "cell": 12, "rows": 7, "
 M6_PAGE_BUDGET = {"solutions/geothermal": 350}
 M6_TR_ALLOWANCE = 1.15
 # R6: fixed texts travel with what they qualify and are exempt from R1 and R5.
-M6_FIXED_CLASSES = {"beam-note", "scene-label", "act-footnote", "domain-status", "company-parent"}
+M6_FIXED_CLASSES = {"beam-note", "scene-label", "act-footnote", "domain-status"}
 # R4: what may lead a section. A table, an image, a map or chart, or the two drawn blocks the
 # authority names (the empty data-gap frame and the address block).
 LEAD_VISUAL_TAGS = {"table", "img", "figure", "svg", "picture", "video", "canvas"}
@@ -648,6 +655,18 @@ def public_references(rel: str, text: str) -> set[str]:
     return found
 
 
+def mentions_retired_brand(path: pathlib.Path) -> bool:
+    """True when a deployed file names the retired parent brand in any spelling."""
+    data = path.read_bytes()
+    if path.suffix.lower() in BRAND_TEXT_SUFFIXES:
+        text = unescape(data.decode("utf-8", errors="ignore")).casefold()
+        letters = "".join(ch for ch in unicodedata.normalize("NFKD", text)
+                          if ch.isalnum() and not unicodedata.combining(ch))
+        return RETIRED_BRAND in letters
+    lowered = data.lower()
+    return any(RETIRED_BRAND.encode(enc) in lowered for enc in ("ascii", "utf-16-le", "utf-16-be"))
+
+
 def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
     """MER-237: only the public site is deployed, and everything it references is.
 
@@ -697,6 +716,10 @@ def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
         rel = path.relative_to(ROOT).as_posix()
         if path.suffix.lower() in DEPLOY_INTERNAL_SUFFIXES or "__pycache__" in path.parts:
             fail(f"deploy set contains an internal file: {rel}", errors)
+    for path in files:
+        if mentions_retired_brand(path):
+            fail(f"{path.relative_to(ROOT).as_posix()}: names the retired parent brand 'VirgaSoft'; "
+                 f"the public site never mentions it (CTO decision 2026-10-17)", errors)
     for path in files:
         if path.suffix.lower() not in DEPLOY_TEXT_SUFFIXES:
             continue
