@@ -12,6 +12,10 @@ homepage keeps its light trim; and the reworked pages obey the content rules —
 every section (R4), the text budgets in both languages (R5) and one status vocabulary (R8). The
 locator map is recorded and captioned, and the conversation types live on /partner/ alone.
 
+MER-255 retired the interior tables (docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md): the cases that mutated a
+table now mutate the ruled list or record that replaced it, and two cases guard the replacements (the
+12-word budget on list lines, and a table coming back).
+
 Same discipline as scripts/negative_tests_mer237.py: each case mutates one real file (or creates
 one), runs the site validator, and restores the original in a `finally` block. A case counts as
 CAUGHT only when the validator fails with the expected text on an ERROR line the unmutated baseline
@@ -97,9 +101,9 @@ case("the footer loses About", PARTNER,
      swap('<a href="/about/" data-i18n="nav.about">About</a>\n        <a href="/partner/"',
           '<a href="/partner/"'),
      "footer navigation is")
-case("the footer attribution loses its link to the sources table", GEOTHERMAL,
-     swap(' <a href="/about/#sources" data-i18n="footer.sources">Every source is listed on the About page.</a>', ""),
-     "does not end with the link to /about/#sources")
+case("the footer attribution loses its link to the sources page", GEOTHERMAL,
+     swap(' <a href="/sources/" data-i18n="footer.sources">Data sources and attributions</a>', ""),
+     "does not end with the link to /sources/")
 case("the Turkish Partner label drifts", SCRIPT,
      swap("'nav.partner': 'İş Birliği',", "'nav.partner': 'Bize Ulaşın',"),
      "'nav.partner' in the 'tr' dictionary")
@@ -127,7 +131,7 @@ case("an old /pilot/ fragment stops landing", GEOTHERMAL,
      swap('<span class="anchor-alias" id="pilot-structure" aria-hidden="true"></span>', ""),
      "no #pilot-structure")
 case("an old /pilot/ fragment lands at the top: its container is not positioned", STYLES,
-     swap(".page-section{position:relative;", ".page-section{"),
+     swap(".page-section{position:relative}", ".page-section{overflow:visible}"),
      "which styles.css does not position")
 
 # ---- the homepage's light trim (authority 4.1) ---------------------------------------------------
@@ -161,13 +165,12 @@ case("the Turkish Marine status drifts", SCRIPT,
      "R8: 'app.marine.status' in the 'tr' dictionary")
 
 # ---- R4 show first --------------------------------------------------------------------------------
-case("a paragraph opens a section before its table", GEOTHERMAL,
-     swap('<table class="data-table" aria-labelledby="outputs-title" data-lead-visual>',
-          '<p>Here is what the pilot produced.</p><table class="data-table" aria-labelledby="outputs-title" data-lead-visual>'),
+case("a paragraph opens a section before its lead visual", GEOTHERMAL,
+     swap('<figure class="scale-figure" data-lead-visual>',
+          '<p>Here is what the pilot produced.</p><figure class="scale-figure" data-lead-visual>'),
      "opens with <p>")
 case("a section loses its lead visual", ABOUT,
-     swap('<table class="data-table" aria-labelledby="sources-title" data-lead-visual>',
-          '<table class="data-table" aria-labelledby="sources-title">'),
+     swap('<ul class="source-names mono lead-set" data-lead-visual>', '<ul class="source-names mono lead-set">'),
      "not a marked lead")
 case("text sits in <main> outside a section", PARTNER,
      swap("  </main>", '    <div class="intro-text"><p>Write to us.</p></div>\n  </main>'),
@@ -188,26 +191,24 @@ case("a section body runs past forty words", GEOTHERMAL,
      swap("structure and geology are optional support and score-invariant.</p>",
           "structure and geology are optional support and score-invariant. " + " ".join(["more"] * 12) + ".</p>"),
      "body is")
-case("a table cell runs past twelve words", PARTNER,
-     swap(">A partnership or collaboration with OrbGSS.</td>",
-          ">A partnership or collaboration with OrbGSS, on any ground, in any country, at any scale.</td>"),
-     "R5: partner/index.html: table cell")
-case("a table grows past seven rows", GEOTHERMAL,
-     swap("<tr><th scope=\"row\" data-i18n=\"geothermalPage.output.area\">",
-          "<tr><th scope=\"row\">One</th><td>Row</td></tr><tr><th scope=\"row\">Two</th><td>Row</td></tr>"
-          "<tr><th scope=\"row\" data-i18n=\"geothermalPage.output.area\">"),
-     "a table has 8 rows")
+case("a list line runs past twelve words (the cell budget now holds the ruled lists)", PARTNER,
+     swap(">A partnership or collaboration with OrbGSS.</span>",
+          ">A partnership or collaboration with OrbGSS, on any ground, in any country, at any scale.</span>"),
+     "R5: partner/index.html: list line")
+case("a table comes back on an interior page", GEOTHERMAL,
+     swap('<figure class="scale-figure" data-lead-visual>',
+          '<table class="data-table" data-lead-visual><tbody><tr><th scope="row">Area</th><td>36 km</td></tr></tbody></table>'
+          '<figure class="scale-figure" data-lead-visual>'),
+     "a <table> is back")
 case("only the Turkish copy runs past the budget", SCRIPT,
      swap("Boşluk doldurulmaz, gösterilir ve önceliği değiştirmez: yapı ve jeoloji isteğe bağlı destektir, skoru etkilemez.",
           "Boşluk doldurulmaz, gösterilir ve önceliği değiştirmez: yapı ve jeoloji isteğe bağlı destektir, skoru etkilemez. "
           + " ".join(["ek"] * 24) + "."),
      "in tr (at most")
 case("a page runs past its total budget", ABOUT,
-     regex(r'(</section>\s*)(<div class="page-closing">)',
-           r"\1" + "".join(
-               f'<section class="page-section"><div class="shell"><table class="data-table" data-lead-visual><tbody>'
-               f'<tr><th scope="row">Row {i}</th><td>{" ".join(["word"] * 10)}</td><td>{" ".join(["word"] * 10)}</td></tr>'
-               f'</tbody></table></div></section>\n    ' for i in range(6)) + r"\2"),
+     swap("  </main>", "".join(
+         f'    <section class="page-section"><div class="shell"><p>{" ".join(["word"] * 60)}</p></div></section>\n'
+         for _ in range(6)) + "  </main>"),
      "budgeted words")
 
 # ---- R1 one home per fact ---------------------------------------------------------------------------
@@ -228,11 +229,11 @@ case("a hub photograph is shown full size on another page", GEOTHERMAL,
 
 # ---- R3 no software detail ----------------------------------------------------------------------------------
 case("the About page talks about the workflow", ABOUT,
-     swap(">Priorities come from mapped layers, not an unexplained model output.</td>",
-          ">Priorities come from the mapped-layer workflow, not a model output.</td>"),
+     swap(">Priorities come from mapped layers, not an unexplained model output.</p>",
+          ">Priorities come from the mapped-layer workflow, not a model output.</p>"),
      "mentions 'workflow'")
 case("a layer code reaches the Geothermal page", GEOTHERMAL,
-     swap(">Landsat thermal bands</td>", ">Landsat thermal bands (THM-01)</td>"),
+     swap(">Landsat thermal bands</span>", ">Landsat thermal bands (THM-01)</span>"),
      "mentions 'thm-01'")
 
 # ---- V1 the locator map ----------------------------------------------------------------------------------
@@ -243,16 +244,16 @@ case("the locator map loses the kind line of its caption", GEOTHERMAL,
      swap('<span class="scene-kind" data-i18n="scene.kind.locator">Locator map — Natural Earth</span>', ""),
      "must carry the bottom-right caption")
 case("the locator map is shown on another page", ABOUT,
-     regex(r'(<section class="page-section" id="principles"[^>]*>\s*<div class="shell">)',
+     regex(r'(<section class="[^"]*" id="principles"[^>]*>\s*<div class="shell chapter-grid">)',
            r'\1<img src="/assets/maps/kizildere-locator-23c85f44.svg" alt="" data-i18n-alt="alt.locator" width="1200" height="574" />'),
      "its home is the Geothermal page")
 
 # ---- Partner with us is the one home of the conversations -----------------------------------------------
 case("a conversation link loses its translated subject", PARTNER,
      swap(' data-i18n-href="mail.technical"', ""),
-     "the conversation table's mail links")
+     "the conversation routes' mail links")
 case("another page starts a conversation itself", ABOUT,
-     swap('<a href="#sources">', '<a href="mailto:contact@orbgss.com">'),
+     swap('<a class="see-link" href="/sources/">', '<a class="see-link" href="mailto:contact@orbgss.com">'),
      "conversations start on /partner/")
 
 # ---- the hub bands (illustrative photographs, contained) -----------------------------------------------------

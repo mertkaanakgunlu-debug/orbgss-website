@@ -7,13 +7,14 @@ This file is the first authority to read when continuing OrbGSS website work in 
 Before changing code, read in this order:
 
 1. `STATUS.md`
-2. `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (Milestone 6, CTO-approved 2026-10-15; wins over 3–5 on pages, navigation, URLs and content rules)
-3. `docs/WEB_VNEXT_AUTHORITY.md` (vNext authority; wins over 4–5 where they disagree)
-4. `docs/DESIGN_AUTHORITY.md`
-5. `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`
-6. `IMAGERY_RIGHTS.md`
-7. `assets/imagery/sources.json`
-8. the exact task file named by `STATUS.md`
+2. `docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md` (MER-255 interior redesign; on its review branch until the CTO accepts it. Where it disagrees with 3 about how the five interior routes are presented — tables, R2 thumbnails, R5/R6 budgets, the sources architecture — it wins; it changes no scientific, legal or claim rule)
+3. `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (Milestone 6, CTO-approved 2026-10-15; wins over 4–6 on pages, navigation, URLs and content rules)
+4. `docs/WEB_VNEXT_AUTHORITY.md` (vNext authority; wins over 5–6 where they disagree)
+5. `docs/DESIGN_AUTHORITY.md`
+6. `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`
+7. `IMAGERY_RIGHTS.md`
+8. `assets/imagery/sources.json`
+9. the exact task file named by `STATUS.md`
 
 Then inspect `index.html`, `styles.css`, `script.js`, and run the site validator before editing.
 
@@ -82,6 +83,17 @@ MER-240 implemented the English target. It was independently accepted at `a20453
   - **Open:**
     - D3: privacy / KVKK page, a legal call.
     - D5: a coastal Marine scene to replace the inland Ili Delta.
+
+## Interior redesign (MER-255, pending the CTO's acceptance)
+
+`docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md` rebuilds the five interior routes. Once the CTO accepts and publishes it, these are invariants; until then the Milestone 6 text above describes production.
+
+- **One grammar, five openings.** The interior routes carry `<body class="interior">`; the homepage never does. Each page opens differently: Solutions a state ledger, Geothermal a wide Kızıldere strip, About the orbital motif, Partner a split with one photograph, Sources a register. Do not collapse them back into one template.
+- **No tables on the interior routes.** Comparison and reference content is a ruled list, a numbered list or a record; the 12-word cell budget now holds every line of a `lead-set`. The validator fails on any `<table>` there.
+- **Interior photographs are four recorded Class A crops** of the Act 2 master (`web_m6.interior_crops`, `scripts/build_interior_crops.py`), each shown full size on one page, none drawn above its own pixels (CSS caps plus the browser measurement of `scripts/measure_interior_renders.py`, bound 1.01).
+- **Geothermal shows no governed derivative.** MER-151 / GEO-WEB-002 rasters stay homepage-only until MER-242; the layer diagram is a captioned schematic of empty frames and the 0–100 ruler is neutral. Do not fill a gap with a picture.
+- **Attribution has its own page.** `/sources/` (TR `/tr/kaynaklar/`) holds every source, credit line, image credit, reference DOI and licence (the Scientific colour maps MIT text, unchanged, English in both languages); the footer carries the Landsat and Copernicus credits and the link to it; About keeps a short trust note under `#sources`. Keep it complete when a source changes, and keep `IMAGERY_RIGHTS.md` current.
+- Checks: `scripts/validate_site.py` and `scripts/negative_tests_mer255.py`.
 
 ## Content / claim discipline
 

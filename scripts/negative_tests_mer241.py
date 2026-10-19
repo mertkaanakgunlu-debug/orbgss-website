@@ -80,7 +80,7 @@ case("a route loses its Turkish twin", TR_PARTNER, remove_file,
 case("a stray page appears under /tr/", ROOT / "tr" / "pilot" / "index.html",
      lambda t: "<!doctype html><title>Pilot</title>\n", "is not the Turkish twin of any canonical route")
 case("a Turkish page is edited by hand", TR_ABOUT,
-     swap("Veri ve görüntü kaynakları", "Veri ve görüntü kaynakları ve daha fazlası"),
+     swap("Çok geniş zemin, çok az zaman.", "Çok geniş zemin, çok az zaman ve daha fazlası."),
      "differs from a fresh run of scripts/build_tr_pages.py")
 case("a Turkish string is changed in the dictionary and the pages are not regenerated", SCRIPT,
      swap("'nav.partner': 'İş Birliği',", "'nav.partner': 'İş Ortaklığı',"),

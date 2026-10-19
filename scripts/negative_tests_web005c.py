@@ -23,6 +23,7 @@ INDEX = ROOT / "index.html"
 # body copy duties.
 ABOUT = ROOT / "about" / "index.html"
 SOLUTIONS = ROOT / "solutions" / "index.html"
+SOURCES = ROOT / "sources" / "index.html"
 SCRIPT = ROOT / "script.js"
 STYLES = ROOT / "styles.css"
 
@@ -44,18 +45,18 @@ def case(name, path, old, new, expect):
 
 # --- route compatibility: the superseded anchors must keep resolving -------------------------
 case("legacy #mineral deep link stops resolving", SOLUTIONS,
-     '\n      <span class="anchor-alias" id="mineral" aria-hidden="true"></span>', "",
+     '\n            <span class="anchor-alias" id="mineral" aria-hidden="true"></span>', "",
      "legacy anchor #mineral no longer resolves")
 case("legacy #environment deep link stops resolving", SOLUTIONS,
-     '\n      <span class="anchor-alias" id="environment" aria-hidden="true"></span>', "",
+     '\n            <span class="anchor-alias" id="environment" aria-hidden="true"></span>', "",
      "legacy anchor #environment no longer resolves")
 
-# --- the canonical bands themselves (rows until MER-240) --------------------------------------
+# --- the canonical sections themselves (rows until MER-240, bands, then MER-255's expansion panels) ---
 case("the /solutions/ #mining band anchor drifts", SOLUTIONS,
-     '<section class="domain-band" id="mining"', '<section class="domain-band" id="mining-exploration"',
+     '<article class="domain-panel" id="mining"', '<article class="domain-panel" id="mining-exploration"',
      "no #mining band")
 case("the /solutions/ #marine band anchor drifts", SOLUTIONS,
-     '<section class="domain-band" id="marine"', '<section class="domain-band" id="marine-intelligence"',
+     '<article class="domain-panel" id="marine"', '<article class="domain-panel" id="marine-intelligence"',
      "no #marine band")
 
 # --- the navigation publishes the taxonomy on every route -------------------------------------
@@ -89,9 +90,9 @@ case("the /solutions/ row heading reverts in TR", SCRIPT,
      "superseded domain label")
 
 # --- superseded vocabulary must not return through body copy either ----------------------------
-case("a superseded label returns through /about/ body copy", ABOUT,
-     "Natural colour, thermal evidence, domain photographs",
-     "Natural colour, thermal evidence, Mineral Exploration photographs",
+case("a superseded label returns through /sources/ body copy", SOURCES,
+     "Natural-colour photographs and thermal evidence.",
+     "Natural-colour photographs and thermal evidence for Mineral Exploration.",
      "superseded domain label")
 case("a superseded label returns through the TR dictionary", SCRIPT,
      "'solutionsPage.meta.ogDescription': 'Jeotermal aktif; sırada madencilik ve denizel var.',",

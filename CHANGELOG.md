@@ -2,6 +2,15 @@
 
 Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
 
+## MER-255 premium interior redesign — 2026-10-19 (branch `claude/premium-interior-redesign-65zdlt`; `REVIEW_READY`, not published)
+
+- **Pages:** `/solutions/`, `/solutions/geothermal/`, `/about/` and `/partner/` rebuilt around one photograph each and five different openings (state ledger, Kızıldere strip, orbital statement, split, register); one grammar (`body.interior`, numbered chapters, ruled lists, mono captions). The homepage's four acts, hero and inspection aid are untouched; its footer attribution sentence is shortened (below).
+- **No tables on the interior routes.** The Solutions comparison, the Geothermal facts, layers and outputs, the About principles and sources, and the Partner conversations became ruled lists, a numbered layer list, records and a route list. Nothing was dropped: status labels, every mandatory warning and the data-gap statement stay.
+- **Geothermal:** where the pilot is → one area, one grid (fact list) → every layer and what it is not (a captioned schematic of empty frames plus the numbered list) → the 0–100 ruler with the score's public label and its limits → the structure/geology gap. No governed raster (MER-242 still pending); the iron layer reads "Accepted, not shown yet".
+- **Attribution:** the `/about/#sources` table is replaced by a short trust note; `/sources/` (TR `/tr/kaynaklar/`) holds source data, image credits with 160 px thumbnails, reference DOIs and the licence notices (the Scientific colour maps MIT text, unchanged); the footer keeps the Landsat and Copernicus credits and links to it.
+- **Imagery:** four recorded Class A crops of the Act 2 master (`scripts/build_interior_crops.py`, `web_m6.interior_crops`), each on one page, none drawn above its own pixels (`scripts/measure_interior_renders.py`: 19 widths × DPR 1/2, worst 1.00×). The Partner crop's alt text no longer says "west of the analysis area", because the crop overlaps the grid's western edge.
+- **Checks:** `scripts/validate_site.py` gains the MER-255 contract (grammar, crops, thumbnails, Geothermal honesty, no data collection, the sources page and the unchanged MIT text) and a 12-word budget on ruled-list lines; `scripts/negative_tests_mer255.py` adds 46 cases; the MER-240, MER-241 and WEB-005C suites were rewritten where they mutated tables (46, 51 and 18 cases). Authority: `docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md`. Evidence: `tasks/MER-255_EVIDENCE.md`.
+
 ## MER-241 static Turkish pages — 2026-10-17 (branch `claude/mer-241-turkish-static-pages-sihwiy`; `REVIEW_READY`, not published)
 
 - **Pages:** `/tr/`, `/tr/cozumler/`, `/tr/cozumler/jeotermal/`, `/tr/hakkimizda/` and `/tr/is-birligi/` (D2 slugs; anchor ids unchanged), generated from the English pages and the `script.js` dictionary by `scripts/build_tr_pages.py` (no dependency, deterministic, `--check`). The Turkish copy says exactly what the English copy says; nothing was added, redesigned or reworded.

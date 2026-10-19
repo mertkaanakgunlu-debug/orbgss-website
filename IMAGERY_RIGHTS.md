@@ -1,4 +1,4 @@
-# OrbGSS imagery rights and provenance — v0.10 (2026-10-16, MER-240)
+# OrbGSS imagery rights and provenance — v0.11 (2026-10-19, MER-255)
 
 ## Three asset classes
 
@@ -92,6 +92,16 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Recorded in `sources.json` → `web_005b.context` (production, frame, checksums, rights basis).
 - Used for homepage Act 2 and as the base of the inspection aid. Public-domain USGS pixels: only the crop, tone rendering and encoding are OrbGSS work, and the USGS acknowledgement stays in the footer.
 
+### Kızıldere interior-page crops — MER-255 (class A, four crops of the Act 2 master)
+- What they are: four crops of the WEB-005B Act 2 master above (`kizildere-aoi-context-2025-natural.jpg`, 3200 × 1800 px, native 30 m, USGS Landsat 8 OLI, `LC08_L2SP_179034_20250505_02_T1`), made by `scripts/build_interior_crops.py` for the redesigned interior pages. Public-domain USGS pixels: only the crop and the WebP encode (quality 82) are OrbGSS work. No tone, colour, sharpening, upscaling or generative step; a derivative narrower than its crop is a Lanczos downscale and none is wider than its crop.
+- `kizildere-stage` — the wide strip behind the Geothermal page headline (crop 3200 × 1100, derivatives 3200 / 2400 / 1600). Shown on `/solutions/geothermal/` only.
+- `kizildere-aoi` — the 36 × 36 km analysis grid in natural colour (crop 1200 × 1200, derivatives 1200 / 800), with the same crop as the base frame of the layer diagram. Shown on `/solutions/geothermal/` only. It is a photograph of the area, not analysis.
+- `kizildere-terrain` — eroded ground north-east of the pilot area, beyond the east edge of the analysis grid (crop 1459 × 897, derivatives 1459 / 1000). Shown on `/about/` only.
+- `kizildere-valley` — the cultivated graben floor in the south-west of the context frame (crop 1000 × 1000, derivatives 1000 / 700). Its eastern third overlaps the western edge of the analysis grid, so its alt text places it "in the south-west of the Kızıldere context view" and the record states the overlap. Shown on `/partner/` only.
+- Captions: the standard bottom-right caption of the Act 2 context (place, the pilot's declared coordinates, "Natural-color composite"). The coordinates name the pilot, as the Act 2 caption does; a crop does not claim to be centred on them.
+- Recorded in `sources.json` → `web_m6.interior_crops` (parent checksum, crop box, size, per-file SHA-256 and bytes, content-hash file names, rights basis, overlap with the analysis grid, caption keys, `rendered`). `rendered` is measured in a real browser by `scripts/measure_interior_renders.py` (19 viewport widths from 360 to 3840 CSS px at device pixel ratios 1 and 2; the drawn width, including `object-fit: cover`, against the candidate the browser selected). No crop is drawn above its own pixels (worst ratio 1.00); the validator also holds the CSS width caps to the same bound without a browser.
+- Rule R2 (`docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`) applies to each crop: one full-size appearance; the Sources page lists images only as thumbnails of at most 160 CSS px, each a recorded image.
+
 ### Ili River Delta / Lake Balkhash — marine (illustrative domain photograph: homepage card, `/solutions/` hub band; MER-238 D5 may replace it with a coastal scene)
 - Location: Ili River Delta & Lake Balkhash, Kazakhstan
 - Coordinates displayed: 45.0600° N, 74.5200° E
@@ -105,10 +115,10 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 ### Kızıldere locator map — Natural Earth (class A cartographic illustration, MER-240)
 - What it is: an outline map of Türkiye and its neighbours with the 36 km pilot area of interest drawn as a square at its declared centre (37.9794° N, 28.7907° E). A locator, not Earth-observation imagery and not product proof. It shows no analysis and carries no text; the page caption says `Locator map — Natural Earth`.
 - Source: Natural Earth 1:50m Cultural Vectors, Admin 0 – Countries, v5.1.2 (`ne_50m_admin_0_countries.geojson` from the `nvkelso/natural-earth-vector` v5.1.2 release, SHA-256 `3e458fc0…`). Downloaded on 2026-10-16 with CTO approval; the download is not committed, only the generated SVG is.
-- Rights: Natural Earth data are in the public domain (https://www.naturalearthdata.com/about/terms-of-use/). No permission or attribution is required; the About sources table credits it as "Made with Natural Earth".
+- Rights: Natural Earth data are in the public domain (https://www.naturalearthdata.com/about/terms-of-use/). No permission or attribution is required; the Sources page (`/sources/`) credits it as "Made with Natural Earth".
 - Produced by: `scripts/build_locator_map.py` (Python standard library only): equirectangular projection true at 39° N, clipped outside the frame, lightly simplified. Türkiye is filled and outlined; neighbouring countries are filled in one colour with no borders between them, so the map draws no third-country boundary.
 - Recorded in: `sources.json` → `web_m6.locator_map` (source URL and checksum, licence, generator, output checksum). The file name carries its own checksum, because `/assets/` is served immutable.
-- Used on: the Geothermal page header (`/solutions/geothermal/`), only.
+- Used on: the Geothermal page, as the lead of "Where the pilot is" (`/solutions/geothermal/`), only; the Sources page lists it as a 160 px thumbnail.
 
 ## Class B — WEB-002 product-proof visuals (2026-09-15)
 
@@ -181,7 +191,7 @@ derivatives of the governed rasters of the accepted `kizildere_mvp_v2` export `2
 * **Rendering:** the frozen hero palette stops; NoData transparent over a neutral hillshade; lossless WebP.
 * **Files:** `assets/proof/web005b/` → `terrain-{600,900,1200}-d.webp`, `thm01-*`, `alt01-*`, `priority-*` and `priority-legend-ramp.png`.
 * **Records:** each layer records its governed source SHA-256, its window and gamma decision, and a SHA-256 per derivative. `scripts/validate_site.py` recomputes the checksums and the palette LUT and re-checks every MER-151 bound.
-* **Rights:** the same basis as every class-B export. The output is OrbGSS's own analytical rendering: no raw provider raster is redistributed, and no paid, closed or restricted data is used. The underlying providers (NASADEM, Landsat thermal, Sentinel-2) are credited in the footer.
+* **Rights:** the same basis as every class-B export. The output is OrbGSS's own analytical rendering: no raw provider raster is redistributed, and no paid, closed or restricted data is used. The underlying providers (NASADEM, Landsat thermal, Sentinel-2) are credited on `/sources/` (since MER-255; before it, in a long footer sentence), and the footer keeps the two credits the providers ask for there: the Landsat acknowledgement and "Contains modified Copernicus Sentinel data (2025)".
 * **Warnings:** each surface carries its mandatory scientific warning as visible EN/TR copy.
 * **Ceiling:** the native 1200 px grid, designed against 600 CSS px. MER-151 permits a 4K presentation derivative, but none is published.
 
@@ -239,5 +249,5 @@ public site is deployed (`.vercelignore`), and the gate stays in force for every
 1. Every file listed in `assets/imagery/sources.json` under `local_file` exists and passes `python scripts/validate_site.py` (done in v0.5).
 2. Each image has been visually checked against its scene metadata (done in v0.5).
 3. No NASA logo/identifier is embedded in any image (none: assets are generated from raw Landsat bands).
-4. Keep the USGS acknowledgement in the footer.
+4. Keep the USGS acknowledgement in the footer. Since MER-255 the footer attribution ends in a link to `/sources/` ("Data sources and attributions"), the one page that carries every source, credit line, image credit, reference and licence notice (the MIT text of the Scientific colour maps, kept in English in both languages). Keep it complete when a source changes.
 5. If a non-USGS source is introduced later, record its exact license and attribution requirement here before it enters production.

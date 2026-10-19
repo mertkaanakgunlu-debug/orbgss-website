@@ -234,13 +234,13 @@
       "web_m6_placement": {
         "task": "MER-240",
         "status": "placed",
-        "section": "Solutions hub band",
+        "section": "Solutions feature band (Geothermal)",
         "anchor": "geothermal",
         "routes": [
           "solutions/index.html"
         ],
         "public_role": "illustrative photography",
-        "r2_home": "The hub band is this photograph's one full-size appearance (M6 rule R2). The homepage card is the accepted exception: a card that links to the domain (authority 4.2).",
+        "r2_home": "The feature band is this photograph's one full-size appearance (M6 rule R2). The homepage card is the accepted exception: a card that links to the domain (authority 4.2). The Sources page lists it as a 160 px thumbnail.",
         "caption_i18n_keys": [
           "scene.yellowstone.place",
           "scene.yellowstone.coords",
@@ -251,11 +251,39 @@
           "device_pixel_ratio_considered": 2,
           "max_device_px": 2880,
           "widest_candidate_px": 2880,
-          "selected_derivative": "assets/imagery/yellowstone-2013-2880.webp",
-          "measurement_method": "Headless Chrome on /solutions/, 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the object-fit image (max of the band width and the band height times the image aspect) is recorded, never the sizes attribute.",
-          "measured_max_css_width": 1440
+          "selected_derivative": "assets/imagery/yellowstone-2013-1800.webp",
+          "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+          "tool": "scripts/measure_interior_renders.py",
+          "viewports_measured": [
+            "360x844",
+            "390x844",
+            "414x844",
+            "600x1112",
+            "768x1112",
+            "834x1112",
+            "1024x900",
+            "1180x900",
+            "1280x900",
+            "1366x900",
+            "1440x900",
+            "1536x900",
+            "1680x900",
+            "1920x900",
+            "2200x900",
+            "2560x900",
+            "3000x900",
+            "3440x900",
+            "3840x900"
+          ],
+          "device_pixel_ratios_measured": [
+            1,
+            2
+          ],
+          "max_upscale_factor": 1.0,
+          "max_upscale_at": "1440x900 @2x"
         },
-        "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results."
+        "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results.",
+        "mer255_note": "MER-255 redesign: the Mining and Marine photographs moved from full-width bands to the two expansion-direction panels; the measured width is in rendered."
       }
     },
     {
@@ -396,28 +424,56 @@
       "web_m6_placement": {
         "task": "MER-240",
         "status": "placed",
-        "section": "Solutions hub band",
+        "section": "Solutions expansion-direction panel",
         "anchor": "mining",
         "routes": [
           "solutions/index.html"
         ],
         "public_role": "illustrative photography",
-        "r2_home": "The hub band is this photograph's one full-size appearance (M6 rule R2). The homepage card is the accepted exception: a card that links to the domain (authority 4.2).",
+        "r2_home": "The expansion-direction panel is this photograph's one full-size appearance (M6 rule R2). The homepage card is the accepted exception: a card that links to the domain (authority 4.2). The Sources page lists it as a 160 px thumbnail.",
         "caption_i18n_keys": [
           "scene.chuquicamata.place",
           "scene.chuquicamata.coords",
           "scene.kind.naturalColor"
         ],
         "rendered": {
-          "max_css_width": 1440,
+          "max_css_width": 614,
           "device_pixel_ratio_considered": 2,
-          "max_device_px": 2880,
+          "max_device_px": 1228,
           "widest_candidate_px": 2880,
-          "selected_derivative": "assets/imagery/chuquicamata-2024-2880.webp",
-          "measurement_method": "Headless Chrome on /solutions/, 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the object-fit image (max of the band width and the band height times the image aspect) is recorded, never the sizes attribute.",
-          "measured_max_css_width": 1440
+          "selected_derivative": "assets/imagery/chuquicamata-2024-900.webp",
+          "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+          "tool": "scripts/measure_interior_renders.py",
+          "viewports_measured": [
+            "360x844",
+            "390x844",
+            "414x844",
+            "600x1112",
+            "768x1112",
+            "834x1112",
+            "1024x900",
+            "1180x900",
+            "1280x900",
+            "1366x900",
+            "1440x900",
+            "1536x900",
+            "1680x900",
+            "1920x900",
+            "2200x900",
+            "2560x900",
+            "3000x900",
+            "3440x900",
+            "3840x900"
+          ],
+          "device_pixel_ratios_measured": [
+            1,
+            2
+          ],
+          "max_upscale_factor": 0.876,
+          "max_upscale_at": "1440x900 @2x"
         },
-        "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results."
+        "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results.",
+        "mer255_note": "MER-255 redesign: the Mining and Marine photographs moved from full-width bands to the two expansion-direction panels; the measured width is in rendered."
       }
     },
     {
@@ -559,28 +615,56 @@
       "web_m6_placement": {
         "task": "MER-240",
         "status": "placed",
-        "section": "Solutions hub band",
+        "section": "Solutions expansion-direction panel",
         "anchor": "marine",
         "routes": [
           "solutions/index.html"
         ],
         "public_role": "illustrative photography",
-        "r2_home": "The hub band is this photograph's one full-size appearance (M6 rule R2). The homepage card is the accepted exception: a card that links to the domain (authority 4.2).",
+        "r2_home": "The expansion-direction panel is this photograph's one full-size appearance (M6 rule R2). The homepage card is the accepted exception: a card that links to the domain (authority 4.2). The Sources page lists it as a 160 px thumbnail.",
         "caption_i18n_keys": [
           "scene.ili.place",
           "scene.ili.coords",
           "scene.kind.naturalColor"
         ],
         "rendered": {
-          "max_css_width": 1440,
+          "max_css_width": 614,
           "device_pixel_ratio_considered": 2,
-          "max_device_px": 2880,
+          "max_device_px": 1228,
           "widest_candidate_px": 2880,
-          "selected_derivative": "assets/imagery/ili-delta-2020-2880.webp",
-          "measurement_method": "Headless Chrome on /solutions/, 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the object-fit image (max of the band width and the band height times the image aspect) is recorded, never the sizes attribute.",
-          "measured_max_css_width": 1440
+          "selected_derivative": "assets/imagery/ili-delta-2020-900.webp",
+          "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+          "tool": "scripts/measure_interior_renders.py",
+          "viewports_measured": [
+            "360x844",
+            "390x844",
+            "414x844",
+            "600x1112",
+            "768x1112",
+            "834x1112",
+            "1024x900",
+            "1180x900",
+            "1280x900",
+            "1366x900",
+            "1440x900",
+            "1536x900",
+            "1680x900",
+            "1920x900",
+            "2200x900",
+            "2560x900",
+            "3000x900",
+            "3440x900",
+            "3840x900"
+          ],
+          "device_pixel_ratios_measured": [
+            1,
+            2
+          ],
+          "max_upscale_factor": 0.876,
+          "max_upscale_at": "1440x900 @2x"
         },
-        "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results."
+        "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results.",
+        "mer255_note": "MER-255 redesign: the Mining and Marine photographs moved from full-width bands to the two expansion-direction panels; the measured width is in rendered."
       }
     }
   ],
@@ -3956,6 +4040,453 @@
         }
       },
       "scale_note": "The authority named the 1:10m layer; the 1:50m layer is used. At the 1,100 CSS px the figure is drawn at, the 1:10m detail is not visible, and the source is much larger."
-    }
+    },
+    "interior_crops": [
+      {
+        "id": "kizildere-stage",
+        "page": "solutions/geothermal",
+        "role": "Geothermal page stage: a wide strip of the Büyük Menderes graben behind the headline.",
+        "asset_class": "A - OrbGSS natural-colour Landsat composite, cropped",
+        "parent": {
+          "path": "assets/imagery/kizildere-aoi-context-2025-natural.jpg",
+          "sha256": "e43310e8adee08a2e27e0d863abe1c8bbc448669784ade8702571520abe3f865",
+          "record": "web_005b.context.master",
+          "scene_id": "kizildere-aoi-context-2025"
+        },
+        "crop_box_px": [
+          0,
+          380,
+          3200,
+          1480
+        ],
+        "crop_size_px": [
+          3200,
+          1100
+        ],
+        "analysis_grid_box_px": [
+          541,
+          300,
+          1741,
+          1500
+        ],
+        "analysis_grid_overlap_px2": 1320000,
+        "ground_resolution_m": 30.0,
+        "pixel_hash8": "161b5b57",
+        "operations": [
+          "crop of the accepted master",
+          "Lanczos3 downscale where a derivative is narrower than the crop",
+          "WebP encode"
+        ],
+        "operations_not_used": [
+          "tone or colour change",
+          "sharpening",
+          "upscaling",
+          "generative or AI step"
+        ],
+        "derivatives": [
+          {
+            "path": "assets/imagery/kizildere-stage-161b5b57-3200.webp",
+            "width_px": 3200,
+            "height_px": 1100,
+            "format": "image/webp",
+            "operation": "WebP quality 82 encode of the crop at its native 3200 px; no resize",
+            "bytes": 832884,
+            "sha256": "fde2f7d7dab953feaad12758d509cb24e56a0e01bcc2693b89116a2ecfaab6e7"
+          },
+          {
+            "path": "assets/imagery/kizildere-stage-161b5b57-2400.webp",
+            "width_px": 2400,
+            "height_px": 825,
+            "format": "image/webp",
+            "operation": "Lanczos3 downscale of the crop to 2400 px, then WebP quality 82",
+            "bytes": 562526,
+            "sha256": "829ccf3ec285d1f81b7602ee58f9c0e50c19b38ee238898cda39521e3079cce6"
+          },
+          {
+            "path": "assets/imagery/kizildere-stage-161b5b57-1600.webp",
+            "width_px": 1600,
+            "height_px": 550,
+            "format": "image/webp",
+            "operation": "Lanczos3 downscale of the crop to 1600 px, then WebP quality 82",
+            "bytes": 293072,
+            "sha256": "ff3fbc745a410a31407532d853c7149a88e074e3e4cae9c284cd6192f4e86f51"
+          }
+        ],
+        "max_safe_rendered_px": {
+          "device_px": 3200,
+          "basis": "native 30 m Landsat at the crop's own pixel width; nothing is upscaled at or below that many device px"
+        },
+        "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Only the crop, tone rendering (in the parent) and encoding are OrbGSS work.",
+        "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
+        "caption_i18n_keys": [
+          "scene.context.place",
+          "scene.context.coords",
+          "scene.kind.naturalColor"
+        ],
+        "rendered": {
+          "tool": "scripts/measure_interior_renders.py",
+          "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+          "viewports_measured": [
+            "360x844",
+            "390x844",
+            "414x844",
+            "600x1112",
+            "768x1112",
+            "834x1112",
+            "1024x900",
+            "1180x900",
+            "1280x900",
+            "1366x900",
+            "1440x900",
+            "1536x900",
+            "1680x900",
+            "1920x900",
+            "2200x900",
+            "2560x900",
+            "3000x900",
+            "3440x900",
+            "3840x900"
+          ],
+          "device_pixel_ratios_measured": [
+            1,
+            2
+          ],
+          "max_css_width": 1602,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 3204,
+          "widest_candidate_px": 3200,
+          "selected_derivative": "assets/imagery/kizildere-stage-161b5b57-1600.webp",
+          "max_upscale_factor": 1.001,
+          "max_upscale_at": "1680x900 @1x"
+        }
+      },
+      {
+        "id": "kizildere-aoi",
+        "page": "solutions/geothermal",
+        "role": "Geothermal page, the analysis area: the 36 x 36 km grid (1,200 x 1,200 cells) in natural colour.",
+        "asset_class": "A - OrbGSS natural-colour Landsat composite, cropped",
+        "parent": {
+          "path": "assets/imagery/kizildere-aoi-context-2025-natural.jpg",
+          "sha256": "e43310e8adee08a2e27e0d863abe1c8bbc448669784ade8702571520abe3f865",
+          "record": "web_005b.context.master",
+          "scene_id": "kizildere-aoi-context-2025"
+        },
+        "crop_box_px": [
+          541,
+          300,
+          1741,
+          1500
+        ],
+        "crop_size_px": [
+          1200,
+          1200
+        ],
+        "analysis_grid_box_px": [
+          541,
+          300,
+          1741,
+          1500
+        ],
+        "analysis_grid_overlap_px2": 1440000,
+        "ground_resolution_m": 30.0,
+        "pixel_hash8": "1a7d0c36",
+        "operations": [
+          "crop of the accepted master",
+          "Lanczos3 downscale where a derivative is narrower than the crop",
+          "WebP encode"
+        ],
+        "operations_not_used": [
+          "tone or colour change",
+          "sharpening",
+          "upscaling",
+          "generative or AI step"
+        ],
+        "derivatives": [
+          {
+            "path": "assets/imagery/kizildere-aoi-1a7d0c36-1200.webp",
+            "width_px": 1200,
+            "height_px": 1200,
+            "format": "image/webp",
+            "operation": "WebP quality 82 encode of the crop at its native 1200 px; no resize",
+            "bytes": 326784,
+            "sha256": "b64d3078033b8de70ac0af42d7f26d59eac26220e421778ffca888795697263e"
+          },
+          {
+            "path": "assets/imagery/kizildere-aoi-1a7d0c36-800.webp",
+            "width_px": 800,
+            "height_px": 800,
+            "format": "image/webp",
+            "operation": "Lanczos3 downscale of the crop to 800 px, then WebP quality 82",
+            "bytes": 189842,
+            "sha256": "16302a4811f8786e55934579de00ca7eab604895816313fa4e37c1b2e39ff59c"
+          }
+        ],
+        "max_safe_rendered_px": {
+          "device_px": 1200,
+          "basis": "native 30 m Landsat at the crop's own pixel width; nothing is upscaled at or below that many device px"
+        },
+        "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Only the crop, tone rendering (in the parent) and encoding are OrbGSS work.",
+        "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
+        "caption_i18n_keys": [
+          "scene.context.place",
+          "scene.context.coords",
+          "scene.kind.naturalColor"
+        ],
+        "rendered": {
+          "tool": "scripts/measure_interior_renders.py",
+          "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+          "viewports_measured": [
+            "360x844",
+            "390x844",
+            "414x844",
+            "600x1112",
+            "768x1112",
+            "834x1112",
+            "1024x900",
+            "1180x900",
+            "1280x900",
+            "1366x900",
+            "1440x900",
+            "1536x900",
+            "1680x900",
+            "1920x900",
+            "2200x900",
+            "2560x900",
+            "3000x900",
+            "3440x900",
+            "3840x900"
+          ],
+          "device_pixel_ratios_measured": [
+            1,
+            2
+          ],
+          "max_css_width": 600,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 1200,
+          "widest_candidate_px": 1200,
+          "selected_derivative": "assets/imagery/kizildere-aoi-1a7d0c36-800.webp",
+          "max_upscale_factor": 1.0,
+          "max_upscale_at": "768x1112 @2x"
+        }
+      },
+      {
+        "id": "kizildere-terrain",
+        "page": "about",
+        "role": "About page: eroded ground north-east of the pilot area, beyond the east edge of the analysis grid.",
+        "asset_class": "A - OrbGSS natural-colour Landsat composite, cropped",
+        "parent": {
+          "path": "assets/imagery/kizildere-aoi-context-2025-natural.jpg",
+          "sha256": "e43310e8adee08a2e27e0d863abe1c8bbc448669784ade8702571520abe3f865",
+          "record": "web_005b.context.master",
+          "scene_id": "kizildere-aoi-context-2025"
+        },
+        "crop_box_px": [
+          1741,
+          0,
+          3200,
+          897
+        ],
+        "crop_size_px": [
+          1459,
+          897
+        ],
+        "analysis_grid_box_px": [
+          541,
+          300,
+          1741,
+          1500
+        ],
+        "analysis_grid_overlap_px2": 0,
+        "ground_resolution_m": 30.0,
+        "pixel_hash8": "984f936e",
+        "operations": [
+          "crop of the accepted master",
+          "Lanczos3 downscale where a derivative is narrower than the crop",
+          "WebP encode"
+        ],
+        "operations_not_used": [
+          "tone or colour change",
+          "sharpening",
+          "upscaling",
+          "generative or AI step"
+        ],
+        "derivatives": [
+          {
+            "path": "assets/imagery/kizildere-terrain-984f936e-1459.webp",
+            "width_px": 1459,
+            "height_px": 897,
+            "format": "image/webp",
+            "operation": "WebP quality 82 encode of the crop at its native 1459 px; no resize",
+            "bytes": 322282,
+            "sha256": "5084a832761a7f75b16254ed72a8d7ee89276cd2cf92da0cf1559d72ae7ecef0"
+          },
+          {
+            "path": "assets/imagery/kizildere-terrain-984f936e-1000.webp",
+            "width_px": 1000,
+            "height_px": 615,
+            "format": "image/webp",
+            "operation": "Lanczos3 downscale of the crop to 1000 px, then WebP quality 82",
+            "bytes": 188540,
+            "sha256": "1a6c76ead5ee10683bbe17efde49e5e6dbdc4d36ecb184d33e4ee52bcd3d2372"
+          }
+        ],
+        "max_safe_rendered_px": {
+          "device_px": 1459,
+          "basis": "native 30 m Landsat at the crop's own pixel width; nothing is upscaled at or below that many device px"
+        },
+        "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Only the crop, tone rendering (in the parent) and encoding are OrbGSS work.",
+        "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
+        "caption_i18n_keys": [
+          "scene.context.place",
+          "scene.context.coords",
+          "scene.kind.naturalColor"
+        ],
+        "rendered": {
+          "tool": "scripts/measure_interior_renders.py",
+          "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+          "viewports_measured": [
+            "360x844",
+            "390x844",
+            "414x844",
+            "600x1112",
+            "768x1112",
+            "834x1112",
+            "1024x900",
+            "1180x900",
+            "1280x900",
+            "1366x900",
+            "1440x900",
+            "1536x900",
+            "1680x900",
+            "1920x900",
+            "2200x900",
+            "2560x900",
+            "3000x900",
+            "3440x900",
+            "3840x900"
+          ],
+          "device_pixel_ratios_measured": [
+            1,
+            2
+          ],
+          "max_css_width": 726,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 1452,
+          "widest_candidate_px": 1459,
+          "selected_derivative": "assets/imagery/kizildere-terrain-984f936e-1000.webp",
+          "max_upscale_factor": 0.995,
+          "max_upscale_at": "834x1112 @2x"
+        }
+      },
+      {
+        "id": "kizildere-valley",
+        "page": "partner",
+        "role": "Partner page: the cultivated graben floor in the south-west of the context frame; its eastern third overlaps the western edge of the analysis grid.",
+        "asset_class": "A - OrbGSS natural-colour Landsat composite, cropped",
+        "parent": {
+          "path": "assets/imagery/kizildere-aoi-context-2025-natural.jpg",
+          "sha256": "e43310e8adee08a2e27e0d863abe1c8bbc448669784ade8702571520abe3f865",
+          "record": "web_005b.context.master",
+          "scene_id": "kizildere-aoi-context-2025"
+        },
+        "crop_box_px": [
+          0,
+          800,
+          1000,
+          1800
+        ],
+        "crop_size_px": [
+          1000,
+          1000
+        ],
+        "analysis_grid_box_px": [
+          541,
+          300,
+          1741,
+          1500
+        ],
+        "analysis_grid_overlap_px2": 321300,
+        "ground_resolution_m": 30.0,
+        "pixel_hash8": "28b19cfd",
+        "operations": [
+          "crop of the accepted master",
+          "Lanczos3 downscale where a derivative is narrower than the crop",
+          "WebP encode"
+        ],
+        "operations_not_used": [
+          "tone or colour change",
+          "sharpening",
+          "upscaling",
+          "generative or AI step"
+        ],
+        "derivatives": [
+          {
+            "path": "assets/imagery/kizildere-valley-28b19cfd-1000.webp",
+            "width_px": 1000,
+            "height_px": 1000,
+            "format": "image/webp",
+            "operation": "WebP quality 82 encode of the crop at its native 1000 px; no resize",
+            "bytes": 209292,
+            "sha256": "916ba8f7d5aefd673562b9b0a82000cc77f2d2dc6121ccab02c3e278ee6b0466"
+          },
+          {
+            "path": "assets/imagery/kizildere-valley-28b19cfd-700.webp",
+            "width_px": 700,
+            "height_px": 700,
+            "format": "image/webp",
+            "operation": "Lanczos3 downscale of the crop to 700 px, then WebP quality 82",
+            "bytes": 124900,
+            "sha256": "fa2899f22b327eb8f36c10d37b6ccb6a93cc37c392eefdf19925f27c4382518c"
+          }
+        ],
+        "max_safe_rendered_px": {
+          "device_px": 1000,
+          "basis": "native 30 m Landsat at the crop's own pixel width; nothing is upscaled at or below that many device px"
+        },
+        "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Only the crop, tone rendering (in the parent) and encoding are OrbGSS work.",
+        "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
+        "caption_i18n_keys": [
+          "scene.context.place",
+          "scene.context.coords",
+          "scene.kind.naturalColor"
+        ],
+        "rendered": {
+          "tool": "scripts/measure_interior_renders.py",
+          "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+          "viewports_measured": [
+            "360x844",
+            "390x844",
+            "414x844",
+            "600x1112",
+            "768x1112",
+            "834x1112",
+            "1024x900",
+            "1180x900",
+            "1280x900",
+            "1366x900",
+            "1440x900",
+            "1536x900",
+            "1680x900",
+            "1920x900",
+            "2200x900",
+            "2560x900",
+            "3000x900",
+            "3440x900",
+            "3840x900"
+          ],
+          "device_pixel_ratios_measured": [
+            1,
+            2
+          ],
+          "max_css_width": 498,
+          "device_pixel_ratio_considered": 2,
+          "max_device_px": 996,
+          "widest_candidate_px": 1000,
+          "selected_derivative": "assets/imagery/kizildere-valley-28b19cfd-700.webp",
+          "max_upscale_factor": 0.996,
+          "max_upscale_at": "600x1112 @2x"
+        }
+      }
+    ]
   }
 }

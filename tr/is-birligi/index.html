@@ -28,7 +28,7 @@
   <meta property="og:image" content="https://orbgss.com/assets/hero/hero-poster-1600.webp" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body>
+<body class="interior">
   <a class="skip-link" href="#main" data-i18n="a11y.skip">İçeriğe geç</a>
 
   <header class="site-header" id="top">
@@ -67,34 +67,60 @@
   </header>
 
   <main id="main">
-    <section class="page-hero" aria-labelledby="partner-title">
+    <section class="page-hero is-split" aria-labelledby="partner-title">
       <div class="page-hero-inner">
         <p class="kicker mono" data-i18n="nav.partner">İş Birliği</p>
         <h1 id="partner-title" data-i18n="partnerPage.title">Sırada nereye bakacağımızı konuşalım.</h1>
         <p class="page-hero-copy" data-i18n="partnerPage.intro">OrbGSS; pilot, iş birliği ve teknik görüşmeler için ulaşılabilir durumdadır. Doğrudan e-posta ile yazın — doldurulacak bir form yok.</p>
       </div>
+      <figure class="split-figure" data-label-tone="light" data-label-tone-locked>
+        <img
+          src="/assets/imagery/kizildere-valley-28b19cfd-1000.webp"
+          srcset="/assets/imagery/kizildere-valley-28b19cfd-700.webp 700w, /assets/imagery/kizildere-valley-28b19cfd-1000.webp 1000w"
+          sizes="(min-width: 1100px) 500px, 100vw"
+          alt="Kızıldere bağlam görünümünün güneybatısında, Büyük Menderes grabeninin işlenen tabanının ve onu kesen bir yolun doğal renkli Landsat 8 görünümü"
+          data-i18n-alt="alt.valley"
+          decoding="async"
+          width="1000"
+          height="1000"
+        />
+        <figcaption class="scene-label"><span data-i18n="scene.context.place">Kızıldere — Büyük Menderes grabeni, Denizli, Türkiye</span><span data-i18n="scene.context.coords">37.9794° K, 28.7907° D</span><span class="scene-kind" data-i18n="scene.kind.naturalColor">Doğal renkli kompozit</span></figcaption>
+      </figure>
     </section>
 
-    <section class="page-section" aria-labelledby="conversations-title">
-      <div class="shell">
+    <section class="page-section chapter is-stacked" id="routes" aria-labelledby="conversations-title">
+      <div class="shell chapter-grid">
         <div class="page-section-head">
           <h2 id="conversations-title" data-i18n="partnerPage.conversations.title">Hangi görüşme</h2>
         </div>
-        <table class="data-table" aria-labelledby="conversations-title" data-lead-visual>
-          <thead>
-            <tr><th scope="col" data-i18n="partnerPage.col.conversation">Görüşme</th><th scope="col" data-i18n="partnerPage.col.covers">Kapsamı</th><th scope="col" data-i18n="partnerPage.col.write">Yazın</th></tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row" data-i18n="partnerPage.pilot.title">Pilot</th><td data-i18n="partnerPage.pilot.copy">Bir jeotermal pilot ya da yeni bir alanda ilk uygulama.</td><td><a href="mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Talebi" data-i18n-href="mail.pilot"><span data-i18n="partnerPage.write">Yazın</span> <span aria-hidden="true">→</span></a></td></tr>
-            <tr><th scope="row" data-i18n="partnerPage.partnership.title">İş birliği</th><td data-i18n="partnerPage.partnership.copy">OrbGSS ile bir iş birliği ya da ortaklık.</td><td><a href="mailto:contact@orbgss.com?subject=OrbGSS%20%C4%B0%C5%9F%20Birli%C4%9Fi%20Talebi" data-i18n-href="mail.partner"><span data-i18n="partnerPage.write">Yazın</span> <span aria-hidden="true">→</span></a></td></tr>
-            <tr><th scope="row" data-i18n="partnerPage.technical.title">Teknik</th><td data-i18n="partnerPage.technical.copy">Kanıt, sınırları ya da bir pilotun nasıl kapsamlandırılacağı.</td><td><a href="mailto:contact@orbgss.com?subject=OrbGSS%20Teknik%20G%C3%B6r%C3%BC%C5%9Fme%20Talebi" data-i18n-href="mail.technical"><span data-i18n="partnerPage.write">Yazın</span> <span aria-hidden="true">→</span></a></td></tr>
-          </tbody>
-        </table>
+        <ul class="route-list lead-set" data-lead-visual>
+          <li>
+            <a href="mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Talebi" data-i18n-href="mail.pilot">
+              <span class="route-title" data-i18n="partnerPage.pilot.title">Pilot</span>
+              <span class="route-copy" data-i18n="partnerPage.pilot.copy">Bir jeotermal pilot ya da yeni bir alanda ilk uygulama.</span>
+              <span class="route-go mono"><span data-i18n="partnerPage.write">Yazın</span> <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:contact@orbgss.com?subject=OrbGSS%20%C4%B0%C5%9F%20Birli%C4%9Fi%20Talebi" data-i18n-href="mail.partner">
+              <span class="route-title" data-i18n="partnerPage.partnership.title">İş birliği</span>
+              <span class="route-copy" data-i18n="partnerPage.partnership.copy">OrbGSS ile bir iş birliği ya da ortaklık.</span>
+              <span class="route-go mono"><span data-i18n="partnerPage.write">Yazın</span> <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:contact@orbgss.com?subject=OrbGSS%20Teknik%20G%C3%B6r%C3%BC%C5%9Fme%20Talebi" data-i18n-href="mail.technical">
+              <span class="route-title" data-i18n="partnerPage.technical.title">Teknik</span>
+              <span class="route-copy" data-i18n="partnerPage.technical.copy">Kanıt, sınırları ya da bir pilotun nasıl kapsamlandırılacağı.</span>
+              <span class="route-go mono"><span data-i18n="partnerPage.write">Yazın</span> <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <section class="page-section is-deep" aria-labelledby="direct-title">
-      <div class="shell">
+    <section class="page-section chapter is-deep" id="direct" aria-labelledby="direct-title">
+      <div class="shell chapter-grid">
         <div class="page-section-head">
           <h2 id="direct-title" data-i18n="partnerPage.direct.label">Doğrudan</h2>
         </div>
@@ -114,7 +140,7 @@
         <a href="/tr/hakkimizda/" data-i18n="nav.about">Hakkımızda</a>
         <a href="/tr/is-birligi/" data-i18n="nav.partner">İş Birliği</a>
       </nav>
-      <p class="attribution"><span data-i18n="footer.attribution">Landsat verileri ABD Jeoloji Araştırmaları Kurumu (USGS) kaynaklıdır. Açılış görseli, görselleştirilmiş bir yörünge sekansıdır; Dünya dokusu NASA Blue Marble’dır ve zemin detayı değiştirilmiş Copernicus Sentinel-2 verilerinden (2025) gelir. Bölüm görselleri ise NASADEM yükselti, Landsat termal ve Sentinel-2 alterasyon kanıtlarından türetilen, Kızıldere pilot alanına ait OrbGSS kartografik dışa aktarımlarıdır; renk skalaları Fabio Crameri, Scientific colour maps v8.0.</span> <a href="/tr/hakkimizda/#sources" data-i18n="footer.sources">Tüm kaynaklar Hakkımızda sayfasında listelenir.</a></p>
+      <p class="attribution"><span data-i18n="footer.attribution">Landsat verileri ABD Jeoloji Araştırmaları Kurumu (USGS) kaynaklıdır. Değiştirilmiş Copernicus Sentinel verileri (2025) içerir.</span> <a href="/tr/kaynaklar/" data-i18n="footer.sources">Veri kaynakları ve atıflar</a></p>
       <p data-i18n="footer.copyright">© 2026 OrbGSS. Tüm hakları saklıdır.</p>
     </div>
   </footer>

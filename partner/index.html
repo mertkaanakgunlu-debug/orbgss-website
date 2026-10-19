@@ -27,7 +27,7 @@
   <meta property="og:image" content="https://orbgss.com/assets/hero/hero-poster-1600.webp" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body>
+<body class="interior">
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
 
   <header class="site-header" id="top">
@@ -66,34 +66,60 @@
   </header>
 
   <main id="main">
-    <section class="page-hero" aria-labelledby="partner-title">
+    <section class="page-hero is-split" aria-labelledby="partner-title">
       <div class="page-hero-inner">
         <p class="kicker mono" data-i18n="nav.partner">Partner with us</p>
         <h1 id="partner-title" data-i18n="partnerPage.title">Let's talk about where to look next.</h1>
         <p class="page-hero-copy" data-i18n="partnerPage.intro">OrbGSS is available for pilot, partnership and technical conversations. Reach out directly by email — there is no form to fill in.</p>
       </div>
+      <figure class="split-figure" data-label-tone="light" data-label-tone-locked>
+        <img
+          src="/assets/imagery/kizildere-valley-28b19cfd-1000.webp"
+          srcset="/assets/imagery/kizildere-valley-28b19cfd-700.webp 700w, /assets/imagery/kizildere-valley-28b19cfd-1000.webp 1000w"
+          sizes="(min-width: 1100px) 500px, 100vw"
+          alt="Natural-colour Landsat 8 view of the cultivated floor of the Büyük Menderes graben, with a road crossing it, in the south-west of the Kızıldere context view"
+          data-i18n-alt="alt.valley"
+          decoding="async"
+          width="1000"
+          height="1000"
+        />
+        <figcaption class="scene-label"><span data-i18n="scene.context.place">Kızıldere — Büyük Menderes graben, Denizli, Türkiye</span><span data-i18n="scene.context.coords">37.9794° N, 28.7907° E</span><span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span></figcaption>
+      </figure>
     </section>
 
-    <section class="page-section" aria-labelledby="conversations-title">
-      <div class="shell">
+    <section class="page-section chapter is-stacked" id="routes" aria-labelledby="conversations-title">
+      <div class="shell chapter-grid">
         <div class="page-section-head">
           <h2 id="conversations-title" data-i18n="partnerPage.conversations.title">Which conversation</h2>
         </div>
-        <table class="data-table" aria-labelledby="conversations-title" data-lead-visual>
-          <thead>
-            <tr><th scope="col" data-i18n="partnerPage.col.conversation">Conversation</th><th scope="col" data-i18n="partnerPage.col.covers">What it covers</th><th scope="col" data-i18n="partnerPage.col.write">Write</th></tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row" data-i18n="partnerPage.pilot.title">Pilot</th><td data-i18n="partnerPage.pilot.copy">A geothermal pilot, or a first application in a new area.</td><td><a href="mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Inquiry" data-i18n-href="mail.pilot"><span data-i18n="partnerPage.write">Write</span> <span aria-hidden="true">→</span></a></td></tr>
-            <tr><th scope="row" data-i18n="partnerPage.partnership.title">Partnership</th><td data-i18n="partnerPage.partnership.copy">A partnership or collaboration with OrbGSS.</td><td><a href="mailto:contact@orbgss.com?subject=OrbGSS%20Partnership%20Inquiry" data-i18n-href="mail.partner"><span data-i18n="partnerPage.write">Write</span> <span aria-hidden="true">→</span></a></td></tr>
-            <tr><th scope="row" data-i18n="partnerPage.technical.title">Technical</th><td data-i18n="partnerPage.technical.copy">The evidence, its limits, or how a pilot would be scoped.</td><td><a href="mailto:contact@orbgss.com?subject=OrbGSS%20Technical%20Inquiry" data-i18n-href="mail.technical"><span data-i18n="partnerPage.write">Write</span> <span aria-hidden="true">→</span></a></td></tr>
-          </tbody>
-        </table>
+        <ul class="route-list lead-set" data-lead-visual>
+          <li>
+            <a href="mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Inquiry" data-i18n-href="mail.pilot">
+              <span class="route-title" data-i18n="partnerPage.pilot.title">Pilot</span>
+              <span class="route-copy" data-i18n="partnerPage.pilot.copy">A geothermal pilot, or a first application in a new area.</span>
+              <span class="route-go mono"><span data-i18n="partnerPage.write">Write</span> <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:contact@orbgss.com?subject=OrbGSS%20Partnership%20Inquiry" data-i18n-href="mail.partner">
+              <span class="route-title" data-i18n="partnerPage.partnership.title">Partnership</span>
+              <span class="route-copy" data-i18n="partnerPage.partnership.copy">A partnership or collaboration with OrbGSS.</span>
+              <span class="route-go mono"><span data-i18n="partnerPage.write">Write</span> <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:contact@orbgss.com?subject=OrbGSS%20Technical%20Inquiry" data-i18n-href="mail.technical">
+              <span class="route-title" data-i18n="partnerPage.technical.title">Technical</span>
+              <span class="route-copy" data-i18n="partnerPage.technical.copy">The evidence, its limits, or how a pilot would be scoped.</span>
+              <span class="route-go mono"><span data-i18n="partnerPage.write">Write</span> <span aria-hidden="true">→</span></span>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 
-    <section class="page-section is-deep" aria-labelledby="direct-title">
-      <div class="shell">
+    <section class="page-section chapter is-deep" id="direct" aria-labelledby="direct-title">
+      <div class="shell chapter-grid">
         <div class="page-section-head">
           <h2 id="direct-title" data-i18n="partnerPage.direct.label">Direct</h2>
         </div>
@@ -113,7 +139,7 @@
         <a href="/about/" data-i18n="nav.about">About</a>
         <a href="/partner/" data-i18n="nav.partner">Partner with us</a>
       </nav>
-      <p class="attribution"><span data-i18n="footer.attribution">Landsat data courtesy of the U.S. Geological Survey. The hero is a rendered orbital sequence whose Earth texture is NASA Blue Marble with ground detail from modified Copernicus Sentinel-2 data (2025). The story panels are OrbGSS cartographic exports of the Kızıldere pilot area, derived from NASADEM elevation, Landsat thermal and Sentinel-2 alteration evidence, with Scientific colour maps v8.0 by Fabio Crameri.</span> <a href="/about/#sources" data-i18n="footer.sources">Every source is listed on the About page.</a></p>
+      <p class="attribution"><span data-i18n="footer.attribution">Landsat data courtesy of the U.S. Geological Survey. Contains modified Copernicus Sentinel data (2025).</span> <a href="/sources/" data-i18n="footer.sources">Data sources and attributions</a></p>
       <p data-i18n="footer.copyright">© 2026 OrbGSS. All rights reserved.</p>
     </div>
   </footer>

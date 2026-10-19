@@ -2,72 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://orbgss.com/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/" />
     <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/" />
   </url>
   <url>
     <loc>https://orbgss.com/solutions/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/solutions/" />
     <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/cozumler/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/solutions/" />
   </url>
   <url>
     <loc>https://orbgss.com/solutions/geothermal/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/solutions/geothermal/" />
     <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/cozumler/jeotermal/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/solutions/geothermal/" />
   </url>
   <url>
     <loc>https://orbgss.com/about/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/about/" />
     <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/hakkimizda/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/about/" />
   </url>
   <url>
     <loc>https://orbgss.com/partner/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/partner/" />
     <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/is-birligi/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/partner/" />
   </url>
   <url>
+    <loc>https://orbgss.com/sources/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/sources/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/kaynaklar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/sources/" />
+  </url>
+  <url>
     <loc>https://orbgss.com/tr/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/" />
     <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/" />
   </url>
   <url>
     <loc>https://orbgss.com/tr/cozumler/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/solutions/" />
     <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/cozumler/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/solutions/" />
   </url>
   <url>
     <loc>https://orbgss.com/tr/cozumler/jeotermal/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/solutions/geothermal/" />
     <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/cozumler/jeotermal/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/solutions/geothermal/" />
   </url>
   <url>
     <loc>https://orbgss.com/tr/hakkimizda/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/about/" />
     <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/hakkimizda/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/about/" />
   </url>
   <url>
     <loc>https://orbgss.com/tr/is-birligi/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-10-19</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/partner/" />
     <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/is-birligi/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/partner/" />
+  </url>
+  <url>
+    <loc>https://orbgss.com/tr/kaynaklar/</loc>
+    <lastmod>2026-10-19</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://orbgss.com/sources/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://orbgss.com/tr/kaynaklar/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://orbgss.com/sources/" />
   </url>
 </urlset>
