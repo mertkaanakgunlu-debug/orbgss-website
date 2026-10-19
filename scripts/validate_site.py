@@ -2865,7 +2865,9 @@ def main() -> int:
     crops = manifest.get("web_m6", {}).get("interior_crops", [])
     css_flat = re.sub(r"\s+", "", css_text)
     # The Mining and Marine figures on /solutions/ are captioned photographs, not cards (CLAUDE.md keeps Act 3 and
-    # the homepage Solutions cards as the only card-like compositions): no frame, surface effect, link or CTA.
+    # the homepage Solutions cards as the only card-like compositions): no border, radius, shadow, outline or backdrop
+    # on the three selectors below and no link inside the pair. The two-column grid, the item count, the placeholder
+    # background and the copy are deliberately not checked here.
     for sel in (".domain-panel", ".panel-figure", ".pair-grid"):
         for body in re.findall(re.escape(sel) + r"\{([^}]*)\}", css_flat):
             bad = re.findall(r"(?:^|;)(border(?:-radius)?|box-shadow|backdrop-filter|outline)\s*:", body)
