@@ -15,6 +15,9 @@ import unicodedata
 from html import unescape
 from html.parser import HTMLParser
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import geo_frame  # noqa: E402
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 HTML = ROOT / "index.html"
 MANIFEST = ROOT / "assets" / "imagery" / "sources.json"
@@ -2861,6 +2864,20 @@ def main() -> int:
     # -- the interior crops ---------------------------------------------------------------------
     crops = manifest.get("web_m6", {}).get("interior_crops", [])
     css_flat = re.sub(r"\s+", "", css_text)
+    # The Mining and Marine figures on /solutions/ are captioned photographs, not cards (CLAUDE.md keeps Act 3 and
+    # the homepage Solutions cards as the only card-like compositions): no frame, surface effect, link or CTA.
+    for sel in (".domain-panel", ".panel-figure", ".pair-grid"):
+        for body in re.findall(re.escape(sel) + r"\{([^}]*)\}", css_flat):
+            bad = re.findall(r"(?:^|;)(border(?:-radius)?|box-shadow|backdrop-filter|outline)\s*:", body)
+            if bad:
+                fail(f"MER-255: {sel} declares {sorted(set(bad))}; the expansion-direction figures are captioned "
+                     f"photographs, not cards", errors)
+    sol_dom = doms.get("solutions")
+    if sol_dom is not None:
+        pair = first(sol_dom, lambda n: "pair-grid" in n.classes)
+        if pair is not None and first(pair, lambda n: n.tag == "a" and n.attrs.get("href")):
+            fail("MER-255: /solutions/ expansion-direction figures carry a link; they are captioned photographs, "
+                 "not cards (no link, arrow or call to action)", errors)
     if not crops:
         fail("sources.json has no web_m6.interior_crops record for the redesigned interior imagery", errors)
     crop_ids = [str(c.get("id")) for c in crops]
@@ -2914,6 +2931,54 @@ def main() -> int:
             if str(crop.get("pixel_hash8", "-")) not in dpath.name:
                 fail(f"web_m6.interior_crops[{cid}] derivative {dpath.name} is not content-hash named "
                      f"(/assets/ is immutable-cached)", errors)
+        # MER-255 review B3: the coordinates printed on an image must name ground the image shows. The
+        # caption's coordinate is projected back onto the master's pixel grid (scripts/geo_frame.py) and
+        # must fall inside the crop box; the record, both dictionaries and the figure's own caption agree.
+        label = crop.get("label_point") or {}
+        ckeys = [str(k) for k in (crop.get("caption_i18n_keys") or [])]
+        if len(ckeys) < 2 or not label:
+            fail(f"MER-255: web_m6.interior_crops[{cid}] records no caption keys or no label_point", errors)
+        else:
+            nums: dict[str, tuple[float, float]] = {}
+            for lang, (ns, ew) in (("en", ("N", "E")), ("tr", ("K", "D"))):
+                value = dictionary_value(lang, ckeys[1]) or ""
+                m_c = re.fullmatch(rf"(\d{{1,2}}\.\d{{4}})° {ns}, (\d{{1,3}}\.\d{{4}})° {ew}", value)
+                if m_c:
+                    nums[lang] = (float(m_c.group(1)), float(m_c.group(2)))
+                else:
+                    fail(f"MER-255: {ckeys[1]} in the {lang!r} dictionary is {value!r}, expected "
+                         f"'dd.dddd° {ns}, dd.dddd° {ew}'", errors)
+            if len(nums) == 2 and nums["en"] != nums["tr"]:
+                fail(f"MER-255: {ckeys[1]} names different coordinates in en and tr", errors)
+            if "en" in nums:
+                cpx, cpy = geo_frame.wgs84_to_frame_px(*nums["en"])
+                if not (box[0] - 0.5 <= cpx <= box[2] + 0.5 and box[1] - 0.5 <= cpy <= box[3] + 0.5):
+                    fail(f"MER-255: crop {cid} is captioned {nums['en'][0]:.4f} N, {nums['en'][1]:.4f} E = master pixel "
+                         f"({cpx:.0f}, {cpy:.0f}), outside its crop box {box}; the label must name ground the image shows",
+                         errors)
+                if (label.get("lat"), label.get("lon")) != nums["en"]:
+                    fail(f"MER-255: crop {cid} records label_point {label.get('lat')}, {label.get('lon')} but its "
+                         f"caption says {nums['en'][0]}, {nums['en'][1]}", errors)
+            page_dom = doms.get(str(crop.get("page")))
+            deriv_paths = {str(d.get("path")) for d in derivs}
+            shown = [i_ for i_ in (page_dom.find_all(lambda n_: n_.tag == "img") if page_dom else [])
+                     if str(i_.attrs.get("src", "")).lstrip("/") in deriv_paths and "thumb" not in i_.classes]
+            captioned = 0
+            for img_node in shown:
+                holder = next((a_ for a_ in img_node.ancestors()
+                               if a_.find_all(lambda n_: "scene-label" in n_.classes)), None)
+                if holder is None or holder.tag in ("main", "body", "html", "#root"):
+                    continue  # an uncaptioned frame (the labelled layer schematic); no label of its own
+                captioned += 1
+                label_node = first(holder, lambda n_: "scene-label" in n_.classes)
+                spans = [c_.attrs.get("data-i18n") for c_ in (label_node.children if label_node else [])
+                         if isinstance(c_, DomNode) and c_.attrs.get("data-i18n")]
+                if spans[:2] != ckeys[:2]:
+                    fail(f"MER-255: the {crop.get('page')} figure that shows crop {cid} is captioned with {spans[:2]}, "
+                         f"its record names {ckeys[:2]}", errors)
+            if shown and not captioned:
+                fail(f"MER-255: crop {cid} is shown on {crop.get('page')} without a caption of its own; every "
+                     f"photograph names its place and coordinates on the image", errors)
         # Where it is shown: full size on its own page only, as R2 requires.
         shown_where = {n for n, d in doms.items() if n in route_html and any(
             str(i.attrs.get("src", "")).lstrip("/") in {str(x.get("path")) for x in derivs}
@@ -3175,20 +3240,38 @@ def main() -> int:
         'DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, '
         'OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.')
 
-    def straight(value: str) -> str:
-        return " ".join(value.replace("“", '"').replace("”", '"').split())
+    def squeeze(value: str) -> str:
+        # Whitespace only: the licence text is the standard ASCII text, straight quotes included.
+        return " ".join(value.split())
+
+    notice = (manifest.get("web_m6", {}).get("licence_notices", {}) or {}).get("scientific-colour-maps-v8.0") or {}
+    notice_line = str(notice.get("copyright_line_published") or "")
+    for field in ("licence", "copyright_holder", "copyright_line_published", "year_status", "basis_in_repo",
+                  "to_verify_against", "open_item"):
+        if not notice.get(field):
+            fail(f"MER-255: web_m6.licence_notices['scientific-colour-maps-v8.0'] is missing {field}", errors)
+    if not re.fullmatch(r"Copyright \(c\)( \d{4}(?:-\d{4})?,)? Fabio Crameri", notice_line):
+        fail(f"MER-255: the recorded copyright notice {notice_line!r} is not 'Copyright (c) [year,] Fabio Crameri'", errors)
+    notice_year = notice.get("copyright_year")
+    if notice_year is None and re.search(r"\d{4}", notice_line):
+        fail("MER-255: a copyright year is published without a verified source (copyright_year is null in "
+             "web_m6.licence_notices; no year is asserted until the release file is read)", errors)
+    if notice_year is not None and (str(notice_year) not in notice_line or not notice.get("year_verified_from")):
+        fail("MER-255: a copyright year is published without a verified source (record year_verified_from, "
+             "the file it was read from, in web_m6.licence_notices)", errors)
 
     for lang in ("en", "tr"):
-        body = straight(" ".join(dictionary_value(lang, f"sourcesPage.mit.{k}") or ""
-                                 for k in ("permission", "condition", "warranty")))
+        body = squeeze(" ".join(dictionary_value(lang, f"sourcesPage.mit.{k}") or ""
+                                for k in ("permission", "condition", "warranty")))
         if body != MIT_BODY:
             fail(f"MER-255: the {lang!r} MIT licence text on /sources/ differs from the standard MIT text; "
                  f"the licence notice must travel unchanged", errors)
         if dictionary_value(lang, "sourcesPage.mit.name") != "MIT License":
             fail(f"MER-255: the {lang!r} licence heading must read 'MIT License'", errors)
         copyright_line = dictionary_value(lang, "sourcesPage.mit.copyright") or ""
-        if not re.fullmatch(r"Copyright \(c\) \d{4}, Fabio Crameri", copyright_line):
-            fail(f"MER-255: the {lang!r} copyright notice is {copyright_line!r}", errors)
+        if copyright_line != notice_line:
+            fail(f"MER-255: the {lang!r} copyright notice is {copyright_line!r}, the licence record publishes "
+                 f"{notice_line!r}", errors)
     licence_block = first(src_dom, lambda n: n.attrs.get("id") == "licence-scm")
     if licence_block is None or first(licence_block, lambda n: n.tag == "blockquote" and "source-fixed" in n.classes) is None:
         fail("MER-255: the Scientific colour maps licence block is missing from /sources/", errors)

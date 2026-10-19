@@ -2,6 +2,17 @@
 
 Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
 
+## MER-255 review revision — 2026-10-19 (same branch; `REVIEW_READY` again, not published)
+
+The independent review of `cffadf8a` returned FAIL on three defects. Fixed, with the card remark:
+
+- **B1 — hero lane:** `hero/config/lane.json` `integration_write_surface` now lists the nine crop WebP files, and its `phase`, `lane` and `integration_task` fields name MER-255. The hero validator is run after the commit (it diffs baseline to HEAD) and shows only the 13 known fresh-clone failures.
+- **B2 — Scientific colour maps line:** "Copyright (c) 2023, Fabio Crameri" had no source and is withdrawn. The page carries the standard MIT permission and warranty text under "Copyright (c) Fabio Crameri", with no year; `web_m6.licence_notices` records the evidence and the open item; the validator fails on a year without a recorded verified source. Taking the exact notice from the Zenodo v8.0 release file stays with the CTO.
+- **B3 — caption coordinates:** each crop has a recorded `label_point`. About's terrain crop is now captioned "East of the Kızıldere pilot area" at 38.0936° N, 29.2483° E and Partner's valley crop "South-west of the Kızıldere pilot area" at 37.8744° N, 28.5695° E; the pilot centre stays on the two crops that contain it. `scripts/geo_frame.py` projects the printed pair onto the 30 m master grid and the validator fails when it lies outside the crop.
+- **Cards:** Mining and Marine on `/solutions/` lose the hairline frame and are held by the validator to no frame, no link and no grid; `docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md` §2 and `CLAUDE.md` clarify that these are captioned photographs, so the single-card-composition rule is unchanged.
+- **Small:** the Turkish credit lines on `/tr/kaynaklar/` are the providers' original English wording and say so; straight quotes in the licence text; the About trust note no longer claims credits "where it appears".
+- **Checks:** `scripts/negative_tests_mer255.py` now has 58 cases (12 new: caption coordinates, the licence line, the not-a-card guard). Evidence: `tasks/MER-255_EVIDENCE.md`.
+
 ## MER-255 premium interior redesign — 2026-10-19 (branch `claude/premium-interior-redesign-65zdlt`; `REVIEW_READY`, not published)
 
 - **Pages:** `/solutions/`, `/solutions/geothermal/`, `/about/` and `/partner/` rebuilt around one photograph each and five different openings (state ledger, Kızıldere strip, orbital statement, split, register); one grammar (`body.interior`, numbered chapters, ruled lists, mono captions). The homepage's four acts, hero and inspection aid are untouched; its footer attribution sentence is shortened (below).

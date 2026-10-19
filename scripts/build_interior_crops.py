@@ -31,16 +31,25 @@ import sys
 
 from PIL import Image
 
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import geo_frame  # noqa: E402
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "assets" / "imagery" / "sources.json"
 MASTER = "assets/imagery/kizildere-aoi-context-2025-natural.jpg"
 WEBP_QUALITY = 82  # the same encode as the Act 2 derivatives (scripts/build_web005b_context.py)
 OUT_DIR = "assets/imagery"
 
-# id, page, crop box (left, top, right, bottom) in master pixels, derivative widths, role.
+# id, page, crop box (left, top, right, bottom) in master pixels, derivative widths, role, and the point the
+# caption on the image names ("label"). The caption's coordinates must lie inside the crop's own ground:
+# the declared pilot centre where the crop contains it, otherwise the centre of the crop (MER-255 review B3).
+# The pilot (AOI) centre is the centre of the analysis grid, master pixel (1141, 900).
 # The AOI box is the recorded 36 x 36 km analysis grid inside the frame:
 # web_005b.context.frame.aoi_in_frame x 0.169063-0.544063, y 0.166667-0.833333 of 3200 x 1800.
 AOI_BOX = (541, 300, 1741, 1500)
+PILOT_CENTRE_PX = (1141.0, 900.0)
+PILOT_BASIS = "the declared pilot (AOI) centre, which lies inside this crop"
+CENTRE_BASIS = "the centre of this crop; the crop does not contain the pilot centre"
 CROPS = (
     {
         "id": "kizildere-stage",
@@ -48,6 +57,8 @@ CROPS = (
         "box": (0, 380, 3200, 1480),
         "widths": (3200, 2400, 1600),
         "role": "Geothermal page stage: a wide strip of the Büyük Menderes graben behind the headline.",
+        "caption": ("scene.context.place", "scene.context.coords"),
+        "label": (PILOT_CENTRE_PX, PILOT_BASIS),
     },
     {
         "id": "kizildere-aoi",
@@ -55,6 +66,8 @@ CROPS = (
         "box": (541, 300, 1741, 1500),
         "widths": (1200, 800),
         "role": "Geothermal page, the analysis area: the 36 x 36 km grid (1,200 x 1,200 cells) in natural colour.",
+        "caption": ("scene.aoi.place", "scene.aoi.coords"),
+        "label": (PILOT_CENTRE_PX, PILOT_BASIS),
     },
     {
         "id": "kizildere-terrain",
@@ -62,6 +75,8 @@ CROPS = (
         "box": (1741, 0, 3200, 897),
         "widths": (1459, 1000),
         "role": "About page: eroded ground north-east of the pilot area, beyond the east edge of the analysis grid.",
+        "caption": ("scene.terrain.place", "scene.terrain.coords"),
+        "label": (None, CENTRE_BASIS),
     },
     {
         "id": "kizildere-valley",
@@ -69,6 +84,8 @@ CROPS = (
         "box": (0, 800, 1000, 1800),
         "widths": (1000, 700),
         "role": "Partner page: the cultivated graben floor in the south-west of the context frame; its eastern third overlaps the western edge of the analysis grid.",
+        "caption": ("scene.valley.place", "scene.valley.coords"),
+        "label": (None, CENTRE_BASIS),
     },
 )
 
@@ -78,6 +95,15 @@ def overlap_px(a: tuple[int, int, int, int], b: tuple[int, int, int, int]) -> in
     width = min(a[2], b[2]) - max(a[0], b[0])
     height = min(a[3], b[3]) - max(a[1], b[1])
     return max(width, 0) * max(height, 0)
+
+
+def label_point(box: tuple[int, int, int, int], point_px: tuple[float, float] | None, basis: str) -> dict:
+    """The point the image caption names, in master pixels and as the 4-decimal WGS84 pair printed on the image."""
+    px = point_px if point_px is not None else ((box[0] + box[2]) / 2, (box[1] + box[3]) / 2)
+    if not (box[0] <= px[0] <= box[2] and box[1] <= px[1] <= box[3]):
+        raise SystemExit(f"caption point {px} lies outside the crop box {box}")
+    lat, lon = geo_frame.frame_px_to_wgs84(*px)
+    return {"master_px": [px[0], px[1]], "lat": round(lat, 4), "lon": round(lon, 4), "basis": basis}
 
 
 def sha256_bytes(data: bytes) -> str:
@@ -146,7 +172,8 @@ def build(root: pathlib.Path = ROOT) -> tuple[dict[str, bytes], list[dict]]:
             "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no "
                             "restrictions on use or redistribution. Only the crop, tone rendering (in the parent) and encoding are OrbGSS work.",
             "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
-            "caption_i18n_keys": ["scene.context.place", "scene.context.coords", "scene.kind.naturalColor"],
+            "caption_i18n_keys": [*spec["caption"], "scene.kind.naturalColor"],
+            "label_point": label_point(spec["box"], *spec["label"]),
             "rendered": None,
         })
     return files, records

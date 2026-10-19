@@ -4123,6 +4123,15 @@
           "scene.context.coords",
           "scene.kind.naturalColor"
         ],
+        "label_point": {
+          "master_px": [
+            1141.0,
+            900.0
+          ],
+          "lat": 37.9794,
+          "lon": 28.7907,
+          "basis": "the declared pilot (AOI) centre, which lies inside this crop"
+        },
         "rendered": {
           "tool": "scripts/measure_interior_renders.py",
           "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
@@ -4228,10 +4237,19 @@
         "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Only the crop, tone rendering (in the parent) and encoding are OrbGSS work.",
         "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
         "caption_i18n_keys": [
-          "scene.context.place",
-          "scene.context.coords",
+          "scene.aoi.place",
+          "scene.aoi.coords",
           "scene.kind.naturalColor"
         ],
+        "label_point": {
+          "master_px": [
+            1141.0,
+            900.0
+          ],
+          "lat": 37.9794,
+          "lon": 28.7907,
+          "basis": "the declared pilot (AOI) centre, which lies inside this crop"
+        },
         "rendered": {
           "tool": "scripts/measure_interior_renders.py",
           "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
@@ -4337,10 +4355,19 @@
         "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Only the crop, tone rendering (in the parent) and encoding are OrbGSS work.",
         "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
         "caption_i18n_keys": [
-          "scene.context.place",
-          "scene.context.coords",
+          "scene.terrain.place",
+          "scene.terrain.coords",
           "scene.kind.naturalColor"
         ],
+        "label_point": {
+          "master_px": [
+            2470.5,
+            448.5
+          ],
+          "lat": 38.0936,
+          "lon": 29.2483,
+          "basis": "the centre of this crop; the crop does not contain the pilot centre"
+        },
         "rendered": {
           "tool": "scripts/measure_interior_renders.py",
           "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
@@ -4446,10 +4473,19 @@
         "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Only the crop, tone rendering (in the parent) and encoding are OrbGSS work.",
         "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
         "caption_i18n_keys": [
-          "scene.context.place",
-          "scene.context.coords",
+          "scene.valley.place",
+          "scene.valley.coords",
           "scene.kind.naturalColor"
         ],
+        "label_point": {
+          "master_px": [
+            500.0,
+            1300.0
+          ],
+          "lat": 37.8744,
+          "lon": 28.5695,
+          "basis": "the centre of this crop; the crop does not contain the pilot centre"
+        },
         "rendered": {
           "tool": "scripts/measure_interior_renders.py",
           "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
@@ -4487,6 +4523,20 @@
           "max_upscale_at": "600x1112 @2x"
         }
       }
-    ]
+    ],
+    "licence_notices": {
+      "scientific-colour-maps-v8.0": {
+        "licence": "MIT",
+        "copyright_holder": "Fabio Crameri",
+        "copyright_line_published": "Copyright (c) Fabio Crameri",
+        "copyright_year": null,
+        "year_verified_from": null,
+        "year_status": "Not published. The licence file of the v8.0 release was not reachable from the build environment (zenodo.org, doi.org and github.com refused), so no year is asserted.",
+        "basis_in_repo": "The earlier About page credit 'Fabio Crameri; MIT licence' and the MER-241 IMAGERY_RIGHTS.md entry (Scientific colour maps v8.0, MIT, doi:10.5281/zenodo.8035877).",
+        "secondary_source_seen": "PyPI cmcrameri 1.10 sdist (SHA-256 38a776359040674cb4028695faf0121d0ccadb40eee0c9834eb4947674962b7e, downloaded and read twice, by the implementation and the independent review). Its README says it is 'based on Scientific colour maps version 8.0 (doi:10.5281/zenodo.8035877) (2023-06-14)', which fixes that DOI as the v8.0 release. Its LICENSE.txt says 'Colormaps in cmcrameri/cm/cmaps: Copyright (c) 2020 Fabio Crameri' and 'Python scripts and packaging: Copyright (c) 2020 Callum Rollo': the Python package's own licence file, not the release file. It conflicts with an earlier draft's 2023 line, which had no source and was withdrawn.",
+        "to_verify_against": "the licence file of the Zenodo release v8.0 (version DOI 10.5281/zenodo.8035877; concept DOI 10.5281/zenodo.1243862)",
+        "open_item": "CTO decision 4 (source usage rights): confirm the exact notice from the release file; until then the page carries the standard MIT permission and warranty text under this year-less line."
+      }
+    }
   }
 }

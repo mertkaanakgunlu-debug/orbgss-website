@@ -607,13 +607,14 @@ body.interior .text-link{white-space:normal}
 .domain-band.is-feature .text-link{margin-top:6px;color:#fff;border-bottom-color:rgba(255,255,255,.4)}
 .domain-band.is-feature .scene-label{right:var(--edge);bottom:20px}
 
-/* The two expansion directions: a photograph and one line each, nothing else is claimed for them. */
+/* The two expansion directions: a photograph and one line each, nothing else is claimed for them. They are
+   captioned figures, not cards: no frame, surface, shadow, link or call to action (authority doc §2, MER-255). */
 .domain-pair{position:relative;padding:var(--chap-y) var(--pad);background:var(--orb-bg)}
 .domain-pair .page-section-head{margin-bottom:clamp(28px,3.4vw,52px)}
 .domain-pair .page-section-head::before{content:none}
 .pair-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,3.4vw,56px)}
 .domain-panel{position:relative;display:flex;flex-direction:column;gap:clamp(18px,2vw,26px);scroll-margin-top:calc(var(--header-h) + 12px)}
-.panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:#0b141a;border:1px solid var(--orb-divider)}
+.panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:#0b141a}
 .panel-figure>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .panel-figure .scene-label{right:16px;bottom:14px}
 .panel-copy{display:grid;gap:8px 20px;grid-template-columns:minmax(0,1fr) auto;align-items:baseline}

@@ -124,6 +124,37 @@ case("the Geothermal stage can be drawn taller than its crop allows", STYLES,
      swap("min-height:clamp(460px,38vw,550px)", "min-height:clamp(460px,38vw,640px)"),
      "the stage hero can draw its crop")
 
+# ---- captions: the coordinates on an image name ground the image shows (review B3) ---------------------------
+case("the About crop is captioned with the pilot point again", SCRIPT,
+     swap("'scene.terrain.coords': '38.0936° N, 29.2483° E',", "'scene.terrain.coords': '37.9794° N, 28.7907° E',"),
+     "outside its crop box")
+case("the Partner caption names the pilot place and point again", PARTNER,
+     swap('data-i18n="scene.valley.place">South-west of the Kızıldere pilot area, Türkiye</span><span data-i18n="scene.valley.coords">37.8744° N, 28.5695° E</span>',
+          'data-i18n="scene.context.place">Kızıldere — Büyük Menderes graben, Denizli, Türkiye</span><span data-i18n="scene.context.coords">37.9794° N, 28.7907° E</span>'),
+     "is captioned with")
+case("a crop's recorded label point drifts from its caption", MANIFEST,
+     as_json(lambda d: crop(d, "kizildere-terrain")["label_point"].update(lat=38.5)),
+     "records label_point")
+case("a crop loses its label point", MANIFEST,
+     as_json(lambda d: crop(d, "kizildere-valley").pop("label_point")),
+     "records no caption keys or no label_point")
+case("the Turkish caption coordinate drifts from the English one", SCRIPT,
+     swap("'scene.valley.coords': '37.8744° K, 28.5695° D',", "'scene.valley.coords': '37.8744° K, 28.5700° D',"),
+     "names different coordinates in en and tr")
+
+# ---- the expansion-direction figures are captioned photographs, not cards (review decision 2) ---------------
+case("an expansion-direction figure gets a frame again", STYLES,
+     swap(".panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:#0b141a}",
+          ".panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:#0b141a;border:1px solid #2a3a46}"),
+     "captioned photographs, not cards")
+case("an expansion-direction panel gains a shadow", STYLES,
+     swap(".domain-panel{position:relative;display:flex;", ".domain-panel{box-shadow:0 8px 24px #000;position:relative;display:flex;"),
+     "captioned photographs, not cards")
+case("an expansion-direction panel becomes a link", SOLUTIONS,
+     swap('<span class="anchor-alias" id="mineral" aria-hidden="true"></span>',
+          '<span class="anchor-alias" id="mineral" aria-hidden="true"></span><a href="/solutions/geothermal/">More</a>'),
+     "carry a link")
+
 # ---- thumbnails ----------------------------------------------------------------------------------------
 case("a thumbnail is declared larger than 160 CSS px", SOURCES_PAGE,
      swap('width="160" height="90"', 'width="240" height="135"'), "at most 160 x 160 CSS px")
@@ -214,11 +245,24 @@ case("the English MIT text is shortened", SCRIPT,
      swap("shall be included in all copies or substantial portions of the Software.", "shall be included in all copies of the Software.", every=False),
      "the 'en' MIT licence text")
 case("the Turkish MIT text is translated", SCRIPT,
-     regex(r"(\n  tr: \{.*?'sourcesPage\.mit\.warranty': 'THE SOFTWARE IS PROVIDED )“AS IS”", r"\1“OLDUĞU GİBİ”"),
+     regex(r"(\n  tr: \{.*?'sourcesPage\.mit\.warranty': 'THE SOFTWARE IS PROVIDED )\"AS IS\"", r'\1"OLDUĞU GİBİ"'),
      "the 'tr' MIT licence text")
 case("the licence copyright notice is malformed", SCRIPT,
-     swap("'sourcesPage.mit.copyright': 'Copyright (c) 2023, Fabio Crameri',", "'sourcesPage.mit.copyright': 'Copyright Fabio Crameri',", every=True),
+     swap("'sourcesPage.mit.copyright': 'Copyright (c) Fabio Crameri',", "'sourcesPage.mit.copyright': 'Copyright Fabio Crameri',", every=True),
      "copyright notice is")
+case("a copyright year appears on the page without a verified source", SCRIPT,
+     swap("'sourcesPage.mit.copyright': 'Copyright (c) Fabio Crameri',", "'sourcesPage.mit.copyright': 'Copyright (c) 2023, Fabio Crameri',", every=True),
+     "the licence record publishes")
+case("the licence record publishes a year it never verified", MANIFEST,
+     as_json(lambda d: d["web_m6"]["licence_notices"]["scientific-colour-maps-v8.0"].update(
+         copyright_line_published="Copyright (c) 2023, Fabio Crameri")),
+     "a copyright year is published without a verified source")
+case("the licence record is removed", MANIFEST,
+     as_json(lambda d: d["web_m6"].pop("licence_notices")),
+     "is missing licence")
+case("the MIT text takes typographic quotes", SCRIPT,
+     swap('(the "Software")', "(the “Software”)"),
+     "the 'en' MIT licence text")
 case("the footer attribution loses the Sentinel credit", SCRIPT,
      swap("'footer.attribution': 'Landsat data courtesy of the U.S. Geological Survey. Contains modified Copernicus Sentinel data (2025).',",
           "'footer.attribution': 'Landsat data courtesy of the U.S. Geological Survey.',"),
