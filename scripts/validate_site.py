@@ -1499,12 +1499,193 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
 # === /atlas:solutions-about ===
 
 # === atlas:partner-sources ===
-# MER-278 owns this region: the checks of /partner/ and /sources/ in the Atlas design. Empty until that thread lands.
-ATLAS_GROUPS["partner-sources"] = {"prefixes": ("partnerPage.", "sourcesPage."), "type_ready": False}
+# MER-278 owns this region: the checks of /partner/ and /sources/ in the Atlas design (preview, pending CTO
+# acceptance). What it pins: the grounds (Partner opens and stays on Orbit, Sources opens on Orbit and its four
+# parts sit on paper), the two-tone headline, the mailto routes with their audience lines and subjects, the one
+# address, no form, the photograph's caption, and on Sources the font licence (A8) next to the unchanged Crameri
+# MIT notice and DOIs. Where a page sits on a ground, what it looks like and how it reads are checked by
+# measurement in the review, not here.
+ATLAS_GROUPS["partner-sources"] = {"prefixes": ("partnerPage.", "sourcesPage."), "type_ready": True}
+PS_PARTNER = {"en": "partner/index.html", "tr": "tr/is-birligi/index.html"}
+PS_SOURCES = {"en": "sources/index.html", "tr": "tr/kaynaklar/index.html"}
+PS_ROUTE_KEYS = ["pilot", "partnership", "technical"]
+PS_MAILTO = {
+    "en": ["mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Inquiry",
+           "mailto:contact@orbgss.com?subject=OrbGSS%20Partnership%20Inquiry",
+           "mailto:contact@orbgss.com?subject=OrbGSS%20Technical%20Inquiry"],
+    "tr": ["mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Talebi",
+           "mailto:contact@orbgss.com?subject=OrbGSS%20%C4%B0%C5%9F%20Birli%C4%9Fi%20Talebi",
+           "mailto:contact@orbgss.com?subject=OrbGSS%20Teknik%20G%C3%B6r%C3%BC%C5%9Fme%20Talebi"],
+}
+# The font notices are IBM's: English in both languages, and each line is also in assets/fonts/OFL.txt.
+PS_FONT_NOTICES = {
+    "sourcesPage.fonts.sans": "IBM Plex Sans: Copyright 2018 IBM Corp. All rights reserved.",
+    "sourcesPage.fonts.mono": "IBM Plex Mono: Copyright 2017 IBM Corp. All rights reserved.",
+    "sourcesPage.fonts.reserved": "Copyright \u00a9 2017 IBM Corp. with Reserved Font Name \"Plex\"",
+    "sourcesPage.fonts.licence": "This Font Software is licensed under the SIL Open Font License, Version 1.1.",
+    "sourcesPage.fonts.trademark": "IBM Plex(R) is a trademark of IBM Corp, registered in many jurisdictions worldwide.",
+}
+PS_PAPER_SECTIONS = ["data", "images", "references", "licences"]
+
+
+def atlas_ps_dictionary(lang: str) -> dict[str, str]:
+    """The partnerPage.* and sourcesPage.* strings of one language, read straight from script.js."""
+    script = (ROOT / "script.js").read_text(encoding="utf-8")
+    block = re.search(rf"\n  {lang}: \{{(.*?)\n  \}},?\n", script, re.S)
+    out: dict[str, str] = {}
+    if block:
+        for key, single, double in re.findall(
+                r"^\s+'((?:partnerPage|sourcesPage)\.[^']+)':\s*(?:'((?:[^'\\]|\\.)*)'|\"((?:[^\"\\]|\\.)*)\")\s*,?\s*$",
+                block.group(1), re.M):
+            out[key] = (single or double).replace("\\'", "'")
+    return out
 
 
 def atlas_partner_sources_checks(errors: list[str], page_html: dict[str, str]) -> None:
-    return None
+    def first_of(node, pred):
+        found = node.find_all(pred)
+        return found[0] if found else None
+
+    def keys_of(node) -> list[str]:
+        return [str(n.attrs.get("data-i18n")) for n in node.find_all(lambda x: x.attrs.get("data-i18n"))]
+
+    dictionaries = {lang: atlas_ps_dictionary(lang) for lang in ("en", "tr")}
+    css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    regions = atlas_regions(css) or {}
+    region = atlas_strip_css(regions.get("partner-sources", ""))
+    blocks = list(atlas_rule_blocks(region))
+
+    def rule(selector: str) -> str:
+        return " ".join(body for sel, body in blocks if selector in [s.strip() for s in sel.split(",")])
+
+    # -- Partner -----------------------------------------------------------------------------------------
+    for lang, rel in PS_PARTNER.items():
+        if rel not in page_html:
+            continue
+        dom = build_dom(page_html[rel])
+        main = first_of(dom, lambda n: n.tag == "main")
+        if main is None:
+            continue
+        hero = first_of(main, lambda n: n.tag == "section" and "page-hero" in n.classes)
+        if hero is None or not {"is-split", "ground-orbit"} <= hero.classes:
+            fail(f"MER-278: {rel}: the Partner opening must be a page-hero is-split on Orbit (ground-orbit)", errors)
+        routes = first_of(main, lambda n: n.tag == "section" and n.attrs.get("id") == "routes")
+        if routes is None or "ground-orbit" not in routes.classes:
+            fail(f"MER-278: {rel}: the conversations (#routes) must sit on Orbit (ground-orbit)", errors)
+        if main.find_all(lambda n: "ground-paper" in n.classes or "ground-lift" in n.classes):
+            fail(f"MER-278: {rel}: the Partner page stays on Orbit from its opening to its conversations; "
+                 f"no paper or Lift band", errors)
+        title = first_of(main, lambda n: n.tag == "h1")
+        parts = [c for c in (title.children if title else []) if isinstance(c, DomNode)]
+        if [(c.tag, sorted(c.classes), c.attrs.get("data-i18n")) for c in parts] != [
+                ("span", ["t1"], "partnerPage.title.a"), ("span", ["t2"], "partnerPage.title.b")]:
+            fail(f"MER-278: {rel}: the Partner headline must be the two tone spans t1 and t2 "
+                 f"(partnerPage.title.a, partnerPage.title.b)", errors)
+        route_list = first_of(main, lambda n: n.tag == "ul" and "route-list" in n.classes)
+        links = route_list.find_all(lambda n: n.tag == "a") if route_list else []
+        if [str(a.attrs.get("href")) for a in links] != PS_MAILTO[lang]:
+            fail(f"MER-278: {rel}: the three conversation routes must be the mailto links with their pinned "
+                 f"subjects {PS_MAILTO[lang]}", errors)
+        for key, link in zip(PS_ROUTE_KEYS, links):
+            audience = first_of(link, lambda n: "route-for" in n.classes)
+            if audience is None or audience.attrs.get("data-i18n") != f"partnerPage.{key}.for":
+                fail(f"MER-278: {rel}: the {key} route has no audience line (partnerPage.{key}.for)", errors)
+        for each_lang, dictionary in dictionaries.items():
+            for key in PS_ROUTE_KEYS:
+                if not dictionary.get(f"partnerPage.{key}.for", "").strip():
+                    fail(f"MER-278: the {each_lang!r} dictionary has no audience line partnerPage.{key}.for", errors)
+        address = first_of(hero, lambda n: n.tag == "p" and "mail-address" in n.classes) if hero else None
+        address_links = address.find_all(lambda n: n.tag == "a") if address else []
+        if [str(a.attrs.get("href")) for a in address_links] != ["mailto:contact@orbgss.com"] \
+                or "contact@orbgss.com" not in (address.text() if address else ""):
+            fail(f"MER-278: {rel}: the opening must carry the one address link mailto:contact@orbgss.com", errors)
+        for forbidden in main.find_all(lambda n: n.tag in ("form", "input", "textarea", "select", "button")):
+            fail(f"MER-278: {rel}: <{forbidden.tag}> on the Partner page; contact is by email only, no form", errors)
+        figure = first_of(main, lambda n: n.tag == "figure" and "split-figure" in n.classes)
+        caption = first_of(figure, lambda n: n.tag == "figcaption" and "scene-label" in n.classes) if figure else None
+        spans = [c.attrs.get("data-i18n") for c in (caption.children if caption else []) if isinstance(c, DomNode)]
+        if figure is None or not figure.attrs.get("data-label-tone") or spans != [
+                "scene.valley.place", "scene.valley.coords", "scene.kind.naturalColor"]:
+            fail(f"MER-278: {rel}: the photograph keeps its three-line bottom-right caption "
+                 f"(place, coordinates, kind) and its label tone", errors)
+
+    # -- Sources -----------------------------------------------------------------------------------------
+    notices = (ROOT / "assets" / "fonts" / "OFL.txt").read_text(encoding="utf-8") if (ROOT / "assets/fonts/OFL.txt").exists() else ""
+    for key, line in PS_FONT_NOTICES.items():
+        plain = line.split(": ", 1)[1] if key in ("sourcesPage.fonts.sans", "sourcesPage.fonts.mono") else line
+        if plain not in notices:
+            fail(f"MER-278: assets/fonts/OFL.txt no longer carries the notice shown on /sources/: {plain!r}", errors)
+    for lang, rel in PS_SOURCES.items():
+        if rel not in page_html:
+            continue
+        dom = build_dom(page_html[rel])
+        main = first_of(dom, lambda n: n.tag == "main")
+        if main is None:
+            continue
+        hero = first_of(main, lambda n: n.tag == "section" and "page-hero" in n.classes)
+        if hero is None or not {"is-register", "ground-orbit"} <= hero.classes:
+            fail(f"MER-278: {rel}: the Sources opening must be a page-hero is-register on Orbit (ground-orbit)", errors)
+        sections = [c for c in main.children if isinstance(c, DomNode) and c.tag == "section" and "page-hero" not in c.classes]
+        if [s.attrs.get("id") for s in sections] != PS_PAPER_SECTIONS or \
+                any("ground-paper" not in s.classes or s.classes & {"ground-orbit", "ground-lift"} for s in sections):
+            fail(f"MER-278: {rel}: the four parts of Sources (data, images, references, licences) are the paper "
+                 f"colophon: each is a section on ground-paper", errors)
+        title = first_of(main, lambda n: n.tag == "h1")
+        parts = [c for c in (title.children if title else []) if isinstance(c, DomNode)]
+        if [(c.tag, sorted(c.classes), c.attrs.get("data-i18n")) for c in parts] != [
+                ("span", ["t1"], "sourcesPage.title.a"), ("span", ["t2"], "sourcesPage.title.b")]:
+            fail(f"MER-278: {rel}: the Sources headline must be the two tone spans t1 and t2 "
+                 f"(sourcesPage.title.a, sourcesPage.title.b)", errors)
+        # A8: the typefaces' licence and IBM's notices, beside the colour maps' MIT notice.
+        fonts = first_of(main, lambda n: n.tag == "article" and n.attrs.get("id") == "licence-fonts")
+        quote = first_of(fonts, lambda n: n.tag == "blockquote" and "source-fixed" in n.classes) if fonts else None
+        if quote is None or keys_of(quote) != list(PS_FONT_NOTICES):
+            fail(f"MER-278: {rel}: #licence-fonts must hold IBM's five notices in a source-fixed blockquote "
+                 f"({', '.join(PS_FONT_NOTICES)})", errors)
+        if fonts is None or first_of(fonts, lambda n: n.tag == "a" and str(n.attrs.get("href", "")).startswith(
+                "https://openfontlicense.org/") and n.attrs.get("target") == "_blank" and "noopener" in str(n.attrs.get("rel", ""))) is None:
+            fail(f"MER-278: {rel}: #licence-fonts must link the full SIL Open Font License text "
+                 f"(https://openfontlicense.org/..., target=_blank rel=noopener)", errors)
+        terms = first_of(main, lambda n: n.tag == "li" and n.attrs.get("id") == "terms-fonts")
+        if terms is None or first_of(terms, lambda n: n.tag == "a" and n.attrs.get("href") == "https://www.ibm.com/plex/") is None:
+            fail(f"MER-278: {rel}: the typefaces need a terms entry (#terms-fonts) linking https://www.ibm.com/plex/", errors)
+        # The colour maps keep their MIT notice, without a copyright year, and both DOIs.
+        scm = first_of(main, lambda n: n.tag == "article" and n.attrs.get("id") == "licence-scm")
+        if scm is None:
+            fail(f"MER-278: {rel}: the Scientific colour maps MIT licence block (#licence-scm) is gone", errors)
+        hrefs = [str(a.attrs.get("href")) for a in main.find_all(lambda n: n.tag == "a")]
+        for doi in ("https://doi.org/10.5281/zenodo.1243862", "https://doi.org/10.5281/zenodo.8035877"):
+            if doi not in hrefs:
+                fail(f"MER-278: {rel}: the Crameri DOI {doi} is gone from /sources/", errors)
+    for lang, dictionary in dictionaries.items():
+        for key, line in PS_FONT_NOTICES.items():
+            if dictionary.get(key) != line.replace("\\u00a9", "\u00a9"):
+                fail(f"MER-278: the {lang!r} dictionary changed IBM's notice {key} "
+                     f"({dictionary.get(key)!r}); the notices travel unchanged, in English", errors)
+        if dictionary.get("sourcesPage.mit.copyright") != "Copyright (c) Fabio Crameri":
+            fail(f"MER-278: the {lang!r} Crameri copyright line is {dictionary.get('sourcesPage.mit.copyright')!r}; "
+                 f"it stays 'Copyright (c) Fabio Crameri', without a year, until the release file is read", errors)
+
+    # -- claim discipline: nothing here may suggest an Esri partnership --------------------------------------
+    for rel in [*PS_PARTNER.values(), *PS_SOURCES.values()]:
+        if rel in page_html and re.search(r"esri", page_html[rel], re.I):
+            fail(f"MER-278: {rel} mentions Esri; no page may imply a partnership that has not been granted", errors)
+    for lang, dictionary in dictionaries.items():
+        for key, value in dictionary.items():
+            if re.search(r"esri", value, re.I):
+                fail(f"MER-278: the {lang!r} string {key} mentions Esri; no page may imply a partnership that "
+                     f"has not been granted", errors)
+
+    # -- the region's own CSS ----------------------------------------------------------------------------
+    if re.search(r"border|radius|shadow|outline", rule(".split-figure")):
+        fail("styles.css atlas:partner-sources: .split-figure carries a border, radius, shadow or outline; "
+             "the photograph is a bare frame", errors)
+    if not re.search(r'html\[lang="tr"\]\s*\.is-split\s+h1\s+\.t1\s*\{[^}]*color\s*:\s*var\(--fg-2\)', regions.get("partner-sources", "")):
+        fail("styles.css atlas:partner-sources: the Turkish Partner headline must tone its first half "
+             "(html[lang=\"tr\"] .is-split h1 .t1), as Turkish puts the verb last", errors)
+    if "color:var(--fg-2)" not in rule(".is-split h1 .t2").replace(" ", ""):
+        fail("styles.css atlas:partner-sources: the second half of the two-tone headline must be Steel "
+             "(var(--fg-2)) by tone, not by weight", errors)
 # === /atlas:partner-sources ===
 
 
