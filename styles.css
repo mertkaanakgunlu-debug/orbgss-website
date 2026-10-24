@@ -827,7 +827,7 @@ body.page-geothermal .page-section-head.geo-head .lede{margin:0}
 .geo-ledger-col.is-not .kicker{color:var(--limit)}
 .geo-ledger-col ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair)}
 .geo-ledger-col li{padding:14px 0;border-bottom:1px solid var(--hair-soft);font-size:var(--t-body);line-height:1.4;color:var(--fg)}
-.geo-ledger-col.is-not ul{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));column-gap:32px}
+.geo-ledger-col.is-not ul{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));column-gap:32px;max-width:none;padding-left:20px}
 
 /* ---------- 04 what is missing, on Lift: a statement and an index of the gaps ---------- */
 .geo-missing{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px clamp(48px,7vw,112px);align-items:end}

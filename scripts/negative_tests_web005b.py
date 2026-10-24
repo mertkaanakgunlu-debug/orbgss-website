@@ -17,7 +17,7 @@ ROOT = pathlib.Path(".").resolve()
 INDEX = ROOT / "index.html"
 # MER-240: /pilot/ is a redirect now; its successor, the Geothermal page, is the deep route that
 # must never borrow a homepage derivative.
-GEOTHERMAL = ROOT / "solutions" / "geothermal" / "index.html"
+ABOUT = ROOT / "about" / "index.html"
 SOURCES = ROOT / "assets" / "imagery" / "sources.json"
 STYLES = ROOT / "styles.css"
 SCRIPT = ROOT / "script.js"
@@ -202,7 +202,8 @@ case("the coupled legend is re-encoded lossy", SOURCES,
      "legend must stay lossless")
 
 # ---- B-VIS-14 homepage-only -----------------------------------------------------------------
-case("a WEB-005B asset leaks onto /solutions/geothermal/", GEOTHERMAL,
+# A1 (MER-276, preview) gives the four MER-151 layers a second, recorded home on /solutions/geothermal/ and nowhere else.
+case("a WEB-005B asset leaks onto /about/", ABOUT,
      lambda t: t.replace("</main>", '<img src="/assets/proof/web005b/terrain-600.webp" alt="" /></main>', 1),
      "published beyond the homepage")
 

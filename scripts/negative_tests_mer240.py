@@ -131,7 +131,7 @@ case("an old /pilot/ fragment stops landing", GEOTHERMAL,
      swap('<span class="anchor-alias" id="pilot-structure" aria-hidden="true"></span>', ""),
      "no #pilot-structure")
 case("an old /pilot/ fragment lands at the top: its container is not positioned", STYLES,
-     swap(".page-section{position:relative}", ".page-section{overflow:visible}"),
+     swap(".ground{position:relative;", ".ground{"),
      "which styles.css does not position")
 
 # ---- the homepage's light trim (authority 4.1) ---------------------------------------------------
@@ -166,8 +166,8 @@ case("the Turkish Marine status drifts", SCRIPT,
 
 # ---- R4 show first --------------------------------------------------------------------------------
 case("a paragraph opens a section before its lead visual", GEOTHERMAL,
-     swap('<figure class="scale-figure" data-lead-visual>',
-          '<p>Here is what the pilot produced.</p><figure class="scale-figure" data-lead-visual>'),
+     swap('<figure class="geo-atlas" data-lead-visual>',
+          '<p>Here is what the pilot produced.</p><figure class="geo-atlas" data-lead-visual>'),
      "opens with <p>")
 case("a section loses its lead visual", ABOUT,
      swap('<ul class="source-names mono lead-set" data-lead-visual>', '<ul class="source-names mono lead-set">'),
@@ -196,9 +196,9 @@ case("a list line runs past twelve words (the cell budget now holds the ruled li
           ">A partnership or collaboration with OrbGSS, on any ground, in any country, at any scale.</span>"),
      "R5: partner/index.html: list line")
 case("a table comes back on an interior page", GEOTHERMAL,
-     swap('<figure class="scale-figure" data-lead-visual>',
+     swap('<figure class="geo-atlas" data-lead-visual>',
           '<table class="data-table" data-lead-visual><tbody><tr><th scope="row">Area</th><td>36 km</td></tr></tbody></table>'
-          '<figure class="scale-figure" data-lead-visual>'),
+          '<figure class="geo-atlas" data-lead-visual>'),
      "a <table> is back")
 case("only the Turkish copy runs past the budget", SCRIPT,
      swap("Boşluk doldurulmaz, gösterilir ve önceliği değiştirmez: yapı ve jeoloji isteğe bağlı destektir, skoru etkilemez.",

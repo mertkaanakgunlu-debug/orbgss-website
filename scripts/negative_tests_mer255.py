@@ -4,12 +4,10 @@
 
 MER-255 rebuilt the five interior pages (docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md): one visual grammar
 (`body.interior`) with a different opening on each page, four recorded Class A crops of the Kızıldere
-master in place of text and tables, ruled lists in place of tables, a labelled schematic and a neutral
-0-100 ruler on the Geothermal page, and the attribution moved from an About table to its own
+master in place of text and tables, ruled lists in place of tables, and the attribution moved from an About table to its own
 /sources/ page. The contract worth guarding: the grammar stays on the interior routes and off the
 homepage; every crop is recorded, checksummed and never drawn above its own pixels (record, CSS caps
-and browser measurement agree); thumbnails are small recorded images; the Geothermal page shows no
-governed raster and no invented data; the interior pages collect nothing and load nothing third-party;
+and browser measurement agree); thumbnails are small recorded images; the interior pages collect nothing and load nothing third-party;
 and /sources/ keeps every source, credit line, reference DOI and the unchanged MIT licence text.
 
 Same discipline as scripts/negative_tests_mer240.py: each case mutates one real file, runs the site
@@ -76,14 +74,11 @@ def crop(data, cid):
     return next(c for c in data["web_m6"]["interior_crops"] if c["id"] == cid)
 
 
-_manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-GOVERNED = next(iter(_manifest["web_005b"]["analytical"]["layers"].values()))["derivatives"][0]["path"]
-
 # ---- one grammar, five openings ---------------------------------------------------------------
 case("the homepage takes the interior grammar", INDEX,
      swap('<body class="home">', '<body class="home interior">'), "carries <body class=\"interior\">")
 case("an interior page loses the interior grammar", GEOTHERMAL,
-     swap('<body class="interior">', "<body>"), "lacks <body class=\"interior\">")
+     swap('<body class="interior page-geothermal">', '<body class="page-geothermal">'), "lacks <body class=\"interior\">")
 case("two pages open with the same composition", PARTNER,
      swap('class="page-hero is-split"', 'class="page-hero is-register"'), "hero is")
 
@@ -167,36 +162,10 @@ case("a thumbnail stops being lazy", SOURCES_PAGE,
 case("the thumbnail rule stops capping its width", STYLES,
      swap(".thumb{width:160px;", ".thumb{width:320px;"), "does not cap thumbnails")
 
-# ---- Geothermal: no governed raster, nothing invented ----------------------------------------------------
-case("a governed scientific derivative reaches the Geothermal page", GEOTHERMAL,
-     swap("  </main>", f'    <section class="page-section"><img data-lead-visual src="/{GOVERNED}" alt="" width="600" height="600" /></section>\n  </main>'),
-     "a governed scientific derivative")
-case("the layer diagram loses its schematic caption", GEOTHERMAL,
-     swap('<figcaption data-i18n="geothermalPage.stack.caption">', '<figcaption data-i18n="geothermalPage.scale.caption">'),
-     "the layer diagram has no schematic caption")
-case("the English schematic caption stops saying schematic", SCRIPT,
-     swap("'geothermalPage.stack.caption': 'Schematic. The frames are empty:",
-          "'geothermalPage.stack.caption': 'The frames are empty:"),
-     "must open with 'Schematic'")
-case("a layer-diagram frame is filled with an image", GEOTHERMAL,
-     swap('<span class="plane is-top"></span>',
-          '<span class="plane is-top"><img src="/assets/imagery/kizildere-aoi-1a7d0c36-800.webp" alt="" width="800" height="800" /></span>'),
-     "may hold one image only")
-case("a layer-diagram frame paints data through CSS", STYLES,
-     swap(".plane.is-top{", ".plane.is-top{background-image:url(/assets/imagery/kizildere-aoi-1a7d0c36-800.webp);"),
-     "paints an image or data through CSS")
-case("the 0-100 ruler becomes a colour ramp", STYLES,
-     swap(".scale-line{display:block;height:16px;", ".scale-line{background:linear-gradient(90deg,#1b5e20,#e53935);display:block;height:16px;"),
-     "ruler must stay neutral")
-case("the ruler loses the public score label", GEOTHERMAL,
-     swap('<p class="scale-title mono" data-i18n="label.priority">', '<p class="scale-title mono" data-i18n="act.priority.note">'),
-     "must carry the public label")
-case("the ruler shows a third value", GEOTHERMAL,
-     swap("<span>0</span><span>100</span>", "<span>0</span><span>50</span><span>100</span>"),
-     "runs 0 to 100")
-case("a layer loses its mandatory warning", GEOTHERMAL,
-     swap('<p class="beam-note" data-i18n="story.terrain.note">', '<p class="layer-copy" data-i18n="story.terrain.note">'),
-     "each with its mandatory warning")
+# ---- Geothermal: the MER-255 diagram, ruler and "no governed raster" cases are retired ------------------------
+# MER-276 (Atlas, A1 and A6) replaced the schematic layer diagram, the neutral ruler and the rule that no governed
+# raster reaches the page. The cases that guard what replaced them (the six plates, the four MER-151 layers, the
+# legend and scale bar, the warnings) are in scripts/negative_tests_atlas_geothermal.py.
 
 # ---- nothing collected, nothing third-party ------------------------------------------------------------------
 case("a form appears on Partner", PARTNER,
