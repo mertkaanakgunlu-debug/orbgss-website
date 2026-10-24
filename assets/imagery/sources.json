@@ -4332,13 +4332,13 @@
             1,
             2
           ],
-          "max_css_width": 1602,
+          "max_css_width": 1600,
           "device_pixel_ratio_considered": 2,
-          "max_device_px": 3204,
+          "max_device_px": 3200,
           "widest_candidate_px": 3200,
           "selected_derivative": "assets/imagery/kizildere-stage-161b5b57-1600.webp",
-          "max_upscale_factor": 1.001,
-          "max_upscale_at": "1680x900 @1x"
+          "max_upscale_factor": 1.0,
+          "max_upscale_at": "1536x900 @1x"
         }
       },
       {
@@ -4450,13 +4450,13 @@
             1,
             2
           ],
-          "max_css_width": 600,
+          "max_css_width": 534,
           "device_pixel_ratio_considered": 2,
-          "max_device_px": 1200,
+          "max_device_px": 1068,
           "widest_candidate_px": 1200,
           "selected_derivative": "assets/imagery/kizildere-aoi-1a7d0c36-800.webp",
-          "max_upscale_factor": 1.0,
-          "max_upscale_at": "768x1112 @2x"
+          "max_upscale_factor": 0.987,
+          "max_upscale_at": "1440x900 @2x"
         }
       },
       {
@@ -4686,12 +4686,12 @@
             1,
             2
           ],
-          "max_css_width": 498,
+          "max_css_width": 500,
           "device_pixel_ratio_considered": 2,
-          "max_device_px": 996,
+          "max_device_px": 1000,
           "widest_candidate_px": 1000,
           "selected_derivative": "assets/imagery/kizildere-valley-28b19cfd-700.webp",
-          "max_upscale_factor": 0.996,
+          "max_upscale_factor": 1.0,
           "max_upscale_at": "600x1112 @2x"
         }
       }
