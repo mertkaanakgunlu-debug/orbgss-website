@@ -85,7 +85,7 @@ case("the homepage takes the interior grammar", INDEX,
 case("an interior page loses the interior grammar", GEOTHERMAL,
      swap('<body class="interior">', "<body>"), "lacks <body class=\"interior\">")
 case("two pages open with the same composition", PARTNER,
-     swap('class="page-hero is-split ground-orbit"', 'class="page-hero is-register ground-orbit"'), "hero is")
+     swap('class="page-hero is-split ground-orbit"', 'class="page-hero is-register ground-orbit"'), "expected 'is-split'")
 
 # ---- the crops: recorded, checksummed, honest -----------------------------------------------------
 case("a crop derivative loses its checksum", MANIFEST,
