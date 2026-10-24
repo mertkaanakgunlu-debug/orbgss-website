@@ -7,14 +7,15 @@ This file is the first authority to read when continuing OrbGSS website work in 
 Before changing code, read in this order:
 
 1. `STATUS.md`
-2. `docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md` (MER-255 interior redesign; on its review branch until the CTO accepts it. Where it disagrees with 3 about how the five interior routes are presented — tables, R2 thumbnails, R5/R6 budgets, the sources architecture — it wins; it changes no scientific, legal or claim rule)
-3. `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (Milestone 6, CTO-approved 2026-10-15; wins over 4–6 on pages, navigation, URLs and content rules)
-4. `docs/WEB_VNEXT_AUTHORITY.md` (vNext authority; wins over 5–6 where they disagree)
-5. `docs/DESIGN_AUTHORITY.md`
-6. `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`
-7. `IMAGERY_RIGHTS.md`
-8. `assets/imagery/sources.json`
-9. the exact task file named by `STATUS.md`
+2. `docs/WEB_ATLAS_DESIGN_AUTHORITY.md` (Atlas redesign, MER-274 / MER-275; **preview, pending CTO acceptance**, on its task branch only. Once accepted it wins over 3–7 on colour, type, fonts, grounds and the shared components, and on nothing else)
+3. `docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md` (MER-255 interior redesign; on its review branch until the CTO accepts it. Where it disagrees with 4 about how the five interior routes are presented — tables, R2 thumbnails, R5/R6 budgets, the sources architecture — it wins; it changes no scientific, legal or claim rule)
+4. `docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md` (Milestone 6, CTO-approved 2026-10-15; wins over 5–7 on pages, navigation, URLs and content rules)
+5. `docs/WEB_VNEXT_AUTHORITY.md` (vNext authority; wins over 6–7 where they disagree)
+6. `docs/DESIGN_AUTHORITY.md`
+7. `docs/PRODUCT_AND_CONTENT_AUTHORITY.md`
+8. `IMAGERY_RIGHTS.md`
+9. `assets/imagery/sources.json`
+10. the exact task file named by `STATUS.md`
 
 Then inspect `index.html`, `styles.css`, `script.js`, and run the site validator before editing.
 
@@ -97,6 +98,18 @@ MER-240 implemented the English target. It was independently accepted at `a20453
 - **Attribution has its own page.** `/sources/` (TR `/tr/kaynaklar/`) holds every source, credit line, image credit, reference DOI and licence (the Scientific colour maps MIT permission and warranty text, standard wording, English in both languages); the footer carries the Landsat and Copernicus credits and the link to it; About keeps a short trust note under `#sources`. Keep it complete when a source changes, and keep `IMAGERY_RIGHTS.md` current.
 - **The Scientific colour maps copyright line carries no year** ("Copyright (c) Fabio Crameri") because no reachable source states the year of the v8.0 release file; `web_m6.licence_notices` records that, and the validator fails on a year without a recorded `year_verified_from`. Taking the exact notice from the release file is the CTO's call. Never invent a year or a holder line.
 - Checks: `scripts/validate_site.py` and `scripts/negative_tests_mer255.py` (run the negative suites one at a time, never in parallel; they mutate the working tree).
+
+## Atlas redesign (MER-274 / MER-275, pending the CTO's acceptance)
+
+`docs/WEB_ATLAS_DESIGN_AUTHORITY.md` gives the whole site one colour system, one pair of type families and one set of shared components. Once the CTO accepts the reviewed preview and authorizes a publication, these are invariants; until then production is described by the text above and nothing here is published.
+
+- **Five UI colour roles, nothing else.** Orbit `#030B12`, Paper `#F2F4F5`, Steel `#9EB1C1`, Signal `#73E7FF`, Caution `#C8A97A`; derived Lift `#061420`, the paper tones Slate `#5B6B76`, Signal deep `#0E6D81` and Caution deep `#7F602F`; the lines are Steel (on dark) or Orbit (on paper) at low alpha. They are defined once in `:root`; the validator refuses any other colour in `styles.css`, `<style>` blocks and inline styles (images, the legend ramp, the hero video and the logo SVG are exempt). Caution is a line and a label, never a fill. Signal is the only accent. No UI colour goes inside a figure frame, and a scientific colour map is never a UI colour.
+- **Two families, two weights.** OrbGSS Sans 300 (display) and 400 (text, UI) and OrbGSS Mono 400 (data, kickers, captions): self-hosted subsets of IBM Plex (SIL OFL 1.1) renamed because IBM reserves "Plex", under `assets/fonts/` with `fonts.json` and `OFL.txt`, rebuilt by `scripts/build_fonts.py`. No other weight, no synthesised bold, no third-party font request, no Space Grotesk. The scale is the `--t-*` tokens; mono capitals come in two sizes and one tracking; nothing is set under 10 px in a region marked type-ready.
+- **Grounds.** Orbit for every page opening, photograph, analytical plate, the score, the header and the footer; Lift for index bars and the Mining/Marine pair; Paper for reading records only. Components take their colours from the ground-aware roles (`--fg`, `--fg-2`, `--link`, `--limit`, `--hair`), not from a ground colour.
+- **The homepage's four acts, copy, imagery and motion are unchanged;** only fonts and colour mapping moved. The hero h1 holds "Know where / to look next." on two lines.
+- **Regions.** `styles.css`, the `script.js` dictionary and `scripts/validate_site.py` are cut into marked regions (`atlas:foundation`, and one each for `atlas:geothermal`, `atlas:solutions-about`, `atlas:partner-sources`); a page thread edits its own region and its own `negative_tests_atlas_*.py`, a shared component goes back to the foundation.
+- **Open:** A1–A9 of the design review, the font licence entry on `/sources/` (A8, MER-278) and the CTO's reading of any new Turkish copy; see the authority §8.
+- Checks: `scripts/validate_site.py`, `scripts/negative_tests_atlas_foundation.py` (and the other negative suites, one at a time, never in parallel, in a detached worktree), `scripts/build_fonts.py --check` (needs the network).
 
 ## Content / claim discipline
 

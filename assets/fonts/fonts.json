@@ -1,0 +1,39 @@
+{
+  "unicode_range": "U+0020-007E, U+00A0-00FF, U+011E-011F, U+0130-0131, U+0152-0153, U+015E-015F, U+2007, U+2009, U+2011, U+2013-2014, U+2018-201A, U+201C-201E, U+2022, U+2026, U+2030, U+2032-2033, U+2039-203A, U+2070, U+2074-2079, U+20AC, U+2122, U+2190-2193, U+2196-2199, U+2212, U+2248, U+2260, U+2264-2265, U+FFFD",
+  "upstream_licence": "SIL OFL 1.1",
+  "faces": {
+    "sans-300": {
+      "file": "orbgss-sans-300.d8ab34ee.woff2",
+      "family": "OrbGSS Sans",
+      "weight": 300,
+      "bytes": 22136,
+      "sha256": "d8ab34eead11d581ae2421c891f3c73ffc9c697b6ee395d89565e30d3e25e76d",
+      "upstream": {
+        "package_file": "@ibm/plex-sans@1.1.0/fonts/complete/woff2/IBMPlexSans-Light.woff2",
+        "sha256": "769209c2a0dbf2e3f012c22e4c604100cb3f1e7b8beb0ef77bc7d982d85509cc"
+      }
+    },
+    "sans-400": {
+      "file": "orbgss-sans-400.39dbd03f.woff2",
+      "family": "OrbGSS Sans",
+      "weight": 400,
+      "bytes": 20972,
+      "sha256": "39dbd03fe7be6ca88ba1b77e70eaf121eb0705c51a6d71c2d3ea7521f56ec20d",
+      "upstream": {
+        "package_file": "@ibm/plex-sans@1.1.0/fonts/complete/woff2/IBMPlexSans-Regular.woff2",
+        "sha256": "ba711a3085ff9f27440b6b9c4550cfc47c97bf36591d5da958b975bb3add8c1a"
+      }
+    },
+    "mono-400": {
+      "file": "orbgss-mono-400.62ab771d.woff2",
+      "family": "OrbGSS Mono",
+      "weight": 400,
+      "bytes": 17048,
+      "sha256": "62ab771debe2eab792d5fd89dde59b792e75768194d4060d450769be6145d19d",
+      "upstream": {
+        "package_file": "@ibm/plex-mono@1.1.0/fonts/complete/woff2/IBMPlexMono-Regular.woff2",
+        "sha256": "49ce58b41a0e1cb921c0f58d9a5b8b96a2cc21437c7066f3ba4f24873076d131"
+      }
+    }
+  }
+}

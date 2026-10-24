@@ -129,11 +129,13 @@ case("an AOI overlay returns to Act 2 with no recorded geometry behind it", INDE
      "no longer positions it from the recorded analysis-grid fractions")
 
 # ---- B-VIS-05 tokens ------------------------------------------------------------------------
-case("Product cyan token drifts", STYLES,
-     lambda t: t.replace("--orb-cyan:#73E7FF;", "--orb-cyan:#43BFF0;", 1), "palette token --orb-cyan")
+# The WEB-005B product palette (--orb-*) was superseded by the Atlas palette (MER-275); the same two
+# properties -- pinned once, never redefined -- now hold for its tokens.
+case("Signal token drifts", STYLES,
+     lambda t: t.replace("--signal:#73E7FF;", "--signal:#43BFF0;", 1), "palette token --signal")
 case("a palette token is redefined a second time", STYLES,
-     lambda t: t.replace(".sec{position:relative;", ".sec{--orb-surface:#101010;position:relative;", 1),
-     "palette token --orb-surface")
+     lambda t: t.replace(".sec{position:relative;", ".sec{--lift:#101010;position:relative;", 1),
+     "palette token --lift")
 
 # ---- B-VIS-06 / B-VIS-08 priority semantics and legend ---------------------------------------
 case("priority public label reworded", SCRIPT,

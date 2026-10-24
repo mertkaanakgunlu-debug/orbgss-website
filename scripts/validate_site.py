@@ -179,17 +179,7 @@ EXPECTED_HOMEPAGE_SLOTS = ["context", "terrain", "thermal", "alteration", "prior
 HERO_DRAPE_STATE_CEILING = 1.25 * 1024 * 1024
 HERO_DRAPE_LAYERS = ["terrain", "thm01", "alt01", "priority"]
 # WEB-005A relief rise (docs/web-005-polish-authority@0e87675): 6-12 lossless states, 0.45-0.70 s.
-# WEB-005B / MER-109. The Product palette (tasks/WEB-005B_HOMEPAGE_VISUAL_FIDELITY_PALETTE.md
-# section 5) is pinned here so a quiet token edit fails the build (B-VIS-05).
-WEB005B_TOKENS = {
-    "--orb-bg": "#030B12", "--orb-surface": "#08131D", "--orb-panel": "#0D1B27",
-    "--orb-divider": "#183245", "--orb-text-primary": "#EAF2F8", "--orb-text-secondary": "#9EB1C1",
-    "--orb-meta": "#6F8597", "--orb-cyan": "#73E7FF", "--orb-cyan-glow": "#8AF1FF",
-    "--orb-beam-core": "#7FEFFF", "--orb-beam-glow": "#3CCBFF", "--orb-target-frame": "#98F5FF",
-    # R15 tonal hierarchy: the lifted and the settled ground the page moves between. Pinned for the
-    # same reason as the rest -- a quiet edit here changes the whole page's depth.
-    "--orb-lift": "#061420", "--orb-deep": "#020810",
-}
+# The product palette that WEB-005B pinned here (--orb-*) is superseded by the Atlas palette (ATLAS_TOKENS, atlas:foundation).
 # MER-108 governed-source pins and website-derivative bounds (B-VIS-04). The source SHA-256s are
 # the MER-113 identities in the terminal authority; normalization is d3a163bd's canonical kind per
 # layer; analytical opacity is 11c32e8d section 6. None of these may drift without Science.
@@ -764,6 +754,381 @@ def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
     return allowed, len(files)
 
 
+# =============================================================================================
+# Atlas redesign (MER-274 / MER-275; preview, pending CTO acceptance; docs/WEB_ATLAS_DESIGN_AUTHORITY.md).
+# The checks are cut into marked regions so the page threads of the redesign each own one and never
+# touch another: atlas:foundation (this file's shared checks), atlas:geothermal, atlas:solutions-about
+# and atlas:partner-sources. Each region defines one function that main() calls and registers its group
+# in ATLAS_GROUPS: its dictionary prefixes and whether its CSS region already holds to the type scale.
+# =============================================================================================
+# === atlas:foundation ===
+ATLAS_TOKENS = {
+    "--orbit": "#030B12", "--lift": "#061420", "--paper": "#F2F4F5", "--steel": "#9EB1C1",
+    "--slate": "#5B6B76", "--signal": "#73E7FF", "--signal-deep": "#0E6D81",
+    "--caution": "#C8A97A", "--caution-deep": "#7F602F",
+    "--rule": "rgba(158,177,193,.22)", "--rule-soft": "rgba(158,177,193,.11)",
+    "--rule-paper": "rgba(3,11,18,.14)", "--rule-paper-soft": "rgba(3,11,18,.08)",
+}
+# Tokens that belonged to the superseded palettes (WEB-005B, the MER-255 greys). They may not come back.
+ATLAS_RETIRED_TOKEN = re.compile(r"--(?:orb-[\w-]+|accent(?:-soft)?|line(?:-soft)?|bg(?:-deep)?|beam|text|muted|dim)\b")
+ATLAS_CSS_REGIONS = ["foundation", "home", "shell", "geothermal", "solutions-about", "partner-sources"]
+ATLAS_PAGE_GROUPS = ["geothermal", "solutions-about", "partner-sources"]
+# Filled in by each page group's own region further down: {"prefixes": (...), "type_ready": bool}.
+ATLAS_GROUPS: dict[str, dict] = {}
+# Regions whose CSS already holds to the type scale. A page group switches itself on in its own region.
+ATLAS_TYPE_READY = {"foundation", "home", "shell"}
+ATLAS_FONT_DIR = "assets/fonts"
+ATLAS_FONT_BUDGET = 64 * 1024
+ATLAS_FONT_PRELOAD = ("sans-300", "sans-400")
+ATLAS_HEAD_PAGES = ["index.html", "404.html", "solutions/index.html", "solutions/geothermal/index.html",
+                    "about/index.html", "partner/index.html", "sources/index.html"]
+ATLAS_NAMED_COLOURS = set("""aliceblue antiquewhite aqua aquamarine azure beige bisque black blanchedalmond blue blueviolet brown
+burlywood cadetblue chartreuse chocolate coral cornflowerblue cornsilk crimson cyan darkblue darkcyan darkgoldenrod darkgray
+darkgreen darkgrey darkkhaki darkmagenta darkolivegreen darkorange darkorchid darkred darksalmon darkseagreen darkslateblue
+darkslategray darkslategrey darkturquoise darkviolet deeppink deepskyblue dimgray dimgrey dodgerblue firebrick floralwhite
+forestgreen fuchsia gainsboro ghostwhite gold goldenrod gray green greenyellow grey honeydew hotpink indianred indigo ivory khaki
+lavender lavenderblush lawngreen lemonchiffon lightblue lightcoral lightcyan lightgoldenrodyellow lightgray lightgreen lightgrey
+lightpink lightsalmon lightseagreen lightskyblue lightslategray lightslategrey lightsteelblue lightyellow lime limegreen linen
+magenta maroon mediumaquamarine mediumblue mediumorchid mediumpurple mediumseagreen mediumslateblue mediumspringgreen
+mediumturquoise mediumvioletred midnightblue mintcream mistyrose moccasin navajowhite navy oldlace olive olivedrab orange
+orangered orchid palegoldenrod palegreen paleturquoise palevioletred papayawhip peachpuff peru pink plum powderblue purple
+rebeccapurple red rosybrown royalblue saddlebrown salmon sandybrown seagreen seashell sienna silver skyblue slateblue slategray
+slategrey snow springgreen steelblue tan teal thistle tomato turquoise violet wheat white whitesmoke yellow yellowgreen
+canvas canvastext field fieldtext highlight highlighttext linktext buttonface buttontext graytext""".split())
+_ATLAS_COLOUR_PROPS = re.compile(r"(?:^|-)color$|^(?:background(?:-image)?|border(?:-(?:top|right|bottom|left|block|inline)[\w-]*)?|"
+                                 r"outline|box-shadow|text-shadow|fill|stroke|text-decoration|column-rule|filter|mask|"
+                                 r"--[\w-]+)$")
+
+
+def atlas_hex_rgb(value: str) -> tuple[int, int, int]:
+    value = value.lstrip("#")
+    return int(value[0:2], 16), int(value[2:4], 16), int(value[4:6], 16)
+
+
+ATLAS_PALETTE_RGB = {atlas_hex_rgb(v) for v in ATLAS_TOKENS.values() if v.startswith("#")}
+
+
+def atlas_strip_css(css: str) -> str:
+    """CSS with comments, strings and url(...) bodies blanked out, so only real values are scanned."""
+    css = re.sub(r"/\*.*?\*/", " ", css, flags=re.S)
+    css = re.sub(r"url\([^)]*\)", "url()", css)
+    return re.sub(r'"(?:[^"\\]|\\.)*"|\'(?:[^\'\\]|\\.)*\'', '""', css)
+
+
+def atlas_colour_violations(css: str) -> list[str]:
+    """Every colour literal that is not one of the Atlas palette values (or a palette colour with alpha).
+
+    Allowed: the nine palette hexes, rgba() of a palette triple at any alpha (an alpha is the same
+    colour, not a new one), transparent and currentColor. Refused: any other hex, rgb()/hsl()/color-mix()
+    of anything else, and every CSS named colour. A colour carried by a var() is the token's business.
+    """
+    text = atlas_strip_css(css)
+    bad: list[str] = []
+    for m in re.finditer(r"#([0-9a-fA-F]{3,8})\b", text):
+        digits = m.group(1)
+        if len(digits) != 6 or ("#" + digits).upper() not in {v.upper() for v in ATLAS_TOKENS.values()}:
+            bad.append("#" + digits)
+    for m in re.finditer(r"\b(rgba?|hsla?|hwb|lab|lch|oklab|oklch|color-mix|color)\(([^()]*(?:\([^()]*\)[^()]*)*)\)", text, re.I):
+        fn, args = m.group(1).lower(), m.group(2)
+        if fn in ("rgb", "rgba"):
+            parts = [p.strip() for p in re.split(r"[,/\s]+", args.strip()) if p.strip()]
+            try:
+                triple = tuple(int(float(p)) for p in parts[:3])
+            except ValueError:
+                bad.append(m.group(0))
+                continue
+            if triple not in ATLAS_PALETTE_RGB:
+                bad.append(m.group(0))
+        else:
+            bad.append(m.group(0))
+    for m in re.finditer(r"([\w-]+)\s*:\s*([^;{}]+)", text):
+        prop, value = m.group(1).lower(), m.group(2)
+        if not _ATLAS_COLOUR_PROPS.search(prop):
+            continue
+        for word in re.findall(r"(?<![\w#-])[a-zA-Z]+(?![\w(-])", value):
+            if word.lower() in ATLAS_NAMED_COLOURS:
+                bad.append(f"{prop}: {word}")
+    return sorted(set(bad))
+
+
+def atlas_inline_css(page_html: str) -> str:
+    """The inline style attributes and <style> blocks of one page, as one stylesheet text."""
+    chunks = re.findall(r"<style[^>]*>(.*?)</style>", page_html, re.S | re.I)
+    chunks += ["x{" + v + "}" for v in re.findall(r"\sstyle\s*=\s*\"([^\"]*)\"", page_html, re.I)]
+    chunks += ["x{" + v + "}" for v in re.findall(r"\sstyle\s*=\s*'([^']*)'", page_html, re.I)]
+    return "\n".join(chunks)
+
+
+def atlas_regions(css: str) -> dict[str, str] | None:
+    """The marked CSS regions of styles.css, in file order, or None when the markers are not well formed."""
+    found = re.findall(r"/\* === (/?)atlas:([\w-]+) ===", css)
+    names = [n for slash, n in found if not slash]
+    ends = [n for slash, n in found if slash]
+    if names != ATLAS_CSS_REGIONS or ends != ATLAS_CSS_REGIONS:
+        return None
+    out: dict[str, str] = {}
+    for name in ATLAS_CSS_REGIONS:
+        m = re.search(r"/\* === atlas:" + re.escape(name) + r" ===.*?(?=/\* === /atlas:" + re.escape(name) + r" ===)", css, re.S)
+        out[name] = m.group(0) if m else ""
+    return out
+
+
+def atlas_luminance(rgb: tuple[int, int, int]) -> float:
+    def chan(c: int) -> float:
+        c = c / 255
+        return c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = (chan(c) for c in rgb)
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def atlas_contrast(a: str, b: str) -> float:
+    la, lb = atlas_luminance(atlas_hex_rgb(a)), atlas_luminance(atlas_hex_rgb(b))
+    hi, lo = max(la, lb), min(la, lb)
+    return (hi + 0.05) / (lo + 0.05)
+
+
+# Text pairs the system promises (docs/WEB_ATLAS_DESIGN_AUTHORITY.md section 1): name, text, ground, minimum.
+ATLAS_CONTRAST_PAIRS = [
+    ("paper on orbit", "--paper", "--orbit", 7.0), ("steel on orbit", "--steel", "--orbit", 7.0),
+    ("signal on orbit", "--signal", "--orbit", 7.0), ("caution on orbit", "--caution", "--orbit", 7.0),
+    ("steel on lift", "--steel", "--lift", 7.0), ("paper on lift", "--paper", "--lift", 7.0),
+    ("orbit on paper", "--orbit", "--paper", 7.0), ("slate on paper", "--slate", "--paper", 4.5),
+    ("signal-deep on paper", "--signal-deep", "--paper", 4.5), ("caution-deep on paper", "--caution-deep", "--paper", 4.5),
+]
+
+
+def atlas_rule_blocks(css: str):
+    """(selector, body) of every simple rule in already stripped CSS, nested @media bodies included."""
+    for m in re.finditer(r"([^{}]+)\{([^{}]*)\}", css):
+        yield " ".join(m.group(1).split()), m.group(2)
+
+
+def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dict[str, int]:
+    """The shared Atlas contract: palette, one colour system, type, fonts, regions, components."""
+    css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    script = (ROOT / "script.js").read_text(encoding="utf-8")
+    stripped = atlas_strip_css(css)
+
+    # -- 1. the palette: defined once, in :root, exactly -------------------------------------------
+    root_block = re.search(r":root\{(.*?)\n\}", css, re.S)
+    root_text = root_block.group(1).replace(" ", "") if root_block else ""
+    for name, value in ATLAS_TOKENS.items():
+        defs = re.findall(re.escape(name) + r":\s*(#[0-9A-Fa-f]{6}|rgba\([^)]*\))\s*;", css)
+        if len(defs) != 1 or f"{name}:{value}" not in root_text:
+            fail(f"palette token {name} must be defined once in :root as {value}", errors)
+    for m in sorted(set(ATLAS_RETIRED_TOKEN.findall(stripped))):
+        fail(f"styles.css still uses the retired colour token {m}; the Atlas palette has nine colours and four rules", errors)
+    for name, text, ground, floor in ATLAS_CONTRAST_PAIRS:
+        ratio = atlas_contrast(ATLAS_TOKENS[text], ATLAS_TOKENS[ground])
+        if ratio < floor:
+            fail(f"palette pair {name} is {ratio:.2f}:1, under the {floor}:1 the system promises", errors)
+
+    # -- 2. no other colour anywhere: the stylesheet, <style> blocks and inline styles --------------------
+    for label, text in [("styles.css", css)] + [(rel, atlas_inline_css(h)) for rel, h in sorted(page_html.items())]:
+        for item in atlas_colour_violations(text):
+            fail(f"{label}: colour {item} is not in the Atlas palette (images are exempt, UI colours are not)", errors)
+    # Caution is a line and a label, never a fill; scientific colours never go in a figure frame.
+    for selector, body in atlas_rule_blocks(stripped):
+        for prop, value in re.findall(r"([\w-]+)\s*:\s*([^;]+)", body):
+            if prop.startswith("background") and re.search(r"caution|--limit|#C8A97A|#7F602F|200,\s*169,\s*122", value, re.I):
+                fail(f"styles.css: {selector} fills with caution; caution is a line and a label, never a fill", errors)
+
+    # -- 3. type: two families, two weights, no synthesis, nothing under 10 px in a ready region ------
+    sans, mono = re.search(r"--sans:([^;]+);", css), re.search(r"--mono:([^;]+);", css)
+    if not sans or not sans.group(1).startswith('"OrbGSS Sans"'):
+        fail("--sans must lead with the self-hosted \"OrbGSS Sans\"", errors)
+    if not mono or not mono.group(1).startswith('"OrbGSS Mono"'):
+        fail("--mono must lead with the self-hosted \"OrbGSS Mono\"", errors)
+    outside_faces = re.sub(r"@font-face\{[^}]*\}", " ", stripped)
+    for fam in re.findall(r"font-family\s*:\s*([^;}]+)", outside_faces):
+        if fam.strip() not in ("var(--sans)", "var(--mono)", "inherit"):
+            fail(f"styles.css: font-family {fam.strip()!r}; only var(--sans), var(--mono) and inherit are allowed", errors)
+    for decl in re.findall(r"(?<![\w-])font\s*:\s*([^;}]+)", outside_faces):
+        if decl.strip() != "inherit":
+            fail(f"styles.css: font shorthand {decl.strip()!r}; set the family and size separately", errors)
+    for w in re.findall(r"font-weight\s*:\s*([^;}]+)", stripped):
+        if w.strip() not in ("300", "400", "normal", "inherit"):
+            fail(f"styles.css: font-weight {w.strip()}; the site has Sans 300, Sans 400 and Mono 400 and no other weight", errors)
+    if not re.search(r"body\{[^}]*font-synthesis-weight:none", stripped):
+        fail("body must set font-synthesis-weight:none (emphasis is tone, never a synthesised bold)", errors)
+    for name in ("Space Grotesk", "Inter", "Segoe", "Roboto", "Helvetica", "Menlo", "Consolas", "system-ui", "ui-sans-serif", "ui-monospace"):
+        if re.search(r"(?<![\w-])" + re.escape(name) + r"(?![\w-])", re.sub(r"@font-face\{[^}]*\}", " ", stripped)):
+            fail(f"styles.css names {name}; the Atlas faces are the only fonts", errors)
+
+    # -- 4. the self-hosted fonts: recorded, hash-named, small, licensed, preloaded -------------------
+    record_path = ROOT / ATLAS_FONT_DIR / "fonts.json"
+    face_files: dict[str, str] = {}
+    if not record_path.exists():
+        fail(f"{ATLAS_FONT_DIR}/fonts.json is missing", errors)
+    else:
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+        faces = record.get("faces", {})
+        if sorted(faces) != sorted(["sans-300", "sans-400", "mono-400"]):
+            fail("fonts.json must record exactly sans-300, sans-400 and mono-400", errors)
+        total = 0
+        for key, face in sorted(faces.items()):
+            path = ROOT / ATLAS_FONT_DIR / face.get("file", "")
+            face_files[key] = face.get("file", "")
+            if not path.is_file():
+                fail(f"font {key}: {path.name} is not in {ATLAS_FONT_DIR}/", errors)
+                continue
+            data = path.read_bytes()
+            total += len(data)
+            if hashlib.sha256(data).hexdigest() != face.get("sha256") or len(data) != face.get("bytes"):
+                fail(f"font {key}: {path.name} does not match its recorded SHA-256 / size", errors)
+            if path.name != f"orbgss-{key}.{face.get('sha256', '')[:8]}.woff2":
+                fail(f"font {key}: {path.name} must be named orbgss-{key}.<first 8 of SHA-256>.woff2 (/assets/ is served immutable)", errors)
+            if "plex" in str(face.get("family", "")).lower():
+                fail(f"font {key}: the family name may not contain IBM's reserved name 'Plex'", errors)
+            if not str(face.get("upstream", {}).get("sha256", "")):
+                fail(f"font {key}: the upstream file hash is not recorded", errors)
+        if total > ATLAS_FONT_BUDGET:
+            fail(f"the three font files weigh {total} bytes, over the {ATLAS_FONT_BUDGET} bytes budget per page", errors)
+        css_urls = re.findall(r"@font-face\{[^}]*?src:url\(\"?([^\")]+)", css)
+        want = sorted(f"{ATLAS_FONT_DIR}/{f}" for f in face_files.values())
+        if sorted(css_urls) != want:
+            fail(f"@font-face must load exactly the recorded font files; found {sorted(css_urls)}", errors)
+        for f in re.findall(r"@font-face\{[^}]*\}", css):
+            fam = re.search(r"font-family:\"([^\"]+)\"", f)
+            if fam and fam.group(1).endswith("Fallback"):
+                if "size-adjust" not in f:
+                    fail(f"the fallback face {fam.group(1)} lost its size-adjust", errors)
+            elif "font-display:swap" not in f.replace(" ", ""):
+                fail("every webfont face must set font-display: swap", errors)
+            if fam and not fam.group(1).endswith("Fallback") and f"unicode-range:{record.get('unicode_range', '?')}" not in f.replace("; ", ";"):
+                fail(f"the face {fam.group(1)} lost the recorded unicode-range", errors)
+        licence = ROOT / ATLAS_FONT_DIR / "OFL.txt"
+        if not licence.is_file():
+            fail(f"{ATLAS_FONT_DIR}/OFL.txt (the font licence and IBM's notices) is missing", errors)
+        else:
+            lt = licence.read_text(encoding="utf-8")
+            for need in ("SIL OPEN FONT LICENSE Version 1.1", "Copyright 2018 IBM Corp.", "Copyright 2017 IBM Corp.", "Reserved Font Name"):
+                if need not in lt:
+                    fail(f"{ATLAS_FONT_DIR}/OFL.txt lost {need!r}", errors)
+        wanted = [f'<link rel="preload" href="/{ATLAS_FONT_DIR}/{face_files.get(k, "?")}" as="font" type="font/woff2" crossorigin />'
+                  for k in ATLAS_FONT_PRELOAD]
+        for rel, text in sorted(page_html.items()):
+            head = text.split("</head>", 1)[0]
+            pos = [head.find(w) for w in wanted]
+            sheet = head.find('rel="stylesheet"')
+            if min(pos) < 0 or not (pos[0] < pos[1] < sheet):
+                fail(f"{rel}: must preload the Sans 300 and Sans 400 fonts (as=font, type, crossorigin) before the stylesheet", errors)
+
+    # -- 5. the regions: styles.css, the dictionary, this validator, the negative tests -----------------
+    regions = atlas_regions(css)
+    if regions is None:
+        fail(f"styles.css must contain exactly the regions {ATLAS_CSS_REGIONS}, each opened and closed once, in that order", errors)
+    else:
+        first = css.index("/* === atlas:foundation ===")
+        leftover = css[first:]
+        for name, text in regions.items():
+            leftover = leftover.replace(text, "", 1)
+        leftover = re.sub(r"/\* === /atlas:[\w-]+ === \*/", "", leftover)
+        if leftover.strip():
+            fail("styles.css has rules outside the atlas regions", errors)
+        for name in sorted(ATLAS_TYPE_READY | {g for g, d in ATLAS_GROUPS.items() if d.get("type_ready")}):
+            body = atlas_strip_css(regions.get(name, ""))
+            for selector, decls in atlas_rule_blocks(body):
+                for m in re.finditer(r"font-size\s*:\s*(\d+(?:\.\d+)?)px", decls):
+                    if float(m.group(1)) < 10:
+                        fail(f"styles.css atlas:{name}: {selector} sets {m.group(1)}px text; nothing is set under 10px", errors)
+                for m in re.finditer(r"font-size\s*:\s*clamp\(\s*(\d+(?:\.\d+)?)px", decls):
+                    if float(m.group(1)) < 10:
+                        fail(f"styles.css atlas:{name}: {selector} clamps text under 10px", errors)
+                if re.search(r"text-transform\s*:\s*uppercase", decls):
+                    ls = re.search(r"letter-spacing\s*:\s*([^;]+)", decls)
+                    fs = re.search(r"font-size\s*:\s*([^;]+)", decls)
+                    if ls and ls.group(1).strip() not in ("var(--track)", ".14em"):
+                        fail(f"styles.css atlas:{name}: {selector} sets capitals with tracking {ls.group(1).strip()}; caps use one tracking, var(--track)", errors)
+                    if fs and fs.group(1).strip() not in ("var(--t-label)", "var(--t-caption)", "11px", "inherit"):
+                        fail(f"styles.css atlas:{name}: {selector} sets capitals at {fs.group(1).strip()}; caps come in the label and caption sizes", errors)
+    dict_regions = re.findall(r"// === (/?)atlas:([\w-]+) ===", script)
+    expected = [(s, g) for _ in range(2) for g in ATLAS_PAGE_GROUPS for s in ("", "/")]
+    if dict_regions != expected:
+        fail("script.js must carry the dictionary regions atlas:geothermal, atlas:solutions-about and atlas:partner-sources, "
+             "each opened and closed once in the English block and once in the Turkish block", errors)
+    else:
+        inside_region = re.compile(r"// === atlas:([\w-]+) ===[^\n]*\n(.*?)// === /atlas:\1 ===", re.S)
+        outside = inside_region.sub("", script)
+        for m in inside_region.finditer(script):
+            prefixes = tuple(ATLAS_GROUPS.get(m.group(1), {}).get("prefixes", ()))
+            for key in re.findall(r"^\s+'([^']+)'\s*:", m.group(2), re.M):
+                if not key.startswith(prefixes):
+                    fail(f"script.js: dictionary key {key!r} sits in the atlas:{m.group(1)} region but is not one of its prefixes {prefixes}", errors)
+        for g, group in ATLAS_GROUPS.items():
+            prefixes = tuple(group.get("prefixes", ()))
+            for key in re.findall(r"^\s+'([^']+)'\s*:", outside, re.M):
+                if prefixes and key.startswith(prefixes):
+                    fail(f"script.js: dictionary key {key!r} belongs in the atlas:{g} region", errors)
+    for name in ATLAS_PAGE_GROUPS + ["foundation"]:
+        if (ROOT / "scripts" / f"negative_tests_atlas_{name.replace('-', '_')}.py").exists():
+            continue
+        fail(f"scripts/negative_tests_atlas_{name.replace('-', '_')}.py is missing", errors)
+    own = (ROOT / "scripts" / "validate_site.py").read_text(encoding="utf-8")
+    for name in ["foundation"] + ATLAS_PAGE_GROUPS:
+        if len(re.findall(r"^# === atlas:" + re.escape(name) + r" ===", own, re.M)) != 1 or \
+           len(re.findall(r"^# === /atlas:" + re.escape(name) + r" ===", own, re.M)) != 1:
+            fail(f"validate_site.py must carry the region atlas:{name}, opened and closed once", errors)
+
+    # -- 6. the shared components exist, on the right grounds, and carry no chrome they should not -----
+    blocks = list(atlas_rule_blocks(stripped))
+
+    def rule(selector: str) -> str:
+        return " ".join(body for sel, body in blocks if selector in [s.strip() for s in sel.split(",")])
+
+    for sel in (".kicker", ".text-link", ".scene-label", ".beam-note", ".record-list", ".plate", ".plate-frame", ".plate-cap",
+                ".ground", ".ground-orbit", ".ground-lift", ".ground-paper", ".site-header", ".site-footer"):
+        if not rule(sel):
+            fail(f"styles.css lost the shared component {sel}", errors)
+    if "border-left:2pxsolidvar(--limit)" not in rule(".beam-note").replace(" ", ""):
+        fail("the mandatory warning (.beam-note) must keep its 2px caution left rule (border-left:2px solid var(--limit))", errors)
+    for sel, body in blocks:
+        parts = [s.strip() for s in sel.split(",")]
+        if any(p.startswith(".plate") and p not in (".plate-gap", ".plate-pending", ".plate-gap .plate-state", ".plate-pending .plate-state")
+               and not p.startswith(".plate-frame .") for p in parts):
+            if re.search(r"border|radius|shadow|outline", body) or ":hover" in sel:
+                fail(f"styles.css: {sel} gives a plate chrome (border, radius, shadow, outline or hover); plates have none", errors)
+    for ground in (".site-header", ".site-footer"):
+        if "background:var(--orbit)" not in rule(ground).replace(" ", ""):
+            fail(f"{ground} must sit on Orbit", errors)
+    paper = rule(".ground-paper").replace(" ", "")
+    for need in ("--fg:var(--orbit)", "--fg-2:var(--slate)", "--link:var(--signal-deep)", "--limit:var(--caution-deep)", "background:var(--paper)"):
+        if need not in paper:
+            fail(f"the paper ground must carry {need}", errors)
+    if "border:0solidvar(--signal)" not in rule(".target-frame i").replace(" ", ""):
+        fail("the homepage target frame must be Signal (--signal)", errors)
+    return {"regions": len(ATLAS_CSS_REGIONS), "fonts_bytes": sum((ROOT / ATLAS_FONT_DIR / f).stat().st_size for f in face_files.values() if (ROOT / ATLAS_FONT_DIR / f).exists())}
+# === /atlas:foundation ===
+
+# === atlas:geothermal ===
+# MER-276 owns this region: the checks of /solutions/geothermal/ in the Atlas design. Empty until that thread lands.
+ATLAS_GROUPS["geothermal"] = {"prefixes": ("geothermalPage.",), "type_ready": False}
+
+
+def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> None:
+    return None
+# === /atlas:geothermal ===
+
+# === atlas:solutions-about ===
+# MER-277 owns this region: the checks of /solutions/ and /about/ in the Atlas design. Empty until that thread lands.
+ATLAS_GROUPS["solutions-about"] = {"prefixes": ("solutionsPage.", "aboutPage."), "type_ready": False}
+
+
+def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -> None:
+    return None
+# === /atlas:solutions-about ===
+
+# === atlas:partner-sources ===
+# MER-278 owns this region: the checks of /partner/ and /sources/ in the Atlas design. Empty until that thread lands.
+ATLAS_GROUPS["partner-sources"] = {"prefixes": ("partnerPage.", "sourcesPage."), "type_ready": False}
+
+
+def atlas_partner_sources_checks(errors: list[str], page_html: dict[str, str]) -> None:
+    return None
+# === /atlas:partner-sources ===
+
+
+
 def main() -> int:
     errors: list[str] = []
     warnings: list[str] = []
@@ -779,6 +1144,14 @@ def main() -> int:
 
     # Collected, not fatal here: a deploy-set error must not hide the rest of the validation.
     deploy_allowed, deploy_files = check_deploy_set(errors)
+
+    # Atlas redesign (MER-275): the shared contract, then each page group's own region.
+    atlas_pages = {rel: (ROOT / rel).read_text(encoding="utf-8")
+                   for rel in [*ROUTES.values(), *TR_FILES.values(), *AUX_PAGES.values()]}
+    atlas_summary = atlas_foundation_checks(errors, atlas_pages)
+    atlas_geothermal_checks(errors, atlas_pages)
+    atlas_solutions_about_checks(errors, atlas_pages)
+    atlas_partner_sources_checks(errors, atlas_pages)
 
     html = HTML.read_text(encoding="utf-8")
     parser = SiteParser()
@@ -1766,12 +2139,6 @@ def main() -> int:
                     fail(f"the {lang!r} domain photography footnote lost required wording "
                          f"{term!r}; it is the only thing left telling a reader these photographs "
                          f"are not OrbGSS results from the pilot area", errors)
-
-        root_block = re.search(r":root\{(.*?)\n\}", css_text, re.S)
-        for name, value in WEB005B_TOKENS.items():
-            defs = re.findall(re.escape(name) + r":\s*(#[0-9A-Fa-f]{6})\s*;", css_text)
-            if len(defs) != 1 or not root_block or f"{name}:{value}" not in root_block.group(1).replace(" ", ""):
-                fail(f"palette token {name} must be defined once in :root as {value}", errors)
 
         if dictionary_value("en", "label.priority") != "Remote-Sensing Relative Priority — Experimental Baseline":
             fail("the priority public label changed", errors)

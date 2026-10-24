@@ -4,8 +4,8 @@
   "description": "Actionable geospatial intelligence from Earth observation and geoscience data.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#061018",
-  "theme_color": "#061018",
+  "background_color": "#030B12",
+  "theme_color": "#030B12",
   "icons": [
     {
       "src": "/assets/mark.svg",
