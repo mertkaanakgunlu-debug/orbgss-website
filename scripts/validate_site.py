@@ -1110,12 +1110,146 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
 # === /atlas:geothermal ===
 
 # === atlas:solutions-about ===
-# MER-277 owns this region: the checks of /solutions/ and /about/ in the Atlas design. Empty until that thread lands.
-ATLAS_GROUPS["solutions-about"] = {"prefixes": ("solutionsPage.", "aboutPage."), "type_ready": False}
+# MER-277 owns this region: the checks of /solutions/ and /about/ (and their Turkish twins) in the Atlas design.
+# What it holds: the grounds the CTO-approved palette page assigns (the Solutions and About openings on Orbit, the
+# Mining and Marine pair on Lift, the About statement and the six principles on Paper), the three-row domain index
+# and the pilot index, the six principles and the data index, and the rule that a governed raster appears on these
+# two pages only as an index thumbnail of at most 160 CSS px, with no filter, transform or opacity on it.
+# What it does not hold: type sizes on these pages beyond the foundation's own rules, the heading scale, or the look
+# of a page at any width; those are measured in the browser (STATUS.md, MER-277 evidence).
+ATLAS_GROUPS["solutions-about"] = {"prefixes": ("solutionsPage.", "aboutPage."), "type_ready": True}
+ATLAS_SA_PAGES = {
+    "solutions/index.html": ("solutions", "/solutions/geothermal/", ""),
+    "tr/cozumler/index.html": ("solutions", "/tr/cozumler/jeotermal/", ""),
+    "about/index.html": ("about", "/solutions/geothermal/", "/sources/"),
+    "tr/hakkimizda/index.html": ("about", "/tr/cozumler/jeotermal/", "/tr/kaynaklar/"),
+}
 
 
 def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -> None:
-    return None
+    css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    region = atlas_regions(css)
+    sa_css = atlas_strip_css(region["solutions-about"]) if region else ""
+    sa_blocks = list(atlas_rule_blocks(sa_css))
+    flat = re.sub(r"\s+", "", sa_css)
+
+    def find(node: DomNode, pred) -> DomNode | None:
+        return next(iter(node.find_all(pred)), None)
+
+    def by_class(node: DomNode, cls: str) -> list[DomNode]:
+        return node.find_all(lambda n: cls in n.classes)
+
+    def grounds(node: DomNode | None) -> set[str]:
+        return {c for c in (node.classes if node else set()) if c.startswith("ground-")}
+
+    def thumb_ok(img: DomNode) -> bool:
+        w, h = str(img.attrs.get("width", "")), str(img.attrs.get("height", ""))
+        return "thumb" in img.classes and w.isdigit() and h.isdigit() and int(w) <= THUMB_MAX_CSS_PX and int(h) <= THUMB_MAX_CSS_PX
+
+    for rel, (kind, geo_prefix, sources_href) in ATLAS_SA_PAGES.items():
+        if rel not in page_html:
+            continue
+        dom = build_dom(page_html[rel])
+        body = find(dom, lambda n: n.tag == "body")
+        main = find(dom, lambda n: n.tag == "main")
+        if body is None or main is None:
+            fail(f"{rel}: no <body> or <main>", errors)
+            continue
+        want = {"interior", f"page-{kind}"}
+        if not want <= body.classes:
+            fail(f"{rel}: <body> must carry {sorted(want)}; the page's CSS hangs on page-{kind}", errors)
+        hero = find(main, lambda n: n.tag == "section" and "page-hero" in n.classes)
+        if hero is None or grounds(hero) - {"ground-orbit"}:
+            fail(f"{rel}: the page opening must sit on Orbit (every page opening does); it carries {sorted(grounds(hero))}", errors)
+        h1 = find(main, lambda n: n.tag == "h1")
+        if h1 is None or len(h1.find_all(lambda n: n.tag == "span" and n.attrs.get("data-i18n"))) != 2 \
+                or not find(h1, lambda n: "tone" in n.classes):
+            fail(f"{rel}: the page title is two clauses, the second in tone (span.tone)", errors)
+
+        # Governed rasters: an index thumbnail and nothing else (the CTO accepts this widening of MER-151 with the preview).
+        for img in dom.find_all(lambda n: n.tag == "img" and "assets/proof/" in str(n.attrs.get("src", ""))):
+            if not thumb_ok(img):
+                fail(f"{rel}: {img.attrs.get('src')} is a governed raster; on this page it may appear only as an index "
+                     f"thumbnail (class thumb, at most {THUMB_MAX_CSS_PX} x {THUMB_MAX_CSS_PX} CSS px)", errors)
+
+        if kind == "solutions":
+            if grounds(main) or main.find_all(lambda n: "ground-paper" in n.classes):
+                fail(f"{rel}: Solutions has no Paper ground; Paper is for reading records", errors)
+            rows = [li for li in by_class(main, "domain-index")[0].children if isinstance(li, DomNode)] if by_class(main, "domain-index") else []
+            links = [find(li, lambda n: n.tag == "a" and "index-row" in n.classes) for li in rows]
+            hrefs = [str(a.attrs.get("href")) if a else None for a in links]
+            if hrefs != ["#geothermal", "#mining", "#marine"]:
+                fail(f"{rel}: the domain index must be three native links, #geothermal, #mining, #marine in that order; found {hrefs}", errors)
+            else:
+                lead, none_a, none_b = links
+                if "is-lead" not in lead.classes or not find(lead, lambda n: n.tag == "img" and thumb_ok(n)):
+                    fail(f"{rel}: the Geothermal index row leads with a thumbnail of at most {THUMB_MAX_CSS_PX} CSS px", errors)
+                for row in (none_a, none_b):
+                    if find(row, lambda n: n.tag == "img") or not find(row, lambda n: "is-none" in n.classes):
+                        fail(f"{rel}: an expansion-direction index row shows no image, only the 'none yet' frame", errors)
+                for row in links:
+                    if not find(row, lambda n: "domain-status" in n.classes) or not find(row, lambda n: "index-name" in n.classes):
+                        fail(f"{rel}: every domain index row carries its name and its status label", errors)
+            feature = find(main, lambda n: n.tag == "section" and n.attrs.get("id") == "geothermal")
+            band = find(feature, lambda n: "domain-band" in n.classes) if feature else None
+            if feature is None or "domain-feature" not in feature.classes or band is None or not find(band, lambda n: n.tag == "img" and "data-lead-visual" in n.attrs):
+                fail(f"{rel}: #geothermal must be the Geothermal band with its lead photograph", errors)
+            else:
+                nav = find(feature, lambda n: n.tag == "nav" and "pilot-index" in n.classes)
+                targets = [str(a.attrs.get("href")) for a in nav.find_all(lambda n: n.tag == "a")] if nav else []
+                if targets != [f"{geo_prefix}#glance", f"{geo_prefix}#layers", f"{geo_prefix}#outputs"]:
+                    fail(f"{rel}: the pilot index must link the pilot record, the layer atlas and the result on the Geothermal page; found {targets}", errors)
+            pair = find(main, lambda n: n.tag == "section" and "domain-pair" in n.classes)
+            if pair is None or "ground-lift" not in pair.classes or grounds(pair) != {"ground-lift"}:
+                fail(f"{rel}: the Mining and Marine pair must sit on Lift", errors)
+            else:
+                panels = by_class(pair, "domain-panel")
+                if [p_.attrs.get("id") for p_ in panels] != ["mining", "marine"]:
+                    fail(f"{rel}: the pair holds exactly the Mining and Marine panels", errors)
+                siblings = [c for c in main.children if isinstance(c, DomNode)]
+                names = [(c.tag, " ".join(sorted(c.classes))) for c in siblings]
+                at = siblings.index(pair)
+                if not (len(siblings) > at + 2 and "page-note" in siblings[at + 1].classes and "page-closing" in siblings[at + 2].classes):
+                    fail(f"{rel}: the illustrative footnote (div.page-note) must follow the pair directly, then the closing line; found {names}", errors)
+        else:
+            order = [("problem", "ground-orbit"), ("position", "ground-paper"), ("principles", "ground-paper"), ("sources", "ground-lift")]
+            for sid, ground in order:
+                sec = find(main, lambda n, s=sid: n.tag == "section" and n.attrs.get("id") == s)
+                if sec is None or grounds(sec) != {ground}:
+                    fail(f"{rel}: #{sid} must sit on {ground[7:].title()} (the About statement and the six principles are Paper, the rest Orbit and Lift)", errors)
+            principles = find(main, lambda n: n.tag == "ol" and "principle-list" in n.classes)
+            items = [c for c in principles.children if isinstance(c, DomNode) and c.tag == "li"] if principles else []
+            if len(items) != 6 or any(not find(li, lambda n: n.tag == "h3") or not find(li, lambda n: n.tag == "p") for li in items):
+                fail(f"{rel}: the principles are six items, each a heading and a sentence", errors)
+            statement = find(main, lambda n: n.tag == "blockquote" and "lead-statement" in n.classes)
+            if statement is None or len(statement.find_all(lambda n: n.tag == "span" and n.attrs.get("data-i18n"))) != 2 \
+                    or not find(statement, lambda n: "tone" in n.classes):
+                fail(f"{rel}: the published principle is two sentences, the second in tone (span.tone)", errors)
+            index = find(main, lambda n: n.tag == "a" and "layer-index" in n.classes)
+            thumbs = index.find_all(lambda n: n.tag == "img") if index else []
+            if index is None or str(index.attrs.get("href")) != f"{geo_prefix}#layers" or len(thumbs) != 5 or not all(thumb_ok(i) for i in thumbs):
+                fail(f"{rel}: the layer index is one link to the layer atlas holding five thumbnails of at most {THUMB_MAX_CSS_PX} CSS px", errors)
+            data_link = find(main, lambda n: n.tag == "p" and "chapter-link" in n.classes)
+            data_target = find(data_link, lambda n: n.tag == "a") if data_link else None
+            if data_target is None or str(data_target.attrs.get("href")) != sources_href:
+                fail(f"{rel}: 'Where the data comes from' links to the Sources page ({sources_href})", errors)
+
+    # The CSS: the pair stays on Lift (no rule of its own repaints it), the thumbnails stay small and untouched.
+    for selector, body_text in sa_blocks:
+        parts = [s_.strip() for s_ in selector.split(",")]
+        if ".domain-pair" in parts and re.search(r"(?:^|;)background", body_text):
+            fail("styles.css atlas:solutions-about: .domain-pair paints its own background; the pair sits on the Lift ground", errors)
+        if any(re.search(r"row-thumb|\.index-thumb|\.layer-thumbs", s_) for s_ in parts):
+            if re.search(r"(?:^|;)(?:filter|transform|opacity|mix-blend-mode|scale|backdrop-filter)\s*:", body_text):
+                fail(f"styles.css atlas:solutions-about: {selector} puts a filter, transform or opacity on a thumbnail; "
+                     f"no CSS effect goes on a governed raster", errors)
+            for m in re.finditer(r"(?:^|;)(?:width|height|max-width|min-width)\s*:([^;]+)", body_text):
+                for px in re.findall(r"(\d+(?:\.\d+)?)px", m.group(1)):
+                    if float(px) > THUMB_MAX_CSS_PX:
+                        fail(f"styles.css atlas:solutions-about: {selector} sizes a thumbnail at {px}px; an index thumbnail is at most {THUMB_MAX_CSS_PX} CSS px (R2)", errors)
+    note_rule = re.search(r"\.page-solutions\.page-note\{([^}]*)\}", flat)
+    if not note_rule or "background:var(--lift)" not in note_rule.group(1):
+        fail("styles.css atlas:solutions-about: the footnote (.page-solutions .page-note) must sit on the pair's Lift ground", errors)
 # === /atlas:solutions-about ===
 
 # === atlas:partner-sources ===

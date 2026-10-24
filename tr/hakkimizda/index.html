@@ -30,7 +30,7 @@
   <link rel="preload" href="/assets/fonts/orbgss-sans-400.39dbd03f.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body class="interior">
+<body class="interior page-about">
   <a class="skip-link" href="#main" data-i18n="a11y.skip">İçeriğe geç</a>
 
   <header class="site-header" id="top">
@@ -70,16 +70,17 @@
 
   <main id="main">
     <section class="page-hero is-statement" aria-labelledby="about-title">
-      <span class="orbit-mark" aria-hidden="true"></span>
       <div class="page-hero-inner">
         <p class="kicker mono" data-i18n="aboutPage.kicker">Hakkımızda</p>
-        <h1 id="about-title" data-i18n="company.title">OrbGSS — Orbital Geo-Spatial Solutions</h1>
-        <p class="page-hero-copy" data-i18n="company.copy">OrbGSS bir coğrafi zekâ platformudur. Arama ve arazi kararlarını kanıta dayalı, izlenebilir ve önceliklendirilmesi kolay hâle getirmek için vardır.</p>
+        <h1 id="about-title"><span data-i18n="aboutPage.title.name">OrbGSS —</span> <span class="tone" data-i18n="aboutPage.title.full">Orbital Geo-Spatial Solutions</span></h1>
+        <div class="hero-foot">
+          <p class="page-hero-copy" data-i18n="company.copy">OrbGSS bir coğrafi zekâ platformudur. Arama ve arazi kararlarını kanıta dayalı, izlenebilir ve önceliklendirilmesi kolay hâle getirmek için vardır.</p>
+        </div>
       </div>
     </section>
 
-    <section class="page-section chapter is-feature" id="problem" aria-labelledby="problem-title">
-      <div class="shell chapter-grid">
+    <section class="about-problem ground ground-orbit" id="problem" aria-labelledby="problem-title">
+      <div class="ground-in problem-grid">
         <div class="page-section-head">
           <h2 id="problem-title" data-i18n="aboutPage.problem.title">Çok geniş zemin, çok az zaman.</h2>
           <p data-i18n="aboutPage.problem.copy">Arama ve arazi kararları, kimsenin yürüyerek kat edemeyeceği kadar geniş bir zeminle başlar. Zor soru, her saha çalışmasından önce gelir: önce nereye bakılmalı.</p>
@@ -101,48 +102,59 @@
       </div>
     </section>
 
-    <section class="page-section chapter" id="position" aria-labelledby="position-title">
-      <div class="shell chapter-grid">
+    <section class="about-position ground ground-paper" id="position" aria-labelledby="position-title">
+      <div class="ground-in">
         <div class="page-section-head">
           <h2 id="position-title" data-i18n="aboutPage.position.title">Aramayı daraltan kanıt.</h2>
           <p data-i18n="aboutPage.position.copy">OrbGSS her sıralamanın yanında kanıt katmanlarını, sınırlarını ve boşluklarını yayımlar; böylece ekip sonuca güvenmek yerine onu değerlendirebilir.</p>
         </div>
         <blockquote class="lead-statement" data-lead-visual>
-          <p data-i18n="aboutPage.position.statement">Uzaktan algılama zemini sıralayabilir. Bunu doğrulayabilecek olan yalnızca sahadır.</p>
+          <p><span data-i18n="aboutPage.position.statement">Uzaktan algılama zemini sıralayabilir.</span> <span class="tone" data-i18n="aboutPage.position.statement.tail">Bunu doğrulayabilecek olan yalnızca sahadır.</span></p>
         </blockquote>
+        <a class="layer-index" href="/tr/cozumler/jeotermal/#layers">
+          <span class="layer-thumbs">
+            <img class="thumb row-thumb" src="/assets/imagery/kizildere-aoi-1a7d0c36-800.webp" alt="Küçük görsel: doğal renk" data-i18n-alt="aboutPage.thumb.natural" width="88" height="88" loading="lazy" decoding="async" />
+            <img class="thumb row-thumb" src="/assets/proof/web005b/terrain-600-d.webp" alt="Küçük görsel: yükselti" data-i18n-alt="aboutPage.thumb.terrain" width="88" height="88" loading="lazy" decoding="async" />
+            <img class="thumb row-thumb" src="/assets/proof/web005b/thm01-600.webp" alt="Küçük görsel: termal anomali" data-i18n-alt="aboutPage.thumb.thermal" width="88" height="88" loading="lazy" decoding="async" />
+            <img class="thumb row-thumb" src="/assets/proof/web005b/alt01-600.webp" alt="Küçük görsel: alterasyon işareti" data-i18n-alt="aboutPage.thumb.alteration" width="88" height="88" loading="lazy" decoding="async" />
+            <img class="thumb row-thumb" src="/assets/proof/web005b/priority-600.webp" alt="Küçük görsel: göreli öncelik" data-i18n-alt="aboutPage.thumb.priority" width="88" height="88" loading="lazy" decoding="async" />
+          </span>
+          <span class="layer-index-link text-link"><span data-i18n="aboutPage.layers.link">Her katman ve ne olmadığı</span> <span aria-hidden="true">→</span></span>
+        </a>
       </div>
     </section>
 
-    <section class="page-section chapter is-deep is-stacked" id="principles" aria-labelledby="principles-title">
-      <div class="shell chapter-grid">
+    <section class="about-principles ground ground-paper" id="principles" aria-labelledby="principles-title">
+      <div class="ground-in">
         <div class="page-section-head">
+          <p class="kicker mono" data-i18n="aboutPage.principles.kicker">İlkeler</p>
           <h2 id="principles-title" data-i18n="aboutPage.principles.title">OrbGSS nasıl yayımlar</h2>
         </div>
         <ol class="principle-list lead-set" data-lead-visual>
           <li>
             <h3 data-i18n="proof.evidence.title">Kanıta dayalı ön eleme</h3>
             <p data-i18n="aboutPage.principle.evidence">Öncelikler açıklanmamış bir model çıktısından değil, haritalanmış katmanlardan gelir.</p>
-            <a class="see-link" href="/tr/#evidence"><span data-i18n="aboutPage.see.evidence">Üç katman</span> <span aria-hidden="true">→</span></a>
+            <a class="see-link text-link" href="/tr/#evidence"><span data-i18n="aboutPage.see.evidence">Üç katman</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.provenance.title">İzlenebilir kaynak</h3>
             <p data-i18n="aboutPage.principle.provenance">Yayımlanan her görsel bir kaynağa ve kayıtlı bir dışa aktarıma bağlanır.</p>
-            <a class="see-link" href="/tr/kaynaklar/"><span data-i18n="aboutPage.see.sources">Veri kaynakları</span> <span aria-hidden="true">→</span></a>
+            <a class="see-link text-link" href="/tr/kaynaklar/"><span data-i18n="aboutPage.see.sources">Veri kaynakları</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.gaps.title">Açık veri boşlukları</h3>
             <p data-i18n="aboutPage.principle.gaps">Eksik bir katman eksik olarak yayımlanır, asla uydurulmaz.</p>
-            <a class="see-link" href="/tr/cozumler/jeotermal/#gap"><span data-i18n="aboutPage.see.gap">Yapı ve jeoloji</span> <span aria-hidden="true">→</span></a>
+            <a class="see-link text-link" href="/tr/cozumler/jeotermal/#gap"><span data-i18n="aboutPage.see.gap">Yapı ve jeoloji</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.aoi.title">Önce ilgi alanı analizi</h3>
             <p data-i18n="aboutPage.principle.aoi">Her yorumdan önce tek bir tanımlı alan, projeksiyon ve ızgara.</p>
-            <a class="see-link" href="/tr/cozumler/jeotermal/#glance"><span data-i18n="aboutPage.see.glance">Pilot alanı</span> <span aria-hidden="true">→</span></a>
+            <a class="see-link text-link" href="/tr/cozumler/jeotermal/#glance"><span data-i18n="aboutPage.see.glance">Pilot alanı</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.narrowing.title">Uzaktan daraltma</h3>
             <p data-i18n="aboutPage.principle.narrowing">Saha zamanı ayrılmadan önce geniş alanlar yörüngeden sıralanır.</p>
-            <a class="see-link" href="/tr/#priority"><span data-i18n="aboutPage.see.priority">Önce nereye bakılmalı</span> <span aria-hidden="true">→</span></a>
+            <a class="see-link text-link" href="/tr/#priority"><span data-i18n="aboutPage.see.priority">Önce nereye bakılmalı</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.decision.title">Karar desteği</h3>
@@ -153,21 +165,23 @@
       </div>
     </section>
 
-    <section class="page-section chapter" id="sources" aria-labelledby="sources-title">
-      <div class="shell chapter-grid">
+    <section class="about-sources ground ground-lift" id="sources" aria-labelledby="sources-title">
+      <div class="ground-in sources-grid">
         <div class="page-section-head">
           <h2 id="sources-title" data-i18n="aboutPage.trust.title">Veriler nereden geliyor</h2>
           <p data-i18n="aboutPage.trust.copy">Her harita açık kamu verisine dayanır. Atıflar, kaynakçalar ve lisans bildirimleri tek sayfada toplanır.</p>
         </div>
-        <ul class="source-names mono lead-set" data-lead-visual>
-          <li data-i18n="sourcesPage.name.landsat">Landsat</li>
-          <li data-i18n="sourcesPage.name.nasadem">NASADEM</li>
-          <li data-i18n="sourcesPage.name.sentinel">Copernicus Sentinel-2</li>
-          <li data-i18n="sourcesPage.name.nasaeo">NASA Earth Observatory</li>
-          <li data-i18n="sourcesPage.name.naturalearth">Natural Earth</li>
-          <li data-i18n="sourcesPage.name.scm">Scientific colour maps</li>
-        </ul>
-        <p class="chapter-link"><a class="text-link" href="/tr/kaynaklar/"><span data-i18n="footer.sources">Veri kaynakları ve atıflar</span> <span aria-hidden="true">→</span></a></p>
+        <div class="sources-index">
+          <ul class="source-names mono lead-set" data-lead-visual>
+            <li data-i18n="sourcesPage.name.landsat">Landsat</li>
+            <li data-i18n="sourcesPage.name.nasadem">NASADEM</li>
+            <li data-i18n="sourcesPage.name.sentinel">Copernicus Sentinel-2</li>
+            <li data-i18n="sourcesPage.name.nasaeo">NASA Earth Observatory</li>
+            <li data-i18n="sourcesPage.name.naturalearth">Natural Earth</li>
+            <li data-i18n="sourcesPage.name.scm">Scientific colour maps</li>
+          </ul>
+          <p class="chapter-link"><a class="text-link" href="/tr/kaynaklar/"><span data-i18n="footer.sources">Veri kaynakları ve atıflar</span> <span aria-hidden="true">→</span></a></p>
+        </div>
       </div>
     </section>
 
