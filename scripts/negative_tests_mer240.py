@@ -181,8 +181,8 @@ case("a paragraph is passed off as the lead visual", PARTNER,
 
 # ---- R5 text budgets -------------------------------------------------------------------------------
 case("a headline runs past eight words", SOLUTIONS,
-     swap(">Where OrbGSS works today, and where next.</h1>",
-          ">Where OrbGSS works today, and where it is going next year.</h1>"),
+     swap('data-i18n="solutionsPage.title.tail">and where next.</span>',
+          'data-i18n="solutionsPage.title.tail">and where it is going next year.</span>'),
      "R5: solutions/index.html: headline")
 case("the page intro runs past thirty words", GEOTHERMAL,
      swap("and what is still missing.</p>", "and what is still missing, " + " ".join(["more"] * 12) + ".</p>"),
@@ -244,7 +244,7 @@ case("the locator map loses the kind line of its caption", GEOTHERMAL,
      swap('<span class="scene-kind" data-i18n="scene.kind.locator">Locator map — Natural Earth</span>', ""),
      "must carry the bottom-right caption")
 case("the locator map is shown on another page", ABOUT,
-     regex(r'(<section class="[^"]*" id="principles"[^>]*>\s*<div class="shell chapter-grid">)',
+     regex(r'(<section class="[^"]*" id="principles"[^>]*>\s*)',
            r'\1<img src="/assets/maps/kizildere-locator-23c85f44.svg" alt="" data-i18n-alt="alt.locator" width="1200" height="574" />'),
      "its home is the Geothermal page")
 
@@ -253,7 +253,7 @@ case("a conversation link loses its translated subject", PARTNER,
      swap(' data-i18n-href="mail.technical"', ""),
      "the conversation routes' mail links")
 case("another page starts a conversation itself", ABOUT,
-     swap('<a class="see-link" href="/sources/">', '<a class="see-link" href="mailto:contact@orbgss.com">'),
+     swap('<a class="see-link text-link" href="/sources/">', '<a class="see-link text-link" href="mailto:contact@orbgss.com">'),
      "conversations start on /partner/")
 
 # ---- the hub bands (illustrative photographs, contained) -----------------------------------------------------

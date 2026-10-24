@@ -29,7 +29,7 @@
   <link rel="preload" href="/assets/fonts/orbgss-sans-400.39dbd03f.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body class="interior">
+<body class="interior page-about">
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
 
   <header class="site-header" id="top">
@@ -69,16 +69,17 @@
 
   <main id="main">
     <section class="page-hero is-statement" aria-labelledby="about-title">
-      <span class="orbit-mark" aria-hidden="true"></span>
       <div class="page-hero-inner">
         <p class="kicker mono" data-i18n="aboutPage.kicker">About</p>
-        <h1 id="about-title" data-i18n="company.title">OrbGSS — Orbital Geo-Spatial Solutions</h1>
-        <p class="page-hero-copy" data-i18n="company.copy">OrbGSS is a geospatial-intelligence platform. It exists to make exploration and land decisions evidence-based, traceable and easier to prioritize.</p>
+        <h1 id="about-title"><span data-i18n="aboutPage.title.name">OrbGSS —</span> <span class="tone" data-i18n="aboutPage.title.full">Orbital Geo-Spatial Solutions</span></h1>
+        <div class="hero-foot">
+          <p class="page-hero-copy" data-i18n="company.copy">OrbGSS is a geospatial-intelligence platform. It exists to make exploration and land decisions evidence-based, traceable and easier to prioritize.</p>
+        </div>
       </div>
     </section>
 
-    <section class="page-section chapter is-feature" id="problem" aria-labelledby="problem-title">
-      <div class="shell chapter-grid">
+    <section class="about-problem ground ground-orbit" id="problem" aria-labelledby="problem-title">
+      <div class="ground-in problem-grid">
         <div class="page-section-head">
           <h2 id="problem-title" data-i18n="aboutPage.problem.title">Too much ground, too little time.</h2>
           <p data-i18n="aboutPage.problem.copy">Exploration and land decisions begin with more ground than anyone can walk. The hard question comes before any fieldwork: where to look first.</p>
@@ -100,48 +101,59 @@
       </div>
     </section>
 
-    <section class="page-section chapter" id="position" aria-labelledby="position-title">
-      <div class="shell chapter-grid">
+    <section class="about-position ground ground-paper" id="position" aria-labelledby="position-title">
+      <div class="ground-in">
         <div class="page-section-head">
           <h2 id="position-title" data-i18n="aboutPage.position.title">Evidence that narrows the search.</h2>
           <p data-i18n="aboutPage.position.copy">OrbGSS publishes the evidence layers, their limits and their gaps beside every ranking, so a team can judge the result instead of trusting it.</p>
         </div>
         <blockquote class="lead-statement" data-lead-visual>
-          <p data-i18n="aboutPage.position.statement">Remote sensing can order the ground. Only the field can confirm it.</p>
+          <p><span data-i18n="aboutPage.position.statement">Remote sensing can order the ground.</span> <span class="tone" data-i18n="aboutPage.position.statement.tail">Only the field can confirm it.</span></p>
         </blockquote>
+        <a class="layer-index" href="/solutions/geothermal/#layers">
+          <span class="layer-thumbs">
+            <img class="thumb row-thumb" src="/assets/imagery/kizildere-aoi-1a7d0c36-800.webp" alt="Thumbnail: natural colour" data-i18n-alt="aboutPage.thumb.natural" width="88" height="88" loading="lazy" decoding="async" />
+            <img class="thumb row-thumb" src="/assets/proof/web005b/terrain-600-d.webp" alt="Thumbnail: elevation" data-i18n-alt="aboutPage.thumb.terrain" width="88" height="88" loading="lazy" decoding="async" />
+            <img class="thumb row-thumb" src="/assets/proof/web005b/thm01-600.webp" alt="Thumbnail: thermal anomaly" data-i18n-alt="aboutPage.thumb.thermal" width="88" height="88" loading="lazy" decoding="async" />
+            <img class="thumb row-thumb" src="/assets/proof/web005b/alt01-600.webp" alt="Thumbnail: alteration signal" data-i18n-alt="aboutPage.thumb.alteration" width="88" height="88" loading="lazy" decoding="async" />
+            <img class="thumb row-thumb" src="/assets/proof/web005b/priority-600.webp" alt="Thumbnail: relative priority" data-i18n-alt="aboutPage.thumb.priority" width="88" height="88" loading="lazy" decoding="async" />
+          </span>
+          <span class="layer-index-link text-link"><span data-i18n="aboutPage.layers.link">Every layer, and what it is not</span> <span aria-hidden="true">→</span></span>
+        </a>
       </div>
     </section>
 
-    <section class="page-section chapter is-deep is-stacked" id="principles" aria-labelledby="principles-title">
-      <div class="shell chapter-grid">
+    <section class="about-principles ground ground-paper" id="principles" aria-labelledby="principles-title">
+      <div class="ground-in">
         <div class="page-section-head">
+          <p class="kicker mono" data-i18n="aboutPage.principles.kicker">Principles</p>
           <h2 id="principles-title" data-i18n="aboutPage.principles.title">How OrbGSS publishes</h2>
         </div>
         <ol class="principle-list lead-set" data-lead-visual>
           <li>
             <h3 data-i18n="proof.evidence.title">Evidence-backed screening</h3>
             <p data-i18n="aboutPage.principle.evidence">Priorities come from mapped layers, not an unexplained model output.</p>
-            <a class="see-link" href="/#evidence"><span data-i18n="aboutPage.see.evidence">The three layers</span> <span aria-hidden="true">→</span></a>
+            <a class="see-link text-link" href="/#evidence"><span data-i18n="aboutPage.see.evidence">The three layers</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.provenance.title">Traceable provenance</h3>
             <p data-i18n="aboutPage.principle.provenance">Every published visual maps back to a source and a recorded export.</p>
-            <a class="see-link" href="/sources/"><span data-i18n="aboutPage.see.sources">Data sources</span> <span aria-hidden="true">→</span></a>
+            <a class="see-link text-link" href="/sources/"><span data-i18n="aboutPage.see.sources">Data sources</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.gaps.title">Explicit data gaps</h3>
             <p data-i18n="aboutPage.principle.gaps">A missing layer is published as missing, never invented.</p>
-            <a class="see-link" href="/solutions/geothermal/#gap"><span data-i18n="aboutPage.see.gap">Structure and geology</span> <span aria-hidden="true">→</span></a>
+            <a class="see-link text-link" href="/solutions/geothermal/#gap"><span data-i18n="aboutPage.see.gap">Structure and geology</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.aoi.title">AOI-first analysis</h3>
             <p data-i18n="aboutPage.principle.aoi">One declared area, projection and grid before any interpretation.</p>
-            <a class="see-link" href="/solutions/geothermal/#glance"><span data-i18n="aboutPage.see.glance">The pilot area</span> <span aria-hidden="true">→</span></a>
+            <a class="see-link text-link" href="/solutions/geothermal/#glance"><span data-i18n="aboutPage.see.glance">The pilot area</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.narrowing.title">Remote narrowing</h3>
             <p data-i18n="aboutPage.principle.narrowing">Large areas are ordered from orbit before field time is committed.</p>
-            <a class="see-link" href="/#priority"><span data-i18n="aboutPage.see.priority">Where to look first</span> <span aria-hidden="true">→</span></a>
+            <a class="see-link text-link" href="/#priority"><span data-i18n="aboutPage.see.priority">Where to look first</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.decision.title">Decision support</h3>
@@ -152,21 +164,23 @@
       </div>
     </section>
 
-    <section class="page-section chapter" id="sources" aria-labelledby="sources-title">
-      <div class="shell chapter-grid">
+    <section class="about-sources ground ground-lift" id="sources" aria-labelledby="sources-title">
+      <div class="ground-in sources-grid">
         <div class="page-section-head">
           <h2 id="sources-title" data-i18n="aboutPage.trust.title">Where the data comes from</h2>
           <p data-i18n="aboutPage.trust.copy">Every map traces back to open public data. Credits, citations and licence notices are kept together on one page.</p>
         </div>
-        <ul class="source-names mono lead-set" data-lead-visual>
-          <li data-i18n="sourcesPage.name.landsat">Landsat</li>
-          <li data-i18n="sourcesPage.name.nasadem">NASADEM</li>
-          <li data-i18n="sourcesPage.name.sentinel">Copernicus Sentinel-2</li>
-          <li data-i18n="sourcesPage.name.nasaeo">NASA Earth Observatory</li>
-          <li data-i18n="sourcesPage.name.naturalearth">Natural Earth</li>
-          <li data-i18n="sourcesPage.name.scm">Scientific colour maps</li>
-        </ul>
-        <p class="chapter-link"><a class="text-link" href="/sources/"><span data-i18n="footer.sources">Data sources and attributions</span> <span aria-hidden="true">→</span></a></p>
+        <div class="sources-index">
+          <ul class="source-names mono lead-set" data-lead-visual>
+            <li data-i18n="sourcesPage.name.landsat">Landsat</li>
+            <li data-i18n="sourcesPage.name.nasadem">NASADEM</li>
+            <li data-i18n="sourcesPage.name.sentinel">Copernicus Sentinel-2</li>
+            <li data-i18n="sourcesPage.name.nasaeo">NASA Earth Observatory</li>
+            <li data-i18n="sourcesPage.name.naturalearth">Natural Earth</li>
+            <li data-i18n="sourcesPage.name.scm">Scientific colour maps</li>
+          </ul>
+          <p class="chapter-link"><a class="text-link" href="/sources/"><span data-i18n="footer.sources">Data sources and attributions</span> <span aria-hidden="true">→</span></a></p>
+        </div>
       </div>
     </section>
 

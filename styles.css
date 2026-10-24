@@ -868,93 +868,160 @@ body.page-geothermal .page-closing .text-link:hover{color:var(--link)}
 /* === /atlas:geothermal === */
 
 /* === atlas:solutions-about === MER-277 owns this region: /solutions/ and /about/ and their Turkish twins.
-   Until that thread lands it holds the MER-255 composition on the Atlas tokens. */
+   Atlas composition (preview, pending CTO acceptance). Solutions: an Orbit opening with the domain index, the
+   Geothermal band and its pilot index, the Mining and Marine pair on Lift. About: an Orbit opening, the problem
+   on Orbit, the statement and the six principles on Paper, the data index on Lift. Both pages are composed from
+   the foundation components (kicker, text link, grounds, caption); what is here is layout. */
 
-/* Solutions: the ledger. Three rows that are also the page's index; Geothermal leads. */
-body.interior .page-hero.is-ledger{padding-bottom:0}
-.state-ledger{list-style:none;width:min(var(--shell),100%);margin:clamp(48px,6vw,96px) auto 0;padding:0;display:grid;grid-template-columns:minmax(0,1.4fr) repeat(2,minmax(0,1fr));border-top:1px solid var(--rule)}
-.state-ledger li{position:relative;border-left:1px solid var(--rule-soft)}
-.state-ledger li:first-child{border-left:0}
-.state-ledger li:first-child::before{content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--signal)}
-.state-ledger a{display:flex;flex-direction:column;gap:12px;height:100%;padding:clamp(22px,2.4vw,34px) clamp(18px,2.2vw,32px) clamp(28px,3vw,44px)}
-.state-ledger li:first-child a{padding-left:0}
-.state-ledger a:focus-visible{outline-offset:-3px}
-.ledger-name{font-size:clamp(24px,2.5vw,40px);font-weight:300;letter-spacing:-.03em;line-height:1.05;color:var(--paper);transition:color .2s ease}
-.state-ledger a:hover .ledger-name{color:var(--signal)}
-.state-ledger .domain-status{margin:0}
-.ledger-note{margin-top:auto;padding-top:6px;font-size:14px;line-height:1.5;color:var(--steel)}
-/* About: the statement. The brand's orbital motif, drawn thin and large, behind the headline;
-   no globe, no data, nothing to read. */
-.orbit-mark{position:absolute;right:calc(var(--edge) - 24px);top:50%;width:min(36vw,480px);aspect-ratio:1/1;transform:translateY(-50%);pointer-events:none;z-index:0;
-  background:radial-gradient(circle at 68.1% 11.7%,var(--signal) 0 3.5px,rgba(115,231,255,.22) 4px 11px,transparent 12px)}
-.orbit-mark::before,.orbit-mark::after{content:"";position:absolute;border-radius:50%}
-.orbit-mark::before{inset:0;border:1px solid rgba(115,231,255,.16)}
-.orbit-mark::after{inset:14% 0;border:1px solid rgba(115,231,255,.34);transform:rotate(-24deg)}
-/* ----- Solutions ----- */
-/* The feature band: Geothermal at full size, the published first application. Capped at 1440 CSS px,
-   which a 2x display fills from the 2880 px master width (sources.json -> scenes -> web_m6_placement). */
-.domain-band{position:relative;overflow:hidden;display:flex;align-items:flex-end;max-width:1440px;margin-inline:auto;min-height:clamp(340px,44vw,620px);background:var(--orbit);scroll-margin-top:calc(var(--header-h) + 12px)}
+/* The shell's .page-section-head p would otherwise win over the foundation kicker. */
+body.page-solutions .page-section-head .kicker,body.page-about .page-section-head .kicker{max-width:none;margin:0 0 18px;font-size:var(--t-label);line-height:1.6;color:var(--link)}
+.tone{color:var(--fg-2)}
+/* Index thumbnails: R2 allows a visual at most 160 CSS px inside an index or a linking card. The images keep
+   their own pixels (no filter, no transform, no upscale); the frame is a line, not a fill. */
+img.row-thumb{display:block;aspect-ratio:1/1;height:auto;border:0;background:none}
+
+/* ----- Solutions: the opening and the domain index ----- */
+body.page-solutions .page-hero.is-ledger{padding:clamp(72px,9vw,140px) var(--pad) 0}
+body.page-solutions .page-hero .kicker{margin:0 0 clamp(20px,2.2vw,30px)}
+.hero-lead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px 64px}
+body.page-solutions .page-hero .hero-lead h1{flex:1 1 560px;margin:0;max-width:16ch;font-size:var(--t-page);line-height:.98;letter-spacing:-.03em;text-wrap:balance}
+body.page-solutions .page-hero .hero-lead .page-hero-copy{flex:0 1 380px;max-width:none;font-size:var(--t-lede);line-height:1.65;color:var(--paper);text-wrap:pretty}
+body.interior .page-hero h1 .tone{display:block}
+.domain-index{list-style:none;width:min(var(--shell),100%);margin:clamp(56px,7vw,104px) auto 0;padding:0;border-top:1px solid var(--rule)}
+.domain-index li{position:relative;border-bottom:1px solid var(--rule-soft)}
+.domain-index li:first-child::before{content:"";position:absolute;left:0;top:-1px;width:min(420px,40%);height:2px;background:var(--signal)}
+.index-row{display:grid;grid-template-columns:auto minmax(0,1.5fr) minmax(0,1.3fr) minmax(0,1.5fr);align-items:center;gap:16px clamp(24px,3vw,48px);padding:clamp(22px,2.4vw,30px) 0}
+.index-row:focus-visible{outline-offset:-3px}
+.index-thumb{display:block;width:clamp(72px,8vw,112px);aspect-ratio:1/1;overflow:hidden}
+.index-thumb img.row-thumb{width:100%;height:100%}
+.index-thumb.is-none{display:flex;align-items:center;justify-content:center;border:1px dashed var(--rule);font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-caption);letter-spacing:var(--track);line-height:1.6;text-transform:uppercase;text-align:center;color:var(--steel)}
+.index-name{font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1;color:var(--steel);transition:color .2s ease}
+.index-row.is-lead .index-name{color:var(--paper)}
+.index-row:hover .index-name{color:var(--signal)}
+.index-row .domain-status{margin:0}
+.index-note{font-size:var(--t-body);line-height:1.5;color:var(--steel)}
+.index-row.is-lead .index-note{color:var(--paper)}
+.index-note [aria-hidden]{color:var(--signal)}
+
+/* ----- Solutions: the Geothermal band and the pilot index ----- */
+.domain-feature{position:relative;scroll-margin-top:calc(var(--header-h) + 12px)}
+/* Capped at 1440 CSS px, which a 2x display fills from the 2880 px master width (sources.json -> scenes -> web_m6_placement). */
+.domain-band{position:relative;overflow:hidden;display:flex;align-items:flex-end;max-width:1440px;margin-inline:auto;min-height:clamp(340px,44vw,620px);background:var(--orbit)}
 .domain-band>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .domain-band-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,11,18,0) 38%,rgba(3,11,18,.84) 100%)}
 .domain-band-copy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:0 var(--pad) clamp(28px,3.2vw,48px)}
-.domain-band-copy h2{margin:0;font-size:clamp(28px,3vw,46px);font-weight:300;letter-spacing:-.03em;line-height:1.05;color:var(--paper)}
+.domain-band-copy h2{margin:0;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;color:var(--paper)}
 .domain-band-copy .domain-status{margin:0}
-.domain-band.is-feature{min-height:clamp(460px,52vw,740px)}
+.domain-band-copy .kicker{margin:0}
+.domain-band.is-feature{min-height:clamp(480px,50vw,720px)}
 .domain-band.is-feature .domain-band-shade{background:
-  linear-gradient(90deg,rgba(3,11,18,.84) 0%,rgba(3,11,18,.5) 36%,rgba(3,11,18,.04) 68%),
+  linear-gradient(90deg,rgba(3,11,18,.86) 0%,rgba(3,11,18,.5) 38%,rgba(3,11,18,.04) 70%),
   linear-gradient(0deg,rgba(3,11,18,.92) 0%,rgba(3,11,18,.3) 34%,transparent 62%)}
-.domain-band.is-feature .domain-band-copy{gap:16px;padding-left:var(--edge);padding-right:var(--edge);padding-bottom:clamp(40px,5vw,76px)}
-.domain-band.is-feature h2{font-size:clamp(40px,5.2vw,84px);letter-spacing:-.045em;line-height:1}
-.band-lede{margin:0;max-width:34ch;font-size:clamp(16px,1.35vw,21px);line-height:1.55;color:var(--paper)}
+.domain-band.is-feature .domain-band-copy{gap:16px;padding-left:var(--edge);padding-right:var(--edge);padding-bottom:clamp(86px,calc(120px - 2.4vw),112px)}
+.domain-band.is-feature h2{font-size:var(--t-page);letter-spacing:-.03em;line-height:.98}
+.band-lede{margin:0;max-width:34ch;font-size:var(--t-lede);line-height:1.55;color:var(--paper)}
 .domain-band.is-feature .text-link{margin-top:6px;color:var(--paper);border-bottom-color:rgba(242,244,245,.4)}
+.domain-band.is-feature .text-link:hover{color:var(--signal);border-bottom-color:var(--signal)}
 .domain-band.is-feature .scene-label{right:var(--edge);bottom:20px}
+.pilot-index{counter-reset:pilot;display:flex;flex-wrap:wrap;gap:0 clamp(24px,4vw,64px);padding:0 var(--edge);background:var(--lift);border-top:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft)}
+.pilot-index>*{display:inline-flex;align-items:center;gap:12px;min-height:64px;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);line-height:1.6;text-transform:uppercase}
+.pilot-index-lead{color:var(--steel)}
+.pilot-index a{color:var(--paper);transition:color .2s ease}
+.pilot-index a::before{counter-increment:pilot;content:counter(pilot,decimal-leading-zero);color:var(--signal)}
+.pilot-index a:hover{color:var(--signal)}
+.pilot-index a:focus-visible{outline-offset:-3px}
 
-/* The two expansion directions: a photograph and one line each, nothing else is claimed for them. They are
-   captioned figures, not cards: no frame, surface, shadow, link or call to action (authority doc §2, MER-255). */
-.domain-pair{position:relative;padding:var(--chap-y) var(--pad);background:var(--orbit)}
-.domain-pair .page-section-head{margin-bottom:clamp(28px,3.4vw,52px)}
-.domain-pair .page-section-head::before{content:none}
-.pair-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,3.4vw,56px)}
+/* ----- Solutions: the two expansion directions, on Lift ----- */
+/* Captioned figures, not cards: no frame, surface, shadow, link or call to action (authority doc section 2, MER-255). */
+.domain-pair{position:relative;padding:clamp(80px,9vw,136px) var(--pad) clamp(40px,5vw,72px)}
+.domain-pair .page-section-head{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"kicker kicker" "title note";align-items:end;gap:0 32px;max-width:none;margin:0 0 clamp(40px,5vw,72px)}
+.domain-pair .page-section-head .kicker{grid-area:kicker}
+.domain-pair .page-section-head h2{grid-area:title;margin:0;max-width:none;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;color:var(--paper)}
+.domain-pair .page-section-head .none-note{grid-area:note;max-width:none;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);line-height:1.6;text-transform:uppercase;color:var(--steel)}
+.pair-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(48px,5vw,72px) clamp(32px,4vw,64px)}
 .domain-panel{position:relative;display:flex;flex-direction:column;gap:clamp(18px,2vw,26px);scroll-margin-top:calc(var(--header-h) + 12px)}
 .panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--orbit)}
 .panel-figure>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .panel-figure .scene-label{right:16px;bottom:14px}
 .panel-copy{display:grid;gap:8px 20px;grid-template-columns:minmax(0,1fr) auto;align-items:baseline}
-.panel-copy h3{margin:0;font-size:clamp(26px,2.5vw,38px);font-weight:300;letter-spacing:-.03em;line-height:1.05;color:var(--paper)}
+.panel-copy h3{margin:0;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.06;color:var(--paper)}
 .panel-copy .domain-status{margin:0;text-align:right}
-.panel-line{grid-column:1 / -1;margin:0;font-size:15px;line-height:1.6;color:var(--steel)}
-.panel-none{grid-column:1 / -1;margin:6px 0 0;padding-top:14px;border-top:1px dashed var(--rule);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--steel)}
-.page-note{padding:0 var(--pad) clamp(48px,6vw,88px);background:var(--orbit)}
-.page-note .act-footnote{margin-top:0}
-/* ----- About ----- */
-.wide-figure{position:relative;width:100%;max-width:728px;margin:0;border:1px solid var(--rule);background:var(--orbit);aspect-ratio:1459/897;overflow:hidden}
+.panel-line{grid-column:1 / -1;margin:6px 0 0;padding-top:14px;border-top:1px solid var(--hair);font-size:var(--t-body);line-height:1.5;color:var(--fg-2)}
+.page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--lift)}
+.page-note .act-footnote{margin-top:0;border-top-color:var(--rule)}
+
+/* ----- the closing line, on both pages: the one Partner link, set as a statement ----- */
+body.page-solutions .page-closing,body.page-about .page-closing{padding:clamp(56px,6vw,88px) var(--pad)}
+body.page-solutions .page-closing .text-link,body.page-about .page-closing .text-link{gap:18px;padding:0;border-bottom:0;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.1;text-transform:none;color:var(--paper);white-space:normal}
+body.page-solutions .page-closing .text-link:hover,body.page-about .page-closing .text-link:hover{color:var(--signal)}
+body.page-solutions .page-closing .text-link span[aria-hidden],body.page-about .page-closing .text-link span[aria-hidden]{font-size:.6em}
+
+/* ----- About: the opening ----- */
+body.page-about .page-hero.is-statement{padding:clamp(80px,10vw,152px) var(--pad) clamp(64px,7vw,104px)}
+body.page-about .page-hero .kicker{margin:0 0 clamp(20px,2.2vw,30px)}
+body.page-about .page-hero h1{margin:0;max-width:none;font-size:var(--t-page);line-height:.98;letter-spacing:-.03em}
+body.page-about .page-hero h1 .tone{text-wrap:wrap}
+.hero-foot{display:flex;flex-wrap:wrap;justify-content:flex-end;margin-top:clamp(36px,4vw,56px);padding-top:clamp(24px,2.6vw,34px);border-top:1px solid var(--rule)}
+body.page-about .page-hero .hero-foot .page-hero-copy{flex:0 1 560px;max-width:none;font-size:var(--t-lede);line-height:1.62;color:var(--paper);text-wrap:pretty}
+body.page-about .ground{padding-block:clamp(72px,8vw,120px)}
+/* The statement and the principles are one stretch of Paper: a rule and the section's own padding divide them. */
+body.page-about .about-position{padding-bottom:clamp(48px,5vw,72px)}
+body.page-about .about-principles{padding-top:0}
+.about-principles>.ground-in{padding-top:clamp(56px,6vw,88px);border-top:1px solid var(--hair)}
+
+/* ----- About: the problem, on Orbit ----- */
+.problem-grid{display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(40px,6vw,96px)}
+.problem-grid .page-section-head{flex:1 1 340px;min-width:0;max-width:none;margin:0}
+.problem-grid .page-section-head h2{margin:0 0 22px;max-width:12ch;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;color:var(--paper)}
+.problem-grid .page-section-head p{max-width:38ch;font-size:var(--t-body);line-height:1.7;color:var(--steel)}
+.wide-figure{position:relative;width:100%;max-width:728px;margin:0;background:var(--orbit);aspect-ratio:1459/897;overflow:hidden;flex:1.6 1 520px;min-width:0}
 .wide-figure>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .wide-figure .scene-label{right:16px;bottom:14px}
-.lead-statement{margin:0;padding-left:clamp(20px,2.6vw,40px);border-left:2px solid var(--signal)}
-.lead-statement p{margin:0;max-width:20ch;font-size:clamp(30px,3.9vw,62px);font-weight:300;letter-spacing:-.04em;line-height:1.08;color:var(--paper);text-wrap:balance}
-.principle-list{list-style:none;counter-reset:principle;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(36px,6vw,112px);margin:0;padding:0;border-top:1px solid var(--rule)}
-.principle-list>li{counter-increment:principle;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:clamp(16px,2vw,28px);row-gap:8px;align-content:start;padding:clamp(24px,2.6vw,36px) 0 clamp(26px,2.8vw,40px);border-bottom:1px solid var(--rule-soft)}
-.principle-list>li::before{content:counter(principle,decimal-leading-zero);grid-row:1 / span 3;padding-top:.5em;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--signal)}
-.principle-list h3{margin:0;font-size:clamp(20px,1.8vw,26px);font-weight:400;letter-spacing:-.025em;line-height:1.2;color:var(--paper)}
-.principle-list p{margin:0;max-width:36ch;font-size:15px;line-height:1.65;color:var(--steel)}
-.see-link{grid-column:2;justify-self:start;margin-top:4px;padding:6px 0;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--steel);border-bottom:1px solid transparent;transition:color .2s ease,border-color .2s ease}
-.see-link:hover{color:var(--paper);border-bottom-color:rgba(242,244,245,.4)}
-.principles-foot{margin:clamp(24px,3vw,40px) 0 0;max-width:62ch;font-size:13.5px;line-height:1.65;color:var(--steel)}
-.source-names{list-style:none;display:flex;flex-wrap:wrap;gap:14px clamp(24px,3vw,44px);margin:0;padding:24px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--steel)}
+
+/* ----- About: the statement and the six principles, on Paper ----- */
+.about-position .page-section-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:20px 64px;max-width:none;margin:0 0 clamp(48px,6vw,88px)}
+.about-position .page-section-head h2{flex:1 1 320px;margin:0;max-width:13ch;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.1;color:var(--fg);text-wrap:balance}
+.about-position .page-section-head p{flex:0 1 460px;max-width:none;font-size:var(--t-body);line-height:1.7;color:var(--fg-2)}
+.lead-statement{margin:0;padding:clamp(28px,3.4vw,48px) 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.lead-statement p{margin:0;max-width:22ch;font-size:var(--t-page);font-weight:300;letter-spacing:-.03em;line-height:1.02;color:var(--fg);text-wrap:balance}
+.layer-index{display:flex;flex-wrap:wrap;align-items:center;gap:20px clamp(24px,3vw,48px);margin-top:clamp(36px,4vw,56px)}
+.layer-thumbs{display:flex;gap:10px}
+.layer-thumbs img.row-thumb{width:clamp(52px,6vw,88px);height:clamp(52px,6vw,88px)}
+.layer-index:hover .layer-index-link{color:var(--fg)}
+.about-principles .page-section-head{max-width:none;margin:0 0 clamp(48px,5vw,72px)}
+.about-principles .page-section-head h2{margin:0;max-width:none;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;color:var(--fg)}
+.principle-list{list-style:none;counter-reset:principle;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));column-gap:clamp(32px,4vw,64px);margin:0;padding:0}
+.principle-list>li{counter-increment:principle;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:28px 0 36px;border-top:1px solid var(--hair)}
+.principle-list>li::before{content:counter(principle,decimal-leading-zero);font-size:var(--t-statement);font-weight:300;letter-spacing:-.02em;line-height:1;color:var(--link)}
+.principle-list h3{margin:8px 0 0;font-size:var(--t-figure);font-weight:400;letter-spacing:-.01em;line-height:1.2;color:var(--fg)}
+.principle-list p{margin:0;max-width:34ch;font-size:var(--t-body);line-height:1.65;color:var(--fg-2)}
+.see-link{margin-top:4px;white-space:normal}
+.principles-foot{margin:clamp(32px,4vw,56px) 0 0;padding-top:clamp(24px,2.6vw,34px);border-top:1px solid var(--hair);max-width:40ch;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.14;color:var(--fg-2)}
+
+/* ----- About: where the data comes from, on Lift ----- */
+.sources-grid{display:flex;flex-wrap:wrap;align-items:flex-start;gap:clamp(36px,5vw,80px)}
+.sources-grid .page-section-head{flex:1 1 320px;max-width:none;margin:0}
+.sources-grid .page-section-head h2{margin:0 0 18px;max-width:none;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.1;color:var(--paper)}
+.sources-grid .page-section-head p{max-width:40ch;font-size:var(--t-body);line-height:1.7;color:var(--steel)}
+.sources-index{flex:1.4 1 460px;min-width:0}
+.source-names{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));column-gap:32px;margin:0;padding:0;border-top:1px solid var(--rule)}
+.source-names li{padding:15px 0;border-bottom:1px solid var(--rule-soft);font-family:var(--sans);font-size:var(--t-figure);letter-spacing:-.01em;line-height:1.3;color:var(--paper)}
+.sources-index .chapter-link{margin:28px 0 0}
+.sources-index .chapter-link .text-link{color:var(--link)}
+.sources-index .chapter-link .text-link:hover{color:var(--fg)}
+
 @media(max-width:860px){
-  .state-ledger{grid-template-columns:minmax(0,1fr)}
-  .state-ledger li{border-left:0;border-top:1px solid var(--rule-soft)}
-  .state-ledger li:first-child{border-top:0}
-  .state-ledger a,.state-ledger li:first-child a{padding:22px 0 24px}
-  .ledger-note{margin-top:0}
-  .principle-list{grid-template-columns:minmax(0,1fr)}
+  .index-row{grid-template-columns:auto minmax(0,1fr);gap:10px 20px}
+  .index-thumb{grid-row:1 / span 3}
+  .index-row>.index-name,.index-row>.domain-status,.index-row>.index-note{grid-column:2}
 }
 @media(max-width:760px){
   .pair-grid{grid-template-columns:minmax(0,1fr)}
+  .domain-pair .page-section-head{grid-template-columns:minmax(0,1fr);grid-template-areas:"kicker" "title" "note";gap:14px 0}
 }
 @media(max-width:700px){
   .domain-band.is-feature .domain-band-copy{padding-bottom:92px}
-  .orbit-mark{width:96vw;right:-52vw;top:26%;opacity:.7}
+  .pilot-index>*{min-height:48px}
 }
 @media(max-width:560px){
   .lead-statement p{max-width:none}

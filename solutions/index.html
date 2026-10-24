@@ -29,7 +29,7 @@
   <link rel="preload" href="/assets/fonts/orbgss-sans-400.39dbd03f.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/styles.css" />
 </head>
-<body class="interior">
+<body class="interior page-solutions">
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
 
   <header class="site-header" id="top">
@@ -71,61 +71,77 @@
     <section class="page-hero is-ledger" aria-labelledby="solutions-title">
       <div class="page-hero-inner">
         <p class="kicker mono" data-i18n="solutionsPage.kicker">Solutions</p>
-        <h1 id="solutions-title" data-i18n="solutionsPage.title">Where OrbGSS works today, and where next.</h1>
-        <p class="page-hero-copy" data-i18n="solutionsPage.intro">Geothermal is active, with a published pilot. Mining and marine are expansion directions: nothing is published for them yet.</p>
+        <div class="hero-lead">
+          <h1 id="solutions-title"><span data-i18n="solutionsPage.title.lead">Where OrbGSS works today,</span> <span class="tone" data-i18n="solutionsPage.title.tail">and where next.</span></h1>
+          <p class="page-hero-copy" data-i18n="solutionsPage.intro">Geothermal is active, with a published pilot. Mining and marine are expansion directions: nothing is published for them yet.</p>
+        </div>
       </div>
-      <ul class="state-ledger" aria-label="Domains at a glance" data-i18n-aria-label="solutionsPage.ledger.label">
+      <ul class="domain-index" aria-label="Domains at a glance" data-i18n-aria-label="solutionsPage.ledger.label">
         <li>
-          <a href="#geothermal">
-            <span class="ledger-name" data-i18n="app.geothermal.title">Geothermal</span>
+          <a class="index-row is-lead" href="#geothermal">
+            <span class="index-thumb"><img class="thumb row-thumb" src="/assets/proof/web005b/priority-600.webp" alt="Thumbnail of the Kızıldere relative priority map" data-i18n-alt="solutionsPage.thumb.priority" width="112" height="112" loading="lazy" decoding="async" /></span>
+            <span class="index-name" data-i18n="app.geothermal.title">Geothermal</span>
             <span class="domain-status mono is-active" data-i18n="app.geothermal.status">Active · First application</span>
-            <span class="ledger-note" data-i18n="solutionsPage.published.geothermal">The Kızıldere pilot</span>
+            <span class="index-note"><span data-i18n="solutionsPage.published.geothermal">The Kızıldere pilot</span> <span aria-hidden="true">→</span></span>
           </a>
         </li>
         <li>
-          <a href="#mining">
-            <span class="ledger-name" data-i18n="app.mining.title">Mining</span>
+          <a class="index-row" href="#mining">
+            <span class="index-thumb is-none" aria-hidden="true"><span data-i18n="solutionsPage.thumb.none">None yet</span></span>
+            <span class="index-name" data-i18n="app.mining.title">Mining</span>
             <span class="domain-status mono" data-i18n="app.mining.status">Expansion direction</span>
-            <span class="ledger-note" data-i18n="solutionsPage.published.none">Nothing published yet</span>
+            <span class="index-note" data-i18n="solutionsPage.published.none">Nothing published yet</span>
           </a>
         </li>
         <li>
-          <a href="#marine">
-            <span class="ledger-name" data-i18n="app.marine.title">Marine</span>
+          <a class="index-row" href="#marine">
+            <span class="index-thumb is-none" aria-hidden="true"><span data-i18n="solutionsPage.thumb.none">None yet</span></span>
+            <span class="index-name" data-i18n="app.marine.title">Marine</span>
             <span class="domain-status mono" data-i18n="app.marine.status">Expansion direction</span>
-            <span class="ledger-note" data-i18n="solutionsPage.published.none">Nothing published yet</span>
+            <span class="index-note" data-i18n="solutionsPage.published.none">Nothing published yet</span>
           </a>
         </li>
       </ul>
     </section>
 
-    <section class="domain-band is-feature" id="geothermal" aria-labelledby="band-geothermal-title" data-label-tone="light" data-label-tone-locked>
-      <img
-        data-lead-visual
-        src="/assets/imagery/yellowstone-2013-1400.webp"
-        srcset="/assets/imagery/yellowstone-2013-900.webp 900w, /assets/imagery/yellowstone-2013-1400.webp 1400w, /assets/imagery/yellowstone-2013-1800.webp 1800w, /assets/imagery/yellowstone-2013-2400.webp 2400w, /assets/imagery/yellowstone-2013-2880.webp 2880w"
-        sizes="(min-width: 1440px) 1440px, (max-width: 736px) 736px, 100vw"
-        alt="Satellite view of the geothermal landscape around Yellowstone National Park"
-        data-i18n-alt="alt.yellowstone"
-        loading="lazy"
-        decoding="async"
-        width="2880"
-        height="1800"
-      />
-      <span class="domain-band-shade" aria-hidden="true"></span>
-      <div class="domain-band-copy">
-        <h2 id="band-geothermal-title" data-i18n="app.geothermal.title">Geothermal</h2>
-        <p class="domain-status mono is-active" data-i18n="app.geothermal.status">Active · First application</p>
-        <p class="band-lede" data-i18n="solutionsPage.feature.copy">The first application, with a published pilot in Kızıldere, Türkiye.</p>
-        <a class="text-link" href="/solutions/geothermal/"><span data-i18n="solutionsPage.band.pilot">See the Kızıldere pilot</span> <span aria-hidden="true">→</span></a>
+    <section class="domain-feature" id="geothermal" aria-labelledby="band-geothermal-title">
+      <div class="domain-band is-feature" data-label-tone="light" data-label-tone-locked>
+        <img
+          data-lead-visual
+          src="/assets/imagery/yellowstone-2013-1400.webp"
+          srcset="/assets/imagery/yellowstone-2013-900.webp 900w, /assets/imagery/yellowstone-2013-1400.webp 1400w, /assets/imagery/yellowstone-2013-1800.webp 1800w, /assets/imagery/yellowstone-2013-2400.webp 2400w, /assets/imagery/yellowstone-2013-2880.webp 2880w"
+          sizes="(min-width: 1440px) 1440px, (max-width: 736px) 736px, 100vw"
+          alt="Satellite view of the geothermal landscape around Yellowstone National Park"
+          data-i18n-alt="alt.yellowstone"
+          loading="lazy"
+          decoding="async"
+          width="2880"
+          height="1800"
+        />
+        <span class="domain-band-shade" aria-hidden="true"></span>
+        <div class="domain-band-copy">
+          <p class="kicker mono" data-i18n="solutionsPage.band.kicker">Now</p>
+          <h2 id="band-geothermal-title" data-i18n="app.geothermal.title">Geothermal</h2>
+          <p class="domain-status mono is-active" data-i18n="app.geothermal.status">Active · First application</p>
+          <p class="band-lede" data-i18n="solutionsPage.feature.copy">The first application, with a published pilot in Kızıldere, Türkiye.</p>
+          <a class="text-link" href="/solutions/geothermal/"><span data-i18n="solutionsPage.band.pilot">See the Kızıldere pilot</span> <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="scene-label"><span data-i18n="scene.yellowstone.place">Yellowstone National Park, USA</span><span data-i18n="scene.yellowstone.coords">44.4604° N, 110.8282° W</span><span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span></p>
       </div>
-      <p class="scene-label"><span data-i18n="scene.yellowstone.place">Yellowstone National Park, USA</span><span data-i18n="scene.yellowstone.coords">44.4604° N, 110.8282° W</span><span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span></p>
+      <nav class="pilot-index" aria-label="Inside the Kızıldere pilot" data-i18n-aria-label="solutionsPage.pilotnav.label">
+        <span class="pilot-index-lead mono" data-i18n="solutionsPage.pilotnav.lead">Inside the pilot</span>
+        <a href="/solutions/geothermal/#glance"><span data-i18n="solutionsPage.pilotnav.record">The pilot record</span></a>
+        <a href="/solutions/geothermal/#layers"><span data-i18n="solutionsPage.pilotnav.atlas">The layer atlas</span></a>
+        <a href="/solutions/geothermal/#outputs"><span data-i18n="solutionsPage.pilotnav.result">The result and its limits</span></a>
+      </nav>
     </section>
 
-    <section class="domain-pair" aria-labelledby="expansion-title">
-      <div class="shell">
+    <section class="domain-pair ground ground-lift" aria-labelledby="expansion-title">
+      <div class="ground-in">
         <div class="page-section-head">
+          <p class="kicker mono" data-i18n="solutionsPage.expansion.kicker">Next</p>
           <h2 id="expansion-title" data-i18n="solutionsPage.expansion.title">Expansion directions</h2>
+          <p class="none-note mono" data-i18n="solutionsPage.published.none">Nothing published yet</p>
         </div>
         <div class="pair-grid">
           <article class="domain-panel" id="mining">
@@ -148,7 +164,6 @@
               <h3 data-i18n="app.mining.title">Mining</h3>
               <p class="domain-status mono" data-i18n="app.mining.status">Expansion direction</p>
               <p class="panel-line" data-i18n="solutionsPage.ground.mining">Mineral exploration targets</p>
-              <p class="panel-none mono" data-i18n="solutionsPage.published.none">Nothing published yet</p>
             </div>
           </article>
           <article class="domain-panel" id="marine">
@@ -171,7 +186,6 @@
               <h3 data-i18n="app.marine.title">Marine</h3>
               <p class="domain-status mono" data-i18n="app.marine.status">Expansion direction</p>
               <p class="panel-line" data-i18n="solutionsPage.ground.marine">Coastal and marine ground</p>
-              <p class="panel-none mono" data-i18n="solutionsPage.published.none">Nothing published yet</p>
             </div>
           </article>
         </div>
