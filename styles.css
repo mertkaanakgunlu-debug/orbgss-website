@@ -1024,7 +1024,17 @@ body.page-about .about-principles{padding-top:0}
   .pilot-index>*{min-height:48px}
 }
 @media(max-width:560px){
-  .lead-statement p{max-width:none}
+  .lead-statement p{max-width:none;overflow-wrap:anywhere}
+}
+/* At 320 CSS px the long Turkish word "doğrulayabilecek" does not fit the column at the page-title floor (44px),
+   and the five index thumbnails are 2px wider than the column. Scale the statement with the viewport below 380px
+   and let the thumbnails give a little; nothing changes from 380px up. */
+@media(max-width:380px){
+  .lead-statement p{font-size:min(var(--t-page),11.25vw)}
+}
+@media(max-width:359px){
+  .layer-thumbs{gap:6px}
+  .layer-thumbs img.row-thumb{width:46px;height:46px}
 }
 /* === /atlas:solutions-about === */
 
