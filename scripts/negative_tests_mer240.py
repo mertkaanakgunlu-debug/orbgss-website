@@ -188,8 +188,8 @@ case("the page intro runs past thirty words", GEOTHERMAL,
      swap("and what is still missing.</p>", "and what is still missing, " + " ".join(["more"] * 12) + ".</p>"),
      "the page intro is")
 case("a section body runs past forty words", GEOTHERMAL,
-     swap("structure and geology are optional support and score-invariant.</p>",
-          "structure and geology are optional support and score-invariant. " + " ".join(["more"] * 12) + ".</p>"),
+     swap("against the valleys and ridges it sits on.</p>",
+          "against the valleys and ridges it sits on. " + " ".join(["more"] * 30) + ".</p>"),
      "body is")
 case("a list line runs past twelve words (the cell budget now holds the ruled lists)", PARTNER,
      swap(">A partnership or collaboration with OrbGSS.</span>",
@@ -201,9 +201,9 @@ case("a table comes back on an interior page", GEOTHERMAL,
           '<figure class="geo-atlas" data-lead-visual>'),
      "a <table> is back")
 case("only the Turkish copy runs past the budget", SCRIPT,
-     swap("Boşluk doldurulmaz, gösterilir ve önceliği değiştirmez: yapı ve jeoloji isteğe bağlı destektir, skoru etkilemez.",
-          "Boşluk doldurulmaz, gösterilir ve önceliği değiştirmez: yapı ve jeoloji isteğe bağlı destektir, skoru etkilemez. "
-          + " ".join(["ek"] * 24) + "."),
+     swap("üzerinde durduğu vadi ve sırtlarla birlikte görülebilir.",
+          "üzerinde durduğu vadi ve sırtlarla birlikte görülebilir. "
+          + " ".join(["ek"] * 40) + "."),
      "in tr (at most")
 case("a page runs past its total budget", ABOUT,
      swap("  </main>", "".join(
@@ -218,8 +218,8 @@ case("the company sentence is repeated on Partner", PARTNER,
           "<p>It exists to make exploration and land decisions evidence-based, traceable and easier to prioritize.</p>"),
      "R1:")
 case("a principle is restated on the Geothermal page", GEOTHERMAL,
-     swap("structure and geology are optional support and score-invariant.</p>",
-          "structure and geology are optional support and score-invariant. A missing layer is published as missing, never invented.</p>"),
+     swap("against the valleys and ridges it sits on.</p>",
+          "against the valleys and ridges it sits on. A missing layer is published as missing, never invented.</p>"),
      "R1: 'a missing layer is published as missing, never invented'")
 
 # ---- R2 one full-size appearance per visual ------------------------------------------------------------
