@@ -3837,6 +3837,49 @@
           "measured_max_device_px_at_2x": 1196,
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measurement_note": "the shared evidence frame, capped at 600 CSS px (598 inside its hairline). R15 measured again after the stage was re-measured to its content: 19 widths x DPR 1, 2 and 3, and the drawn width never exceeds 598."
+        },
+        "geothermal_placement": {
+          "status": "preview",
+          "consumer": "MER-276 / Atlas Geothermal page",
+          "acceptance": "A1 - preview only, pending the CTO's acceptance before any publish",
+          "route": "solutions/geothermal/index.html",
+          "plate": "elevation",
+          "rendered": {
+            "tool": "scripts/measure_geothermal_renders.py",
+            "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+            "viewports_measured": [
+              "360x844",
+              "390x844",
+              "414x844",
+              "600x1112",
+              "768x1112",
+              "834x1112",
+              "1024x900",
+              "1180x900",
+              "1280x900",
+              "1366x900",
+              "1440x900",
+              "1536x900",
+              "1680x900",
+              "1920x900",
+              "2200x900",
+              "2560x900",
+              "3000x900",
+              "3440x900",
+              "3840x900"
+            ],
+            "device_pixel_ratios_measured": [
+              1,
+              2
+            ],
+            "max_css_width": 534,
+            "device_pixel_ratio_considered": 2,
+            "max_device_px": 1068,
+            "native_px": 1200,
+            "selected_derivative": "assets/proof/web005b/terrain-600-d.webp",
+            "max_upscale_factor": 0.89,
+            "max_upscale_at": "600x1112 @1x"
+          }
         }
       },
       "thm01": {
@@ -3869,6 +3912,49 @@
           "measured_max_device_px_at_2x": 1196,
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measurement_note": "the shared evidence frame, capped at 600 CSS px (598 inside its hairline). R15 measured again after the stage was re-measured to its content: 19 widths x DPR 1, 2 and 3, and the drawn width never exceeds 598."
+        },
+        "geothermal_placement": {
+          "status": "preview",
+          "consumer": "MER-276 / Atlas Geothermal page",
+          "acceptance": "A1 - preview only, pending the CTO's acceptance before any publish",
+          "route": "solutions/geothermal/index.html",
+          "plate": "thermal",
+          "rendered": {
+            "tool": "scripts/measure_geothermal_renders.py",
+            "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+            "viewports_measured": [
+              "360x844",
+              "390x844",
+              "414x844",
+              "600x1112",
+              "768x1112",
+              "834x1112",
+              "1024x900",
+              "1180x900",
+              "1280x900",
+              "1366x900",
+              "1440x900",
+              "1536x900",
+              "1680x900",
+              "1920x900",
+              "2200x900",
+              "2560x900",
+              "3000x900",
+              "3440x900",
+              "3840x900"
+            ],
+            "device_pixel_ratios_measured": [
+              1,
+              2
+            ],
+            "max_css_width": 534,
+            "device_pixel_ratio_considered": 2,
+            "max_device_px": 1068,
+            "native_px": 1200,
+            "selected_derivative": "assets/proof/web005b/thm01-600.webp",
+            "max_upscale_factor": 0.89,
+            "max_upscale_at": "600x1112 @1x"
+          }
         }
       },
       "alt01": {
@@ -3902,6 +3988,49 @@
           "measured_max_device_px_at_2x": 1196,
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measurement_note": "the shared evidence frame, capped at 600 CSS px (598 inside its hairline). R15 measured again after the stage was re-measured to its content: 19 widths x DPR 1, 2 and 3, and the drawn width never exceeds 598."
+        },
+        "geothermal_placement": {
+          "status": "preview",
+          "consumer": "MER-276 / Atlas Geothermal page",
+          "acceptance": "A1 - preview only, pending the CTO's acceptance before any publish",
+          "route": "solutions/geothermal/index.html",
+          "plate": "alteration",
+          "rendered": {
+            "tool": "scripts/measure_geothermal_renders.py",
+            "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+            "viewports_measured": [
+              "360x844",
+              "390x844",
+              "414x844",
+              "600x1112",
+              "768x1112",
+              "834x1112",
+              "1024x900",
+              "1180x900",
+              "1280x900",
+              "1366x900",
+              "1440x900",
+              "1536x900",
+              "1680x900",
+              "1920x900",
+              "2200x900",
+              "2560x900",
+              "3000x900",
+              "3440x900",
+              "3840x900"
+            ],
+            "device_pixel_ratios_measured": [
+              1,
+              2
+            ],
+            "max_css_width": 534,
+            "device_pixel_ratio_considered": 2,
+            "max_device_px": 1068,
+            "native_px": 1200,
+            "selected_derivative": "assets/proof/web005b/alt01-600.webp",
+            "max_upscale_factor": 0.89,
+            "max_upscale_at": "600x1112 @1x"
+          }
         }
       },
       "priority": {
@@ -3935,6 +4064,49 @@
           "measured_max_device_px_at_2x": 1196,
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measurement_note": "WEB-005B R15 sizes the result map against the viewport as well as the native-density cap (--result-map = max(340px, min(600px, 100svh - 356px))), so the map is SMALLER than 600 CSS px on a laptop-height window and reaches the 600 px cap only on a tall one. 598 is the widest it is ever drawn, measured at 1920x1080; shorter viewports draw it smaller, which is always safe for density."
+        },
+        "geothermal_placement": {
+          "status": "preview",
+          "consumer": "MER-276 / Atlas Geothermal page",
+          "acceptance": "A1 - preview only, pending the CTO's acceptance before any publish",
+          "route": "solutions/geothermal/index.html",
+          "plate": "priority",
+          "rendered": {
+            "tool": "scripts/measure_geothermal_renders.py",
+            "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+            "viewports_measured": [
+              "360x844",
+              "390x844",
+              "414x844",
+              "600x1112",
+              "768x1112",
+              "834x1112",
+              "1024x900",
+              "1180x900",
+              "1280x900",
+              "1366x900",
+              "1440x900",
+              "1536x900",
+              "1680x900",
+              "1920x900",
+              "2200x900",
+              "2560x900",
+              "3000x900",
+              "3440x900",
+              "3840x900"
+            ],
+            "device_pixel_ratios_measured": [
+              1,
+              2
+            ],
+            "max_css_width": 600,
+            "device_pixel_ratio_considered": 2,
+            "max_device_px": 1200,
+            "native_px": 1200,
+            "selected_derivative": "assets/proof/web005b/priority-600.webp",
+            "max_upscale_factor": 1.0,
+            "max_upscale_at": "768x1112 @1x"
+          }
         }
       }
     },
