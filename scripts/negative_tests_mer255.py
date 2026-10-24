@@ -144,8 +144,8 @@ case("the Turkish caption coordinate drifts from the English one", SCRIPT,
 
 # ---- the expansion-direction figures are captioned photographs, not cards (review decision 2) ---------------
 case("an expansion-direction figure gets a frame again", STYLES,
-     swap(".panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:#0b141a}",
-          ".panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:#0b141a;border:1px solid #2a3a46}"),
+     swap(".panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--orbit)}",
+          ".panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--orbit);border:1px solid var(--rule)}"),
      "captioned photographs, not cards")
 case("an expansion-direction panel gains a shadow", STYLES,
      swap(".domain-panel{position:relative;display:flex;", ".domain-panel{box-shadow:0 8px 24px #000;position:relative;display:flex;"),
