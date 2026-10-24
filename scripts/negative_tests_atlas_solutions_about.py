@@ -37,7 +37,7 @@ suite.case("the pair is repainted by its own rule", CSS,
 suite.case("the footnote leaves the pair's Lift ground", CSS,
            swap(".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--lift)}",
                 ".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--orbit)}"),
-           "must be Lift")
+           "must sit on the pair's Lift ground")
 suite.case("a Paper band appears on Solutions", SOL,
            swap('<section class="domain-feature" id="geothermal"', '<section class="domain-feature ground ground-paper" id="geothermal"'),
            "Solutions has no Paper ground")

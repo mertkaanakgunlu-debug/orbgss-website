@@ -437,9 +437,9 @@
           "scene.kind.naturalColor"
         ],
         "rendered": {
-          "max_css_width": 614,
+          "max_css_width": 612,
           "device_pixel_ratio_considered": 2,
-          "max_device_px": 1228,
+          "max_device_px": 1224,
           "widest_candidate_px": 2880,
           "selected_derivative": "assets/imagery/chuquicamata-2024-900.webp",
           "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
@@ -469,7 +469,7 @@
             1,
             2
           ],
-          "max_upscale_factor": 0.876,
+          "max_upscale_factor": 0.873,
           "max_upscale_at": "1440x900 @2x"
         },
         "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results.",
@@ -628,9 +628,9 @@
           "scene.kind.naturalColor"
         ],
         "rendered": {
-          "max_css_width": 614,
+          "max_css_width": 612,
           "device_pixel_ratio_considered": 2,
-          "max_device_px": 1228,
+          "max_device_px": 1224,
           "widest_candidate_px": 2880,
           "selected_derivative": "assets/imagery/ili-delta-2020-900.webp",
           "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
@@ -660,7 +660,7 @@
             1,
             2
           ],
-          "max_upscale_factor": 0.876,
+          "max_upscale_factor": 0.873,
           "max_upscale_at": "1440x900 @2x"
         },
         "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results.",
@@ -4396,12 +4396,12 @@
             1,
             2
           ],
-          "max_css_width": 726,
+          "max_css_width": 728,
           "device_pixel_ratio_considered": 2,
-          "max_device_px": 1452,
+          "max_device_px": 1456,
           "widest_candidate_px": 1459,
           "selected_derivative": "assets/imagery/kizildere-terrain-984f936e-1000.webp",
-          "max_upscale_factor": 0.995,
+          "max_upscale_factor": 0.998,
           "max_upscale_at": "834x1112 @2x"
         }
       },
