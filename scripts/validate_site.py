@@ -1101,12 +1101,258 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
 # === /atlas:foundation ===
 
 # === atlas:geothermal ===
-# MER-276 owns this region: the checks of /solutions/geothermal/ in the Atlas design. Empty until that thread lands.
-ATLAS_GROUPS["geothermal"] = {"prefixes": ("geothermalPage.",), "type_ready": False}
+# MER-276 owns this region: the checks of /solutions/geothermal/ in the Atlas design (preview, pending the CTO's
+# acceptance of A1-A9 of "CTO Design Review.dc.html"). The MER-255 diagram, ruler and layer-list checks and the
+# "no governed derivative on this page" rule are superseded by A1 and A6; what replaces them is below.
+ATLAS_GROUPS["geothermal"] = {"prefixes": ("geothermalPage.",), "type_ready": True}
+
+ATLAS_GEOTHERMAL_EN = "solutions/geothermal/index.html"
+ATLAS_GEOTHERMAL_TR = "tr/cozumler/jeotermal/index.html"
+# A1: the four MER-151 presentation derivatives the Geothermal page shows beside the homepage (preview).
+ATLAS_GEOTHERMAL_A1_LAYERS = ("terrain", "thm01", "alt01", "priority")
+ATLAS_GEOTHERMAL_A1_ROUTES = {layer: ("solutions/geothermal",) for layer in ATLAS_GEOTHERMAL_A1_LAYERS}
+# Language-neutral text no dictionary key owns (the scale bar's far end).
+ATLAS_GEOTHERMAL_LOOSE_OK = {"10 km"}
+# The atlas, in reading order: (plate id, state, the warning key it carries, the key naming the layer on the image,
+# the MER-151 layer it shows). One figure of small multiples (A6), six plates, three states.
+ATLAS_GEOTHERMAL_PLATES = [
+    ("natural", "evidence", "act.context.note", "scene.kind.naturalColor", None),
+    ("elevation", "evidence", "story.terrain.note", "act.evidence.terrain.name", "terrain"),
+    ("gap", "gap", "geothermalPage.gap.copy", None, None),
+    ("thermal", "evidence", "act.evidence.thermal.note", "act.evidence.thermal.name", "thm01"),
+    ("alteration", "evidence", "act.evidence.alteration.note", "act.evidence.alteration.name", "alt01"),
+    ("iron", "pending", "act.evidence.alteration.note", None, None),
+]
+# The ledger's "Does not establish" column (A5): the priority warning's own terms, pinned in English.
+ATLAS_GEOTHERMAL_NOT = [
+    ("geothermalPage.not.probability", "Probability"),
+    ("geothermalPage.not.reserve", "Reserve or resource estimation"),
+    ("geothermalPage.not.discovery", "Discovery likelihood"),
+    ("geothermalPage.not.drilling", "Drilling-success likelihood"),
+    ("geothermalPage.not.prospectivity", "Full Prospectivity"),
+    ("geothermalPage.not.calibrated", "A score calibrated across areas"),
+    ("geothermalPage.not.validation", "Field validation"),
+]
+ATLAS_GEOTHERMAL_GROUNDS = {"glance": "ground-paper", "layers": "ground-orbit", "result": "ground-orbit",
+                            "relief": "ground-orbit", "missing": "ground-lift"}
+ATLAS_GEOTHERMAL_IDS = ["glance", "layers", "natural", "elevation", "gap", "thermal", "alteration", "iron", "result",
+                        "outputs", "relief", "missing", "pilot-observe", "pilot-terrain", "pilot-evidence",
+                        "pilot-priority", "pilot-geothermal", "pilot-structure"]
+# What would make a governed raster something other than the accepted derivative.
+ATLAS_GEOTHERMAL_RASTER_BANNED = re.compile(r"filter|transform|opacity|mix-blend-mode|scale|zoom|clip-path|mask|backdrop")
+
+
+def atlas_geothermal_dictionary(script: str) -> dict[str, dict[str, str]]:
+    """The Geothermal keys of both language blocks of script.js: {lang: {key: value}}."""
+    out: dict[str, dict[str, str]] = {"en": {}, "tr": {}}
+    regions = re.findall(r"// === atlas:geothermal ===[^\n]*\n(.*?)// === /atlas:geothermal ===", script, re.S)
+    if len(regions) != 2:
+        return out
+    for lang, body in zip(("en", "tr"), regions):
+        for key, single, double in re.findall(r"^\s+'([^']+)':\s*(?:'((?:[^'\\]|\\.)*)'|\"((?:[^\"\\]|\\.)*)\"),\s*$", body, re.M):
+            out[lang][key] = (single or double).replace("\\'", "'")
+    return out
 
 
 def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> None:
-    return None
+    def bad(msg: str) -> None:
+        fail(f"MER-276: {msg}", errors)
+
+    text = page_html.get(ATLAS_GEOTHERMAL_EN, "")
+    if not text:
+        return
+    dom = build_dom(text)
+    css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    script = (ROOT / "script.js").read_text(encoding="utf-8")
+    manifest = json.loads((ROOT / "assets/imagery/sources.json").read_text(encoding="utf-8"))
+    dictionary = atlas_geothermal_dictionary(script)
+
+    def find(node, pred) -> list:
+        return [n for n in node.iter() if pred(n)]
+
+    def one(node, pred):
+        found = find(node, pred)
+        return found[0] if found else None
+
+    def classes(n) -> set[str]:
+        return set(str(n.attrs.get("class") or "").split())
+
+    # -- 1. the page frame: body class, the ids every link lands on, the grounds of the chapters ----------------------
+    body = one(dom, lambda n: n.tag == "body")
+    if body is None or not {"interior", "page-geothermal"} <= classes(body):
+        bad('the Geothermal page must carry <body class="interior page-geothermal"> (its CSS is scoped to it)')
+    ids = {str(n.attrs["id"]) for n in dom.iter() if n.attrs.get("id")}
+    for anchor in ATLAS_GEOTHERMAL_IDS:
+        if anchor not in ids:
+            bad(f"#{anchor} is missing; the page's own links and the old /pilot/ fragments land on it")
+    for anchor, ground in ATLAS_GEOTHERMAL_GROUNDS.items():
+        section = one(dom, lambda n, a=anchor: n.tag == "section" and n.attrs.get("id") == a)
+        if section is not None and ground not in classes(section):
+            bad(f"section #{anchor} must sit on {ground} (the Atlas grounds: opening/atlas/result on Orbit, the record and the ledger on paper)")
+    ledger = one(dom, lambda n: n.tag == "section" and "geo-ledger" in classes(n))
+    if ledger is None or "ground-paper" not in classes(ledger):
+        bad("the ledger (Establishes / Does not establish) must be a paper band")
+    index = one(dom, lambda n: n.tag == "nav" and "geo-index-list" in classes(n))
+    targets = [str(a.attrs.get("href")) for a in find(index, lambda n: n.tag == "a")] if index is not None else []
+    if targets != ["#glance", "#layers", "#result", "#missing"]:
+        bad(f"the chapter index links {targets}, expected #glance, #layers, #result, #missing")
+    missing = one(dom, lambda n: "geo-missing-list" in classes(n))
+    gaps = [str(a.attrs.get("href")) for a in find(missing, lambda n: n.tag == "a")] if missing is not None else []
+    if gaps != ["#gap", "#iron", "#relief"]:
+        bad(f"the index of what is missing links {gaps}, expected #gap, #iron, #relief")
+    if re.search(r"prototype|to be supplied by science", text, re.I):
+        bad("prototype wording is back on the page; an asset still to come is labelled with the site's own words")
+
+    # -- 2. the atlas: six plates in one figure, three states ---------------------------------------------------------
+    atlas = one(dom, lambda n: n.tag == "figure" and "geo-atlas" in classes(n))
+    plates = find(atlas, lambda n: n.tag == "figure" and "plate" in classes(n)) if atlas is not None else []
+    if atlas is None or "data-lead-visual" not in atlas.attrs:
+        bad("the layer atlas must be one figure (figure.geo-atlas, marked as the section's lead visual)")
+    if [str(pl.attrs.get("id")) for pl in plates] != [row[0] for row in ATLAS_GEOTHERMAL_PLATES]:
+        bad(f"the atlas holds plates {[pl.attrs.get('id') for pl in plates]}, expected {[r[0] for r in ATLAS_GEOTHERMAL_PLATES]}")
+    layer_derivs = {key: {str(d["path"]) for d in manifest["web_005b"]["analytical"]["layers"][key]["derivatives"]}
+                    | {str(e["path"]) for e in manifest["web_005b"]["analytical"].get("delivery", {}).get("layers", {}).get(key, [])}
+                    for key in ATLAS_GEOTHERMAL_A1_LAYERS}
+    for plate, (pid, state, note_key, kind_key, layer) in zip(plates, ATLAS_GEOTHERMAL_PLATES):
+        frame = one(plate, lambda n: "plate-frame" in classes(n))
+        cap = one(plate, lambda n: n.tag == "figcaption" and "plate-cap" in classes(n))
+        if frame is None or cap is None:
+            bad(f"plate #{pid} lost its frame or its caption block")
+            continue
+        imgs = find(frame, lambda n: n.tag == "img")
+        note = one(cap, lambda n: "beam-note" in classes(n))
+        if note is None or note.attrs.get("data-i18n") != note_key:
+            bad(f"plate #{pid} must carry its mandatory warning ({note_key}) as a visible beam-note")
+        if one(cap, lambda n: "plate-no" in classes(n)) is None or one(cap, lambda n: n.tag == "h3" and "plate-name" in classes(n)) is None \
+                or one(cap, lambda n: "plate-role" in classes(n)) is None:
+            bad(f"plate #{pid} must show its number, name, and role · source")
+        if state == "evidence":
+            if len(imgs) != 1 or not str(imgs[0].attrs.get("alt", "")).strip() or not imgs[0].attrs.get("data-i18n-alt"):
+                bad(f"plate #{pid} must hold exactly one described image")
+                continue
+            img = imgs[0]
+            if str(img.attrs.get("width")) != "1200" or str(img.attrs.get("height")) != "1200":
+                bad(f"plate #{pid}: the image is declared {img.attrs.get('width')} x {img.attrs.get('height')}, the governed grid is 1200 x 1200")
+            if img.attrs.get("style"):
+                bad(f"plate #{pid}: an inline style on a plate image; no filter, transform or scaling may touch it")
+            label = one(frame, lambda n: "scene-label" in classes(n))
+            spans = [c for c in (label.children if label else []) if hasattr(c, "attrs")]
+            keys = [str(c.attrs.get("data-i18n")) for c in spans]
+            if keys != ["scene.aoi.place", "scene.aoi.coords", str(kind_key)] or "scene-kind" not in classes(spans[-1]):
+                bad(f"plate #{pid}: the bottom-right caption must read place, coordinates, layer; it reads {keys}")
+            if "data-label-tone" not in frame.attrs:
+                bad(f"plate #{pid}: the frame lost its data-label-tone (caption tone is chosen per panel)")
+            urls = [str(img.attrs.get("src", ""))] + [c.strip().split()[0] for c in str(img.attrs.get("srcset", "")).split(",") if c.strip()]
+            if layer:
+                if frame.attrs.get("data-visual-status") != "product-proof":
+                    bad(f"plate #{pid}: an analytical plate must say data-visual-status=\"product-proof\" (the CSS guard that keeps filters off it)")
+                stray = [u for u in urls if u.lstrip("/") not in layer_derivs[layer]]
+                if stray:
+                    bad(f"plate #{pid} shows {stray}, which are not recorded MER-151 derivatives of {layer}")
+                if len(urls) < 4:
+                    bad(f"plate #{pid} must offer the 600, 900 and 1200 px derivatives")
+            elif not all(u.lstrip("/").startswith("assets/imagery/kizildere-aoi-") for u in urls):
+                bad(f"plate #{pid} must show the recorded natural-colour analysis-grid crop")
+        elif state == "gap":
+            if imgs or one(frame, lambda n: "plate-gap" in classes(n)) is None or frame.attrs.get("data-visual-status") != "data-gap":
+                bad(f"plate #{pid} is the data gap: a dashed frame with no image, data-visual-status=\"data-gap\"")
+        else:
+            if imgs or one(frame, lambda n: "plate-pending" in classes(n)) is None:
+                bad(f"plate #{pid} is an asset still to be supplied: a pending frame with no image")
+            state_span = one(frame, lambda n: "plate-state" in classes(n))
+            if state_span is None or state_span.attrs.get("data-i18n") != "geothermalPage.layer.pending":
+                bad(f"plate #{pid} must say 'Accepted, not shown yet' (geothermalPage.layer.pending)")
+    # Governed rasters on this page: exactly the four MER-151 layers and the legend ramp, nothing from the
+    # GEO-WEB-002 or WEB-002 packages, and no CSS that would filter, transform or scale one.
+    ramp = str(manifest["web_005b"]["analytical"]["layers"]["priority"]["legend"]["path"])
+    allowed = set().union(*layer_derivs.values()) | {ramp}
+    for url in re.findall(r"""(?:src|srcset)="([^"]+)\"""", text):
+        for cand in (c.strip().split()[0] for c in url.split(",") if c.strip()):
+            path = cand.lstrip("/")
+            if path.startswith("assets/proof/") and path not in allowed:
+                bad(f"the page shows {path}, a governed raster that is not one of the four MER-151 layers (A1) or the legend ramp")
+    geo_css = re.search(r"/\* === atlas:geothermal ===.*?/\* === /atlas:geothermal === \*/", css, re.S)
+    for selector, decls in atlas_rule_blocks(atlas_strip_css(geo_css.group(0) if geo_css else "")):
+        if re.search(r"(?:^|[\s>+~,])img\b|\.plate-frame|\.geo-priority|\.geo-plate|\.geo-ramp", selector) and ATLAS_GEOTHERMAL_RASTER_BANNED.search(decls):
+            bad(f"styles.css: {selector} applies {ATLAS_GEOTHERMAL_RASTER_BANNED.search(decls).group(0)} near a governed raster; none is allowed")
+    plate_rule = re.search(r"\.plate\{([^}]*)\}", re.sub(r"\s+", "", css))
+    cap_px = re.search(r"max-width:(\d+)px", plate_rule.group(1)) if plate_rule else None
+    if not cap_px or int(cap_px.group(1)) > 600:
+        bad("the .plate rule must cap a plate at 600 CSS px (the native 1200 px grid at 2x)")
+
+    # -- 3. the result: the priority plate with its legend and scale, the warning twice, the ledger -------------------
+    result = one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "result")
+    pri = one(result, lambda n: n.tag == "figure" and "geo-priority" in classes(n)) if result is not None else None
+    if pri is None:
+        bad("the result lost its priority plate (figure.geo-priority)")
+    else:
+        pimg = one(pri, lambda n: n.tag == "img" and "priority-1200" in str(n.attrs.get("src", "")))
+        if pimg is None or "priority-600" not in str(pimg.attrs.get("srcset", "")) or str(pimg.attrs.get("width")) != "1200":
+            bad("the priority plate must show priority-1200.webp with the 600 and 900 px candidates")
+        keys = [str(c.attrs.get("data-i18n")) for c in (one(pri, lambda n: "scene-label" in classes(n)).children if one(pri, lambda n: "scene-label" in classes(n)) else []) if hasattr(c, "attrs")]
+        if keys != ["scene.priority.place", "scene.priority.coords", "label.priority"]:
+            bad(f"the priority plate's caption must read place, coordinates, the accepted public label; it reads {keys}")
+        legend = one(pri, lambda n: n.tag == "img" and str(n.attrs.get("src", "")).lstrip("/") == ramp)
+        if legend is None or one(pri, lambda n: "geo-bar" in classes(n) and n.attrs.get("role") == "img") is None:
+            bad("the priority plate must keep its legend ramp and its 10 km scale bar")
+    for where, node in (("result", result), ("relief", one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief"))):
+        warn = one(node, lambda n: "beam-note" in classes(n) and n.attrs.get("data-i18n") == "act.priority.note") if node is not None else None
+        if warn is None:
+            bad(f"the {where} block must carry the verbatim priority warning (act.priority.note)")
+    relief = one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief")
+    slot = one(relief, lambda n: "plate-pending" in classes(n)) if relief is not None else None
+    if slot is None or relief is None or find(relief, lambda n: n.tag == "img"):
+        bad("the relief slot is an asset still to be supplied (A2): a pending frame, and no image until MER-242 delivers it")
+    sets = find(dom, lambda n: "geo-ledger-set" in classes(n))
+    if len(sets) != 1:
+        bad("the ledger must be one marked set (div.geo-ledger-set.lead-set)")
+    else:
+        cols = [c for c in sets[0].children if hasattr(c, "attrs")]
+        got_is = [str(li.attrs.get("data-i18n")) for li in find(cols[0], lambda n: n.tag == "li")] if cols else []
+        got_not = [str(li.attrs.get("data-i18n")) for li in find(cols[1], lambda n: n.tag == "li")] if len(cols) > 1 else []
+        if got_is != ["geothermalPage.ledger.is", "geothermalPage.ledger.for"]:
+            bad(f"the ledger's Establishes column holds {got_is}")
+        if got_not != [k for k, _ in ATLAS_GEOTHERMAL_NOT]:
+            bad(f"the ledger's Does not establish column holds {got_not}, expected the seven terms of the priority warning")
+        if len(cols) > 1 and one(cols[1], lambda n: n.tag == "ul" and "beam-note" in classes(n)) is None:
+            bad("the Does not establish list is the warning enumerated; it must carry beam-note (the one place the claim words may appear)")
+    for key, want in ATLAS_GEOTHERMAL_NOT:
+        if dictionary["en"].get(key) != want:
+            bad(f"{key} in the English dictionary is {dictionary['en'].get(key)!r}, not {want!r}")
+
+    # -- 4. every Turkish string exists, and every key the page uses is in the Geothermal or shared dictionary -------------
+    for key in {str(n.attrs[a]) for n in dom.iter() for a in ("data-i18n", "data-i18n-alt", "data-i18n-aria-label", "data-i18n-content") if n.attrs.get(a)}:
+        if key.startswith("geothermalPage.") and (key not in dictionary["en"] or key not in dictionary["tr"]):
+            bad(f"{key} is used by the page but missing from the English or the Turkish Geothermal dictionary")
+    used = {str(n.attrs[a]) for n in dom.iter() for a in ("data-i18n", "data-i18n-alt", "data-i18n-aria-label", "data-i18n-content") if n.attrs.get(a)}
+    for key in dictionary["en"]:
+        if key not in used:
+            bad(f"{key} is in the Geothermal dictionary but no element of the page uses it")
+    if "pending the CTO's language review" not in script:
+        bad("the Turkish Geothermal block must say its new strings are pending the CTO's language review")
+
+    # -- 5. A1 placement records: each layer's second home is recorded, measured in a browser and within its native grid --
+    for layer in ATLAS_GEOTHERMAL_A1_LAYERS:
+        rec = (manifest["web_005b"].get("placement", {}).get(layer) or {}).get("geothermal_placement")
+        if not rec:
+            bad(f"web_005b.placement.{layer} has no geothermal_placement record (A1: a second recorded home)")
+            continue
+        for field in ("status", "acceptance", "route", "plate", "rendered"):
+            if not rec.get(field):
+                bad(f"web_005b.placement.{layer}.geothermal_placement is missing {field}")
+        if rec.get("route") != ATLAS_GEOTHERMAL_EN or "pending" not in str(rec.get("acceptance", "")).lower():
+            bad(f"web_005b.placement.{layer}.geothermal_placement must name {ATLAS_GEOTHERMAL_EN} and say the acceptance is pending")
+        r = rec.get("rendered") or {}
+        css_w, dpr, native = r.get("max_css_width"), r.get("device_pixel_ratio_considered"), r.get("native_px")
+        if not all(isinstance(v, (int, float)) for v in (css_w, dpr, native)):
+            bad(f"web_005b.placement.{layer}.geothermal_placement.rendered is incomplete")
+            continue
+        if css_w * dpr > native or css_w > 600:
+            bad(f"{layer} is drawn up to {css_w} CSS px = {int(css_w * dpr)} device px on the Geothermal page, above its {native} px native grid or the 600 CSS px cap")
+        if str(r.get("selected_derivative", "")) not in layer_derivs[layer]:
+            bad(f"web_005b.placement.{layer}.geothermal_placement names a derivative that is not the layer's own")
+        if len(r.get("viewports_measured", [])) < 12 or not isinstance(r.get("max_upscale_factor"), (int, float)) or r["max_upscale_factor"] > 1.0:
+            bad(f"web_005b.placement.{layer}.geothermal_placement.rendered was measured at fewer than 12 viewports or upscales ({r.get('max_upscale_factor')})")
 # === /atlas:geothermal ===
 
 # === atlas:solutions-about ===
@@ -2004,9 +2250,12 @@ def main() -> int:
             shown_on = [r for r, rp in route_parsers.items() if all_srcs(rp) & own]
             if rec.get("status") == "placed" and "" not in shown_on:
                 fail(f"web_005b asset {key!r} claims a homepage placement but is not on the homepage", errors)
-            if [r for r in shown_on if r != ""]:
+            # A1 (MER-276, preview, pending CTO acceptance): the Geothermal page shows these layers too,
+            # each recorded under placement[key].geothermal_placement (atlas:geothermal checks it).
+            beyond = [r for r in shown_on if r != "" and r not in ATLAS_GEOTHERMAL_A1_ROUTES.get(key, ())]
+            if beyond:
                 fail(f"web_005b asset {key!r} is published beyond the homepage: "
-                     f"{[ROUTES[r] for r in shown_on if r != '']}", errors)
+                     f"{[ROUTES[r] for r in beyond]}", errors)
             if rec.get("visible_warning"):
                 check_warning_coverage("web_005b asset", key, rec["visible_warning"], shown_on)
             else:
@@ -3121,6 +3370,9 @@ def main() -> int:
             is_thumb = "thumb" in img.classes and str(img.attrs.get("width", "")).isdigit() \
                 and int(img.attrs["width"]) <= THUMB_MAX_CSS_PX
             for vid in ids:
+                # A1 (MER-276, preview): the four MER-151 layers have a second recorded home on the Geothermal page.
+                if vid.startswith("web005b:") and name in ATLAS_GEOTHERMAL_A1_ROUTES.get(vid.split(":", 1)[1], ()):
+                    continue
                 if not is_thumb:
                     full_size.setdefault(vid, set()).add(name)
     for vid, where in sorted(full_size.items()):
@@ -3153,7 +3405,7 @@ def main() -> int:
             fail("the Geothermal page must show the recorded locator map exactly once", errors)
         else:
             fig = next((a for a in shown[0].ancestors() if a.tag == "figure"), None)
-            caption = first(fig, lambda n: n.tag == "figcaption" and "scene-label" in n.classes) if fig else None
+            caption = first(fig, lambda n: "scene-label" in n.classes) if fig else None
             spans = [c for c in caption.children if isinstance(c, DomNode)] if caption else []
             if len(spans) != 3 or "scene-kind" not in spans[-1].classes:
                 fail("the locator map must carry the bottom-right caption: place, coordinates, kind",
@@ -3397,8 +3649,7 @@ def main() -> int:
     def widest_of(cid: str) -> int:
         return max([int(d.get("width_px", 0)) for d in crop_by_id.get(cid, {}).get("derivatives", [])] or [0])
 
-    for selector, cid in ((".wide-figure", "kizildere-terrain"), (".split-figure", "kizildere-valley"),
-                          (".aoi-figure", "kizildere-aoi")):
+    for selector, cid in ((".wide-figure", "kizildere-terrain"), (".split-figure", "kizildere-valley")):
         cap = css_cap(selector, "max-width")
         if cap is None:
             fail(f"MER-255: {selector} has no max-width cap; its photograph must never be drawn above "
@@ -3458,64 +3709,8 @@ def main() -> int:
     if not css_thumb or int(css_thumb.group(1)) > THUMB_MAX_CSS_PX:
         fail(f"MER-255: the .thumb rule does not cap thumbnails at {THUMB_MAX_CSS_PX} CSS px", errors)
 
-    # -- Geothermal: no governed derivative, schematic diagram, neutral ruler ------------------------
-    geo_dom = doms["solutions/geothermal"]
-    geo_text = route_html["solutions/geothermal"]
-    governed = {p for p, v in visual_of.items() if v.split(":")[0] in ("web005b", "proof", "geo")}
-    for path in sorted(governed):
-        if path and path in geo_text:
-            fail(f"MER-255: /solutions/geothermal/ shows {path}, a governed scientific derivative; those "
-                 f"are homepage-only until MER-242 delivers accepted derivatives for this page (D1)", errors)
-    stack = first(geo_dom, lambda n: n.tag == "figure" and "layer-stack" in n.classes)
-    if stack is None:
-        fail("MER-255: the Geothermal page lost its layer diagram", errors)
-    else:
-        scene_box = first(stack, lambda n: "stack-scene" in n.classes)
-        stack_imgs = stack.find_all(lambda n: n.tag == "img")
-        for img in stack_imgs:
-            base_ok = any("is-base" in a.classes for a in img.ancestors()) \
-                and str(img.attrs.get("src", "")).lstrip("/").startswith("assets/imagery/kizildere-aoi-") \
-                and img.attrs.get("alt", None) == ""
-            if not base_ok:
-                fail("MER-255: the layer diagram may hold one image only, the natural-colour base "
-                     "frame (a kizildere-aoi crop, empty alt); every other frame is empty because the "
-                     "diagram is a schematic, not data", errors)
-        if len(stack_imgs) != 1:
-            fail(f"MER-255: the layer diagram holds {len(stack_imgs)} images, expected exactly the base frame", errors)
-        if scene_box is None or scene_box.attrs.get("role") != "img" or not scene_box.attrs.get("data-i18n-aria-label"):
-            fail("MER-255: the layer diagram must expose one described image role (aria-label)", errors)
-        caption = first(stack, lambda n: n.tag == "figcaption")
-        if caption is None or caption.attrs.get("data-i18n") != "geothermalPage.stack.caption":
-            fail("MER-255: the layer diagram has no schematic caption", errors)
-        for lang, word in (("en", "Schematic"), ("tr", "Şema")):
-            value = dictionary_value(lang, "geothermalPage.stack.caption") or ""
-            if not value.startswith(word) or ("empty" not in value.lower() and "boş" not in value.lower()):
-                fail(f"MER-255: the {lang!r} schematic caption must open with {word!r} and say the frames "
-                     f"are empty: {value!r}", errors)
-    if re.search(r"\.plane[^{]*\{[^}]*url\(", css_flat):
-        fail("MER-255: a layer-diagram frame paints an image or data through CSS; the frames are empty by rule", errors)
-    scale_line = re.search(r"\.scale-line\{([^}]*)\}", css_flat)
-    # The ruler is drawn with hairlines in the two neutral text tokens; a literal colour or an image
-    # in it would be a palette that no export record backs.
-    if not scale_line or re.search(r"#[0-9a-fA-F]{3,8}|rgba?\(|hsla?\(|url\(", scale_line.group(1)):
-        fail("MER-255: the 0-100 ruler must stay neutral (token colours only); a colour ramp would be an "
-             "unrecorded palette", errors)
-    scale = first(geo_dom, lambda n: n.tag == "figure" and "scale-figure" in n.classes)
-    if scale is None:
-        fail("MER-255: the Geothermal page lost its 0-100 priority ruler", errors)
-    else:
-        if first(scale, lambda n: n.attrs.get("data-i18n") == "label.priority") is None:
-            fail("MER-255: the priority ruler must carry the public label (label.priority)", errors)
-        if first(scale, lambda n: n.tag == "img") is not None:
-            fail("MER-255: the priority ruler is typography only; it must not contain an image", errors)
-        ticks = first(scale, lambda n: "scale-ticks" in n.classes)
-        if ticks is None or [c.text() for c in ticks.children if isinstance(c, DomNode)] != ["0", "100"]:
-            fail("MER-255: the priority ruler runs 0 to 100 and shows no other value", errors)
-    # The layer list keeps one mandatory warning per layer.
-    layer_items = geo_dom.find_all(lambda n: n.tag == "li" and first(n, lambda m: "layer-head" in m.classes) is not None)
-    if len(layer_items) != 5 or any(first(li, lambda n: "beam-note" in n.classes) is None for li in layer_items):
-        fail(f"MER-255: the Geothermal layer list must hold five layers, each with its mandatory "
-             f"warning (found {len(layer_items)})", errors)
+    # -- Geothermal: the MER-255 diagram/ruler/layer-list checks are superseded by the Atlas page; its own checks live in
+    #    atlas_geothermal_checks (region atlas:geothermal, MER-276).
 
     # -- no data collection and nothing third-party on the interior pages -----------------------------
     for name in INTERIOR_ROUTES:
@@ -3718,7 +3913,8 @@ def main() -> int:
                  f"(the generated tree is stale or was edited by hand; re-run the script)", errors)
 
     # -- 3. per-page metadata, switch and text --------------------------------------------------
-    LOOSE_OK = {"Orb", "GSS", "EN", "TR", "|", "↓", "→", "·", "—", "0", "100", "404", "contact@orbgss.com"}
+    LOOSE_OK = {"Orb", "GSS", "EN", "TR", "|", "↓", "→", "·", "—", "0", "100", "404", "contact@orbgss.com"} \
+        | ATLAS_GEOTHERMAL_LOOSE_OK
     BARE_OK = {("img", 'alt="OrbGSS — Orbital Geo-Spatial Solutions"')}
     pages_en = {route: (ROUTES[route], text) for route, text in route_html.items()}
     pages_tr = {route: (TR_FILES[route], text) for route, text in tr_html.items()}
