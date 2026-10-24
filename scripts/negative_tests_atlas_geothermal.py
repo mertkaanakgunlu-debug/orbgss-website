@@ -32,7 +32,7 @@ suite.case("prototype wording comes back", PAGE, swap("<body class=\"interior pa
 suite.case("a plate leaves the atlas order", PAGE, swap('<figure class="plate geo-plate" id="elevation">', '<figure class="plate geo-plate" id="elevations">'), "the atlas holds plates")
 suite.case("a plate loses its warning key", PAGE, regex(r'(id="thermal">.*?class="plate-note beam-note" data-i18n=")[^"]+', r"\g<1>story.terrain.note", DOT), "plate #thermal must carry its mandatory warning")
 suite.case("a plate image is declared at the wrong grid", PAGE, regex(r'(id="alteration">.*?)width="1200"', r'\g<1>width="1000"', DOT), "plate #alteration: the image is declared")
-suite.case("a plate image gets an inline style", PAGE, regex(r'(id="thermal">.*?<img )', r'\g<1>style="filter:contrast(1.2)" ', DOT), "plate #thermal: an inline style on a plate image")
+suite.case("a plate image gets an inline style", PAGE, regex(r'(id="thermal">.*?<img)(\s)', r'\g<1> style="filter:contrast(1.2)"\g<2>', DOT), "plate #thermal: an inline style on a plate image")
 suite.case("a plate caption names the wrong things", PAGE, regex(r'(id="thermal">.*?)scene.aoi.coords', r'\g<1>scene.priority.coords', DOT), "plate #thermal: the bottom-right caption must read")
 suite.case("a plate frame loses its caption tone", PAGE, swap('<div class="plate-frame" data-label-tone="light" data-visual-slot="thermal"', '<div class="plate-frame" data-visual-slot="thermal"'), "plate #thermal: the frame lost its data-label-tone")
 suite.case("an analytical plate stops saying product-proof", PAGE, swap('data-visual-slot="alteration" data-visual-status="product-proof"', 'data-visual-slot="alteration" data-visual-status="photo"'), 'must say data-visual-status="product-proof"')
