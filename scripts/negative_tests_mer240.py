@@ -176,7 +176,8 @@ case("text sits in <main> outside a section", PARTNER,
      swap("  </main>", '    <div class="intro-text"><p>Write to us.</p></div>\n  </main>'),
      "outside a section")
 case("a paragraph is passed off as the lead visual", PARTNER,
-     swap('<p class="mail-address mono" data-lead-visual>', '<p class="mono" data-lead-visual>'),
+     swap('<ul class="route-list lead-set" data-lead-visual>',
+          '<p data-lead-visual>Write to us.</p><ul class="route-list lead-set" data-lead-visual>'),
      "marks <p> as its lead visual")
 
 # ---- R5 text budgets -------------------------------------------------------------------------------
@@ -213,8 +214,8 @@ case("a page runs past its total budget", ABOUT,
 
 # ---- R1 one home per fact ---------------------------------------------------------------------------
 case("the company sentence is repeated on Partner", PARTNER,
-     swap('<p class="mail-address mono" data-lead-visual><a href="mailto:contact@orbgss.com">contact@orbgss.com</a></p>',
-          '<p class="mail-address mono" data-lead-visual><a href="mailto:contact@orbgss.com">contact@orbgss.com</a></p>'
+     swap('<p class="mail-address"><a href="mailto:contact@orbgss.com"><span>contact@orbgss.com</span> <span aria-hidden="true">→</span></a></p>',
+          '<p class="mail-address"><a href="mailto:contact@orbgss.com"><span>contact@orbgss.com</span> <span aria-hidden="true">→</span></a></p>'
           "<p>It exists to make exploration and land decisions evidence-based, traceable and easier to prioritize.</p>"),
      "R1:")
 case("a principle is restated on the Geothermal page", GEOTHERMAL,
