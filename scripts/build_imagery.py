@@ -176,6 +176,10 @@ def main() -> int:
     # pipeline from the same ``production`` grammar, but it lives in its own package block
     # because it is published for WEB-005 rather than placed on the homepage today.
     scenes = manifest["scenes"] + manifest.get("geo_web_002", {}).get("context_scenes", [])
+    # Missing-visuals plan (2026-10-25): the About, Partner and Solutions (Marine) photographs of other
+    # places are built by this same pipeline from the same ``production`` grammar; they live in
+    # ``web_m6.context_scenes``.
+    scenes += manifest.get("web_m6", {}).get("context_scenes", [])
     if args.scenes:
         scenes = [s for s in scenes if s["id"] in args.scenes]
         unknown = set(args.scenes) - {s["id"] for s in scenes}

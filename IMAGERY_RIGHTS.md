@@ -92,17 +92,15 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Recorded in `sources.json` → `web_005b.context` (production, frame, checksums, rights basis).
 - Used for homepage Act 2 and as the base of the inspection aid. Public-domain USGS pixels: only the crop, tone rendering and encoding are OrbGSS work, and the USGS acknowledgement stays in the footer.
 
-### Kızıldere interior-page crops — MER-255 (class A, four crops of the Act 2 master)
-- What they are: four crops of the WEB-005B Act 2 master above (`kizildere-aoi-context-2025-natural.jpg`, 3200 × 1800 px, native 30 m, USGS Landsat 8 OLI, `LC08_L2SP_179034_20250505_02_T1`), made by `scripts/build_interior_crops.py` for the redesigned interior pages. Public-domain USGS pixels: only the crop and the WebP encode (quality 82) are OrbGSS work. No tone, colour, sharpening, upscaling or generative step; a derivative narrower than its crop is a Lanczos downscale and none is wider than its crop.
+### Kızıldere Geothermal-page crops — MER-255 (class A, two crops of the Act 2 master)
+- What they are: two crops of the WEB-005B Act 2 master above (`kizildere-aoi-context-2025-natural.jpg`, 3200 × 1800 px, native 30 m, USGS Landsat 8 OLI, `LC08_L2SP_179034_20250505_02_T1`), made by `scripts/build_interior_crops.py` for the Geothermal page (the other two crops, `kizildere-terrain` on About and `kizildere-valley` on Partner, were retired on 2026-10-25 and their files removed; see the photographs of other places below). Public-domain USGS pixels: only the crop and the WebP encode (quality 82) are OrbGSS work. No tone, colour, sharpening, upscaling or generative step; a derivative narrower than its crop is a Lanczos downscale and none is wider than its crop.
 - `kizildere-stage` — the wide strip behind the Geothermal page headline (crop 3200 × 1100, derivatives 3200 / 2400 / 1600). Shown on `/solutions/geothermal/` only.
 - `kizildere-aoi` — the 36 × 36 km analysis grid in natural colour (crop 1200 × 1200, derivatives 1200 / 800), with the same crop as the base frame of the layer diagram. Shown on `/solutions/geothermal/` only. It is a photograph of the area, not analysis.
-- `kizildere-terrain` — eroded ground north-east of the pilot area, beyond the east edge of the analysis grid (crop 1459 × 897, derivatives 1459 / 1000). Shown on `/about/` only.
-- `kizildere-valley` — the cultivated graben floor in the south-west of the context frame (crop 1000 × 1000, derivatives 1000 / 700). Its eastern third overlaps the western edge of the analysis grid, so its alt text places it "in the south-west of the Kızıldere context view" and the record states the overlap. Shown on `/partner/` only.
-- Captions: the standard bottom-right caption (place, coordinates, "Natural-color composite"). The coordinates are the crop's `label_point` in `sources.json`: the declared pilot centre (37.9794° N, 28.7907° E) for `kizildere-stage` and `kizildere-aoi`, which contain it; the crop's own centre for `kizildere-terrain` (38.0936° N, 29.2483° E, "East of the Kızıldere pilot area") and `kizildere-valley` (37.8744° N, 28.5695° E, "South-west of the Kızıldere pilot area"), which do not. The pilot centre is never printed on a crop that does not show it. `scripts/geo_frame.py` (UTM 35N, 30 m master grid) projects each printed pair onto the master, and `scripts/validate_site.py` fails when it falls outside the crop box.
+- Captions: the standard bottom-right caption (place, coordinates, "Natural-color composite"). The coordinates are the crop's `label_point` in `sources.json`: the declared pilot centre (37.9794° N, 28.7907° E), which both crops contain. `scripts/geo_frame.py` (UTM 35N, 30 m master grid) projects each printed pair onto the master, and `scripts/validate_site.py` fails when it falls outside the crop box.
 - Recorded in `sources.json` → `web_m6.interior_crops` (parent checksum, crop box, size, per-file SHA-256 and bytes, content-hash file names, rights basis, overlap with the analysis grid, caption keys, `rendered`). `rendered` is measured in a real browser by `scripts/measure_interior_renders.py` (19 viewport widths from 360 to 3840 CSS px at device pixel ratios 1 and 2; the drawn width, including `object-fit: cover`, against the candidate the browser selected). No crop is drawn above its own pixels (worst ratio 1.00); the validator also holds the CSS width caps to the same bound without a browser.
 - Rule R2 (`docs/WEB_M6_IA_AND_CONTENT_AUTHORITY.md`) applies to each crop: one full-size appearance; the Sources page lists images only as thumbnails of at most 160 CSS px, each a recorded image.
 
-### Ili River Delta / Lake Balkhash — marine (illustrative domain photograph: homepage card, `/solutions/` hub band; MER-238 D5 may replace it with a coastal scene)
+### Ili River Delta / Lake Balkhash — marine (illustrative domain photograph; RETIRED on 2026-10-25: neither `/solutions/` nor the homepage Marine card shows it, both show the Büyük Menderes delta)
 - Location: Ili River Delta & Lake Balkhash, Kazakhstan
 - Coordinates displayed: 45.0600° N, 74.5200° E
 - Acquisition: 7 March 2020
@@ -111,6 +109,43 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Reference page: https://earthobservatory.nasa.gov/images/146552/a-delta-oasis-in-southeastern-kazakhstan
 
 **Hub bands (MER-240).** The `/solutions/` hub shows the three photographs at full size, in bands capped at 1440 CSS px, so a 2× display is served the 2880 px master width and nothing is upscaled. Chuquicamata and the Ili Delta gained 2400 and 2880 px WebP derivatives for this, built by `scripts/build_domain_derivatives.py` with the same resize-and-encode operation as their existing ones (no crop, colour, tone or gamma change); the existing derivatives were kept byte for byte. Each scene records the placement in `sources.json` → `web_m6_placement`, and the page footnote frames the photographs as other places, not OrbGSS results.
+**Update (2026-10-25).** The Ili Delta is retired: the Marine panel of `/solutions/` and the homepage Marine card both show `menderes-delta-2025`. Its `web_m6_placement` and `web_005b_placement` records are marked retired in `sources.json`; its provenance, rights, files and checksums are retained unchanged.
+
+### Photographs of other places — the missing-visuals plan (class A, 2026-10-25)
+The About page, the Partner page and the Marine panel of `/solutions/` show public-domain Landsat scenes of places that are **not** the pilot area, instead of crops of the Kızıldere frame (the CTO-approved plan "Eksik görseller planı"; MER-238 visual need V4 for Marine). They are illustrative photography: not OrbGSS analytical outputs, not results, and they carry the page framing "A public-domain Landsat scene of another place, not an OrbGSS result" (`scene.illustrative`; `domains.illustrative` on `/solutions/`). No scene was chosen to point at a prospective partner site or pilot; the places are descriptive only.
+
+### Death Valley, California — About lead figure (`death-valley-2024`)
+- Location: Death Valley, California, USA
+- Coordinates displayed: 36.3000° N, 116.7500° W (the centre of the scene)
+- Acquisition: 2024-10-03
+- Sensor: Landsat 9 OLI-2
+- Production source product: `LC09_L2SP_040035_20241003_02_T1` (USGS Landsat Collection 2 Level-2, Tier 1; Planetary Computer STAC item https://planetarycomputer.microsoft.com/api/stac/v1/collections/landsat-c2-l2/items/LC09_L2SP_040035_20241003_02_T1)
+- Built by `scripts/build_imagery.py` (cubic warp to UTM, natural colour from OLI bands 4 / 3 / 2, percentile stretch 0.5–99.5 %, gamma 1.3, saturation 1.15) into `assets/imagery/death-valley-2024.jpg` (2400 × 1476 px, native 30 m, valid coverage 100 %, JPEG quality 82, SHA-256 `da111f73…`); responsive WebP derivatives of 1600, 1000 px by `scripts/build_m6_context_scenes.py` (Lanczos3 downscale and WebP quality 82 only, content-hash named `death-valley-2024-149bc2b0-<width>.webp`, never upscaled).
+- Shown on `/about/` only (the wide figure of "Too much ground, too little time."). A wide, rugged valley-and-range landscape; the page's point is the amount of ground, not a place.
+- Rights: USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Credit line: "Landsat data courtesy of the U.S. Geological Survey." Only the crop, the tone rendering and the encoding are OrbGSS work.
+- Recorded in `sources.json` → `web_m6.context_scenes[death-valley-2024]` (product, master and per-file SHA-256 and bytes, caption keys, `label_point`, the browser-measured placement). The ground of the scene does not reach the Kızıldere pilot area (checked by the validator).
+
+### Aluto volcano, Main Ethiopian Rift — Partner figure (`aluto-rift-2026`)
+- Location: Aluto volcano, Ethiopia (in the Main Ethiopian Rift)
+- Coordinates displayed: 7.7800° N, 38.8000° E (the centre of the scene)
+- Acquisition: 2026-01-11
+- Sensor: Landsat 9 OLI-2
+- Production source product: `LC09_L2SP_168055_20260111_02_T1` (USGS Landsat Collection 2 Level-2, Tier 1; Planetary Computer STAC item https://planetarycomputer.microsoft.com/api/stac/v1/collections/landsat-c2-l2/items/LC09_L2SP_168055_20260111_02_T1)
+- Built by `scripts/build_imagery.py` (cubic warp to UTM, natural colour from OLI bands 4 / 3 / 2, percentile stretch 0.5–99.5 %, gamma 1.3, saturation 1.15) into `assets/imagery/aluto-rift-2026.jpg` (1000 × 1000 px, native 30 m, valid coverage 100 %, JPEG quality 82, SHA-256 `7895ed1b…`); responsive WebP derivatives of 1000, 700 px by `scripts/build_m6_context_scenes.py` (Lanczos3 downscale and WebP quality 82 only, content-hash named `aluto-rift-2026-dd7b43ea-<width>.webp`, never upscaled).
+- Shown on `/partner/` only (the split figure beside "where to look next"). A volcanic rift landscape of another region; the caption names the place and nothing else, and the page says it is not an OrbGSS result.
+- Rights: USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Credit line: "Landsat data courtesy of the U.S. Geological Survey." Only the crop, the tone rendering and the encoding are OrbGSS work.
+- Recorded in `sources.json` → `web_m6.context_scenes[aluto-rift-2026]` (product, master and per-file SHA-256 and bytes, caption keys, `label_point`, the browser-measured placement). The ground of the scene does not reach the Kızıldere pilot area (checked by the validator).
+
+### Büyük Menderes delta and Aegean coast — Marine panel (`menderes-delta-2025`)
+- Location: Büyük Menderes delta and Aegean coast, Türkiye
+- Coordinates displayed: 37.5800° N, 27.2700° E (the centre of the scene)
+- Acquisition: 2025-07-23
+- Sensor: Landsat 9 OLI-2
+- Production source product: `LC09_L2SP_180034_20250723_02_T1` (USGS Landsat Collection 2 Level-2, Tier 1; Planetary Computer STAC item https://planetarycomputer.microsoft.com/api/stac/v1/collections/landsat-c2-l2/items/LC09_L2SP_180034_20250723_02_T1)
+- Built by `scripts/build_imagery.py` (cubic warp to UTM, natural colour from OLI bands 4 / 3 / 2, percentile stretch 0.5–99.5 %, gamma 1.3, saturation 1.15) into `assets/imagery/menderes-delta-2025.jpg` (2880 × 1800 px, native 30 m, valid coverage 100 %, JPEG quality 82, SHA-256 `97102850…`); responsive WebP derivatives of 1800, 1400, 900 px by `scripts/build_m6_context_scenes.py` (Lanczos3 downscale and WebP quality 82 only, content-hash named `menderes-delta-2025-34e35c2d-<width>.webp`, never upscaled).
+- Shown on `/solutions/` (the Marine expansion-direction panel, its full-size appearance) and as the homepage Marine card (the accepted second appearance under R2: a card that links to the domain; no caption of its own, framed by the section footnote). It replaces the inland Ili Delta on both (MER-238 D5), which keeps its record below.
+- Rights: USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Credit line: "Landsat data courtesy of the U.S. Geological Survey." Only the crop, the tone rendering and the encoding are OrbGSS work.
+- Recorded in `sources.json` → `web_m6.context_scenes[menderes-delta-2025]` (product, master and per-file SHA-256 and bytes, caption keys, `label_point`, the browser-measured placement). The ground of the scene does not reach the Kızıldere pilot area (checked by the validator).
 
 ### Kızıldere locator map — Natural Earth (class A cartographic illustration, MER-240)
 - What it is: an outline map of Türkiye and its neighbours with the 36 km pilot area of interest drawn as a square at its declared centre (37.9794° N, 28.7907° E). A locator, not Earth-observation imagery and not product proof. It shows no analysis and carries no text; the page caption says `Locator map — Natural Earth`.
@@ -194,6 +229,24 @@ derivatives of the governed rasters of the accepted `kizildere_mvp_v2` export `2
 * **Rights:** the same basis as every class-B export. The output is OrbGSS's own analytical rendering: no raw provider raster is redistributed, and no paid, closed or restricted data is used. The underlying providers (NASADEM, Landsat thermal, Sentinel-2) are credited on `/sources/` (since MER-255; before it, in a long footer sentence), and the footer keeps the two credits the providers ask for there: the Landsat acknowledgement and "Contains modified Copernicus Sentinel data (2025)".
 * **Warnings:** each surface carries its mandatory scientific warning as visible EN/TR copy.
 * **Ceiling:** the native 1200 px grid, designed against 600 CSS px. MER-151 permits a 4K presentation derivative, but none is published.
+
+## Class B — MER-242 Geothermal-page presentation derivatives (2026-10-25, accepted by the CTO)
+
+Two more surfaces of the same export, for `/solutions/geothermal/`, recorded in `sources.json` → `mer_242` and
+built by `scripts/build_mer242_presentation.py` with the MER-151 pipeline of the homepage build (same functions,
+same hillshade code). Evidence and the Science decisions: `tasks/MER-242_EVIDENCE.md`. Delivered as files and
+records only; no page shows them yet.
+
+* **ALT-02 (iron), Pl. 06:** the ALT-01 palette and LUT (ALT-02 shares the renderer style `alt_batlow_sequential`),
+  the ALT-01 window rule (`q_low 0.02 / q_high 0.98`, no gamma), the homepage hillshade and opacity 0.90.
+* **Priority over relief:** the unwindowed priority LUT at opacity 0.90 (the MER-108 floor) over a dark neutral
+  hillshade of the governed DEM with a vertical exaggeration of 3.0; source-over only, no blend mode.
+* **Files:** `assets/proof/mer242/` → `alt02-<hash8>-{600,900,1200}.webp`, `alt02-legend-<hash8>.png`,
+  `relief-<hash8>-{160,320,600,900,1200}.webp` (160 and 320 are the `/sources/` thumbnail). The relief legend is
+  the homepage `priority-legend-ramp.png`. Lossless WebP; no enlargement.
+* **Rights, warnings and ceiling:** as for the WEB-005B derivatives above.
+
+**Placement (2026-10-25, missing-visuals branch).** `alt02-9266ceca-{600,900,1200}.webp` is Pl. 06 of `/solutions/geothermal/` and `relief-55f5fc73-{600,900,1200}.webp` is the "Priority over relief" figure (with the homepage priority ramp and the 10 km bar); `relief-55f5fc73-{160,320}.webp` is the "Evidence and priority maps" thumbnail on `/sources/`. The measured placement is recorded in `sources.json` → `mer_242.surfaces.<name>.geothermal_placement` (`scripts/measure_geothermal_renders.py`): never drawn above 600 CSS px or the native 1200 px grid. No enlarged (1800 / 2400 px) file is published. The Pl. 06 caption reads "Alteration signal — iron" (R3 bars the layer code from public pages); the public label and the mandatory warning of record stay in `sources.json`.
 
 ## WEB-001 placement (2026-09-15, superseded by WEB-002, then by WEB-005)
 

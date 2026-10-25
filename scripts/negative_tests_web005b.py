@@ -240,7 +240,7 @@ case("a domain card is laid out above its widest candidate", SOURCES,
            lambda s: s["web_005b_placement"]["rendered"].update(max_css_width=1200)),
      "above its widest")
 case("a domain card names a derivative that is not its own", SOURCES,
-     scene("ili-delta-2020",
+     scene("chuquicamata-2024",
            lambda s: s["web_005b_placement"]["rendered"].update(
                selected_derivative="assets/imagery/yellowstone-2013-1400.webp")),
      "selected derivative that is not its own")

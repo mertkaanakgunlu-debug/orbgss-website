@@ -11,6 +11,7 @@ the rendered CSS width, the candidate the browser actually selected (`currentSrc
 native width. The result is written to the records the validator holds to a bound:
 
   * web_m6.interior_crops[].rendered           (the MER-255 Kızıldere crops)
+  * web_m6.context_scenes[].rendered           (the About, Partner and Marine photographs of other places)
   * scenes[].web_m6_placement.rendered         (the Solutions photographs)
 
 Index thumbnails (class "thumb") and the layer-diagram frames are not placements and are skipped.
@@ -31,7 +32,9 @@ import urllib.parse
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "assets" / "imagery" / "sources.json"
 ROUTES = {"solutions": "/solutions/", "solutions/geothermal": "/solutions/geothermal/",
-          "about": "/about/", "partner": "/partner/"}
+          "about": "/about/", "partner": "/partner/", "home": "/"}
+# The homepage is measured for the context scenes that are also a homepage card (the Söke scene) and for nothing else:
+# every other record keeps the placement it was measured for.
 # 19 widths from a small phone to a 4K monitor; the height is a typical window for that width.
 VIEWPORTS = [(w, 844 if w < 600 else 1112 if w < 1000 else 900) for w in
              (360, 390, 414, 600, 768, 834, 1024, 1180, 1280, 1366, 1440, 1536, 1680, 1920, 2200, 2560,
@@ -66,6 +69,7 @@ def main(argv: list[str]) -> int:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     crops = manifest["web_m6"]["interior_crops"]
     scenes = [s for s in manifest["scenes"] if s.get("web_m6_placement")]
+    ctx_scenes = manifest["web_m6"].get("context_scenes", [])
     # file name -> (kind, id, pixel width). The pixel width comes from the record, not from the
     # element: `img.naturalWidth` is the width in CSS px at the density of the selected candidate,
     # so it reads half the real width for a 2x candidate.
@@ -77,6 +81,11 @@ def main(argv: list[str]) -> int:
     for scene in scenes:
         for deriv in scene["derivatives"]:
             owner[pathlib.PurePosixPath(deriv["path"]).name] = ("scene", scene["id"], deriv["width_px"],
+                                                                deriv["width_px"] / deriv["height_px"])
+
+    for scene in ctx_scenes:
+        for deriv in scene["derivatives"]:
+            owner[pathlib.PurePosixPath(deriv["path"]).name] = ("ctx", scene["id"], deriv["width_px"],
                                                                 deriv["width_px"] / deriv["height_px"])
 
     server, base = serve()
@@ -114,6 +123,8 @@ def main(argv: list[str]) -> int:
                             if name not in owner or row["nat"] == 0:
                                 continue
                             kind, ident, pixels, aspect = owner[name]
+                            if route == "home" and kind != "ctx":
+                                continue
                             key = (kind, ident)
                             # object-fit: cover draws the image at the larger of the box width and the
                             # box height times the image aspect; the box alone would under-report it.
@@ -166,11 +177,14 @@ def main(argv: list[str]) -> int:
 
     missing = [c["id"] for c in crops if ("crop", c["id"]) not in worst]
     missing += [s["id"] for s in scenes if ("scene", s["id"]) not in worst]
+    missing += [s["id"] for s in ctx_scenes if ("ctx", s["id"]) not in worst]
     if missing:
         print(f"not measured on any page: {missing}", file=sys.stderr)
         return 1
     for crop in crops:
         crop["rendered"] = rendered_record(worst[("crop", crop["id"])], crop["derivatives"])
+    for scene in ctx_scenes:
+        scene["rendered"] = rendered_record(worst[("ctx", scene["id"])], scene["derivatives"])
     for scene in scenes:
         rendered = scene["web_m6_placement"].setdefault("rendered", {})
         rendered.pop("measured_max_css_width", None)  # superseded by max_css_width below

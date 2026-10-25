@@ -570,6 +570,12 @@ body.home{background:var(--pumice)}
 .domain-copy p{margin:0;max-width:46ch;font-size:var(--t-body);line-height:1.6;color:var(--fg)}
 .domain-status{margin:2px 0 0;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--fg-2)}
 .domain-status.is-active{color:var(--link)}
+/* The "Active" label sits on a photograph (the homepage lead card, the Geothermal band of /solutions/). Violet light
+   type needs a ground darker than the lightest pixels of a photograph for 4.5:1, and the gradient shade alone left
+   3.1-3.4:1 over the Yellowstone snow (measured in a browser). A feathered Night scrim sits under the label itself, no
+   box, no edge: 95 % Night at its core, which keeps the label above 4.5:1 over any pixel, white included. */
+.domain-card .domain-status.is-active,.domain-band .domain-status.is-active{position:relative;isolation:isolate;width:fit-content}
+.domain-card .domain-status.is-active::before,.domain-band .domain-status.is-active::before{content:"";position:absolute;z-index:-1;inset:-28px -72px;pointer-events:none;background:radial-gradient(closest-side,rgba(22,10,25,.95) 0,rgba(22,10,25,.95) 66%,rgba(22,10,25,0) 100%)}
 /* WEB-005C R2: each card is a native link to its own /solutions/ row. The anchor wraps the copy
    block and stays STATIC on purpose -- that is what lets its ::after resolve against the card
    instead of the copy block, so one transparent overlay makes the whole card the click target
@@ -803,10 +809,10 @@ body.page-geothermal .page-section-head.geo-head .lede{margin:0}
 .geo-bar .geo-ends{margin-top:6px}
 
 /* "Priority over relief": the full-size slot kept for the figure Science will deliver (MER-242). */
-.geo-relief{padding-top:0}
-.geo-relief-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,600px);gap:clamp(48px,7vw,104px);align-items:start;padding-top:clamp(56px,6vw,88px);border-top:1px solid var(--hair)}
 
 /* ---------- 04 what is missing, on Lift: a statement and an index of the gaps ---------- */
+.geo-relief{padding-top:0}
+.geo-relief-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,600px);gap:clamp(48px,7vw,104px);align-items:start;padding-top:clamp(56px,6vw,88px);border-top:1px solid var(--hair)}
 .geo-missing{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px clamp(48px,7vw,112px);align-items:end}
 .geo-missing-list{display:flex;flex-direction:column;border-top:1px solid var(--hair)}
 .geo-missing-list a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--hair-soft);font-size:var(--t-body);line-height:1.4;color:var(--fg);transition:background .2s ease}
@@ -932,6 +938,7 @@ body.page-about .about-principles{padding-top:0}
 .problem-grid .page-section-head{flex:1 1 340px;min-width:0;max-width:none;margin:0}
 .problem-grid .page-section-head h2{margin:0 0 22px;max-width:12ch;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;color:var(--fg)}
 .problem-grid .page-section-head p{max-width:38ch;font-size:var(--t-body);line-height:1.7;color:var(--fg-2)}
+.problem-grid .scene-note{flex:1 0 100%;max-width:none;margin:0}
 .wide-figure{position:relative;width:100%;max-width:728px;margin:0;background:var(--night);aspect-ratio:1459/897;overflow:hidden;flex:1.6 1 520px;min-width:0}
 .wide-figure>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .wide-figure .scene-label{right:16px;bottom:14px}
@@ -1012,6 +1019,7 @@ body.interior .page-hero.is-split .kicker,body.interior .page-hero.is-register .
 body.interior .page-hero.is-split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,clamp(300px,40vw,500px));gap:clamp(40px,7vw,112px);align-items:center;padding:clamp(72px,9vw,136px) var(--edge) clamp(72px,9vw,136px)}
 .is-split .page-hero-inner{width:auto;margin:0}
 body.interior .page-hero.is-split .page-hero-copy{max-width:44ch;margin:clamp(22px,2.6vw,32px) 0 clamp(40px,4.6vw,64px);font-size:var(--t-lede);line-height:1.65;color:var(--fg-2);text-wrap:pretty}
+body.interior .page-hero.is-split .scene-note{grid-column:1/-1;max-width:none;margin:0}
 .mail-address{margin:0}
 .mail-address a{display:inline-flex;align-items:baseline;gap:18px;padding-bottom:10px;border-bottom:1px solid var(--fg-2);font-size:var(--t-statement);font-weight:300;line-height:1.1;letter-spacing:-.025em;color:var(--fg);overflow-wrap:anywhere;transition:color .2s ease,border-color .2s ease}
 .mail-address a [aria-hidden]{font-size:.55em}
