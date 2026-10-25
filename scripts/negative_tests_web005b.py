@@ -129,7 +129,7 @@ case("an AOI overlay returns to Act 2 with no recorded geometry behind it", INDE
      "no longer positions it from the recorded analysis-grid fractions")
 
 # ---- B-VIS-05 tokens ------------------------------------------------------------------------
-# The WEB-005B product palette (--orb-*) was superseded by the Atlas palette (MER-275); the same two
+# The WEB-005B product palette (--orb-*) was superseded by the Atlas palette (MER-275), which the Agate palette replaced (MER-279); the same two
 # properties -- pinned once, never redefined -- now hold for its tokens.
 case("Teal (dark-ground) token drifts", STYLES,
      lambda t: t.replace("--teal-light:#58AEB2;", "--teal-light:#43BFF0;", 1), "palette token --teal-light")

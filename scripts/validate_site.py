@@ -179,7 +179,7 @@ EXPECTED_HOMEPAGE_SLOTS = ["context", "terrain", "thermal", "alteration", "prior
 HERO_DRAPE_STATE_CEILING = 1.25 * 1024 * 1024
 HERO_DRAPE_LAYERS = ["terrain", "thm01", "alt01", "priority"]
 # WEB-005A relief rise (docs/web-005-polish-authority@0e87675): 6-12 lossless states, 0.45-0.70 s.
-# The product palette that WEB-005B pinned here (--orb-*) is superseded by the Atlas palette (AGATE_TOKENS, atlas:foundation).
+# The product palette that WEB-005B pinned here (--orb-*) is superseded by the Atlas palette (MER-275) and then by the Agate palette (AGATE_TOKENS, atlas:foundation).
 # MER-108 governed-source pins and website-derivative bounds (B-VIS-04). The source SHA-256s are
 # the MER-113 identities in the terminal authority; normalization is d3a163bd's canonical kind per
 # layer; analytical opacity is 11c32e8d section 6. None of these may drift without Science.
@@ -824,7 +824,7 @@ def atlas_strip_css(css: str) -> str:
 
 
 def atlas_colour_violations(css: str) -> list[str]:
-    """Every colour literal that is not one of the Atlas palette values (or a palette colour with alpha).
+    """Every colour literal that is not one of the Agate palette values (or a palette colour with alpha).
 
     Allowed: the nine palette hexes, rgba() of a palette triple at any alpha (an alpha is the same
     colour, not a new one), transparent and currentColor. Refused: any other hex, rgb()/hsl()/color-mix()
