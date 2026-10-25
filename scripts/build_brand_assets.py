@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Build the deployed Agate brand assets (MER-279).
+"""Build the deployed brand assets (Heat Trace identity, brand package Final_v3).
 
-The CTO approved the Agate identity on 2026-10-25 (palette: Graphite #202629, Mineral Gray #69716F,
-Agate Teal #18777A, Mineral Gold #C49A5A; dark-background equivalents #E3E5E4, #B7C0BD, #58AEB2, #D8B173).
-The supplied package ("OrbGSS Logo Tasarim Final.zip", folder final/, variant-b/ excluded) is the source of
-every file written here:
+The CTO decided on this identity on 2026-10-25 (palette 6a "Heat Trace": Plum #371641, Magma #CD1B74, Amber #FFA323,
+Glow #FEF1A1; dark-background values Violet #854AA6, Magma #E43386, Amber #FFAA2E, Glow #FFF4A5; ground Night #160A19,
+wordmark Mist #F5EFF7). The supplied package ("OrbGSS Logo Tasarım4.zip", folder Final_v3/) is the source of every file
+written here (it replaces the Agate package of MER-279):
 
-    python scripts/build_brand_assets.py --source <unpacked final/ folder>           # write
-    python scripts/build_brand_assets.py --source <unpacked final/ folder> --check   # compare with the record
+    python scripts/build_brand_assets.py --source <unpacked Final_v3/ folder>           # write
+    python scripts/build_brand_assets.py --source <unpacked Final_v3/ folder> --check   # compare with the record
 
 What it does, and nothing more:
   * copies the horizontal logo for light grounds, the favicon tile, the 180 px touch icon and the 192 / 512 px
@@ -40,7 +40,7 @@ FILES = {
     "logo-light": ("logo/orbgss-logo-light.svg", "orbgss-logo-light", "svg",
                    "horizontal logo for light grounds: header and footer on every page"),
     "favicon": ("favicon/favicon.svg", "orbgss-favicon", "svg",
-                "favicon tile, Graphite with the dark-ground symbol (32 px design size)"),
+                "favicon tile, Night with the dark-ground symbol (32 px design size)"),
     "apple-touch-icon": ("favicon/apple-touch-icon.png", "orbgss-apple-touch-icon", "png",
                          "180 px full-bleed touch icon"),
     "icon-192": ("favicon/icon-192.png", "orbgss-icon-192", "png", "192 px web-app manifest icon"),
@@ -50,11 +50,11 @@ ICO = ("favicon/favicon.ico", "favicon.ico")  # shipped at the site root, unchan
 
 # The package the files were taken from (SHA-256 of the zip as supplied). The per-file source hashes in brand.json are
 # what the validator pins; this one only names the delivery they came from.
-PACKAGE = {"name": "OrbGSS Logo Tasarim Final.zip", "sha256": "56f749ec52c49fbc71c5647b4656b9bb0cb639549a64571300fe5800a3b185f3"}
+PACKAGE = {"name": "OrbGSS Logo Tasarım4.zip", "sha256": "cc5f769be1007a4929618237203218b94319454325188b8ea409fd53ee625635"}
 
 PALETTE = {
-    "light": {"graphite": "#202629", "mineral_gray": "#69716F", "agate_teal": "#18777A", "mineral_gold": "#C49A5A"},
-    "dark": {"outer": "#E3E5E4", "mineral_gray": "#B7C0BD", "agate_teal": "#58AEB2", "mineral_gold": "#D8B173"},
+    "light": {"plum": "#371641", "magma": "#CD1B74", "amber": "#FFA323", "glow": "#FEF1A1"},
+    "dark": {"violet": "#854AA6", "magma": "#E43386", "amber": "#FFAA2E", "glow": "#FFF4A5", "night": "#160A19", "mist": "#F5EFF7"},
 }
 
 METADATA = re.compile(r"<metadata>.*?</metadata>", re.S)
@@ -86,7 +86,7 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
             "purpose": purpose,
             "bytes": len(data),
             "sha256": digest,
-            "source": {"path": f"final/{rel}", "bytes": len(raw), "sha256": sha256(raw)},
+            "source": {"path": f"Final_v3/{rel}", "bytes": len(raw), "sha256": sha256(raw)},
             "transform": ("metadata element and its xmlns:c2pa declaration removed; drawing unchanged"
                           if ext == "svg" else "none (byte for byte)"),
         }
@@ -97,22 +97,23 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
         "purpose": "multi-size favicon (16, 32, 48 px) at the site root, where browsers ask for it",
         "bytes": len(raw),
         "sha256": sha256(raw),
-        "source": {"path": f"final/{ICO[0]}", "bytes": len(raw), "sha256": sha256(raw)},
+        "source": {"path": f"Final_v3/{ICO[0]}", "bytes": len(raw), "sha256": sha256(raw)},
         "transform": "none (byte for byte)",
     }
     record = {
-        "identity": "Agate",
-        "approved": "CTO, 2026-10-25 (MER-279)",
-        "package": f"{PACKAGE['name']}, folder final/ (variant-b/ excluded)",
+        "identity": "Heat Trace",
+        "approved": "CTO, 2026-10-25 (brand package Final_v3)",
+        "package": f"{PACKAGE['name']}, folder Final_v3/ (Final_v2/ and the older Agate folder final/ are superseded and not used)",
         "package_sha256": PACKAGE["sha256"],
         "palette": PALETTE,
         "rules": {
-            "teal": "the interactive accent: links, active navigation, focus",
-            "gold": "a restrained highlight and a non-text mark; never a button fill and never body text on a light ground",
-            "map": "no teal on a map; the gold area-of-interest callout with a dark halo is the one brand colour there",
-            "minimum_sizes": "horizontal logo 120 px wide, symbol 24 px",
+            "magma": "the interactive accent: links, active navigation, focus",
+            "amber": "a restrained highlight and a non-text mark; never a button fill and never body text on a light ground",
+            "glow": "the logo's orb only; never a UI colour",
+            "map": "the area of interest is a dashed Magma #E43386 callout with a Night halo; Amber and Glow are never drawn on a map",
+            "minimum_sizes": "horizontal logo 120 px wide, symbol 32 px; below that the app icon",
         },
-        "not_used": "final/assets/illustrative-map.jpg is a generated illustration and is not placed on any page",
+        "not_used": "Final_v3/assets/illustrative-map.jpg is a generated illustration and is not placed on any page",
         "files": entries,
     }
     files[RECORD] = (json.dumps(record, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
@@ -121,7 +122,7 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--source", required=True, type=pathlib.Path, help="the unpacked final/ folder of the brand package")
+    ap.add_argument("--source", required=True, type=pathlib.Path, help="the unpacked Final_v3/ folder of the brand package")
     ap.add_argument("--check", action="store_true", help="compare with the committed files instead of writing")
     args = ap.parse_args()
     files, _ = build(args.source)

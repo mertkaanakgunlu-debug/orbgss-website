@@ -1,0 +1,117 @@
+{
+ "summary": {
+  "routes": 13,
+  "viewports": [
+   1440,
+   390
+  ],
+  "text_nodes_checked": 1354,
+  "below_floor": 0
+ },
+ "per_route": {
+  "1440/index.html": {
+   "checked": 29,
+   "below_floor": []
+  },
+  "1440/solutions/index.html": {
+   "checked": 37,
+   "below_floor": []
+  },
+  "1440/solutions/geothermal/index.html": {
+   "checked": 58,
+   "below_floor": []
+  },
+  "1440/about/index.html": {
+   "checked": 53,
+   "below_floor": []
+  },
+  "1440/partner/index.html": {
+   "checked": 31,
+   "below_floor": []
+  },
+  "1440/sources/index.html": {
+   "checked": 141,
+   "below_floor": []
+  },
+  "1440/404.html": {
+   "checked": 18,
+   "below_floor": []
+  },
+  "1440/tr/index.html": {
+   "checked": 29,
+   "below_floor": []
+  },
+  "1440/tr/cozumler/index.html": {
+   "checked": 37,
+   "below_floor": []
+  },
+  "1440/tr/cozumler/jeotermal/index.html": {
+   "checked": 58,
+   "below_floor": []
+  },
+  "1440/tr/hakkimizda/index.html": {
+   "checked": 53,
+   "below_floor": []
+  },
+  "1440/tr/is-birligi/index.html": {
+   "checked": 31,
+   "below_floor": []
+  },
+  "1440/tr/kaynaklar/index.html": {
+   "checked": 141,
+   "below_floor": []
+  },
+  "390/index.html": {
+   "checked": 23,
+   "below_floor": []
+  },
+  "390/solutions/index.html": {
+   "checked": 31,
+   "below_floor": []
+  },
+  "390/solutions/geothermal/index.html": {
+   "checked": 52,
+   "below_floor": []
+  },
+  "390/about/index.html": {
+   "checked": 47,
+   "below_floor": []
+  },
+  "390/partner/index.html": {
+   "checked": 25,
+   "below_floor": []
+  },
+  "390/sources/index.html": {
+   "checked": 135,
+   "below_floor": []
+  },
+  "390/404.html": {
+   "checked": 12,
+   "below_floor": []
+  },
+  "390/tr/index.html": {
+   "checked": 23,
+   "below_floor": []
+  },
+  "390/tr/cozumler/index.html": {
+   "checked": 31,
+   "below_floor": []
+  },
+  "390/tr/cozumler/jeotermal/index.html": {
+   "checked": 52,
+   "below_floor": []
+  },
+  "390/tr/hakkimizda/index.html": {
+   "checked": 47,
+   "below_floor": []
+  },
+  "390/tr/is-birligi/index.html": {
+   "checked": 25,
+   "below_floor": []
+  },
+  "390/tr/kaynaklar/index.html": {
+   "checked": 135,
+   "below_floor": []
+  }
+ }
+}

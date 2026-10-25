@@ -2,7 +2,18 @@
 
 Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
 
-## MER-279 — Agate brand adoption on the existing site — 2026-10-25 (`REVIEW_READY`, not published)
+## Heat Trace brand adoption on the existing site — 2026-10-25 (`REVIEW_READY`, not published)
+
+The CTO decided on the final brand identity (package `OrbGSS Logo Tasarım4.zip`, folder `Final_v3/`, "Heat Trace") and asked for it on the website. It replaces the Agate identity of MER-279; a brand adoption, not a redesign. Branched from the light-theme head `7be2907`. Spec: `docs/WEB_HEAT_TRACE_BRAND_AUTHORITY.md`; evidence: `tasks/HEAT_TRACE_EVIDENCE.md`.
+
+- **Palette:** Graphite, Mineral, Teal and Gold are replaced by Ink `#2D1B30`, Muted `#756D76`, Magma `#CD1B74`, Amber `#FFA323` and, on dark grounds, Mist `#F5EFF7`, Mist soft `#C3BAC5`, Magma light `#F94997`, Amber light `#FFAA2E`, with Night `#160A19`, Night lift `#241E25`, Pumice `#F7F5F8`, Ink soft and Amber ink as derived neutrals. Magma is the interactive accent only; Amber a restrained highlight that is never a fill; Plum and Glow stay in the logo. Grounds keep their structural class names.
+- **Marks:** new horizontal logo in the header and footer of every page (138 and 120 px wide), SVG and `.ico` favicon, touch icon and manifest icons, hash-named under `assets/brand/` and recorded in `brand.json`; `scripts/build_brand_assets.py` rebuilds them from `Final_v3/`. The Agate files are deleted.
+- **Locator map:** dashed Magma area-of-interest callout with a Night halo on Night-family neutrals, no Amber or Glow; new checksum-named file. The Act 4 target frame is Magma.
+- **Caption tone:** `script.js` flips light and dark captions at 0.1967 (Mist and Ink); the validator now derives the number from the two tokens and fails a stale value.
+- **Validator and tests:** `BRAND_TOKENS` and 19 contrast pairs, the Agate and Atlas tokens retired (`--muted` is a Heat Trace token again), no amber fill, `brand_checks`; `negative_tests_agate_brand.py` becomes `negative_tests_brand.py` (43 cases); all 14 suites caught all 577 cases.
+- **Unchanged:** page set, navigation, URLs, the four-act homepage, imagery, scientific rasters (not recoloured), the hero video, copy, type and fonts. Open for the CTO: fonts, a hero re-render, a social card.
+
+## MER-279 — Agate brand adoption on the existing site — 2026-10-25 (`REVIEW_READY`, not published; superseded by Heat Trace)
 
 The CTO approved the Agate identity and asked for it on the existing website, as a brand adoption and not a replacement. Branched from the Atlas integration `4bbbe0ee`. Spec: `docs/WEB_AGATE_BRAND_AUTHORITY.md`; evidence: `tasks/MER-279_EVIDENCE.md`.
 

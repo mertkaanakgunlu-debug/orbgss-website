@@ -4156,10 +4156,10 @@
     "locator_map": {
       "id": "kizildere-locator",
       "asset_class": "A (cartographic illustration from public-domain vector data); not Earth-observation imagery and not product proof",
-      "path": "assets/maps/kizildere-locator-226827d0.svg",
+      "path": "assets/maps/kizildere-locator-006fcf1f.svg",
       "format": "image/svg+xml",
-      "bytes": 22628,
-      "sha256": "226827d0d155efa74875b368a2c4072935a6bc6f8d60743d5eb93f78675cb087",
+      "bytes": 22671,
+      "sha256": "006fcf1f82a6e59f8b57c88cd5f19da58581ff33e99c5f9555f943be42f2a85b",
       "viewbox": [
         1200,
         574
@@ -4198,7 +4198,7 @@
         "clip": "Sutherland-Hodgman, 24 units outside the frame so no clip edge is visible",
         "simplify": "a vertex closer than 0.7 viewBox units to the last kept one is dropped; rings under 1.5 square units are dropped",
         "drawn": "Turkiye filled and outlined; every other country filled and stroked in one colour, so no third-country border is drawn; no text in the file",
-    "colours": "MER-279 (Agate): Graphite neutrals from the brand token file (sea #121415, other countries #252A2B, Turkiye #2C3233 with a #6C7472 outline) and one brand colour, the Mineral Gold #D8B173 area-of-interest callout with a #121415 halo; no teal on a map (brand rule). The geometry is byte-identical to the previous build (same source, same generator); only the colour constants changed, and the previous build (23c85f44) reproduced byte for byte from the pinned source before the change."
+    "colours": "Heat Trace (Final_v3): neutrals of the brand's dark theme from the token file (sea #110C12, other countries #1C161D, Turkiye #241E25 with a #69646A outline) and one brand colour, the Magma #E43386 area-of-interest callout (a dashed 2 px line over a 14 % fill) inside a 5 px Night #160A19 halo at 60 % opacity; Amber and Glow are never drawn on a map, and no teal (brand rule). The geometry is byte-identical to the Agate build (same source, same generator); only the colour constants and the dashed callout changed."
       },
       "aoi": {
         "centre": "37.9794 N, 28.7907 E",
