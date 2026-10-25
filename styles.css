@@ -208,7 +208,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 
 /* ---------- footer ---------- */
 .site-footer{min-height:180px;padding:34px var(--pad) 46px;display:flex;justify-content:space-between;align-items:flex-end;gap:60px;background:var(--white);border-top:1px solid var(--hair)}
-.footer-brand img{display:block;width:172px;height:auto;margin-left:-4px}
+.footer-brand img{display:block;width:172px;height:auto}
 /* The footer links keep a real 24px activation target: vertical padding gives them one without
    enlarging the type; the negative block margin keeps the spacing. */
 .footer-right{max-width:760px;text-align:right}.footer-right nav{display:flex;justify-content:flex-end;gap:30px;font-size:var(--t-label);text-transform:uppercase;letter-spacing:var(--track);margin:-7px 0 11px}.footer-right nav a{color:var(--fg-2);padding:7px 0;transition:color .2s ease}.footer-right nav a:hover{color:var(--fg)}.footer-right p{font-size:13px;line-height:1.65;color:var(--fg-2);margin:6px 0}.footer-right .attribution{max-width:690px;margin-left:auto}.footer-right .attribution a{color:var(--fg-2);border-bottom:1px solid var(--hair);transition:color .2s ease,border-color .2s ease}.footer-right .attribution a:hover{color:var(--fg);border-bottom-color:var(--fg)}
