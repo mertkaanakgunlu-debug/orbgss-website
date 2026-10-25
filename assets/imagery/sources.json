@@ -4719,5 +4719,301 @@
         "open_item": "CTO decision 4 (source usage rights): confirm the exact notice from the release file; until then the page carries the standard MIT permission and warranty text under this year-less line."
       }
     }
+  },
+  "mer_242": {
+    "task": "MER-242",
+    "export_id": "20260917T161155Z-5e7a0e53",
+    "project": "kizildere_mvp_v2",
+    "science": {
+      "presentation_authority": "geothermal-prospectivity@e8aa5d65f56556be928499c50936eb63db88a6ad:tasks/MER-151_GEO-WEB-004_HOMEPAGE_EVIDENCE_PRESENTATION_PARITY_AUTHORITY.md",
+      "terminal_authority": "geothermal-prospectivity@30779547ced0cbf047cb51fb6c2c6ed178547d56:tasks/MER-108_TERMINAL_WEBSITE_HERO_DISPLAY_AMENDMENT.yaml",
+      "website_derivative_authority": "geothermal-prospectivity@11c32e8d2d072aa709262e513c8888e6a745bb76:tasks/MER-108_PUBLIC_WEB_DISPLAY_DERIVATIVE_AUTHORITY.md",
+      "normalization_authority": "geothermal-prospectivity@d3a163bd6c6b2fe6a1a73fe28e5acf23cd9d4e87:tasks/MER-108_NORMALIZATION_AUTHORITY_CORRECTION.md",
+      "surface": "public website presentation only: /solutions/geothermal/ (Pl. 06 and the priority-over-relief figure) and thumbnails of at most 160 CSS px on /sources/; never a report, workbench, validation or quantitative-export surface",
+      "resolution_claim": "presentation-resolution derivative of a 1200 x 1200 / 30 m / EPSG:32635 scientific raster; the enlarged files carry no finer ground sampling and no additional scientific evidence",
+      "task": "MER-242 (Science, assigned by the CTO to the website workstream on 2026-10-25)",
+      "style_registry": "geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8:src/geothermal/workbench/style_registry.py (ALT-01 and ALT-02 -> alt_batlow_sequential)",
+      "acceptance": "accepted by the CTO on 2026-10-25 (S1-S7 of tasks/MER-242_EVIDENCE.md); no separate independent review was run"
+    },
+    "scientific_master": {
+      "crs": "EPSG:32635",
+      "width": 1200,
+      "height": 1200,
+      "gsd_m": 30.0,
+      "statement": "unchanged and authoritative; the derivatives below are presentation renderings of it"
+    },
+    "pipeline": [
+      "governed scalar + governed valid mask (MER-113 export, SHA-256 verified)",
+      "canonical normalization per d3a163bd, resolved once over the whole raster's valid cells",
+      "optional bounded display window (MER-151 section 3), resolved from the governed source",
+      "optional bounded fixed monotonic gamma (MER-151 section 3)",
+      "frozen MER-108 palette topology / exact approved LUT (256 entries, linear sRGB)",
+      "governed mask to RGBA: NoData analytical alpha 0; no fill, dilation or erosion",
+      "source-over onto the surface's fixed neutral grayscale DEM hillshade at a fixed analytical opacity",
+      "native 1200 grid; smaller rungs are area (box) downsamples of the final RGB; no enlargement",
+      "lossless WebP (exact), SHA-256 recorded"
+    ],
+    "not_used": [
+      "ai_super_resolution",
+      "scalar_space_interpolation",
+      "gaussian smoothing",
+      "unsharp",
+      "clahe_or_local_tone_mapping",
+      "per_crop_autoscaling",
+      "mask dilation/erosion/fill",
+      "hotspot emphasis",
+      "blend modes or colourised hillshade",
+      "data-dependent opacity",
+      "Lanczos3 enlargement (permitted by MER-151 section 2, not used)",
+      "CSS filter or blend on the page"
+    ],
+    "resolution_claim": "presentation-resolution derivative of a 1200 x 1200 / 30 m / EPSG:32635 scientific raster; the enlarged files carry no finer ground sampling and no additional scientific evidence",
+    "grid": {
+      "crs": "EPSG:32635",
+      "width": 1200,
+      "height": 1200,
+      "transform": [
+        30.0,
+        0.0,
+        639270.0,
+        0.0,
+        -30.0,
+        4223040.0
+      ]
+    },
+    "renderer": {
+      "python": "3.12.13",
+      "numpy": "2.5.1",
+      "rasterio": "1.5.1",
+      "pillow": "12.3.0",
+      "webp": "1.6.0"
+    },
+    "encoder": "Pillow WebP lossless=True quality=100 method=6 exact=True; legend PNG optimize=True",
+    "naming": "<surface>-<first 8 hex of SHA-256 of the native 1200 px RGB pixels>-<width>.webp: /assets/ is served immutable for a year, so a changed rendering gets a new name",
+    "surfaces": {
+      "alt02": {
+        "export_layer_id": "alt-alt02",
+        "source": "alt-alt02.tif",
+        "source_sha256": "7b3aa4a7c7586503df805021063d497cca7e28a31acf31222314a38d69e9bb0a",
+        "public_label": "ALT-02 Alteration Proxy - ferric/iron",
+        "mandatory_warning": "Broad Sentinel-2 spectral alteration proxy; not mineral identification and not proof of hydrothermal alteration.",
+        "mandatory_warning_status": "wording of record; not rendered while public_warnings is retired (CTO, 2026-10-25)",
+        "normalization": "linear_min_max",
+        "resolved": {
+          "vmin": -20.642841339111328,
+          "vmax": 303.0005187988281
+        },
+        "display_window": {
+          "kind": "quantile",
+          "q_low": 0.02,
+          "q_high": 0.98,
+          "span": 0.96,
+          "resolved_low": 0.06426644487120432,
+          "resolved_high": 0.06596524915484718,
+          "clipped_fraction": 0.040001,
+          "resolved_over": "all valid cells of the governed source raster"
+        },
+        "gamma": "disabled",
+        "transfer_note": "the ALT-01 rule and values of MER-151 section 3: quantile window 0.02 / 0.98 (span 0.96) resolved from all valid cells of the governed ALT-02 raster, no gamma",
+        "topology_id": "alt_violet_blue_cyan_green_yellow_v1",
+        "stops": [
+          "#27104B",
+          "#362061",
+          "#3A377A",
+          "#30578D",
+          "#20799D",
+          "#159BA8",
+          "#18B2A0",
+          "#42C482",
+          "#7BD05E",
+          "#B7DC43",
+          "#E2E53B",
+          "#FFF05A"
+        ],
+        "stops_source": "webhero_publication_v4 alt01 (ALT-02 shares the renderer style alt_batlow_sequential)",
+        "lut_sha256": "ed32cf671a8701716fbf1f704a7428c0cce1a5f9fb349c3626a9d7c917443d70",
+        "analytical_opacity": 0.9,
+        "context": {
+          "source": "top-dem.tif",
+          "azimuth_deg": 315.0,
+          "altitude_deg": 45.0,
+          "z_factor": 1.0,
+          "gray_base": 0.07,
+          "gray_span": 0.32,
+          "nodata_fill": "median of valid DEM cells (DEM has no invalid cells here)",
+          "resize": "the neutral underlay is built at the native grid and enlarged as an IMAGE (Lanczos3) alongside the analytical RGBA; the DEM scalar itself is never interpolated"
+        },
+        "context_note": "the homepage family's hillshade, unchanged, so Pl. 06 matches Pl. 02, 04 and 05",
+        "valid_fraction": 0.836847,
+        "mask": "governed valid mask, nearest at the native grid; NoData shows the neutral context, which is not analysis",
+        "native_pixels_sha256_8": "9266ceca",
+        "placement_intent": {
+          "route": "solutions/geothermal/index.html",
+          "slot": "Pl. 06 #iron (data-visual-slot=\"iron\")",
+          "design_cap_css_px": 600
+        },
+        "placement_status": "files delivered; not placed on any page by MER-242",
+        "derivatives": [
+          {
+            "path": "assets/proof/mer242/alt02-9266ceca-600.webp",
+            "width": 600,
+            "height": 600,
+            "resize": "area (box) downsample of the final RGB",
+            "presentation_scale": 0.5,
+            "format": "image/webp (lossless)",
+            "bytes": 717676,
+            "sha256": "69d4217b21ef913e30ac19f66b6f9f4b5f2b791d2b6d14d6f029ea63bd1a72fd"
+          },
+          {
+            "path": "assets/proof/mer242/alt02-9266ceca-900.webp",
+            "width": 900,
+            "height": 900,
+            "resize": "area (box) downsample of the final RGB",
+            "presentation_scale": 0.75,
+            "format": "image/webp (lossless)",
+            "bytes": 1480520,
+            "sha256": "263ef15c6801ad06d3a3f16d74f5c3bb017b85e70abd98d4e51a386d232c098a"
+          },
+          {
+            "path": "assets/proof/mer242/alt02-9266ceca-1200.webp",
+            "width": 1200,
+            "height": 1200,
+            "resize": "none (native 1200 grid)",
+            "presentation_scale": 1.0,
+            "format": "image/webp (lossless)",
+            "bytes": 2075972,
+            "sha256": "f5a12c9e7b7217fd123a5fe8603c5851496a9f94e3cee11ab104da45ddb37238"
+          }
+        ],
+        "legend": {
+          "path": "assets/proof/mer242/alt02-legend-ed32cf67.png",
+          "width": 256,
+          "height": 8,
+          "content": "the unblended 256-entry LUT, low at left to high at right",
+          "coupled_to": "the windowed canonical coordinate: the left end is the 2nd and the right end the 98th percentile of the governed valid cells; values beyond them sit on the end colours. A dimensionless proxy, so the ramp carries words (lower / higher), not numbers",
+          "bytes": 272,
+          "sha256": "1010a6dd97711c218c0c688cd069239622b894f7a78faef752f48d90eee235fe"
+        }
+      },
+      "relief": {
+        "export_layer_id": "score-mvp-remote-sensing-priority",
+        "source": "score-mvp-remote-sensing-priority.tif",
+        "source_sha256": "15065152f6f21eaf66236d51d6814acfb32326c5698bc2433dcb69653d8a9d1e",
+        "public_label": "Remote-Sensing Relative Priority - Experimental Baseline, over shaded NASADEM relief",
+        "mandatory_warning": "AOI-relative experimental screening only. Not probability, reserve/resource estimation, discovery likelihood, drilling-success likelihood, Full Prospectivity, or a calibrated cross-AOI score.",
+        "mandatory_warning_status": "wording of record; not rendered while public_warnings is retired (CTO, 2026-10-25)",
+        "normalization": "fixed_range_0_100",
+        "resolved": {
+          "vmin": 0.0,
+          "vmax": 100.0
+        },
+        "display_window": "disabled",
+        "gamma": "disabled",
+        "transfer_note": "no window (prohibited) and no gamma: the published 0-100 score keeps the colours of the homepage result and of its legend ramp",
+        "topology_id": "priority_deep_purple_red_orange_yellow_v1",
+        "stops": [
+          "#13001F",
+          "#2B0A4A",
+          "#54106F",
+          "#8A176A",
+          "#C52A55",
+          "#E85B35",
+          "#F89A2B",
+          "#FFD84A",
+          "#FFF3A0"
+        ],
+        "stops_source": "webhero_publication_v1 priority",
+        "lut_sha256": "7babdc574d6d209a6d24162a3e5206bf16e5a39a74885c70d7ac659b1c01b43b",
+        "analytical_opacity": 0.9,
+        "context": {
+          "source": "top-dem.tif",
+          "azimuth_deg": 315.0,
+          "altitude_deg": 45.0,
+          "z_factor": 3.0,
+          "gray_base": 0.05,
+          "gray_span": 0.55,
+          "nodata_fill": "median of valid DEM cells (DEM has no invalid cells here)",
+          "z_factor_note": "3.0 = the vertical exaggeration of the accepted WEB-005A hero relief (hero/evidence/production_drape_states.json relief_geometry)",
+          "resize": "built at the native grid; only box downsamples of the final RGB are published"
+        },
+        "context_note": "source-over at 0.90, the lowest priority opacity MER-108 section 6 permits, onto a dark neutral hillshade exaggerated 3x; the relief reads fully where the score has no valid cell and as a faint modulation (at most ~15 of 255 levels) under valid cells",
+        "valid_fraction": 0.833898,
+        "mask": "governed valid mask, nearest at the native grid; NoData shows the neutral context, which is not analysis",
+        "native_pixels_sha256_8": "55f5fc73",
+        "placement_intent": {
+          "route": "solutions/geothermal/index.html",
+          "slot": "#relief (data-visual-slot=\"relief\")",
+          "design_cap_css_px": 600,
+          "thumbnail": {
+            "route": "sources/index.html",
+            "row": "Evidence and priority maps",
+            "css_px": 160,
+            "derivatives": [
+              160,
+              320
+            ]
+          }
+        },
+        "placement_status": "files delivered; not placed on any page by MER-242",
+        "derivatives": [
+          {
+            "path": "assets/proof/mer242/relief-55f5fc73-160.webp",
+            "width": 160,
+            "height": 160,
+            "resize": "area (box) downsample of the final RGB",
+            "presentation_scale": 0.1333,
+            "format": "image/webp (lossless)",
+            "bytes": 57708,
+            "sha256": "288213960f383b3da0d1c4619059ffd12b25bf6e89d29ea1e075b6416301d559"
+          },
+          {
+            "path": "assets/proof/mer242/relief-55f5fc73-320.webp",
+            "width": 320,
+            "height": 320,
+            "resize": "area (box) downsample of the final RGB",
+            "presentation_scale": 0.2667,
+            "format": "image/webp (lossless)",
+            "bytes": 225734,
+            "sha256": "4723dd848ff32ce2c56b4539b1e09677dec49bb673d5bf8b7e2e9d958c868b8a"
+          },
+          {
+            "path": "assets/proof/mer242/relief-55f5fc73-600.webp",
+            "width": 600,
+            "height": 600,
+            "resize": "area (box) downsample of the final RGB",
+            "presentation_scale": 0.5,
+            "format": "image/webp (lossless)",
+            "bytes": 785302,
+            "sha256": "11fccddf9382c4985612e76f1366efe8bee96aecf5afd7bc9e458b38f04cd439"
+          },
+          {
+            "path": "assets/proof/mer242/relief-55f5fc73-900.webp",
+            "width": 900,
+            "height": 900,
+            "resize": "area (box) downsample of the final RGB",
+            "presentation_scale": 0.75,
+            "format": "image/webp (lossless)",
+            "bytes": 1728748,
+            "sha256": "d1fe802d42bf83296bab093371d36bff176e4f27071c1fb7653c38fc467ec359"
+          },
+          {
+            "path": "assets/proof/mer242/relief-55f5fc73-1200.webp",
+            "width": 1200,
+            "height": 1200,
+            "resize": "none (native 1200 grid)",
+            "presentation_scale": 1.0,
+            "format": "image/webp (lossless)",
+            "bytes": 2900294,
+            "sha256": "b2e17ec6321363999bc15909be98c4aa2cd6d3b59113b60b204adecfe4df5c60"
+          }
+        ],
+        "legend": {
+          "path": "assets/proof/web005b/priority-legend-ramp.png",
+          "sha256": "dd7899460402459fd24bd9ecbf2ea9a329d2bfa9b9dfa422743f37bd1e1b64d8",
+          "record": "web_005b.analytical.layers.priority.legend",
+          "reuse": "the homepage's unblended 0-100 priority ramp: same LUT, no window, no gamma, so position on the ramp is the score itself (MER-108 section 6: legends use unblended colours)"
+        }
+      }
+    }
   }
 }
