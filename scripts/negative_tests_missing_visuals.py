@@ -89,7 +89,7 @@ suite.case("a scene's description names the pilot area", SCRIPT,
            "names the pilot area")
 suite.case("a pilot-area photograph replaces the About figure", ABOUT,
            swap('src="/assets/imagery/death-valley-2024-149bc2b0-1600.webp"', 'src="/assets/imagery/kizildere-stage-161b5b57-1600.webp"'),
-           "recorded for 'about' alone")
+           "recorded for ['about'] alone")
 
 # ---- captions name ground the image shows ---------------------------------------------------------------------------
 suite.case("a caption names a point outside its scene", SCRIPT,
@@ -117,7 +117,7 @@ suite.case("the framing stops saying it is another place", SCRIPT,
            "must say, in both languages, that the scene is of another place")
 suite.case("the Marine panel is shown on a second page", PARTNER,
            swap("</main>", '<img src="/assets/imagery/menderes-delta-2025-34e35c2d-900.webp" alt="" width="900" height="562">\n  </main>'),
-           "recorded for 'solutions' alone")
+           "recorded for ['', 'solutions'] alone")
 
 # ---- the figure may not grow past its pixels --------------------------------------------------------------------------
 suite.case("the Partner figure is allowed to grow past its scene", STYLES,
