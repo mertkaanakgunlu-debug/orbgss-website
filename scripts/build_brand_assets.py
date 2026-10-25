@@ -107,7 +107,7 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
         "package_sha256": PACKAGE["sha256"],
         "palette": PALETTE,
         "rules": {
-            "teal": "the interactive accent: links, active navigation, focus, selection",
+            "teal": "the interactive accent: links, active navigation, focus",
             "gold": "a restrained highlight and a non-text mark; never a button fill and never body text on a light ground",
             "map": "no teal on a map; the gold area-of-interest callout with a dark halo is the one brand colour there",
             "minimum_sizes": "horizontal logo 120 px wide, symbol 24 px",

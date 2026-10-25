@@ -8,7 +8,7 @@
 
 ## 0. Özet (CTO için)
 
-* **Renk:** Atlas'ın cyan + lacivert paleti gitti. Yerine onayladığın dört Agate rengi geldi: Graphite (koyu zemin ve açık zeminde yazı), Mineral Gray, Agate Teal ve Mineral Gold; koyu zeminde okunsun diye her birinin açık eşi (`#E3E5E4`, `#B7C0BD`, `#58AEB2`, `#D8B173`). Teal tek etkileşim rengi (bağlantı, aktif menü, odak halkası, seçim). Gold ölçülü bir vurgu: sınır, uyarı çizgisi, hedef çerçevesi, haritadaki ilgi alanı; hiçbir yerde dolgu rengi değil. Bakır yok, lacivert yüzey yok.
+* **Renk:** Atlas'ın cyan + lacivert paleti gitti. Yerine onayladığın dört Agate rengi geldi: Graphite (koyu zemin ve açık zeminde yazı), Mineral Gray, Agate Teal ve Mineral Gold; koyu zeminde okunsun diye her birinin açık eşi (`#E3E5E4`, `#B7C0BD`, `#58AEB2`, `#D8B173`). Teal tek etkileşim rengi (bağlantı, aktif menü, odak halkası). Gold ölçülü bir vurgu: sınır, uyarı çizgisi, hedef çerçevesi, haritadaki ilgi alanı; hiçbir yerde dolgu rengi değil. Bakır yok, lacivert yüzey yok.
 * **Logo ve ikonlar:** Başlıkta ve altlıkta yeni yatay logo (SVG, 141–225 px genişlikte, marka asgarisi 120 px). Favicon (SVG ve `.ico`), 180 px dokunma ikonu ve 192 / 512 px manifest ikonları paketten birebir. Her marka dosyası içerik özetiyle adlandırıldı (`/assets/` bir yıl önbellekte kalıyor) ve `assets/brand/brand.json` hepsinin kaynağını ve özetini kayıtlı tutuyor.
 * **Harita:** Kızıldere konum haritası marka kuralıyla yeniden üretildi: Graphite nötrler, ilgi alanı altın bir çerçeve, haritada teal yok. Üretici betik aynı, yalnız renkler değişti.
 * **Değişmeyenler:** Dört perdeli ana sayfa, gerçek uydu görüntüleri, bilimsel rasterlar (hiçbirine dokunulmadı), alt yazılar, menü, adresler, metinler, yazı tipleri.
@@ -27,7 +27,7 @@ Defined once in `:root` of `styles.css`; `scripts/validate_site.py` pins every v
 | `--gold` | `#C49A5A` | Mineral Gold on light grounds: rules, marks, never text | (2.37:1 on Limestone, so never text there) |
 | `--mist` | `#E3E5E4` | the approved dark-ground "outer" colour: primary text on dark | on Ground 13.83:1, on Ground lift 11.49:1 |
 | `--mineral-light` | `#B7C0BD` | Mineral Gray on dark: secondary text, captions | on Ground 9.41:1, on Ground lift 7.81:1 |
-| `--teal-light` | `#58AEB2` | Agate Teal on dark: links, active nav, focus ring, selection | on Ground 6.76:1, on Ground lift 5.62:1 |
+| `--teal-light` | `#58AEB2` | Agate Teal on dark: links, active nav, focus ring | on Ground 6.76:1, on Ground lift 5.62:1 |
 | `--gold-light` | `#D8B173` | Mineral Gold on dark: limits, data gaps, mandatory warnings, the target frame | on Ground 8.71:1, on Ground lift 7.24:1 |
 | `--ground` | `#171A1B` | the dark ground (Graphite, deepened one step so the page recedes behind the brand colour) | |
 | `--ground-lift` | `#252A2B` | the derived dark step: indexes, the Mining/Marine pair, the Act 4 stage | |
@@ -42,7 +42,7 @@ Defined once in `:root` of `styles.css`; `scripts/validate_site.py` pins every v
 **Rules.**
 
 1. **Nothing else is a UI colour.** The stylesheet, `<style>` blocks and inline styles may use the sixteen tokens' hexes, `rgba()` of a palette triple at any alpha, `transparent` and `currentColor`. Every other hex, `rgb()` of anything else, `hsl()`, `color-mix()` and every CSS named colour fails the validator. Images are exempt: rasters, the hero video and SVG files are checked on their own terms (§4, §6).
-2. **Teal is the interactive accent, and only that.** Links, the active navigation item, the focus ring (2 px, 6.76:1 on the ground), selection, tab and control states. It is never a data colour and never appears on a map.
+2. **Teal is the interactive accent, and only that.** Links, the active navigation item, the focus ring (2 px, 6.76:1 on the ground), tab and control states. It is never a data colour and never appears on a map.
 3. **Gold is a restrained highlight, never a fill.** A line, a label, a mark: the mandatory-warning rule, the data-gap label, the target frame on the Act 4 result, the area-of-interest callout on a map. The validator fails any rule that fills a background with a gold value. On Limestone, gold text is `--gold-ink`; `--gold` is only a line there.
 4. **No copper, no navy surface, no gradient accent.** The retired Atlas tokens (`--orbit`, `--lift`, `--paper`, `--steel`, `--slate`, `--signal`, `--signal-deep`, `--caution`, `--caution-deep`) and every earlier retired token fail the validator if they return; so do the old cyan and navy hexes.
 5. **Scientific colour maps are not part of this system.** No UI colour goes inside a figure frame, and no CSS filter, transform or upscale goes on a governed raster. No analytical raster, hero frame or photograph was re-coloured by this work; the Agate palette applies to the page, never to the evidence.
