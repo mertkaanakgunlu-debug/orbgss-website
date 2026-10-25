@@ -1,6 +1,14 @@
 {
   "version": "0.10-mer-240",
   "policy": "This manifest covers two distinct asset classes. (1) Landsat gallery imagery under 'scenes': self-hosted OrbGSS natural-color composites generated from USGS Landsat Collection 2 Level-2 surface-reflectance products (public domain). Each scene's 'production' block pins the exact product identifiers, crop and stretch used; scripts/build_imagery.py reproduces the asset. NASA Earth Observatory pages are kept only as the reference that motivated each scene choice; no NASA-rendered pixels are served. Yellowstone, Chuquicamata and the Ili Delta are placed only as illustrative photography: the homepage Solutions cards (WEB-005B R11 derivatives) and, at full size, the /solutions/ hub bands (MER-240, each scene's 'web_m6_placement'); Crater Lake is retired and placed on no page. (2) WEB-002 product-proof imagery under 'web_002.proof_assets': OrbGSS cartographic exports of the accepted Kızıldere MVP project, materialized through the accepted GEO-039 Workbench export path and cropped/resized for web delivery only. These are scientific outputs, not photography: they are never re-coloured, re-projected, re-classified or value-changed, they carry mandatory warnings in visible page copy (since MER-240 retired /pilot/ they are deployed but placed on no page), and no raw provider raster or paid/closed/restricted data is redistributed. The two classes have different sources, different rights bases and different handling rules; do not describe one with the other's wording. (3) GEO-WEB-002 final homepage visual masters under 'geo_web_002': the package the locked four-act final homepage needed. Its Act 2 context master is superseded on the homepage by 'web_005b.context', and its 'assets' are deployed under assets/proof/final/ but placed on no page. Its 'context_scenes' entry is class (1) and is built by the same scripts/build_imagery.py production grammar; its 'assets' entries cover both classes and each one records its role, source/export identity, master and derivative dimensions and checksums, rights basis, attribution requirement, mandatory warning and the maximum size at which it may honestly be rendered. No asset in that package is ever enlarged past the native pixel density of its source. (4) The rendered hero under 'web_005' is class C: an OrbGSS render, never sensor imagery; since MER-216 it is a two-tier WebM / MP4 ladder of the same master frames. (5) The homepage Acts 3-4 and the inspection aid bind 'web_005b.analytical', MER-151 presentation derivatives of the governed rasters. (6) MER-240 adds one class-A cartographic illustration under 'web_m6.locator_map': the Kizildere locator map, an SVG generated from Natural Earth public-domain vector data. It is neither Earth-observation imagery nor product proof.",
+  "public_warnings": {
+    "status": "retired",
+    "decided": "CTO, 2026-10-25",
+    "decision": "The per-layer and per-result warnings (the gold-ruled notes under each layer, under the priority result and under the homepage context band) are removed from every public page, English and Turkish, together with the in-page section bars. How a layer is used and how the priority is scored is not explained on the public site; a reader who wants it asks OrbGSS.",
+    "effect": "The visible_warning records below keep the wording of record so that a reinstatement would use the approved text. None of it is rendered, and scripts/validate_site.py fails if one of those i18n keys comes back to the dictionary or to a page.",
+    "unchanged": "The published score keeps its public label and is never called probability, reserve, discovery, drilling-success likelihood or Full Prospectivity in copy; the illustrative-imagery footnote and the cinematic hero's 'not sensor imagery' line stay.",
+    "open": "Whether one short neutral site-level line near the results is wanted is a CTO decision; none is on any page."
+  },
   "scenes": [
     {
       "id": "crater-lake-2023",
@@ -775,7 +783,7 @@
           "required_terms_tr": [
             "doğrulama kanıtı değildir"
           ],
-          "note": "The mandatory warning for this asset is carried in visible page copy under this i18n key, in the static HTML as well as the dictionary, so it survives with JavaScript disabled. scripts/validate_site.py enforces every term in both languages."
+          "note": "Retired from the public site on 2026-10-25 (see public_warnings): the wording of record is kept here for a reinstatement and is not rendered anywhere. scripts/validate_site.py refuses this key in the dictionary or on a page."
         }
       },
       {
@@ -845,7 +853,7 @@
             "skorlanan bir öngörücü değildir",
             "evrensel bir jeotermal uygunluk yönü taşımaz"
           ],
-          "note": "The mandatory warning for this asset is carried in visible page copy under this i18n key, in the static HTML as well as the dictionary, so it survives with JavaScript disabled. scripts/validate_site.py enforces every term in both languages."
+          "note": "Retired from the public site on 2026-10-25 (see public_warnings): the wording of record is kept here for a reinstatement and is not rendered anywhere. scripts/validate_site.py refuses this key in the dictionary or on a page."
         }
       },
       {
@@ -918,7 +926,7 @@
             "rezerv veya kaynak",
             "keşif ya da sondaj başarısı kanıtı değildir"
           ],
-          "note": "The mandatory warning for this asset is carried in visible page copy under this i18n key, in the static HTML as well as the dictionary, so it survives with JavaScript disabled. scripts/validate_site.py enforces every term in both languages."
+          "note": "Retired from the public site on 2026-10-25 (see public_warnings): the wording of record is kept here for a reinstatement and is not rendered anywhere. scripts/validate_site.py refuses this key in the dictionary or on a page."
         }
       },
       {
@@ -989,7 +997,7 @@
             "kaolinit",
             "hidrotermal alterasyon kanıtı sayılmaz"
           ],
-          "note": "The mandatory warning for this asset is carried in visible page copy under this i18n key, in the static HTML as well as the dictionary, so it survives with JavaScript disabled. scripts/validate_site.py enforces every term in both languages."
+          "note": "Retired from the public site on 2026-10-25 (see public_warnings): the wording of record is kept here for a reinstatement and is not rendered anywhere. scripts/validate_site.py refuses this key in the dictionary or on a page."
         }
       },
       {
@@ -1060,7 +1068,7 @@
             "kaolinit",
             "hidrotermal alterasyon kanıtı sayılmaz"
           ],
-          "note": "The mandatory warning for this asset is carried in visible page copy under this i18n key, in the static HTML as well as the dictionary, so it survives with JavaScript disabled. scripts/validate_site.py enforces every term in both languages."
+          "note": "Retired from the public site on 2026-10-25 (see public_warnings): the wording of record is kept here for a reinstatement and is not rendered anywhere. scripts/validate_site.py refuses this key in the dictionary or on a page."
         }
       },
       {
@@ -1170,7 +1178,7 @@
             "Tam Prospektivite",
             "alanlar arası kalibre"
           ],
-          "note": "The mandatory warning for this asset is carried in visible page copy under this i18n key, in the static HTML as well as the dictionary, so it survives with JavaScript disabled. scripts/validate_site.py enforces every term in both languages."
+          "note": "Retired from the public site on 2026-10-25 (see public_warnings): the wording of record is kept here for a reinstatement and is not rendered anywhere. scripts/validate_site.py refuses this key in the dictionary or on a page."
         }
       },
       {
@@ -1279,7 +1287,7 @@
             "sondaj hedefi",
             "sondaj başarısı"
           ],
-          "note": "The mandatory warning for this asset is carried in visible page copy under this i18n key, in the static HTML as well as the dictionary, so it survives with JavaScript disabled. scripts/validate_site.py enforces every term in both languages."
+          "note": "Retired from the public site on 2026-10-25 (see public_warnings): the wording of record is kept here for a reinstatement and is not rendered anywhere. scripts/validate_site.py refuses this key in the dictionary or on a page."
         }
       }
     ]

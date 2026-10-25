@@ -21,12 +21,12 @@ SOURCES, SOURCES_TR = "sources/index.html", "tr/kaynaklar/index.html"
 CSS, JS = "styles.css", "script.js"
 
 # ---- Partner: grounds, headline, routes, address, photograph --------------------------------------------
-suite.case("the Partner opening leaves Orbit", PARTNER, swap("page-hero is-split ground-orbit", "page-hero is-split"),
-           "the Partner opening must be a page-hero is-split on Orbit")
+suite.case("the Partner opening leaves paper", PARTNER, swap("page-hero is-split ground-paper", "page-hero is-split"),
+           "the Partner opening must be a page-hero is-split on paper")
 suite.case("the conversations leave Orbit", PARTNER, swap("route-section ground-orbit", "route-section"),
            "(#routes) must sit on Orbit")
 suite.case("a Lift band appears on Partner", PARTNER, swap("route-section ground-orbit", "route-section ground-orbit ground-lift"),
-           "no paper or Lift band")
+           "no Lift band")
 suite.case("the headline loses its tone span", PARTNER, swap('<span class="t2" data-i18n="partnerPage.title.b">', '<span data-i18n="partnerPage.title.b">'),
            "the Partner headline must be the two tone spans")
 suite.case("a Pilot subject changes", PARTNER, swap("?subject=OrbGSS%20Pilot%20Inquiry", "?subject=OrbGSS%20Pilot"),
@@ -88,8 +88,8 @@ suite.case("a Crameri DOI is dropped", SOURCES, swap('href="https://doi.org/10.5
 
 # ---- the region's own CSS ---------------------------------------------------------------------------------
 suite.case("text under 10px in the region", CSS,
-           swap(".page-index a{display:inline-flex;align-items:center;gap:12px;min-height:60px;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);",
-                ".page-index a{display:inline-flex;align-items:center;gap:12px;min-height:60px;font-family:var(--mono);font-variant-ligatures:none;font-size:9px;"),
+           swap(".route-for{flex:1 1 200px;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);",
+                ".route-for{flex:1 1 200px;font-family:var(--mono);font-variant-ligatures:none;font-size:9px;"),
            "sets 9px text; nothing is set under 10px")
 suite.case("capitals get a second tracking in the region", CSS,
            swap("line-height:1.6;letter-spacing:var(--track);text-transform:uppercase;color:var(--link)}\n.route-copy", "line-height:1.6;letter-spacing:.24em;text-transform:uppercase;color:var(--link)}\n.route-copy"),
@@ -97,7 +97,7 @@ suite.case("capitals get a second tracking in the region", CSS,
 suite.case("capitals get a third size in the region", CSS,
            swap(".route-go{flex:none;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);", ".route-go{flex:none;font-family:var(--mono);font-variant-ligatures:none;font-size:13px;"),
            ".route-go sets capitals at 13px")
-suite.case("a stray colour in the region", CSS, swap(".route-list a:hover{background:rgba(88,174,178,.04)}", ".route-list a:hover{background:#112233}"),
+suite.case("a stray colour in the region", CSS, swap(".route-list a:hover{background:var(--wash)}", ".route-list a:hover{background:#112233}"),
            "is not in the Agate palette")
 suite.case("a medium weight in the region", CSS, swap(".route-title{flex:1 1 240px;font-size:var(--t-section);font-weight:300;", ".route-title{flex:1 1 240px;font-size:var(--t-section);font-weight:500;"),
            "font-weight 500")

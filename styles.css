@@ -39,13 +39,16 @@
   --ground:#171A1B;
   --ground-lift:#252A2B;
   --limestone:#F6F5F2;
+  --white:#FFFFFF;
   --graphite-soft:#565D5A;
   --gold-ink:#735525;
   --rule:rgba(183,192,189,.22);
   --rule-soft:rgba(183,192,189,.11);
   --rule-paper:rgba(105,113,111,.30);
   --rule-paper-soft:rgba(105,113,111,.15);
-  /* Roles on the current ground. The dark ground is the default; .ground-paper (and the homepage lift) change them. */
+  /* Roles on the current ground. The dark ground is the default; .ground-paper, the header and the footer are the light
+     ground and change them. --surface is a panel on the ground, --matte what shows behind a loading image, --wash the
+     hover and selection tint. */
   --fg:var(--mist);
   --fg-2:var(--mineral-light);
   --link:var(--teal-light);
@@ -53,6 +56,9 @@
   --limit-line:var(--gold-light);
   --hair:var(--rule);
   --hair-soft:var(--rule-soft);
+  --surface:var(--ground-lift);
+  --matte:var(--ground);
+  --wash:rgba(88,174,178,.07);
   --sans:"OrbGSS Sans","OrbGSS Sans Fallback",sans-serif;
   --mono:"OrbGSS Mono","OrbGSS Mono Fallback",monospace;
   /* The type scale (1440 px down to 390 px, clamped at both ends). Mono caps come in exactly two sizes
@@ -74,13 +80,14 @@
   --sec-y:clamp(72px,8.4vw,140px);
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;background:var(--ground);scroll-padding-top:var(--header-h)}
-body{margin:0;background:var(--ground);color:var(--fg);font-family:var(--sans);font-weight:400;font-synthesis-weight:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+html{scroll-behavior:smooth;background:var(--limestone);scroll-padding-top:var(--header-h)}
+body{margin:0;background:var(--limestone);color:var(--fg);font-family:var(--sans);font-weight:400;font-synthesis-weight:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 button,a{-webkit-tap-highlight-color:transparent}
 :focus-visible{outline:2px solid var(--link);outline-offset:4px}
 .skip-link{position:fixed;left:16px;top:16px;z-index:999;transform:translateY(-160%);background:var(--limestone);color:var(--graphite);padding:10px 14px;border-radius:0;font-size:13px;transition:transform .2s ease}.skip-link:focus{transform:none}
+.skip-link:focus-visible{outline-color:var(--teal)}
 
 /* === atlas:foundation === MER-275. Shared components. Page threads compose these and never edit them;
    a change needed here goes back to the foundation owner. */
@@ -104,14 +111,17 @@ button,a{-webkit-tap-highlight-color:transparent}
 .text-link:hover{color:var(--fg)}
 
 /* ---------- grounds ----------
-   Orbit: page openings, photographs, plates, the priority score, header and footer. Lift: index bars and
-   the Mining/Marine pair. Paper: reading records only. A ground sets the roles (--fg, --fg-2, --link,
-   --limit, --hair) so a component reads right on all three. */
+   The page is light (Limestone, with the White header and footer). Graphite (orbit) and its lifted step are the
+   dark detail: photographs, the priority score, the closing line and a few bands. A ground sets the roles (--fg,
+   --fg-2, --link, --limit, --hair, --surface, --matte, --wash) so a component reads right on either. The class
+   names are structural, not colour names: orbit and lift are the dark grounds, paper the light one. */
 .ground{position:relative;padding:clamp(64px,7vw,112px) var(--pad)}
 .ground-in{width:min(var(--shell),100%);margin-inline:auto}
-.ground-orbit{background:var(--ground)}
-.ground-lift{background:var(--ground-lift)}
-.ground-paper{--fg:var(--graphite);--fg-2:var(--graphite-soft);--link:var(--teal);--limit:var(--gold-ink);--limit-line:var(--gold);--hair:var(--rule-paper);--hair-soft:var(--rule-paper-soft);background:var(--limestone);color:var(--fg)}
+.ground-orbit,.ground-lift,.domain-card,.domain-band{--fg:var(--mist);--fg-2:var(--mineral-light);--link:var(--teal-light);--limit:var(--gold-light);--limit-line:var(--gold-light);--hair:var(--rule);--hair-soft:var(--rule-soft);--surface:var(--ground-lift);--matte:var(--ground);--wash:rgba(88,174,178,.07)}
+.ground-orbit{background:var(--ground);color:var(--fg)}
+.ground-lift{background:var(--ground-lift);color:var(--fg)}
+.ground-paper,.site-header,.site-footer{--fg:var(--graphite);--fg-2:var(--graphite-soft);--link:var(--teal);--limit:var(--gold-ink);--limit-line:var(--gold);--hair:var(--rule-paper);--hair-soft:var(--rule-paper-soft);--surface:var(--white);--matte:var(--limestone);--wash:rgba(24,119,122,.07)}
+.ground-paper{background:var(--limestone);color:var(--fg)}
 
 /* ---------- caption: location and coordinates directly on the image, bottom-right, bare mono ----------
    No card, box or band: legibility comes from a tight halo, and the tone is chosen per panel from the
@@ -137,11 +147,6 @@ button,a{-webkit-tap-highlight-color:transparent}
 [data-label-tone="dark"] .scene-label span+span,
 [data-label-tone="dark"] .scene-label .scene-kind{color:var(--graphite)}
 
-/* ---------- mandatory scientific warning: a 2 px Caution left rule and an optional mono label ----------
-   The text is verbatim (R6). Caution is a line and a label, never a fill. */
-.beam-note{margin:0;max-width:62ch;padding-left:14px;border-left:2px solid var(--limit-line);font-size:var(--t-warning);line-height:1.6;color:var(--fg-2)}
-.warning-label{display:block;margin:0 0 6px;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);font-weight:400;line-height:1.6;letter-spacing:var(--track);text-transform:uppercase;color:var(--limit)}
-
 /* ---------- record list: label and value rows (the pilot record on paper) ---------- */
 .record-list{margin:0;border-top:1px solid var(--hair)}
 .record-list>div{display:grid;grid-template-columns:minmax(120px,1fr) minmax(0,3fr);gap:6px 24px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--hair-soft)}
@@ -150,72 +155,71 @@ button,a{-webkit-tap-highlight-color:transparent}
 
 /* ---------- plate: a numbered figure ----------
    The image at or below its honest-render ceiling, the caption on it, then the number, the name,
-   "role · source" and the verbatim note. Three states: evidence (an image), data gap and asset to be
+   "role · source". Three states: evidence (an image), data gap and asset to be
    supplied (line and label only, never a fill). A plate has no border, radius, shadow or hover chrome. */
 .plate{margin:0;width:100%;max-width:600px}
-.plate-frame{position:relative;aspect-ratio:1/1;background:var(--ground);overflow:hidden}
+.plate-frame{position:relative;aspect-ratio:1/1;background:var(--matte);overflow:hidden}
 .plate-frame>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .plate-frame .scene-label{right:12px;bottom:10px}
 .plate-gap,.plate-pending{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;text-align:center;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);line-height:1.8;letter-spacing:var(--track);text-transform:uppercase}
-.plate-gap{border:1px dashed var(--gold-light);color:var(--mineral-light)}
-.plate-gap .plate-state{color:var(--gold-light)}
-.plate-pending{border:1px dashed var(--rule);background:repeating-linear-gradient(135deg,rgba(88,174,178,.06) 0 1px,transparent 1px 12px);color:var(--mineral-light)}
-.plate-pending .plate-state{color:var(--teal-light)}
+.plate-gap{border:1px dashed var(--limit);color:var(--fg-2)}
+.plate-gap .plate-state{color:var(--limit)}
+.plate-pending{border:1px dashed var(--hair);background:repeating-linear-gradient(135deg,var(--wash) 0 1px,transparent 1px 12px);color:var(--fg-2)}
+.plate-pending .plate-state{color:var(--link)}
 .plate-cap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;align-items:baseline;margin-top:16px}
 .plate-no{grid-row:1 / span 2;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--link)}
 .plate-name{font-size:var(--t-figure);line-height:1.2;letter-spacing:-.01em;color:var(--fg)}
 .plate-role{font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-caption);letter-spacing:var(--track);text-transform:uppercase;color:var(--fg-2)}
-.plate-note{grid-column:2;margin-top:8px}
 
 /* ---------- header / navigation ---------- */
-.site-header{height:var(--header-h);padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--rule-soft);background:var(--ground);position:relative;z-index:40}
-/* The approved Agate logo (MER-279): the symbol and the OrbGSS wordmark in the dark-ground colours, an SVG
-   at 634:108. The brand's minimum is 120 px wide, so the header never goes under 24 px high (141 px wide);
+.site-header{height:var(--header-h);padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--hair);background:var(--white);position:relative;z-index:40}
+/* The approved Agate logo (MER-279, light-ground version since the light theme): the symbol and the OrbGSS wordmark
+   in the Graphite, Mineral Gray, Teal and Gold of a light surface, an SVG at 634:108. The brand's minimum is 120 px wide, so the header never goes under 24 px high (141 px wide);
    the vertical padding keeps a real activation box (WCAG 2.5.8) around it. */
 .brand{display:inline-flex;align-items:center;padding:6px 0}
 .brand-logo{display:block;width:auto;height:30px}
 .main-nav{display:flex;align-items:center;justify-content:flex-end;gap:clamp(22px,2.8vw,44px);font-size:var(--t-label);font-weight:400;text-transform:uppercase;letter-spacing:var(--track)}
 .nav-list{display:flex;align-items:center;gap:clamp(24px,3.2vw,52px);list-style:none;margin:0;padding:0}
-.nav-list a,.nav-trigger{position:relative;display:inline-flex;align-items:center;gap:9px;padding:6px 0;color:var(--mineral-light);transition:color .2s ease;background:none;border:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;white-space:nowrap}
-.nav-list a:hover,.nav-trigger:hover,.has-menu.open .nav-trigger{color:var(--mist)}
-.nav-list a[aria-current="page"],.nav-trigger[aria-current="page"]{color:var(--mist)}
-.nav-list a[aria-current="page"]::after,.nav-trigger[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--teal-light)}
+.nav-list a,.nav-trigger{position:relative;display:inline-flex;align-items:center;gap:9px;padding:6px 0;color:var(--fg-2);transition:color .2s ease;background:none;border:0;font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;white-space:nowrap}
+.nav-list a:hover,.nav-trigger:hover,.has-menu.open .nav-trigger{color:var(--fg)}
+.nav-list a[aria-current="page"],.nav-trigger[aria-current="page"]{color:var(--fg)}
+.nav-list a[aria-current="page"]::after,.nav-trigger[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--link)}
 .chevron{width:5px;height:5px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s ease}
 .has-menu.open .chevron{transform:translateY(1px) rotate(225deg)}
 .has-menu{position:relative}
 .submenu{position:absolute;top:100%;left:-18px;padding-top:22px;display:none;z-index:50}
 .has-menu.open .submenu{display:block}
-.submenu ul{list-style:none;margin:0;padding:8px 0;min-width:250px;background:var(--ground-lift);border:1px solid var(--rule)}
+.submenu ul{list-style:none;margin:0;padding:8px 0;min-width:250px;background:var(--white);border:1px solid var(--hair);box-shadow:0 12px 32px rgba(32,38,41,.12)}
 .submenu a{display:block;padding:11px 18px;transition:color .15s ease,background .15s ease;white-space:nowrap}
-.submenu a:hover,.submenu a:focus-visible{color:var(--mist);background:rgba(88,174,178,.08)}
+.submenu a:hover,.submenu a:focus-visible{color:var(--fg);background:var(--wash)}
 .submenu a:focus-visible{outline-offset:-3px}
-.lang-switch{display:flex;align-items:center;gap:8px;padding-left:clamp(20px,2.6vw,40px);border-left:1px solid var(--rule)}
+.lang-switch{display:flex;align-items:center;gap:8px;padding-left:clamp(20px,2.6vw,40px);border-left:1px solid var(--hair)}
 /* min-width, not a bigger label: the two-letter codes would sit just under the 24px WCAG 2.5.8 target. The mobile rules below already raise them to 44px. */
 /* MER-241: the switch is two real links (EN and TR are separate pages), not two buttons. */
-.lang-btn{display:inline-block;text-align:center;background:none;border:0;padding:6px 5px;min-width:24px;color:var(--mineral-light);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;transition:color .2s ease}
-.lang-btn:hover{color:var(--mist)}
-.lang-btn[aria-current="true"]{color:var(--teal-light)}
-.lang-sep{color:var(--rule)}
-.menu-toggle{display:none;background:none;border:0;padding:10px;margin-right:-10px;cursor:pointer}.menu-toggle span{display:block;width:25px;height:1px;background:var(--mist);margin:6px}
+.lang-btn{display:inline-block;text-align:center;background:none;border:0;padding:6px 5px;min-width:24px;color:var(--fg-2);font:inherit;letter-spacing:inherit;text-transform:inherit;cursor:pointer;transition:color .2s ease}
+.lang-btn:hover{color:var(--fg)}
+.lang-btn[aria-current="true"]{color:var(--link)}
+.lang-sep{color:var(--hair)}
+.menu-toggle{display:none;background:none;border:0;padding:10px;margin-right:-10px;cursor:pointer}.menu-toggle span{display:block;width:25px;height:1px;background:var(--fg);margin:6px}
 
 /* ---------- footer ---------- */
-.site-footer{min-height:180px;padding:34px var(--pad) 46px;display:flex;justify-content:space-between;align-items:flex-end;gap:60px;background:var(--ground);border-top:1px solid var(--rule-soft)}
+.site-footer{min-height:180px;padding:34px var(--pad) 46px;display:flex;justify-content:space-between;align-items:flex-end;gap:60px;background:var(--white);border-top:1px solid var(--hair)}
 .footer-brand img{display:block;width:230px;height:auto;margin-left:-5px}
 /* The footer links keep a real 24px activation target: vertical padding gives them one without
    enlarging the type; the negative block margin keeps the spacing. */
-.footer-right{max-width:760px;text-align:right}.footer-right nav{display:flex;justify-content:flex-end;gap:30px;font-size:var(--t-label);text-transform:uppercase;letter-spacing:var(--track);margin:-7px 0 11px}.footer-right nav a{color:var(--mineral-light);padding:7px 0;transition:color .2s ease}.footer-right nav a:hover{color:var(--mist)}.footer-right p{font-size:13px;line-height:1.65;color:var(--mineral-light);margin:6px 0}.footer-right .attribution{max-width:690px;margin-left:auto}.footer-right .attribution a{color:var(--mineral-light);border-bottom:1px solid rgba(183,192,189,.45);transition:color .2s ease,border-color .2s ease}.footer-right .attribution a:hover{color:var(--mist);border-bottom-color:var(--mist)}
+.footer-right{max-width:760px;text-align:right}.footer-right nav{display:flex;justify-content:flex-end;gap:30px;font-size:var(--t-label);text-transform:uppercase;letter-spacing:var(--track);margin:-7px 0 11px}.footer-right nav a{color:var(--fg-2);padding:7px 0;transition:color .2s ease}.footer-right nav a:hover{color:var(--fg)}.footer-right p{font-size:13px;line-height:1.65;color:var(--fg-2);margin:6px 0}.footer-right .attribution{max-width:690px;margin-left:auto}.footer-right .attribution a{color:var(--fg-2);border-bottom:1px solid var(--hair);transition:color .2s ease,border-color .2s ease}.footer-right .attribution a:hover{color:var(--fg);border-bottom-color:var(--fg)}
 
 /* ---------- foundation, below the desktop composition ---------- */
 @media(max-width:980px){
   :root{--header-h:76px}
   .site-header{height:var(--header-h)}
-  .main-nav{display:none;position:absolute;top:var(--header-h);left:0;right:0;padding:26px var(--pad) 30px;background:var(--ground);border-bottom:1px solid var(--rule);flex-direction:column;align-items:stretch;gap:0}.main-nav.open{display:flex}.menu-toggle{display:block}
+  .main-nav{display:none;position:absolute;top:var(--header-h);left:0;right:0;padding:26px var(--pad) 30px;background:var(--white);border-bottom:1px solid var(--hair);flex-direction:column;align-items:stretch;gap:0}.main-nav.open{display:flex}.menu-toggle{display:block}
   .nav-list{flex-direction:column;align-items:stretch;gap:0}
-  .nav-list>li{border-bottom:1px solid var(--rule-soft)}
+  .nav-list>li{border-bottom:1px solid var(--hair-soft)}
   .nav-list a,.nav-trigger{width:100%;justify-content:space-between;padding:16px 0;white-space:normal}
   .nav-list a[aria-current="page"]::after{right:auto;width:22px;bottom:10px}
   .submenu{position:static;padding:0}
-  .submenu ul{min-width:0;background:transparent;border:0;padding:0 0 10px 18px}
+  .submenu ul{min-width:0;background:transparent;border:0;box-shadow:none;padding:0 0 10px 18px}
   .submenu a{padding:12px 0;white-space:normal}.submenu a:hover,.submenu a:focus-visible{background:transparent}.submenu a:focus-visible{outline-offset:2px}
   .lang-switch{border-left:0;padding-left:0;padding-top:16px;gap:16px;margin-left:-10px}
   .lang-btn{display:inline-flex;align-items:center;justify-content:flex-start;min-height:44px;min-width:44px;padding:8px 10px}
@@ -300,7 +304,7 @@ button,a{-webkit-tap-highlight-color:transparent}
    change; separation is spacing, type scale, imagery, hairlines and inner stages.
    Section heights are content-driven — only the hero owns a viewport.
    ================================================================================ */
-body.home{background:var(--ground)}
+body.home{background:var(--limestone)}
 .shell{position:relative;z-index:1;width:min(var(--shell),100%);margin-inline:auto}
 .sec{position:relative;background:var(--ground);padding:var(--sec-y) var(--pad)}
 
@@ -309,22 +313,21 @@ body.home{background:var(--ground)}
    still STARTS and ENDS on Orbit, and a reading section rises to Lift in the middle, so no boundary is
    ever a colour step. The result sits on flat Orbit with its figure on a Lift stage, and the footer
    is Orbit as well, so the page comes to rest instead of stopping. */
-.sec-evidence{background:linear-gradient(180deg,var(--ground) 0%,var(--ground-lift) 20%,var(--ground-lift) 80%,var(--ground) 100%)}
+.sec-evidence{background:var(--limestone)}
 .sec-result{background:var(--ground)}
-.sec-inspect{background:linear-gradient(180deg,var(--ground) 0%,var(--ground-lift) 28%,var(--ground-lift) 76%,var(--ground) 100%)}
-.sec-contact{background:var(--ground)}
+.sec-inspect{background:var(--limestone)}
+.sec-domains{background:var(--limestone)}
 
 /* One hairline per boundary, and it fades out before the page edge instead of cutting the width
    in half — a rule the eye reads as a handoff, not a seam. The first post-hero act deliberately
    has none: the hero already ends on its own bottom shade, and a line there would be exactly the
    hard edge R10 section 4 asks for the absence of. */
-.sec-evidence::before,.sec-result::before,.sec-inspect::before,.sec-domains::before,
-.sec-contact::before{content:"";position:absolute;
+.sec-evidence::before,.sec-result::before,.sec-inspect::before,.sec-domains::before{content:"";position:absolute;
   left:var(--pad);right:var(--pad);top:0;height:1px;pointer-events:none;
-  background:linear-gradient(90deg,transparent 0%,var(--rule-soft) 14%,var(--rule-soft) 86%,transparent 100%)}
+  background:linear-gradient(90deg,transparent 0%,var(--hair-soft) 14%,var(--hair-soft) 86%,transparent 100%)}
 .sec-result{padding-top:clamp(52px,5.4vw,88px);padding-bottom:clamp(52px,5.4vw,88px)}
-.sec h2{margin:0;color:var(--mist)}
-.sec .kicker{margin:0;color:var(--teal-light)}
+.sec h2{margin:0;color:var(--fg)}
+.sec .kicker{margin:0;color:var(--link)}
 .sec-head{display:flex;flex-direction:column;gap:18px;max-width:60ch}
 .sec-head h2{font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;max-width:16ch}
 /* The Solutions headline is a sentence rather than a phrase, so it needs a wider measure than the
@@ -332,15 +335,15 @@ body.home{background:var(--ground)}
    inherited 16px body size (~480px) and caps the h2 no matter what the h2 asks for. */
 .sec-domains .sec-head{max-width:780px}
 .sec-domains .sec-head h2{max-width:none}
-.act-statement{margin:0;font-size:var(--t-lede);line-height:1.62;color:var(--mist);text-wrap:pretty}
+.act-statement{margin:0;font-size:var(--t-lede);line-height:1.62;color:var(--fg);text-wrap:pretty}
 /* Deliberately NOT uppercased. These lines carry exact identifiers — the accepted scoring profile
    id `mvp_remote_sensing_priority_v1`, the EPSG code — and a text-transform would publish them in a
    case the authority never used. The monospace face and tracking carry the technical register
    instead. */
-.act-meta{margin:0;font-size:var(--t-caption);letter-spacing:.06em;color:var(--mineral-light);line-height:1.8}
+.act-meta{margin:0;font-size:var(--t-caption);letter-spacing:.06em;color:var(--fg-2);line-height:1.8}
 .act-note{margin:0}
-.act-footnote{margin:clamp(30px,3.4vw,48px) 0 0;max-width:86ch;display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;font-size:var(--t-warning);line-height:1.6;color:var(--mineral-light);border-top:1px solid var(--rule-soft);padding-top:20px}
-.act-footnote .mono{flex:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--gold-light)}
+.act-footnote{margin:clamp(30px,3.4vw,48px) 0 0;max-width:86ch;display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;font-size:var(--t-warning);line-height:1.6;color:var(--fg-2);border-top:1px solid var(--hair-soft);padding-top:20px}
+.act-footnote .mono{flex:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--limit)}
 .act-footnote>span:not(.mono){flex:1 1 32ch;min-width:0}
 
 /* Scroll entrance: one quiet rise per visual, once, only when script.js has an observer and motion
@@ -381,7 +384,6 @@ body.home{background:var(--ground)}
   padding:clamp(34px,6vw,56px) var(--pad) clamp(44px,7vw,72px);width:100%}
 .place-copy h2{max-width:14ch;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08}
 .place-copy .act-statement{max-width:46ch;color:var(--mist)}
-.place-copy .beam-note{max-width:56ch}
 .place-spec{display:flex;flex-wrap:wrap;gap:6px 28px;margin-top:2px}
 .place-spec .act-meta{color:var(--mineral-light)}
 /* WEB-005B R14: the AOI corner marks are removed from Act 02. The recorded analysis grid spans
@@ -407,31 +409,26 @@ body.home{background:var(--ground)}
    height with the subordinate footnote and the frame spec anchored to its foot. */
 .evidence-stage{display:grid;grid-template-columns:minmax(0,600px) minmax(240px,394px);gap:clamp(28px,3vw,46px);align-items:stretch;max-width:1040px}
 .evidence-main{min-width:0}
-.evidence-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--rule);margin-bottom:clamp(18px,2vw,26px);background:var(--ground-lift)}
-.evidence-tab{position:relative;display:flex;flex-direction:column;justify-content:center;gap:6px;min-height:66px;padding:11px clamp(12px,1.2vw,18px);border-right:1px solid var(--rule);cursor:pointer;transition:background .2s ease}
+.evidence-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--hair);margin-bottom:clamp(18px,2vw,26px);background:var(--surface)}
+.evidence-tab{position:relative;display:flex;flex-direction:column;justify-content:center;gap:6px;min-height:66px;padding:11px clamp(12px,1.2vw,18px);border-right:1px solid var(--hair);cursor:pointer;transition:background .2s ease}
 .evidence-tab:last-child{border-right:0}
-.evidence-tab-role{font-size:var(--t-label);letter-spacing:var(--track);color:var(--mineral-light);transition:color .2s ease}
-.evidence-tab-name{font-size:var(--t-body);font-weight:400;letter-spacing:-.005em;color:var(--mineral-light);transition:color .2s ease}
+.evidence-tab-role{font-size:var(--t-label);letter-spacing:var(--track);color:var(--fg-2);transition:color .2s ease}
+.evidence-tab-name{font-size:var(--t-body);font-weight:400;letter-spacing:-.005em;color:var(--fg-2);transition:color .2s ease}
 /* Selection is never colour alone: a 2px underline rule, a brighter label AND a "Shown" marker. */
-.evidence-tab-shown{display:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--teal-light)}
-.evidence-tab:hover .evidence-tab-name{color:var(--mist)}
-.evidence-frame{position:relative;display:grid;width:100%;max-width:600px;aspect-ratio:1/1;border:1px solid var(--rule);background:var(--ground);overflow:hidden}
+.evidence-tab-shown{display:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--link)}
+.evidence-tab:hover .evidence-tab-name{color:var(--fg)}
+.evidence-frame{position:relative;display:grid;width:100%;max-width:600px;aspect-ratio:1/1;border:1px solid var(--hair);background:var(--matte);overflow:hidden}
 .evidence-plate{grid-area:1/1;position:relative;margin:0;opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s linear .45s}
 .evidence-plate>.panel-image{width:100%;height:100%;object-fit:cover}
-.evidence-state{display:flex;flex-wrap:wrap;gap:6px 22px;margin:15px 0 0;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--mineral-light)}
-.evidence-side{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:max-content 1fr;gap:22px;border-top:1px solid var(--rule);padding-top:19px}
+.evidence-state{display:flex;flex-wrap:wrap;gap:6px 22px;margin:15px 0 0;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--fg-2)}
+.evidence-side{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:max-content max-content;gap:26px;align-self:start;border-top:1px solid var(--hair);padding-top:19px}
 .evidence-read{grid-area:1/1;display:flex;flex-direction:column;gap:13px;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility 0s linear .35s}
-.evidence-role{font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--teal-light)}
-.evidence-label{margin:0;font-size:var(--t-figure);font-weight:400;letter-spacing:-.01em;color:var(--mist)}
-.evidence-body{margin:0;font-size:var(--t-body);line-height:1.65;color:var(--mineral-light);max-width:none}
-.evidence-note{max-width:none}
-/* The foot of the reading column: the subordinate structure/geology gap, the route into the
-   method, and the one shared frame spec. Anchored to the bottom so it lands level with the map's
-   own foot instead of leaving the column half empty. */
-.evidence-foot{grid-row:2;align-self:end;display:flex;flex-direction:column;align-items:flex-start;gap:14px;border-top:1px solid var(--rule-soft);padding-top:18px}
-.evidence-gap{margin:0;font-size:var(--t-warning);line-height:1.6;color:var(--mineral-light)}
-.evidence-gap .mono{display:block;margin-bottom:7px;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--gold-light)}
-.evidence-foot .act-meta{color:var(--mineral-light)}
+.evidence-role{font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--link)}
+.evidence-label{margin:0;font-size:var(--t-figure);font-weight:400;letter-spacing:-.01em;color:var(--fg)}
+/* The foot of the reading column: the route into the Geothermal page, set directly under the layer's name. With the
+   per-layer explanations gone the column is a short, top-aligned block, not a column stretched to the map's height. */
+.evidence-foot{grid-row:2;align-self:start;display:flex;flex-direction:column;align-items:flex-start;gap:14px;border-top:1px solid var(--hair-soft);padding-top:18px}
+.evidence-foot .act-meta{color:var(--fg-2)}
 #ev-terrain:checked~.evidence-stage .evidence-plate[data-layer="terrain"],
 #ev-thermal:checked~.evidence-stage .evidence-plate[data-layer="thermal"],
 #ev-alteration:checked~.evidence-stage .evidence-plate[data-layer="alteration"]{opacity:1;visibility:visible;transition:opacity .45s ease}
@@ -440,20 +437,20 @@ body.home{background:var(--ground)}
 #ev-alteration:checked~.evidence-stage .evidence-read[data-layer="alteration"]{opacity:1;visibility:visible;transition:opacity .35s ease}
 #ev-terrain:checked~.evidence-stage [for="ev-terrain"],
 #ev-thermal:checked~.evidence-stage [for="ev-thermal"],
-#ev-alteration:checked~.evidence-stage [for="ev-alteration"]{background:rgba(88,174,178,.07);box-shadow:inset 0 -2px 0 var(--teal-light)}
+#ev-alteration:checked~.evidence-stage [for="ev-alteration"]{background:var(--wash);box-shadow:inset 0 -2px 0 var(--link)}
 #ev-terrain:checked~.evidence-stage [for="ev-terrain"] .evidence-tab-name,
 #ev-thermal:checked~.evidence-stage [for="ev-thermal"] .evidence-tab-name,
-#ev-alteration:checked~.evidence-stage [for="ev-alteration"] .evidence-tab-name{color:var(--mist)}
+#ev-alteration:checked~.evidence-stage [for="ev-alteration"] .evidence-tab-name{color:var(--fg)}
 #ev-terrain:checked~.evidence-stage [for="ev-terrain"] .evidence-tab-role,
 #ev-thermal:checked~.evidence-stage [for="ev-thermal"] .evidence-tab-role,
-#ev-alteration:checked~.evidence-stage [for="ev-alteration"] .evidence-tab-role{color:var(--teal-light)}
+#ev-alteration:checked~.evidence-stage [for="ev-alteration"] .evidence-tab-role{color:var(--link)}
 #ev-terrain:checked~.evidence-stage [for="ev-terrain"] .evidence-tab-shown,
 #ev-thermal:checked~.evidence-stage [for="ev-thermal"] .evidence-tab-shown,
 #ev-alteration:checked~.evidence-stage [for="ev-alteration"] .evidence-tab-shown{display:block}
 /* The focus ring belongs on the tab the keyboard is actually on, not on the whole group. */
 #ev-terrain:focus-visible~.evidence-stage [for="ev-terrain"],
 #ev-thermal:focus-visible~.evidence-stage [for="ev-thermal"],
-#ev-alteration:focus-visible~.evidence-stage [for="ev-alteration"]{outline:2px solid var(--teal-light);outline-offset:-2px}
+#ev-alteration:focus-visible~.evidence-stage [for="ev-alteration"]{outline:2px solid var(--link);outline-offset:-2px}
 
 /* ---------- Act 04 — the result ----------
    The dominant object on the page, and dominant by scale, centring and the silence around it —
@@ -493,16 +490,14 @@ body.home{background:var(--ground)}
    sides and the warning cell added a second rule of its own on top. Now the gutter is real space
    and the rule sits in the MIDDLE of it, inset from the type top and bottom; the warning keeps its
    caution colour on the term, where it does not collide with anything. */
-.result-defs{margin:clamp(30px,3.4vw,52px) 0 0;width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--defs-gap);border-top:1px solid var(--rule);text-align:left}
+.result-defs{margin:clamp(30px,3.4vw,52px) auto 0;width:100%;max-width:880px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--defs-gap);border-top:1px solid var(--rule);text-align:left}
 .result-defs>div{position:relative;padding:22px 0 6px}
 /* The rule's geometry lives on every cell and only `content` turns it on, so the responsive blocks
    below can move which cells carry one without restating where it sits. */
 .result-defs>div::before{content:none;position:absolute;left:calc(var(--defs-gap) / -2);top:24px;bottom:8px;width:1px;background:var(--rule-soft)}
 .result-defs>div+div::before{content:""}
 .result-defs dt{font-size:var(--t-label);font-family:var(--mono);letter-spacing:var(--track);text-transform:uppercase;color:var(--teal-light);margin-bottom:10px}
-.result-defs .is-not dt{color:var(--gold-light)}
 .result-defs dd{margin:0;font-size:var(--t-body);line-height:1.65;color:var(--mineral-light)}
-.result-defs dd.beam-note{max-width:none;font-size:var(--t-warning);color:var(--mineral-light);padding-left:0;border-left:0}
 .result-actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(22px,3vw,44px);margin-top:clamp(26px,2.8vw,40px)}
 
 /* ---------- inspection aid ----------
@@ -516,12 +511,12 @@ body.home{background:var(--ground)}
 .inspect-radio{position:absolute;left:0;top:0;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
 .inspect-figure{margin:0;display:flex;flex-direction:column;gap:14px}
 .inspect-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 22px}
-.inspect-against{font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--mineral-light)}
+.inspect-against{font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--fg-2)}
 /* No row gap: each pair already carries a 44px activation box, which is the spacing. */
 .inspect-pairs{display:flex;flex-wrap:wrap;gap:0 18px}
-.inspect-pair{display:inline-flex;align-items:center;min-height:44px;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--mineral-light);cursor:pointer;border-bottom:1px solid transparent;transition:color .2s ease,border-color .2s ease}
-.inspect-pair:hover{color:var(--mist)}
-.inspect-frame{position:relative;width:100%;max-width:600px;aspect-ratio:1/1;overflow:hidden;border:1px solid var(--rule);background:var(--ground);--pos:50%}
+.inspect-pair{display:inline-flex;align-items:center;min-height:44px;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--fg-2);cursor:pointer;border-bottom:1px solid transparent;transition:color .2s ease,border-color .2s ease}
+.inspect-pair:hover{color:var(--fg)}
+.inspect-frame{position:relative;width:100%;max-width:600px;aspect-ratio:1/1;overflow:hidden;border:1px solid var(--hair);background:var(--matte);--pos:50%}
 .inspect-base{position:absolute;inset:0;overflow:hidden}
 .inspect-base>img{position:absolute;left:-45.0835%;top:-25%;width:266.6667%;height:150%;max-width:none;object-fit:cover}
 .inspect-layer{position:absolute;left:0;top:0;bottom:0;width:var(--pos);overflow:hidden;opacity:0;visibility:hidden}
@@ -540,10 +535,10 @@ body.home{background:var(--ground)}
 #cp-priority:checked~.inspect-figure .inspect-layer[data-pair="priority"]{opacity:1;visibility:visible}
 #cp-thermal:checked~.inspect-figure [for="cp-thermal"],
 #cp-alteration:checked~.inspect-figure [for="cp-alteration"],
-#cp-priority:checked~.inspect-figure [for="cp-priority"]{color:var(--mist);border-bottom-color:var(--teal-light)}
+#cp-priority:checked~.inspect-figure [for="cp-priority"]{color:var(--fg);border-bottom-color:var(--link)}
 #cp-thermal:focus-visible~.inspect-figure [for="cp-thermal"],
 #cp-alteration:focus-visible~.inspect-figure [for="cp-alteration"],
-#cp-priority:focus-visible~.inspect-figure [for="cp-priority"]{outline:2px solid var(--teal-light);outline-offset:3px}
+#cp-priority:focus-visible~.inspect-figure [for="cp-priority"]{outline:2px solid var(--link);outline-offset:3px}
 
 /* ---------- Solutions ----------
    The active application leads at full width; the two in development sit beneath it. One
@@ -552,7 +547,7 @@ body.home{background:var(--ground)}
    other places and the section footnote below the cards is what says so — the per-card captions
    that used to say it were removed at Product's instruction in R14. */
 .domains{list-style:none;margin:clamp(34px,4vw,62px) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,1.8vw,26px)}
-.domain-card{position:relative;overflow:hidden;display:flex;align-items:flex-end;min-height:300px;border:1px solid var(--rule);background:var(--ground);scroll-margin-top:calc(var(--header-h) + 12px)}
+.domain-card{position:relative;overflow:hidden;display:flex;align-items:flex-end;min-height:300px;border:0;background:var(--ground);scroll-margin-top:calc(var(--header-h) + 12px)}
 .domain-card.is-lead{grid-column:1/-1;min-height:clamp(340px,40vh,460px)}
 /* Same height for every card's copy block, so the three titles sit the same distance off their own
    card's foot however tall the card or however long the sentence. Without this the two-line Mining
@@ -567,10 +562,10 @@ body.home{background:var(--ground)}
 .domain-copy{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;
   gap:11px;width:100%;min-height:calc(var(--domain-copy-h) + 2 * clamp(22px,2.6vw,40px));
   padding:clamp(22px,2.6vw,40px)}
-.domain-copy h3{margin:0;font-size:var(--t-figure);font-weight:400;letter-spacing:-.01em;color:var(--mist)}
-.domain-copy p{margin:0;max-width:46ch;font-size:var(--t-body);line-height:1.6;color:var(--mist)}
-.domain-status{margin:2px 0 0;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--mineral-light)}
-.domain-status.is-active{color:var(--teal-light)}
+.domain-copy h3{margin:0;font-size:var(--t-figure);font-weight:400;letter-spacing:-.01em;color:var(--fg)}
+.domain-copy p{margin:0;max-width:46ch;font-size:var(--t-body);line-height:1.6;color:var(--fg)}
+.domain-status{margin:2px 0 0;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--fg-2)}
+.domain-status.is-active{color:var(--link)}
 /* WEB-005C R2: each card is a native link to its own /solutions/ row. The anchor wraps the copy
    block and stays STATIC on purpose -- that is what lets its ::after resolve against the card
    instead of the copy block, so one transparent overlay makes the whole card the click target
@@ -581,15 +576,11 @@ body.home{background:var(--ground)}
 /* The card clips its own overflow, so the focus ring is inset like the other contained
    surfaces on the page (evidence tabs, submenu) rather than the page default outset ring. */
 .domain-link:focus-visible{outline:none}
-.domain-link:focus-visible::after{outline:2px solid var(--teal-light);outline-offset:-2px}
+.domain-link:focus-visible::after{outline:2px solid var(--link);outline-offset:-2px}
 .domains-note{margin-top:clamp(22px,2.4vw,34px)}
 
 
 /* ---------- company mark (the About header) ---------- */
-
-/* ---------- contact: one centred Partner line (MER-240) ---------- */
-.sec-contact{padding-top:clamp(44px,5vw,72px);padding-bottom:clamp(52px,6vw,88px)}
-.sec-contact .shell{display:flex;justify-content:center}
 
 @media(min-width:701px){
   /* The whole 16:9 frame is on screen, so the recorded AOI fractions are true of what is drawn
@@ -622,17 +613,9 @@ body.home{background:var(--ground)}
   .sec-result h2{margin-bottom:14px}
   .result-lead{max-width:66ch;margin-bottom:clamp(20px,2.2vw,30px)}
 }
-@media(max-width:1180px){
-  /* 2 x 2: only the right-hand cell of each row carries a vertical rule, and the first row carries
-     the horizontal one. A rule inherited from the 4-column layout would land mid-row. */
-  .result-defs{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:2px}
-  .result-defs>div+div::before{content:none}
-  .result-defs>div:nth-child(even)::before{content:""}
-  .result-defs>div:nth-child(-n+2){border-bottom:1px solid var(--rule-soft);padding-bottom:22px}
-}
 @media(max-width:1000px){
   .evidence-stage{grid-template-columns:minmax(0,1fr);gap:26px}
-  .evidence-side{border-top:1px solid var(--rule)}
+  .evidence-side{border-top:1px solid var(--hair)}
   .sec-inspect .shell{grid-template-columns:minmax(0,1fr);gap:30px}
   .inspect-switch{justify-self:start}
 }
@@ -657,14 +640,12 @@ body.home{background:var(--ground)}
 }
 @media(max-width:700px){
   .evidence-tabs{grid-template-columns:1fr}
-  .evidence-tab{border-right:0;border-bottom:1px solid var(--rule);min-height:56px;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:6px 14px}
+  .evidence-tab{border-right:0;border-bottom:1px solid var(--hair);min-height:56px;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:6px 14px}
   .evidence-tab:last-child{border-bottom:0}
   /* One column: the separation is horizontal, so every vertical rule goes. */
   .result-defs{grid-template-columns:1fr;row-gap:0}
-  .result-defs>div::before,.result-defs>div+div::before,
-  .result-defs>div:nth-child(even)::before{content:none}
+  .result-defs>div::before,.result-defs>div+div::before{content:none}
   .result-defs>div+div{border-top:1px solid var(--rule-soft)}
-  .result-defs>div:nth-child(-n+2){border-bottom:0;padding-bottom:6px}
   .act-footnote{gap:8px}
   .place-copy{padding-left:var(--pad);padding-right:var(--pad)}
   .context-band{--place-pad:var(--pad)}
@@ -688,7 +669,7 @@ body.home{background:var(--ground)}
    the Atlas tokens. A page thread composes the foundation components instead of growing this region; what
    no page uses any more is removed at integration. */
 
-body.interior{--edge:max(var(--pad),calc((100% - var(--shell)) / 2));--chap-y:clamp(64px,7vw,112px);background:var(--ground)}
+body.interior{--edge:max(var(--pad),calc((100% - var(--shell)) / 2));--chap-y:clamp(64px,7vw,112px);background:var(--limestone)}
 body.interior main{counter-reset:chapter}
 /* A renamed or moved section carries its superseded anchor along with it, so an existing deep
    link (/solutions/#mineral, /solutions/#environment, the old /pilot/#pilot-* fragments) still
@@ -699,25 +680,26 @@ body.interior main{counter-reset:chapter}
 .anchor-alias{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;pointer-events:none;scroll-margin-top:calc(var(--header-h) + 12px)}
 /* ----- heroes ----- */
 /* The base .page-hero rules below also serve the 404; everything interior is scoped to body.interior. */
-.page-hero{padding:clamp(64px,9vw,140px) var(--pad) clamp(40px,5vw,64px);background:var(--ground);border-bottom:1px solid var(--rule)}
+.page-hero{padding:clamp(64px,9vw,140px) var(--pad) clamp(40px,5vw,64px);background:var(--ground);border-bottom:1px solid var(--hair)}
 .page-hero-inner{max-width:920px}
 .page-hero h1{margin:0 0 22px;font-size:clamp(34px,4.2vw,64px);font-weight:300;letter-spacing:-.03em;line-height:1.1;max-width:18ch}
-.page-hero-copy{margin:0;max-width:64ch;font-size:clamp(16px,1.2vw,19px);line-height:1.7;color:var(--mist);font-weight:400}
+.page-hero-copy{margin:0;max-width:64ch;font-size:clamp(16px,1.2vw,19px);line-height:1.7;color:var(--fg);font-weight:400}
 body.interior .page-hero{position:relative;overflow:hidden;padding:clamp(72px,9vw,148px) var(--pad) clamp(52px,6vw,92px);background:var(--ground);border-bottom:0}
+body.interior .page-hero.ground-paper{background:var(--limestone)}
 body.interior .page-hero-inner{position:relative;z-index:2;width:min(var(--shell),100%);max-width:none;margin-inline:auto}
-body.interior .page-hero .kicker{margin:0 0 clamp(18px,2vw,28px);color:var(--teal-light)}
-body.interior .page-hero h1{margin:0 0 clamp(20px,2.4vw,32px);max-width:17ch;font-size:clamp(38px,5.4vw,88px);font-weight:300;letter-spacing:-.045em;line-height:1.02;text-wrap:balance;color:var(--mist)}
-body.interior .page-hero-copy{max-width:50ch;font-size:clamp(16px,1.3vw,21px);line-height:1.68;color:var(--mist)}
+body.interior .page-hero .kicker{margin:0 0 clamp(18px,2vw,28px);color:var(--link)}
+body.interior .page-hero h1{margin:0 0 clamp(20px,2.4vw,32px);max-width:17ch;font-size:clamp(38px,5.4vw,88px);font-weight:300;letter-spacing:-.045em;line-height:1.02;text-wrap:balance;color:var(--fg)}
+body.interior .page-hero-copy{max-width:50ch;font-size:clamp(16px,1.3vw,21px);line-height:1.68;color:var(--fg)}
 /* ----- chapters ----- */
 .page-section{position:relative}
 body.interior .page-section{position:relative;padding:var(--chap-y) var(--pad);background:var(--ground);border-top:0}
-body.interior .page-section::before{content:"";position:absolute;left:var(--pad);right:var(--pad);top:0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent 0%,var(--rule-soft) 14%,var(--rule-soft) 86%,transparent 100%)}
+body.interior .page-section::before{content:"";position:absolute;left:var(--pad);right:var(--pad);top:0;height:1px;pointer-events:none;background:linear-gradient(90deg,transparent 0%,var(--hair-soft) 14%,var(--hair-soft) 86%,transparent 100%)}
 body.interior .page-section.is-deep{background:linear-gradient(180deg,var(--ground) 0%,var(--ground-lift) 22%,var(--ground-lift) 78%,var(--ground) 100%)}
 .chapter{counter-increment:chapter}
-.chapter .page-section-head::before{content:counter(chapter,decimal-leading-zero);display:block;margin-bottom:clamp(14px,1.6vw,22px);font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--teal-light)}
+.chapter .page-section-head::before{content:counter(chapter,decimal-leading-zero);display:block;margin-bottom:clamp(14px,1.6vw,22px);font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--link)}
 .page-section-head{max-width:760px;margin:0 0 clamp(28px,3.5vw,48px)}
-.page-section-head h2{margin:0 0 16px;font-size:clamp(28px,3.1vw,48px);font-weight:300;letter-spacing:-.038em;line-height:1.06;color:var(--mist);text-wrap:balance}
-.page-section-head p{margin:0;max-width:40ch;font-size:clamp(15px,1.1vw,17px);line-height:1.72;color:var(--mineral-light);font-weight:400}
+.page-section-head h2{margin:0 0 16px;font-size:clamp(28px,3.1vw,48px);font-weight:300;letter-spacing:-.038em;line-height:1.06;color:var(--fg);text-wrap:balance}
+.page-section-head p{margin:0;max-width:40ch;font-size:clamp(15px,1.1vw,17px);line-height:1.72;color:var(--fg-2);font-weight:400}
 
 /* Side by side by default: the heading holds its place on the left while the visual and the reading
    run on the right. Stacked chapters (.is-stacked) put the heading over a full-width composition. */
@@ -730,10 +712,9 @@ body.interior .page-section.is-deep{background:linear-gradient(180deg,var(--grou
 .chapter.is-stacked .chapter-grid>:not(.page-section-head){grid-column:1}
 .chapter-link{margin:0}
 body.interior .text-link{white-space:normal}
-.chapter-link .text-link{color:var(--mineral-light)}
-.chapter-link .text-link:hover{color:var(--mist)}
+.chapter-link .text-link{color:var(--fg-2)}
+.chapter-link .text-link:hover{color:var(--fg)}
 /* ----- shared endings ----- */
-.page-closing{padding:clamp(48px,6vw,88px) var(--pad);display:flex;justify-content:center;border-top:1px solid var(--rule-soft);background:linear-gradient(180deg,var(--ground) 0%,var(--ground) 100%)}
 .not-found .page-hero{border-bottom:0;min-height:52svh}
 .not-found .text-link{margin-top:30px}
 /* MER-241: one 404 serves every path, so it answers in both languages. */
@@ -751,28 +732,22 @@ body.interior .text-link{white-space:normal}
 
 /* === atlas:geothermal === MER-276 owns this region: /solutions/geothermal/ and its Turkish twin, in the Atlas design
    (preview, pending CTO acceptance of A1-A9). It composes the foundation components (kicker, text link, caption,
-   warning, record list, plate, grounds) and adds only what is particular to this page: the opening on the Landsat
-   strip, the chapter index, the atlas grid, the result plate with its legend and scale, the ledger and the index of
-   what is missing. Every rule is scoped to body.page-geothermal so no sibling page is touched. */
+   record list, plate, grounds) and adds only what is particular to this page: the opening on the Landsat strip,
+   the atlas grid, the result plate with its legend and scale and the index of what is missing. Every rule is scoped to body.page-geothermal so no sibling page is touched. */
 
 /* ---------- the opening: the Landsat strip behind the headline ----------
    Capped at 1600 CSS px wide and 550 CSS px high, like Act 02: the crop is 3200 x 1100 px, so a 2x display is served
    at native density and the strip is never drawn above its own pixels (the validator reads both caps). */
 body.interior .page-hero.is-stage{display:flex;align-items:flex-end;max-width:1600px;margin-inline:auto;min-height:clamp(460px,38vw,550px);padding-top:clamp(72px,8vw,112px);padding-bottom:clamp(56px,5vw,72px);background:var(--ground)}
 body.page-geothermal .page-hero.is-stage h1{margin:0 0 clamp(20px,2.4vw,30px);max-width:21ch;font-size:var(--t-page);font-weight:300;line-height:.98;letter-spacing:-.03em}
-body.page-geothermal .tone{color:var(--mineral-light)}
-body.page-geothermal .page-hero.is-stage .page-hero-copy{max-width:52ch;font-size:var(--t-lede);line-height:1.62;color:var(--mist)}
+body.page-geothermal .tone{color:var(--fg-2)}
+body.page-geothermal .page-hero.is-stage .page-hero-copy{max-width:52ch;font-size:var(--t-lede);line-height:1.62;color:var(--fg)}
 .stage-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%}
 .stage-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:
   linear-gradient(90deg,rgba(23,26,27,.93) 0%,rgba(23,26,27,.8) 32%,rgba(23,26,27,.3) 62%,rgba(23,26,27,0) 86%),
   linear-gradient(0deg,rgba(23,26,27,.94) 0%,rgba(23,26,27,.5) 18%,transparent 42%)}
 .page-hero.is-stage .scene-label{right:var(--edge);bottom:18px}
 
-/* ---------- the chapter index: one full-width Lift band under the strip ---------- */
-.geo-index{position:relative;padding:0 var(--pad);background:var(--ground-lift);border-bottom:1px solid var(--rule-soft)}
-.geo-index-list{width:min(var(--shell),100%);margin-inline:auto;display:flex;flex-wrap:wrap;gap:0 clamp(24px,4vw,64px)}
-.geo-index-list a{display:inline-flex;align-items:center;gap:12px;min-height:clamp(48px,4.2vw,60px);font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--fg-2);transition:color .2s ease}
-.geo-index-list a:hover{color:var(--fg)}
 .geo-no{color:var(--link)}
 .geo-no::before{content:attr(data-no)}
 
@@ -783,7 +758,6 @@ body.page-geothermal .page-section-head h2{font-size:var(--t-section);letter-spa
 body.page-geothermal .page-section-head h3{font-size:var(--t-statement);letter-spacing:-.025em;line-height:1.12}
 body.page-geothermal .page-section-head .kicker{margin:0 0 18px;max-width:none;font-size:var(--t-label);line-height:1.6;color:var(--link)}
 body.page-geothermal .page-section-head .lede{margin:22px 0 0;max-width:46ch;font-size:var(--t-lede);line-height:1.62;color:var(--fg-2)}
-body.page-geothermal .page-section-head .beam-note{margin-top:28px;max-width:62ch;font-size:var(--t-warning);line-height:1.6;color:var(--fg-2)}
 .geo-link{margin:clamp(36px,4vw,56px) 0 0}
 
 /* ---------- 01 the pilot record, on paper: the record and the locator map ---------- */
@@ -815,7 +789,6 @@ body.page-geothermal .page-section-head.geo-head .lede{margin:0}
 .geo-result-head{grid-area:head}
 .geo-priority{grid-area:plate}
 .geo-result-text{grid-area:text}
-.geo-result-text .beam-note{max-width:62ch}
 .geo-result-text .geo-link{margin-top:clamp(28px,3vw,40px)}
 .geo-legend{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px;margin-top:28px}
 .geo-ramp{width:min(256px,62%)}
@@ -829,31 +802,17 @@ body.page-geothermal .page-section-head.geo-head .lede{margin:0}
 .geo-relief{padding-top:0}
 .geo-relief-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,600px);gap:clamp(48px,7vw,104px);align-items:start;padding-top:clamp(56px,6vw,88px);border-top:1px solid var(--hair)}
 
-/* ---------- the ledger, on paper: what the result establishes and what it does not ---------- */
-.geo-ledger{padding-block:clamp(56px,6vw,88px)}
-.geo-ledger-set{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(40px,6vw,96px);align-items:start}
-.geo-ledger-col .kicker{margin:0 0 10px}
-.geo-ledger-col.is-not .kicker{color:var(--limit)}
-.geo-ledger-col ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair)}
-.geo-ledger-col li{padding:14px 0;border-bottom:1px solid var(--hair-soft);font-size:var(--t-body);line-height:1.4;color:var(--fg)}
-.geo-ledger-col.is-not ul{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));column-gap:32px;max-width:none;padding-left:20px}
-
 /* ---------- 04 what is missing, on Lift: a statement and an index of the gaps ---------- */
 .geo-missing{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px clamp(48px,7vw,112px);align-items:end}
 .geo-missing-list{display:flex;flex-direction:column;border-top:1px solid var(--hair)}
 .geo-missing-list a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--hair-soft);font-size:var(--t-body);line-height:1.4;color:var(--fg);transition:background .2s ease}
-.geo-missing-list a:hover{background:rgba(88,174,178,.05)}
+.geo-missing-list a:hover{background:var(--wash)}
 .geo-missing-list .mono-label{text-align:right}
 .geo-missing-list .mono-label.is-limit{color:var(--limit)}
 
-/* ---------- the one closing link ---------- */
-body.page-geothermal .page-closing{justify-content:flex-start;padding:clamp(56px,6vw,88px) var(--edge);border-top:1px solid var(--rule-soft)}
-body.page-geothermal .page-closing .text-link{margin:0;padding:0;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;text-transform:none;color:var(--fg);border-bottom:0;white-space:normal}
-body.page-geothermal .page-closing .text-link:hover{color:var(--link)}
-
 /* ---------- below the desktop composition ---------- */
 @media(max-width:1000px){
-  .geo-record,.geo-relief-in,.geo-ledger-set,.geo-missing{grid-template-columns:minmax(0,1fr)}
+  .geo-record,.geo-relief-in,.geo-missing{grid-template-columns:minmax(0,1fr)}
   .geo-result{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;grid-template-areas:"head" "plate" "text"}
   .geo-atlas-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .geo-priority,.geo-slot{max-width:600px}
@@ -866,7 +825,6 @@ body.page-geothermal .page-closing .text-link:hover{color:var(--link)}
   .stage-shade{position:relative;inset:auto;grid-area:1/1;background:linear-gradient(0deg,rgba(23,26,27,1) 0%,rgba(23,26,27,.55) 16%,transparent 44%)}
   body.interior .page-hero.is-stage .page-hero-inner{grid-area:2/1;padding:clamp(24px,6vw,36px) var(--pad) 52px}
   .page-hero.is-stage .scene-label{grid-area:1/1;position:relative;right:auto;bottom:auto;align-self:end;justify-self:end;margin:0 var(--pad) 14px 0}
-  .geo-index-list{gap:0 24px}
   .geo-where{grid-template-columns:minmax(0,1fr);gap:8px}
 }
 @media(max-width:640px){
@@ -894,23 +852,23 @@ body.page-solutions .page-hero.is-ledger{padding:clamp(72px,9vw,140px) var(--pad
 body.page-solutions .page-hero .kicker{margin:0 0 clamp(20px,2.2vw,30px)}
 .hero-lead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px 64px}
 body.page-solutions .page-hero .hero-lead h1{flex:1 1 560px;margin:0;max-width:16ch;font-size:var(--t-page);line-height:.98;letter-spacing:-.03em;text-wrap:balance}
-body.page-solutions .page-hero .hero-lead .page-hero-copy{flex:0 1 380px;max-width:none;font-size:var(--t-lede);line-height:1.65;color:var(--mist);text-wrap:pretty}
+body.page-solutions .page-hero .hero-lead .page-hero-copy{flex:0 1 380px;max-width:none;font-size:var(--t-lede);line-height:1.65;color:var(--fg);text-wrap:pretty}
 body.interior .page-hero h1 .tone{display:block}
-.domain-index{list-style:none;width:min(var(--shell),100%);margin:clamp(56px,7vw,104px) auto 0;padding:0;border-top:1px solid var(--rule)}
-.domain-index li{position:relative;border-bottom:1px solid var(--rule-soft)}
-.domain-index li:first-child::before{content:"";position:absolute;left:0;top:-1px;width:min(420px,40%);height:2px;background:var(--teal-light)}
+.domain-index{list-style:none;width:min(var(--shell),100%);margin:clamp(56px,7vw,104px) auto 0;padding:0;border-top:1px solid var(--hair)}
+.domain-index li{position:relative;border-bottom:1px solid var(--hair-soft)}
+.domain-index li:first-child::before{content:"";position:absolute;left:0;top:-1px;width:min(420px,40%);height:2px;background:var(--link)}
 .index-row{display:grid;grid-template-columns:auto minmax(0,1.5fr) minmax(0,1.3fr) minmax(0,1.5fr);align-items:center;gap:16px clamp(24px,3vw,48px);padding:clamp(22px,2.4vw,30px) 0}
 .index-row:focus-visible{outline-offset:-3px}
 .index-thumb{display:block;width:clamp(72px,8vw,112px);aspect-ratio:1/1;overflow:hidden}
 .index-thumb img.row-thumb{width:100%;height:100%}
-.index-thumb.is-none{display:flex;align-items:center;justify-content:center;border:1px dashed var(--rule);font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-caption);letter-spacing:var(--track);line-height:1.6;text-transform:uppercase;text-align:center;color:var(--mineral-light)}
-.index-name{font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1;color:var(--mineral-light);transition:color .2s ease}
-.index-row.is-lead .index-name{color:var(--mist)}
-.index-row:hover .index-name{color:var(--teal-light)}
+.index-thumb.is-none{display:flex;align-items:center;justify-content:center;border:1px dashed var(--hair);font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-caption);letter-spacing:var(--track);line-height:1.6;text-transform:uppercase;text-align:center;color:var(--fg-2)}
+.index-name{font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1;color:var(--fg-2);transition:color .2s ease}
+.index-row.is-lead .index-name{color:var(--fg)}
+.index-row:hover .index-name{color:var(--link)}
 .index-row .domain-status{margin:0}
-.index-note{font-size:var(--t-body);line-height:1.5;color:var(--mineral-light)}
-.index-row.is-lead .index-note{color:var(--mist)}
-.index-note [aria-hidden]{color:var(--teal-light)}
+.index-note{font-size:var(--t-body);line-height:1.5;color:var(--fg-2)}
+.index-row.is-lead .index-note{color:var(--fg)}
+.index-note [aria-hidden]{color:var(--link)}
 
 /* ----- Solutions: the Geothermal band and the pilot index ----- */
 .domain-feature{position:relative;scroll-margin-top:calc(var(--header-h) + 12px)}
@@ -928,50 +886,37 @@ body.interior .page-hero h1 .tone{display:block}
   linear-gradient(0deg,rgba(23,26,27,.92) 0%,rgba(23,26,27,.3) 34%,transparent 62%)}
 .domain-band.is-feature .domain-band-copy{gap:16px;padding-left:var(--edge);padding-right:var(--edge);padding-bottom:clamp(86px,calc(120px - 2.4vw),112px)}
 .domain-band.is-feature h2{font-size:var(--t-page);letter-spacing:-.03em;line-height:.98}
-.band-lede{margin:0;max-width:34ch;font-size:var(--t-lede);line-height:1.55;color:var(--mist)}
+.band-lede{margin:0;max-width:34ch;font-size:var(--t-lede);line-height:1.55;color:var(--fg)}
 .domain-band.is-feature .text-link{margin-top:6px;color:var(--mist);border-bottom-color:rgba(227,229,228,.4)}
 .domain-band.is-feature .text-link:hover{color:var(--teal-light);border-bottom-color:var(--teal-light)}
 .domain-band.is-feature .scene-label{right:var(--edge);bottom:20px}
-.pilot-index{counter-reset:pilot;display:flex;flex-wrap:wrap;gap:0 clamp(24px,4vw,64px);padding:0 var(--edge);background:var(--ground-lift);border-top:1px solid var(--rule-soft);border-bottom:1px solid var(--rule-soft)}
-.pilot-index>*{display:inline-flex;align-items:center;gap:12px;min-height:64px;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);line-height:1.6;text-transform:uppercase}
-.pilot-index-lead{color:var(--mineral-light)}
-.pilot-index a{color:var(--mist);transition:color .2s ease}
-.pilot-index a::before{counter-increment:pilot;content:counter(pilot,decimal-leading-zero);color:var(--teal-light)}
-.pilot-index a:hover{color:var(--teal-light)}
-.pilot-index a:focus-visible{outline-offset:-3px}
 
 /* ----- Solutions: the two expansion directions, on Lift ----- */
 /* Captioned figures, not cards: no frame, surface, shadow, link or call to action (authority doc section 2, MER-255). */
 .domain-pair{position:relative;padding:clamp(80px,9vw,136px) var(--pad) clamp(40px,5vw,72px)}
 .domain-pair .page-section-head{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"kicker kicker" "title note";align-items:end;gap:0 32px;max-width:none;margin:0 0 clamp(40px,5vw,72px)}
 .domain-pair .page-section-head .kicker{grid-area:kicker}
-.domain-pair .page-section-head h2{grid-area:title;margin:0;max-width:none;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;color:var(--mist)}
-.domain-pair .page-section-head .none-note{grid-area:note;max-width:none;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);line-height:1.6;text-transform:uppercase;color:var(--mineral-light)}
+.domain-pair .page-section-head h2{grid-area:title;margin:0;max-width:none;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;color:var(--fg)}
+.domain-pair .page-section-head .none-note{grid-area:note;max-width:none;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);line-height:1.6;text-transform:uppercase;color:var(--fg-2)}
 .pair-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(48px,5vw,72px) clamp(32px,4vw,64px)}
 .domain-panel{position:relative;display:flex;flex-direction:column;gap:clamp(18px,2vw,26px);scroll-margin-top:calc(var(--header-h) + 12px)}
 .panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--ground)}
 .panel-figure>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .panel-figure .scene-label{right:16px;bottom:14px}
 .panel-copy{display:grid;gap:8px 20px;grid-template-columns:minmax(0,1fr) auto;align-items:baseline}
-.panel-copy h3{margin:0;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.06;color:var(--mist)}
+.panel-copy h3{margin:0;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.06;color:var(--fg)}
 .panel-copy .domain-status{margin:0;text-align:right}
 .panel-line{grid-column:1 / -1;margin:6px 0 0;padding-top:14px;border-top:1px solid var(--hair);font-size:var(--t-body);line-height:1.5;color:var(--fg-2)}
-.page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--ground-lift)}
-.page-note .act-footnote{margin-top:0;border-top-color:var(--rule)}
-
-/* ----- the closing line, on both pages: the one Partner link, set as a statement ----- */
-body.page-solutions .page-closing,body.page-about .page-closing{padding:clamp(56px,6vw,88px) var(--pad)}
-body.page-solutions .page-closing .text-link,body.page-about .page-closing .text-link{gap:18px;padding:0;border-bottom:0;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.1;text-transform:none;color:var(--mist);white-space:normal}
-body.page-solutions .page-closing .text-link:hover,body.page-about .page-closing .text-link:hover{color:var(--teal-light)}
-body.page-solutions .page-closing .text-link span[aria-hidden],body.page-about .page-closing .text-link span[aria-hidden]{font-size:.6em}
+.page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--limestone)}
+.page-note .act-footnote{margin-top:0;border-top-color:var(--hair)}
 
 /* ----- About: the opening ----- */
 body.page-about .page-hero.is-statement{padding:clamp(80px,10vw,152px) var(--pad) clamp(64px,7vw,104px)}
 body.page-about .page-hero .kicker{margin:0 0 clamp(20px,2.2vw,30px)}
 body.page-about .page-hero h1{margin:0;max-width:none;font-size:var(--t-page);line-height:.98;letter-spacing:-.03em}
 body.page-about .page-hero h1 .tone{text-wrap:wrap}
-.hero-foot{display:flex;flex-wrap:wrap;justify-content:flex-end;margin-top:clamp(36px,4vw,56px);padding-top:clamp(24px,2.6vw,34px);border-top:1px solid var(--rule)}
-body.page-about .page-hero .hero-foot .page-hero-copy{flex:0 1 560px;max-width:none;font-size:var(--t-lede);line-height:1.62;color:var(--mist);text-wrap:pretty}
+.hero-foot{display:flex;flex-wrap:wrap;justify-content:flex-end;margin-top:clamp(36px,4vw,56px);padding-top:clamp(24px,2.6vw,34px);border-top:1px solid var(--hair)}
+body.page-about .page-hero .hero-foot .page-hero-copy{flex:0 1 560px;max-width:none;font-size:var(--t-lede);line-height:1.62;color:var(--fg);text-wrap:pretty}
 body.page-about .ground{padding-block:clamp(72px,8vw,120px)}
 /* The statement and the principles are one stretch of Paper: a rule and the section's own padding divide them. */
 body.page-about .about-position{padding-bottom:clamp(48px,5vw,72px)}
@@ -981,8 +926,8 @@ body.page-about .about-principles{padding-top:0}
 /* ----- About: the problem, on Orbit ----- */
 .problem-grid{display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(40px,6vw,96px)}
 .problem-grid .page-section-head{flex:1 1 340px;min-width:0;max-width:none;margin:0}
-.problem-grid .page-section-head h2{margin:0 0 22px;max-width:12ch;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;color:var(--mist)}
-.problem-grid .page-section-head p{max-width:38ch;font-size:var(--t-body);line-height:1.7;color:var(--mineral-light)}
+.problem-grid .page-section-head h2{margin:0 0 22px;max-width:12ch;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;color:var(--fg)}
+.problem-grid .page-section-head p{max-width:38ch;font-size:var(--t-body);line-height:1.7;color:var(--fg-2)}
 .wide-figure{position:relative;width:100%;max-width:728px;margin:0;background:var(--ground);aspect-ratio:1459/897;overflow:hidden;flex:1.6 1 520px;min-width:0}
 .wide-figure>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .wide-figure .scene-label{right:16px;bottom:14px}
@@ -1010,11 +955,11 @@ body.page-about .about-principles{padding-top:0}
 /* ----- About: where the data comes from, on Lift ----- */
 .sources-grid{display:flex;flex-wrap:wrap;align-items:flex-start;gap:clamp(36px,5vw,80px)}
 .sources-grid .page-section-head{flex:1 1 320px;max-width:none;margin:0}
-.sources-grid .page-section-head h2{margin:0 0 18px;max-width:none;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.1;color:var(--mist)}
-.sources-grid .page-section-head p{max-width:40ch;font-size:var(--t-body);line-height:1.7;color:var(--mineral-light)}
+.sources-grid .page-section-head h2{margin:0 0 18px;max-width:none;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.1;color:var(--fg)}
+.sources-grid .page-section-head p{max-width:40ch;font-size:var(--t-body);line-height:1.7;color:var(--fg-2)}
 .sources-index{flex:1.4 1 460px;min-width:0}
-.source-names{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));column-gap:32px;margin:0;padding:0;border-top:1px solid var(--rule)}
-.source-names li{padding:15px 0;border-bottom:1px solid var(--rule-soft);font-family:var(--sans);font-size:var(--t-figure);letter-spacing:-.01em;line-height:1.3;color:var(--mist)}
+.source-names{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));column-gap:32px;margin:0;padding:0;border-top:1px solid var(--hair)}
+.source-names li{padding:15px 0;border-bottom:1px solid var(--hair-soft);font-family:var(--sans);font-size:var(--t-figure);letter-spacing:-.01em;line-height:1.3;color:var(--fg)}
 .sources-index .chapter-link{margin:28px 0 0}
 .sources-index .chapter-link .text-link{color:var(--link)}
 .sources-index .chapter-link .text-link:hover{color:var(--fg)}
@@ -1030,7 +975,6 @@ body.page-about .about-principles{padding-top:0}
 }
 @media(max-width:700px){
   .domain-band.is-feature .domain-band-copy{padding-bottom:92px}
-  .pilot-index>*{min-height:48px}
 }
 @media(max-width:560px){
   .lead-statement p{max-width:none;overflow-wrap:anywhere}
@@ -1065,9 +1009,9 @@ body.interior .page-hero.is-split{display:grid;grid-template-columns:minmax(0,1f
 .is-split .page-hero-inner{width:auto;margin:0}
 body.interior .page-hero.is-split .page-hero-copy{max-width:44ch;margin:clamp(22px,2.6vw,32px) 0 clamp(40px,4.6vw,64px);font-size:var(--t-lede);line-height:1.65;color:var(--fg-2);text-wrap:pretty}
 .mail-address{margin:0}
-.mail-address a{display:inline-flex;align-items:baseline;gap:18px;padding-bottom:10px;border-bottom:1px solid rgba(183,192,189,.5);font-size:var(--t-statement);font-weight:300;line-height:1.1;letter-spacing:-.025em;color:var(--fg);overflow-wrap:anywhere;transition:color .2s ease,border-color .2s ease}
+.mail-address a{display:inline-flex;align-items:baseline;gap:18px;padding-bottom:10px;border-bottom:1px solid var(--fg-2);font-size:var(--t-statement);font-weight:300;line-height:1.1;letter-spacing:-.025em;color:var(--fg);overflow-wrap:anywhere;transition:color .2s ease,border-color .2s ease}
 .mail-address a [aria-hidden]{font-size:.55em}
-.mail-address a:hover{color:var(--teal-light);border-bottom-color:var(--teal-light)}
+.mail-address a:hover{color:var(--link);border-bottom-color:var(--link)}
 .split-figure{position:relative;width:100%;max-width:500px;margin:0;aspect-ratio:1/1;overflow:hidden;background:var(--ground)}
 .split-figure img{width:100%;height:100%;object-fit:cover}
 .split-figure .scene-label{right:16px;bottom:14px}
@@ -1076,25 +1020,20 @@ body.interior .page-section.route-section{padding:clamp(72px,8vw,120px) var(--pa
 .route-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair)}
 .route-list>li{border-bottom:1px solid var(--hair-soft)}
 .route-list a{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px clamp(24px,4vw,64px);padding:clamp(28px,3.4vw,44px) 0;transition:background .2s ease}
-.route-list a:hover{background:rgba(88,174,178,.04)}
+.route-list a:hover{background:var(--wash)}
 .route-list a:focus-visible{outline-offset:-3px}
 .route-title{flex:1 1 240px;font-size:var(--t-section);font-weight:300;line-height:1;letter-spacing:-.025em;color:var(--fg)}
 .route-for{flex:1 1 200px;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);line-height:1.6;letter-spacing:var(--track);text-transform:uppercase;color:var(--link)}
 .route-copy{flex:2 1 300px;max-width:40ch;font-size:var(--t-body);line-height:1.55;color:var(--fg-2)}
 .route-go{flex:none;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);line-height:1.6;letter-spacing:var(--track);text-transform:uppercase;color:var(--fg);white-space:nowrap;transition:color .2s ease}
-.route-list a:hover .route-go{color:var(--teal-light)}
+.route-list a:hover .route-go{color:var(--link)}
 
 /* ----- Sources ----- */
-body.interior .page-hero.is-register{padding:clamp(72px,9vw,136px) var(--pad) 0}
+body.interior .page-hero.is-register{padding:clamp(72px,9vw,136px) var(--pad) clamp(56px,6vw,96px)}
 .is-register .page-hero-inner{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:0 clamp(32px,5vw,64px);align-items:end}
 .is-register .kicker{grid-column:1 / -1}
 body.interior .page-hero.is-register h1{max-width:13ch}
 body.interior .page-hero.is-register .page-hero-copy{max-width:none;margin:0;font-size:var(--t-lede);line-height:1.65;color:var(--fg-2);text-wrap:pretty}
-/* The index of the four parts, numbered by CSS so no numeral is loose text. It closes the opening and sits on the paper. */
-.page-index{counter-reset:pi;display:flex;flex-wrap:wrap;gap:0 clamp(24px,3.6vw,56px);width:min(var(--shell),100%);margin:clamp(44px,5vw,72px) auto 0;border-top:1px solid var(--rule)}
-.page-index a{display:inline-flex;align-items:center;gap:12px;min-height:60px;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--mineral-light);transition:color .2s ease}
-.page-index a::before{counter-increment:pi;content:counter(pi,decimal-leading-zero);color:var(--teal-light)}
-.page-index a:hover{color:var(--mist)}
 /* The colophon: four sections on paper, each opening with its numeral, title and one line. */
 body.interior .page-section.ground-paper{padding:clamp(64px,7vw,104px) var(--pad) 0;background:var(--limestone)}
 body.interior .page-section.ground-paper:last-child{padding-bottom:clamp(80px,9vw,136px)}
@@ -1166,7 +1105,6 @@ body.interior .page-section.ground-paper::before{display:none}
   .thumb{width:112px}
 }
 @media(max-width:560px){
-  .page-index a{min-height:48px}
   .source-record dl>div{grid-template-columns:minmax(0,1fr)}
 }
 /* === /atlas:partner-sources === */

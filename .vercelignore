@@ -27,3 +27,10 @@
 !partner
 !sources
 !tr
+
+# Internal record, not site content. assets/imagery/sources.json is the provenance manifest that scripts/validate_site.py
+# reads; it holds how each figure is prepared for display (windows, gamma, palette stops, source rasters) and the CTO's
+# decisions. The public site does not explain how OrbGSS works behind the scenes (CTO, 2026-10-25), so the file stays in
+# the repository and is ignored again here, after "!assets" has re-included the directory. The validator models this
+# one line form ("/<exact file path>", after every "!" entry) and fails if the file would be served.
+/assets/imagery/sources.json

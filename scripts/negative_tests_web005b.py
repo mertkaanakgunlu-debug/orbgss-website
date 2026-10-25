@@ -141,17 +141,17 @@ case("a palette token is redefined a second time", STYLES,
 case("priority public label reworded", SCRIPT,
      lambda t: t.replace("'label.priority': 'Remote-Sensing Relative Priority — Experimental Baseline'",
                          "'label.priority': 'Geothermal Priority'", 1), "priority public label changed")
-case("priority warning dropped from the static page", INDEX,
-     lambda t: re.sub(r'(<dd class="beam-note" data-i18n="act.priority.note">)[^<]*(</dd>)',
-                      r"\1Screening only.\2", t, count=1), "lost required wording")
+case("a retired priority warning is rendered on the homepage again", INDEX,
+     lambda t: t.replace("</main>", '<p data-i18n="act.priority.note">Screening only.</p></main>', 1),
+     "the retired warning key 'act.priority.note' is rendered on")
 case("detached colour strip returns to the homepage", INDEX,
      lambda t: t.replace('<div class="priority-legend">', '<div class="scale-strip"></div><div class="priority-legend">', 1),
      "detached scientific scale strip")
 case("legend moved out of the result figure", INDEX,
      lambda t: t.replace('src="assets/proof/web005b/priority-legend-ramp.png"', 'src=""', 1)
-                .replace("    <!--\r\n      INSPECTION AID",
+                .replace('    <section id="inspect"',
                          '    <img src="assets/proof/web005b/priority-legend-ramp.png" alt="" />\r\n'
-                         '    <!--\r\n      INSPECTION AID', 1),
+                         '    <section id="inspect"', 1),
      "legend must sit inside the result figure")
 
 # ---- B-VIS-07 safe density ------------------------------------------------------------------

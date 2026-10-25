@@ -29,7 +29,7 @@ From the CTO, 2026-10-15 (Milestone 6 and this task's decision round):
 5. Every page except the homepage is reworked. The homepage's four acts do not change.
 6. Turkish ships as static `/tr/` pages.
 7. Solutions: one hub page plus a dedicated Geothermal page. Mining and Marine stay as hub sections until they have something to show.
-8. Homepage: light trim. The four acts and the inspection aid stay; the Solutions cards stay as the entry to the domains; Method and Company leave the homepage for About; Contact becomes one Partner line.
+8. Homepage: light trim. The four acts and the inspection aid stay; the Solutions cards stay as the entry to the domains; Method and Company leave the homepage for About; Contact becomes one Partner line. *(Superseded 2026-10-25: the CTO removed that line and the closing Partner band of every page; the header, the footer and the hero link carry Partner with us. `#contact` no longer exists, `docs/WEB_LIGHT_THEME_AUTHORITY.md` §3.)*
 9. About carries no team, address or legal-entity details: none exist in canonical material, and WEB-003 forbids personal biographies.
 10. Partner with us is email only. No form, backend, CRM, analytics or cookies.
 
@@ -103,7 +103,7 @@ The copy below is proposed wording. Where a line says *existing*, the accepted t
 | Solutions cards | Stay as the three native-link cards, with image, domain name and status label only; the description sentence moves to the hub. New targets: Geothermal → `/solutions/geothermal/`, Mining → `/solutions/#mining`, Marine → `/solutions/#marine`. Mining and Marine read "Expansion direction" (R8). The section title, statement and illustrative footnote are unchanged. |
 | Method (`#proof`) | Removed. Its six commitments become the About principles table (4.4). |
 | Company (`#company`) | Removed. Its copy becomes the About header (4.4). |
-| Contact (`#contact`) | Reduced to one centred line keeping `id="contact"`: "Partner with us →" (existing `contact.cta`), linking `/partner/`. |
+| Contact (`#contact`) | Reduced to one centred line keeping `id="contact"`: "Partner with us →" (existing `contact.cta`), linking `/partner/`. *Removed 2026-10-25 (CTO): the footer already links Partner with us.* |
 | Footer | New navigation. The last attribution sentence "Full provenance is documented in the production package." becomes "Every source is listed on the About page." / "Tüm kaynaklar Hakkımızda sayfasında listelenir." with a link to `/about/#sources`. |
 
 ### 4.2 Solutions (`/solutions/`)

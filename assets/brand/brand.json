@@ -25,15 +25,15 @@
   },
   "not_used": "final/assets/illustrative-map.jpg is a generated illustration and is not placed on any page",
   "files": {
-    "logo-dark": {
-      "file": "orbgss-logo-dark.9085b960.svg",
-      "purpose": "horizontal logo for dark grounds: header and footer on every page",
+    "logo-light": {
+      "file": "orbgss-logo-light.de682b8e.svg",
+      "purpose": "horizontal logo for light grounds: header and footer on every page",
       "bytes": 4939,
-      "sha256": "9085b96015c99855019b35118eda909c578245826566f961411a141c6a40da60",
+      "sha256": "de682b8e1b80a3a74cb939d646053117435a2a3428c00d632be80d6a34536b30",
       "source": {
-        "path": "final/logo/orbgss-logo-dark.svg",
+        "path": "final/logo/orbgss-logo-light.svg",
         "bytes": 12713,
-        "sha256": "ef297ba33c28529c10d608f816fdd316c636dafa1420dd50af8f56c364ddde98"
+        "sha256": "c45dd61321493af14bf5cdac64cc59dace8baae10556f6ede74252cdec3ab140"
       },
       "transform": "metadata element and its xmlns:c2pa declaration removed; drawing unchanged"
     },

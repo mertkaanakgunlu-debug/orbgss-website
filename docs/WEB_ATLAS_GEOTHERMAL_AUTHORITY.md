@@ -5,6 +5,8 @@
 **Baseline:** `claude/project-thread-csvxkc@a477368` (MER-275 on top of MER-255, both unpublished).
 **Governs, once accepted:** `/solutions/geothermal/` and `/tr/cozumler/jeotermal/`. It supersedes the MER-255 Geothermal section of `docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md` and the MER-255 "layer diagram, neutral ruler, no governed derivative" rules; every other rule stands.
 
+**Amended 2026-10-25 (`docs/WEB_LIGHT_THEME_AUTHORITY.md`, CTO request):** the chapter index, the warning under every plate, the two verbatim priority warnings and the ledger (A5) were removed, and the opening, the atlas and the missing index moved to the light ground. Where this document describes them, the light theme document wins; the layout of the atlas, the plates' images, captions, derivatives and the A1 placement records are unchanged.
+
 ## 0. Özet (CTO için)
 
 * **Ne değişti:** Jeotermal sayfası artık "Atlas" tasarımında. Açılışta Landsat şeridi ve bir bölüm dizini; sonra açık zeminde pilot kaydı ve konum haritası; sonra koyu zeminde altı levhalık katman atlası; sonra öncelik haritası ve "ortaya koyar / koymaz" tablosu; en sonda eksik olanların listesi.
@@ -82,7 +84,7 @@ The mandatory warnings (`act.priority.note`, `act.context.note`, `story.terrain.
 | --- | --- | --- | --- |
 | A1 | MER-151 layers at full size on Geothermal | `geothermal_placement` records, validator hooks | preview, pending CTO acceptance |
 | A2 | full-size pending slots (iron, priority over relief) | `.plate-pending`, `#iron`, `#relief` | preview, pending; nothing placed before MER-242 |
-| A5 | "Does not establish" ledger | `.geo-ledger` | preview, pending |
+| A5 | "Does not establish" ledger | `.geo-ledger` | removed on request, 2026-10-25 |
 | A6 | one atlas figure of small multiples, not a card grid | `.geo-atlas` | preview, pending |
 | A7 | new and trimmed copy, EN and TR | §5 | preview, pending CTO language review |
 

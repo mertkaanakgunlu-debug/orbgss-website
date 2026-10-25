@@ -20,18 +20,19 @@ CSS, JS, FONTS = "styles.css", "script.js", "assets/fonts/fonts.json"
 # ---- the palette ---------------------------------------------------------------------------------
 suite.case("a palette token drifts", CSS, swap("--teal-light:#58AEB2;", "--teal-light:#43BFF0;"), "palette token --teal-light")
 suite.case("a line token drifts", CSS, swap("--rule:rgba(183,192,189,.22);", "--rule:rgba(183,192,189,.5);"), "palette token --rule")
-suite.case("a retired WEB-005B token comes back", CSS, swap("body{margin:0;background:var(--ground)", "body{margin:0;background:var(--orb-bg)"), "retired colour token --orb-bg")
+suite.case("a retired WEB-005B token comes back", CSS, swap("body{margin:0;background:var(--limestone)", "body{margin:0;background:var(--orb-bg)"), "retired colour token --orb-bg")
 suite.case("a retired beam token is defined again", CSS, swap("--ground:#171A1B;", "--ground:#171A1B;\n  --orb-beam-core:#7FEFFF;"), "retired colour token --orb-beam-core")
-suite.case("a stray hex colour in a rule", CSS, swap(".site-footer{min-height:180px;", ".site-footer{color:#ffffff;min-height:180px;"), "is not in the Agate palette")
-suite.case("a stray rgba colour in a rule", CSS, swap(".beam-note{margin:0;", ".beam-note{color:rgba(10,10,10,.5);margin:0;"), "is not in the Agate palette")
+suite.case("a stray hex colour in a rule", CSS, swap(".site-footer{min-height:180px;", ".site-footer{color:#fafafa;min-height:180px;"), "is not in the Agate palette")
+suite.case("a stray rgba colour in a rule", CSS, swap(".record-list{margin:0;", ".record-list{color:rgba(10,10,10,.5);margin:0;"), "is not in the Agate palette")
 suite.case("a CSS named colour", CSS, swap(".kicker,.mono-label{margin:0 0 18px;", ".kicker,.mono-label{border-color:red;margin:0 0 18px;"), "border-color: red")
-suite.case("an inline style colour on the homepage", "index.html", swap('<a class="skip-link"', '<a style="color:#ffffff" class="skip-link"'), "index.html: colour #ffffff")
+suite.case("an inline style colour on the homepage", "index.html", swap('<a class="skip-link"', '<a style="color:#fafafa" class="skip-link"'), "index.html: colour #fafafa")
 suite.case("a <style> block colour on the About page", "about/index.html", swap("</head>", "<style>a{color:#ABCDEF}</style></head>"), "about/index.html: colour #ABCDEF")
-suite.case("gold used as a fill", CSS, swap(".plate-gap{border:1px dashed var(--gold-light);", ".plate-gap{background:var(--gold-light);border:1px dashed var(--gold-light);"), "never a fill")
+suite.case("gold used as a fill", CSS, swap(".plate-gap{border:1px dashed var(--limit);", ".plate-gap{background:var(--gold-light);border:1px dashed var(--limit);"), "never a fill")
 suite.case("a retired Atlas token comes back (--signal)", CSS, swap(".skip-link{position:fixed;", ".skip-link{border-color:var(--signal);position:fixed;"), "retired colour token --signal")
 suite.case("a retired Atlas token comes back (--paper)", CSS, swap(".lede{margin:0;font-size:var(--t-lede);line-height:1.62;color:var(--fg);", ".lede{margin:0;font-size:var(--t-lede);line-height:1.62;color:var(--paper);"), "retired colour token --paper")
 suite.case("a retired Atlas token is defined again (--orbit)", CSS, swap("--ground:#171A1B;", "--ground:#171A1B;\n  --orbit:#030B12;"), "retired colour token --orbit")
-suite.case("the old Orbit navy returns as a rule colour", CSS, swap(".beam-note{margin:0;", ".beam-note{color:rgba(3,11,18,.5);margin:0;"), "is not in the Agate palette")
+suite.case("the old Orbit navy returns as a rule colour", CSS, swap(".record-list{margin:0;", ".record-list{color:rgba(3,11,18,.5);margin:0;"), "is not in the Agate palette")
+suite.case("white is used as a literal instead of its token", "about/index.html", swap("</head>", "<style>a{color:#FFFFFE}</style></head>"), "about/index.html: colour #FFFFFE")
 
 # ---- the type system -----------------------------------------------------------------------------
 suite.case("a medium weight appears", CSS, swap(".t-figure{margin:0;font-size:var(--t-figure);font-weight:400;", ".t-figure{margin:0;font-size:var(--t-figure);font-weight:500;"), "font-weight 500")
@@ -63,10 +64,12 @@ suite.case("a foreign key sits in a group's dictionary region", JS, regex(r"(// 
 suite.case("a validator region marker is removed", "scripts/validate_site.py", swap("# === /atlas:geothermal ===", "#"), "must carry the region atlas:geothermal")
 
 # ---- the shared components -----------------------------------------------------------------------
-suite.case("the mandatory warning loses its gold rule", CSS, swap("border-left:2px solid var(--limit-line)", "border-left:2px solid var(--mineral-light)"), "2px gold left rule")
+suite.case("the gold-ruled warning note returns to the stylesheet", CSS, swap(".record-list{margin:0;", ".beam-note{margin:0;border-left:2px solid var(--limit-line)}\n.record-list{margin:0;"), "retired warning component .beam-note")
+suite.case("a warning note returns on a page", "about/index.html", swap("</main>", '<p class="beam-note">x</p></main>'), "a page carries a retired warning component")
+suite.case("a per-layer note returns on a page", "index.html", swap("</main>", '<p class="plate-note">x</p></main>'), "a page carries a retired warning component")
 suite.case("a plate gets a radius", CSS, swap(".plate{margin:0;width:100%;max-width:600px}", ".plate{margin:0;width:100%;max-width:600px;border-radius:4px}"), "gives a plate chrome")
 suite.case("the paper ground keeps the dark-ground teal for links", CSS, swap("--link:var(--teal);--limit", "--link:var(--teal-light);--limit"), "paper ground must carry")
-suite.case("the header leaves the Graphite ground", CSS, swap("border-bottom:1px solid var(--rule-soft);background:var(--ground);position:relative;z-index:40}", "border-bottom:1px solid var(--rule-soft);background:var(--ground-lift);position:relative;z-index:40}"), "must sit on the Graphite ground")
+suite.case("the header leaves the white ground", CSS, swap("border-bottom:1px solid var(--hair);background:var(--white);position:relative;z-index:40}", "border-bottom:1px solid var(--hair);background:var(--limestone);position:relative;z-index:40}"), ".site-header must sit on white")
 suite.case("the target frame turns teal", CSS, swap("height:22px;border:0 solid var(--gold-light)", "height:22px;border:0 solid var(--teal-light)"), "target frame must be Mineral Gold")
 suite.case("the plate component is deleted", CSS, swap(".plate-frame{position:relative;", ".platex-frame{position:relative;"), "lost the shared component .plate-frame")
 

@@ -23,14 +23,16 @@ suite.case("the body loses the class its CSS is scoped to", PAGE, swap('<body cl
 suite.case("an old pilot alias disappears", PAGE, swap('id="pilot-structure"', 'id="pilot-structures"'), "#pilot-structure is missing")
 suite.case("the result chapter leaves Orbit", PAGE, swap('<section class="ground ground-orbit" id="result"', '<section class="ground ground-paper" id="result"'), "section #result must sit on ground-orbit")
 suite.case("the record chapter leaves paper", PAGE, swap('<section class="ground ground-paper" id="glance"', '<section class="ground ground-lift" id="glance"'), "section #glance must sit on ground-paper")
-suite.case("the ledger leaves paper", PAGE, swap('<section class="ground ground-paper geo-ledger"', '<section class="ground ground-lift geo-ledger"'), "the ledger (Establishes / Does not establish) must be a paper band")
-suite.case("the chapter index points elsewhere", PAGE, regex(r'(<nav class="lead-set geo-index-list".*?)href="#result"', r'\g<1>href="#results"', DOT), "the chapter index links")
+suite.case("the atlas goes back to a dark ground", PAGE, swap('<section class="ground ground-paper" id="layers"', '<section class="ground ground-orbit" id="layers"'), "section #layers must sit on ground-paper")
+suite.case("the missing index goes back to Lift", PAGE, swap('<section class="ground ground-paper" id="missing"', '<section class="ground ground-lift" id="missing"'), "section #missing must sit on ground-paper")
+suite.case("the ledger of what the result does not establish returns", PAGE, swap('<section class="ground ground-paper" id="missing"', '<section class="ground ground-paper geo-ledger"></section>\n    <section class="ground ground-paper" id="missing"'), "the ledger of what the result does not establish is back")
+suite.case("the in-page chapter bar returns", PAGE, swap('<section class="ground ground-paper" id="glance"', '<nav class="lead-set geo-index-list"></nav>\n    <section class="ground ground-paper" id="glance"'), "the in-page chapter bar is back")
 suite.case("the missing index loses a link", PAGE, regex(r'(<div class="geo-missing-list lead-set".*?)href="#iron"', r'\g<1>href="#irons"', DOT), "the index of what is missing links")
 suite.case("prototype wording comes back", PAGE, swap("<body class=\"interior page-geothermal\">", "<body class=\"interior page-geothermal\"><!-- prototype -->"), "prototype wording is back")
 
 # ---- the atlas -----------------------------------------------------------------------------------
 suite.case("a plate leaves the atlas order", PAGE, swap('<figure class="plate geo-plate" id="elevation">', '<figure class="plate geo-plate" id="elevations">'), "the atlas holds plates")
-suite.case("a plate loses its warning key", PAGE, regex(r'(id="thermal">.*?class="plate-note beam-note" data-i18n=")[^"]+', r"\g<1>story.terrain.note", DOT), "plate #thermal must carry its mandatory warning")
+suite.case("a plate carries a warning note again", PAGE, regex(r'(id="thermal">.*?<figcaption class="plate-cap">)', r'\g<1><p class="plate-note beam-note">x</p>', DOT), "plate #thermal carries a warning note under its caption")
 suite.case("a plate image is declared at the wrong grid", PAGE, regex(r'(id="alteration">.*?)width="1200"', r'\g<1>width="1000"', DOT), "plate #alteration: the image is declared")
 suite.case("a plate image gets an inline style", PAGE, regex(r'(id="thermal">.*?<img)(\s)', r'\g<1> style="filter:contrast(1.2)"\g<2>', DOT), "plate #thermal: an inline style on a plate image")
 suite.case("a plate caption names the wrong things", PAGE, regex(r'(id="thermal">.*?)scene.aoi.coords', r'\g<1>scene.priority.coords', DOT), "plate #thermal: the bottom-right caption must read")
@@ -53,18 +55,16 @@ suite.case("the priority plate is lost", PAGE, swap('<figure class="plate geo-pr
 suite.case("the priority plate shows another candidate set", PAGE, regex(r'(<figure class="plate geo-priority".*?)priority-600\.webp 600w, ', r"\g<1>", DOT), "the priority plate must show priority-1200.webp")
 suite.case("the priority caption loses the accepted label", PAGE, regex(r'(<figure class="plate geo-priority".*?)data-i18n="label\.priority"', r'\g<1>data-i18n="label.priorityX"', DOT), "the priority plate's caption must read")
 suite.case("the priority plate loses its scale bar", PAGE, swap('<div class="geo-bar" role="img"', '<div class="geo-bar"'), "must keep its legend ramp and its 10 km scale bar")
-suite.case("the result loses the verbatim warning", PAGE, regex(r'(id="result".*?)data-i18n="act\.priority\.note"', r'\g<1>data-i18n="act.context.note"', DOT), "the result block must carry the verbatim priority warning")
-suite.case("the relief block loses the verbatim warning", PAGE, regex(r'(id="relief".*?)data-i18n="act\.priority\.note"', r'\g<1>data-i18n="act.context.note"', DOT), "the relief block must carry the verbatim priority warning")
+suite.case("the result carries a warning note again", PAGE, regex(r'(id="result"[^>]*>)', r'\g<1><p class="beam-note">x</p>', DOT), "the result block carries a warning note")
+suite.case("the relief block carries a warning note again", PAGE, regex(r'(id="relief"[^>]*>)', r'\g<1><p class="beam-note">x</p>', DOT), "the relief block carries a warning note")
 suite.case("the relief slot is filled before Science delivers", PAGE, swap('<div class="plate-frame" data-visual-slot="relief" data-visual-status="to-be-supplied">', '<div class="plate-frame" data-visual-slot="relief" data-visual-status="to-be-supplied"><img src="/assets/proof/web005b/priority-600.webp" alt="x" width="1200" height="1200">'), "the relief slot is an asset still to be supplied")
 
-# ---- the ledger ----------------------------------------------------------------------------------
-suite.case("the ledger loses a term", PAGE, regex(r'\s*<li data-i18n="geothermalPage\.not\.validation">[^<]*</li>', ""), "the ledger's Does not establish column holds")
-suite.case("the ledger stops being the warning's own", PAGE, swap('<ul class="beam-note">', '<ul class="plain">'), "must carry beam-note")
-suite.case("a ledger term drifts from the warning", JS, swap("'geothermalPage.not.reserve': 'Reserve or resource estimation'", "'geothermalPage.not.reserve': 'Reserve estimate'"), "in the English dictionary is")
+# ---- the removed explanations ----------------------------------------------------------------------
+suite.case("a retired ledger key returns to the dictionary", JS, swap("    'geothermalPage.glance.title':", "    'geothermalPage.ledger.not': 'Does not establish',\n    'geothermalPage.glance.title':"), "copy that explained how the work is done")
 
 # ---- the dictionary ------------------------------------------------------------------------------
 suite.case("the page uses a key no language has", PAGE, swap('data-i18n="geothermalPage.relief.title"', 'data-i18n="geothermalPage.relief.nothing"'), "is used by the page but missing")
-suite.case("the dictionary keeps a key nothing uses", JS, swap("    'geothermalPage.not.reserve':", "    'geothermalPage.orphan': 'x',\n    'geothermalPage.not.reserve':"), "no element of the page uses it")
+suite.case("the dictionary keeps a key nothing uses", JS, swap("    'geothermalPage.glance.title':", "    'geothermalPage.orphan': 'x',\n    'geothermalPage.glance.title':"), "no element of the page uses it")
 suite.case("the review note disappears from the Turkish block", JS, swap("pending the CTO's language review", "reviewed"), "pending the CTO's language review")
 
 # ---- the A1 placement records --------------------------------------------------------------------

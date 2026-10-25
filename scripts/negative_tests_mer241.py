@@ -88,7 +88,7 @@ case("a Turkish string is changed in the dictionary and the pages are not regene
 case("a Turkish key is missing, so the generator would fall back to English", SCRIPT,
      swap("    'nav.partner': 'İş Birliği',\n", ""), "has no Turkish value")
 case("an English page links somewhere with no Turkish equivalent", ABOUT,
-     swap('<a class="text-link" href="/partner/">', '<a class="text-link" href="/legal/">'),
+     swap('<a href="/partner/" data-i18n="nav.partner">', '<a href="/legal/" data-i18n="nav.partner">'),
      "has no Turkish equivalent")
 
 # ---- metadata, hreflang and the sitemap --------------------------------------------------------
@@ -179,7 +179,7 @@ case("a Turkish link fragment does not resolve", TR_HOME,
 case("an anchor id is translated", TR_ABOUT,
      swap('id="principles"', 'id="ilkeler"'), "anchor ids differ")
 case("a Turkish page gains a section", TR_ABOUT,
-     swap('    <div class="page-closing">', '    <section class="page-section"></section>\n    <div class="page-closing">'),
+     swap("  </main>", '    <section class="page-section"></section>\n  </main>'),
      "does not have the same elements, ids and classes")
 case("a Turkish page shows a different image", TR_SOLUTIONS,
      swap("/assets/imagery/chuquicamata-2024-1400.webp", "/assets/imagery/yellowstone-2013-1400.webp"),
@@ -188,13 +188,13 @@ case("a Turkish page drops back to a document-relative asset URL", TR_HOME,
      swap('<link rel="icon" href="/assets/brand/orbgss-favicon.31dba293.svg"', '<link rel="icon" href="assets/brand/orbgss-favicon.31dba293.svg"'),
      "tr/assets/brand/orbgss-favicon.31dba293.svg")
 
-# ---- the mandatory scientific warnings, in Turkish ---------------------------------------------
-case("the Turkish priority warning loses its wording", TR_HOME,
-     regex(r'(<dd class="beam-note" data-i18n="act\.priority\.note">).*?(</dd>)',
-           r"\1Yalnızca bir yorum.\2"), "lost required wording")
-case("the Turkish priority warning is no longer rendered", TR_HOME,
-     swap('<dd class="beam-note" data-i18n="act.priority.note">', '<dd class="beam-note">'),
-     "its mandatory warning 'act.priority.note' is not rendered")
+# ---- the retired scientific warnings stay retired in Turkish (CTO, 2026-10-25) -------------------
+case("the Turkish homepage renders a retired warning again", TR_HOME,
+     swap("</main>", '<p data-i18n="act.priority.note">Yalnızca bir yorum.</p></main>'),
+     "the retired warning key 'act.priority.note' is rendered on tr/index.html")
+case("a retired warning key returns to the Turkish dictionary", SCRIPT,
+     regex(r"(\n  tr: \{\n)", r"\1    'act.priority.note': 'Yalnızca bir yorum.',\n"),
+     "the retired warning key 'act.priority.note' is back in the 'tr' dictionary")
 
 # ---- runtime: the page is the language ---------------------------------------------------------
 case("script.js swaps text in the browser again", SCRIPT,

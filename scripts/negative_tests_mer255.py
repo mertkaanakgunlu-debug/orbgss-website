@@ -80,7 +80,7 @@ case("the homepage takes the interior grammar", INDEX,
 case("an interior page loses the interior grammar", GEOTHERMAL,
      swap('<body class="interior page-geothermal">', '<body class="page-geothermal">'), "lacks <body class=\"interior\">")
 case("two pages open with the same composition", PARTNER,
-     swap('class="page-hero is-split ground-orbit"', 'class="page-hero is-register ground-orbit"'), "expected 'is-split'")
+     swap('class="page-hero is-split ground-paper"', 'class="page-hero is-register ground-paper"'), "expected 'is-split'")
 
 # ---- the crops: recorded, checksummed, honest -----------------------------------------------------
 case("a crop derivative loses its checksum", MANIFEST,
@@ -155,7 +155,7 @@ case("a thumbnail is declared larger than 160 CSS px", SOURCES_PAGE,
      swap('width="160" height="90"', 'width="240" height="135"'), "at most 160 x 160 CSS px")
 case("a thumbnail is not a recorded image", SOURCES_PAGE,
      swap('src="/assets/imagery/yellowstone-2013-900.webp" alt="Thumbnail of the Yellowstone',
-          'src="/assets/brand/orbgss-logo-dark.9085b960.svg" alt="Thumbnail of the Yellowstone'),
+          'src="/assets/brand/orbgss-logo-light.de682b8e.svg" alt="Thumbnail of the Yellowstone'),
      "is not a recorded image in sources.json")
 case("a thumbnail stops being lazy", SOURCES_PAGE,
      swap('width="160" height="90" loading="lazy"', 'width="160" height="90"'), "must be loaded lazily")
@@ -207,9 +207,9 @@ case("a source loses its terms entry", SOURCES_PAGE,
 case("an image credit names no source", SOURCES_PAGE,
      regex(r'(<li class="credit-row">\s*<img class="thumb" src="/assets/imagery/chuquicamata-2024-900.webp".*?)<p class="credit-sources">.*?</p>', r"\1"),
      "an image credit on /sources/ names no source record")
-case("the sources index points at a missing section", SOURCES_PAGE,
-     swap('<a href="#references" data-i18n="sourcesPage.index.references">', '<a href="#papers" data-i18n="sourcesPage.index.references">'),
-     "the /sources/ index links")
+case("the in-page index bar returns on the sources page", SOURCES_PAGE,
+     swap('<main id="main">', '<main id="main"><nav class="page-index" aria-label="x"><a href="#data">x</a></nav>'),
+     "the /sources/ in-page index bar is back")
 case("the English MIT text is shortened", SCRIPT,
      swap("shall be included in all copies or substantial portions of the Software.", "shall be included in all copies of the Software.", every=False),
      "the 'en' MIT licence text")
