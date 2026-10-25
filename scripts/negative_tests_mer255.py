@@ -3,8 +3,8 @@
     py -3.14 scripts/negative_tests_mer255.py
 
 MER-255 rebuilt the five interior pages (docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md): one visual grammar
-(`body.interior`) with a different opening on each page, four recorded Class A crops of the Kızıldere
-master in place of text and tables, ruled lists in place of tables, and the attribution moved from an About table to its own
+(`body.interior`) with a different opening on each page, recorded Class A photographs (two crops of the Kızıldere
+master and, since 2026-10-25, three scenes of other places) in place of text and tables, ruled lists in place of tables, and the attribution moved from an About table to its own
 /sources/ page. The contract worth guarding: the grammar stays on the interior routes and off the
 homepage; every crop is recorded, checksummed and never drawn above its own pixels (record, CSS caps
 and browser measurement agree); thumbnails are small recorded images; the interior pages collect nothing and load nothing third-party;
@@ -74,6 +74,10 @@ def crop(data, cid):
     return next(c for c in data["web_m6"]["interior_crops"] if c["id"] == cid)
 
 
+def other(data, sid):
+    return next(s for s in data["web_m6"]["context_scenes"] if s["id"] == sid)
+
+
 # ---- one grammar, five openings ---------------------------------------------------------------
 case("the homepage takes the interior grammar", INDEX,
      swap('<body class="home">', '<body class="home interior">'), "carries <body class=\"interior\">")
@@ -90,25 +94,25 @@ case("a crop's parent master changes", MANIFEST,
      as_json(lambda d: crop(d, "kizildere-aoi")["parent"].update(sha256="0" * 64)),
      "parent does not match its recorded SHA-256")
 case("a crop stops recording that nothing is upscaled", MANIFEST,
-     as_json(lambda d: crop(d, "kizildere-terrain").update(operations_not_used=["tone or colour change"])),
+     as_json(lambda d: crop(d, "kizildere-aoi").update(operations_not_used=["tone or colour change"])),
      "must record that no upscaling is used")
 case("a crop's analysis-grid overlap is misstated", MANIFEST,
-     as_json(lambda d: crop(d, "kizildere-valley").update(analysis_grid_overlap_px2=0)),
+     as_json(lambda d: crop(d, "kizildere-aoi").update(analysis_grid_overlap_px2=0)),
      "records an analysis-grid overlap")
 case("a crop's measured upscale exceeds the bound", MANIFEST,
      as_json(lambda d: crop(d, "kizildere-stage")["rendered"].update(max_upscale_factor=1.45)),
      "the bound is")
 case("a crop's recorded width exceeds its pixels", MANIFEST,
-     as_json(lambda d: crop(d, "kizildere-terrain")["rendered"].update(max_css_width=1200)),
-     "above its 1459 px widest candidate")
+     as_json(lambda d: crop(d, "kizildere-aoi")["rendered"].update(max_css_width=1200)),
+     "above its 1200 px widest candidate")
 case("a crop's record claims a candidate it does not ship", MANIFEST,
      as_json(lambda d: crop(d, "kizildere-aoi")["rendered"].update(widest_candidate_px=2400)),
      "claims a 2400 px candidate")
 case("a crop is shown full size on a second page", PARTNER,
      swap("  </main>",
-          '    <section class="page-section"><img data-lead-visual src="/assets/imagery/kizildere-terrain-984f936e-1000.webp" '
-          'alt="" data-i18n-alt="alt.terrain" width="1000" height="615" /></section>\n  </main>'),
-     "recorded for 'about' alone")
+          '    <section class="page-section"><img data-lead-visual src="/assets/imagery/kizildere-aoi-1a7d0c36-1200.webp" '
+          'alt="" data-i18n-alt="alt.aoi" width="1200" height="1200" /></section>\n  </main>'),
+     "recorded for 'solutions/geothermal' alone")
 case("the About figure is allowed to grow past its crop", STYLES,
      swap(".wide-figure{position:relative;width:100%;max-width:728px;", ".wide-figure{position:relative;width:100%;max-width:900px;"),
      "is capped at 900 CSS px")
@@ -120,21 +124,21 @@ case("the Geothermal stage can be drawn taller than its crop allows", STYLES,
      "the stage hero can draw its crop")
 
 # ---- captions: the coordinates on an image name ground the image shows (review B3) ---------------------------
-case("the About crop is captioned with the pilot point again", SCRIPT,
-     swap("'scene.terrain.coords': '38.0936° N, 29.2483° E',", "'scene.terrain.coords': '37.9794° N, 28.7907° E',"),
-     "outside its crop box")
+case("the About photograph is captioned with the pilot point", SCRIPT,
+     swap("'scene.deathvalley.coords': '36.3000° N, 116.7500° W',", "'scene.deathvalley.coords': '37.9794° N, 28.7907° E',"),
+     "outside the ground the scene shows")
 case("the Partner caption names the pilot place and point again", PARTNER,
-     swap('data-i18n="scene.valley.place">South-west of the Kızıldere pilot area, Türkiye</span><span data-i18n="scene.valley.coords">37.8744° N, 28.5695° E</span>',
+     swap('data-i18n="scene.aluto.place">Aluto volcano, Ethiopia</span><span data-i18n="scene.aluto.coords">7.7800° N, 38.8000° E</span>',
           'data-i18n="scene.context.place">Kızıldere — Büyük Menderes graben, Denizli, Türkiye</span><span data-i18n="scene.context.coords">37.9794° N, 28.7907° E</span>'),
      "is captioned with")
-case("a crop's recorded label point drifts from its caption", MANIFEST,
-     as_json(lambda d: crop(d, "kizildere-terrain")["label_point"].update(lat=38.5)),
-     "records label_point")
-case("a crop loses its label point", MANIFEST,
-     as_json(lambda d: crop(d, "kizildere-valley").pop("label_point")),
-     "records no caption keys or no label_point")
+case("a scene's recorded label point drifts from its caption", MANIFEST,
+     as_json(lambda d: other(d, "death-valley-2024")["label_point"].update(lat=38.5)),
+     "label_point, production centre and caption disagree")
+case("a scene loses its label point", MANIFEST,
+     as_json(lambda d: other(d, "aluto-rift-2026").pop("label_point")),
+     "is missing label_point")
 case("the Turkish caption coordinate drifts from the English one", SCRIPT,
-     swap("'scene.valley.coords': '37.8744° K, 28.5695° D',", "'scene.valley.coords': '37.8744° K, 28.5700° D',"),
+     swap("'scene.aluto.coords': '7.7800° K, 38.8000° D',", "'scene.aluto.coords': '7.7800° K, 38.8100° D',"),
      "names different coordinates in en and tr")
 
 # ---- the expansion-direction figures are captioned photographs, not cards (review decision 2) ---------------
@@ -239,7 +243,7 @@ case("the footer attribution loses the Sentinel credit", SCRIPT,
 case("the licence block is removed", SOURCES_PAGE,
      regex(r'\s*<article class="licence-block" id="licence-scm">.*?</article>', ""), "licence block is missing")
 case("IMAGERY_RIGHTS.md stops recording a crop", RIGHTS,
-     swap("kizildere-valley", "kizildere-v", every=True), "does not record the interior crop")
+     swap("kizildere-stage", "kizildere-s", every=True), "does not record the interior crop")
 
 
 def main() -> int:

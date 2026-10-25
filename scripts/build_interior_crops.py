@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the interior-page crops of the Kızıldere natural-colour master and record them (MER-255).
+"""Build the Geothermal-page crops of the Kızıldere natural-colour master and record them (MER-255).
 
     py -3.14 scripts/build_interior_crops.py            # write the files and sources.json -> web_m6.interior_crops
     py -3.14 scripts/build_interior_crops.py --check    # exit 1 if the files or the record differ from a fresh build
@@ -7,11 +7,13 @@
 Local production tooling (Pillow), never a site runtime dependency; nothing runs on Vercel.
 
 What it makes. The WEB-005B Act 2 master (`assets/imagery/kizildere-aoi-context-2025-natural.jpg`,
-3200 x 1800 px, native 30 m, USGS Landsat 8 OLI, public domain) is cropped four ways for the redesigned
-interior pages. Class-A natural-colour photography: a crop and an encode, nothing else. No tone, colour,
-sharpening or resampling step touches a pixel inside a crop; a derivative narrower than its crop is a
-Lanczos downscale, the same operation as every other responsive derivative on the site, and no
-derivative is ever wider than its crop (nothing is upscaled).
+3200 x 1800 px, native 30 m, USGS Landsat 8 OLI, public domain) is cropped two ways for the Geothermal page
+(the stage strip and the analysis area). The About, Partner and Marine photographs, which used to be the other
+two crops, are scenes of other places since the missing-visuals plan (2026-10-25); see
+`scripts/build_m6_context_scenes.py`. Class-A natural-colour photography: a crop and an encode, nothing
+else. No tone, colour, sharpening or resampling step touches a pixel inside a crop; a derivative narrower
+than its crop is a Lanczos downscale, the same operation as every other responsive derivative on the site,
+and no derivative is ever wider than its crop (nothing is upscaled).
 
 Why crops rather than the Act 2 frame. The homepage shows the whole 96 x 54 km frame; M6 rule R2 keeps
 one full-size appearance per visual. Each crop here is a different framing of the same ground, recorded
@@ -49,7 +51,6 @@ OUT_DIR = "assets/imagery"
 AOI_BOX = (541, 300, 1741, 1500)
 PILOT_CENTRE_PX = (1141.0, 900.0)
 PILOT_BASIS = "the declared pilot (AOI) centre, which lies inside this crop"
-CENTRE_BASIS = "the centre of this crop; the crop does not contain the pilot centre"
 CROPS = (
     {
         "id": "kizildere-stage",
@@ -68,24 +69,6 @@ CROPS = (
         "role": "Geothermal page, the analysis area: the 36 x 36 km grid (1,200 x 1,200 cells) in natural colour.",
         "caption": ("scene.aoi.place", "scene.aoi.coords"),
         "label": (PILOT_CENTRE_PX, PILOT_BASIS),
-    },
-    {
-        "id": "kizildere-terrain",
-        "page": "about",
-        "box": (1741, 0, 3200, 897),
-        "widths": (1459, 1000),
-        "role": "About page: eroded ground north-east of the pilot area, beyond the east edge of the analysis grid.",
-        "caption": ("scene.terrain.place", "scene.terrain.coords"),
-        "label": (None, CENTRE_BASIS),
-    },
-    {
-        "id": "kizildere-valley",
-        "page": "partner",
-        "box": (0, 800, 1000, 1800),
-        "widths": (1000, 700),
-        "role": "Partner page: the cultivated graben floor in the south-west of the context frame; its eastern third overlaps the western edge of the analysis grid.",
-        "caption": ("scene.valley.place", "scene.valley.coords"),
-        "label": (None, CENTRE_BASIS),
     },
 )
 

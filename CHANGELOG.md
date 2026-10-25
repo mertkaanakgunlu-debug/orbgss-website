@@ -2,6 +2,16 @@
 
 Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
 
+## Missing visuals — 2026-10-25 (branch `claude/project-thread-sqytba`, built on the Violet branch `claude/project-thread-osxzu4@5c97842`; `REVIEW_READY`, preview only)
+
+CTO-approved plan "Eksik görseller planı" (website part; the two Geothermal figures are Science's, MER-242).
+
+- **About, Partner and the Marine panel of `/solutions/` now show public-domain Landsat scenes of other places** instead of crops of the pilot area: Death Valley (Landsat 9, 2024-10-03) on About, Aluto volcano in the Main Ethiopian Rift (Landsat 9, 2026-01-11) on Partner, and the Büyük Menderes delta and Aegean coast near Söke (Landsat 9, 2025-07-23; MER-238 visual need V4, decision D5) on Solutions. Built by the existing `scripts/build_imagery.py` from USGS Collection 2 Level-2 products; recorded in `sources.json` → `web_m6.context_scenes` with product ids, master and derivative checksums, rights basis, caption keys and the browser-measured placement; derivatives by the new `scripts/build_m6_context_scenes.py` (hash-named, never upscaled).
+- **Framing:** About and Partner carry `scene.illustrative` ("A public-domain Landsat scene of another place, not an OrbGSS result.", EN and TR); `/solutions/` keeps its `domains.illustrative` footnote. The Sources page lists the three scenes.
+- **Geothermal:** the empty iron frame (plate 06) and the empty "Priority over relief" section are off the page until Science's derivatives arrive (MER-242); the "What is missing" index keeps both as unlinked "Accepted, not shown yet" rows. The validator now fails on any pending frame.
+- **Removed:** the two Kızıldere crops that used to open About and Partner (`kizildere-terrain`, `kizildere-valley`: records, files and i18n keys). The homepage is untouched, including its Marine card, which still shows the Ili Delta.
+- **Checks:** `scripts/validate_site.py` gains the `web_m6.context_scenes` checks; the negative suites cover them (`scripts/negative_tests_missing_visuals.py`) and the Geothermal, MER-240 and MER-255 suites follow the new page.
+
 ## Violet brand adoption on the existing site — 2026-10-25 (`REVIEW_READY`, not published)
 
 The CTO approved the final brand identity "Violet vurgu" (package `OrbGSS_Brand_Tasarim_Final.zip`, folder `Final_v4/`) and asked for it on the website. It replaces the Heat Trace pink accent of the previous entry; a brand adoption, not a redesign. Branched from the Heat Trace head `a213731`. Spec: `docs/WEB_VIOLET_BRAND_AUTHORITY.md`; evidence: `tasks/VIOLET_EVIDENCE.md`.

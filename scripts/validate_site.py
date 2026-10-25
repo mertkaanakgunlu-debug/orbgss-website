@@ -1469,22 +1469,28 @@ ATLAS_GEOTHERMAL_A1_ROUTES = {layer: ("solutions/geothermal",) for layer in ATLA
 # Language-neutral text no dictionary key owns (the scale bar's far end).
 ATLAS_GEOTHERMAL_LOOSE_OK = {"10 km"}
 # The atlas, in reading order: (plate id, state, the key naming the layer on the image, the MER-151 layer it shows).
-# One figure of small multiples (A6), six plates, three states. A plate carries no warning: the per-layer notes were
-# removed on the CTO's request (2026-10-25), because what a layer is for and is not is the work's own business.
+# One figure of small multiples (A6), five plates, two states shown (the data gap and the evidence). A plate carries no
+# warning: the per-layer notes were removed on the CTO's request (2026-10-25), because what a layer is for and is not is
+# the work's own business. The sixth plate (the iron layer) and the relief figure are NOT on the page until Science
+# delivers their derivatives (MER-242): an empty frame reads as unfinished work, so the missing index below lists both as
+# "Accepted, not shown yet" rows without a frame (missing-visuals plan, 2026-10-25).
 ATLAS_GEOTHERMAL_PLATES = [
     ("natural", "evidence", "scene.kind.naturalColor", None),
     ("elevation", "evidence", "act.evidence.terrain.name", "terrain"),
     ("gap", "gap", None, None),
     ("thermal", "evidence", "act.evidence.thermal.name", "thm01"),
     ("alteration", "evidence", "act.evidence.alteration.name", "alt01"),
-    ("iron", "pending", None, None),
 ]
-# The light theme (2026-10-25): the opening, the atlas and the record sit on paper; the priority result and its relief
-# slot keep the dark ground, so the page still turns dark once, where the one coloured figure is.
+# The frames that stay off the page until the figures exist, and the two rows of the missing index that stand in for them.
+ATLAS_GEOTHERMAL_ABSENT_IDS = ("iron", "relief")
+ATLAS_GEOTHERMAL_MISSING_ROWS = [("geothermalPage.layer.iron", "geothermalPage.layer.pending"),
+                                 ("geothermalPage.relief.title", "geothermalPage.layer.pending")]
+# The light theme (2026-10-25): the opening, the atlas and the record sit on paper; the priority result keeps the dark
+# ground, so the page still turns dark once, where the one coloured figure is.
 ATLAS_GEOTHERMAL_GROUNDS = {"glance": "ground-paper", "layers": "ground-paper", "result": "ground-orbit",
-                            "relief": "ground-orbit", "missing": "ground-paper"}
-ATLAS_GEOTHERMAL_IDS = ["glance", "layers", "natural", "elevation", "gap", "thermal", "alteration", "iron", "result",
-                        "outputs", "relief", "missing", "pilot-observe", "pilot-terrain", "pilot-evidence",
+                            "missing": "ground-paper"}
+ATLAS_GEOTHERMAL_IDS = ["glance", "layers", "natural", "elevation", "gap", "thermal", "alteration", "result",
+                        "outputs", "missing", "pilot-observe", "pilot-terrain", "pilot-evidence",
                         "pilot-priority", "pilot-geothermal", "pilot-structure"]
 # What would make a governed raster something other than the accepted derivative.
 ATLAS_GEOTHERMAL_RASTER_BANNED = re.compile(r"filter|transform|opacity|mix-blend-mode|scale|zoom|clip-path|mask|backdrop")
@@ -1544,12 +1550,23 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
         bad("the ledger of what the result does not establish is back (geo-ledger); it was removed on request")
     missing = one(dom, lambda n: "geo-missing-list" in classes(n))
     gaps = [str(a.attrs.get("href")) for a in find(missing, lambda n: n.tag == "a")] if missing is not None else []
-    if gaps != ["#gap", "#iron", "#relief"]:
-        bad(f"the index of what is missing links {gaps}, expected #gap, #iron, #relief")
+    if gaps != ["#gap"]:
+        bad(f"the index of what is missing links {gaps}, expected only #gap (the iron layer and the relief figure have no frame to link to)")
+    missing_rows = [[str(s.attrs.get("data-i18n")) for s in find(r, lambda n: n.tag == "span" and n.attrs.get("data-i18n"))]
+                    for r in (find(missing, lambda n: "geo-missing-row" in classes(n)) if missing is not None else [])]
+    if missing_rows != [list(r) for r in ATLAS_GEOTHERMAL_MISSING_ROWS]:
+        bad(f"the index of what is missing must list the iron layer and the relief figure as two unlinked rows saying "
+            f"'Accepted, not shown yet'; its rows read {missing_rows}")
+    for gone in ATLAS_GEOTHERMAL_ABSENT_IDS:
+        if gone in ids:
+            bad(f"#{gone} is back on the page; its figure is not delivered (MER-242), and an empty frame reads as unfinished work")
+    if find(dom, lambda n: "plate-pending" in classes(n) or n.attrs.get("data-visual-status") == "to-be-supplied"):
+        bad("a frame still to be supplied is on the page (plate-pending / data-visual-status=\"to-be-supplied\"); a figure appears when it exists"
+            ", never as an empty frame")
     if re.search(r"prototype|to be supplied by science", text, re.I):
         bad("prototype wording is back on the page; an asset still to come is labelled with the site's own words")
 
-    # -- 2. the atlas: six plates in one figure, three states ---------------------------------------------------------
+    # -- 2. the atlas: five plates in one figure -----------------------------------------------------------------------
     atlas = one(dom, lambda n: n.tag == "figure" and "geo-atlas" in classes(n))
     plates = find(atlas, lambda n: n.tag == "figure" and "plate" in classes(n)) if atlas is not None else []
     if atlas is None or "data-lead-visual" not in atlas.attrs:
@@ -1601,12 +1618,6 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
         elif state == "gap":
             if imgs or one(frame, lambda n: "plate-gap" in classes(n)) is None or frame.attrs.get("data-visual-status") != "data-gap":
                 bad(f"plate #{pid} is the data gap: a dashed frame with no image, data-visual-status=\"data-gap\"")
-        else:
-            if imgs or one(frame, lambda n: "plate-pending" in classes(n)) is None:
-                bad(f"plate #{pid} is an asset still to be supplied: a pending frame with no image")
-            state_span = one(frame, lambda n: "plate-state" in classes(n))
-            if state_span is None or state_span.attrs.get("data-i18n") != "geothermalPage.layer.pending":
-                bad(f"plate #{pid} must say 'Accepted, not shown yet' (geothermalPage.layer.pending)")
     # Governed rasters on this page: exactly the four MER-151 layers and the legend ramp, nothing from the
     # GEO-WEB-002 or WEB-002 packages, and no CSS that would filter, transform or scale one.
     ramp = str(manifest["web_005b"]["analytical"]["layers"]["priority"]["legend"]["path"])
@@ -1640,13 +1651,8 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
         legend = one(pri, lambda n: n.tag == "img" and str(n.attrs.get("src", "")).lstrip("/") == ramp)
         if legend is None or one(pri, lambda n: "geo-bar" in classes(n) and n.attrs.get("role") == "img") is None:
             bad("the priority plate must keep its legend ramp and its 10 km scale bar")
-    for where, node in (("result", result), ("relief", one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief"))):
-        if node is not None and find(node, lambda n: classes(n) & {"beam-note", "plate-note", "warning-label"}):
-            bad(f"the {where} block carries a warning note; the result and its limits warning was removed on request")
-    relief = one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief")
-    slot = one(relief, lambda n: "plate-pending" in classes(n)) if relief is not None else None
-    if slot is None or relief is None or find(relief, lambda n: n.tag == "img"):
-        bad("the relief slot is an asset still to be supplied (A2): a pending frame, and no image until MER-242 delivers it")
+    if result is not None and find(result, lambda n: classes(n) & {"beam-note", "plate-note", "warning-label"}):
+        bad("the result block carries a warning note; the result and its limits warning was removed on request")
     # -- 4. every Turkish string exists, and every key the page uses is in the Geothermal or shared dictionary -------------
     for key in {str(n.attrs[a]) for n in dom.iter() for a in ("data-i18n", "data-i18n-alt", "data-i18n-aria-label", "data-i18n-content") if n.attrs.get(a)}:
         if key.startswith("geothermalPage.") and (key not in dictionary["en"] or key not in dictionary["tr"]):
@@ -1933,7 +1939,7 @@ def atlas_partner_sources_checks(errors: list[str], page_html: dict[str, str]) -
         caption = first_of(figure, lambda n: n.tag == "figcaption" and "scene-label" in n.classes) if figure else None
         spans = [c.attrs.get("data-i18n") for c in (caption.children if caption else []) if isinstance(c, DomNode)]
         if figure is None or not figure.attrs.get("data-label-tone") or spans != [
-                "scene.valley.place", "scene.valley.coords", "scene.kind.naturalColor"]:
+                "scene.aluto.place", "scene.aluto.coords", "scene.kind.naturalColor"]:
             fail(f"MER-278: {rel}: the photograph keeps its three-line bottom-right caption "
                  f"(place, coordinates, kind) and its label tone", errors)
 
@@ -4259,6 +4265,156 @@ def main() -> int:
             fail(f"web_m6.interior_crops[{cid}].rendered names a derivative that is not its own", errors)
         if len(rendered.get("viewports_measured", [])) < 12:
             fail(f"web_m6.interior_crops[{cid}].rendered was measured at fewer than 12 viewports", errors)
+    # -- the photographs of other places (missing-visuals plan, 2026-10-25) ------------------------------------
+    # The About, Partner and Marine photographs are public-domain Landsat scenes of places that are NOT the pilot area.
+    # Each is a recorded Class A scene with a master, hash-named derivatives, a caption that names ground the image
+    # shows, the "another place, not an OrbGSS result" framing on its page, and a measured placement.
+    ctx_scenes = manifest.get("web_m6", {}).get("context_scenes", [])
+    ctx_pages = {"death-valley-2024": "about", "aluto-rift-2026": "partner", "menderes-delta-2025": "solutions"}
+    if sorted(str(s.get("id")) for s in ctx_scenes) != sorted(ctx_pages):
+        fail(f"web_m6.context_scenes holds {sorted(str(s.get('id')) for s in ctx_scenes)}, expected {sorted(ctx_pages)}", errors)
+    pilot_lat, pilot_lon = 37.9794, 28.7907
+    for scene in ctx_scenes:
+        sid = str(scene.get("id", "<unknown>"))
+        where = f"web_m6.context_scenes[{sid}]"
+        for field in ("id", "page", "role", "asset_class", "location", "coordinates", "acquired", "sensor", "source_data",
+                      "source_page", "local_file", "production", "master", "pixel_hash8", "operations",
+                      "operations_not_used", "derivatives", "max_safe_rendered_px", "rights_basis",
+                      "attribution_requirement", "caption_i18n_keys", "alt_i18n_key", "label_point", "rendered"):
+            if scene.get(field) in (None, "", []):
+                fail(f"{where} is missing {field}", errors)
+        if scene.get("page") != ctx_pages.get(sid):
+            fail(f"{where} is recorded for {scene.get('page')!r}, expected {ctx_pages.get(sid)!r}", errors)
+        if not str(scene.get("asset_class", "")).startswith("A"):
+            fail(f"{where} must be class A (natural-colour photography); a scientific raster is never one of these", errors)
+        for banned in ("upscaling", "tone or colour change", "generative or AI step"):
+            if banned not in scene.get("operations_not_used", []):
+                fail(f"{where} must record that no {banned} is used", errors)
+        prod = scene.get("production") or {}
+        render = prod.get("render") or {}
+        product = str((prod.get("product_ids") or ["-"])[0])
+        if not re.fullmatch(r"LC0[89]_L2SP_\d{6}_\d{8}_02_T1", product):
+            fail(f"{where} must name a Landsat Collection 2 Level-2 Tier 1 product, found {product!r}", errors)
+        else:
+            if product.split("_")[3] != str(scene.get("acquired", "")).replace("-", ""):
+                fail(f"{where} says it was acquired {scene.get('acquired')} but its product is {product}", errors)
+            if str(scene.get("sensor")) != ("Landsat 9 OLI-2" if product.startswith("LC09") else "Landsat 8 OLI"):
+                fail(f"{where} names sensor {scene.get('sensor')!r} for product {product}", errors)
+            if not str(scene.get("source_page", "")).endswith("/" + product):
+                fail(f"{where} source_page does not point at its product {product}", errors)
+        if not isinstance(render.get("coverage"), (int, float)) or render["coverage"] < 0.99:
+            fail(f"{where} has no recorded render with at least 99 % valid coverage (a no-data wedge would show as black)", errors)
+        if "public domain" not in str(scene.get("rights_basis", "")).lower() \
+                or scene.get("attribution_requirement") != "Landsat data courtesy of the U.S. Geological Survey.":
+            fail(f"{where} must record the public-domain basis and the USGS credit line", errors)
+        master = scene.get("master") or {}
+        master_path = ROOT / str(master.get("path", "-"))
+        master_w = 0
+        if str(master.get("path")) != str(scene.get("local_file")) or not master_path.is_file():
+            fail(f"{where} master {master.get('path')} is missing or is not its local_file", errors)
+        else:
+            if sha256_of(master_path) != master.get("sha256") or master_path.stat().st_size != master.get("bytes"):
+                fail(f"{where} master does not match its recorded SHA-256 / size", errors)
+            master_w = int((master.get("size_px") or [0, 0])[0])
+            if list(master.get("size_px") or []) != [prod.get("width_px"), prod.get("height_px")] \
+                    or list(render.get("size_px") or []) != [prod.get("width_px"), prod.get("height_px")]:
+                fail(f"{where} master size, production size and render size disagree", errors)
+        derivs = scene.get("derivatives") or []
+        widest = max([int(d.get("width_px", 0)) for d in derivs] or [0])
+        if widest > master_w:
+            fail(f"{where} ships a {widest} px derivative of a {master_w} px master (upscaled)", errors)
+        if (scene.get("max_safe_rendered_px") or {}).get("device_px") != master_w:
+            fail(f"{where} max_safe_rendered_px is not the master's own width", errors)
+        for deriv in derivs:
+            dpath = ROOT / str(deriv.get("path", "-"))
+            if not dpath.is_file():
+                fail(f"{where} derivative {deriv.get('path')} does not exist", errors)
+                continue
+            if sha256_of(dpath) != deriv.get("sha256") or dpath.stat().st_size != deriv.get("bytes"):
+                fail(f"{where} derivative {deriv.get('path')} does not match its recorded SHA-256 / size", errors)
+            if not dpath.name.startswith(f"{sid}-{scene.get('pixel_hash8', '-')}-"):
+                fail(f"{where} derivative {dpath.name} is not content-hash named (/assets/ is immutable-cached)", errors)
+        # The caption names ground the image shows, in both languages, and never the pilot area.
+        ckeys = [str(k) for k in (scene.get("caption_i18n_keys") or [])]
+        label = scene.get("label_point") or {}
+        bounds = render.get("bounds_wgs84") or [0, 0, 0, 0]
+        nums: dict[str, tuple[float, float]] = {}
+        if len(ckeys) != 3 or ckeys[2] != "scene.kind.naturalColor":
+            fail(f"{where} caption keys must be place, coordinates and scene.kind.naturalColor, found {ckeys}", errors)
+        else:
+            for lang, (ns, ew) in (("en", ("N", "E")), ("tr", ("K", "D"))):
+                value = dictionary_value(lang, ckeys[1]) or ""
+                west = "W" if lang == "en" else "B"
+                m_c = re.fullmatch(rf"(\d{{1,2}}\.\d{{4}})° ([{ns}S]), (\d{{1,3}}\.\d{{4}})° ([{ew}{west}])", value)
+                if not m_c:
+                    fail(f"{where}: {ckeys[1]} in the {lang!r} dictionary is {value!r}, expected 'dd.dddd° N, ddd.dddd° E' style", errors)
+                    continue
+                lat = float(m_c.group(1)) * (-1 if m_c.group(2) == "S" else 1)
+                lon = float(m_c.group(3)) * (-1 if m_c.group(4) in ("W", "B") else 1)
+                nums[lang] = (lat, lon)
+            if len(nums) == 2 and nums["en"] != nums["tr"]:
+                fail(f"{where}: {ckeys[1]} names different coordinates in en and tr", errors)
+            if "en" in nums:
+                if dictionary_value("en", ckeys[1]) != scene.get("coordinates"):
+                    fail(f"{where}: the caption coordinates {dictionary_value('en', ckeys[1])!r} differ from the record's {scene.get('coordinates')!r}", errors)
+                if not (bounds[0] <= nums["en"][1] <= bounds[2] and bounds[1] <= nums["en"][0] <= bounds[3]):
+                    fail(f"{where}: the caption names {nums['en']}, outside the ground the scene shows {bounds}; the label must name ground the image shows", errors)
+                if (label.get("lat"), label.get("lon")) != nums["en"] or (prod.get("center_lat"), prod.get("center_lon")) != nums["en"]:
+                    fail(f"{where}: label_point, production centre and caption disagree", errors)
+            for lang in ("en", "tr"):
+                place = dictionary_value(lang, ckeys[0]) or ""
+                if not place.strip() or re.search(r"k[ıi]z[ıi]ldere", place, re.I):
+                    fail(f"{where}: {ckeys[0]} in the {lang!r} dictionary is empty or names the pilot area; these are scenes of other places", errors)
+        if len(bounds) == 4 and bounds[0] - 0.25 <= pilot_lon <= bounds[2] + 0.25 and bounds[1] - 0.2 <= pilot_lat <= bounds[3] + 0.2:
+            fail(f"{where}: the scene's ground {bounds} reaches the Kızıldere pilot area; these must be other places", errors)
+        # The page: shown on its own page only, captioned, described, framed as illustrative.
+        page = str(scene.get("page"))
+        page_dom = doms.get(page)
+        deriv_paths = {str(d.get("path")) for d in derivs}
+        shown_where = {n for n, d in doms.items() if n in route_html and any(
+            str(i.attrs.get("src", "")).lstrip("/") in deriv_paths and "thumb" not in i.classes
+            for i in d.find_all(lambda n_: n_.tag == "img"))}
+        if shown_where != {page}:
+            fail(f"{where} is shown on {sorted(shown_where)}, recorded for {page!r} alone", errors)
+        shown = [i_ for i_ in (page_dom.find_all(lambda n_: n_.tag == "img") if page_dom else [])
+                 if str(i_.attrs.get("src", "")).lstrip("/") in deriv_paths and "thumb" not in i_.classes]
+        for img_node in shown:
+            holder = next((a_ for a_ in img_node.ancestors() if a_.find_all(lambda n_: "scene-label" in n_.classes)), None)
+            label_node = first(holder, lambda n_: "scene-label" in n_.classes) if holder is not None else None
+            spans = [c_.attrs.get("data-i18n") for c_ in (label_node.children if label_node else [])
+                     if isinstance(c_, DomNode) and c_.attrs.get("data-i18n")]
+            if spans != ckeys:
+                fail(f"{where}: the figure that shows it is captioned with {spans}, its record names {ckeys}", errors)
+            if img_node.attrs.get("data-i18n-alt") != scene.get("alt_i18n_key"):
+                fail(f"{where}: the image is described by {img_node.attrs.get('data-i18n-alt')!r}, its record names {scene.get('alt_i18n_key')!r}", errors)
+        for lang in ("en", "tr"):
+            alt = dictionary_value(lang, str(scene.get("alt_i18n_key"))) or ""
+            if len(alt.split()) < 8 or re.search(r"k[ıi]z[ıi]ldere", alt, re.I):
+                fail(f"{where}: the {lang!r} description {scene.get('alt_i18n_key')} is missing, too short or names the pilot area", errors)
+        frame_key = "domains.illustrative" if page == "solutions" else "scene.illustrative"
+        if page_dom is None or not page_dom.find_all(lambda n_: n_.attrs.get("data-i18n") == frame_key):
+            fail(f"{where}: its page does not carry the illustrative framing {frame_key}", errors)
+        framing = dictionary_value("en", frame_key) or ""
+        if not re.search(r"(another|other) place", framing) or not re.search(r"\bnot\b", framing) \
+                or not (dictionary_value("tr", frame_key) or "").strip():
+            fail(f"{where}: {frame_key} must say, in both languages, that the scene is of another place and not an OrbGSS result", errors)
+        rendered = scene.get("rendered") or {}
+        for field in ("tool", "max_css_width", "device_pixel_ratio_considered", "widest_candidate_px",
+                      "selected_derivative", "max_upscale_factor", "viewports_measured"):
+            if rendered.get(field) in (None, "", []):
+                fail(f"{where}.rendered is missing {field}", errors)
+        r_css, r_dpr, r_widest = (rendered.get(k) for k in ("max_css_width", "device_pixel_ratio_considered", "widest_candidate_px"))
+        if all(isinstance(v, (int, float)) for v in (r_css, r_dpr, r_widest)):
+            if r_widest != widest:
+                fail(f"{where}.rendered claims a {r_widest} px candidate, the widest shipped is {widest}", errors)
+            if r_css * r_dpr > widest * MAX_UPSCALE:
+                fail(f"{where} is drawn up to {r_css} CSS px = {int(r_css * r_dpr)} device px at {r_dpr}x, above its {widest} px widest candidate", errors)
+        if isinstance(rendered.get("max_upscale_factor"), (int, float)) and rendered["max_upscale_factor"] > MAX_UPSCALE:
+            fail(f"{where} is measured at {rendered['max_upscale_factor']}x its selected candidate; the bound is {MAX_UPSCALE}x", errors)
+        if str(rendered.get("selected_derivative", "")) not in deriv_paths:
+            fail(f"{where}.rendered names a derivative that is not its own", errors)
+        if len(rendered.get("viewports_measured", [])) < 12:
+            fail(f"{where}.rendered was measured at fewer than 12 viewports", errors)
     # The Solutions photographs carry the same bound on their MER-240 placement record.
     for scene in scenes:
         measured = (scene.get("web_m6_placement") or {}).get("rendered", {}).get("max_upscale_factor")
@@ -4273,11 +4429,12 @@ def main() -> int:
         return int(found.group(1)) if found else None
 
     crop_by_id = {str(c.get("id")): c for c in crops}
+    crop_by_id.update({str(s.get("id")): s for s in ctx_scenes})
 
     def widest_of(cid: str) -> int:
         return max([int(d.get("width_px", 0)) for d in crop_by_id.get(cid, {}).get("derivatives", [])] or [0])
 
-    for selector, cid in ((".wide-figure", "kizildere-terrain"), (".split-figure", "kizildere-valley")):
+    for selector, cid in ((".wide-figure", "death-valley-2024"), (".split-figure", "aluto-rift-2026")):
         cap = css_cap(selector, "max-width")
         if cap is None:
             fail(f"MER-255: {selector} has no max-width cap; its photograph must never be drawn above "
@@ -4412,9 +4569,9 @@ def main() -> int:
         if first(row, lambda n: "credit-sources" in n.classes) is None or \
                 first(row, lambda n: n.tag == "a" and str(n.attrs.get("href", "")).startswith("#src-")) is None:
             fail("MER-255: an image credit on /sources/ names no source record", errors)
-    if len(thumb_rows) < 6:
-        fail(f"MER-255: /sources/ lists {len(thumb_rows)} thumbnailed image credits, expected at least 6 "
-             f"(hero, Kızıldere, Yellowstone, Chuquicamata, Ili, locator)", errors)
+    if len(thumb_rows) < 9:
+        fail(f"MER-255: /sources/ lists {len(thumb_rows)} thumbnailed image credits, expected at least 9 "
+             f"(hero, Kızıldere, Yellowstone, Chuquicamata, Ili, Death Valley, Aluto, Büyük Menderes, locator)", errors)
     # The licence: the standard MIT text, in English in both languages, with the copyright line.
     MIT_BODY = (
         'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and '
@@ -4474,7 +4631,7 @@ def main() -> int:
                 fail(f"MER-255: the {lang!r} footer attribution lost {fragment!r}: {attribution!r}", errors)
     # IMAGERY_RIGHTS.md records the crops (the document the manifest answers to).
     rights_text = (ROOT / "IMAGERY_RIGHTS.md").read_text(encoding="utf-8")
-    for cid in crop_ids:
+    for cid in crop_ids + [str(s.get("id")) for s in ctx_scenes]:
         if cid not in rights_text:
             fail(f"MER-255: IMAGERY_RIGHTS.md does not record the interior crop {cid!r}", errors)
     for doc in ("docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md", "tasks/MER-255_EVIDENCE.md"):

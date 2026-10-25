@@ -260,7 +260,7 @@ case("a hub band loses its placement record", SOURCES,
      as_json(lambda d: scene(d, "chuquicamata-2024").pop("web_m6_placement")),
      "without a placed web_m6_placement")
 case("a hub band is laid out wider than its pixels allow", SOURCES,
-     as_json(lambda d: scene(d, "ili-delta-2020")["web_m6_placement"]["rendered"].update(max_css_width=1800)),
+     as_json(lambda d: scene(d, "chuquicamata-2024")["web_m6_placement"]["rendered"].update(max_css_width=1800)),
      "above its widest 2880 px candidate")
 case("the hub loses the illustrative footnote", SOLUTIONS,
      regex(r'\s*<div class="page-note ground-paper">.*?</div>\s*</div>', ""),

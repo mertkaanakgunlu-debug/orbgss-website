@@ -17,7 +17,7 @@ Reconciled by MER-213 on 2026-09-29, MER-218 on 2026-10-03, MER-239 on 2026-10-1
 
 ## What is deliberately not done
 
-- MER-238 D3 (privacy / KVKK, a legal call) and D5 (coastal Marine scene) are open. D4 is closed: `contact@orbgss.com` receives external mail, though the CTO's test landed in spam.
+- MER-238 D3 (privacy / KVKK, a legal call) is open; D5 (coastal Marine scene) is built on the missing-visuals branch (2026-10-25), pending review. D4 is closed: `contact@orbgss.com` receives external mail, though the CTO's test landed in spam.
 - The repository holds no record of the WEB-006 DNS execution itself; its observable result is recorded in `tasks/MER-219_PREFLIGHT.md` §2.1.
 - The GitHub repository is public; whether it should be private is a CTO decision (`STATUS.md` open decision 5).
 
