@@ -1,0 +1,129 @@
+{
+ "routes": 13,
+ "want": {
+  "violet": "rgb(133, 74, 166)",
+  "violet_light": "rgb(171, 124, 199)"
+ },
+ "gone": {
+  "magma": "rgb(205, 27, 116)",
+  "magma_light": "rgb(249, 73, 151)",
+  "heat_trace_amber_light": "rgb(255, 170, 46)",
+  "logo_magma": "rgb(228, 51, 134)"
+ },
+ "per_route": {
+  "/index.html": {
+   "violet": 97,
+   "violet_light": 72,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/solutions/index.html": {
+   "violet": 40,
+   "violet_light": 16,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/solutions/geothermal/index.html": {
+   "violet": 288,
+   "violet_light": 104,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/about/index.html": {
+   "violet": 192,
+   "violet_light": 0,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/partner/index.html": {
+   "violet": 16,
+   "violet_light": 24,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/sources/index.html": {
+   "violet": 357,
+   "violet_light": 8,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/404.html": {
+   "violet": 0,
+   "violet_light": 56,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/tr/index.html": {
+   "violet": 97,
+   "violet_light": 72,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/tr/cozumler/index.html": {
+   "violet": 40,
+   "violet_light": 16,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/tr/cozumler/jeotermal/index.html": {
+   "violet": 288,
+   "violet_light": 104,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/tr/hakkimizda/index.html": {
+   "violet": 192,
+   "violet_light": 0,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/tr/is-birligi/index.html": {
+   "violet": 16,
+   "violet_light": 24,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  },
+  "/tr/kaynaklar/index.html": {
+   "violet": 357,
+   "violet_light": 8,
+   "magma": 0,
+   "magma_light": 0,
+   "heat_trace_amber_light": 0,
+   "logo_magma": 0
+  }
+ },
+ "totals_want": {
+  "violet": 1980,
+  "violet_light": 504
+ },
+ "totals_gone": {
+  "magma": 0,
+  "magma_light": 0,
+  "heat_trace_amber_light": 0,
+  "logo_magma": 0
+ }
+}
