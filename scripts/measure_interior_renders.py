@@ -32,7 +32,9 @@ import urllib.parse
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "assets" / "imagery" / "sources.json"
 ROUTES = {"solutions": "/solutions/", "solutions/geothermal": "/solutions/geothermal/",
-          "about": "/about/", "partner": "/partner/"}
+          "about": "/about/", "partner": "/partner/", "home": "/"}
+# The homepage is measured for the context scenes that are also a homepage card (the Söke scene) and for nothing else:
+# every other record keeps the placement it was measured for.
 # 19 widths from a small phone to a 4K monitor; the height is a typical window for that width.
 VIEWPORTS = [(w, 844 if w < 600 else 1112 if w < 1000 else 900) for w in
              (360, 390, 414, 600, 768, 834, 1024, 1180, 1280, 1366, 1440, 1536, 1680, 1920, 2200, 2560,
@@ -121,6 +123,8 @@ def main(argv: list[str]) -> int:
                             if name not in owner or row["nat"] == 0:
                                 continue
                             kind, ident, pixels, aspect = owner[name]
+                            if route == "home" and kind != "ctx":
+                                continue
                             key = (kind, ident)
                             # object-fit: cover draws the image at the larger of the box width and the
                             # box height times the image aspect; the box alone would under-report it.

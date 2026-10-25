@@ -83,7 +83,7 @@ MER-240 implemented the English target. It was independently accepted at `a20453
     - D4: `contact@orbgss.com` receives external mail (CTO test, 2026-10-16), which closed the MER-240 ship gate. The test mail landed in spam; a Gmail "never send to spam" filter is the CTO's action.
   - **Open:**
     - D3: privacy / KVKK page, a legal call.
-    - D5: a coastal Marine scene to replace the inland Ili Delta. Decided and built on the missing-visuals branch (2026-10-25): the Büyük Menderes delta and Aegean coast near Söke, on `/solutions/`; the homepage Marine card still shows the Ili Delta.
+    - D5: a coastal Marine scene to replace the inland Ili Delta. Decided and built on the missing-visuals branch (2026-10-25): the Büyük Menderes delta and Aegean coast near Söke, on `/solutions/` and on the homepage Marine card (the card is the accepted second appearance); the Ili Delta is retired and shown nowhere.
 
 ## Interior redesign (MER-255, pending the CTO's acceptance)
 

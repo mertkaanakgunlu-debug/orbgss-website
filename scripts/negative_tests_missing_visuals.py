@@ -130,7 +130,7 @@ suite.case("the About figure is allowed to grow past its scene", STYLES,
 # ---- the Sources page lists the scenes -----------------------------------------------------------------------------------
 suite.case("the Sources page drops a scene credit", SOURCES,
            regex(r'\s*<li class="credit-row">\s*<img class="thumb" src="/assets/imagery/death-valley-2024[^"]*".*?</li>', "", DOT),
-           "thumbnailed image credits, expected at least 10")
+           "thumbnailed image credits, expected at least 9")
 
 # ---- Geothermal: the two MER-242 derivatives, recorded, bounded and placed ---------------------------------------------------------
 def surface(data, name):
@@ -169,7 +169,7 @@ suite.case("the iron plate is filled with a derivative nobody recorded", GEOTHER
            "a governed raster that is not")
 suite.case("the Sources page loses the relief thumbnail", SOURCES,
            regex(r'<img class="thumb" src="/assets/proof/mer242/relief-55f5fc73-160\.webp"[^>]*>', "", DOT),
-           "thumbnailed image credits, expected at least 10")
+           "thumbnailed image credits, expected at least 9")
 
 # ---- the Active status label stays legible over a photograph -----------------------------------------------------------------------
 suite.case("the Active label loses its scrim", STYLES,

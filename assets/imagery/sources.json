@@ -596,7 +596,7 @@
       ],
       "web_005b_placement": {
         "task": "WEB-005B / MER-109",
-        "status": "placed",
+        "status": "retired-from-homepage",
         "section": "Domains",
         "homepage_slot": "domain-marine",
         "anchor": "marine",
@@ -604,7 +604,7 @@
           "index.html"
         ],
         "public_role": "illustrative photography",
-        "note": "Illustrative public-domain Landsat scene shown beside a domain and its status. It is NOT an OrbGSS analytical output, not a result and not the Kizildere pilot area; the card carries its own location, coordinates and \"Natural-color composite\" label and the section footnote (i18n domains.illustrative) says so in both languages.",
+        "note": "RETIRED: the homepage Marine card shows the coastal scene menderes-delta-2025 (web_m6.context_scenes) since the missing-visuals plan, so this scene appears on no route. Its provenance, rights and checksums are retained unchanged. Original note: Illustrative public-domain Landsat scene shown beside a domain and its status. It is NOT an OrbGSS analytical output, not a result and not the Kizildere pilot area; the card carries its own location, coordinates and \"Natural-color composite\" label and the section footnote (i18n domains.illustrative) says so in both languages.",
         "rendered": {
           "max_css_width": 728,
           "device_pixel_ratio_considered": 2,
@@ -618,11 +618,12 @@
           "domains.illustrativeLabel",
           "domains.illustrative"
         ],
-        "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record."
+        "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record.",
+        "retired_by": "missing-visuals plan (2026-10-25)"
       },
       "web_m6_retired": {
         "task": "missing-visuals plan (2026-10-25)",
-        "note": "The Ili Delta no longer appears on /solutions/: the Marine panel there shows the coastal scene menderes-delta-2025 (web_m6.context_scenes, MER-238 visual need V4). This scene stays on the homepage Marine card (web_005b_placement) with its provenance, rights and checksums unchanged."
+        "note": "The Ili Delta no longer appears on /solutions/ or on the homepage: both show the coastal scene menderes-delta-2025 (web_m6.context_scenes, MER-238 visual need V4). Provenance, rights and checksums are retained unchanged."
       }
     }
   ],
@@ -4892,14 +4893,18 @@
             1,
             2
           ],
-          "max_css_width": 612,
+          "max_css_width": 684,
           "device_pixel_ratio_considered": 2,
-          "max_device_px": 1224,
+          "max_device_px": 1368,
           "widest_candidate_px": 1800,
           "selected_derivative": "assets/imagery/menderes-delta-2025-34e35c2d-900.webp",
-          "max_upscale_factor": 0.873,
+          "max_upscale_factor": 0.896,
           "max_upscale_at": "1440x900 @2x"
-        }
+        },
+        "card_pages": [
+          ""
+        ],
+        "card_note": "Also the homepage Marine card (the accepted exception to rule R2: a card that links to the domain, authority 4.2). The card carries no caption of its own (WEB-005B R14); the section footnote domains.illustrative frames it."
       }
     ]
   },

@@ -2224,6 +2224,13 @@ def main() -> int:
             package_context_paths.add(str(deriv["path"]))
     if web005b.get("context", {}).get("master", {}).get("file"):
         package_context_paths.add(str(web005b["context"]["master"]["file"]))
+    # The Söke scene is also the homepage Marine card; the scenes of other places are recorded under web_m6.context_scenes.
+    for ctx_entry in manifest.get("web_m6", {}).get("context_scenes", []):
+        if ctx_entry.get("local_file"):
+            package_context_paths.add(str(ctx_entry["local_file"]))
+        for ctx_deriv in ctx_entry.get("derivatives", []):
+            if ctx_deriv.get("path"):
+                package_context_paths.add(str(ctx_deriv["path"]))
 
     manifest_html_paths = {
         src for src in parser.img_srcs + parser.img_srcsets if src.startswith("assets/imagery/")
@@ -4483,8 +4490,19 @@ def main() -> int:
         shown_where = {n for n, d in doms.items() if n in route_html and any(
             str(i.attrs.get("src", "")).lstrip("/") in deriv_paths and "thumb" not in i.classes
             for i in d.find_all(lambda n_: n_.tag == "img"))}
-        if shown_where != {page}:
-            fail(f"{where} is shown on {sorted(shown_where)}, recorded for {page!r} alone", errors)
+        # The homepage Marine card is the one accepted second appearance (rule R2: a card that links to the domain, authority 4.2);
+        # it is recorded in card_pages, carries no caption of its own (WEB-005B R14) and is framed by domains.illustrative.
+        card_pages = [str(c) for c in (scene.get("card_pages") or [])]
+        if shown_where != {page, *card_pages}:
+            fail(f"{where} is shown on {sorted(shown_where)}, recorded for {sorted({page, *card_pages})!r} alone", errors)
+        for card_page in card_pages:
+            card_dom = doms.get(card_page)
+            card_imgs = [i_ for i_ in (card_dom.find_all(lambda n_: n_.tag == "img") if card_dom else [])
+                         if str(i_.attrs.get("src", "")).lstrip("/") in deriv_paths]
+            if card_dom is None or not card_imgs or any(i_.attrs.get("data-i18n-alt") != scene.get("alt_i18n_key") for i_ in card_imgs):
+                fail(f"{where}: the card on {card_page or 'the homepage'!r} must show the scene with its own description {scene.get('alt_i18n_key')}", errors)
+            if card_dom is not None and not card_dom.find_all(lambda n_: n_.attrs.get("data-i18n") == "domains.illustrative"):
+                fail(f"{where}: the card on {card_page or 'the homepage'!r} lost the illustrative framing domains.illustrative", errors)
         shown = [i_ for i_ in (page_dom.find_all(lambda n_: n_.tag == "img") if page_dom else [])
                  if str(i_.attrs.get("src", "")).lstrip("/") in deriv_paths and "thumb" not in i_.classes]
         for img_node in shown:
@@ -4678,9 +4696,9 @@ def main() -> int:
         if first(row, lambda n: "credit-sources" in n.classes) is None or \
                 first(row, lambda n: n.tag == "a" and str(n.attrs.get("href", "")).startswith("#src-")) is None:
             fail("MER-255: an image credit on /sources/ names no source record", errors)
-    if len(thumb_rows) < 10:
-        fail(f"MER-255: /sources/ lists {len(thumb_rows)} thumbnailed image credits, expected at least 10 "
-             f"(hero, Kızıldere, Yellowstone, Chuquicamata, Ili, Death Valley, Aluto, Büyük Menderes, locator, evidence and priority maps)", errors)
+    if len(thumb_rows) < 9:
+        fail(f"MER-255: /sources/ lists {len(thumb_rows)} thumbnailed image credits, expected at least 9 "
+             f"(hero, Kızıldere, Yellowstone, Chuquicamata, Death Valley, Aluto, Büyük Menderes, locator, evidence and priority maps)", errors)
     # The licence: the standard MIT text, in English in both languages, with the copyright line.
     MIT_BODY = (
         'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and '
