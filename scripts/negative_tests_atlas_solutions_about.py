@@ -90,8 +90,11 @@ suite.case("the Geothermal band loses its lead photograph", SOL,
            swap("<img\n          data-lead-visual\n          src=\"/assets/imagery/yellowstone-2013-1400.webp\"", "<img\n          src=\"/assets/imagery/yellowstone-2013-1400.webp\""),
            "#geothermal must be the Geothermal band")
 suite.case("the footnote no longer follows the pair", SOL,
-           regex(r'(\s*<div class="page-note ground-paper">.*?</div>\s*</div>)(\s*<div class="page-closing">)', r'\2\1', __import__("re").S),
-           "the illustrative footnote (div.page-note) must follow the pair directly")
+           swap('<div class="page-note ground-paper">', '<section class="page-section"></section>\n    <div class="page-note ground-paper">'),
+           "the illustrative footnote (div.page-note) must follow the pair directly and close the page")
+suite.case("a block follows the footnote, so the page no longer ends on it", SOL,
+           swap("  </main>", '    <section class="page-section"></section>\n  </main>'),
+           "the illustrative footnote (div.page-note) must follow the pair directly and close the page")
 suite.case("the Solutions title loses its tone clause", SOL,
            swap('<span class="tone" data-i18n="solutionsPage.title.tail">', '<span data-i18n="solutionsPage.title.tail">'),
            "the page title is two clauses")
@@ -105,7 +108,7 @@ suite.case("a layer thumbnail is declared at full size", ABOUT,
                 'src="/assets/proof/web005b/alt01-600.webp" alt="Thumbnail: alteration signal" data-i18n-alt="aboutPage.thumb.alteration" width="600" height="600"'),
            "it may appear only as an index thumbnail")
 suite.case("a governed raster is shown full size on Solutions", SOL,
-           swap("    <div class=\"page-closing\">", "    <section class=\"page-section\"><img data-lead-visual src=\"/assets/proof/web005b/priority-600.webp\" alt=\"\" width=\"600\" height=\"600\" /></section>\n    <div class=\"page-closing\">"),
+           swap("  </main>", "    <section class=\"page-section\"><img data-lead-visual src=\"/assets/proof/web005b/priority-600.webp\" alt=\"\" width=\"600\" height=\"600\" /></section>\n  </main>"),
            "it may appear only as an index thumbnail")
 suite.case("a thumbnail gets a CSS filter", CSS,
            swap("img.row-thumb{display:block;aspect-ratio:1/1;", "img.row-thumb{filter:saturate(1.4);display:block;aspect-ratio:1/1;"),

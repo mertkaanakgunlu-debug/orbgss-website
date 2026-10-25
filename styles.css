@@ -317,14 +317,12 @@ body.home{background:var(--limestone)}
 .sec-result{background:var(--ground)}
 .sec-inspect{background:var(--limestone)}
 .sec-domains{background:var(--limestone)}
-.sec-contact{background:var(--ground)}
 
 /* One hairline per boundary, and it fades out before the page edge instead of cutting the width
    in half — a rule the eye reads as a handoff, not a seam. The first post-hero act deliberately
    has none: the hero already ends on its own bottom shade, and a line there would be exactly the
    hard edge R10 section 4 asks for the absence of. */
-.sec-evidence::before,.sec-result::before,.sec-inspect::before,.sec-domains::before,
-.sec-contact::before{content:"";position:absolute;
+.sec-evidence::before,.sec-result::before,.sec-inspect::before,.sec-domains::before{content:"";position:absolute;
   left:var(--pad);right:var(--pad);top:0;height:1px;pointer-events:none;
   background:linear-gradient(90deg,transparent 0%,var(--hair-soft) 14%,var(--hair-soft) 86%,transparent 100%)}
 .sec-result{padding-top:clamp(52px,5.4vw,88px);padding-bottom:clamp(52px,5.4vw,88px)}
@@ -584,10 +582,6 @@ body.home{background:var(--limestone)}
 
 /* ---------- company mark (the About header) ---------- */
 
-/* ---------- contact: one centred Partner line (MER-240) ---------- */
-.sec-contact{padding-top:clamp(44px,5vw,72px);padding-bottom:clamp(52px,6vw,88px)}
-.sec-contact .shell{display:flex;justify-content:center}
-
 @media(min-width:701px){
   /* The whole 16:9 frame is on screen, so the recorded AOI fractions are true of what is drawn
      and the analysis square can be shown. */
@@ -721,7 +715,6 @@ body.interior .text-link{white-space:normal}
 .chapter-link .text-link{color:var(--fg-2)}
 .chapter-link .text-link:hover{color:var(--fg)}
 /* ----- shared endings ----- */
-.page-closing{padding:clamp(48px,6vw,88px) var(--pad);display:flex;justify-content:center;border-top:1px solid var(--rule-soft);background:linear-gradient(180deg,var(--ground) 0%,var(--ground) 100%)}
 .not-found .page-hero{border-bottom:0;min-height:52svh}
 .not-found .text-link{margin-top:30px}
 /* MER-241: one 404 serves every path, so it answers in both languages. */
@@ -816,11 +809,6 @@ body.page-geothermal .page-section-head.geo-head .lede{margin:0}
 .geo-missing-list a:hover{background:var(--wash)}
 .geo-missing-list .mono-label{text-align:right}
 .geo-missing-list .mono-label.is-limit{color:var(--limit)}
-
-/* ---------- the one closing link ---------- */
-body.page-geothermal .page-closing{justify-content:flex-start;padding:clamp(56px,6vw,88px) var(--edge);border-top:1px solid var(--rule-soft)}
-body.page-geothermal .page-closing .text-link{margin:0;padding:0;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;text-transform:none;color:var(--fg);border-bottom:0;white-space:normal}
-body.page-geothermal .page-closing .text-link:hover{color:var(--link)}
 
 /* ---------- below the desktop composition ---------- */
 @media(max-width:1000px){
@@ -921,12 +909,6 @@ body.interior .page-hero h1 .tone{display:block}
 .panel-line{grid-column:1 / -1;margin:6px 0 0;padding-top:14px;border-top:1px solid var(--hair);font-size:var(--t-body);line-height:1.5;color:var(--fg-2)}
 .page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--limestone)}
 .page-note .act-footnote{margin-top:0;border-top-color:var(--hair)}
-
-/* ----- the closing line, on both pages: the one Partner link, set as a statement ----- */
-body.page-solutions .page-closing,body.page-about .page-closing{padding:clamp(56px,6vw,88px) var(--pad)}
-body.page-solutions .page-closing .text-link,body.page-about .page-closing .text-link{gap:18px;padding:0;border-bottom:0;font-size:var(--t-statement);font-weight:300;letter-spacing:-.025em;line-height:1.1;text-transform:none;color:var(--mist);white-space:normal}
-body.page-solutions .page-closing .text-link:hover,body.page-about .page-closing .text-link:hover{color:var(--teal-light)}
-body.page-solutions .page-closing .text-link span[aria-hidden],body.page-about .page-closing .text-link span[aria-hidden]{font-size:.6em}
 
 /* ----- About: the opening ----- */
 body.page-about .page-hero.is-statement{padding:clamp(80px,10vw,152px) var(--pad) clamp(64px,7vw,104px)}

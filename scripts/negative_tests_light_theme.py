@@ -35,6 +35,19 @@ suite.case("a section bar returns on Partner", PARTNER,
            swap("</main>", '<nav class="index-bar" aria-label="x"></nav></main>'),
            "an in-page section bar")
 
+# ---- the closing Partner band is gone from every page (CTO, 2026-10-25): the header and footer carry the link -----
+for page, label in (("about/index.html", "About"), ("solutions/index.html", "Solutions"),
+                    ("solutions/geothermal/index.html", "Geothermal"), ("tr/hakkimizda/index.html", "the Turkish About page")):
+    suite.case(f"the dark closing Partner band returns on {label}", page,
+               swap("  </main>", '    <div class="page-closing"><a class="text-link" href="/partner/">Partner</a></div>\n  </main>'),
+               "the closing Partner band is back")
+suite.case("the homepage Partner line returns under its old anchor", HOME,
+           swap("  </main>", '    <div id="contact" class="sec"><a class="text-link" href="/partner/">Partner</a></div>\n  </main>'),
+           "the closing Partner band is back")
+suite.case("the footer loses its link to Partner with us", ABOUT,
+           regex(r'(<footer class="site-footer">.*?)<a href="/partner/"[^>]*>[^<]*</a>', r'\1', __import__("re").S),
+           "the footer must link to Partner with us")
+
 # ---- the page source publishes no working notes, and the method sentences stay out ----------------------------
 suite.case("a working note returns to the homepage source as an HTML comment", HOME,
            swap('<main id="main">', '<main id="main"><!-- display window and gamma of the Act 3 layers -->'),

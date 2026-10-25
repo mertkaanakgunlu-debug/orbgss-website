@@ -136,17 +136,15 @@ case("an old /pilot/ fragment lands at the top: its container is not positioned"
 
 # ---- the homepage's light trim (authority 4.1) ---------------------------------------------------
 case("the Company section returns to the homepage", INDEX,
-     swap('<div id="contact" class="sec sec-contact">',
-          '<section id="company" class="sec"><h2>Company</h2></section>\n    <div id="contact" class="sec sec-contact">'),
+     swap("  </main>", '<section id="company" class="sec"><h2>Company</h2></section>\n  </main>'),
      "#company is back")
 case("the hero's Partner call becomes a mailto again", INDEX,
      swap('<a class="text-link" href="/partner/"><span data-i18n="hero.secondary">',
           '<a class="text-link" href="mailto:contact@orbgss.com"><span data-i18n="hero.secondary">'),
      "carries a mailto: link")
-case("the Partner line grows a second link", INDEX,
-     regex(r'(<div id="contact" class="sec sec-contact">\s*<div class="shell">)',
-           r'\1<a href="/about/">About</a>'),
-     "#contact must be the one Partner line")
+case("the closing Partner line returns to the homepage (CTO removed it, 2026-10-25)", INDEX,
+     swap("  </main>", '    <div id="contact" class="sec sec-contact">\n      <div class="shell"><a class="text-link" href="/partner/">Partner With Us</a></div>\n    </div>\n  </main>'),
+     "the closing Partner band is back")
 case("the Act 3 deep link goes back to the build story", INDEX,
      swap('href="/solutions/geothermal/#layers"', 'href="/solutions/geothermal/"'),
      "must point to /solutions/geothermal/#layers")

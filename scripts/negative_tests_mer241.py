@@ -179,7 +179,7 @@ case("a Turkish link fragment does not resolve", TR_HOME,
 case("an anchor id is translated", TR_ABOUT,
      swap('id="principles"', 'id="ilkeler"'), "anchor ids differ")
 case("a Turkish page gains a section", TR_ABOUT,
-     swap('    <div class="page-closing">', '    <section class="page-section"></section>\n    <div class="page-closing">'),
+     swap("  </main>", '    <section class="page-section"></section>\n  </main>'),
      "does not have the same elements, ids and classes")
 case("a Turkish page shows a different image", TR_SOLUTIONS,
      swap("/assets/imagery/chuquicamata-2024-1400.webp", "/assets/imagery/yellowstone-2013-1400.webp"),

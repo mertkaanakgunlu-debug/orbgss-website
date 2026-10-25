@@ -132,13 +132,14 @@ _CSS_URL_REF = re.compile(r"""url\(\s*["']?([^"')\s]+)["']?\s*\)""")
 # aliases on their renamed /solutions/ rows so existing deep links keep resolving.
 # WEB-005B R14: the section is "Solutions" and carries the #solutions anchor; it is no longer
 # framed as a pilot panel, so there is no #pilot section on the homepage.
-# MER-240: Method (#proof) and Company (#company) moved to /about/; #contact stays as the one
-# Partner line, so existing /#contact links still land.
+# MER-240: Method (#proof) and Company (#company) moved to /about/. MER-240 kept #contact as the one closing Partner
+# line; the CTO removed that line, and every page's closing Partner band, on 2026-10-25 (the header and footer carry
+# Partner with us), so #contact is gone and a /#contact link simply opens the homepage.
 # Light theme (2026-10-25): the homepage's data-gap footnote (#structure) is gone with the other explanations; the gap
 # is still published, once, on the Geothermal page (#missing).
 REQUIRED_SECTION_IDS = {
     "hero", "context", "evidence", "terrain", "thermal", "alteration", "priority",
-    "solutions", "geothermal", "mining", "marine", "contact",
+    "solutions", "geothermal", "mining", "marine",
 }
 RETIRED_HOMEPAGE_SECTION_IDS = {"proof", "company"}
 # WEB-005: the homepage's primary visual hierarchy is exactly these four acts, in this order.
@@ -313,8 +314,8 @@ LEAD_VISUAL_TAGS = {"table", "img", "figure", "svg", "picture", "video", "canvas
 # section may also open with the designed blocks that replace them: a statement, or a marked set
 # (a ruled list or register of records).
 LEAD_VISUAL_CLASSES = {"gap-frame", "mail-address", "lead-statement", "lead-set"}
-# Blocks that may sit in <main> outside a section: the one closing link and the footnote.
-M6_LOOSE_BLOCKS = {"page-closing", "page-note"}
+# Blocks that may sit in <main> outside a section: the footnote. (The closing Partner band is retired, CTO 2026-10-25.)
+M6_LOOSE_BLOCKS = {"page-note"}
 # R2: a thumbnail is at most 160 CSS px on its long side.
 THUMB_MAX_CSS_PX = 160
 # R3: no software or development detail on the reworked routes. Layer codes stay out of visible
@@ -1173,6 +1174,9 @@ RETIRED_EXPLANATION_KEYS = [
 # Sentences removed after review because they said how the score is built, in both languages. A key may stay (the
 # Geothermal result copy) while its wording may not return.
 RETIRED_METHOD_PHRASES = ["combined into one experimental score", "deneysel skorda birleştirilir"]
+# The closing Partner band (the dark line with one Partner link above the footer) is retired on every page: the header and
+# the footer carry Partner with us (CTO, 2026-10-25). Its classes and the homepage anchor may not come back.
+RETIRED_CLOSING_CLASSES = {"page-closing", "sec-contact"}
 # The homepage keeps three dark acts (the cinematic hero, the Kizildere band, the priority result) and three light sections.
 LIGHT_HOME_DARK = ["hero", "context", "priority"]
 LIGHT_HOME_PAPER = ["evidence", "inspect", "solutions"]
@@ -1219,6 +1223,12 @@ def light_theme_checks(errors: list[str], page_html: dict[str, str]) -> None:
         if "<!--" in text:
             bad(f"{rel}: carries an HTML comment; deployed pages publish no working notes (keep them in docs/)")
         dom = build_dom(text)
+        for node in dom.find_all(lambda n: bool(n.classes & RETIRED_CLOSING_CLASSES) or n.attrs.get("id") == "contact"):
+            bad(f"{rel}: the closing Partner band is back; the header and footer carry Partner with us and the pages end on their content")
+        footer = next(iter(dom.find_all(lambda n: n.tag == "footer" and "site-footer" in n.classes)), None)
+        partner_href = "/tr/is-birligi/" if rel.startswith("tr/") else "/partner/"
+        if footer is not None and not footer.find_all(lambda n: n.tag == "a" and n.attrs.get("href") == partner_href):
+            bad(f"{rel}: the footer must link to Partner with us ({partner_href}); it is the page's only closing call to action")
         for node in dom.find_all(lambda n: bool(n.classes & LIGHT_BAR_CLASSES)):
             bad(f"{rel}: an in-page section bar ({sorted(node.classes & LIGHT_BAR_CLASSES)}) is back; the pages are read by scrolling")
     for rel in ("index.html", "tr/index.html"):
@@ -1742,8 +1752,8 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
                 siblings = [c for c in main.children if isinstance(c, DomNode)]
                 names = [(c.tag, " ".join(sorted(c.classes))) for c in siblings]
                 at = siblings.index(pair)
-                if not (len(siblings) > at + 2 and "page-note" in siblings[at + 1].classes and "page-closing" in siblings[at + 2].classes):
-                    fail(f"{rel}: the illustrative footnote (div.page-note) must follow the pair directly, then the closing line; found {names}", errors)
+                if not (len(siblings) == at + 2 and "page-note" in siblings[at + 1].classes):
+                    fail(f"{rel}: the illustrative footnote (div.page-note) must follow the pair directly and close the page; found {names}", errors)
         else:
             order = [("problem", "ground-orbit"), ("position", "ground-paper"), ("principles", "ground-paper"), ("sources", "ground-paper")]
             for sid, ground in order:
@@ -3767,11 +3777,6 @@ def main() -> int:
     if "mailto:" in html:
         fail("index.html carries a mailto: link; the homepage's Partner calls point to /partner/", errors)
     home_dom = doms[""]
-    contact = first(home_dom, lambda n: n.attrs.get("id") == "contact")
-    contact_links = contact.find_all(lambda n: n.tag == "a") if contact else []
-    if not contact or [a.attrs.get("href") for a in contact_links] != ["/partner/"] \
-            or count_words(contact.text()) > M6_BUDGET["headline"]:
-        fail("index.html: #contact must be the one Partner line, a single link to /partner/", errors)
     for key, href in (("act.evidence.deeper", "/solutions/geothermal/#layers"),
                       ("act.priority.deeper", "/solutions/geothermal/")):
         span = first(home_dom, lambda n, k=key: n.attrs.get("data-i18n") == k)
@@ -3823,9 +3828,6 @@ def main() -> int:
             if block.tag == "section" and "page-hero" in block.classes:
                 continue
             if block.tag == "div" and block.classes & M6_LOOSE_BLOCKS:
-                if "page-closing" in block.classes and \
-                        len(block.find_all(lambda n: n.tag == "a")) != 1:
-                    fail(f"R4: {label}: the closing block holds more than one link", errors)
                 if "page-note" in block.classes and not first(block, lambda n: "act-footnote" in n.classes):
                     fail(f"R4: {label}: a page note that is not the fixed footnote", errors)
                 continue

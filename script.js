@@ -230,7 +230,6 @@ const I18N = {
     'geothermalPage.relief.state': 'Figure to be supplied',
     'geothermalPage.relief.slot': 'Priority over shaded NASADEM relief',
     'geothermalPage.missing.title': 'The gaps are part of the record.',
-    'geothermalPage.next': 'Discuss a pilot',
     // === /atlas:geothermal ===
 
     // === atlas:solutions-about === MER-277 owns this region: the Solutions and About page strings (solutionsPage.*, aboutPage.*).
@@ -626,7 +625,6 @@ const I18N = {
     'geothermalPage.relief.state': 'Şekil henüz teslim edilmedi',
     'geothermalPage.relief.slot': 'Gölgelendirilmiş NASADEM rölyefi üzerinde öncelik',
     'geothermalPage.missing.title': 'Boşluklar kaydın parçasıdır.',
-    'geothermalPage.next': 'Pilot görüşün',
     // === /atlas:geothermal ===
 
     // === atlas:solutions-about === MER-277 owns this region: the Solutions and About page strings (solutionsPage.*, aboutPage.*).
