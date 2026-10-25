@@ -4156,10 +4156,10 @@
     "locator_map": {
       "id": "kizildere-locator",
       "asset_class": "A (cartographic illustration from public-domain vector data); not Earth-observation imagery and not product proof",
-      "path": "assets/maps/kizildere-locator-006fcf1f.svg",
+      "path": "assets/maps/kizildere-locator-19b40fa0.svg",
       "format": "image/svg+xml",
       "bytes": 22671,
-      "sha256": "006fcf1f82a6e59f8b57c88cd5f19da58581ff33e99c5f9555f943be42f2a85b",
+      "sha256": "19b40fa0ab032d3810a2361d957a8a60273fdc83f66c5af647377474bfd58c83",
       "viewbox": [
         1200,
         574
@@ -4198,7 +4198,7 @@
         "clip": "Sutherland-Hodgman, 24 units outside the frame so no clip edge is visible",
         "simplify": "a vertex closer than 0.7 viewBox units to the last kept one is dropped; rings under 1.5 square units are dropped",
         "drawn": "Turkiye filled and outlined; every other country filled and stroked in one colour, so no third-country border is drawn; no text in the file",
-    "colours": "Heat Trace (Final_v3): neutrals of the brand's dark theme from the token file (sea #110C12, other countries #1C161D, Turkiye #241E25 with a #69646A outline) and one brand colour, the Magma #E43386 area-of-interest callout (a dashed 2 px line over a 14 % fill) inside a 5 px Night #160A19 halo at 60 % opacity; Amber and Glow are never drawn on a map, and no teal (brand rule). The geometry is byte-identical to the Agate build (same source, same generator); only the colour constants and the dashed callout changed."
+    "colours": "Violet (Final_v4): neutrals of the brand's dark theme from the token file (sea #110C12, other countries #1C161D, Turkiye #241E25 with a #69646A outline) and the brand's map rule, which draws no brand colour on a map: the area of interest is a white #FFFFFF dashed 2 px line over a 14 % white fill inside a 5 px Night #160A19 halo at 70 % opacity, because the scientific ramps run through violet and yellow and a brand hue on the map would read as data. The geometry is byte-identical to the Heat Trace build (same source, same generator); only the colour constants changed."
       },
       "aoi": {
         "centre": "37.9794 N, 28.7907 E",

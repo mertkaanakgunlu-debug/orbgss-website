@@ -1,7 +1,7 @@
 # WEB Heat Trace brand adoption — palette, marks and map rule
 
 **Task:** brand adoption on the existing website (CTO decision of 2026-10-25, "bu son tasarım kararı uygula"); not a site replacement.
-**Status:** **review, pending CTO acceptance.** Nothing here is published; it becomes binding only when the CTO accepts the reviewed branch and authorizes a publication.
+**Status:** **superseded on 2026-10-25 by `docs/WEB_VIOLET_BRAND_AUTHORITY.md`** (the CTO replaced the Magma interface accent with Violet, package `Final_v4`); kept as history. It was: **review, pending CTO acceptance.** Nothing here is published; it becomes binding only when the CTO accepts the reviewed branch and authorizes a publication.
 **Baseline:** the light-theme branch (white header and footer, Pumice-style pages, plain-spoken copy), which itself sits on the Agate adoption (MER-279) and the Atlas integration (MER-274). This work changes colour and brand marks on top of it and nothing else.
 **Governs, once accepted:** the UI palette, the colours of the grounds, the logo, the favicon family and the map rule. It **supersedes `docs/WEB_AGATE_BRAND_AUTHORITY.md`** (§1 palette, §3 interaction colours, §4 marks, §5 map rule, §8 checks) and the palette lines of `docs/WEB_LIGHT_THEME_AUTHORITY.md` and `docs/WEB_ATLAS_DESIGN_AUTHORITY.md`. It changes nothing in type, fonts, the structure of the shared components, the four-act homepage, the scientific, legal, claim and content rules, the page set, the navigation, the URLs or the light-theme page map (`docs/WEB_LIGHT_THEME_AUTHORITY.md` §1).
 **Package:** `OrbGSS Logo Tasarım4.zip` (SHA-256 `cc5f769b…625635`), folder `Final_v3/`, "6a Heat Trace" palette. `Final_v2/` and the older Agate folder `final/` are superseded and not used.

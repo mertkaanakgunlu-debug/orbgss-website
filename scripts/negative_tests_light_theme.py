@@ -67,8 +67,8 @@ suite.case("the Turkish sentence on how the score is built returns to the dictio
                 "Kanıt katmanları 0 ile 100 arası tek bir deneysel skorda birleştirilir."),
            "a sentence on how the score is built")
 suite.case("the skip link's focus ring goes back to the pale link colour", CSS,
-           swap(".skip-link:focus-visible{outline-color:var(--magma)}\n", ""),
-           "the skip link's focus ring must be Magma")
+           swap(".skip-link:focus-visible{outline-color:var(--violet)}\n", ""),
+           "the skip link's focus ring must be Violet")
 suite.case("the mobile Solutions sublist takes the dropdown shadow again", CSS,
            swap("border:0;box-shadow:none;padding:0 0 10px 18px", "border:0;padding:0 0 10px 18px"),
            "must reset the desktop dropdown's box-shadow")
