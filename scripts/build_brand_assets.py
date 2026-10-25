@@ -48,6 +48,10 @@ FILES = {
 }
 ICO = ("favicon/favicon.ico", "favicon.ico")  # shipped at the site root, unchanged
 
+# The package the files were taken from (SHA-256 of the zip as supplied). The per-file source hashes in brand.json are
+# what the validator pins; this one only names the delivery they came from.
+PACKAGE = {"name": "OrbGSS Logo Tasarim Final.zip", "sha256": "56f749ec52c49fbc71c5647b4656b9bb0cb639549a64571300fe5800a3b185f3"}
+
 PALETTE = {
     "light": {"graphite": "#202629", "mineral_gray": "#69716F", "agate_teal": "#18777A", "mineral_gold": "#C49A5A"},
     "dark": {"outer": "#E3E5E4", "mineral_gray": "#B7C0BD", "agate_teal": "#58AEB2", "mineral_gold": "#D8B173"},
@@ -99,7 +103,8 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
     record = {
         "identity": "Agate",
         "approved": "CTO, 2026-10-25 (MER-279)",
-        "package": "OrbGSS Logo Tasarim Final.zip, folder final/ (variant-b/ excluded)",
+        "package": f"{PACKAGE['name']}, folder final/ (variant-b/ excluded)",
+        "package_sha256": PACKAGE["sha256"],
         "palette": PALETTE,
         "rules": {
             "teal": "the interactive accent: links, active navigation, focus, selection",
