@@ -195,6 +195,22 @@ derivatives of the governed rasters of the accepted `kizildere_mvp_v2` export `2
 * **Warnings:** each surface carries its mandatory scientific warning as visible EN/TR copy.
 * **Ceiling:** the native 1200 px grid, designed against 600 CSS px. MER-151 permits a 4K presentation derivative, but none is published.
 
+## Class B — MER-242 Geothermal-page presentation derivatives (2026-10-25, pending acceptance)
+
+Two more surfaces of the same export, for `/solutions/geothermal/`, recorded in `sources.json` → `mer_242` and
+built by `scripts/build_mer242_presentation.py` with the MER-151 pipeline of the homepage build (same functions,
+same hillshade code). Evidence and the Science decisions: `tasks/MER-242_EVIDENCE.md`. Delivered as files and
+records only; no page shows them yet.
+
+* **ALT-02 (iron), Pl. 06:** the ALT-01 palette and LUT (ALT-02 shares the renderer style `alt_batlow_sequential`),
+  the ALT-01 window rule (`q_low 0.02 / q_high 0.98`, no gamma), the homepage hillshade and opacity 0.90.
+* **Priority over relief:** the unwindowed priority LUT at opacity 0.90 (the MER-108 floor) over a dark neutral
+  hillshade of the governed DEM with a vertical exaggeration of 3.0; source-over only, no blend mode.
+* **Files:** `assets/proof/mer242/` → `alt02-<hash8>-{600,900,1200}.webp`, `alt02-legend-<hash8>.png`,
+  `relief-<hash8>-{160,320,600,900,1200}.webp` (160 and 320 are the `/sources/` thumbnail). The relief legend is
+  the homepage `priority-legend-ramp.png`. Lossless WebP; no enlargement.
+* **Rights, warnings and ceiling:** as for the WEB-005B derivatives above.
+
 ## WEB-001 placement (2026-09-15, superseded by WEB-002, then by WEB-005)
 
 WEB-001 reused the four Landsat scenes as temporary gallery material across the story panels.
