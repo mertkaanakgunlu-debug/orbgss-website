@@ -115,7 +115,7 @@ case("a card title loses the id its link is named by", INDEX,
      '<h3 data-i18n="domain.mining.title">',
      "which is not")
 case("the card links lose their visible focus state", STYLES,
-     ".domain-link:focus-visible::after{outline:2px solid var(--signal);outline-offset:-2px}",
+     ".domain-link:focus-visible::after{outline:2px solid var(--teal-light);outline-offset:-2px}",
      ".domain-link:focus-visible::after{outline:none}",
      "no visible focus state")
 

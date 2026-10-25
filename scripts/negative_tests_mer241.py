@@ -185,8 +185,8 @@ case("a Turkish page shows a different image", TR_SOLUTIONS,
      swap("/assets/imagery/chuquicamata-2024-1400.webp", "/assets/imagery/yellowstone-2013-1400.webp"),
      "references different assets")
 case("a Turkish page drops back to a document-relative asset URL", TR_HOME,
-     swap('<link rel="icon" href="/assets/mark.svg"', '<link rel="icon" href="assets/mark.svg"'),
-     "tr/assets/mark.svg")
+     swap('<link rel="icon" href="/assets/brand/orbgss-favicon.31dba293.svg"', '<link rel="icon" href="assets/brand/orbgss-favicon.31dba293.svg"'),
+     "tr/assets/brand/orbgss-favicon.31dba293.svg")
 
 # ---- the mandatory scientific warnings, in Turkish ---------------------------------------------
 case("the Turkish priority warning loses its wording", TR_HOME,

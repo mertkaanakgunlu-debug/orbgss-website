@@ -36,12 +36,16 @@ AOI_HALF_KM = 18.0
 KM_PER_DEG_LAT = 111.32
 
 FOCUS_A3 = "TUR"
-SEA = "#030b12"
-LAND = "#0f202b"
-FOCUS_FILL = "#16303f"
-FOCUS_LINE = "#5d7f93"
-AOI_LINE = "#73e7ff"
-AOI_FILL = "rgba(115,231,255,.22)"
+# MER-279: Agate map colours. The brand rule is that a map carries no teal and one brand colour, the
+# Mineral Gold area-of-interest callout (#D8B173, the dark-ground gold) with a dark halo; everything else
+# is a Graphite neutral from the brand token file (final/tokens/orbgss-tokens.css, Graphite theme).
+SEA = "#121415"
+LAND = "#252A2B"
+FOCUS_FILL = "#2C3233"
+FOCUS_LINE = "#6C7472"
+AOI_LINE = "#D8B173"
+AOI_HALO = "#121415"
+AOI_FILL_OPACITY = ".22"
 
 SIMPLIFY = 0.7    # drop a vertex closer than this (viewBox units) to the last kept one
 MIN_AREA = 1.5    # drop rings smaller than this (square viewBox units)
@@ -171,7 +175,9 @@ def main() -> int:
         f'<path d="{focus[0]}" fill="{FOCUS_FILL}" stroke="{FOCUS_LINE}" stroke-width="1.2" '
         'stroke-linejoin="round" fill-rule="evenodd"/>'
         f'<rect x="{cx - half_x:.1f}" y="{cy - half_y:.1f}" width="{2 * half_x:.1f}" '
-        f'height="{2 * half_y:.1f}" fill="{AOI_FILL}" stroke="{AOI_LINE}" stroke-width="2"/>'
+        f'height="{2 * half_y:.1f}" fill="none" stroke="{AOI_HALO}" stroke-width="5"/>'
+        f'<rect x="{cx - half_x:.1f}" y="{cy - half_y:.1f}" width="{2 * half_x:.1f}" '
+        f'height="{2 * half_y:.1f}" fill="{AOI_LINE}" fill-opacity="{AOI_FILL_OPACITY}" stroke="{AOI_LINE}" stroke-width="2"/>'
         "</svg>\n"
     ).encode("utf-8")
 

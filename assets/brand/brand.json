@@ -1,0 +1,100 @@
+{
+  "identity": "Agate",
+  "approved": "CTO, 2026-10-25 (MER-279)",
+  "package": "OrbGSS Logo Tasarim Final.zip, folder final/ (variant-b/ excluded)",
+  "palette": {
+    "light": {
+      "graphite": "#202629",
+      "mineral_gray": "#69716F",
+      "agate_teal": "#18777A",
+      "mineral_gold": "#C49A5A"
+    },
+    "dark": {
+      "outer": "#E3E5E4",
+      "mineral_gray": "#B7C0BD",
+      "agate_teal": "#58AEB2",
+      "mineral_gold": "#D8B173"
+    }
+  },
+  "rules": {
+    "teal": "the interactive accent: links, active navigation, focus, selection",
+    "gold": "a restrained highlight and a non-text mark; never a button fill and never body text on a light ground",
+    "map": "no teal on a map; the gold area-of-interest callout with a dark halo is the one brand colour there",
+    "minimum_sizes": "horizontal logo 120 px wide, symbol 24 px"
+  },
+  "not_used": "final/assets/illustrative-map.jpg is a generated illustration and is not placed on any page",
+  "files": {
+    "logo-dark": {
+      "file": "orbgss-logo-dark.9085b960.svg",
+      "purpose": "horizontal logo for dark grounds: header and footer on every page",
+      "bytes": 4939,
+      "sha256": "9085b96015c99855019b35118eda909c578245826566f961411a141c6a40da60",
+      "source": {
+        "path": "final/logo/orbgss-logo-dark.svg",
+        "bytes": 12713,
+        "sha256": "ef297ba33c28529c10d608f816fdd316c636dafa1420dd50af8f56c364ddde98"
+      },
+      "transform": "metadata element and its xmlns:c2pa declaration removed; drawing unchanged"
+    },
+    "favicon": {
+      "file": "orbgss-favicon.31dba293.svg",
+      "purpose": "favicon tile, Graphite with the dark-ground symbol (32 px design size)",
+      "bytes": 1524,
+      "sha256": "31dba293057f9a9ab14330ae7ba0d5509c70be99b0808ca18b2cb9cd3a8b931c",
+      "source": {
+        "path": "final/favicon/favicon.svg",
+        "bytes": 9298,
+        "sha256": "c53cfa6fb1d35a975ceecbac7d27bad5100bff571b75993d571cdb2af40fa361"
+      },
+      "transform": "metadata element and its xmlns:c2pa declaration removed; drawing unchanged"
+    },
+    "apple-touch-icon": {
+      "file": "orbgss-apple-touch-icon.ea0b5f7b.png",
+      "purpose": "180 px full-bleed touch icon",
+      "bytes": 9012,
+      "sha256": "ea0b5f7b02bd65b0dcde4d82be57fe55a8e72a9a1a7949f2eb882802bee82402",
+      "source": {
+        "path": "final/favicon/apple-touch-icon.png",
+        "bytes": 9012,
+        "sha256": "ea0b5f7b02bd65b0dcde4d82be57fe55a8e72a9a1a7949f2eb882802bee82402"
+      },
+      "transform": "none (byte for byte)"
+    },
+    "icon-192": {
+      "file": "orbgss-icon-192.dbdf27c7.png",
+      "purpose": "192 px web-app manifest icon",
+      "bytes": 10516,
+      "sha256": "dbdf27c795a8242f5dba6b45f8f2a3891cd38bb35d63f644a33ef81ac7b1821d",
+      "source": {
+        "path": "final/favicon/icon-192.png",
+        "bytes": 10516,
+        "sha256": "dbdf27c795a8242f5dba6b45f8f2a3891cd38bb35d63f644a33ef81ac7b1821d"
+      },
+      "transform": "none (byte for byte)"
+    },
+    "icon-512": {
+      "file": "orbgss-icon-512.cd7794c9.png",
+      "purpose": "512 px web-app manifest icon",
+      "bytes": 36593,
+      "sha256": "cd7794c9eec7443ca945f8652f990b182f7eb582ec9f70376ed43bd70de1f901",
+      "source": {
+        "path": "final/favicon/icon-512.png",
+        "bytes": 36593,
+        "sha256": "cd7794c9eec7443ca945f8652f990b182f7eb582ec9f70376ed43bd70de1f901"
+      },
+      "transform": "none (byte for byte)"
+    },
+    "favicon-ico": {
+      "file": "../../favicon.ico",
+      "purpose": "multi-size favicon (16, 32, 48 px) at the site root, where browsers ask for it",
+      "bytes": 3864,
+      "sha256": "133b4c1e666b584d6f1644fce39d975db2a8563e215ff625dc95a416392e7b8e",
+      "source": {
+        "path": "final/favicon/favicon.ico",
+        "bytes": 3864,
+        "sha256": "133b4c1e666b584d6f1644fce39d975db2a8563e215ff625dc95a416392e7b8e"
+      },
+      "transform": "none (byte for byte)"
+    }
+  }
+}

@@ -2,7 +2,7 @@
 
     python scripts/negative_tests_atlas_foundation.py
 
-The foundation is the palette (nine colours and four rules, and no other UI colour), the type system (OrbGSS
+The foundation is the palette (since MER-279 the Agate brand colours and their rules, and no other UI colour), the type system (OrbGSS
 Sans 300 / 400 and OrbGSS Mono 400, the scale, no other weight), the self-hosted fonts and their licence, the
 marked regions that keep the page threads apart, and the shared components. Each case breaks exactly one of
 them in memory and checks that scripts/validate_site.py names it. Run it from a detached worktree of the
@@ -18,19 +18,23 @@ suite = Suite("Atlas negative tests - foundation (MER-275)")
 CSS, JS, FONTS = "styles.css", "script.js", "assets/fonts/fonts.json"
 
 # ---- the palette ---------------------------------------------------------------------------------
-suite.case("a palette token drifts", CSS, swap("--signal:#73E7FF;", "--signal:#43BFF0;"), "palette token --signal")
-suite.case("a line token drifts", CSS, swap("--rule:rgba(158,177,193,.22);", "--rule:rgba(158,177,193,.5);"), "palette token --rule")
-suite.case("a retired WEB-005B token comes back", CSS, swap("body{margin:0;background:var(--orbit)", "body{margin:0;background:var(--orb-bg)"), "retired colour token --orb-bg")
-suite.case("a retired beam token is defined again", CSS, swap("--orbit:#030B12;", "--orbit:#030B12;\n  --orb-beam-core:#7FEFFF;"), "retired colour token --orb-beam-core")
-suite.case("a stray hex colour in a rule", CSS, swap(".site-footer{min-height:180px;", ".site-footer{color:#ffffff;min-height:180px;"), "is not in the Atlas palette")
-suite.case("a stray rgba colour in a rule", CSS, swap(".beam-note{margin:0;", ".beam-note{color:rgba(10,10,10,.5);margin:0;"), "is not in the Atlas palette")
+suite.case("a palette token drifts", CSS, swap("--teal-light:#58AEB2;", "--teal-light:#43BFF0;"), "palette token --teal-light")
+suite.case("a line token drifts", CSS, swap("--rule:rgba(183,192,189,.22);", "--rule:rgba(183,192,189,.5);"), "palette token --rule")
+suite.case("a retired WEB-005B token comes back", CSS, swap("body{margin:0;background:var(--ground)", "body{margin:0;background:var(--orb-bg)"), "retired colour token --orb-bg")
+suite.case("a retired beam token is defined again", CSS, swap("--ground:#171A1B;", "--ground:#171A1B;\n  --orb-beam-core:#7FEFFF;"), "retired colour token --orb-beam-core")
+suite.case("a stray hex colour in a rule", CSS, swap(".site-footer{min-height:180px;", ".site-footer{color:#ffffff;min-height:180px;"), "is not in the Agate palette")
+suite.case("a stray rgba colour in a rule", CSS, swap(".beam-note{margin:0;", ".beam-note{color:rgba(10,10,10,.5);margin:0;"), "is not in the Agate palette")
 suite.case("a CSS named colour", CSS, swap(".kicker,.mono-label{margin:0 0 18px;", ".kicker,.mono-label{border-color:red;margin:0 0 18px;"), "border-color: red")
 suite.case("an inline style colour on the homepage", "index.html", swap('<a class="skip-link"', '<a style="color:#ffffff" class="skip-link"'), "index.html: colour #ffffff")
 suite.case("a <style> block colour on the About page", "about/index.html", swap("</head>", "<style>a{color:#ABCDEF}</style></head>"), "about/index.html: colour #ABCDEF")
-suite.case("caution used as a fill", CSS, swap(".plate-gap{border:1px dashed var(--caution);", ".plate-gap{background:var(--caution);border:1px dashed var(--caution);"), "never a fill")
+suite.case("gold used as a fill", CSS, swap(".plate-gap{border:1px dashed var(--gold-light);", ".plate-gap{background:var(--gold-light);border:1px dashed var(--gold-light);"), "never a fill")
+suite.case("a retired Atlas token comes back (--signal)", CSS, swap(".skip-link{position:fixed;", ".skip-link{border-color:var(--signal);position:fixed;"), "retired colour token --signal")
+suite.case("a retired Atlas token comes back (--paper)", CSS, swap(".lede{margin:0;font-size:var(--t-lede);line-height:1.62;color:var(--fg);", ".lede{margin:0;font-size:var(--t-lede);line-height:1.62;color:var(--paper);"), "retired colour token --paper")
+suite.case("a retired Atlas token is defined again (--orbit)", CSS, swap("--ground:#171A1B;", "--ground:#171A1B;\n  --orbit:#030B12;"), "retired colour token --orbit")
+suite.case("the old Orbit navy returns as a rule colour", CSS, swap(".beam-note{margin:0;", ".beam-note{color:rgba(3,11,18,.5);margin:0;"), "is not in the Agate palette")
 
 # ---- the type system -----------------------------------------------------------------------------
-suite.case("a medium weight appears", CSS, swap(".brand-wordmark{font-size:24px;font-weight:400;", ".brand-wordmark{font-size:24px;font-weight:500;"), "font-weight 500")
+suite.case("a medium weight appears", CSS, swap(".t-figure{margin:0;font-size:var(--t-figure);font-weight:400;", ".t-figure{margin:0;font-size:var(--t-figure);font-weight:500;"), "font-weight 500")
 suite.case("a third family appears", CSS, swap(".t-figure{margin:0;", ".t-figure{font-family:\"Space Grotesk\";margin:0;"), "only var(--sans)")
 suite.case("a font shorthand appears", CSS, swap(".lede{margin:0;", ".lede{font:400 19px/1.5 serif;margin:0;"), "font shorthand")
 suite.case("font synthesis is switched back on", CSS, swap("font-synthesis-weight:none;", ""), "font-synthesis-weight:none")
@@ -59,11 +63,11 @@ suite.case("a foreign key sits in a group's dictionary region", JS, regex(r"(// 
 suite.case("a validator region marker is removed", "scripts/validate_site.py", swap("# === /atlas:geothermal ===", "#"), "must carry the region atlas:geothermal")
 
 # ---- the shared components -----------------------------------------------------------------------
-suite.case("the mandatory warning loses its caution rule", CSS, swap("border-left:2px solid var(--limit)", "border-left:2px solid var(--steel)"), "2px caution left rule")
+suite.case("the mandatory warning loses its gold rule", CSS, swap("border-left:2px solid var(--limit-line)", "border-left:2px solid var(--mineral-light)"), "2px gold left rule")
 suite.case("a plate gets a radius", CSS, swap(".plate{margin:0;width:100%;max-width:600px}", ".plate{margin:0;width:100%;max-width:600px;border-radius:4px}"), "gives a plate chrome")
-suite.case("the paper ground keeps Signal for links", CSS, swap("--link:var(--signal-deep);--limit", "--link:var(--signal);--limit"), "paper ground must carry")
-suite.case("the header leaves Orbit", CSS, swap("border-bottom:1px solid var(--rule-soft);background:var(--orbit);position:relative;z-index:40}", "border-bottom:1px solid var(--rule-soft);background:var(--lift);position:relative;z-index:40}"), "must sit on Orbit")
-suite.case("the target frame leaves Signal", CSS, swap("height:22px;border:0 solid var(--signal)", "height:22px;border:0 solid var(--paper)"), "target frame must be Signal")
+suite.case("the paper ground keeps the dark-ground teal for links", CSS, swap("--link:var(--teal);--limit", "--link:var(--teal-light);--limit"), "paper ground must carry")
+suite.case("the header leaves the Graphite ground", CSS, swap("border-bottom:1px solid var(--rule-soft);background:var(--ground);position:relative;z-index:40}", "border-bottom:1px solid var(--rule-soft);background:var(--ground-lift);position:relative;z-index:40}"), "must sit on the Graphite ground")
+suite.case("the target frame turns teal", CSS, swap("height:22px;border:0 solid var(--gold-light)", "height:22px;border:0 solid var(--teal-light)"), "target frame must be Mineral Gold")
 suite.case("the plate component is deleted", CSS, swap(".plate-frame{position:relative;", ".platex-frame{position:relative;"), "lost the shared component .plate-frame")
 
 if __name__ == "__main__":

@@ -4,11 +4,23 @@
   "description": "Actionable geospatial intelligence from Earth observation and geoscience data.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#030B12",
-  "theme_color": "#030B12",
+  "background_color": "#171A1B",
+  "theme_color": "#171A1B",
   "icons": [
     {
-      "src": "/assets/mark.svg",
+      "src": "/assets/brand/orbgss-icon-192.dbdf27c7.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/brand/orbgss-icon-512.cd7794c9.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/brand/orbgss-favicon.31dba293.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

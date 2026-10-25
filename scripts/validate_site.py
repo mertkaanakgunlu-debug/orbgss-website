@@ -26,8 +26,8 @@ REQUIRED_FILES = [
     "index.html",
     "styles.css",
     "script.js",
-    "assets/logo.svg",
-    "assets/mark.svg",
+    "favicon.ico",
+    "assets/brand/brand.json",
     "assets/imagery/sources.json",
     "IMAGERY_RIGHTS.md",
     "vercel.json",
@@ -179,7 +179,7 @@ EXPECTED_HOMEPAGE_SLOTS = ["context", "terrain", "thermal", "alteration", "prior
 HERO_DRAPE_STATE_CEILING = 1.25 * 1024 * 1024
 HERO_DRAPE_LAYERS = ["terrain", "thm01", "alt01", "priority"]
 # WEB-005A relief rise (docs/web-005-polish-authority@0e87675): 6-12 lossless states, 0.45-0.70 s.
-# The product palette that WEB-005B pinned here (--orb-*) is superseded by the Atlas palette (ATLAS_TOKENS, atlas:foundation).
+# The product palette that WEB-005B pinned here (--orb-*) is superseded by the Atlas palette (AGATE_TOKENS, atlas:foundation).
 # MER-108 governed-source pins and website-derivative bounds (B-VIS-04). The source SHA-256s are
 # the MER-113 identities in the terminal authority; normalization is d3a163bd's canonical kind per
 # layer; analytical opacity is 11c32e8d section 6. None of these may drift without Science.
@@ -762,15 +762,23 @@ def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
 # in ATLAS_GROUPS: its dictionary prefixes and whether its CSS region already holds to the type scale.
 # =============================================================================================
 # === atlas:foundation ===
-ATLAS_TOKENS = {
-    "--orbit": "#030B12", "--lift": "#061420", "--paper": "#F2F4F5", "--steel": "#9EB1C1",
-    "--slate": "#5B6B76", "--signal": "#73E7FF", "--signal-deep": "#0E6D81",
-    "--caution": "#C8A97A", "--caution-deep": "#7F602F",
-    "--rule": "rgba(158,177,193,.22)", "--rule-soft": "rgba(158,177,193,.11)",
-    "--rule-paper": "rgba(3,11,18,.14)", "--rule-paper-soft": "rgba(3,11,18,.08)",
+# Naming: "Orbit" and "Lift" stay the structural names of the dark ground and its step (the classes ground-orbit and ground-lift,
+# and the messages of the page-group regions); since MER-279 their colours are --ground (Graphite) and --ground-lift.
+# MER-279: the Agate palette replaces the Atlas five-colour system (Orbit, Lift, Paper, Steel, Signal, Caution).
+# The four brand colours as they read on a light surface, the same four on a dark surface, and the neutral grounds and two
+# text tones of the brand token file (final/tokens/orbgss-tokens.css). Nothing else is a UI colour.
+AGATE_TOKENS = {
+    "--graphite": "#202629", "--mineral": "#69716F", "--teal": "#18777A", "--gold": "#C49A5A",
+    "--mist": "#E3E5E4", "--mineral-light": "#B7C0BD", "--teal-light": "#58AEB2", "--gold-light": "#D8B173",
+    "--ground": "#171A1B", "--ground-lift": "#252A2B", "--limestone": "#F6F5F2",
+    "--graphite-soft": "#565D5A", "--gold-ink": "#735525",
+    "--rule": "rgba(183,192,189,.22)", "--rule-soft": "rgba(183,192,189,.11)",
+    "--rule-paper": "rgba(105,113,111,.30)", "--rule-paper-soft": "rgba(105,113,111,.15)",
 }
-# Tokens that belonged to the superseded palettes (WEB-005B, the MER-255 greys). They may not come back.
-ATLAS_RETIRED_TOKEN = re.compile(r"--(?:orb-[\w-]+|accent(?:-soft)?|line(?:-soft)?|bg(?:-deep)?|beam|text|muted|dim)\b")
+# Tokens that belonged to the superseded palettes (WEB-005B, the MER-255 greys, and the Atlas five roles that the Agate
+# identity replaced). They may not come back. The look-behind keeps --ground-lift and --rule-paper from matching.
+ATLAS_RETIRED_TOKEN = re.compile(r"(?<![\w-])--(?:orb-[\w-]+|accent(?:-soft)?|line(?:-soft)?|bg(?:-deep)?|beam|text|muted|dim|"
+                                 r"orbit|lift|paper|steel|slate|signal(?:-deep)?|caution(?:-deep)?)(?![\w-])")
 ATLAS_CSS_REGIONS = ["foundation", "home", "shell", "geothermal", "solutions-about", "partner-sources"]
 ATLAS_PAGE_GROUPS = ["geothermal", "solutions-about", "partner-sources"]
 # Filled in by each page group's own region further down: {"prefixes": (...), "type_ready": bool}.
@@ -805,7 +813,7 @@ def atlas_hex_rgb(value: str) -> tuple[int, int, int]:
     return int(value[0:2], 16), int(value[2:4], 16), int(value[4:6], 16)
 
 
-ATLAS_PALETTE_RGB = {atlas_hex_rgb(v) for v in ATLAS_TOKENS.values() if v.startswith("#")}
+AGATE_PALETTE_RGB = {atlas_hex_rgb(v) for v in AGATE_TOKENS.values() if v.startswith("#")}
 
 
 def atlas_strip_css(css: str) -> str:
@@ -826,7 +834,7 @@ def atlas_colour_violations(css: str) -> list[str]:
     bad: list[str] = []
     for m in re.finditer(r"#([0-9a-fA-F]{3,8})\b", text):
         digits = m.group(1)
-        if len(digits) != 6 or ("#" + digits).upper() not in {v.upper() for v in ATLAS_TOKENS.values()}:
+        if len(digits) != 6 or ("#" + digits).upper() not in {v.upper() for v in AGATE_TOKENS.values()}:
             bad.append("#" + digits)
     for m in re.finditer(r"\b(rgba?|hsla?|hwb|lab|lch|oklab|oklch|color-mix|color)\(([^()]*(?:\([^()]*\)[^()]*)*)\)", text, re.I):
         fn, args = m.group(1).lower(), m.group(2)
@@ -837,7 +845,7 @@ def atlas_colour_violations(css: str) -> list[str]:
             except ValueError:
                 bad.append(m.group(0))
                 continue
-            if triple not in ATLAS_PALETTE_RGB:
+            if triple not in AGATE_PALETTE_RGB:
                 bad.append(m.group(0))
         else:
             bad.append(m.group(0))
@@ -887,13 +895,16 @@ def atlas_contrast(a: str, b: str) -> float:
     return (hi + 0.05) / (lo + 0.05)
 
 
-# Text pairs the system promises (docs/WEB_ATLAS_DESIGN_AUTHORITY.md section 1): name, text, ground, minimum.
+# Text pairs the system promises (docs/WEB_AGATE_BRAND_AUTHORITY.md section 2): name, text, ground, minimum. Reading text
+# keeps 7:1 on the dark grounds; the one accent and the small labels keep AA (4.5:1), which Agate Teal clears on both.
 ATLAS_CONTRAST_PAIRS = [
-    ("paper on orbit", "--paper", "--orbit", 7.0), ("steel on orbit", "--steel", "--orbit", 7.0),
-    ("signal on orbit", "--signal", "--orbit", 7.0), ("caution on orbit", "--caution", "--orbit", 7.0),
-    ("steel on lift", "--steel", "--lift", 7.0), ("paper on lift", "--paper", "--lift", 7.0),
-    ("orbit on paper", "--orbit", "--paper", 7.0), ("slate on paper", "--slate", "--paper", 4.5),
-    ("signal-deep on paper", "--signal-deep", "--paper", 4.5), ("caution-deep on paper", "--caution-deep", "--paper", 4.5),
+    ("mist on ground", "--mist", "--ground", 7.0), ("mineral-light on ground", "--mineral-light", "--ground", 7.0),
+    ("teal-light on ground", "--teal-light", "--ground", 4.5), ("gold-light on ground", "--gold-light", "--ground", 7.0),
+    ("mist on ground-lift", "--mist", "--ground-lift", 7.0), ("mineral-light on ground-lift", "--mineral-light", "--ground-lift", 7.0),
+    ("teal-light on ground-lift", "--teal-light", "--ground-lift", 4.5), ("gold-light on ground-lift", "--gold-light", "--ground-lift", 7.0),
+    ("graphite on mist", "--graphite", "--mist", 7.0), ("graphite on limestone", "--graphite", "--limestone", 7.0),
+    ("graphite-soft on limestone", "--graphite-soft", "--limestone", 4.5), ("mineral on limestone", "--mineral", "--limestone", 4.5),
+    ("teal on limestone", "--teal", "--limestone", 4.5), ("gold-ink on limestone", "--gold-ink", "--limestone", 4.5),
 ]
 
 
@@ -912,26 +923,26 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
     # -- 1. the palette: defined once, in :root, exactly -------------------------------------------
     root_block = re.search(r":root\{(.*?)\n\}", css, re.S)
     root_text = root_block.group(1).replace(" ", "") if root_block else ""
-    for name, value in ATLAS_TOKENS.items():
+    for name, value in AGATE_TOKENS.items():
         defs = re.findall(re.escape(name) + r":\s*(#[0-9A-Fa-f]{6}|rgba\([^)]*\))\s*;", css)
         if len(defs) != 1 or f"{name}:{value}" not in root_text:
             fail(f"palette token {name} must be defined once in :root as {value}", errors)
     for m in sorted(set(ATLAS_RETIRED_TOKEN.findall(stripped))):
-        fail(f"styles.css still uses the retired colour token {m}; the Atlas palette has nine colours and four rules", errors)
+        fail(f"styles.css still uses the retired colour token {m}; the Agate palette (docs/WEB_AGATE_BRAND_AUTHORITY.md) replaced it", errors)
     for name, text, ground, floor in ATLAS_CONTRAST_PAIRS:
-        ratio = atlas_contrast(ATLAS_TOKENS[text], ATLAS_TOKENS[ground])
+        ratio = atlas_contrast(AGATE_TOKENS[text], AGATE_TOKENS[ground])
         if ratio < floor:
             fail(f"palette pair {name} is {ratio:.2f}:1, under the {floor}:1 the system promises", errors)
 
     # -- 2. no other colour anywhere: the stylesheet, <style> blocks and inline styles --------------------
     for label, text in [("styles.css", css)] + [(rel, atlas_inline_css(h)) for rel, h in sorted(page_html.items())]:
         for item in atlas_colour_violations(text):
-            fail(f"{label}: colour {item} is not in the Atlas palette (images are exempt, UI colours are not)", errors)
-    # Caution is a line and a label, never a fill; scientific colours never go in a figure frame.
+            fail(f"{label}: colour {item} is not in the Agate palette (images are exempt, UI colours are not)", errors)
+    # Gold is a mark, a line and a label, never a fill (brand rule); scientific colours never go in a figure frame.
     for selector, body in atlas_rule_blocks(stripped):
         for prop, value in re.findall(r"([\w-]+)\s*:\s*([^;]+)", body):
-            if prop.startswith("background") and re.search(r"caution|--limit|#C8A97A|#7F602F|200,\s*169,\s*122", value, re.I):
-                fail(f"styles.css: {selector} fills with caution; caution is a line and a label, never a fill", errors)
+            if prop.startswith("background") and re.search(r"gold|--limit|#C49A5A|#D8B173|#735525|196,\s*154,\s*90|216,\s*177,\s*115|115,\s*85,\s*37", value, re.I):
+                fail(f"styles.css: {selector} fills with gold; gold is a mark, a line and a label, never a fill", errors)
 
     # -- 3. type: two families, two weights, no synthesis, nothing under 10 px in a ready region ------
     sans, mono = re.search(r"--sans:([^;]+);", css), re.search(r"--mono:([^;]+);", css)
@@ -1080,8 +1091,8 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
                 ".ground", ".ground-orbit", ".ground-lift", ".ground-paper", ".site-header", ".site-footer"):
         if not rule(sel):
             fail(f"styles.css lost the shared component {sel}", errors)
-    if "border-left:2pxsolidvar(--limit)" not in rule(".beam-note").replace(" ", ""):
-        fail("the mandatory warning (.beam-note) must keep its 2px caution left rule (border-left:2px solid var(--limit))", errors)
+    if "border-left:2pxsolidvar(--limit-line)" not in rule(".beam-note").replace(" ", ""):
+        fail("the mandatory warning (.beam-note) must keep its 2px gold left rule (border-left:2px solid var(--limit-line))", errors)
     for sel, body in blocks:
         parts = [s.strip() for s in sel.split(",")]
         if any(p.startswith(".plate") and p not in (".plate-gap", ".plate-pending", ".plate-gap .plate-state", ".plate-pending .plate-state")
@@ -1089,15 +1100,192 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
             if re.search(r"border|radius|shadow|outline", body) or ":hover" in sel:
                 fail(f"styles.css: {sel} gives a plate chrome (border, radius, shadow, outline or hover); plates have none", errors)
     for ground in (".site-header", ".site-footer"):
-        if "background:var(--orbit)" not in rule(ground).replace(" ", ""):
-            fail(f"{ground} must sit on Orbit", errors)
+        if "background:var(--ground)" not in rule(ground).replace(" ", ""):
+            fail(f"{ground} must sit on the Graphite ground (--ground)", errors)
     paper = rule(".ground-paper").replace(" ", "")
-    for need in ("--fg:var(--orbit)", "--fg-2:var(--slate)", "--link:var(--signal-deep)", "--limit:var(--caution-deep)", "background:var(--paper)"):
+    for need in ("--fg:var(--graphite)", "--fg-2:var(--graphite-soft)", "--link:var(--teal)", "--limit:var(--gold-ink)",
+                 "--limit-line:var(--gold)", "background:var(--limestone)"):
         if need not in paper:
             fail(f"the paper ground must carry {need}", errors)
-    if "border:0solidvar(--signal)" not in rule(".target-frame i").replace(" ", ""):
-        fail("the homepage target frame must be Signal (--signal)", errors)
+    # The frame marks the area of interest on the priority figure; the brand's one colour on a map or a figure is the
+    # gold callout, and teal never goes on one (final/README.md, usage rules).
+    if "border:0solidvar(--gold-light)" not in rule(".target-frame i").replace(" ", ""):
+        fail("the homepage target frame must be Mineral Gold (--gold-light): the brand's area-of-interest callout", errors)
     return {"regions": len(ATLAS_CSS_REGIONS), "fonts_bytes": sum((ROOT / ATLAS_FONT_DIR / f).stat().st_size for f in face_files.values() if (ROOT / ATLAS_FONT_DIR / f).exists())}
+
+
+# --- MER-279: the Agate brand assets and where the site wears them --------------------------------------------------------
+AGATE_BRAND_DIR = "assets/brand"
+AGATE_BRAND_ROLES = {"logo-dark": ("orbgss-logo-dark", "svg"), "favicon": ("orbgss-favicon", "svg"),
+                     "apple-touch-icon": ("orbgss-apple-touch-icon", "png"), "icon-192": ("orbgss-icon-192", "png"),
+                     "icon-512": ("orbgss-icon-512", "png")}
+AGATE_PNG_SIZES = {"apple-touch-icon": 180, "icon-192": 192, "icon-512": 512}
+# The brand colours as the approved package states them (final/README.md), light and dark-background values.
+AGATE_BRAND_LIGHT = {"graphite": "#202629", "mineral_gray": "#69716F", "agate_teal": "#18777A", "mineral_gold": "#C49A5A"}
+AGATE_BRAND_DARK = {"outer": "#E3E5E4", "mineral_gray": "#B7C0BD", "agate_teal": "#58AEB2", "mineral_gold": "#D8B173"}
+# What a shipped logo or icon may paint: the dark-background brand colours, the Graphite tile, and the black/white a mask needs.
+AGATE_SVG_PAINT_OK = {v.upper() for v in AGATE_BRAND_DARK.values()} | {"#202629", "BLACK", "WHITE", "NONE"}
+# The locator map is a class-A illustration: Graphite neutrals of the brand token file plus one brand colour, the gold callout.
+AGATE_MAP_PAINT_OK = {"#121415", "#252A2B", "#2C3233", "#6C7472", "#D8B173"}
+AGATE_TEAL = {"#18777A", "#58AEB2"}
+AGATE_LOGO_VIEWBOX = (634, 108)
+AGATE_LOGO_MIN_WIDTH = 120  # the brand's minimum for the horizontal logo, in CSS px
+
+
+def agate_svg_paints(text: str) -> set[str]:
+    out = {m.upper() for m in re.findall(r'(?:fill|stroke|stop-color)="([^"]+)"', text)}
+    out |= {m.upper() for m in re.findall(r"(?:fill|stroke|stop-color)\s*:\s*([^;\"]+)", text)}
+    return out
+
+
+def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str, int]:
+    """The approved Agate identity: record, files, SVG paints, icon sizes, page heads, header and footer, manifest."""
+    def bad(msg: str) -> None:
+        fail(f"MER-279: {msg}", errors)
+
+    css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    record_path = ROOT / AGATE_BRAND_DIR / "brand.json"
+    try:
+        record = json.loads(record_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        bad(f"{AGATE_BRAND_DIR}/brand.json is missing or is not JSON")
+        return {"brand_files": 0}
+    if record.get("identity") != "Agate":
+        bad("brand.json must record the Agate identity")
+    if record.get("palette") != {"light": {"graphite": "#202629", "mineral_gray": "#69716F", "agate_teal": "#18777A", "mineral_gold": "#C49A5A"},
+                                 "dark": {"outer": "#E3E5E4", "mineral_gray": "#B7C0BD", "agate_teal": "#58AEB2", "mineral_gold": "#D8B173"}}:
+        bad("brand.json must record the approved palette exactly (Graphite #202629, Mineral Gray #69716F, Agate Teal #18777A, "
+            "Mineral Gold #C49A5A; dark #E3E5E4, #B7C0BD, #58AEB2, #D8B173)")
+    # The stylesheet carries those eight values under the brand's own names.
+    for token, value in (("--graphite", AGATE_BRAND_LIGHT["graphite"]), ("--mineral", AGATE_BRAND_LIGHT["mineral_gray"]),
+                         ("--teal", AGATE_BRAND_LIGHT["agate_teal"]), ("--gold", AGATE_BRAND_LIGHT["mineral_gold"]),
+                         ("--mist", AGATE_BRAND_DARK["outer"]), ("--mineral-light", AGATE_BRAND_DARK["mineral_gray"]),
+                         ("--teal-light", AGATE_BRAND_DARK["agate_teal"]), ("--gold-light", AGATE_BRAND_DARK["mineral_gold"])):
+        if AGATE_TOKENS.get(token, "").upper() != value:
+            bad(f"{token} must be the approved brand value {value}")
+    files = record.get("files", {})
+    if sorted(files) != sorted([*AGATE_BRAND_ROLES, "favicon-ico"]):
+        bad(f"brand.json must record exactly {sorted([*AGATE_BRAND_ROLES, 'favicon-ico'])}")
+        return {"brand_files": 0}
+
+    shipped: set[str] = {"brand.json"}
+    for role, (stem, ext) in AGATE_BRAND_ROLES.items():
+        entry = files[role]
+        name = entry.get("file", "")
+        shipped.add(name)
+        path = ROOT / AGATE_BRAND_DIR / name
+        if not path.is_file():
+            bad(f"{role}: {AGATE_BRAND_DIR}/{name} does not exist")
+            continue
+        data = path.read_bytes()
+        digest = hashlib.sha256(data).hexdigest()
+        if digest != entry.get("sha256") or len(data) != entry.get("bytes"):
+            bad(f"{role}: {name} does not match its recorded SHA-256 / size")
+        if name != f"{stem}.{digest[:8]}.{ext}":
+            bad(f"{role}: {name} must be named {stem}.<first 8 of SHA-256>.{ext} (/assets/ is served immutable for a year)")
+        if not entry.get("source", {}).get("sha256"):
+            bad(f"{role}: the source file hash is not recorded")
+        if ext == "svg":
+            text = data.decode("utf-8", errors="replace")
+            if re.search(r"<metadata|c2pa|<script|<text|<image|xlink:href|\shref=", text, re.I):
+                bad(f"{role}: {name} carries metadata, script, text, an embedded image or a link; a logo is outlined paths only")
+            paints = agate_svg_paints(text)
+            extra = paints - AGATE_SVG_PAINT_OK
+            if extra:
+                bad(f"{role}: {name} paints {sorted(extra)}, which are not Agate dark-background brand colours")
+            if role == "logo-dark" and not {"#E3E5E4", "#B7C0BD", "#58AEB2", "#D8B173"} <= paints:
+                bad(f"{role}: the logo must carry all four dark-background brand colours (outer, intermediate, teal, gold focal point)")
+            if role == "logo-dark" and f'viewBox="0 0 {AGATE_LOGO_VIEWBOX[0]}' not in text:
+                bad(f"{role}: the logo's viewBox is not the approved 634 x 108 horizontal lock-up")
+        else:
+            if data[:8] != b"\x89PNG\r\n\x1a\n" or b"caBX" in data:
+                bad(f"{role}: {name} is not a plain PNG (or it carries a C2PA box)")
+            else:
+                width, height = int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
+                if (width, height) != (AGATE_PNG_SIZES[role],) * 2:
+                    bad(f"{role}: {name} is {width} x {height}, expected {AGATE_PNG_SIZES[role]} square")
+    for old in sorted((ROOT / AGATE_BRAND_DIR).iterdir()) if (ROOT / AGATE_BRAND_DIR).is_dir() else []:
+        if old.name not in shipped:
+            bad(f"{AGATE_BRAND_DIR}/{old.name} is not in brand.json; remove it or record it")
+    ico = ROOT / "favicon.ico"
+    if ico.is_file():
+        data = ico.read_bytes()
+        count = int.from_bytes(data[4:6], "little") if len(data) > 6 else 0
+        sizes = sorted(data[6 + 16 * i] or 256 for i in range(count))
+        if hashlib.sha256(data).hexdigest() != files["favicon-ico"].get("sha256"):
+            bad("favicon.ico does not match its recorded SHA-256")
+        if sizes != [16, 32, 48]:
+            bad(f"favicon.ico holds {sizes}; the approved file has 16, 32 and 48 px")
+    if (ROOT / AGATE_BRAND_DIR / "illustrative-map.jpg").exists():
+        bad("illustrative-map.jpg is a generated illustration and may not be shipped as site imagery")
+
+    logo = "/" + AGATE_BRAND_DIR + "/" + files["logo-dark"].get("file", "?")
+    fav = "/" + AGATE_BRAND_DIR + "/" + files["favicon"].get("file", "?")
+    touch = "/" + AGATE_BRAND_DIR + "/" + files["apple-touch-icon"].get("file", "?")
+    ground = AGATE_TOKENS["--ground"].upper()
+    for rel, text in sorted(page_html.items()):
+        head = text.split("</head>", 1)[0]
+        for need in ('<link rel="icon" href="/favicon.ico" sizes="32x32" />',
+                     f'<link rel="icon" href="{fav}" type="image/svg+xml" sizes="any" />',
+                     f'<link rel="apple-touch-icon" href="{touch}" />'):
+            if need not in head:
+                bad(f"{rel}: the head must carry {need}")
+        theme = re.search(r'<meta name="theme-color" content="([^"]+)"', head)
+        if not theme or theme.group(1).upper() != ground:
+            bad(f"{rel}: theme-color must be the Graphite ground {ground}")
+        if re.search(r"assets/(?:logo|mark)\.svg|brand-wordmark", text):
+            bad(f"{rel}: still refers to the retired logo files or the text wordmark")
+        home = "/tr/" if rel.startswith("tr/") else "/"
+        header = re.search(r'<a href="' + re.escape(home) + r'" class="brand"[^>]*>\s*(<img[^>]*>)\s*</a>', text)
+        want_header = f'<img class="brand-logo" src="{logo}" alt="" width="{AGATE_LOGO_VIEWBOX[0]}" height="{AGATE_LOGO_VIEWBOX[1]}" />'
+        if not header or header.group(1) != want_header:
+            bad(f"{rel}: the header brand link must hold exactly {want_header}")
+        footer = re.search(r'<div class="footer-brand">\s*(<img[^>]*>)\s*</div>', text)
+        want_footer = f'<img src="{logo}" alt="OrbGSS" width="{AGATE_LOGO_VIEWBOX[0]}" height="{AGATE_LOGO_VIEWBOX[1]}" />'
+        if not footer or footer.group(1) != want_footer:
+            bad(f"{rel}: the footer brand must hold exactly {want_footer}")
+        if "illustrative-map" in text:
+            bad(f"{rel}: places the illustrative map, which is not real imagery")
+
+    # The header logo never drops under the brand's 120 px minimum width, at any breakpoint.
+    heights = [float(h) for h in re.findall(r"\.brand-logo\{[^}]*?height:(\d+(?:\.\d+)?)px", css)]
+    if not heights:
+        bad("styles.css must size .brand-logo by a pixel height")
+    for h in heights:
+        if h * AGATE_LOGO_VIEWBOX[0] / AGATE_LOGO_VIEWBOX[1] < AGATE_LOGO_MIN_WIDTH:
+            bad(f".brand-logo at {h}px high is under the brand's {AGATE_LOGO_MIN_WIDTH}px minimum width")
+
+    try:
+        manifest = json.loads((ROOT / "site.webmanifest").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        manifest = {}
+        bad("site.webmanifest is missing or is not JSON")
+    if manifest:
+        for key in ("background_color", "theme_color"):
+            if str(manifest.get(key, "")).upper() != ground:
+                bad(f"site.webmanifest {key} must be the Graphite ground {ground}")
+        icons = {(i.get("src"), i.get("sizes"), i.get("type")) for i in manifest.get("icons", [])}
+        want = {(f"/{AGATE_BRAND_DIR}/{files['icon-192'].get('file')}", "192x192", "image/png"),
+                (f"/{AGATE_BRAND_DIR}/{files['icon-512'].get('file')}", "512x512", "image/png"),
+                (fav, "any", "image/svg+xml")}
+        if icons != want:
+            bad(f"site.webmanifest icons must be exactly the recorded 192, 512 and SVG icons; found {sorted(map(str, icons))}")
+
+    # The locator map follows the brand's map rule: Graphite neutrals, one gold callout, no teal.
+    try:
+        locator = json.loads(MANIFEST.read_text(encoding="utf-8"))["web_m6"]["locator_map"]["path"]
+        map_text = (ROOT / locator).read_text(encoding="utf-8")
+    except (OSError, KeyError, ValueError):
+        map_text = ""
+        bad("the locator map record or file is missing")
+    if map_text:
+        paints = {x for x in agate_svg_paints(map_text) if x != "NONE"}
+        if paints - AGATE_MAP_PAINT_OK:
+            bad(f"the locator map paints {sorted(paints - AGATE_MAP_PAINT_OK)}; a map uses Graphite neutrals and the gold callout only")
+        if paints & AGATE_TEAL or "#D8B173" not in paints:
+            bad("the locator map must carry the gold area-of-interest callout (#D8B173) and no teal")
+    return {"brand_files": len(files)}
+
 # === /atlas:foundation ===
 
 # === atlas:geothermal ===
@@ -1494,7 +1682,7 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
                     if float(px) > THUMB_MAX_CSS_PX:
                         fail(f"styles.css atlas:solutions-about: {selector} sizes a thumbnail at {px}px; an index thumbnail is at most {THUMB_MAX_CSS_PX} CSS px (R2)", errors)
     note_rule = re.search(r"\.page-solutions\.page-note\{([^}]*)\}", flat)
-    if not note_rule or "background:var(--lift)" not in note_rule.group(1):
+    if not note_rule or "background:var(--ground-lift)" not in note_rule.group(1):
         fail("styles.css atlas:solutions-about: the footnote (.page-solutions .page-note) must sit on the pair's Lift ground", errors)
 # === /atlas:solutions-about ===
 
@@ -1710,6 +1898,7 @@ def main() -> int:
     atlas_pages = {rel: (ROOT / rel).read_text(encoding="utf-8")
                    for rel in [*ROUTES.values(), *TR_FILES.values(), *AUX_PAGES.values()]}
     atlas_summary = atlas_foundation_checks(errors, atlas_pages)
+    agate_brand_checks(errors, atlas_pages)
     atlas_geothermal_checks(errors, atlas_pages)
     atlas_solutions_about_checks(errors, atlas_pages)
     atlas_partner_sources_checks(errors, atlas_pages)
@@ -4228,9 +4417,9 @@ def main() -> int:
                  f"(the generated tree is stale or was edited by hand; re-run the script)", errors)
 
     # -- 3. per-page metadata, switch and text --------------------------------------------------
-    LOOSE_OK = {"Orb", "GSS", "EN", "TR", "|", "↓", "→", "·", "—", "0", "100", "404", "contact@orbgss.com"} \
+    LOOSE_OK = {"EN", "TR", "|", "↓", "→", "·", "—", "0", "100", "404", "contact@orbgss.com"} \
         | ATLAS_GEOTHERMAL_LOOSE_OK
-    BARE_OK = {("img", 'alt="OrbGSS — Orbital Geo-Spatial Solutions"')}
+    BARE_OK = {("img", 'alt="OrbGSS"')}
     pages_en = {route: (ROUTES[route], text) for route, text in route_html.items()}
     pages_tr = {route: (TR_FILES[route], text) for route, text in tr_html.items()}
     for route in ROUTES:
