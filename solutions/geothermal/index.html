@@ -231,6 +231,27 @@
                 <span class="plate-role"><span data-i18n="geothermalPage.role.evidence">Evidence</span> · <span data-i18n="geothermalPage.from.sentinel">Sentinel-2</span></span>
               </figcaption>
             </figure>
+            <figure class="plate geo-plate" id="iron">
+              <div class="plate-frame" data-label-tone="light" data-visual-slot="iron" data-visual-status="product-proof">
+                <img
+                  src="/assets/proof/mer242/alt02-9266ceca-900.webp"
+                  srcset="/assets/proof/mer242/alt02-9266ceca-600.webp 600w, /assets/proof/mer242/alt02-9266ceca-900.webp 900w, /assets/proof/mer242/alt02-9266ceca-1200.webp 1200w"
+                  sizes="(min-width: 1001px) min(31vw, 400px), (min-width: 641px) 44vw, 88vw"
+                  alt="Map of the second, iron-sensitive surface alteration signal across the Kızıldere area of interest, running from deep violet where the signal is weakest to yellow where it is strongest"
+                  data-i18n-alt="alt.alt02"
+                  loading="lazy"
+                  decoding="async"
+                  width="1200"
+                  height="1200"
+                />
+                <p class="scene-label"><span data-i18n="scene.aoi.place">Kızıldere, Denizli, Türkiye</span><span data-i18n="scene.aoi.coords">37.9794° N, 28.7907° E</span><span class="scene-kind" data-i18n="geothermalPage.kind.iron">Alteration signal — iron</span></p>
+              </div>
+              <figcaption class="plate-cap">
+                <span class="plate-no"><span data-i18n="geothermalPage.plate.abbr">Pl.</span> <span class="geo-no" data-no="06"></span></span>
+                <h3 class="plate-name" data-i18n="geothermalPage.layer.iron">Second alteration signal (iron)</h3>
+                <span class="plate-role"><span data-i18n="geothermalPage.role.evidence">Evidence</span> · <span data-i18n="geothermalPage.from.sentinel">Sentinel-2</span></span>
+              </figcaption>
+            </figure>
           </div>
         </figure>
         <p class="geo-link"><a class="text-link" href="/#evidence"><span data-i18n="geothermalPage.layers.link">Open the layers on the homepage</span> <span aria-hidden="true">→</span></a></p>
@@ -280,6 +301,43 @@
       </div>
     </section>
 
+    <section class="ground ground-orbit geo-relief" id="relief" aria-labelledby="relief-title">
+      <div class="ground-in geo-relief-in">
+        <div class="page-section-head">
+          <div class="kicker"><span class="geo-no" data-no="03b" aria-hidden="true"></span> · <span data-i18n="geothermalPage.relief.kicker">The result over relief</span></div>
+          <h3 id="relief-title" class="t-statement" data-i18n="geothermalPage.relief.title">Priority over relief</h3>
+          <p class="lede" data-i18n="geothermalPage.relief.copy">The priority surface read over NASADEM relief, so ranked ground can be seen against the valleys and ridges it sits on.</p>
+        </div>
+        <figure class="plate geo-plate geo-slot" data-lead-visual>
+          <div class="plate-frame" data-label-tone="light" data-visual-slot="relief" data-visual-status="product-proof">
+            <img
+              src="/assets/proof/mer242/relief-55f5fc73-1200.webp"
+              srcset="/assets/proof/mer242/relief-55f5fc73-600.webp 600w, /assets/proof/mer242/relief-55f5fc73-900.webp 900w, /assets/proof/mer242/relief-55f5fc73-1200.webp 1200w"
+              sizes="(min-width: 701px) 600px, 88vw"
+              alt="Relative priority map of the Kızıldere area of interest drawn over shaded relief, ranking ground from 0 to 100 within the area; the relief shows through where the score has no value"
+              data-i18n-alt="alt.relief"
+              loading="lazy"
+              decoding="async"
+              width="1200"
+              height="1200"
+            />
+            <p class="scene-label"><span data-i18n="scene.priority.place">Kızıldere — Büyük Menderes graben, Denizli, Türkiye</span><span data-i18n="scene.priority.coords">37.9794° N, 28.7907° E</span><span class="scene-kind" data-i18n="label.priority">Remote-Sensing Relative Priority — Experimental Baseline</span></p>
+          </div>
+          <div class="geo-legend">
+            <div class="geo-ramp">
+              <img src="/assets/proof/web005b/priority-legend-ramp.png" alt="Colour scale for the relative priority map, running from 0 at the dark end to 100 at the pale end" data-i18n-alt="alt.priorityLegend" decoding="async" width="256" height="8" />
+              <span class="geo-ends mono-caption" aria-hidden="true"><span>0</span><span>100</span></span>
+              <span class="geo-ends geo-ends-words" aria-hidden="true"><span data-i18n="geothermalPage.scale.low">Look here later</span><span data-i18n="geothermalPage.scale.high">Look here first</span></span>
+            </div>
+            <div class="geo-bar" role="img" aria-label="Scale bar: 10 kilometres" data-i18n-aria-label="geothermalPage.scale.bar">
+              <span class="geo-bar-line" aria-hidden="true"></span>
+              <span class="geo-ends mono-caption" aria-hidden="true"><span>0</span><span>10 km</span></span>
+            </div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
     <section class="ground ground-paper" id="missing" aria-labelledby="missing-title">
       <div class="ground-in geo-missing">
         <div class="page-section-head">
@@ -288,8 +346,6 @@
         </div>
         <div class="geo-missing-list lead-set" data-lead-visual>
           <a href="#gap"><span data-i18n="geothermalPage.layer.structure">Structure and geology</span><span class="mono-label is-limit"><span data-i18n="act.evidence.gapLabel">Data gap</span> · <span data-i18n="geothermalPage.plate.abbr">Pl.</span> <span class="geo-no" data-no="03"></span></span></a>
-          <div class="geo-missing-row"><span data-i18n="geothermalPage.layer.iron">Second alteration signal (iron)</span><span class="mono-label"><span data-i18n="geothermalPage.layer.pending">Accepted, not shown yet</span></span></div>
-          <div class="geo-missing-row"><span data-i18n="geothermalPage.relief.title">Priority over relief</span><span class="mono-label"><span data-i18n="geothermalPage.layer.pending">Accepted, not shown yet</span></span></div>
         </div>
       </div>
     </section>

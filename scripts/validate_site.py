@@ -1469,28 +1469,22 @@ ATLAS_GEOTHERMAL_A1_ROUTES = {layer: ("solutions/geothermal",) for layer in ATLA
 # Language-neutral text no dictionary key owns (the scale bar's far end).
 ATLAS_GEOTHERMAL_LOOSE_OK = {"10 km"}
 # The atlas, in reading order: (plate id, state, the key naming the layer on the image, the MER-151 layer it shows).
-# One figure of small multiples (A6), five plates, two states shown (the data gap and the evidence). A plate carries no
-# warning: the per-layer notes were removed on the CTO's request (2026-10-25), because what a layer is for and is not is
-# the work's own business. The sixth plate (the iron layer) and the relief figure are NOT on the page until Science
-# delivers their derivatives (MER-242): an empty frame reads as unfinished work, so the missing index below lists both as
-# "Accepted, not shown yet" rows without a frame (missing-visuals plan, 2026-10-25).
+# One figure of small multiples (A6), six plates, two states (the data gap and the evidence); since MER-242 the iron plate is a delivered figure. A plate carries no warning: the per-layer notes were
+# removed on the CTO's request (2026-10-25), because what a layer is for and is not is the work's own business.
 ATLAS_GEOTHERMAL_PLATES = [
     ("natural", "evidence", "scene.kind.naturalColor", None),
     ("elevation", "evidence", "act.evidence.terrain.name", "terrain"),
     ("gap", "gap", None, None),
     ("thermal", "evidence", "act.evidence.thermal.name", "thm01"),
     ("alteration", "evidence", "act.evidence.alteration.name", "alt01"),
+    ("iron", "evidence", "geothermalPage.kind.iron", "alt02"),
 ]
-# The frames that stay off the page until the figures exist, and the two rows of the missing index that stand in for them.
-ATLAS_GEOTHERMAL_ABSENT_IDS = ("iron", "relief")
-ATLAS_GEOTHERMAL_MISSING_ROWS = [("geothermalPage.layer.iron", "geothermalPage.layer.pending"),
-                                 ("geothermalPage.relief.title", "geothermalPage.layer.pending")]
-# The light theme (2026-10-25): the opening, the atlas and the record sit on paper; the priority result keeps the dark
-# ground, so the page still turns dark once, where the one coloured figure is.
+# The light theme (2026-10-25): the opening, the atlas and the record sit on paper; the priority result and its relief
+# slot keep the dark ground, so the page still turns dark once, where the one coloured figure is.
 ATLAS_GEOTHERMAL_GROUNDS = {"glance": "ground-paper", "layers": "ground-paper", "result": "ground-orbit",
-                            "missing": "ground-paper"}
-ATLAS_GEOTHERMAL_IDS = ["glance", "layers", "natural", "elevation", "gap", "thermal", "alteration", "result",
-                        "outputs", "missing", "pilot-observe", "pilot-terrain", "pilot-evidence",
+                            "relief": "ground-orbit", "missing": "ground-paper"}
+ATLAS_GEOTHERMAL_IDS = ["glance", "layers", "natural", "elevation", "gap", "thermal", "alteration", "iron", "result",
+                        "outputs", "relief", "missing", "pilot-observe", "pilot-terrain", "pilot-evidence",
                         "pilot-priority", "pilot-geothermal", "pilot-structure"]
 # What would make a governed raster something other than the accepted derivative.
 ATLAS_GEOTHERMAL_RASTER_BANNED = re.compile(r"filter|transform|opacity|mix-blend-mode|scale|zoom|clip-path|mask|backdrop")
@@ -1551,22 +1545,11 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
     missing = one(dom, lambda n: "geo-missing-list" in classes(n))
     gaps = [str(a.attrs.get("href")) for a in find(missing, lambda n: n.tag == "a")] if missing is not None else []
     if gaps != ["#gap"]:
-        bad(f"the index of what is missing links {gaps}, expected only #gap (the iron layer and the relief figure have no frame to link to)")
-    missing_rows = [[str(s.attrs.get("data-i18n")) for s in find(r, lambda n: n.tag == "span" and n.attrs.get("data-i18n"))]
-                    for r in (find(missing, lambda n: "geo-missing-row" in classes(n)) if missing is not None else [])]
-    if missing_rows != [list(r) for r in ATLAS_GEOTHERMAL_MISSING_ROWS]:
-        bad(f"the index of what is missing must list the iron layer and the relief figure as two unlinked rows saying "
-            f"'Accepted, not shown yet'; its rows read {missing_rows}")
-    for gone in ATLAS_GEOTHERMAL_ABSENT_IDS:
-        if gone in ids:
-            bad(f"#{gone} is back on the page; its figure is not delivered (MER-242), and an empty frame reads as unfinished work")
-    if find(dom, lambda n: "plate-pending" in classes(n) or n.attrs.get("data-visual-status") == "to-be-supplied"):
-        bad("a frame still to be supplied is on the page (plate-pending / data-visual-status=\"to-be-supplied\"); a figure appears when it exists"
-            ", never as an empty frame")
+        bad(f"the index of what is missing links {gaps}, expected only #gap (the iron layer and the relief figure are delivered since MER-242)")
     if re.search(r"prototype|to be supplied by science", text, re.I):
         bad("prototype wording is back on the page; an asset still to come is labelled with the site's own words")
 
-    # -- 2. the atlas: five plates in one figure -----------------------------------------------------------------------
+    # -- 2. the atlas: six plates in one figure, three states ---------------------------------------------------------
     atlas = one(dom, lambda n: n.tag == "figure" and "geo-atlas" in classes(n))
     plates = find(atlas, lambda n: n.tag == "figure" and "plate" in classes(n)) if atlas is not None else []
     if atlas is None or "data-lead-visual" not in atlas.attrs:
@@ -1576,6 +1559,8 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
     layer_derivs = {key: {str(d["path"]) for d in manifest["web_005b"]["analytical"]["layers"][key]["derivatives"]}
                     | {str(e["path"]) for e in manifest["web_005b"]["analytical"].get("delivery", {}).get("layers", {}).get(key, [])}
                     for key in ATLAS_GEOTHERMAL_A1_LAYERS}
+    for surface in ("alt02", "relief"):
+        layer_derivs[surface] = {str(d["path"]) for d in (manifest.get("mer_242", {}).get("surfaces", {}).get(surface, {}).get("derivatives") or [])}
     for plate, (pid, state, kind_key, layer) in zip(plates, ATLAS_GEOTHERMAL_PLATES):
         frame = one(plate, lambda n: "plate-frame" in classes(n))
         cap = one(plate, lambda n: n.tag == "figcaption" and "plate-cap" in classes(n))
@@ -1618,6 +1603,8 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
         elif state == "gap":
             if imgs or one(frame, lambda n: "plate-gap" in classes(n)) is None or frame.attrs.get("data-visual-status") != "data-gap":
                 bad(f"plate #{pid} is the data gap: a dashed frame with no image, data-visual-status=\"data-gap\"")
+        else:
+            bad(f"plate #{pid} has an unknown state {state!r}")
     # Governed rasters on this page: exactly the four MER-151 layers and the legend ramp, nothing from the
     # GEO-WEB-002 or WEB-002 packages, and no CSS that would filter, transform or scale one.
     ramp = str(manifest["web_005b"]["analytical"]["layers"]["priority"]["legend"]["path"])
@@ -1651,8 +1638,37 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
         legend = one(pri, lambda n: n.tag == "img" and str(n.attrs.get("src", "")).lstrip("/") == ramp)
         if legend is None or one(pri, lambda n: "geo-bar" in classes(n) and n.attrs.get("role") == "img") is None:
             bad("the priority plate must keep its legend ramp and its 10 km scale bar")
-    if result is not None and find(result, lambda n: classes(n) & {"beam-note", "plate-note", "warning-label"}):
-        bad("the result block carries a warning note; the result and its limits warning was removed on request")
+    for where, node in (("result", result), ("relief", one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief"))):
+        if node is not None and find(node, lambda n: classes(n) & {"beam-note", "plate-note", "warning-label"}):
+            bad(f"the {where} block carries a warning note; the result and its limits warning was removed on request")
+    relief = one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief")
+    if relief is None:
+        bad("the relief section (#relief) is missing")
+    else:
+        rframe = one(relief, lambda n: "plate-frame" in classes(n))
+        rimgs = find(relief, lambda n: n.tag == "img" and "plate-frame" not in classes(n) and n.attrs.get("data-i18n-alt") == "alt.relief")
+        if rframe is None or len(rimgs) != 1:
+            bad("the relief figure must hold one plate frame with one described image (alt.relief), the priority over NASADEM relief of MER-242")
+        else:
+            rimg = rimgs[0]
+            if rframe.attrs.get("data-visual-status") != "product-proof" or rframe.attrs.get("data-visual-slot") != "relief":
+                bad("the relief frame must say data-visual-slot=\"relief\" and data-visual-status=\"product-proof\" (the CSS guard that keeps filters off it)")
+            if "data-label-tone" not in rframe.attrs:
+                bad("the relief frame lost its data-label-tone (caption tone is chosen per panel)")
+            if str(rimg.attrs.get("width")) != "1200" or str(rimg.attrs.get("height")) != "1200" or rimg.attrs.get("style"):
+                bad("the relief image must be declared 1200 x 1200 with no inline style")
+            rurls = [str(rimg.attrs.get("src", ""))] + [c.strip().split()[0] for c in str(rimg.attrs.get("srcset", "")).split(",") if c.strip()]
+            if len(rurls) < 4 or any(u.lstrip("/") not in layer_derivs["relief"] for u in rurls):
+                bad(f"the relief image must show only the recorded MER-242 relief derivatives (600, 900, 1200 px); it shows {rurls}")
+            rlabel = one(rframe, lambda n: "scene-label" in classes(n))
+            rkeys = [str(c.attrs.get("data-i18n")) for c in (rlabel.children if rlabel else []) if hasattr(c, "attrs")]
+            if rkeys != ["scene.priority.place", "scene.priority.coords", "label.priority"]:
+                bad(f"the relief caption must read place, coordinates, the accepted public label; it reads {rkeys}")
+            if one(relief, lambda n: n.tag == "img" and str(n.attrs.get("src", "")).lstrip("/") == ramp) is None \
+                    or one(relief, lambda n: "geo-bar" in classes(n) and n.attrs.get("role") == "img") is None:
+                bad("the relief figure must keep the priority legend ramp and the 10 km scale bar")
+        if one(relief, lambda n: "plate-pending" in classes(n)):
+            bad("the relief figure is a delivered MER-242 derivative; a pending frame has no place on the page")
     # -- 4. every Turkish string exists, and every key the page uses is in the Geothermal or shared dictionary -------------
     for key in {str(n.attrs[a]) for n in dom.iter() for a in ("data-i18n", "data-i18n-alt", "data-i18n-aria-label", "data-i18n-content") if n.attrs.get(a)}:
         if key.startswith("geothermalPage.") and (key not in dictionary["en"] or key not in dictionary["tr"]):
@@ -1686,6 +1702,73 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
             bad(f"web_005b.placement.{layer}.geothermal_placement names a derivative that is not the layer's own")
         if len(r.get("viewports_measured", [])) < 12 or not isinstance(r.get("max_upscale_factor"), (int, float)) or r["max_upscale_factor"] > 1.0:
             bad(f"web_005b.placement.{layer}.geothermal_placement.rendered was measured at fewer than 12 viewports or upscales ({r.get('max_upscale_factor')})")
+
+    # -- 6. MER-242: the two Science derivatives of this page (Pl. 06 and the relief figure), recorded and bounded ---------------
+    mer = manifest.get("mer_242") or {}
+    surfaces = mer.get("surfaces") or {}
+    if sorted(surfaces) != ["alt02", "relief"]:
+        bad(f"mer_242.surfaces holds {sorted(surfaces)}, expected ['alt02', 'relief']")
+    w5b_layers = manifest["web_005b"]["analytical"]["layers"]
+    lut_of = {"alt02": w5b_layers["alt01"].get("lut_sha256"), "relief": w5b_layers["priority"].get("lut_sha256") or w5b_layers["priority"].get("palette", {}).get("lut_sha256")}
+    plate_of = {"alt02": "iron", "relief": "relief"}
+    scientific = mer.get("scientific_master") or {}
+    if (scientific.get("crs"), scientific.get("width"), scientific.get("height"), scientific.get("gsd_m")) != ("EPSG:32635", 1200, 1200, 30.0):
+        bad("mer_242.scientific_master must stay the 1200 x 1200, 30 m, EPSG:32635 grid")
+    if "pending" not in str((mer.get("science") or {}).get("acceptance", "")).lower():
+        bad("mer_242.science.acceptance must say the Science decisions are pending until the CTO accepts them")
+    for banned in ("ai_super_resolution", "scalar_space_interpolation", "mask dilation/erosion/fill"):
+        if banned not in (mer.get("not_used") or []):
+            bad(f"mer_242.not_used must keep {banned!r}")
+    for name, surf in surfaces.items():
+        where = f"mer_242.surfaces.{name}"
+        for field in ("source", "source_sha256", "lut_sha256", "analytical_opacity", "native_pixels_sha256_8", "derivatives", "public_label", "mandatory_warning"):
+            if surf.get(field) in (None, "", []):
+                bad(f"{where} is missing {field}")
+        if surf.get("lut_sha256") != lut_of.get(name):
+            bad(f"{where}.lut_sha256 is not the accepted palette of its family (ALT-01 for ALT-02, the homepage priority ramp for the relief figure)")
+        opacity = surf.get("analytical_opacity")
+        if not isinstance(opacity, (int, float)) or not 0.90 <= opacity <= 1.0:
+            bad(f"{where}.analytical_opacity {opacity!r} is outside the MER-108 bound 0.90-1.00")
+        if name == "relief" and (surf.get("display_window") != "disabled" or surf.get("gamma") != "disabled"):
+            bad(f"{where}: priority may never be windowed or gamma-adjusted (fixed 0-100 domain)")
+        if name == "alt02":
+            window = surf.get("display_window") or {}
+            alt01_window = w5b_layers["alt01"].get("display_window") or {}
+            if (window.get("q_low"), window.get("q_high")) != (alt01_window.get("q_low"), alt01_window.get("q_high")) or surf.get("gamma") != "disabled":
+                bad(f"{where} must use the ALT-01 window rule (same quantiles, no gamma) so Pl. 05 and Pl. 06 stay comparable")
+        derivs = surf.get("derivatives") or []
+        if max([int(d.get("width", 0)) for d in derivs] or [0]) > 1200:
+            bad(f"{where} ships a derivative wider than the native 1200 px grid (no enlargement is published)")
+        for deriv in derivs:
+            dpath = ROOT / str(deriv.get("path", "-"))
+            if not dpath.is_file():
+                bad(f"{where} derivative {deriv.get('path')} does not exist")
+                continue
+            if sha256_of(dpath) != deriv.get("sha256") or dpath.stat().st_size != deriv.get("bytes"):
+                bad(f"{where} derivative {deriv.get('path')} does not match its recorded SHA-256 / size")
+            if str(surf.get("native_pixels_sha256_8", "-")) not in dpath.name or not dpath.name.endswith(".webp"):
+                bad(f"{where} derivative {dpath.name} is not content-hash named (/assets/ is immutable-cached)")
+        # the measured placement on this page: the same bound as the A1 layers
+        rec = surf.get("geothermal_placement")
+        if not rec:
+            bad(f"{where} has no geothermal_placement record (the measured placement of its figure)")
+            continue
+        for field in ("status", "acceptance", "route", "plate", "rendered"):
+            if not rec.get(field):
+                bad(f"{where}.geothermal_placement is missing {field}")
+        if rec.get("route") != ATLAS_GEOTHERMAL_EN or rec.get("plate") != plate_of.get(name) or "pending" not in str(rec.get("acceptance", "")).lower():
+            bad(f"{where}.geothermal_placement must name {ATLAS_GEOTHERMAL_EN}, the plate {plate_of.get(name)!r} and say the acceptance is pending")
+        r = rec.get("rendered") or {}
+        css_w, dpr, native = r.get("max_css_width"), r.get("device_pixel_ratio_considered"), r.get("native_px")
+        if not all(isinstance(v, (int, float)) for v in (css_w, dpr, native)):
+            bad(f"{where}.geothermal_placement.rendered is incomplete")
+            continue
+        if css_w * dpr > native or css_w > 600:
+            bad(f"{name} is drawn up to {css_w} CSS px = {int(css_w * dpr)} device px on the Geothermal page, above its {native} px native grid or the 600 CSS px cap")
+        if str(r.get("selected_derivative", "")) not in {str(d.get("path")) for d in derivs}:
+            bad(f"{where}.geothermal_placement names a derivative that is not the surface's own")
+        if len(r.get("viewports_measured", [])) < 12 or not isinstance(r.get("max_upscale_factor"), (int, float)) or r["max_upscale_factor"] > 1.0:
+            bad(f"{where}.geothermal_placement.rendered was measured at fewer than 12 viewports or upscales ({r.get('max_upscale_factor')})")
 # === /atlas:geothermal ===
 
 # === atlas:solutions-about ===
@@ -2520,6 +2603,13 @@ def main() -> int:
     for entries in web005b_analytical.get("delivery", {}).get("layers", {}).values():
         for entry in entries:
             web005b_science_paths.add(str(entry.get("path", "")))
+    # MER-242 (Science): the two Geothermal-page presentation derivatives and the legend they reuse are recorded
+    # under mer_242.surfaces; scripts/validate_site.py checks their checksums in the atlas:geothermal region.
+    for surface in manifest.get("mer_242", {}).get("surfaces", {}).values():
+        for deriv in surface.get("derivatives", []):
+            web005b_science_paths.add(str(deriv.get("path", "")))
+        if (surface.get("legend") or {}).get("path"):
+            web005b_science_paths.add(str(surface["legend"]["path"]))
     recorded_science_paths = proof_paths | package_derivative_paths | web005b_science_paths
 
     def science_srcs(route_parser: SiteParser) -> set[str]:

@@ -805,19 +805,21 @@ body.page-geothermal .page-section-head.geo-head .lede{margin:0}
 /* "Priority over relief": the full-size slot kept for the figure Science will deliver (MER-242). */
 
 /* ---------- 04 what is missing, on Lift: a statement and an index of the gaps ---------- */
+.geo-relief{padding-top:0}
+.geo-relief-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,600px);gap:clamp(48px,7vw,104px);align-items:start;padding-top:clamp(56px,6vw,88px);border-top:1px solid var(--hair)}
 .geo-missing{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px clamp(48px,7vw,112px);align-items:end}
 .geo-missing-list{display:flex;flex-direction:column;border-top:1px solid var(--hair)}
-.geo-missing-list a,.geo-missing-list .geo-missing-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--hair-soft);font-size:var(--t-body);line-height:1.4;color:var(--fg);transition:background .2s ease}
+.geo-missing-list a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--hair-soft);font-size:var(--t-body);line-height:1.4;color:var(--fg);transition:background .2s ease}
 .geo-missing-list a:hover{background:var(--wash)}
 .geo-missing-list .mono-label{text-align:right}
 .geo-missing-list .mono-label.is-limit{color:var(--limit)}
 
 /* ---------- below the desktop composition ---------- */
 @media(max-width:1000px){
-  .geo-record,.geo-missing{grid-template-columns:minmax(0,1fr)}
+  .geo-record,.geo-relief-in,.geo-missing{grid-template-columns:minmax(0,1fr)}
   .geo-result{grid-template-columns:minmax(0,1fr);grid-template-rows:auto;grid-template-areas:"head" "plate" "text"}
   .geo-atlas-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .geo-priority{max-width:600px}
+  .geo-priority,.geo-slot{max-width:600px}
 }
 @media(max-width:700px){
   /* A phone cannot hold a panorama behind a headline: the strip is its own band, the copy sits
@@ -831,7 +833,7 @@ body.page-geothermal .page-section-head.geo-head .lede{margin:0}
 }
 @media(max-width:640px){
   .geo-atlas-grid{grid-template-columns:minmax(0,1fr)}
-  .geo-missing-list a,.geo-missing-list .geo-missing-row{grid-template-columns:minmax(0,1fr)}
+  .geo-missing-list a{grid-template-columns:minmax(0,1fr)}
   .geo-missing-list .mono-label{text-align:left}
 }
 /* === /atlas:geothermal === */

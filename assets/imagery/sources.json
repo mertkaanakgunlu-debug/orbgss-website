@@ -5035,7 +5035,7 @@
           "slot": "Pl. 06 #iron (data-visual-slot=\"iron\")",
           "design_cap_css_px": 600
         },
-        "placement_status": "files delivered; not placed on any page by MER-242",
+        "placement_status": "placed on /solutions/geothermal/ (preview only, pending independent review and the CTO's acceptance before any publish)",
         "derivatives": [
           {
             "path": "assets/proof/mer242/alt02-9266ceca-600.webp",
@@ -5076,6 +5076,49 @@
           "coupled_to": "the windowed canonical coordinate: the left end is the 2nd and the right end the 98th percentile of the governed valid cells; values beyond them sit on the end colours. A dimensionless proxy, so the ramp carries words (lower / higher), not numbers",
           "bytes": 272,
           "sha256": "1010a6dd97711c218c0c688cd069239622b894f7a78faef752f48d90eee235fe"
+        },
+        "geothermal_placement": {
+          "status": "preview",
+          "consumer": "MER-242 / Geothermal page",
+          "acceptance": "MER-242 - preview only, pending independent review and the CTO's acceptance before any publish",
+          "route": "solutions/geothermal/index.html",
+          "plate": "iron",
+          "rendered": {
+            "tool": "scripts/measure_geothermal_renders.py",
+            "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+            "viewports_measured": [
+              "360x844",
+              "390x844",
+              "414x844",
+              "600x1112",
+              "768x1112",
+              "834x1112",
+              "1024x900",
+              "1180x900",
+              "1280x900",
+              "1366x900",
+              "1440x900",
+              "1536x900",
+              "1680x900",
+              "1920x900",
+              "2200x900",
+              "2560x900",
+              "3000x900",
+              "3440x900",
+              "3840x900"
+            ],
+            "device_pixel_ratios_measured": [
+              1,
+              2
+            ],
+            "max_css_width": 534,
+            "device_pixel_ratio_considered": 2,
+            "max_device_px": 1068,
+            "native_px": 1200,
+            "selected_derivative": "assets/proof/mer242/alt02-9266ceca-600.webp",
+            "max_upscale_factor": 0.89,
+            "max_upscale_at": "600x1112 @1x"
+          }
         }
       },
       "relief": {
@@ -5137,7 +5180,7 @@
             ]
           }
         },
-        "placement_status": "files delivered; not placed on any page by MER-242",
+        "placement_status": "placed on /solutions/geothermal/ (preview only, pending independent review and the CTO's acceptance before any publish)",
         "derivatives": [
           {
             "path": "assets/proof/mer242/relief-55f5fc73-160.webp",
@@ -5195,6 +5238,49 @@
           "sha256": "dd7899460402459fd24bd9ecbf2ea9a329d2bfa9b9dfa422743f37bd1e1b64d8",
           "record": "web_005b.analytical.layers.priority.legend",
           "reuse": "the homepage's unblended 0-100 priority ramp: same LUT, no window, no gamma, so position on the ramp is the score itself (MER-108 section 6: legends use unblended colours)"
+        },
+        "geothermal_placement": {
+          "status": "preview",
+          "consumer": "MER-242 / Geothermal page",
+          "acceptance": "MER-242 - preview only, pending independent review and the CTO's acceptance before any publish",
+          "route": "solutions/geothermal/index.html",
+          "plate": "relief",
+          "rendered": {
+            "tool": "scripts/measure_geothermal_renders.py",
+            "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
+            "viewports_measured": [
+              "360x844",
+              "390x844",
+              "414x844",
+              "600x1112",
+              "768x1112",
+              "834x1112",
+              "1024x900",
+              "1180x900",
+              "1280x900",
+              "1366x900",
+              "1440x900",
+              "1536x900",
+              "1680x900",
+              "1920x900",
+              "2200x900",
+              "2560x900",
+              "3000x900",
+              "3440x900",
+              "3840x900"
+            ],
+            "device_pixel_ratios_measured": [
+              1,
+              2
+            ],
+            "max_css_width": 600,
+            "device_pixel_ratio_considered": 2,
+            "max_device_px": 1200,
+            "native_px": 1200,
+            "selected_derivative": "assets/proof/mer242/relief-55f5fc73-600.webp",
+            "max_upscale_factor": 1.0,
+            "max_upscale_at": "768x1112 @1x"
+          }
         }
       }
     }
