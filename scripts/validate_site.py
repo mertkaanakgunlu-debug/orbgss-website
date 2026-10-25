@@ -187,7 +187,7 @@ EXPECTED_HOMEPAGE_SLOTS = ["context", "terrain", "thermal", "alteration", "prior
 HERO_DRAPE_STATE_CEILING = 1.25 * 1024 * 1024
 HERO_DRAPE_LAYERS = ["terrain", "thm01", "alt01", "priority"]
 # WEB-005A relief rise (docs/web-005-polish-authority@0e87675): 6-12 lossless states, 0.45-0.70 s.
-# The product palette that WEB-005B pinned here (--orb-*) is superseded by the Atlas palette (MER-275) and then by the Agate palette (AGATE_TOKENS, atlas:foundation).
+# The product palette that WEB-005B pinned here (--orb-*) is superseded by the Atlas palette (MER-275), then by the Agate palette and now by the Heat Trace palette (BRAND_TOKENS, atlas:foundation).
 # MER-108 governed-source pins and website-derivative bounds (B-VIS-04). The source SHA-256s are
 # the MER-113 identities in the terminal authority; normalization is d3a163bd's canonical kind per
 # layer; analytical opacity is 11c32e8d section 6. None of these may drift without Science.
@@ -790,23 +790,26 @@ def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
 # in ATLAS_GROUPS: its dictionary prefixes and whether its CSS region already holds to the type scale.
 # =============================================================================================
 # === atlas:foundation ===
-# Naming: "Orbit" and "Lift" stay the structural names of the dark ground and its step (the classes ground-orbit and ground-lift,
-# and the messages of the page-group regions); since MER-279 their colours are --ground (Graphite) and --ground-lift.
-# MER-279: the Agate palette replaces the Atlas five-colour system (Orbit, Lift, Paper, Steel, Signal, Caution).
-# The four brand colours as they read on a light surface, the same four on a dark surface, and the neutral grounds and two
-# text tones of the brand token file (final/tokens/orbgss-tokens.css). Nothing else is a UI colour.
-AGATE_TOKENS = {
-    "--graphite": "#202629", "--mineral": "#69716F", "--teal": "#18777A", "--gold": "#C49A5A",
-    "--mist": "#E3E5E4", "--mineral-light": "#B7C0BD", "--teal-light": "#58AEB2", "--gold-light": "#D8B173",
-    "--ground": "#171A1B", "--ground-lift": "#252A2B", "--limestone": "#F6F5F2", "--white": "#FFFFFF",
-    "--graphite-soft": "#565D5A", "--gold-ink": "#735525",
-    "--rule": "rgba(183,192,189,.22)", "--rule-soft": "rgba(183,192,189,.11)",
-    "--rule-paper": "rgba(105,113,111,.30)", "--rule-paper-soft": "rgba(105,113,111,.15)",
+# Naming: "Orbit", "Lift" and "Paper" stay the structural names of the dark ground, its step and the light ground (the classes
+# ground-orbit, ground-lift and ground-paper, and the messages of the page-group regions); their colours are --night, --night-lift
+# and --pumice.
+# Heat Trace (CTO, 2026-10-25, brand package Final_v3) replaces the Agate palette, which replaced the Atlas five-colour system.
+# The four brand colours as they read on a light surface (Ink stands for the wordmark's Plum as the text colour), the same
+# on a dark surface, and the neutral grounds and two text tones of the brand token file (Final_v3/tokens/orbgss-tokens.css).
+# Nothing else is a UI colour.
+BRAND_TOKENS = {
+    "--ink": "#2D1B30", "--muted": "#756D76", "--magma": "#CD1B74", "--amber": "#FFA323",
+    "--mist": "#F5EFF7", "--mist-soft": "#C3BAC5", "--magma-light": "#F94997", "--amber-light": "#FFAA2E",
+    "--night": "#160A19", "--night-lift": "#241E25", "--pumice": "#F7F5F8", "--white": "#FFFFFF",
+    "--ink-soft": "#5D525F", "--amber-ink": "#A15C13",
+    "--rule": "rgba(195,186,197,.22)", "--rule-soft": "rgba(195,186,197,.11)",
+    "--rule-paper": "rgba(117,109,118,.30)", "--rule-paper-soft": "rgba(117,109,118,.15)",
 }
-# Tokens that belonged to the superseded palettes (WEB-005B, the MER-255 greys, and the Atlas five roles that the Agate
-# identity replaced). They may not come back. The look-behind keeps --ground-lift and --rule-paper from matching.
-ATLAS_RETIRED_TOKEN = re.compile(r"(?<![\w-])--(?:orb-[\w-]+|accent(?:-soft)?|line(?:-soft)?|bg(?:-deep)?|beam|text|muted|dim|"
-                                 r"orbit|lift|paper|steel|slate|signal(?:-deep)?|caution(?:-deep)?)(?![\w-])")
+# Tokens that belonged to the superseded palettes (WEB-005B, the MER-255 greys, the Atlas five roles and the Agate names).
+# They may not come back. The look-behind keeps --night-lift and --rule-paper from matching; --muted is a Heat Trace token again.
+ATLAS_RETIRED_TOKEN = re.compile(r"(?<![\w-])--(?:orb-[\w-]+|accent(?:-soft)?|line(?:-soft)?|bg(?:-deep)?|beam|text|dim|"
+                                 r"orbit|lift|paper|steel|slate|signal(?:-deep)?|caution(?:-deep)?|"
+                                 r"graphite(?:-soft)?|mineral(?:-light)?|teal(?:-light)?|gold(?:-light|-ink)?|ground(?:-lift)?|limestone)(?![\w-])")
 ATLAS_CSS_REGIONS = ["foundation", "home", "shell", "geothermal", "solutions-about", "partner-sources"]
 ATLAS_PAGE_GROUPS = ["geothermal", "solutions-about", "partner-sources"]
 # Filled in by each page group's own region further down: {"prefixes": (...), "type_ready": bool}.
@@ -841,7 +844,7 @@ def atlas_hex_rgb(value: str) -> tuple[int, int, int]:
     return int(value[0:2], 16), int(value[2:4], 16), int(value[4:6], 16)
 
 
-AGATE_PALETTE_RGB = {atlas_hex_rgb(v) for v in AGATE_TOKENS.values() if v.startswith("#")}
+BRAND_PALETTE_RGB = {atlas_hex_rgb(v) for v in BRAND_TOKENS.values() if v.startswith("#")}
 
 
 def atlas_strip_css(css: str) -> str:
@@ -852,9 +855,9 @@ def atlas_strip_css(css: str) -> str:
 
 
 def atlas_colour_violations(css: str) -> list[str]:
-    """Every colour literal that is not one of the Agate palette values (or a palette colour with alpha).
+    """Every colour literal that is not one of the Heat Trace palette values (or a palette colour with alpha).
 
-    Allowed: the nine palette hexes, rgba() of a palette triple at any alpha (an alpha is the same
+    Allowed: the fourteen palette hexes, rgba() of a palette triple at any alpha (an alpha is the same
     colour, not a new one), transparent and currentColor. Refused: any other hex, rgb()/hsl()/color-mix()
     of anything else, and every CSS named colour. A colour carried by a var() is the token's business.
     """
@@ -862,7 +865,7 @@ def atlas_colour_violations(css: str) -> list[str]:
     bad: list[str] = []
     for m in re.finditer(r"#([0-9a-fA-F]{3,8})\b", text):
         digits = m.group(1)
-        if len(digits) != 6 or ("#" + digits).upper() not in {v.upper() for v in AGATE_TOKENS.values()}:
+        if len(digits) != 6 or ("#" + digits).upper() not in {v.upper() for v in BRAND_TOKENS.values()}:
             bad.append("#" + digits)
     for m in re.finditer(r"\b(rgba?|hsla?|hwb|lab|lch|oklab|oklch|color-mix|color)\(([^()]*(?:\([^()]*\)[^()]*)*)\)", text, re.I):
         fn, args = m.group(1).lower(), m.group(2)
@@ -873,7 +876,7 @@ def atlas_colour_violations(css: str) -> list[str]:
             except ValueError:
                 bad.append(m.group(0))
                 continue
-            if triple not in AGATE_PALETTE_RGB:
+            if triple not in BRAND_PALETTE_RGB:
                 bad.append(m.group(0))
         else:
             bad.append(m.group(0))
@@ -923,20 +926,21 @@ def atlas_contrast(a: str, b: str) -> float:
     return (hi + 0.05) / (lo + 0.05)
 
 
-# Text pairs the system promises (docs/WEB_AGATE_BRAND_AUTHORITY.md section 2): name, text, ground, minimum. Reading text
-# keeps 7:1 on the dark grounds; the one accent and the small labels keep AA (4.5:1), which Agate Teal clears on both.
+# Text pairs the system promises (docs/WEB_HEAT_TRACE_BRAND_AUTHORITY.md section 2): name, text, ground, minimum. Reading text
+# keeps 7:1 on the dark grounds and on light ones; the accent and the small labels keep AA (4.5:1). Magma light on Night lift
+# is the one pair that sits just above AA (4.99:1); it is the hover and active colour of a link on a raised dark surface.
 ATLAS_CONTRAST_PAIRS = [
-    ("mist on ground", "--mist", "--ground", 7.0), ("mineral-light on ground", "--mineral-light", "--ground", 7.0),
-    ("teal-light on ground", "--teal-light", "--ground", 4.5), ("gold-light on ground", "--gold-light", "--ground", 7.0),
-    ("mist on ground-lift", "--mist", "--ground-lift", 7.0), ("mineral-light on ground-lift", "--mineral-light", "--ground-lift", 7.0),
-    ("teal-light on ground-lift", "--teal-light", "--ground-lift", 4.5), ("gold-light on ground-lift", "--gold-light", "--ground-lift", 7.0),
-    ("graphite on mist", "--graphite", "--mist", 7.0), ("graphite on limestone", "--graphite", "--limestone", 7.0),
-    ("graphite-soft on limestone", "--graphite-soft", "--limestone", 4.5), ("mineral on limestone", "--mineral", "--limestone", 4.5),
-    ("teal on limestone", "--teal", "--limestone", 4.5), ("gold-ink on limestone", "--gold-ink", "--limestone", 4.5),
+    ("mist on night", "--mist", "--night", 7.0), ("mist-soft on night", "--mist-soft", "--night", 7.0),
+    ("magma-light on night", "--magma-light", "--night", 4.5), ("amber-light on night", "--amber-light", "--night", 7.0),
+    ("mist on night-lift", "--mist", "--night-lift", 7.0), ("mist-soft on night-lift", "--mist-soft", "--night-lift", 7.0),
+    ("magma-light on night-lift", "--magma-light", "--night-lift", 4.5), ("amber-light on night-lift", "--amber-light", "--night-lift", 7.0),
+    ("ink on mist", "--ink", "--mist", 7.0), ("ink on pumice", "--ink", "--pumice", 7.0),
+    ("ink-soft on pumice", "--ink-soft", "--pumice", 4.5), ("muted on pumice", "--muted", "--pumice", 4.5),
+    ("magma on pumice", "--magma", "--pumice", 4.5), ("amber-ink on pumice", "--amber-ink", "--pumice", 4.5),
     # The light header, the footer and the light cards sit on white (the brand token --ogs-bg-surface).
-    ("graphite on white", "--graphite", "--white", 7.0), ("graphite-soft on white", "--graphite-soft", "--white", 4.5),
-    ("mineral on white", "--mineral", "--white", 4.5), ("teal on white", "--teal", "--white", 4.5),
-    ("gold-ink on white", "--gold-ink", "--white", 4.5),
+    ("ink on white", "--ink", "--white", 7.0), ("ink-soft on white", "--ink-soft", "--white", 4.5),
+    ("muted on white", "--muted", "--white", 4.5), ("magma on white", "--magma", "--white", 4.5),
+    ("amber-ink on white", "--amber-ink", "--white", 4.5),
 ]
 
 
@@ -955,26 +959,26 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
     # -- 1. the palette: defined once, in :root, exactly -------------------------------------------
     root_block = re.search(r":root\{(.*?)\n\}", css, re.S)
     root_text = root_block.group(1).replace(" ", "") if root_block else ""
-    for name, value in AGATE_TOKENS.items():
+    for name, value in BRAND_TOKENS.items():
         defs = re.findall(re.escape(name) + r":\s*(#[0-9A-Fa-f]{6}|rgba\([^)]*\))\s*;", css)
         if len(defs) != 1 or f"{name}:{value}" not in root_text:
             fail(f"palette token {name} must be defined once in :root as {value}", errors)
     for m in sorted(set(ATLAS_RETIRED_TOKEN.findall(stripped))):
-        fail(f"styles.css still uses the retired colour token {m}; the Agate palette (docs/WEB_AGATE_BRAND_AUTHORITY.md) replaced it", errors)
+        fail(f"styles.css still uses the retired colour token {m}; the Heat Trace palette (docs/WEB_HEAT_TRACE_BRAND_AUTHORITY.md) replaced it", errors)
     for name, text, ground, floor in ATLAS_CONTRAST_PAIRS:
-        ratio = atlas_contrast(AGATE_TOKENS[text], AGATE_TOKENS[ground])
+        ratio = atlas_contrast(BRAND_TOKENS[text], BRAND_TOKENS[ground])
         if ratio < floor:
             fail(f"palette pair {name} is {ratio:.2f}:1, under the {floor}:1 the system promises", errors)
 
     # -- 2. no other colour anywhere: the stylesheet, <style> blocks and inline styles --------------------
     for label, text in [("styles.css", css)] + [(rel, atlas_inline_css(h)) for rel, h in sorted(page_html.items())]:
         for item in atlas_colour_violations(text):
-            fail(f"{label}: colour {item} is not in the Agate palette (images are exempt, UI colours are not)", errors)
-    # Gold is a mark, a line and a label, never a fill (brand rule); scientific colours never go in a figure frame.
+            fail(f"{label}: colour {item} is not in the Heat Trace palette (images are exempt, UI colours are not)", errors)
+    # Amber is a mark, a line and a label, never a fill (brand rule); scientific colours never go in a figure frame.
     for selector, body in atlas_rule_blocks(stripped):
         for prop, value in re.findall(r"([\w-]+)\s*:\s*([^;]+)", body):
-            if prop.startswith("background") and re.search(r"gold|--limit|#C49A5A|#D8B173|#735525|196,\s*154,\s*90|216,\s*177,\s*115|115,\s*85,\s*37", value, re.I):
-                fail(f"styles.css: {selector} fills with gold; gold is a mark, a line and a label, never a fill", errors)
+            if prop.startswith("background") and re.search(r"amber|--limit|#FFA323|#FFAA2E|#A15C13|255,\s*163,\s*35|255,\s*170,\s*46|161,\s*92,\s*19", value, re.I):
+                fail(f"styles.css: {selector} fills with amber; amber is a mark, a line and a label, never a fill", errors)
 
     # -- 3. type: two families, two weights, no synthesis, nothing under 10 px in a ready region ------
     sans, mono = re.search(r"--sans:([^;]+);", css), re.search(r"--mono:([^;]+);", css)
@@ -1143,20 +1147,20 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
         if "background:var(--white)" not in rule(ground).replace(" ", ""):
             fail(f"{ground} must sit on white (--white): the approved logo is the light-ground version", errors)
     paper = rule(".ground-paper").replace(" ", "")
-    for need in ("--fg:var(--graphite)", "--fg-2:var(--graphite-soft)", "--link:var(--teal)", "--limit:var(--gold-ink)",
-                 "--limit-line:var(--gold)", "background:var(--limestone)"):
+    for need in ("--fg:var(--ink)", "--fg-2:var(--ink-soft)", "--link:var(--magma)", "--limit:var(--amber-ink)",
+                 "--limit-line:var(--amber)", "background:var(--pumice)"):
         if need not in paper:
             fail(f"the paper ground must carry {need}", errors)
-    # The frame marks the area of interest on the priority figure; the brand's one colour on a map or a figure is the
-    # gold callout, and teal never goes on one (final/README.md, usage rules).
-    if "border:0solidvar(--gold-light)" not in rule(".target-frame i").replace(" ", ""):
-        fail("the homepage target frame must be Mineral Gold (--gold-light): the brand's area-of-interest callout", errors)
+    # The frame marks the area of interest on the priority figure; the brand's area-of-interest colour on a map or a figure is
+    # Magma, and Amber and Glow are never drawn on one (Final_v3/README.md, usage rules).
+    if "border:0solidvar(--magma-light)" not in rule(".target-frame i").replace(" ", ""):
+        fail("the homepage target frame must be Magma (--magma-light): the brand's area-of-interest colour", errors)
     return {"regions": len(ATLAS_CSS_REGIONS), "fonts_bytes": sum((ROOT / ATLAS_FONT_DIR / f).stat().st_size for f in face_files.values() if (ROOT / ATLAS_FONT_DIR / f).exists())}
 
 
 # --- Light theme and removed explanations (CTO, 2026-10-25) -------------------------------------------------------------
-# The site is a light theme with granite grounds in parts of the content: white header and footer (the approved logo is the
-# light-ground version), Limestone pages, and dark only where a photograph or a coloured result is the point. The public
+# The site is a light theme with dark grounds in parts of the content: white header and footer (the approved logo is the
+# light-ground version), Pumice pages, and dark only where a photograph or a coloured result is the point. The public
 # site describes what OrbGSS delivers, not how it gets there: how each layer is used, how the priority is scored, the
 # per-layer and per-result warnings and the in-page section bars were removed. These keys named that copy; none may come back.
 RETIRED_EXPLANATION_KEYS = [
@@ -1202,18 +1206,18 @@ def light_theme_checks(errors: list[str], page_html: dict[str, str]) -> None:
     flat = re.sub(r"\s+", "", atlas_strip_css(css))
     # The role variables the light scope and the dark scope both define, so a component reads right on either ground.
     paper = re.search(r"\.ground-paper,\.site-header,\.site-footer\{([^}]*)\}", flat)
-    for need in ("--surface:var(--white)", "--matte:var(--limestone)", "--hair:var(--rule-paper)"):
+    for need in ("--surface:var(--white)", "--matte:var(--pumice)", "--hair:var(--rule-paper)"):
         if not paper or need not in paper.group(1):
             bad(f"the light scope (.ground-paper, header, footer) must carry {need}")
     # Review of the light theme (2026-10-25): the skip link sits outside the light scope, so its focus ring would take the
     # pale dark-scope link colour (2.4:1 on the white header); and the desktop dropdown's shadow must not follow the sublist
     # into the mobile menu.
-    if ".skip-link:focus-visible{outline-color:var(--teal)}" not in flat:
-        bad("the skip link's focus ring must be Agate Teal (at least 3:1 on the white header), not the pale dark-scope link colour")
+    if ".skip-link:focus-visible{outline-color:var(--magma)}" not in flat:
+        bad("the skip link's focus ring must be Magma (at least 3:1 on the white header), not the pale dark-scope link colour")
     if not re.search(r"\.submenuul\{min-width:0;[^}]*box-shadow:none", flat):
         bad("the mobile Solutions sublist must reset the desktop dropdown's box-shadow")
     dark = re.search(r"\.ground-orbit,\.ground-lift,\.domain-card,\.domain-band\{([^}]*)\}", flat)
-    for need in ("--fg:var(--mist)", "--surface:var(--ground-lift)", "--matte:var(--ground)"):
+    for need in ("--fg:var(--mist)", "--surface:var(--night-lift)", "--matte:var(--night)"):
         if not dark or need not in dark.group(1):
             bad(f"the dark scope (.ground-orbit, .ground-lift, the domain bands) must carry {need}")
     for rel, text in sorted(page_html.items()):
@@ -1245,73 +1249,81 @@ def light_theme_checks(errors: list[str], page_html: dict[str, str]) -> None:
                 bad(f"{rel}: #{sid} is a photographic or result act and stays dark (no ground-paper)")
 
 
-# --- MER-279: the Agate brand assets and where the site wears them --------------------------------------------------------
-AGATE_BRAND_DIR = "assets/brand"
-AGATE_BRAND_ROLES = {"logo-light": ("orbgss-logo-light", "svg"), "favicon": ("orbgss-favicon", "svg"),
+# --- The Heat Trace brand assets and where the site wears them (CTO, 2026-10-25; MER-279 built the Agate version) ---------
+BRAND_DIR = "assets/brand"
+BRAND_ROLES = {"logo-light": ("orbgss-logo-light", "svg"), "favicon": ("orbgss-favicon", "svg"),
                      "apple-touch-icon": ("orbgss-apple-touch-icon", "png"), "icon-192": ("orbgss-icon-192", "png"),
                      "icon-512": ("orbgss-icon-512", "png")}
-AGATE_PNG_SIZES = {"apple-touch-icon": 180, "icon-192": 192, "icon-512": 512}
-# The brand colours as the approved package states them (final/README.md), light and dark-background values.
-AGATE_BRAND_LIGHT = {"graphite": "#202629", "mineral_gray": "#69716F", "agate_teal": "#18777A", "mineral_gold": "#C49A5A"}
-AGATE_BRAND_DARK = {"outer": "#E3E5E4", "mineral_gray": "#B7C0BD", "agate_teal": "#58AEB2", "mineral_gold": "#D8B173"}
+BRAND_PNG_SIZES = {"apple-touch-icon": 180, "icon-192": 192, "icon-512": 512}
+# The brand colours as the approved package states them (Final_v3/README.md), light and dark-background values.
+BRAND_LIGHT = {"plum": "#371641", "magma": "#CD1B74", "amber": "#FFA323", "glow": "#FEF1A1"}
+BRAND_DARK = {"violet": "#854AA6", "magma": "#E43386", "amber": "#FFAA2E", "glow": "#FFF4A5", "night": "#160A19", "mist": "#F5EFF7"}
 # What a shipped logo or icon may paint, by role. The horizontal logo is the light-ground version (the header and the footer
-# are white since the light theme): the four light-background brand colours and the black/white a mask needs. The favicon tile
-# is Graphite with the dark-ground symbol.
-AGATE_SVG_PAINT_OK = {
-    "logo-light": {v.upper() for v in AGATE_BRAND_LIGHT.values()} | {"BLACK", "WHITE", "NONE"},
-    "favicon": {v.upper() for v in AGATE_BRAND_DARK.values()} | {"#202629", "BLACK", "WHITE", "NONE"},
+# are white): Plum, Magma and Amber, and the black/white a mask needs. The favicon tile is Night with the dark-ground symbol.
+BRAND_SVG_PAINT_OK = {
+    "logo-light": {v.upper() for v in BRAND_LIGHT.values()} | {"BLACK", "WHITE", "NONE"},
+    "favicon": {v.upper() for v in BRAND_DARK.values()} | {"BLACK", "WHITE", "NONE"},
 }
-# The locator map is a class-A illustration: Graphite neutrals of the brand token file plus one brand colour, the gold callout.
-AGATE_MAP_PAINT_OK = {"#121415", "#252A2B", "#2C3233", "#6C7472", "#D8B173"}
-AGATE_TEAL = {"#18777A", "#58AEB2"}
-AGATE_LOGO_VIEWBOX = (634, 108)
-AGATE_LOGO_MIN_WIDTH = 120  # the brand's minimum for the horizontal logo, in CSS px
+# The locator map is a class-A illustration: Night-family neutrals of the brand token file plus one brand colour, the dashed
+# Magma area-of-interest callout (with a Night halo). Amber and Glow are never drawn on a map.
+BRAND_MAP_PAINT_OK = {"#110C12", "#1C161D", "#241E25", "#69646A", "#160A19", "#E43386"}
+BRAND_MAP_FORBIDDEN = {"#FFA323", "#FFAA2E", "#FEF1A1", "#FFF4A5"}
+BRAND_LOGO_VIEWBOX = "0 0 619.41 144"     # the approved horizontal lock-up, as the SVG states it
+BRAND_LOGO_IMG = (619, 144)               # the width / height attributes the pages carry (the same ratio, whole pixels)
+BRAND_LOGO_MIN_WIDTH = 120  # the brand's minimum for the horizontal logo, in CSS px
+# script.js decides between a light and a dark caption by the luminance of the picture behind it. The crossover is derived
+# from the two caption colours (Mist and Ink), not typed in: where both contrast equally against the backdrop.
+CAPTION_CROSSOVER_TOLERANCE = 0.0005
 
 
-def agate_svg_paints(text: str) -> set[str]:
+def caption_crossover() -> float:
+    light, dark = atlas_luminance(atlas_hex_rgb(BRAND_TOKENS["--mist"])), atlas_luminance(atlas_hex_rgb(BRAND_TOKENS["--ink"]))
+    return ((light + 0.05) * (dark + 0.05)) ** 0.5 - 0.05
+
+
+def brand_svg_paints(text: str) -> set[str]:
     out = {m.upper() for m in re.findall(r'(?:fill|stroke|stop-color)="([^"]+)"', text)}
     out |= {m.upper() for m in re.findall(r"(?:fill|stroke|stop-color)\s*:\s*([^;\"]+)", text)}
     return out
 
 
-def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str, int]:
-    """The approved Agate identity: record, files, SVG paints, icon sizes, page heads, header and footer, manifest."""
+def brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str, int]:
+    """The approved Heat Trace identity: record, files, SVG paints, icon sizes, page heads, header and footer, manifest."""
     def bad(msg: str) -> None:
-        fail(f"MER-279: {msg}", errors)
+        fail(f"brand: {msg}", errors)
 
     css = (ROOT / "styles.css").read_text(encoding="utf-8")
-    record_path = ROOT / AGATE_BRAND_DIR / "brand.json"
+    record_path = ROOT / BRAND_DIR / "brand.json"
     try:
         record = json.loads(record_path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
-        bad(f"{AGATE_BRAND_DIR}/brand.json is missing or is not JSON")
+        bad(f"{BRAND_DIR}/brand.json is missing or is not JSON")
         return {"brand_files": 0}
-    if record.get("identity") != "Agate":
-        bad("brand.json must record the Agate identity")
-    if record.get("palette") != {"light": {"graphite": "#202629", "mineral_gray": "#69716F", "agate_teal": "#18777A", "mineral_gold": "#C49A5A"},
-                                 "dark": {"outer": "#E3E5E4", "mineral_gray": "#B7C0BD", "agate_teal": "#58AEB2", "mineral_gold": "#D8B173"}}:
-        bad("brand.json must record the approved palette exactly (Graphite #202629, Mineral Gray #69716F, Agate Teal #18777A, "
-            "Mineral Gold #C49A5A; dark #E3E5E4, #B7C0BD, #58AEB2, #D8B173)")
-    # The stylesheet carries those eight values under the brand's own names.
-    for token, value in (("--graphite", AGATE_BRAND_LIGHT["graphite"]), ("--mineral", AGATE_BRAND_LIGHT["mineral_gray"]),
-                         ("--teal", AGATE_BRAND_LIGHT["agate_teal"]), ("--gold", AGATE_BRAND_LIGHT["mineral_gold"]),
-                         ("--mist", AGATE_BRAND_DARK["outer"]), ("--mineral-light", AGATE_BRAND_DARK["mineral_gray"]),
-                         ("--teal-light", AGATE_BRAND_DARK["agate_teal"]), ("--gold-light", AGATE_BRAND_DARK["mineral_gold"])):
-        if AGATE_TOKENS.get(token, "").upper() != value:
+    if record.get("identity") != "Heat Trace":
+        bad("brand.json must record the Heat Trace identity")
+    if record.get("palette") != {"light": BRAND_LIGHT, "dark": BRAND_DARK}:
+        bad("brand.json must record the approved palette exactly (Plum #371641, Magma #CD1B74, Amber #FFA323, Glow #FEF1A1; "
+            "dark Violet #854AA6, Magma #E43386, Amber #FFAA2E, Glow #FFF4A5, Night #160A19, Mist #F5EFF7)")
+    # The stylesheet carries the brand values under the brand's own names. Plum is the wordmark's colour and Ink the text
+    # colour of the light theme; Glow and Violet live in the logo files only.
+    for token, value in (("--magma", BRAND_LIGHT["magma"]), ("--amber", BRAND_LIGHT["amber"]),
+                         ("--mist", BRAND_DARK["mist"]), ("--night", BRAND_DARK["night"]),
+                         ("--magma-light", "#F94997"), ("--amber-light", BRAND_DARK["amber"])):
+        if BRAND_TOKENS.get(token, "").upper() != value:
             bad(f"{token} must be the approved brand value {value}")
     files = record.get("files", {})
-    if sorted(files) != sorted([*AGATE_BRAND_ROLES, "favicon-ico"]):
-        bad(f"brand.json must record exactly {sorted([*AGATE_BRAND_ROLES, 'favicon-ico'])}")
+    if sorted(files) != sorted([*BRAND_ROLES, "favicon-ico"]):
+        bad(f"brand.json must record exactly {sorted([*BRAND_ROLES, 'favicon-ico'])}")
         return {"brand_files": 0}
 
     shipped: set[str] = {"brand.json"}
-    for role, (stem, ext) in AGATE_BRAND_ROLES.items():
+    for role, (stem, ext) in BRAND_ROLES.items():
         entry = files[role]
         name = entry.get("file", "")
         shipped.add(name)
-        path = ROOT / AGATE_BRAND_DIR / name
+        path = ROOT / BRAND_DIR / name
         if not path.is_file():
-            bad(f"{role}: {AGATE_BRAND_DIR}/{name} does not exist")
+            bad(f"{role}: {BRAND_DIR}/{name} does not exist")
             continue
         data = path.read_bytes()
         digest = hashlib.sha256(data).hexdigest()
@@ -1325,24 +1337,24 @@ def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str
             text = data.decode("utf-8", errors="replace")
             if re.search(r"<metadata|c2pa|<script|<text|<image|xlink:href|\shref=", text, re.I):
                 bad(f"{role}: {name} carries metadata, script, text, an embedded image or a link; a logo is outlined paths only")
-            paints = agate_svg_paints(text)
-            extra = paints - AGATE_SVG_PAINT_OK[role]
+            paints = brand_svg_paints(text)
+            extra = paints - BRAND_SVG_PAINT_OK[role]
             if extra:
-                bad(f"{role}: {name} paints {sorted(extra)}, which are not Agate brand colours for that ground")
-            if role == "logo-light" and not {"#202629", "#69716F", "#18777A", "#C49A5A"} <= paints:
-                bad(f"{role}: the logo must carry all four light-background brand colours (Graphite, Mineral Gray, Agate Teal, Mineral Gold)")
-            if role == "logo-light" and f'viewBox="0 0 {AGATE_LOGO_VIEWBOX[0]}' not in text:
-                bad(f"{role}: the logo's viewBox is not the approved 634 x 108 horizontal lock-up")
+                bad(f"{role}: {name} paints {sorted(extra)}, which are not Heat Trace brand colours for that ground")
+            if role == "logo-light" and not {BRAND_LIGHT["plum"], BRAND_LIGHT["magma"], BRAND_LIGHT["amber"]} <= paints:
+                bad(f"{role}: the logo must carry the light-background brand colours (Plum, Magma, Amber)")
+            if role == "logo-light" and f'viewBox="{BRAND_LOGO_VIEWBOX}"' not in text:
+                bad(f"{role}: the logo's viewBox is not the approved {BRAND_LOGO_VIEWBOX} horizontal lock-up")
         else:
             if data[:8] != b"\x89PNG\r\n\x1a\n" or b"caBX" in data:
                 bad(f"{role}: {name} is not a plain PNG (or it carries a C2PA box)")
             else:
                 width, height = int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
-                if (width, height) != (AGATE_PNG_SIZES[role],) * 2:
-                    bad(f"{role}: {name} is {width} x {height}, expected {AGATE_PNG_SIZES[role]} square")
-    for old in sorted((ROOT / AGATE_BRAND_DIR).iterdir()) if (ROOT / AGATE_BRAND_DIR).is_dir() else []:
+                if (width, height) != (BRAND_PNG_SIZES[role],) * 2:
+                    bad(f"{role}: {name} is {width} x {height}, expected {BRAND_PNG_SIZES[role]} square")
+    for old in sorted((ROOT / BRAND_DIR).iterdir()) if (ROOT / BRAND_DIR).is_dir() else []:
         if old.name not in shipped:
-            bad(f"{AGATE_BRAND_DIR}/{old.name} is not in brand.json; remove it or record it")
+            bad(f"{BRAND_DIR}/{old.name} is not in brand.json; remove it or record it")
     ico = ROOT / "favicon.ico"
     if ico.is_file():
         data = ico.read_bytes()
@@ -1352,13 +1364,13 @@ def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str
             bad("favicon.ico does not match its recorded SHA-256")
         if sizes != [16, 32, 48]:
             bad(f"favicon.ico holds {sizes}; the approved file has 16, 32 and 48 px")
-    if (ROOT / AGATE_BRAND_DIR / "illustrative-map.jpg").exists():
+    if (ROOT / BRAND_DIR / "illustrative-map.jpg").exists():
         bad("illustrative-map.jpg is a generated illustration and may not be shipped as site imagery")
 
-    logo = "/" + AGATE_BRAND_DIR + "/" + files["logo-light"].get("file", "?")
-    fav = "/" + AGATE_BRAND_DIR + "/" + files["favicon"].get("file", "?")
-    touch = "/" + AGATE_BRAND_DIR + "/" + files["apple-touch-icon"].get("file", "?")
-    ground = AGATE_TOKENS["--white"].upper()  # the header is white since the light theme: the browser chrome follows it
+    logo = "/" + BRAND_DIR + "/" + files["logo-light"].get("file", "?")
+    fav = "/" + BRAND_DIR + "/" + files["favicon"].get("file", "?")
+    touch = "/" + BRAND_DIR + "/" + files["apple-touch-icon"].get("file", "?")
+    ground = BRAND_TOKENS["--white"].upper()  # the header is white since the light theme: the browser chrome follows it
     for rel, text in sorted(page_html.items()):
         head = text.split("</head>", 1)[0]
         for need in ('<link rel="icon" href="/favicon.ico" sizes="32x32" />',
@@ -1373,11 +1385,11 @@ def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str
             bad(f"{rel}: still refers to the retired logo files or the text wordmark")
         home = "/tr/" if rel.startswith("tr/") else "/"
         header = re.search(r'<a href="' + re.escape(home) + r'" class="brand"[^>]*>\s*(<img[^>]*>)\s*</a>', text)
-        want_header = f'<img class="brand-logo" src="{logo}" alt="" width="{AGATE_LOGO_VIEWBOX[0]}" height="{AGATE_LOGO_VIEWBOX[1]}" />'
+        want_header = f'<img class="brand-logo" src="{logo}" alt="" width="{BRAND_LOGO_IMG[0]}" height="{BRAND_LOGO_IMG[1]}" />'
         if not header or header.group(1) != want_header:
             bad(f"{rel}: the header brand link must hold exactly {want_header}")
         footer = re.search(r'<div class="footer-brand">\s*(<img[^>]*>)\s*</div>', text)
-        want_footer = f'<img src="{logo}" alt="OrbGSS" width="{AGATE_LOGO_VIEWBOX[0]}" height="{AGATE_LOGO_VIEWBOX[1]}" />'
+        want_footer = f'<img src="{logo}" alt="OrbGSS" width="{BRAND_LOGO_IMG[0]}" height="{BRAND_LOGO_IMG[1]}" />'
         if not footer or footer.group(1) != want_footer:
             bad(f"{rel}: the footer brand must hold exactly {want_footer}")
         if "illustrative-map" in text:
@@ -1388,8 +1400,8 @@ def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str
     if not heights:
         bad("styles.css must size .brand-logo by a pixel height")
     for h in heights:
-        if h * AGATE_LOGO_VIEWBOX[0] / AGATE_LOGO_VIEWBOX[1] < AGATE_LOGO_MIN_WIDTH:
-            bad(f".brand-logo at {h}px high is under the brand's {AGATE_LOGO_MIN_WIDTH}px minimum width")
+        if h * BRAND_LOGO_IMG[0] / BRAND_LOGO_IMG[1] < BRAND_LOGO_MIN_WIDTH:
+            bad(f".brand-logo at {h}px high is under the brand's {BRAND_LOGO_MIN_WIDTH}px minimum width")
 
     try:
         manifest = json.loads((ROOT / "site.webmanifest").read_text(encoding="utf-8"))
@@ -1401,13 +1413,13 @@ def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str
             if str(manifest.get(key, "")).upper() != ground:
                 bad(f"site.webmanifest {key} must be the white header {ground}")
         icons = {(i.get("src"), i.get("sizes"), i.get("type")) for i in manifest.get("icons", [])}
-        want = {(f"/{AGATE_BRAND_DIR}/{files['icon-192'].get('file')}", "192x192", "image/png"),
-                (f"/{AGATE_BRAND_DIR}/{files['icon-512'].get('file')}", "512x512", "image/png"),
+        want = {(f"/{BRAND_DIR}/{files['icon-192'].get('file')}", "192x192", "image/png"),
+                (f"/{BRAND_DIR}/{files['icon-512'].get('file')}", "512x512", "image/png"),
                 (fav, "any", "image/svg+xml")}
         if icons != want:
             bad(f"site.webmanifest icons must be exactly the recorded 192, 512 and SVG icons; found {sorted(map(str, icons))}")
 
-    # The locator map follows the brand's map rule: Graphite neutrals, one gold callout, no teal.
+    # The locator map follows the brand's map rule: Night-family neutrals, one dashed Magma callout, no Amber or Glow.
     try:
         locator = json.loads(MANIFEST.read_text(encoding="utf-8"))["web_m6"]["locator_map"]["path"]
         map_text = (ROOT / locator).read_text(encoding="utf-8")
@@ -1415,11 +1427,19 @@ def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str
         map_text = ""
         bad("the locator map record or file is missing")
     if map_text:
-        paints = {x for x in agate_svg_paints(map_text) if x != "NONE"}
-        if paints - AGATE_MAP_PAINT_OK:
-            bad(f"the locator map paints {sorted(paints - AGATE_MAP_PAINT_OK)}; a map uses Graphite neutrals and the gold callout only")
-        if paints & AGATE_TEAL or "#D8B173" not in paints:
-            bad("the locator map must carry the gold area-of-interest callout (#D8B173) and no teal")
+        paints = {x for x in brand_svg_paints(map_text) if x != "NONE"}
+        if paints - BRAND_MAP_PAINT_OK:
+            bad(f"the locator map paints {sorted(paints - BRAND_MAP_PAINT_OK)}; a map uses Night-family neutrals and the Magma callout only")
+        if paints & BRAND_MAP_FORBIDDEN or "#E43386" not in paints:
+            bad("the locator map must carry the Magma area-of-interest callout (#E43386) and no Amber or Glow")
+        if not re.search(r'stroke="#E43386"[^>]*stroke-dasharray="[^"]+"|stroke-dasharray="[^"]+"[^>]*stroke="#E43386"', map_text):
+            bad("the locator map's area-of-interest callout must be dashed")
+    # The caption crossover in script.js is derived from Mist and Ink; a palette change that forgets it fails here.
+    script_text = (ROOT / "script.js").read_text(encoding="utf-8")
+    cross = re.search(r"const CAPTION_TONE_CROSSOVER = ([0-9.]+);", script_text)
+    if not cross or abs(float(cross.group(1)) - caption_crossover()) > CAPTION_CROSSOVER_TOLERANCE:
+        bad(f"script.js CAPTION_TONE_CROSSOVER must be {caption_crossover():.4f}, where Mist and Ink captions contrast equally"
+            f" (found {cross.group(1) if cross else 'none'})")
     return {"brand_files": len(files)}
 
 # === /atlas:foundation ===
@@ -1791,7 +1811,7 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
                     if float(px) > THUMB_MAX_CSS_PX:
                         fail(f"styles.css atlas:solutions-about: {selector} sizes a thumbnail at {px}px; an index thumbnail is at most {THUMB_MAX_CSS_PX} CSS px (R2)", errors)
     note_rule = re.search(r"\.page-solutions\.page-note\{([^}]*)\}", flat)
-    if not note_rule or "background:var(--limestone)" not in note_rule.group(1):
+    if not note_rule or "background:var(--pumice)" not in note_rule.group(1):
         fail("styles.css atlas:solutions-about: the footnote (.page-solutions .page-note) must sit on the pair's paper ground", errors)
 # === /atlas:solutions-about ===
 
@@ -2007,7 +2027,7 @@ def main() -> int:
     atlas_pages = {rel: (ROOT / rel).read_text(encoding="utf-8")
                    for rel in [*ROUTES.values(), *TR_FILES.values(), *AUX_PAGES.values()]}
     atlas_summary = atlas_foundation_checks(errors, atlas_pages)
-    agate_brand_checks(errors, atlas_pages)
+    brand_checks(errors, atlas_pages)
     atlas_geothermal_checks(errors, atlas_pages)
     atlas_solutions_about_checks(errors, atlas_pages)
     atlas_partner_sources_checks(errors, atlas_pages)

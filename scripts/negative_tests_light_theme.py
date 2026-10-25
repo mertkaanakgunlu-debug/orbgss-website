@@ -2,7 +2,7 @@
 
     python scripts/negative_tests_light_theme.py
 
-The site became a light theme (white header and footer, Limestone pages, granite grounds in parts of the content) and
+The site became a light theme (white header and footer, Pumice pages, dark grounds in parts of the content) and
 stopped explaining how the work is done: the in-page section bars, the per-layer and per-result warnings and the
 explanations of how layers are used and the priority is scored are gone, in English and Turkish. Each case brings one
 of them back, or breaks one light-theme property, in memory and checks that scripts/validate_site.py names it. Run it
@@ -67,8 +67,8 @@ suite.case("the Turkish sentence on how the score is built returns to the dictio
                 "Kanıt katmanları 0 ile 100 arası tek bir deneysel skorda birleştirilir."),
            "a sentence on how the score is built")
 suite.case("the skip link's focus ring goes back to the pale link colour", CSS,
-           swap(".skip-link:focus-visible{outline-color:var(--teal)}\n", ""),
-           "the skip link's focus ring must be Agate Teal")
+           swap(".skip-link:focus-visible{outline-color:var(--magma)}\n", ""),
+           "the skip link's focus ring must be Magma")
 suite.case("the mobile Solutions sublist takes the dropdown shadow again", CSS,
            swap("border:0;box-shadow:none;padding:0 0 10px 18px", "border:0;padding:0 0 10px 18px"),
            "must reset the desktop dropdown's box-shadow")
@@ -89,18 +89,18 @@ suite.case("the priority result is washed out to paper", HOME,
 
 # ---- the two scopes the components read their colours from --------------------------------------------------
 suite.case("the light scope loses its white surface", CSS,
-           swap("--surface:var(--white);--matte:var(--limestone)", "--surface:var(--limestone);--matte:var(--limestone)"),
+           swap("--surface:var(--white);--matte:var(--pumice)", "--surface:var(--pumice);--matte:var(--pumice)"),
            "the light scope (.ground-paper, header, footer) must carry --surface:var(--white)")
 suite.case("the light scope loses its paper hairline", CSS,
            swap("--hair:var(--rule-paper);--hair-soft:var(--rule-paper-soft);--surface:var(--white)", "--hair:var(--rule);--hair-soft:var(--rule-soft);--surface:var(--white)"),
            "the light scope (.ground-paper, header, footer) must carry --hair:var(--rule-paper)")
 suite.case("the dark scope loses its lifted surface", CSS,
-           swap("--surface:var(--ground-lift);--matte:var(--ground)", "--surface:var(--white);--matte:var(--ground)"),
-           "the dark scope (.ground-orbit, .ground-lift, the domain bands) must carry --surface:var(--ground-lift)")
+           swap("--surface:var(--night-lift);--matte:var(--night)", "--surface:var(--white);--matte:var(--night)"),
+           "the dark scope (.ground-orbit, .ground-lift, the domain bands) must carry --surface:var(--night-lift)")
 suite.case("the dark scope loses its light text", CSS,
-           swap(".ground-orbit,.ground-lift,.domain-card,.domain-band{--fg:var(--mist);", ".ground-orbit,.ground-lift,.domain-card,.domain-band{--fg:var(--graphite);"),
+           swap(".ground-orbit,.ground-lift,.domain-card,.domain-band{--fg:var(--mist);", ".ground-orbit,.ground-lift,.domain-card,.domain-band{--fg:var(--ink);"),
            "the dark scope (.ground-orbit, .ground-lift, the domain bands) must carry --fg:var(--mist)")
-suite.case("the ink for limits drifts toward the gold fill", CSS, swap("--gold-ink:#735525;", "--gold-ink:#C49A5A;"), "palette token --gold-ink")
+suite.case("the ink for limits drifts toward the amber fill", CSS, swap("--amber-ink:#A15C13;", "--amber-ink:#FFA323;"), "palette token --amber-ink")
 
 if __name__ == "__main__":
     raise SystemExit(suite.run())

@@ -32,11 +32,11 @@ suite.case("the Mining and Marine pair leaves paper", SOL,
            swap('<section class="domain-pair ground ground-paper"', '<section class="domain-pair ground ground-orbit"'),
            "the Mining and Marine pair must sit on paper")
 suite.case("the pair is repainted by its own rule", CSS,
-           swap(".domain-pair{position:relative;padding:", ".domain-pair{position:relative;background:var(--ground);padding:"),
+           swap(".domain-pair{position:relative;padding:", ".domain-pair{position:relative;background:var(--night);padding:"),
            ".domain-pair paints its own background")
 suite.case("the footnote leaves the pair's paper ground", CSS,
-           swap(".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--limestone)}",
-                ".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--ground)}"),
+           swap(".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--pumice)}",
+                ".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--night)}"),
            "must sit on the pair's paper ground")
 suite.case("a dark band appears on Solutions", SOL,
            swap('<section class="domain-feature" id="geothermal"', '<section class="domain-feature ground ground-orbit" id="geothermal"'),

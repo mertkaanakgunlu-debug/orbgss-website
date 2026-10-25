@@ -139,8 +139,8 @@ case("the Turkish caption coordinate drifts from the English one", SCRIPT,
 
 # ---- the expansion-direction figures are captioned photographs, not cards (review decision 2) ---------------
 case("an expansion-direction figure gets a frame again", STYLES,
-     swap(".panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--ground)}",
-          ".panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--ground);border:1px solid var(--rule)}"),
+     swap(".panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--night)}",
+          ".panel-figure{position:relative;margin:0;aspect-ratio:16/10;overflow:hidden;background:var(--night);border:1px solid var(--rule)}"),
      "captioned photographs, not cards")
 case("an expansion-direction panel gains a shadow", STYLES,
      swap(".domain-panel{position:relative;display:flex;", ".domain-panel{box-shadow:0 8px 24px #000;position:relative;display:flex;"),
@@ -155,7 +155,7 @@ case("a thumbnail is declared larger than 160 CSS px", SOURCES_PAGE,
      swap('width="160" height="90"', 'width="240" height="135"'), "at most 160 x 160 CSS px")
 case("a thumbnail is not a recorded image", SOURCES_PAGE,
      swap('src="/assets/imagery/yellowstone-2013-900.webp" alt="Thumbnail of the Yellowstone',
-          'src="/assets/brand/orbgss-logo-light.de682b8e.svg" alt="Thumbnail of the Yellowstone'),
+          'src="/assets/brand/orbgss-logo-light.27e93f98.svg" alt="Thumbnail of the Yellowstone'),
      "is not a recorded image in sources.json")
 case("a thumbnail stops being lazy", SOURCES_PAGE,
      swap('width="160" height="90" loading="lazy"', 'width="160" height="90"'), "must be loaded lazily")

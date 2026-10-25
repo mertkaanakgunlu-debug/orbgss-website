@@ -129,13 +129,13 @@ case("an AOI overlay returns to Act 2 with no recorded geometry behind it", INDE
      "no longer positions it from the recorded analysis-grid fractions")
 
 # ---- B-VIS-05 tokens ------------------------------------------------------------------------
-# The WEB-005B product palette (--orb-*) was superseded by the Atlas palette (MER-275), which the Agate palette replaced (MER-279); the same two
+# The WEB-005B product palette (--orb-*) was superseded by the Atlas palette (MER-275), which the Agate palette replaced (MER-279) and the Heat Trace palette now replaces; the same two
 # properties -- pinned once, never redefined -- now hold for its tokens.
-case("Teal (dark-ground) token drifts", STYLES,
-     lambda t: t.replace("--teal-light:#58AEB2;", "--teal-light:#43BFF0;", 1), "palette token --teal-light")
+case("Magma (dark-ground) token drifts", STYLES,
+     lambda t: t.replace("--magma-light:#F94997;", "--magma-light:#43BFF0;", 1), "palette token --magma-light")
 case("a palette token is redefined a second time", STYLES,
-     lambda t: t.replace(".sec{position:relative;", ".sec{--ground-lift:#101010;position:relative;", 1),
-     "palette token --ground-lift")
+     lambda t: t.replace(".sec{position:relative;", ".sec{--night-lift:#101010;position:relative;", 1),
+     "palette token --night-lift")
 
 # ---- B-VIS-06 / B-VIS-08 priority semantics and legend ---------------------------------------
 case("priority public label reworded", SCRIPT,
