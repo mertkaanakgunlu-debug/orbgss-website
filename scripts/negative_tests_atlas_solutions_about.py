@@ -22,25 +22,25 @@ SOL, ABOUT = "solutions/index.html", "about/index.html"
 TR_SOL, TR_ABOUT = "tr/cozumler/index.html", "tr/hakkimizda/index.html"
 
 # ---- the grounds ---------------------------------------------------------------------------------
-suite.case("the Solutions opening moves to Paper", SOL,
-           swap('<section class="page-hero is-ledger"', '<section class="page-hero is-ledger ground-paper"'),
-           "the page opening must sit on Orbit")
+suite.case("the Solutions opening moves to Orbit", SOL,
+           swap('<section class="page-hero is-ledger ground-paper"', '<section class="page-hero is-ledger ground-orbit"'),
+           "the page opening must sit on paper")
 suite.case("the About opening moves to Lift", ABOUT,
-           swap('<section class="page-hero is-statement"', '<section class="page-hero is-statement ground-lift"'),
-           "the page opening must sit on Orbit")
-suite.case("the Mining and Marine pair leaves Lift", SOL,
-           swap('<section class="domain-pair ground ground-lift"', '<section class="domain-pair ground ground-orbit"'),
-           "the Mining and Marine pair must sit on Lift")
+           swap('<section class="page-hero is-statement ground-paper"', '<section class="page-hero is-statement ground-lift"'),
+           "the page opening must sit on paper")
+suite.case("the Mining and Marine pair leaves paper", SOL,
+           swap('<section class="domain-pair ground ground-paper"', '<section class="domain-pair ground ground-orbit"'),
+           "the Mining and Marine pair must sit on paper")
 suite.case("the pair is repainted by its own rule", CSS,
            swap(".domain-pair{position:relative;padding:", ".domain-pair{position:relative;background:var(--ground);padding:"),
            ".domain-pair paints its own background")
-suite.case("the footnote leaves the pair's Lift ground", CSS,
-           swap(".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--ground-lift)}",
+suite.case("the footnote leaves the pair's paper ground", CSS,
+           swap(".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--limestone)}",
                 ".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--ground)}"),
-           "must sit on the pair's Lift ground")
-suite.case("a Paper band appears on Solutions", SOL,
-           swap('<section class="domain-feature" id="geothermal"', '<section class="domain-feature ground ground-paper" id="geothermal"'),
-           "Solutions has no Paper ground")
+           "must sit on the pair's paper ground")
+suite.case("a dark band appears on Solutions", SOL,
+           swap('<section class="domain-feature" id="geothermal"', '<section class="domain-feature ground ground-orbit" id="geothermal"'),
+           "Solutions is a light page")
 suite.case("the About statement moves to Orbit", ABOUT,
            swap('<section class="about-position ground ground-paper"', '<section class="about-position ground ground-orbit"'),
            "#position must sit on Paper")
@@ -50,6 +50,9 @@ suite.case("the six principles move to Lift", ABOUT,
 suite.case("the About problem moves to Paper", ABOUT,
            swap('<section class="about-problem ground ground-orbit"', '<section class="about-problem ground ground-paper"'),
            "#problem must sit on Orbit")
+suite.case("the About data section moves to Lift", ABOUT,
+           swap('<section class="about-sources ground ground-paper"', '<section class="about-sources ground ground-lift"'),
+           "#sources must sit on Paper")
 suite.case("the page CSS hook is dropped from About", ABOUT,
            swap('<body class="interior page-about">', '<body class="interior">'),
            "the page's CSS hangs on page-about")
@@ -57,7 +60,7 @@ suite.case("the Turkish Solutions page loses its CSS hook", TR_SOL,
            swap('<body class="interior page-solutions">', '<body class="interior">'),
            "the page's CSS hangs on page-solutions")
 
-# ---- Solutions: the domain index and the pilot index ----------------------------------------------
+# ---- Solutions: the domain index and the Geothermal band ----------------------------------------------
 suite.case("the domain index loses its Marine row", SOL,
            regex(r'\s*<li>\s*<a class="index-row" href="#marine">.*?</a>\s*</li>', "", __import__("re").S),
            "the domain index must be three native links")
@@ -74,17 +77,20 @@ suite.case("an expansion direction row gains an image", SOL,
 suite.case("a domain row loses its status label", SOL,
            regex(r'\s*<span class="domain-status mono" data-i18n="app\.marine\.status">Expansion direction</span>', ""),
            "every domain index row carries its name and its status label")
-suite.case("the pilot index loses a link", SOL,
-           regex(r'\s*<a href="/solutions/geothermal/#layers"><span data-i18n="solutionsPage.pilotnav.atlas">.*?</a>', ""),
-           "the pilot index must link the pilot record")
-suite.case("the pilot index leaves the Geothermal page", SOL,
-           swap('<a href="/solutions/geothermal/#glance">', '<a href="/about/#glance">'),
-           "the pilot index must link the pilot record")
+suite.case("the pilot index bar returns on the Geothermal band", SOL,
+           regex(r'(<section class="domain-feature" id="geothermal"[^>]*>)', r'\g<1><nav class="pilot-index" aria-label="x"></nav>'),
+           "the pilot index bar is back")
+suite.case("the Geothermal band stops linking the Geothermal page", SOL,
+           swap('<a class="text-link" href="/solutions/geothermal/"><span data-i18n="solutionsPage.band.pilot">', '<a class="text-link" href="/about/"><span data-i18n="solutionsPage.band.pilot">'),
+           "the Geothermal band must link the Geothermal page")
+suite.case("a section bar returns on About", ABOUT,
+           swap("</main>", '<nav class="page-index" aria-label="x"></nav></main>'),
+           "an in-page section bar")
 suite.case("the Geothermal band loses its lead photograph", SOL,
            swap("<img\n          data-lead-visual\n          src=\"/assets/imagery/yellowstone-2013-1400.webp\"", "<img\n          src=\"/assets/imagery/yellowstone-2013-1400.webp\""),
            "#geothermal must be the Geothermal band")
 suite.case("the footnote no longer follows the pair", SOL,
-           regex(r'(\s*<div class="page-note">.*?</div>\s*</div>)(\s*<div class="page-closing">)', r'\2\1', __import__("re").S),
+           regex(r'(\s*<div class="page-note ground-paper">.*?</div>\s*</div>)(\s*<div class="page-closing">)', r'\2\1', __import__("re").S),
            "the illustrative footnote (div.page-note) must follow the pair directly")
 suite.case("the Solutions title loses its tone clause", SOL,
            swap('<span class="tone" data-i18n="solutionsPage.title.tail">', '<span data-i18n="solutionsPage.title.tail">'),
@@ -136,15 +142,15 @@ suite.case("the Turkish data link points at the English Sources page", TR_ABOUT,
 
 # ---- the group opts into the type rules --------------------------------------------------------------------
 suite.case("a caption-size rule drops under 10px in the Solutions and About region", CSS,
-           swap(".index-thumb.is-none{display:flex;align-items:center;justify-content:center;border:1px dashed var(--rule);font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-caption);",
-                ".index-thumb.is-none{display:flex;align-items:center;justify-content:center;border:1px dashed var(--rule);font-family:var(--mono);font-variant-ligatures:none;font-size:9px;"),
+           swap(".index-thumb.is-none{display:flex;align-items:center;justify-content:center;border:1px dashed var(--hair);font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-caption);",
+                ".index-thumb.is-none{display:flex;align-items:center;justify-content:center;border:1px dashed var(--hair);font-family:var(--mono);font-variant-ligatures:none;font-size:9px;"),
            "nothing is set under 10px")
 suite.case("capitals in the region take a second tracking", CSS,
-           swap(".pilot-index>*{display:inline-flex;align-items:center;gap:12px;min-height:64px;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);",
-                ".pilot-index>*{display:inline-flex;align-items:center;gap:12px;min-height:64px;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:.24em;"),
+           swap(".domain-pair .page-section-head .none-note{grid-area:note;max-width:none;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);",
+                ".domain-pair .page-section-head .none-note{grid-area:note;max-width:none;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:.24em;"),
            "caps use one tracking")
 suite.case("a Solutions string loses its Turkish value", JS,
-           regex(r"\n    'solutionsPage\.pilotnav\.result': 'Sonuç ve sınırları',", ""),
+           regex(r"\n    'solutionsPage\.title\.tail': 'sırada ne var\.',", ""),
            "has no Turkish value")
 
 if __name__ == "__main__":

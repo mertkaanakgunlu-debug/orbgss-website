@@ -188,13 +188,13 @@ case("a Turkish page drops back to a document-relative asset URL", TR_HOME,
      swap('<link rel="icon" href="/assets/brand/orbgss-favicon.31dba293.svg"', '<link rel="icon" href="assets/brand/orbgss-favicon.31dba293.svg"'),
      "tr/assets/brand/orbgss-favicon.31dba293.svg")
 
-# ---- the mandatory scientific warnings, in Turkish ---------------------------------------------
-case("the Turkish priority warning loses its wording", TR_HOME,
-     regex(r'(<dd class="beam-note" data-i18n="act\.priority\.note">).*?(</dd>)',
-           r"\1Yalnızca bir yorum.\2"), "lost required wording")
-case("the Turkish priority warning is no longer rendered", TR_HOME,
-     swap('<dd class="beam-note" data-i18n="act.priority.note">', '<dd class="beam-note">'),
-     "its mandatory warning 'act.priority.note' is not rendered")
+# ---- the retired scientific warnings stay retired in Turkish (CTO, 2026-10-25) -------------------
+case("the Turkish homepage renders a retired warning again", TR_HOME,
+     swap("</main>", '<p data-i18n="act.priority.note">Yalnızca bir yorum.</p></main>'),
+     "the retired warning key 'act.priority.note' is rendered on tr/index.html")
+case("a retired warning key returns to the Turkish dictionary", SCRIPT,
+     regex(r"(\n  tr: \{\n)", r"\1    'act.priority.note': 'Yalnızca bir yorum.',\n"),
+     "the retired warning key 'act.priority.note' is back in the 'tr' dictionary")
 
 # ---- runtime: the page is the language ---------------------------------------------------------
 case("script.js swaps text in the browser again", SCRIPT,

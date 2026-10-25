@@ -4,6 +4,7 @@
 **Status:** **review, pending CTO acceptance.** The CTO approved the Agate identity on 2026-10-25 and asked for it on the existing site. Nothing here is published; it becomes binding only when the CTO accepts the reviewed branch and authorizes a publication.
 **Baseline:** `claude/project-thread-07ccos@4bbbe0ee` (the Atlas integration of MER-274: MER-275 foundation, MER-276 / 277 / 278 page groups). This work changes colour and brand marks on top of it and nothing else.
 **Governs, once accepted:** the UI palette, the grounds' colours, the logo, the favicon family and the map rule. It wins over `docs/WEB_ATLAS_DESIGN_AUTHORITY.md` §0 (colour bullet), §1 and §2 (the palette and the colours of the grounds) and over the palette lines of the other design documents. It changes nothing in type, fonts, the shared components' structure, the four-act homepage, the scientific, legal, claim and content rules, the page set, the navigation or the URLs.
+**Amended 2026-10-25 (`docs/WEB_LIGHT_THEME_AUTHORITY.md`, CTO request):** the header and footer are white and carry the light-ground logo, so §2 (grounds), §4 (logo role, markup, theme colour) and §7 (the hero seam) below read as amended here; the palette, the map rule, the interaction states and the hero rules stand. The mandatory warnings named in this document were retired the same day.
 **Package:** `OrbGSS Logo Tasarim Final.zip`, folder `final/`; `final/variant-b/` and `final/assets/illustrative-map.jpg` are not used.
 
 ## 0. Özet (CTO için)
@@ -28,12 +29,13 @@ Defined once in `:root` of `styles.css`; `scripts/validate_site.py` pins every v
 | `--mist` | `#E3E5E4` | the approved dark-ground "outer" colour: primary text on dark | on Ground 13.83:1, on Ground lift 11.49:1 |
 | `--mineral-light` | `#B7C0BD` | Mineral Gray on dark: secondary text, captions | on Ground 9.41:1, on Ground lift 7.81:1 |
 | `--teal-light` | `#58AEB2` | Agate Teal on dark: links, active nav, focus ring | on Ground 6.76:1, on Ground lift 5.62:1 |
-| `--gold-light` | `#D8B173` | Mineral Gold on dark: limits, data gaps, mandatory warnings, the target frame | on Ground 8.71:1, on Ground lift 7.24:1 |
+| `--gold-light` | `#D8B173` | Mineral Gold on dark: limits, data gaps, the target frame | on Ground 8.71:1, on Ground lift 7.24:1 |
 | `--ground` | `#171A1B` | the dark ground (Graphite, deepened one step so the page recedes behind the brand colour) | |
 | `--ground-lift` | `#252A2B` | the derived dark step: indexes, the Mining/Marine pair, the Act 4 stage | |
 | `--limestone` | `#F6F5F2` | the light ground (reading records only) | |
 | `--graphite-soft` | `#565D5A` | secondary text on Limestone | 6.20:1 |
-| `--gold-ink` | `#735525` | Mineral Gold as text on Limestone (the warning label on paper) | 6.30:1 |
+| `--gold-ink` | `#735525` | Mineral Gold as text on Limestone (the data-gap label on paper) | 6.30:1 |
+| `--white` | `#FFFFFF` | the header, the footer and the light cards (the brand token `--ogs-bg-surface`) | Graphite 15.32:1, Graphite Soft 6.75:1, Mineral 5.01:1, Teal 5.30:1, Gold Ink 6.87:1 |
 | `--rule`, `--rule-soft` | `rgba(183,192,189,.22)` / `.11` | lines on dark | |
 | `--rule-paper`, `--rule-paper-soft` | `rgba(105,113,111,.30)` / `.15` | lines on Limestone | |
 
@@ -41,7 +43,7 @@ Defined once in `:root` of `styles.css`; `scripts/validate_site.py` pins every v
 
 **Rules.**
 
-1. **Nothing else is a UI colour.** The stylesheet, `<style>` blocks and inline styles may use the sixteen tokens' hexes, `rgba()` of a palette triple at any alpha, `transparent` and `currentColor`. Every other hex, `rgb()` of anything else, `hsl()`, `color-mix()` and every CSS named colour fails the validator. Images are exempt: rasters, the hero video and SVG files are checked on their own terms (§4, §6).
+1. **Nothing else is a UI colour.** The stylesheet, `<style>` blocks and inline styles may use the tokens' hexes, `rgba()` of a palette triple at any alpha, `transparent` and `currentColor`. Every other hex, `rgb()` of anything else, `hsl()`, `color-mix()` and every CSS named colour fails the validator. Images are exempt: rasters, the hero video and SVG files are checked on their own terms (§4, §6).
 2. **Teal is the interactive accent, and only that.** Links, the active navigation item, the focus ring (2 px, 6.76:1 on the ground), tab and control states. It is never a data colour and never appears on a map.
 3. **Gold is a restrained highlight, never a fill.** A line, a label, a mark: the mandatory-warning rule, the data-gap label, the target frame on the Act 4 result, the area-of-interest callout on a map. The validator fails any rule that fills a background with a gold value. On Limestone, gold text is `--gold-ink`; `--gold` is only a line there.
 4. **No copper, no navy surface, no gradient accent.** The retired Atlas tokens (`--orbit`, `--lift`, `--paper`, `--steel`, `--slate`, `--signal`, `--signal-deep`, `--caution`, `--caution-deep`) and every earlier retired token fail the validator if they return; so do the old cyan and navy hexes.
@@ -53,9 +55,7 @@ Defined once in `:root` of `styles.css`; `scripts/validate_site.py` pins every v
 
 The three structural classes keep their names so that page markup, the three page-group regions and their suites are unchanged: `ground-orbit` is the dark ground (Ground), `ground-lift` the lifted step, `ground-paper` the light ground (Limestone). The names are structural, not colour names; a comment in `scripts/validate_site.py` says so.
 
-* **Ground:** every page opening, every photograph, every analytical plate, the priority score, the header and the footer on every page.
-* **Ground lift:** index bars, the Mining and Marine pair, the Act 4 stage.
-* **Limestone:** reading records only, as before (the Geothermal pilot record and its locator map, the "Establishes / Does not establish" ledger, the About statement and principles, the Sources body).
+* **Amended 2026-10-25:** the pages are a light theme. The header and footer are **white**; the pages sit on **Limestone**; **Ground** and **Ground lift** are for photographs, the priority result and the dark bands of each page. The per-page map is in `docs/WEB_LIGHT_THEME_AUTHORITY.md` §1. The three bullets that stood here (Ground for every opening, header and footer; Ground lift for index bars; Limestone for reading records only) are superseded.
 
 ## 3. Interaction states
 
@@ -73,7 +73,7 @@ Built by `scripts/build_brand_assets.py` from the package; recorded in `assets/b
 
 | Role | Shipped file | Used for |
 | --- | --- | --- |
-| `logo-dark` | `assets/brand/orbgss-logo-dark.9085b960.svg` (634 × 108) | header and footer, every page, dark ground |
+| `logo-light` | `assets/brand/orbgss-logo-light.de682b8e.svg` (634 × 108) | header and footer, every page, white ground (amended 2026-10-25; the dark-ground logo is no longer shipped) |
 | `favicon` | `assets/brand/orbgss-favicon.31dba293.svg` | `<link rel="icon" type="image/svg+xml">`: Graphite tile, dark-ground symbol |
 | `favicon-ico` | `/favicon.ico` (16, 32, 48 px, byte for byte) | `<link rel="icon" href="/favicon.ico" sizes="32x32">` and the root path browsers ask for |
 | `apple-touch-icon` | `assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png` (180) | `<link rel="apple-touch-icon">` |
@@ -81,9 +81,9 @@ Built by `scripts/build_brand_assets.py` from the package; recorded in `assets/b
 
 * **Hash names.** `/assets/` is served `immutable` for a year, so a changed logo must be a new file name: `<stem>.<first 8 of SHA-256>.<ext>`. The validator checks the name against the content.
 * **One change to the supplied SVGs.** Each carries an 8 KB embedded C2PA `<metadata>` provenance manifest that no browser reads and that no longer verifies once a file is touched; it and its `xmlns:c2pa` declaration are removed. The drawing is not touched. The validator proves that every paint in a shipped SVG is one of the four dark-ground brand colours (the logo must carry all four) and that no script, text, embedded image or link is present. The originals stay in the package. PNGs and the `.ico` are copied byte for byte.
-* **Markup.** Header: `<a class="brand" …><img class="brand-logo" src="/assets/brand/orbgss-logo-dark.9085b960.svg" alt="" width="634" height="108" /></a>` (the link's own `aria-label` is the accessible name, "OrbGSS home" / "OrbGSS ana sayfa", so the image is decorative); footer: the same file with `alt="OrbGSS"`. `.brand-logo` is 30 px high (24 px at ≤ 560 px), which is 176 px and 141 px wide: above the brand's 120 px minimum for the horizontal logo. The validator recomputes the width from the CSS height and fails below 120.
-* **Theme colour.** `<meta name="theme-color" content="#171A1B">` on every page, and `#171A1B` as the manifest's `theme_color` and `background_color`.
-* **Not used:** `final/assets/illustrative-map.jpg` (a generated illustration; the validator fails if it is placed on a page or shipped) and `final/variant-b/`. The light-ground logo is not shipped because the header and footer are always on the dark ground.
+* **Markup.** Header: `<a class="brand" …><img class="brand-logo" src="/assets/brand/orbgss-logo-light.de682b8e.svg" alt="" width="634" height="108" /></a>` (the link's own `aria-label` is the accessible name, "OrbGSS home" / "OrbGSS ana sayfa", so the image is decorative); footer: the same file with `alt="OrbGSS"`. `.brand-logo` is 30 px high (24 px at ≤ 560 px), which is 176 px and 141 px wide: above the brand's 120 px minimum for the horizontal logo. The validator recomputes the width from the CSS height and fails below 120.
+* **Theme colour.** `<meta name="theme-color" content="#FFFFFF">` on every page, and `#FFFFFF` as the manifest's `theme_color` and `background_color` (amended 2026-10-25: the header is white).
+* **Not used:** `final/assets/illustrative-map.jpg` (a generated illustration; the validator fails if it is placed on a page or shipped) and `final/variant-b/`. The dark-ground logo is not shipped since 2026-10-25 because the header and footer are white.
 * **Retired:** `assets/logo.svg` and `assets/mark.svg` (the old text-and-orbit logo and mark) are deleted; the validator fails any reference.
 
 ## 5. The map rule
@@ -96,7 +96,7 @@ The hero video (class C, a rendered orbital sequence) is **render content**, not
 
 ## 7. Residuals the CTO should know
 
-* **Hero seam.** On the homepage the header and the page ground are Graphite `#171A1B`; the first frames of the hero video carry a navy-black `rgb(3,12,22)` at their upper left. Placed side by side the two read as one family but not as one colour, and the left of the hero looks slightly bluer than the header. The overlay shade that already blended the hero text zone was re-derived on Graphite so the join is as soft as CSS can make it. The complete fix is to re-render the hero with a Graphite space background (`hero/config/scene.json`, local Blender production), a separate decision and a separate task: it needs new accepted master frames, the two-tier encode and the shot audit again.
+* **Hero seam (resolved 2026-10-25).** The header is white now, so the near-match described here is a clear boundary and the residual is closed. The original text: on the homepage the header and the page ground were Graphite `#171A1B`; the first frames of the hero video carry a navy-black `rgb(3,12,22)` at their upper left. Placed side by side the two read as one family but not as one colour, and the left of the hero looks slightly bluer than the header. The overlay shade that already blended the hero text zone was re-derived on Graphite so the join is as soft as CSS can make it. The complete fix is to re-render the hero with a Graphite space background (`hero/config/scene.json`, local Blender production), a separate decision and a separate task: it needs new accepted master frames, the two-tier encode and the shot audit again.
 * **Social image.** `og:image` is still the hero poster (`assets/hero/hero-poster-1600.webp`), which has no logo in it. A Graphite OG card with the logo is an option, not part of this task.
 * **Decorative language separator.** The `|` between EN and TR is `aria-hidden` and at the line colour (1.63:1). It is decoration, not information, and unchanged in kind from the Atlas build.
 * **Icon files are the supplied ones.** The 192 and 512 px manifest icons have rounded, transparent corners as delivered; the 180 px touch icon is a full-bleed opaque square. No maskable variant was supplied, so the manifest declares `purpose: any` only (the two PNGs and the SVG favicon).
@@ -105,15 +105,15 @@ The hero video (class C, a rendered orbital sequence) is **render content**, not
 
 `scripts/validate_site.py` (the brand checks are `agate_brand_checks`, the palette checks the Atlas foundation's, now on `AGATE_TOKENS`):
 
-1. every palette token, defined once in `:root`, exactly; the validator recomputes the 14 text/ground contrast pairs against their floors (7:1 for the main roles, 4.5:1 for teal and the paper tones);
+1. every palette token, defined once in `:root`, exactly; the validator recomputes the 19 text/ground contrast pairs against their floors (7:1 for the main roles, 4.5:1 for teal and the paper tones);
 2. no other colour literal in `styles.css`, any `<style>` block or any inline style; no retired token; no gold fill;
 3. `assets/brand/brand.json` records the Agate identity, the approved palette and exactly the seven roles, with source and shipped SHA-256, size and name-by-hash for each; no unrecorded file in `assets/brand/`;
-4. each SVG paints only brand colours (the logo all four) and holds no metadata, script, text, image or link; each PNG is a plain PNG of the right size; `favicon.ico` holds 16, 32 and 48 px;
-5. every page's head carries the favicon links, the touch icon and the Graphite `theme-color`; no page still names the old logo files or the text wordmark; the header and footer brand markup is exactly as in §4; `.brand-logo` never goes under 120 px wide;
+4. each SVG paints only brand colours for its ground (the light-ground logo all four light-background colours) and holds no metadata, script, text, image or link; each PNG is a plain PNG of the right size; `favicon.ico` holds 16, 32 and 48 px;
+5. every page's head carries the favicon links, the touch icon and the white `theme-color`; no page still names the old logo files or the text wordmark; the header and footer brand markup is exactly as in §4; `.brand-logo` never goes under 120 px wide;
 6. `site.webmanifest` icons and colours; `favicon.ico` is in `.vercelignore`; the illustrative map is not placed or shipped;
 7. the locator map follows the map rule.
 
-`scripts/negative_tests_agate_brand.py` breaks each of those in memory (32 cases) and the suites of earlier tasks were updated to the new tokens and files; run them one at a time in a detached worktree (`tasks/MER-279_EVIDENCE.md`).
+`scripts/negative_tests_agate_brand.py` breaks each of those in memory (38 cases) and the suites of earlier tasks were updated to the new tokens and files; run them one at a time in a detached worktree (`tasks/MER-279_EVIDENCE.md`).
 
 ## 9. Handed over, and for the CTO
 
