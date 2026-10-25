@@ -1,6 +1,6 @@
 # MER-242 — Geothermal-page presentation derivatives (ALT-02, priority over relief)
 
-**Status:** `REVIEW_READY` — files and records delivered; independent review and CTO acceptance pending. Not placed on any page, not published.
+**Status:** `CTO_ACCEPTED` (2026-10-25) — files and records delivered and accepted by the CTO; no separate independent review was run. Not placed on any page, not published.
 **Linear:** MER-242. **Owner:** Science (assigned by the CTO to the website workstream, 2026-10-25).
 **Baseline:** `claude/project-thread-osxzu4@5c978427886d1b102c98a95b0c2d4a59e7d6d1e4`.
 **Builder:** `scripts/build_mer242_presentation.py` (reuses the functions of `scripts/build_web005b_presentation.py`). **Record:** `assets/imagery/sources.json` → `mer_242`.
@@ -8,7 +8,7 @@
 ## 0. Özet (CTO için)
 
 * **Ne teslim edildi:** Jeotermal sayfası için iki yeni bilimsel görsel ve Kaynaklar satırı için bir küçük resim. Pl. 06 demir alterasyonu (ALT-02) ve "rölyef üstünde öncelik". İkisi de anasayfadaki MER-151 görselleriyle aynı yönetilen export'tan (`20260917T161155Z-5e7a0e53`), aynı kodla, kayıpsız üretildi. Sayfaya henüz konmadı.
-* **Bilimsel kararlar (senin kabulün gerekiyor):**
+* **Bilimsel kararlar (CTO kabul etti, 2026-10-25: "Görselleri gördüm, onaylıyorum. Bence bir sorun yok. Üçü de uygun görünüyor."):**
   1. ALT-02, ALT-01'in paletini kullanıyor; yazılımda ikisi zaten aynı stil (`alt_batlow_sequential`). Yeni palet seçilmedi.
   2. ALT-02'nin pencere kuralı ALT-01'in aynısı (%2–%98, gama yok).
   3. Rölyef üstü öncelik: öncelik renkleri değişmedi; MER-108'in izin verdiği en düşük opaklık (0.90) ve 3× abartılı nötr gölgeli rölyef. Rölyef en çok skorun boş olduğu dağlık alanlarda, geçerli hücrelerin altında ise hafif görünüyor. Daha güçlü bir rölyef için MER-108 kuralının (opaklık ≥ 0.90, karışım modu yok) gevşetilmesi gerekir; bunu önermiyorum.
@@ -71,7 +71,8 @@ LUT SHA-256: ALT-02 `ed32cf671a87…` (= ALT-01), relief `7babdc574d6d…` (= ho
 | Lossless round trip of every WebP | PASSED |
 | `python scripts/validate_site.py` with the files and the `mer_242` record | PASSED (Windows, LF checkout) |
 | Placement on a page, browser render measurement, EN/TR | NOT RUN — not placed by this task |
-| Independent review, CTO acceptance | NOT RUN — pending |
+| CTO acceptance of the derivatives and of decisions S1–S7 (review sheet `evidence/mer242/review_sheet.webp`, PR #5 at `6818a9e`) | ACCEPTED, 2026-10-25 |
+| Separate independent code review | NOT RUN |
 
 ## 5. To place them (page work, not done here)
 

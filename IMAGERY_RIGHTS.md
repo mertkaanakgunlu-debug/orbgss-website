@@ -230,7 +230,7 @@ derivatives of the governed rasters of the accepted `kizildere_mvp_v2` export `2
 * **Warnings:** each surface carries its mandatory scientific warning as visible EN/TR copy.
 * **Ceiling:** the native 1200 px grid, designed against 600 CSS px. MER-151 permits a 4K presentation derivative, but none is published.
 
-## Class B — MER-242 Geothermal-page presentation derivatives (2026-10-25, pending acceptance)
+## Class B — MER-242 Geothermal-page presentation derivatives (2026-10-25, accepted by the CTO)
 
 Two more surfaces of the same export, for `/solutions/geothermal/`, recorded in `sources.json` → `mer_242` and
 built by `scripts/build_mer242_presentation.py` with the MER-151 pipeline of the homepage build (same functions,

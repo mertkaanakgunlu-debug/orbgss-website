@@ -74,7 +74,7 @@ SCIENCE.update({
     "task": "MER-242 (Science, assigned by the CTO to the website workstream on 2026-10-25)",
     "style_registry": "geothermal-prospectivity@215ef89d794cf6cbf98e94f8fc17184c859ebcd8:"
                       "src/geothermal/workbench/style_registry.py (ALT-01 and ALT-02 -> alt_batlow_sequential)",
-    "acceptance": "pending: independent review and the CTO (MER-242)",
+    "acceptance": "accepted by the CTO on 2026-10-25 (S1-S7 of tasks/MER-242_EVIDENCE.md); no separate independent review was run",
 })
 
 PRIORITY_WARNING = ("AOI-relative experimental screening only. Not probability, reserve/resource estimation, discovery "
