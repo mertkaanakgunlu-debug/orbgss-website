@@ -129,8 +129,10 @@ _CSS_URL_REF = re.compile(r"""url\(\s*["']?([^"')\s]+)["']?\s*\)""")
 # framed as a pilot panel, so there is no #pilot section on the homepage.
 # MER-240: Method (#proof) and Company (#company) moved to /about/; #contact stays as the one
 # Partner line, so existing /#contact links still land.
+# Light theme (2026-10-25): the homepage's data-gap footnote (#structure) is gone with the other explanations; the gap
+# is still published, once, on the Geothermal page (#missing).
 REQUIRED_SECTION_IDS = {
-    "hero", "context", "evidence", "terrain", "thermal", "alteration", "structure", "priority",
+    "hero", "context", "evidence", "terrain", "thermal", "alteration", "priority",
     "solutions", "geothermal", "mining", "marine", "contact",
 }
 RETIRED_HOMEPAGE_SECTION_IDS = {"proof", "company"}
@@ -770,7 +772,7 @@ def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
 AGATE_TOKENS = {
     "--graphite": "#202629", "--mineral": "#69716F", "--teal": "#18777A", "--gold": "#C49A5A",
     "--mist": "#E3E5E4", "--mineral-light": "#B7C0BD", "--teal-light": "#58AEB2", "--gold-light": "#D8B173",
-    "--ground": "#171A1B", "--ground-lift": "#252A2B", "--limestone": "#F6F5F2",
+    "--ground": "#171A1B", "--ground-lift": "#252A2B", "--limestone": "#F6F5F2", "--white": "#FFFFFF",
     "--graphite-soft": "#565D5A", "--gold-ink": "#735525",
     "--rule": "rgba(183,192,189,.22)", "--rule-soft": "rgba(183,192,189,.11)",
     "--rule-paper": "rgba(105,113,111,.30)", "--rule-paper-soft": "rgba(105,113,111,.15)",
@@ -905,6 +907,10 @@ ATLAS_CONTRAST_PAIRS = [
     ("graphite on mist", "--graphite", "--mist", 7.0), ("graphite on limestone", "--graphite", "--limestone", 7.0),
     ("graphite-soft on limestone", "--graphite-soft", "--limestone", 4.5), ("mineral on limestone", "--mineral", "--limestone", 4.5),
     ("teal on limestone", "--teal", "--limestone", 4.5), ("gold-ink on limestone", "--gold-ink", "--limestone", 4.5),
+    # The light header, the footer and the light cards sit on white (the brand token --ogs-bg-surface).
+    ("graphite on white", "--graphite", "--white", 7.0), ("graphite-soft on white", "--graphite-soft", "--white", 4.5),
+    ("mineral on white", "--mineral", "--white", 4.5), ("teal on white", "--teal", "--white", 4.5),
+    ("gold-ink on white", "--gold-ink", "--white", 4.5),
 ]
 
 
@@ -1087,21 +1093,29 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
     def rule(selector: str) -> str:
         return " ".join(body for sel, body in blocks if selector in [s.strip() for s in sel.split(",")])
 
-    for sel in (".kicker", ".text-link", ".scene-label", ".beam-note", ".record-list", ".plate", ".plate-frame", ".plate-cap",
+    for sel in (".kicker", ".text-link", ".scene-label", ".record-list", ".plate", ".plate-frame", ".plate-cap",
                 ".ground", ".ground-orbit", ".ground-lift", ".ground-paper", ".site-header", ".site-footer"):
         if not rule(sel):
             fail(f"styles.css lost the shared component {sel}", errors)
-    if "border-left:2pxsolidvar(--limit-line)" not in rule(".beam-note").replace(" ", ""):
-        fail("the mandatory warning (.beam-note) must keep its 2px gold left rule (border-left:2px solid var(--limit-line))", errors)
+    # The CTO retired the per-layer and per-result warnings (2026-10-25): the gold-ruled note grammar is gone, and with it
+    # the classes. A page that brings one back is a regression, not a style choice.
+    for retired in (".beam-note", ".plate-note", ".warning-label"):
+        if rule(retired):
+            fail(f"styles.css still defines the retired warning component {retired} (the per-layer warnings were removed on request)", errors)
+    for rel, h in sorted(page_html.items()):
+        for cls in re.findall(r'class="([^"]*)"', h):
+            if {"beam-note", "plate-note", "warning-label"} & set(cls.split()):
+                fail(f"{rel}: a page carries a retired warning component ({cls!r}); the warnings were removed on request", errors)
     for sel, body in blocks:
         parts = [s.strip() for s in sel.split(",")]
         if any(p.startswith(".plate") and p not in (".plate-gap", ".plate-pending", ".plate-gap .plate-state", ".plate-pending .plate-state")
                and not p.startswith(".plate-frame .") for p in parts):
             if re.search(r"border|radius|shadow|outline", body) or ":hover" in sel:
                 fail(f"styles.css: {sel} gives a plate chrome (border, radius, shadow, outline or hover); plates have none", errors)
+    # The header and the footer are white (the light theme, 2026-10-25): the approved light-ground logo is drawn for it.
     for ground in (".site-header", ".site-footer"):
-        if "background:var(--ground)" not in rule(ground).replace(" ", ""):
-            fail(f"{ground} must sit on the Graphite ground (--ground)", errors)
+        if "background:var(--white)" not in rule(ground).replace(" ", ""):
+            fail(f"{ground} must sit on white (--white): the approved logo is the light-ground version", errors)
     paper = rule(".ground-paper").replace(" ", "")
     for need in ("--fg:var(--graphite)", "--fg-2:var(--graphite-soft)", "--link:var(--teal)", "--limit:var(--gold-ink)",
                  "--limit-line:var(--gold)", "background:var(--limestone)"):
@@ -1114,17 +1128,83 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
     return {"regions": len(ATLAS_CSS_REGIONS), "fonts_bytes": sum((ROOT / ATLAS_FONT_DIR / f).stat().st_size for f in face_files.values() if (ROOT / ATLAS_FONT_DIR / f).exists())}
 
 
+# --- Light theme and removed explanations (CTO, 2026-10-25) -------------------------------------------------------------
+# The site is a light theme with granite grounds in parts of the content: white header and footer (the approved logo is the
+# light-ground version), Limestone pages, and dark only where a photograph or a coloured result is the point. The public
+# site describes what OrbGSS delivers, not how it gets there: how each layer is used, how the priority is scored, the
+# per-layer and per-result warnings and the in-page section bars were removed. These keys named that copy; none may come back.
+RETIRED_EXPLANATION_KEYS = [
+    "act.context.note", "act.evidence.copy", "act.evidence.terrain.body", "act.evidence.thermal.body", "act.evidence.alteration.body",
+    "story.terrain.note", "act.evidence.thermal.note", "act.evidence.alteration.note", "act.evidence.gap", "act.evidence.shared.frame",
+    "act.priority.meta", "act.priority.note", "act.priority.def.is.term", "act.priority.def.is.copy", "act.priority.def.not.term",
+    "inspect.note", "story.observe.note", "story.evidence.note", "story.priority.note", "story.geothermal.note",
+    "geothermalPage.index.aria", "geothermalPage.glance.copy", "geothermalPage.gap.copy", "geothermalPage.ledger.title",
+    "geothermalPage.ledger.establishes", "geothermalPage.ledger.not", "geothermalPage.ledger.is", "geothermalPage.ledger.for",
+    "geothermalPage.not.probability", "geothermalPage.not.reserve", "geothermalPage.not.discovery", "geothermalPage.not.drilling",
+    "geothermalPage.not.prospectivity", "geothermalPage.not.calibrated", "geothermalPage.not.validation",
+    "solutionsPage.pilotnav.label", "solutionsPage.pilotnav.lead", "solutionsPage.pilotnav.record", "solutionsPage.pilotnav.atlas",
+    "solutionsPage.pilotnav.result", "sourcesPage.index.label",
+]
+# The homepage keeps three dark acts (the cinematic hero, the Kizildere band, the priority result) and three light sections.
+LIGHT_HOME_DARK = ["hero", "context", "priority"]
+LIGHT_HOME_PAPER = ["evidence", "inspect", "solutions"]
+LIGHT_BAR_CLASSES = {"geo-index", "geo-index-list", "page-index", "pilot-index", "index-bar"}
+
+
+def light_theme_checks(errors: list[str], page_html: dict[str, str]) -> None:
+    def bad(msg: str) -> None:
+        fail(f"light theme: {msg}", errors)
+
+    script = (ROOT / "script.js").read_text(encoding="utf-8")
+    for key in RETIRED_EXPLANATION_KEYS:
+        if re.search(r"^\s+'" + re.escape(key) + r"':", script, re.M):
+            bad(f"script.js carries {key!r}, copy that explained how the work is done or warned beside a layer; "
+                f"it was removed on request and may not come back")
+    css = (ROOT / "styles.css").read_text(encoding="utf-8")
+    flat = re.sub(r"\s+", "", atlas_strip_css(css))
+    # The role variables the light scope and the dark scope both define, so a component reads right on either ground.
+    paper = re.search(r"\.ground-paper,\.site-header,\.site-footer\{([^}]*)\}", flat)
+    for need in ("--surface:var(--white)", "--matte:var(--limestone)", "--hair:var(--rule-paper)"):
+        if not paper or need not in paper.group(1):
+            bad(f"the light scope (.ground-paper, header, footer) must carry {need}")
+    dark = re.search(r"\.ground-orbit,\.ground-lift,\.domain-card,\.domain-band\{([^}]*)\}", flat)
+    for need in ("--fg:var(--mist)", "--surface:var(--ground-lift)", "--matte:var(--ground)"):
+        if not dark or need not in dark.group(1):
+            bad(f"the dark scope (.ground-orbit, .ground-lift, the domain bands) must carry {need}")
+    for rel, text in sorted(page_html.items()):
+        dom = build_dom(text)
+        for node in dom.find_all(lambda n: bool(n.classes & LIGHT_BAR_CLASSES)):
+            bad(f"{rel}: an in-page section bar ({sorted(node.classes & LIGHT_BAR_CLASSES)}) is back; the pages are read by scrolling")
+    for rel in ("index.html", "tr/index.html"):
+        if rel not in page_html:
+            continue
+        dom = build_dom(page_html[rel])
+        for sid in LIGHT_HOME_PAPER:
+            sec = next(iter(dom.find_all(lambda n, s=sid: n.tag == "section" and n.attrs.get("id") == s)), None)
+            if sec is None or "ground-paper" not in sec.classes:
+                bad(f"{rel}: #{sid} must be a light section (ground-paper): the homepage needs the same contrast as the other pages")
+        for sid in LIGHT_HOME_DARK:
+            sec = next(iter(dom.find_all(lambda n, s=sid: n.tag == "section" and n.attrs.get("id") == s)), None)
+            if sec is None or "ground-paper" in sec.classes:
+                bad(f"{rel}: #{sid} is a photographic or result act and stays dark (no ground-paper)")
+
+
 # --- MER-279: the Agate brand assets and where the site wears them --------------------------------------------------------
 AGATE_BRAND_DIR = "assets/brand"
-AGATE_BRAND_ROLES = {"logo-dark": ("orbgss-logo-dark", "svg"), "favicon": ("orbgss-favicon", "svg"),
+AGATE_BRAND_ROLES = {"logo-light": ("orbgss-logo-light", "svg"), "favicon": ("orbgss-favicon", "svg"),
                      "apple-touch-icon": ("orbgss-apple-touch-icon", "png"), "icon-192": ("orbgss-icon-192", "png"),
                      "icon-512": ("orbgss-icon-512", "png")}
 AGATE_PNG_SIZES = {"apple-touch-icon": 180, "icon-192": 192, "icon-512": 512}
 # The brand colours as the approved package states them (final/README.md), light and dark-background values.
 AGATE_BRAND_LIGHT = {"graphite": "#202629", "mineral_gray": "#69716F", "agate_teal": "#18777A", "mineral_gold": "#C49A5A"}
 AGATE_BRAND_DARK = {"outer": "#E3E5E4", "mineral_gray": "#B7C0BD", "agate_teal": "#58AEB2", "mineral_gold": "#D8B173"}
-# What a shipped logo or icon may paint: the dark-background brand colours, the Graphite tile, and the black/white a mask needs.
-AGATE_SVG_PAINT_OK = {v.upper() for v in AGATE_BRAND_DARK.values()} | {"#202629", "BLACK", "WHITE", "NONE"}
+# What a shipped logo or icon may paint, by role. The horizontal logo is the light-ground version (the header and the footer
+# are white since the light theme): the four light-background brand colours and the black/white a mask needs. The favicon tile
+# is Graphite with the dark-ground symbol.
+AGATE_SVG_PAINT_OK = {
+    "logo-light": {v.upper() for v in AGATE_BRAND_LIGHT.values()} | {"BLACK", "WHITE", "NONE"},
+    "favicon": {v.upper() for v in AGATE_BRAND_DARK.values()} | {"#202629", "BLACK", "WHITE", "NONE"},
+}
 # The locator map is a class-A illustration: Graphite neutrals of the brand token file plus one brand colour, the gold callout.
 AGATE_MAP_PAINT_OK = {"#121415", "#252A2B", "#2C3233", "#6C7472", "#D8B173"}
 AGATE_TEAL = {"#18777A", "#58AEB2"}
@@ -1190,12 +1270,12 @@ def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str
             if re.search(r"<metadata|c2pa|<script|<text|<image|xlink:href|\shref=", text, re.I):
                 bad(f"{role}: {name} carries metadata, script, text, an embedded image or a link; a logo is outlined paths only")
             paints = agate_svg_paints(text)
-            extra = paints - AGATE_SVG_PAINT_OK
+            extra = paints - AGATE_SVG_PAINT_OK[role]
             if extra:
-                bad(f"{role}: {name} paints {sorted(extra)}, which are not Agate dark-background brand colours")
-            if role == "logo-dark" and not {"#E3E5E4", "#B7C0BD", "#58AEB2", "#D8B173"} <= paints:
-                bad(f"{role}: the logo must carry all four dark-background brand colours (outer, intermediate, teal, gold focal point)")
-            if role == "logo-dark" and f'viewBox="0 0 {AGATE_LOGO_VIEWBOX[0]}' not in text:
+                bad(f"{role}: {name} paints {sorted(extra)}, which are not Agate brand colours for that ground")
+            if role == "logo-light" and not {"#202629", "#69716F", "#18777A", "#C49A5A"} <= paints:
+                bad(f"{role}: the logo must carry all four light-background brand colours (Graphite, Mineral Gray, Agate Teal, Mineral Gold)")
+            if role == "logo-light" and f'viewBox="0 0 {AGATE_LOGO_VIEWBOX[0]}' not in text:
                 bad(f"{role}: the logo's viewBox is not the approved 634 x 108 horizontal lock-up")
         else:
             if data[:8] != b"\x89PNG\r\n\x1a\n" or b"caBX" in data:
@@ -1219,10 +1299,10 @@ def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str
     if (ROOT / AGATE_BRAND_DIR / "illustrative-map.jpg").exists():
         bad("illustrative-map.jpg is a generated illustration and may not be shipped as site imagery")
 
-    logo = "/" + AGATE_BRAND_DIR + "/" + files["logo-dark"].get("file", "?")
+    logo = "/" + AGATE_BRAND_DIR + "/" + files["logo-light"].get("file", "?")
     fav = "/" + AGATE_BRAND_DIR + "/" + files["favicon"].get("file", "?")
     touch = "/" + AGATE_BRAND_DIR + "/" + files["apple-touch-icon"].get("file", "?")
-    ground = AGATE_TOKENS["--ground"].upper()
+    ground = AGATE_TOKENS["--white"].upper()  # the header is white since the light theme: the browser chrome follows it
     for rel, text in sorted(page_html.items()):
         head = text.split("</head>", 1)[0]
         for need in ('<link rel="icon" href="/favicon.ico" sizes="32x32" />',
@@ -1232,7 +1312,7 @@ def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str
                 bad(f"{rel}: the head must carry {need}")
         theme = re.search(r'<meta name="theme-color" content="([^"]+)"', head)
         if not theme or theme.group(1).upper() != ground:
-            bad(f"{rel}: theme-color must be the Graphite ground {ground}")
+            bad(f"{rel}: theme-color must be the white header {ground}")
         if re.search(r"assets/(?:logo|mark)\.svg|brand-wordmark", text):
             bad(f"{rel}: still refers to the retired logo files or the text wordmark")
         home = "/tr/" if rel.startswith("tr/") else "/"
@@ -1263,7 +1343,7 @@ def agate_brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str
     if manifest:
         for key in ("background_color", "theme_color"):
             if str(manifest.get(key, "")).upper() != ground:
-                bad(f"site.webmanifest {key} must be the Graphite ground {ground}")
+                bad(f"site.webmanifest {key} must be the white header {ground}")
         icons = {(i.get("src"), i.get("sizes"), i.get("type")) for i in manifest.get("icons", [])}
         want = {(f"/{AGATE_BRAND_DIR}/{files['icon-192'].get('file')}", "192x192", "image/png"),
                 (f"/{AGATE_BRAND_DIR}/{files['icon-512'].get('file')}", "512x512", "image/png"),
@@ -1301,28 +1381,21 @@ ATLAS_GEOTHERMAL_A1_LAYERS = ("terrain", "thm01", "alt01", "priority")
 ATLAS_GEOTHERMAL_A1_ROUTES = {layer: ("solutions/geothermal",) for layer in ATLAS_GEOTHERMAL_A1_LAYERS}
 # Language-neutral text no dictionary key owns (the scale bar's far end).
 ATLAS_GEOTHERMAL_LOOSE_OK = {"10 km"}
-# The atlas, in reading order: (plate id, state, the warning key it carries, the key naming the layer on the image,
-# the MER-151 layer it shows). One figure of small multiples (A6), six plates, three states.
+# The atlas, in reading order: (plate id, state, the key naming the layer on the image, the MER-151 layer it shows).
+# One figure of small multiples (A6), six plates, three states. A plate carries no warning: the per-layer notes were
+# removed on the CTO's request (2026-10-25), because what a layer is for and is not is the work's own business.
 ATLAS_GEOTHERMAL_PLATES = [
-    ("natural", "evidence", "act.context.note", "scene.kind.naturalColor", None),
-    ("elevation", "evidence", "story.terrain.note", "act.evidence.terrain.name", "terrain"),
-    ("gap", "gap", "geothermalPage.gap.copy", None, None),
-    ("thermal", "evidence", "act.evidence.thermal.note", "act.evidence.thermal.name", "thm01"),
-    ("alteration", "evidence", "act.evidence.alteration.note", "act.evidence.alteration.name", "alt01"),
-    ("iron", "pending", "act.evidence.alteration.note", None, None),
+    ("natural", "evidence", "scene.kind.naturalColor", None),
+    ("elevation", "evidence", "act.evidence.terrain.name", "terrain"),
+    ("gap", "gap", None, None),
+    ("thermal", "evidence", "act.evidence.thermal.name", "thm01"),
+    ("alteration", "evidence", "act.evidence.alteration.name", "alt01"),
+    ("iron", "pending", None, None),
 ]
-# The ledger's "Does not establish" column (A5): the priority warning's own terms, pinned in English.
-ATLAS_GEOTHERMAL_NOT = [
-    ("geothermalPage.not.probability", "Probability"),
-    ("geothermalPage.not.reserve", "Reserve or resource estimation"),
-    ("geothermalPage.not.discovery", "Discovery likelihood"),
-    ("geothermalPage.not.drilling", "Drilling-success likelihood"),
-    ("geothermalPage.not.prospectivity", "Full Prospectivity"),
-    ("geothermalPage.not.calibrated", "A score calibrated across areas"),
-    ("geothermalPage.not.validation", "Field validation"),
-]
-ATLAS_GEOTHERMAL_GROUNDS = {"glance": "ground-paper", "layers": "ground-orbit", "result": "ground-orbit",
-                            "relief": "ground-orbit", "missing": "ground-lift"}
+# The light theme (2026-10-25): the opening, the atlas and the record sit on paper; the priority result and its relief
+# slot keep the dark ground, so the page still turns dark once, where the one coloured figure is.
+ATLAS_GEOTHERMAL_GROUNDS = {"glance": "ground-paper", "layers": "ground-paper", "result": "ground-orbit",
+                            "relief": "ground-orbit", "missing": "ground-paper"}
 ATLAS_GEOTHERMAL_IDS = ["glance", "layers", "natural", "elevation", "gap", "thermal", "alteration", "iron", "result",
                         "outputs", "relief", "missing", "pilot-observe", "pilot-terrain", "pilot-evidence",
                         "pilot-priority", "pilot-geothermal", "pilot-structure"]
@@ -1376,14 +1449,12 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
     for anchor, ground in ATLAS_GEOTHERMAL_GROUNDS.items():
         section = one(dom, lambda n, a=anchor: n.tag == "section" and n.attrs.get("id") == a)
         if section is not None and ground not in classes(section):
-            bad(f"section #{anchor} must sit on {ground} (the Atlas grounds: opening/atlas/result on Orbit, the record and the ledger on paper)")
-    ledger = one(dom, lambda n: n.tag == "section" and "geo-ledger" in classes(n))
-    if ledger is None or "ground-paper" not in classes(ledger):
-        bad("the ledger (Establishes / Does not establish) must be a paper band")
-    index = one(dom, lambda n: n.tag == "nav" and "geo-index-list" in classes(n))
-    targets = [str(a.attrs.get("href")) for a in find(index, lambda n: n.tag == "a")] if index is not None else []
-    if targets != ["#glance", "#layers", "#result", "#missing"]:
-        bad(f"the chapter index links {targets}, expected #glance, #layers, #result, #missing")
+            bad(f"section #{anchor} must sit on {ground} (the light theme: the record, the atlas and the missing index on paper, the result on Orbit)")
+    # No in-page chapter bar and no ledger of what the result does not establish: both were removed on request.
+    if find(dom, lambda n: n.tag == "nav" and "geo-index-list" in classes(n)) or find(dom, lambda n: "geo-index" in classes(n)):
+        bad("the in-page chapter bar is back (nav.geo-index-list); it was removed on request, the page is read by scrolling")
+    if find(dom, lambda n: "geo-ledger" in classes(n) or "geo-ledger-set" in classes(n)):
+        bad("the ledger of what the result does not establish is back (geo-ledger); it was removed on request")
     missing = one(dom, lambda n: "geo-missing-list" in classes(n))
     gaps = [str(a.attrs.get("href")) for a in find(missing, lambda n: n.tag == "a")] if missing is not None else []
     if gaps != ["#gap", "#iron", "#relief"]:
@@ -1401,16 +1472,15 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
     layer_derivs = {key: {str(d["path"]) for d in manifest["web_005b"]["analytical"]["layers"][key]["derivatives"]}
                     | {str(e["path"]) for e in manifest["web_005b"]["analytical"].get("delivery", {}).get("layers", {}).get(key, [])}
                     for key in ATLAS_GEOTHERMAL_A1_LAYERS}
-    for plate, (pid, state, note_key, kind_key, layer) in zip(plates, ATLAS_GEOTHERMAL_PLATES):
+    for plate, (pid, state, kind_key, layer) in zip(plates, ATLAS_GEOTHERMAL_PLATES):
         frame = one(plate, lambda n: "plate-frame" in classes(n))
         cap = one(plate, lambda n: n.tag == "figcaption" and "plate-cap" in classes(n))
         if frame is None or cap is None:
             bad(f"plate #{pid} lost its frame or its caption block")
             continue
         imgs = find(frame, lambda n: n.tag == "img")
-        note = one(cap, lambda n: "beam-note" in classes(n))
-        if note is None or note.attrs.get("data-i18n") != note_key:
-            bad(f"plate #{pid} must carry its mandatory warning ({note_key}) as a visible beam-note")
+        if find(cap, lambda n: classes(n) & {"beam-note", "plate-note", "warning-label"}):
+            bad(f"plate #{pid} carries a warning note under its caption; the per-layer warnings were removed on request")
         if one(cap, lambda n: "plate-no" in classes(n)) is None or one(cap, lambda n: n.tag == "h3" and "plate-name" in classes(n)) is None \
                 or one(cap, lambda n: "plate-role" in classes(n)) is None:
             bad(f"plate #{pid} must show its number, name, and role · source")
@@ -1468,7 +1538,7 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
     if not cap_px or int(cap_px.group(1)) > 600:
         bad("the .plate rule must cap a plate at 600 CSS px (the native 1200 px grid at 2x)")
 
-    # -- 3. the result: the priority plate with its legend and scale, the warning twice, the ledger -------------------
+    # -- 3. the result: the priority plate with its legend and scale; no warning, no ledger -------------------------------
     result = one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "result")
     pri = one(result, lambda n: n.tag == "figure" and "geo-priority" in classes(n)) if result is not None else None
     if pri is None:
@@ -1484,30 +1554,12 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
         if legend is None or one(pri, lambda n: "geo-bar" in classes(n) and n.attrs.get("role") == "img") is None:
             bad("the priority plate must keep its legend ramp and its 10 km scale bar")
     for where, node in (("result", result), ("relief", one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief"))):
-        warn = one(node, lambda n: "beam-note" in classes(n) and n.attrs.get("data-i18n") == "act.priority.note") if node is not None else None
-        if warn is None:
-            bad(f"the {where} block must carry the verbatim priority warning (act.priority.note)")
+        if node is not None and find(node, lambda n: classes(n) & {"beam-note", "plate-note", "warning-label"}):
+            bad(f"the {where} block carries a warning note; the result and its limits warning was removed on request")
     relief = one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief")
     slot = one(relief, lambda n: "plate-pending" in classes(n)) if relief is not None else None
     if slot is None or relief is None or find(relief, lambda n: n.tag == "img"):
         bad("the relief slot is an asset still to be supplied (A2): a pending frame, and no image until MER-242 delivers it")
-    sets = find(dom, lambda n: "geo-ledger-set" in classes(n))
-    if len(sets) != 1:
-        bad("the ledger must be one marked set (div.geo-ledger-set.lead-set)")
-    else:
-        cols = [c for c in sets[0].children if hasattr(c, "attrs")]
-        got_is = [str(li.attrs.get("data-i18n")) for li in find(cols[0], lambda n: n.tag == "li")] if cols else []
-        got_not = [str(li.attrs.get("data-i18n")) for li in find(cols[1], lambda n: n.tag == "li")] if len(cols) > 1 else []
-        if got_is != ["geothermalPage.ledger.is", "geothermalPage.ledger.for"]:
-            bad(f"the ledger's Establishes column holds {got_is}")
-        if got_not != [k for k, _ in ATLAS_GEOTHERMAL_NOT]:
-            bad(f"the ledger's Does not establish column holds {got_not}, expected the seven terms of the priority warning")
-        if len(cols) > 1 and one(cols[1], lambda n: n.tag == "ul" and "beam-note" in classes(n)) is None:
-            bad("the Does not establish list is the warning enumerated; it must carry beam-note (the one place the claim words may appear)")
-    for key, want in ATLAS_GEOTHERMAL_NOT:
-        if dictionary["en"].get(key) != want:
-            bad(f"{key} in the English dictionary is {dictionary['en'].get(key)!r}, not {want!r}")
-
     # -- 4. every Turkish string exists, and every key the page uses is in the Geothermal or shared dictionary -------------
     for key in {str(n.attrs[a]) for n in dom.iter() for a in ("data-i18n", "data-i18n-alt", "data-i18n-aria-label", "data-i18n-content") if n.attrs.get(a)}:
         if key.startswith("geothermalPage.") and (key not in dictionary["en"] or key not in dictionary["tr"]):
@@ -1593,8 +1645,8 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
         if not want <= body.classes:
             fail(f"{rel}: <body> must carry {sorted(want)}; the page's CSS hangs on page-{kind}", errors)
         hero = find(main, lambda n: n.tag == "section" and "page-hero" in n.classes)
-        if hero is None or grounds(hero) - {"ground-orbit"}:
-            fail(f"{rel}: the page opening must sit on Orbit (every page opening does); it carries {sorted(grounds(hero))}", errors)
+        if hero is None or grounds(hero) != {"ground-paper"}:
+            fail(f"{rel}: the page opening must sit on paper (the light theme); it carries {sorted(grounds(hero))}", errors)
         h1 = find(main, lambda n: n.tag == "h1")
         if h1 is None or len(h1.find_all(lambda n: n.tag == "span" and n.attrs.get("data-i18n"))) != 2 \
                 or not find(h1, lambda n: "tone" in n.classes):
@@ -1607,8 +1659,9 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
                      f"thumbnail (class thumb, at most {THUMB_MAX_CSS_PX} x {THUMB_MAX_CSS_PX} CSS px)", errors)
 
         if kind == "solutions":
-            if grounds(main) or main.find_all(lambda n: "ground-paper" in n.classes):
-                fail(f"{rel}: Solutions has no Paper ground; Paper is for reading records", errors)
+            if grounds(main) or main.find_all(lambda n: "ground-orbit" in n.classes or "ground-lift" in n.classes):
+                fail(f"{rel}: Solutions is a light page: the opening, the expansion pair and the footnote sit on paper, and only the "
+                     f"photographic bands (the domain-band scope) are dark", errors)
             rows = [li for li in by_class(main, "domain-index")[0].children if isinstance(li, DomNode)] if by_class(main, "domain-index") else []
             links = [find(li, lambda n: n.tag == "a" and "index-row" in n.classes) for li in rows]
             hrefs = [str(a.attrs.get("href")) if a else None for a in links]
@@ -1629,13 +1682,13 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
             if feature is None or "domain-feature" not in feature.classes or band is None or not find(band, lambda n: n.tag == "img" and "data-lead-visual" in n.attrs):
                 fail(f"{rel}: #geothermal must be the Geothermal band with its lead photograph", errors)
             else:
-                nav = find(feature, lambda n: n.tag == "nav" and "pilot-index" in n.classes)
-                targets = [str(a.attrs.get("href")) for a in nav.find_all(lambda n: n.tag == "a")] if nav else []
-                if targets != [f"{geo_prefix}#glance", f"{geo_prefix}#layers", f"{geo_prefix}#outputs"]:
-                    fail(f"{rel}: the pilot index must link the pilot record, the layer atlas and the result on the Geothermal page; found {targets}", errors)
+                if find(feature, lambda n: n.tag == "nav" and "pilot-index" in n.classes):
+                    fail(f"{rel}: the pilot index bar is back on the Geothermal band; it was removed on request (the band links the page once)", errors)
+                if not find(band, lambda n: n.tag == "a" and str(n.attrs.get("href")) == geo_prefix):
+                    fail(f"{rel}: the Geothermal band must link the Geothermal page ({geo_prefix})", errors)
             pair = find(main, lambda n: n.tag == "section" and "domain-pair" in n.classes)
-            if pair is None or "ground-lift" not in pair.classes or grounds(pair) != {"ground-lift"}:
-                fail(f"{rel}: the Mining and Marine pair must sit on Lift", errors)
+            if pair is None or grounds(pair) != {"ground-paper"}:
+                fail(f"{rel}: the Mining and Marine pair must sit on paper", errors)
             else:
                 panels = by_class(pair, "domain-panel")
                 if [p_.attrs.get("id") for p_ in panels] != ["mining", "marine"]:
@@ -1646,11 +1699,11 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
                 if not (len(siblings) > at + 2 and "page-note" in siblings[at + 1].classes and "page-closing" in siblings[at + 2].classes):
                     fail(f"{rel}: the illustrative footnote (div.page-note) must follow the pair directly, then the closing line; found {names}", errors)
         else:
-            order = [("problem", "ground-orbit"), ("position", "ground-paper"), ("principles", "ground-paper"), ("sources", "ground-lift")]
+            order = [("problem", "ground-orbit"), ("position", "ground-paper"), ("principles", "ground-paper"), ("sources", "ground-paper")]
             for sid, ground in order:
                 sec = find(main, lambda n, s=sid: n.tag == "section" and n.attrs.get("id") == s)
                 if sec is None or grounds(sec) != {ground}:
-                    fail(f"{rel}: #{sid} must sit on {ground[7:].title()} (the About statement and the six principles are Paper, the rest Orbit and Lift)", errors)
+                    fail(f"{rel}: #{sid} must sit on {ground[7:].title()} (the light theme: the problem statement is the one dark band, the rest is paper)", errors)
             principles = find(main, lambda n: n.tag == "ol" and "principle-list" in n.classes)
             items = [c for c in principles.children if isinstance(c, DomNode) and c.tag == "li"] if principles else []
             if len(items) != 6 or any(not find(li, lambda n: n.tag == "h3") or not find(li, lambda n: n.tag == "p") for li in items):
@@ -1682,8 +1735,8 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
                     if float(px) > THUMB_MAX_CSS_PX:
                         fail(f"styles.css atlas:solutions-about: {selector} sizes a thumbnail at {px}px; an index thumbnail is at most {THUMB_MAX_CSS_PX} CSS px (R2)", errors)
     note_rule = re.search(r"\.page-solutions\.page-note\{([^}]*)\}", flat)
-    if not note_rule or "background:var(--ground-lift)" not in note_rule.group(1):
-        fail("styles.css atlas:solutions-about: the footnote (.page-solutions .page-note) must sit on the pair's Lift ground", errors)
+    if not note_rule or "background:var(--limestone)" not in note_rule.group(1):
+        fail("styles.css atlas:solutions-about: the footnote (.page-solutions .page-note) must sit on the pair's paper ground", errors)
 # === /atlas:solutions-about ===
 
 # === atlas:partner-sources ===
@@ -1755,14 +1808,14 @@ def atlas_partner_sources_checks(errors: list[str], page_html: dict[str, str]) -
         if main is None:
             continue
         hero = first_of(main, lambda n: n.tag == "section" and "page-hero" in n.classes)
-        if hero is None or not {"is-split", "ground-orbit"} <= hero.classes:
-            fail(f"MER-278: {rel}: the Partner opening must be a page-hero is-split on Orbit (ground-orbit)", errors)
+        if hero is None or not {"is-split", "ground-paper"} <= hero.classes:
+            fail(f"MER-278: {rel}: the Partner opening must be a page-hero is-split on paper (ground-paper)", errors)
         routes = first_of(main, lambda n: n.tag == "section" and n.attrs.get("id") == "routes")
         if routes is None or "ground-orbit" not in routes.classes:
             fail(f"MER-278: {rel}: the conversations (#routes) must sit on Orbit (ground-orbit)", errors)
-        if main.find_all(lambda n: "ground-paper" in n.classes or "ground-lift" in n.classes):
-            fail(f"MER-278: {rel}: the Partner page stays on Orbit from its opening to its conversations; "
-                 f"no paper or Lift band", errors)
+        if main.find_all(lambda n: "ground-lift" in n.classes):
+            fail(f"MER-278: {rel}: the Partner page is a light opening and the dark conversations; "
+                 f"no Lift band", errors)
         title = first_of(main, lambda n: n.tag == "h1")
         parts = [c for c in (title.children if title else []) if isinstance(c, DomNode)]
         if [(c.tag, sorted(c.classes), c.attrs.get("data-i18n")) for c in parts] != [
@@ -1902,6 +1955,7 @@ def main() -> int:
     atlas_geothermal_checks(errors, atlas_pages)
     atlas_solutions_about_checks(errors, atlas_pages)
     atlas_partner_sources_checks(errors, atlas_pages)
+    light_theme_checks(errors, atlas_pages)
 
     html = HTML.read_text(encoding="utf-8")
     parser = SiteParser()
@@ -2388,13 +2442,15 @@ def main() -> int:
              f"geo_web_002.assets or web_005b.analytical: {sorted(unrecorded_site_wide)}", errors)
 
     # ------------------------------------------------------------------
-    # Mandatory scientific warnings must be visible on EVERY route that shows the asset, in both
-    # languages, and in the static HTML as well as the dictionary — so they survive with
-    # JavaScript disabled and cannot be quietly dropped by a later copy edit. Before WEB-005 this
-    # was an index.html check; the homepage is no longer the only place these assets appear, and
-    # an asset shown on /pilot/ with its warning left behind on the homepage would be worse than
-    # the original gap.
+    # The public warnings are retired (CTO, 2026-10-25; sources.json public_warnings). Before that, a mandatory
+    # warning had to be visible on every route that showed its asset, in both languages. Now the records keep the
+    # wording of record for a reinstatement, and the check runs the other way: none of those i18n keys may be in the
+    # dictionary or rendered on any page, so a retired warning cannot drift back in with a later copy edit.
     # ------------------------------------------------------------------
+    retired_warnings = manifest.get("public_warnings", {})
+    if retired_warnings.get("status") != "retired" or retired_warnings.get("decided") != "CTO, 2026-10-25":
+        fail("sources.json must carry public_warnings with status 'retired' decided by the CTO on 2026-10-25 "
+             "(the per-layer warnings were removed on request)", errors)
     warning_log: list[tuple[str, str, dict, list[str]]] = []
 
     def check_warning_coverage(label: str, aid: str, coverage: dict, where: list[str]) -> None:
@@ -2404,31 +2460,20 @@ def main() -> int:
             fail(f"{label} {aid!r} visible_warning has no i18n_key", errors)
             return
         for lang in ("en", "tr"):
-            value = dictionary_value(lang, key)
-            if value is None:
-                fail(f"warning key {key!r} is missing from the {lang!r} dictionary", errors)
-                continue
-            for term in coverage.get(f"required_terms_{lang}", []):
-                if term not in value:
-                    fail(f"{label} {aid!r}: {lang} warning lost required wording {term!r}", errors)
-        for route in where:
-            static_text = route_parsers[route].i18n_text.get(key)
-            if static_text is None:
-                fail(f"{label} {aid!r} is shown on {ROUTES[route]} but its warning key {key!r} "
-                     f"is not rendered there", errors)
-                continue
-            for term in coverage.get("required_terms_en", []):
-                if term not in static_text:
-                    fail(f"{label} {aid!r}: static HTML warning under {key!r} lost required "
-                         f"wording {term!r} on {ROUTES[route]} (no-JS readers would not see it)",
-                         errors)
+            if dictionary_value(lang, key) is not None:
+                fail(f"{label} {aid!r}: the retired warning key {key!r} is back in the {lang!r} dictionary "
+                     f"(the public warnings were removed on request; sources.json public_warnings)", errors)
+        for route, route_parser in route_parsers.items():
+            if key in route_parser.i18n_text:
+                fail(f"{label} {aid!r}: the retired warning key {key!r} is rendered on {ROUTES[route]} "
+                     f"(the public warnings were removed on request)", errors)
 
     for asset in proof_assets:
         aid = asset.get("id", "<unknown>")
         coverage = asset.get("visible_warning")
         if not coverage:
-            fail(f"proof asset {aid!r} has no visible_warning record; every mandatory warning "
-                 f"must be bound to visible page copy", errors)
+            fail(f"proof asset {aid!r} has no visible_warning record; the wording of record stays in the "
+                 f"manifest even though it is not shown", errors)
             continue
         own = {str(d.get("path", "")) for d in asset.get("derivatives", [])}
         shown_on = [r for r, rp in route_parsers.items() if science_srcs(rp) & own]
@@ -4242,10 +4287,8 @@ def main() -> int:
     section_ids = [s.attrs.get("id") for s in src_dom.find_all(lambda n: n.tag == "section" and "chapter" in n.classes)]
     if section_ids != ["data", "images", "references", "licences"]:
         fail(f"MER-255: /sources/ sections are {section_ids}, expected data, images, references, licences", errors)
-    index_nav = first(src_dom, lambda n: n.tag == "nav" and "page-index" in n.classes)
-    index_targets = [a.attrs.get("href") for a in index_nav.find_all(lambda n: n.tag == "a")] if index_nav else []
-    if index_targets != ["#data", "#images", "#references", "#licences"]:
-        fail(f"MER-255: the /sources/ index links {index_targets}", errors)
+    if first(src_dom, lambda n: n.tag == "nav" and "page-index" in n.classes):
+        fail("MER-255: the /sources/ in-page index bar is back (nav.page-index); it was removed on request, the page is read by scrolling", errors)
     page_ids = {str(n.attrs.get("id")) for n in src_dom.iter() if n.attrs.get("id")}
     for a in src_dom.find_all(lambda n: n.tag == "a" and str(n.attrs.get("href", "")).startswith("#")):
         if str(a.attrs["href"])[1:] not in page_ids:
@@ -4560,21 +4603,13 @@ def main() -> int:
                 fail(f"MER-241: {label}: {href!r} leaves the Turkish site (only the EN | TR switch may "
                      f"link to the English page)", errors)
 
-    # Mandatory scientific warnings, in Turkish, wherever the English page shows them (R6).
+    # The retired warnings stay retired in Turkish too: none of their keys is rendered on a /tr/ page.
     for wlabel, aid, coverage, where in warning_log:
         key = str(coverage.get("i18n_key", ""))
-        for route in where:
-            if route not in tr_parsers:
-                continue
-            shown = tr_parsers[route].i18n_text.get(key)
-            if shown is None:
-                fail(f"MER-241: {wlabel} {aid!r}: its mandatory warning {key!r} is not rendered on "
-                     f"{TR_FILES[route]} (the English page {ROUTES[route]} shows it)", errors)
-                continue
-            for term in coverage.get("required_terms_tr", []):
-                if term not in shown:
-                    fail(f"MER-241: {wlabel} {aid!r}: the Turkish warning on {TR_FILES[route]} lost "
-                         f"required wording {term!r}", errors)
+        for route, tr_parser in tr_parsers.items():
+            if key in tr_parser.i18n_text:
+                fail(f"MER-241: {wlabel} {aid!r}: the retired warning key {key!r} is rendered on "
+                     f"{TR_FILES[route]} (the public warnings were removed on request)", errors)
 
     # -- 5. sitemap alternates ------------------------------------------------------------------
     if sitemap_path.exists():

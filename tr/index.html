@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title data-i18n="meta.title">OrbGSS — Coğrafi Zekâ</title>
   <meta name="description" data-i18n-content="meta.description" content="OrbGSS, yer gözlem ve yer bilimi verilerini kanıta dayalı mekânsal önceliklere dönüştürerek ekiplerin sırada nerenin inceleneceğine karar vermesine yardımcı olur." />
-  <meta name="theme-color" content="#171A1B" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <meta name="color-scheme" content="light" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <link rel="canonical" href="https://orbgss.com/tr/" />
   <link rel="alternate" hreflang="en" href="https://orbgss.com/" />
@@ -67,7 +67,7 @@
 
   <header class="site-header" id="top">
     <a href="/tr/" class="brand" aria-label="OrbGSS ana sayfa" data-i18n-aria-label="nav.brand">
-      <img class="brand-logo" src="/assets/brand/orbgss-logo-dark.9085b960.svg" alt="" width="634" height="108" />
+      <img class="brand-logo" src="/assets/brand/orbgss-logo-light.de682b8e.svg" alt="" width="634" height="108" />
     </a>
 
     <button class="menu-toggle" type="button" aria-label="Menüyü aç" data-i18n-aria-label="nav.open" aria-controls="primary-nav" aria-expanded="false">
@@ -311,8 +311,7 @@
         </div>
         <div class="place-copy">
           <h2 id="context-title" data-i18n="act.context.title">Herhangi bir analizden önce, gerçek bir alan.</h2>
-          <p class="act-statement" data-i18n="act.context.copy">Kızıldere, Denizli, Türkiye’deki Büyük Menderes grabeninde yer alır. Bu, alanın Landsat 8 tarafından görüntülenmiş hâlidir — tek bir katman türetilmeden önce, pilot çalışmanın tamamının üzerine oturduğu zemin.</p>
-          <p class="act-note beam-note" data-i18n="act.context.note">Yalnızca Yer gözlem bağlamı. Bu, alanın doğal renkli fotografik bileşimidir; analitik kanıt değildir, skorlanan bir girdi değildir ve herhangi bir kanıt katmanının görüntüleme tarihi değildir.</p>
+          <p class="act-statement" data-i18n="act.context.copy">Kızıldere, Denizli, Türkiye’deki Büyük Menderes grabeninde yer alır; Landsat 8’in görüntülediği hâliyle.</p>
           <div class="place-spec">
             <p class="act-meta mono" data-i18n="act.context.meta">Landsat 8 OLI · 2025-05-05 · 30 m · doğal renk</p>
           </div>
@@ -356,11 +355,10 @@
       economize on words. The per-plate metadata strip is gone because it repeated, word for word,
       the extent/grid/projection line the reading column already carries.
     -->
-    <section id="evidence" class="sec sec-evidence" aria-labelledby="evidence-title" data-act="3">
+    <section id="evidence" class="sec sec-evidence ground-paper" aria-labelledby="evidence-title" data-act="3">
       <div class="shell">
         <div class="sec-head">
           <h2 id="evidence-title" data-i18n="act.evidence.title">Aynı zemin üzerinde üç katman.</h2>
-          <p class="act-statement" data-i18n="act.evidence.copy">Çerçeve hiç değişmiyor. Aynı zemin, aynı ızgara, aynı projeksiyon — yalnızca içindeki kanıt değişiyor; katmanları karşılaştırılabilir kılan da bu.</p>
         </div>
 
         <div class="evidence-switch" role="group" aria-label="Kanıt katmanı" data-i18n-aria-label="evidence.switchLabel">
@@ -439,38 +437,20 @@
               <div class="evidence-read" data-layer="terrain">
                 <span class="evidence-role mono" data-i18n="act.evidence.terrain.role">Bağlam</span>
                 <h3 class="evidence-label" data-i18n="act.evidence.terrain.name">Yükselti</h3>
-                <p class="evidence-body" data-i18n="act.evidence.terrain.body">Zeminin biçimi — vadi tabanı, onu sınırlayan sırtlar ve kanıt katmanlarının üzerine oturduğu yüzey.</p>
-                <p class="evidence-note beam-note" data-i18n="story.terrain.note">Yalnızca bağlam ve görüntüleme amaçlıdır. Topoğrafya skorlanan bir öngörücü değildir ve evrensel bir jeotermal uygunluk yönü taşımaz.</p>
                 <p class="act-meta mono" data-i18n="act.evidence.terrain.meta">NASADEM yükselti verisinden</p>
               </div>
               <div class="evidence-read" data-layer="thermal">
                 <span class="evidence-role mono" data-i18n="act.evidence.thermal.role">Kanıt</span>
                 <h3 class="evidence-label" data-i18n="act.evidence.thermal.name">Termal anomali</h3>
-                <p class="evidence-body" data-i18n="act.evidence.thermal.body">Yüzeyin, alanın geri kalanına göre daha sıcak ya da daha soğuk olduğu yerler.</p>
-                <p class="evidence-note beam-note" data-i18n="act.evidence.thermal.note">Yalnızca kanıt katmanı. Jeotermal olasılık, rezerv, keşif ya da sondaj başarısı kanıtı olarak tanımlanmamalıdır.</p>
                 <p class="act-meta mono" data-i18n="act.evidence.thermal.meta">Landsat termal bantlarından</p>
               </div>
               <div class="evidence-read" data-layer="alteration">
                 <span class="evidence-role mono" data-i18n="act.evidence.alteration.role">Kanıt</span>
                 <h3 class="evidence-label" data-i18n="act.evidence.alteration.name">Alterasyon işareti</h3>
-                <p class="evidence-body" data-i18n="act.evidence.alteration.body">Yüzeyin, kimyasal olarak değişime uğramış kayaçların yansıttığı biçimde ışık yansıttığı yerler.</p>
-                <p class="evidence-note beam-note" data-i18n="act.evidence.alteration.note">Geniş bantlı Sentinel-2 spektral alterasyon vekili; mineral tanımlaması değildir ve hidrotermal alterasyon kanıtı değildir.</p>
                 <p class="act-meta mono" data-i18n="act.evidence.alteration.meta">Sentinel-2 yansıtımından</p>
               </div>
-              <!--
-                R15: the subordinate data-gap footnote moved up here, to the foot of the reading
-                column, and the one frame line sits under it. It used to run full width below the
-                stage while the reading column ran out a third of the way down the map, so the
-                section had empty ground on the right AND a loose line underneath. Same copy, same
-                subordinate weight, same anchor id — it now closes the column it belongs to.
-              -->
-              <div class="evidence-foot" id="structure">
-                <p class="evidence-gap">
-                  <span class="mono" data-i18n="act.evidence.gapLabel">Veri boşluğu</span>
-                  <span data-i18n="act.evidence.gap">Yapısal ve jeolojik kanıt burada yorumu keskinleştirirdi. OrbGSS bu temel sürüm için kamuya açık kullanıma uygun bir fay veya litoloji katmanına sahip değildir; bu nedenle boşluk doldurulmak yerine açıkça belirtilir — isteğe bağlı destektir ve öncelik sonucunu değiştirmez.</span>
-                </p>
+              <div class="evidence-foot">
                 <a class="text-link" href="/tr/cozumler/jeotermal/#layers"><span data-i18n="act.evidence.deeper">Tüm katmanları görün</span> <span aria-hidden="true">→</span></a>
-                <p class="act-meta mono" data-i18n="act.evidence.shared.frame">Tek çerçeve · 36 × 36 km · 30 m ızgara · EPSG:32635</p>
               </div>
             </div>
           </div>
@@ -496,7 +476,7 @@
     <section id="priority" class="sec sec-result" aria-labelledby="priority-title" data-act="4">
       <div class="shell">
         <h2 id="priority-title" data-i18n="act.priority.title">Önce nereye bakmalı.</h2>
-        <p class="result-lead" data-i18n="act.priority.copy">Termal ve alterasyon kanıtı, ilgi alanı genelinde 0–100 aralığında tek bir sıralama yüzeyinde birleştirilir; böylece bir ekip zemini tahmin etmek yerine sıralayabilir. Yüksek değerler, bu alan içinde ve bu temel sürüm için “önce şuraya bak” anlamına gelir.</p>
+        <p class="result-lead" data-i18n="act.priority.copy">İlgi alanı genelinde tek bir sıralama; böylece bir ekip araziyi tahmin etmek yerine sıralayabilir.</p>
 
         <figure class="priority-stage" data-visual-slot="priority" data-visual-status="product-proof" data-reveal>
           <div class="priority-frame">
@@ -530,15 +510,10 @@
             <span class="scene-kind" data-i18n="label.priority">Uzaktan Algılama Göreli Önceliği — Deneysel Temel</span>
             <span data-i18n="scene.priority.place">Kızıldere — Büyük Menderes grabeni, Denizli, Türkiye</span>
             <span data-i18n="scene.priority.coords">37.9794° K, 28.7907° D</span>
-            <span data-i18n="act.priority.meta">mvp_remote_sensing_priority_v1 · EPSG:32635 · 30 m · 36 × 36 km</span>
           </figcaption>
         </figure>
 
         <dl class="result-defs">
-          <div>
-            <dt data-i18n="act.priority.def.is.term">Ne olduğu</dt>
-            <dd data-i18n="act.priority.def.is.copy">Yukarıdaki haritalanmış kanıt katmanlarından türetilen, alan içi 0-100 zemin sıralaması.</dd>
-          </div>
           <div>
             <dt data-i18n="act.priority.def.why.term">Neden önemli</dt>
             <dd data-i18n="act.priority.def.why.copy">36 × 36 km'lik bir alanı, kimse oraya gitmeden önce sıralı bir kısa listeye dönüştürür.</dd>
@@ -546,10 +521,6 @@
           <div>
             <dt data-i18n="act.priority.def.for.term">Ne için</dt>
             <dd data-i18n="act.priority.def.for.copy">Kanıtı ve kökeni ekli hâlde, sırada nerenin inceleneceğine karar vermek.</dd>
-          </div>
-          <div class="is-not">
-            <dt data-i18n="act.priority.def.not.term">Ne olmadığı</dt>
-            <dd class="beam-note" data-i18n="act.priority.note">Yalnızca alan içi deneysel ön eleme. Olasılık, rezerv veya kaynak tahmini, keşif olasılığı, sondaj başarısı olasılığı, Tam Prospektivite ya da alanlar arası kalibre edilmiş bir skor değildir.</dd>
           </div>
         </dl>
 
@@ -579,12 +550,12 @@
       No JavaScript: the wipe rests at a static 50/50 split and still reads. With JavaScript the
       range input drives it; the whole frame is the drag target, so the touch area is the figure.
     -->
-    <section id="inspect" class="sec sec-inspect" aria-labelledby="inspect-title">
+    <section id="inspect" class="sec sec-inspect ground-paper" aria-labelledby="inspect-title">
       <div class="shell">
         <div class="sec-head">
           <p class="kicker mono" data-i18n="inspect.kicker">İnceleme aracı</p>
           <h2 id="inspect-title" data-i18n="inspect.title">Bir katmanı fotoğrafın karşısına koyun.</h2>
-          <p class="act-statement" data-i18n="inspect.copy">İlgi alanının doğal renkli görünümü ile aynı zemin üzerindeki bir türetilmiş katman arasında gezinin. Bu bir bakma yöntemidir, yayımlanmış bir şekil değildir — ve iki taraf da tam olarak yukarıda yayımlanan dosyalardır.</p>
+          <p class="act-statement" data-i18n="inspect.copy">İlgi alanının doğal renkli görünümü ile aynı zemin üzerindeki bir türetilmiş katman arasında gezinin.</p>
         </div>
 
         <div class="inspect-switch">
@@ -663,7 +634,6 @@
               </p>
             </div>
 
-            <p class="beam-note inspect-note" data-i18n="inspect.note">Görsel bir inceleme aracıdır, yayımlanmış bir rapor şekli değildir. Her iki taraf da yukarıda yayımlanan dosyalardır; aynı 36 × 36 km çerçeve ve aynı 30 m ızgara üzerindedir ve bu geçiş hiçbirini değiştirmez. Yayımlanmış şekiller yukarıdakilerdir.</p>
           </figure>
         </div>
       </div>
@@ -695,11 +665,11 @@
       aria-labelledby points at the card title, so the accessible name is the domain name rather
       than the whole card read aloud. Navigation needs no JavaScript.
     -->
-    <section id="solutions" class="sec sec-domains" aria-labelledby="solutions-title">
+    <section id="solutions" class="sec sec-domains ground-paper" aria-labelledby="solutions-title">
       <div class="shell">
         <div class="sec-head">
           <h2 id="solutions-title" data-i18n="solutions.title">Tek bir iş akışı, kanıtın desteklediği her yerde uygulanır.</h2>
-          <p class="act-statement" data-i18n="solutions.copy">Aynı kanıttan önceliğe iş akışı, farklı zeminler üzerinde okunur. Her alan bulunduğu noktayı açıkça belirtir; geliştirme aşamasındaki hiçbir şey tamamlanmış ürün olarak sunulmaz.</p>
+          <p class="act-statement" data-i18n="solutions.copy">Her alan bulunduğu noktayı açıkça belirtir; geliştirme aşamasındaki hiçbir şey tamamlanmış ürün olarak sunulmaz.</p>
         </div>
 
         <ul class="domains" aria-label="Çözüm alanları" data-i18n-aria-label="solutions.listLabel">
@@ -786,7 +756,7 @@
 
   <footer class="site-footer">
     <div class="footer-brand">
-      <img src="/assets/brand/orbgss-logo-dark.9085b960.svg" alt="OrbGSS" width="634" height="108" />
+      <img src="/assets/brand/orbgss-logo-light.de682b8e.svg" alt="OrbGSS" width="634" height="108" />
     </div>
     <div class="footer-right">
       <nav aria-label="Alt bilgi gezinmesi" data-i18n-aria-label="nav.footer">

@@ -10,7 +10,7 @@ every file written here:
     python scripts/build_brand_assets.py --source <unpacked final/ folder> --check   # compare with the record
 
 What it does, and nothing more:
-  * copies the horizontal logo for dark grounds, the favicon tile, the 180 px touch icon and the 192 / 512 px
+  * copies the horizontal logo for light grounds, the favicon tile, the 180 px touch icon and the 192 / 512 px
     manifest icons into assets/brand/, named <stem>.<first 8 of SHA-256>.<ext> because /assets/ is served
     immutable for a year (a changed logo must be a new file name);
   * copies favicon.ico to the site root byte for byte (browsers ask for /favicon.ico by that path);
@@ -37,8 +37,8 @@ RECORD = OUT / "brand.json"
 
 # role -> (source path inside final/, shipped stem, extension, what it is for)
 FILES = {
-    "logo-dark": ("logo/orbgss-logo-dark.svg", "orbgss-logo-dark", "svg",
-                  "horizontal logo for dark grounds: header and footer on every page"),
+    "logo-light": ("logo/orbgss-logo-light.svg", "orbgss-logo-light", "svg",
+                   "horizontal logo for light grounds: header and footer on every page"),
     "favicon": ("favicon/favicon.svg", "orbgss-favicon", "svg",
                 "favicon tile, Graphite with the dark-ground symbol (32 px design size)"),
     "apple-touch-icon": ("favicon/apple-touch-icon.png", "orbgss-apple-touch-icon", "png",

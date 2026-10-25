@@ -4,8 +4,8 @@
   "description": "Actionable geospatial intelligence from Earth observation and geoscience data.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#171A1B",
-  "theme_color": "#171A1B",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
   "icons": [
     {
       "src": "/assets/brand/orbgss-icon-192.dbdf27c7.png",
