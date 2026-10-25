@@ -1714,8 +1714,8 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
     scientific = mer.get("scientific_master") or {}
     if (scientific.get("crs"), scientific.get("width"), scientific.get("height"), scientific.get("gsd_m")) != ("EPSG:32635", 1200, 1200, 30.0):
         bad("mer_242.scientific_master must stay the 1200 x 1200, 30 m, EPSG:32635 grid")
-    if "pending" not in str((mer.get("science") or {}).get("acceptance", "")).lower():
-        bad("mer_242.science.acceptance must say the Science decisions are pending until the CTO accepts them")
+    if "cto" not in str((mer.get("science") or {}).get("acceptance", "")).lower():
+        bad("mer_242.science.acceptance must record who accepted the Science decisions (the CTO), or that they are pending the CTO")
     for banned in ("ai_super_resolution", "scalar_space_interpolation", "mask dilation/erosion/fill"):
         if banned not in (mer.get("not_used") or []):
             bad(f"mer_242.not_used must keep {banned!r}")
@@ -4217,6 +4217,25 @@ def main() -> int:
             if bad:
                 fail(f"MER-255: {sel} declares {sorted(set(bad))}; the expansion-direction figures are captioned "
                      f"photographs, not cards", errors)
+    # The "Active" status label sits on a photograph (the homepage lead card, the Geothermal band of /solutions/). Violet
+    # light type reaches 4.5:1 only over a ground darker than a photograph's lightest pixels, and the gradient shade alone
+    # left 3.1-3.4:1 over the Yellowstone snow (measured in a browser), so a feathered Night scrim sits under the label
+    # itself. The CSS pins it: at least 95 % Night at its core, and the worst case (a white photograph pixel under it)
+    # must still give 4.5:1 against Violet light.
+    scrim_rule = re.search(r"\.domain-card\.domain-status\.is-active::before,\.domain-band\.domain-status\.is-active::before\{([^}]*)\}", css_flat)
+    scrim_host = re.search(r"\.domain-card\.domain-status\.is-active,\.domain-band\.domain-status\.is-active\{([^}]*)\}", css_flat)
+    if not scrim_rule or not scrim_host:
+        fail("the Active status label lost its scrim (.domain-card / .domain-band .domain-status.is-active::before): over a photograph it falls below 4.5:1", errors)
+    else:
+        scrim_alphas = [float(a) for a in re.findall(r"rgba\(22,10,25,(\.\d+|\d(?:\.\d+)?)\)", scrim_rule.group(1))]
+        core = max(scrim_alphas, default=0.0)
+        blended = tuple(round(core * night + (1 - core) * 255) for night in (22, 10, 25))
+        scrim_ratio = (atlas_luminance(atlas_hex_rgb(BRAND_TOKENS["--violet-light"])) + 0.05) / (atlas_luminance(blended) + 0.05)
+        if "z-index:-1" not in scrim_rule.group(1) or "radial-gradient" not in scrim_rule.group(1) or core < 0.95 or scrim_ratio < 4.5:
+            fail(f"the Active status label's scrim must be a radial Night gradient behind the text (z-index:-1) of at least 95 % at its core; "
+                 f"it gives {scrim_ratio:.2f}:1 over a white pixel, the bound is 4.5:1", errors)
+        if "isolation:isolate" not in scrim_host.group(1) or "width:fit-content" not in scrim_host.group(1):
+            fail("the Active status label must be isolation:isolate and width:fit-content so its scrim stays behind the text and hugs it", errors)
     sol_dom = doms.get("solutions")
     if sol_dom is not None:
         pair = first(sol_dom, lambda n: "pair-grid" in n.classes)
@@ -4659,9 +4678,9 @@ def main() -> int:
         if first(row, lambda n: "credit-sources" in n.classes) is None or \
                 first(row, lambda n: n.tag == "a" and str(n.attrs.get("href", "")).startswith("#src-")) is None:
             fail("MER-255: an image credit on /sources/ names no source record", errors)
-    if len(thumb_rows) < 9:
-        fail(f"MER-255: /sources/ lists {len(thumb_rows)} thumbnailed image credits, expected at least 9 "
-             f"(hero, Kızıldere, Yellowstone, Chuquicamata, Ili, Death Valley, Aluto, Büyük Menderes, locator)", errors)
+    if len(thumb_rows) < 10:
+        fail(f"MER-255: /sources/ lists {len(thumb_rows)} thumbnailed image credits, expected at least 10 "
+             f"(hero, Kızıldere, Yellowstone, Chuquicamata, Ili, Death Valley, Aluto, Büyük Menderes, locator, evidence and priority maps)", errors)
     # The licence: the standard MIT text, in English in both languages, with the copyright line.
     MIT_BODY = (
         'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and '

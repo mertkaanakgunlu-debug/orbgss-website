@@ -27,7 +27,7 @@ suite.case("the atlas goes back to a dark ground", PAGE, swap('<section class="g
 suite.case("the missing index goes back to Lift", PAGE, swap('<section class="ground ground-paper" id="missing"', '<section class="ground ground-lift" id="missing"'), "section #missing must sit on ground-paper")
 suite.case("the ledger of what the result does not establish returns", PAGE, swap('<section class="ground ground-paper" id="missing"', '<section class="ground ground-paper geo-ledger"></section>\n    <section class="ground ground-paper" id="missing"'), "the ledger of what the result does not establish is back")
 suite.case("the in-page chapter bar returns", PAGE, swap('<section class="ground ground-paper" id="glance"', '<nav class="lead-set geo-index-list"></nav>\n    <section class="ground ground-paper" id="glance"'), "the in-page chapter bar is back")
-suite.case("the missing index loses a link", PAGE, regex(r'(<div class="geo-missing-list lead-set".*?)href="#iron"', r'\g<1>href="#irons"', DOT), "the index of what is missing links")
+suite.case("the missing index loses a link", PAGE, regex(r'(<div class="geo-missing-list lead-set".*?)href="#gap"', r'\g<1>href="#gaps"', DOT), "the index of what is missing links")
 suite.case("prototype wording comes back", PAGE, swap("<body class=\"interior page-geothermal\">", "<body class=\"interior page-geothermal\"><!-- prototype -->"), "prototype wording is back")
 
 # ---- the atlas -----------------------------------------------------------------------------------
@@ -41,8 +41,8 @@ suite.case("an analytical plate stops saying product-proof", PAGE, swap('data-vi
 suite.case("a plate shows another layer's derivative", PAGE, regex(r'(id="alteration">.*?)alt01-900\.webp', r"\g<1>priority-900.webp", DOT), "which are not recorded MER-151 derivatives of alt01")
 suite.case("a plate drops the 600/900/1200 ladder", PAGE, regex(r'(id="thermal">.*?)srcset="[^"]+"', r'\g<1>', DOT), "plate #thermal must offer the 600, 900 and 1200 px derivatives")
 suite.case("the data-gap plate is filled with an image", PAGE, swap('<div class="plate-gap">', '<img src="/assets/proof/web005b/thm01-600.webp" alt="x" width="1200" height="1200"><div class="plate-gap">'), "plate #gap is the data gap")
-suite.case("the pending plate is filled with an image", PAGE, swap('<div class="plate-pending">', '<img src="/assets/proof/web005b/alt01-600.webp" alt="x" width="1200" height="1200"><div class="plate-pending">'), "plate #iron is an asset still to be supplied")
-suite.case("the pending plate stops saying so", PAGE, regex(r'(id="iron">.*?)geothermalPage\.layer\.pending', r"\g<1>geothermalPage.relief.state", DOT), "must say 'Accepted, not shown yet'")
+suite.case("the iron plate shows another layer's derivative", PAGE, swap('/assets/proof/mer242/alt02-9266ceca-900.webp', '/assets/proof/web005b/priority-900.webp'), "which are not recorded MER-151 derivatives of alt02")
+suite.case("the iron plate's caption loses its kind line", PAGE, swap('data-i18n="geothermalPage.kind.iron"', 'data-i18n="act.evidence.alteration.name"'), "plate #iron: the bottom-right caption must read")
 suite.case("a foreign governed raster appears", PAGE, swap('<div class="plate-gap">', '<img src="/assets/proof/final/anything.webp" alt="" width="10" height="10"><div class="plate-gap">'), "a governed raster that is not one of the four MER-151 layers")
 
 # ---- nothing touches a governed raster -----------------------------------------------------------
@@ -57,7 +57,10 @@ suite.case("the priority caption loses the accepted label", PAGE, regex(r'(<figu
 suite.case("the priority plate loses its scale bar", PAGE, swap('<div class="geo-bar" role="img"', '<div class="geo-bar"'), "must keep its legend ramp and its 10 km scale bar")
 suite.case("the result carries a warning note again", PAGE, regex(r'(id="result"[^>]*>)', r'\g<1><p class="beam-note">x</p>', DOT), "the result block carries a warning note")
 suite.case("the relief block carries a warning note again", PAGE, regex(r'(id="relief"[^>]*>)', r'\g<1><p class="beam-note">x</p>', DOT), "the relief block carries a warning note")
-suite.case("the relief slot is filled before Science delivers", PAGE, swap('<div class="plate-frame" data-visual-slot="relief" data-visual-status="to-be-supplied">', '<div class="plate-frame" data-visual-slot="relief" data-visual-status="to-be-supplied"><img src="/assets/proof/web005b/priority-600.webp" alt="x" width="1200" height="1200">'), "the relief slot is an asset still to be supplied")
+suite.case("the relief figure shows another derivative", PAGE, swap('/assets/proof/mer242/relief-55f5fc73-1200.webp', '/assets/proof/web005b/priority-1200.webp'), "the relief image must show only the recorded MER-242 relief derivatives")
+suite.case("the relief figure loses its scale bar", PAGE, regex(r'(id="relief".*?)<div class="geo-bar" role="img"', r'\g<1><div class="geo-bar"', DOT), "the relief figure must keep the priority legend ramp and the 10 km scale bar")
+suite.case("the relief frame stops saying product-proof", PAGE, swap('data-visual-slot="relief" data-visual-status="product-proof"', 'data-visual-slot="relief" data-visual-status="photo"'), 'the relief frame must say data-visual-slot="relief" and data-visual-status="product-proof"')
+suite.case("a pending frame returns to the relief figure", PAGE, regex(r'(<div class="plate-frame" data-label-tone="light" data-visual-slot="relief".*?<img)', r'<div class="plate-pending"></div>\g<1>', DOT), "a pending frame has no place on the page")
 
 # ---- the removed explanations ----------------------------------------------------------------------
 suite.case("a retired ledger key returns to the dictionary", JS, swap("    'geothermalPage.glance.title':", "    'geothermalPage.ledger.not': 'Does not establish',\n    'geothermalPage.glance.title':"), "copy that explained how the work is done")

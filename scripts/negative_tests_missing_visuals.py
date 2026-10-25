@@ -130,20 +130,59 @@ suite.case("the About figure is allowed to grow past its scene", STYLES,
 # ---- the Sources page lists the scenes -----------------------------------------------------------------------------------
 suite.case("the Sources page drops a scene credit", SOURCES,
            regex(r'\s*<li class="credit-row">\s*<img class="thumb" src="/assets/imagery/death-valley-2024[^"]*".*?</li>', "", DOT),
-           "thumbnailed image credits, expected at least 9")
+           "thumbnailed image credits, expected at least 10")
 
-# ---- Geothermal shows no empty frame ---------------------------------------------------------------------------------------
-suite.case("an empty pending frame returns to Geothermal", GEOTHERMAL,
-           swap('<section class="ground ground-paper" id="missing"', '<div class="plate-pending"></div>\n    <section class="ground ground-paper" id="missing"'),
-           "a frame still to be supplied is on the page")
-suite.case("the iron frame returns to the atlas", GEOTHERMAL,
-           swap('<section class="ground ground-paper" id="missing"', '<figure class="plate geo-plate" id="iron"></figure>\n    <section class="ground ground-paper" id="missing"'),
-           "#iron is back on the page")
-suite.case("the relief section returns", GEOTHERMAL,
-           swap('<section class="ground ground-paper" id="missing"', '<section class="ground ground-orbit geo-relief" id="relief"></section>\n    <section class="ground ground-paper" id="missing"'),
-           "#relief is back on the page")
-suite.case("the missing index stops listing the iron layer", GEOTHERMAL,
-           regex(r'\s*<div class="geo-missing-row"><span data-i18n="geothermalPage\.layer\.iron">.*?</div>', "", DOT),
-           "must list the iron layer and the relief figure as two unlinked rows")
+# ---- Geothermal: the two MER-242 derivatives, recorded, bounded and placed ---------------------------------------------------------
+def surface(data, name):
+    return data["mer_242"]["surfaces"][name]
+
+
+suite.case("a MER-242 derivative loses its checksum", MANIFEST,
+           as_json(lambda d: surface(d, "relief")["derivatives"][0].update(sha256="0" * 64)),
+           "does not match its recorded SHA-256 / size")
+suite.case("the relief opacity drops below the MER-108 bound", MANIFEST,
+           as_json(lambda d: surface(d, "relief").update(analytical_opacity=0.5)),
+           "outside the MER-108 bound 0.90-1.00")
+suite.case("the priority is windowed", MANIFEST,
+           as_json(lambda d: surface(d, "relief").update(display_window={"kind": "quantile", "q_low": 0.02, "q_high": 0.98})),
+           "priority may never be windowed or gamma-adjusted")
+suite.case("ALT-02 leaves the ALT-01 window rule", MANIFEST,
+           as_json(lambda d: surface(d, "alt02")["display_window"].update(q_low=0.01)),
+           "must use the ALT-01 window rule")
+suite.case("ALT-02 takes another palette", MANIFEST,
+           as_json(lambda d: surface(d, "alt02").update(lut_sha256="0" * 64)),
+           "is not the accepted palette of its family")
+suite.case("a MER-242 derivative is enlarged past the native grid", MANIFEST,
+           as_json(lambda d: surface(d, "alt02")["derivatives"][0].update(width=1800)),
+           "wider than the native 1200 px grid")
+suite.case("a MER-242 surface loses its measured placement", MANIFEST,
+           as_json(lambda d: surface(d, "relief").pop("geothermal_placement")),
+           "has no geothermal_placement record")
+suite.case("a MER-242 figure is drawn past the 600 px cap", MANIFEST,
+           as_json(lambda d: surface(d, "alt02")["geothermal_placement"]["rendered"].update(max_css_width=700)),
+           "above its 1200 px native grid or the 600 CSS px cap")
+suite.case("the Science acceptance is not recorded", MANIFEST,
+           as_json(lambda d: d["mer_242"]["science"].update(acceptance="")),
+           "must record who accepted the Science decisions")
+suite.case("the iron plate is filled with a derivative nobody recorded", GEOTHERMAL,
+           swap("/assets/proof/mer242/alt02-9266ceca-1200.webp 1200w", "/assets/proof/mer242/alt02-deadbeef-1200.webp 1200w"),
+           "a governed raster that is not")
+suite.case("the Sources page loses the relief thumbnail", SOURCES,
+           regex(r'<img class="thumb" src="/assets/proof/mer242/relief-55f5fc73-160\.webp"[^>]*>', "", DOT),
+           "thumbnailed image credits, expected at least 10")
+
+# ---- the Active status label stays legible over a photograph -----------------------------------------------------------------------
+suite.case("the Active label loses its scrim", STYLES,
+           swap(".domain-card .domain-status.is-active::before,.domain-band .domain-status.is-active::before{", ".domain-card .domain-status.is-active::after,.domain-band .domain-status.is-active::after{"),
+           "the Active status label lost its scrim")
+suite.case("the Active label's scrim is too weak", STYLES,
+           lambda t: re.sub(r"(\.domain-band \.domain-status\.is-active::before\{[^}]*?)rgba\(22,10,25,\.95\) 0,rgba\(22,10,25,\.95\) 66%", r"\g<1>rgba(22,10,25,.6) 0,rgba(22,10,25,.6) 66%", t, count=1),
+           "the Active status label's scrim must be a radial Night gradient")
+suite.case("the Active label's scrim is no longer behind the text", STYLES,
+           swap("content:\"\";position:absolute;z-index:-1;inset:-28px -72px", "content:\"\";position:absolute;z-index:1;inset:-28px -72px"),
+           "the Active status label's scrim must be a radial Night gradient")
+suite.case("the Active label stops hugging its text", STYLES,
+           swap("position:relative;isolation:isolate;width:fit-content", "position:relative;isolation:isolate"),
+           "must be isolation:isolate and width:fit-content")
 
 raise SystemExit(suite.run())

@@ -246,6 +246,8 @@ records only; no page shows them yet.
   the homepage `priority-legend-ramp.png`. Lossless WebP; no enlargement.
 * **Rights, warnings and ceiling:** as for the WEB-005B derivatives above.
 
+**Placement (2026-10-25, missing-visuals branch).** `alt02-9266ceca-{600,900,1200}.webp` is Pl. 06 of `/solutions/geothermal/` and `relief-55f5fc73-{600,900,1200}.webp` is the "Priority over relief" figure (with the homepage priority ramp and the 10 km bar); `relief-55f5fc73-{160,320}.webp` is the "Evidence and priority maps" thumbnail on `/sources/`. The measured placement is recorded in `sources.json` → `mer_242.surfaces.<name>.geothermal_placement` (`scripts/measure_geothermal_renders.py`): never drawn above 600 CSS px or the native 1200 px grid. No enlarged (1800 / 2400 px) file is published. The Pl. 06 caption reads "Alteration signal — iron" (R3 bars the layer code from public pages); the public label and the mandatory warning of record stay in `sources.json`.
+
 ## WEB-001 placement (2026-09-15, superseded by WEB-002, then by WEB-005)
 
 WEB-001 reused the four Landsat scenes as temporary gallery material across the story panels.

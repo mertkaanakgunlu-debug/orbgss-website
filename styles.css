@@ -570,6 +570,12 @@ body.home{background:var(--pumice)}
 .domain-copy p{margin:0;max-width:46ch;font-size:var(--t-body);line-height:1.6;color:var(--fg)}
 .domain-status{margin:2px 0 0;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--fg-2)}
 .domain-status.is-active{color:var(--link)}
+/* The "Active" label sits on a photograph (the homepage lead card, the Geothermal band of /solutions/). Violet light
+   type needs a ground darker than the lightest pixels of a photograph for 4.5:1, and the gradient shade alone left
+   3.1-3.4:1 over the Yellowstone snow (measured in a browser). A feathered Night scrim sits under the label itself, no
+   box, no edge: 95 % Night at its core, which keeps the label above 4.5:1 over any pixel, white included. */
+.domain-card .domain-status.is-active,.domain-band .domain-status.is-active{position:relative;isolation:isolate;width:fit-content}
+.domain-card .domain-status.is-active::before,.domain-band .domain-status.is-active::before{content:"";position:absolute;z-index:-1;inset:-28px -72px;pointer-events:none;background:radial-gradient(closest-side,rgba(22,10,25,.95) 0,rgba(22,10,25,.95) 66%,rgba(22,10,25,0) 100%)}
 /* WEB-005C R2: each card is a native link to its own /solutions/ row. The anchor wraps the copy
    block and stays STATIC on purpose -- that is what lets its ::after resolve against the card
    instead of the copy block, so one transparent overlay makes the whole card the click target
