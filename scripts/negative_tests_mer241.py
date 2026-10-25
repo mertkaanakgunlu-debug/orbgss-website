@@ -88,7 +88,7 @@ case("a Turkish string is changed in the dictionary and the pages are not regene
 case("a Turkish key is missing, so the generator would fall back to English", SCRIPT,
      swap("    'nav.partner': 'İş Birliği',\n", ""), "has no Turkish value")
 case("an English page links somewhere with no Turkish equivalent", ABOUT,
-     swap('<a class="text-link" href="/partner/">', '<a class="text-link" href="/legal/">'),
+     swap('<a href="/partner/" data-i18n="nav.partner">', '<a href="/legal/" data-i18n="nav.partner">'),
      "has no Turkish equivalent")
 
 # ---- metadata, hreflang and the sitemap --------------------------------------------------------
