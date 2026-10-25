@@ -149,9 +149,9 @@ case("detached colour strip returns to the homepage", INDEX,
      "detached scientific scale strip")
 case("legend moved out of the result figure", INDEX,
      lambda t: t.replace('src="assets/proof/web005b/priority-legend-ramp.png"', 'src=""', 1)
-                .replace("    <!--\r\n      INSPECTION AID",
+                .replace('    <section id="inspect"',
                          '    <img src="assets/proof/web005b/priority-legend-ramp.png" alt="" />\r\n'
-                         '    <!--\r\n      INSPECTION AID', 1),
+                         '    <section id="inspect"', 1),
      "legend must sit inside the result figure")
 
 # ---- B-VIS-07 safe density ------------------------------------------------------------------

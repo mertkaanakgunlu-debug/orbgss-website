@@ -81,6 +81,23 @@ for entry, shown in (("STATUS.md", "STATUS.md"), ("CLAUDE.md", "CLAUDE.md"), ("d
     case(f"{entry} is re-included", IGNORE, add_rule("!" + entry),
          f"internal path {shown} would be deployed")
 
+# ---- the internal record next to the public images (CTO, 2026-10-25) --------------------------
+case("the provenance manifest is served again (its path rule is removed)", IGNORE,
+     drop_rule("/assets/imagery/sources.json"),
+     "internal record assets/imagery/sources.json would be deployed")
+case("a path rule names a file that does not exist", IGNORE,
+     add_rule("/assets/imagery/nothing.json"),
+     "which is not a file")
+case("a path rule uses a glob the validator cannot model", IGNORE,
+     add_rule("/assets/*/sources.json"),
+     "unsupported rule")
+case("an allow entry follows a path rule (the path rule would no longer be the last match)", IGNORE,
+     add_rule("!about"),
+     "comes after a path rule")
+case("a public page links the provenance manifest", INDEX,
+     swap('<main id="main">', '<main id="main"><a href="/assets/imagery/sources.json">records</a>'),
+     "references assets/imagery/sources.json, which .vercelignore does not deploy")
+
 # ---- public entries dropped --------------------------------------------------------------------
 case("vercel.json is dropped (the project configuration would not reach Vercel)", IGNORE,
      drop_rule("!vercel.json"),

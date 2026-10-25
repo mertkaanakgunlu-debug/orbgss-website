@@ -98,6 +98,11 @@ DEPLOY_EXCLUDED_PATHS = [
     "CLAUDE_SESSION_BOOTSTRAP.txt", "preview-local.bat", DEPLOY_IGNORE,
     "docs/", "tasks/", "evidence/", "scripts/", "hero/", "references/",
 ]
+# Internal records that sit beside the public images but are not site content. CTO, 2026-10-25: the public site
+# does not explain how OrbGSS works behind the scenes. The provenance manifest holds how each figure is prepared for
+# display (windows, gamma, palette stops, source rasters) and the CTO's decisions, and the validator reads it from the
+# repository; it is ignored again in .vercelignore (an exact-path "/<file>" rule after the allowlist), so it is not served.
+DEPLOY_PRIVATE_FILES = ["assets/imagery/sources.json"]
 # Documentation and tooling, never site content, wherever they sit.
 DEPLOY_INTERNAL_SUFFIXES = {".md", ".py", ".pyc", ".bat", ".ps1", ".sh", ".blend"}
 # Public text files whose references the browser (or a crawler) follows.
@@ -706,18 +711,32 @@ def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
              f"each public entry), so nothing new is deployed by default", errors)
         return set(), 0
     allowed: set[str] = set()
+    private: set[str] = set()
     for rule in rules[1:]:
         name = rule[1:]
+        if rule.startswith("/") and name and "/" in name:
+            # An exact-path re-ignore of one file inside an allowed directory. It must come after the allowlist so that
+            # the last matching rule is the one that ignores it.
+            if any(c in name for c in "\\*?[]!") or name.endswith("/"):
+                fail(f"{DEPLOY_IGNORE}: unsupported rule {rule!r}; a path rule is '/<exact file path>' only", errors)
+            elif not (ROOT / name).is_file():
+                fail(f"{DEPLOY_IGNORE}: ignores {name!r}, which is not a file", errors)
+            else:
+                private.add(name)
+            continue
+        if private:
+            fail(f"{DEPLOY_IGNORE}: allow rule {rule!r} comes after a path rule; list every '!' entry first, so the "
+                 f"path rules are the last match", errors)
         if not rule.startswith("!") or not name or any(c in name for c in "/\\*?[]!"):
-            fail(f"{DEPLOY_IGNORE}: unsupported rule {rule!r}; only '!<root file or directory>' "
-                 f"lines are modelled by the validator", errors)
+            fail(f"{DEPLOY_IGNORE}: unsupported rule {rule!r}; only '!<root file or directory>' and "
+                 f"'/<exact file path>' lines are modelled by the validator", errors)
             continue
         if not (ROOT / name).exists():
             fail(f"{DEPLOY_IGNORE}: allows {name!r}, which does not exist", errors)
         allowed.add(name)
 
     def deployed(rel: str) -> bool:
-        return rel.split("/", 1)[0] in allowed
+        return rel.split("/", 1)[0] in allowed and rel not in private
 
     for name in DEPLOY_REQUIRED_ENTRIES:
         if name not in allowed:
@@ -728,6 +747,11 @@ def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
     for rel in DEPLOY_EXCLUDED_PATHS:
         if deployed(rel):
             fail(f"{DEPLOY_IGNORE}: internal path {rel} would be deployed and publicly served", errors)
+    for rel in DEPLOY_PRIVATE_FILES:
+        if deployed(rel):
+            fail(f"{DEPLOY_IGNORE}: internal record {rel} would be deployed and publicly served; it holds how the "
+                 f"figures are prepared and the CTO's decisions (CTO, 2026-10-25). Ignore it with '/{rel}' after "
+                 f"the allowlist", errors)
 
     files: list[pathlib.Path] = []
     for name in sorted(allowed):
@@ -735,7 +759,8 @@ def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
         if entry.is_file():
             files.append(entry)
         elif entry.is_dir():
-            files.extend(sorted(p for p in entry.rglob("*") if p.is_file()))
+            files.extend(sorted(p for p in entry.rglob("*") if p.is_file()
+                                and p.relative_to(ROOT).as_posix() not in private))
     for path in files:
         rel = path.relative_to(ROOT).as_posix()
         if path.suffix.lower() in DEPLOY_INTERNAL_SUFFIXES or "__pycache__" in path.parts:
@@ -1145,6 +1170,9 @@ RETIRED_EXPLANATION_KEYS = [
     "solutionsPage.pilotnav.label", "solutionsPage.pilotnav.lead", "solutionsPage.pilotnav.record", "solutionsPage.pilotnav.atlas",
     "solutionsPage.pilotnav.result", "sourcesPage.index.label",
 ]
+# Sentences removed after review because they said how the score is built, in both languages. A key may stay (the
+# Geothermal result copy) while its wording may not return.
+RETIRED_METHOD_PHRASES = ["combined into one experimental score", "deneysel skorda birleştirilir"]
 # The homepage keeps three dark acts (the cinematic hero, the Kizildere band, the priority result) and three light sections.
 LIGHT_HOME_DARK = ["hero", "context", "priority"]
 LIGHT_HOME_PAPER = ["evidence", "inspect", "solutions"]
@@ -1160,6 +1188,12 @@ def light_theme_checks(errors: list[str], page_html: dict[str, str]) -> None:
         if re.search(r"^\s+'" + re.escape(key) + r"':", script, re.M):
             bad(f"script.js carries {key!r}, copy that explained how the work is done or warned beside a layer; "
                 f"it was removed on request and may not come back")
+    for phrase in RETIRED_METHOD_PHRASES:
+        if phrase in script:
+            bad(f"script.js says {phrase!r}, a sentence on how the score is built; it was removed on request")
+        for rel, text in sorted(page_html.items()):
+            if phrase in text:
+                bad(f"{rel}: says {phrase!r}, a sentence on how the score is built; it was removed on request")
     css = (ROOT / "styles.css").read_text(encoding="utf-8")
     flat = re.sub(r"\s+", "", atlas_strip_css(css))
     # The role variables the light scope and the dark scope both define, so a component reads right on either ground.
@@ -1167,11 +1201,23 @@ def light_theme_checks(errors: list[str], page_html: dict[str, str]) -> None:
     for need in ("--surface:var(--white)", "--matte:var(--limestone)", "--hair:var(--rule-paper)"):
         if not paper or need not in paper.group(1):
             bad(f"the light scope (.ground-paper, header, footer) must carry {need}")
+    # Review of the light theme (2026-10-25): the skip link sits outside the light scope, so its focus ring would take the
+    # pale dark-scope link colour (2.4:1 on the white header); and the desktop dropdown's shadow must not follow the sublist
+    # into the mobile menu.
+    if ".skip-link:focus-visible{outline-color:var(--teal)}" not in flat:
+        bad("the skip link's focus ring must be Agate Teal (at least 3:1 on the white header), not the pale dark-scope link colour")
+    if not re.search(r"\.submenuul\{min-width:0;[^}]*box-shadow:none", flat):
+        bad("the mobile Solutions sublist must reset the desktop dropdown's box-shadow")
     dark = re.search(r"\.ground-orbit,\.ground-lift,\.domain-card,\.domain-band\{([^}]*)\}", flat)
     for need in ("--fg:var(--mist)", "--surface:var(--ground-lift)", "--matte:var(--ground)"):
         if not dark or need not in dark.group(1):
             bad(f"the dark scope (.ground-orbit, .ground-lift, the domain bands) must carry {need}")
     for rel, text in sorted(page_html.items()):
+        # The page source is as public as the page. CTO, 2026-10-25: the site does not explain how OrbGSS works behind
+        # the scenes, and a comment is where such notes collect (display windows, build scripts, internal task ids).
+        # Working notes live in docs/WEB_HOMEPAGE_SOURCE_NOTES.md, which is not deployed.
+        if "<!--" in text:
+            bad(f"{rel}: carries an HTML comment; deployed pages publish no working notes (keep them in docs/)")
         dom = build_dom(text)
         for node in dom.find_all(lambda n: bool(n.classes & LIGHT_BAR_CLASSES)):
             bad(f"{rel}: an in-page section bar ({sorted(node.classes & LIGHT_BAR_CLASSES)}) is back; the pages are read by scrolling")
