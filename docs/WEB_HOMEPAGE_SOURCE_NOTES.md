@@ -4,6 +4,8 @@
 
 Where a note names a record, the record is `assets/imagery/sources.json`, which is also no longer deployed (`.vercelignore`).
 
+The note headed "CONTACT" describes the homepage's one closing Partner line and the notes on the Solutions section mention its footnote; the closing line itself was removed from every page on 2026-10-25 (CTO: the header and footer carry Partner with us), so that note is history. `/#contact` no longer exists.
+
 ## Homepage (`index.html`)
 
 Source: `index.html`. Comments, in document order.
