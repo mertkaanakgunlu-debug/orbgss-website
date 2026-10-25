@@ -1,0 +1,186 @@
+{
+ "nav link (About, current)": {
+  "rest": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "hover": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "focus": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  }
+ },
+ "nav link (Partner)": {
+  "rest": {
+   "color": "rgb(183, 192, 189)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 9.41,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "hover": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "focus": {
+   "color": "rgb(183, 192, 189)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 9.41,
+   "outline": "2px solid rgb(88, 174, 178) off 4px",
+   "outlineVsBackdrop": 6.76
+  }
+ },
+ "nav trigger (Solutions)": {
+  "rest": {
+   "color": "rgb(183, 192, 189)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 9.41,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "hover": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "focus": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "2px solid rgb(88, 174, 178) off 4px",
+   "outlineVsBackdrop": 6.76
+  }
+ },
+ "language TR link": {
+  "rest": {
+   "color": "rgb(183, 192, 189)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 9.41,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "hover": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "focus": {
+   "color": "rgb(183, 192, 189)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 9.41,
+   "outline": "2px solid rgb(88, 174, 178) off 4px",
+   "outlineVsBackdrop": 6.76
+  }
+ },
+ "footer link": {
+  "rest": {
+   "color": "rgb(183, 192, 189)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 9.41,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "hover": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "focus": {
+   "color": "rgb(183, 192, 189)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 9.41,
+   "outline": "2px solid rgb(88, 174, 178) off 4px",
+   "outlineVsBackdrop": 6.76
+  }
+ },
+ "brand logo link": {
+  "rest": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "hover": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "focus": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "2px solid rgb(88, 174, 178) off 4px",
+   "outlineVsBackdrop": 6.76
+  }
+ },
+ "mailto link (Partner)": {
+  "rest": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "hover": {
+   "color": "rgb(88, 174, 178)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 6.76,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "focus": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "2px solid rgb(88, 174, 178) off 4px",
+   "outlineVsBackdrop": 6.76
+  }
+ },
+ "homepage Solutions card": {
+  "rest": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  },
+  "focus": {
+   "color": "rgb(227, 229, 228)",
+   "bg": "rgb(23,26,27)",
+   "textRatio": 13.83,
+   "outline": "none",
+   "outlineVsBackdrop": null
+  }
+ },
+ "skip link": {
+  "color": "rgb(32, 38, 41)",
+  "bg": "rgb(246,245,242)",
+  "textRatio": 14.05,
+  "outline": "2px solid rgb(88, 174, 178) off 4px",
+  "outlineVsBackdrop": 6.76
+ }
+}

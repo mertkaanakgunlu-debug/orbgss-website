@@ -1,0 +1,2265 @@
+{
+ "layout": [
+  {
+   "route": "/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/solutions/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/solutions/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/solutions/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/solutions/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/solutions/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/solutions/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/solutions/geothermal/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/solutions/geothermal/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/solutions/geothermal/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/solutions/geothermal/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/solutions/geothermal/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/solutions/geothermal/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/about/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/about/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/about/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/about/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/about/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/about/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/partner/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/partner/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/partner/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/partner/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/partner/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/partner/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/sources/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/sources/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/sources/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/sources/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/sources/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/sources/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/tr/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/tr/cozumler/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/cozumler/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/cozumler/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/cozumler/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/cozumler/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/cozumler/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/tr/cozumler/jeotermal/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/cozumler/jeotermal/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/cozumler/jeotermal/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/cozumler/jeotermal/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/cozumler/jeotermal/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/cozumler/jeotermal/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/tr/hakkimizda/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/hakkimizda/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/hakkimizda/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/hakkimizda/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/hakkimizda/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/hakkimizda/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/tr/is-birligi/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/is-birligi/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/is-birligi/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/is-birligi/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/is-birligi/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/is-birligi/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/tr/kaynaklar/",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/kaynaklar/",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/kaynaklar/",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/kaynaklar/",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/kaynaklar/",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/tr/kaynaklar/",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200,
+    "/site.webmanifest": 200
+   }
+  },
+  {
+   "route": "/404.html",
+   "w": 320,
+   "overflow": false,
+   "scrollW": 320,
+   "clientW": 320,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/404.html",
+   "w": 360,
+   "overflow": false,
+   "scrollW": 360,
+   "clientW": 360,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/404.html",
+   "w": 390,
+   "overflow": false,
+   "scrollW": 390,
+   "clientW": 390,
+   "logos": [
+    {
+     "where": "header",
+     "w": 141,
+     "h": 24,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 205,
+     "h": 35,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/404.html",
+   "w": 768,
+   "overflow": false,
+   "scrollW": 768,
+   "clientW": 768,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/404.html",
+   "w": 1024,
+   "overflow": false,
+   "scrollW": 1024,
+   "clientW": 1024,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 209,
+     "h": 36,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": []
+  },
+  {
+   "route": "/404.html",
+   "w": 1440,
+   "overflow": false,
+   "scrollW": 1440,
+   "clientW": 1440,
+   "logos": [
+    {
+     "where": "header",
+     "w": 176,
+     "h": 30,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    },
+    {
+     "where": "footer",
+     "w": 225,
+     "h": 38,
+     "natural": 634,
+     "src": "/assets/brand/orbgss-logo-dark.9085b960.svg",
+     "visible": true
+    }
+   ],
+   "theme": "#171A1B",
+   "errors": [],
+   "badResponses": [],
+   "iconStatus": {
+    "/favicon.ico": 200,
+    "/assets/brand/orbgss-favicon.31dba293.svg": 200,
+    "/assets/brand/orbgss-apple-touch-icon.ea0b5f7b.png": 200
+   }
+  }
+ ]
+}

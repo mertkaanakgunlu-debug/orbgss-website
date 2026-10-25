@@ -4,17 +4,20 @@
 **Status:** **preview, pending CTO acceptance.** The CTO approved the palette and type page on 2026-10-24 and asked for the whole site in the new design as a finished preview. Nothing here is published; it becomes binding only when the CTO accepts the reviewed preview and authorizes a publication.
 **Baseline:** `claude/premium-interior-redesign-65zdlt@fe8cc470` (MER-255 on top of MER-241, both unpublished).
 **Governs, once accepted:** colour, type, fonts, grounds and the shared components of every page. It wins over `docs/DESIGN_AUTHORITY.md`, `docs/WEB_VNEXT_AUTHORITY.md` and `docs/WEB_INTERIOR_REDESIGN_AUTHORITY.md` on those points only. It changes nothing in the scientific, legal, claim and content rules, and nothing in the homepage's four acts.
+**Superseded in part (MER-279, 2026-10-25):** the CTO approved the Agate brand identity. Its palette, grounds' colours, logo and favicon family replace §0 (colour bullet), §1 and §2 (colours) below; read `docs/WEB_AGATE_BRAND_AUTHORITY.md` for them. Type (§3), fonts (§4), the homepage (§5), regions (§6), the validator contract's structure (§7) and the structural rules of §1 (one colour system, ground-aware roles, no colour in a figure frame) stand. The Atlas colour names and values below are kept as the record of what MER-275 built.
 **Brief:** `/mnt/project-files/site-redesign/SPEC.md`. **Approved page:** https://claude.ai/artifact/TowszhEqnCko89rsQsP9d9.
 
 ## 0. Özet (CTO için)
 
-* **Renk:** Sitede artık yalnızca beş renk rolü var: Orbit (koyu zemin), Paper (açık zemin), Steel (ikincil yazı), Signal (tek vurgu, cyan) ve Caution (sınır ve uyarı). Açık zeminde okunabilsinler diye Signal ve Caution'ın birer koyu tonu var. Çizgiler Steel'in saydam hâli. Eski cyan, bronz ve onlarca gri kalktı. Doğrulayıcı bu listenin dışında renk kullanılırsa derlemeyi durduruyor.
+* **Renk (MER-279 ile Agate paletine geçti, bkz. `docs/WEB_AGATE_BRAND_AUTHORITY.md`; aşağıdaki Atlas renkleri kayıt için duruyor):** Sitede artık yalnızca beş renk rolü var: Orbit (koyu zemin), Paper (açık zemin), Steel (ikincil yazı), Signal (tek vurgu, cyan) ve Caution (sınır ve uyarı). Açık zeminde okunabilsinler diye Signal ve Caution'ın birer koyu tonu var. Çizgiler Steel'in saydam hâli. Eski cyan, bronz ve onlarca gri kalktı. Doğrulayıcı bu listenin dışında renk kullanılırsa derlemeyi durduruyor.
 * **Yazı tipi:** IBM Plex Sans (başlıklar 300, metin 400) ve IBM Plex Mono (veri, etiket, alt yazı). Space Grotesk yok, kalın (500/700) yok; vurgu renk tonuyla. Dosyalar kendi sunucumuzdan geliyor (üç dosya, toplam 59 KB), Google'a istek gitmiyor. IBM "Plex" adını ayırdığı için alt kümeler "OrbGSS Sans" ve "OrbGSS Mono" adıyla yeniden adlandırıldı; lisans metni ve IBM'in telif satırları yanında duruyor.
 * **Ana sayfa:** Dört perde, görseller, metin, hareket aynen duruyor. Yalnızca yazı tipi ve renk eşlemesi değişti; "Know where / to look next." iki satırda kalıyor.
 * **Henüz yapılmadı:** Geothermal, Solutions, About, Partner ve Sources sayfalarının yeni içeriği ve yerleşimi (üç ayrı iş). Bu sayfalar şimdilik MER-255'in düzeniyle, yeni renk ve yazı tipiyle görünüyor.
 * **Senin kararın gereken:** §8.
 
-## 1. Palette — the only UI colours
+## 1. Palette — the only UI colours (Atlas values; superseded by Agate, MER-279)
+
+> **Superseded.** Since MER-279 the only valid palette is the Agate one in `docs/WEB_AGATE_BRAND_AUTHORITY.md` §1. The structure of this section survives (one palette defined once in `:root`, ground-aware roles, no colour in a figure frame, retired tokens may not return); the names and values below do not. Mapping, for anyone reading older evidence: `--orbit` → `--ground` `#171A1B`; `--lift` → `--ground-lift` `#252A2B`; `--paper` → `--mist` `#E3E5E4` as text on dark and `--limestone` `#F6F5F2` as the light ground; `--steel` → `--mineral-light` `#B7C0BD`; `--slate` → `--graphite-soft` `#565D5A`; `--signal` → `--teal-light` `#58AEB2`; `--signal-deep` → `--teal` `#18777A`; `--caution` → `--gold-light` `#D8B173`; `--caution-deep` → `--gold-ink` `#735525`; text on paper is `--graphite` `#202629`. The validator fails every Atlas token name.
 
 Defined once in `:root` of `styles.css`; `scripts/validate_site.py` pins every value.
 
@@ -41,7 +44,9 @@ Defined once in `:root` of `styles.css`; `scripts/validate_site.py` pins every v
 5. **Retired:** every `--orb-*` token and the MER-255 grey tokens (`--accent`, `--line`, `--bg`, `--beam`, `--text`, `--muted`, `--dim`, and their variants). The validator fails any use. Retired values include `#43BFF0`, `#82D3F3`, `#98F5FF`, `#8AF1FF`, `#7FEFFF`, `#3CCBFF`, `#14698F`, the bronzes and the extra lights and greys.
 6. **Caption tone.** The per-panel `data-label-tone` stays; light tone maps to Paper with an Orbit halo, dark tone to Orbit.
 
-## 2. Grounds
+## 2. Grounds (colours superseded by Agate, MER-279)
+
+> The three grounds keep their structural class names `ground-orbit`, `ground-lift` and `ground-paper`; their colours are now Ground `#171A1B`, Ground lift `#252A2B` and Limestone `#F6F5F2`.
 
 * **Orbit:** every page opening (the header merges into it), every photograph, every analytical plate, the priority score, the header and the footer on every page.
 * **Lift:** index bars, the Mining and Marine pair, the homepage Act 4 stage.
@@ -103,6 +108,8 @@ A page thread edits its own region only. A change to a shared component (anythin
 ## 7. What the validator enforces
 
 `scripts/validate_site.py` (`atlas_foundation_checks`) fails the build when:
+
+(Since MER-279 the colour items below read in Agate terms — the `AGATE_TOKENS`, a gold fill instead of a caution fill, the Ground instead of Orbit — and `docs/WEB_AGATE_BRAND_AUTHORITY.md` §8 adds the brand-mark checks.)
 
 * a palette token is missing, defined twice or off its pinned value; a retired token is used; a promised text and ground pair falls below its contrast floor (7:1 on dark, 4.5:1 on paper);
 * styles.css, a `<style>` block or an inline style carries a colour that is not in the palette; a rule fills a background with a caution value;

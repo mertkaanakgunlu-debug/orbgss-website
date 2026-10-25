@@ -1,0 +1,22 @@
+{
+ "motion": {
+  "/": {
+   "runningAnimations": 0,
+   "elementsWithMotion": 50,
+   "videoSources": 0,
+   "videoPaused": true
+  },
+  "/solutions/": {
+   "runningAnimations": 0,
+   "elementsWithMotion": 24,
+   "videoSources": null,
+   "videoPaused": null
+  },
+  "/solutions/geothermal/": {
+   "runningAnimations": 0,
+   "elementsWithMotion": 26,
+   "videoSources": null,
+   "videoPaused": null
+  }
+ }
+}

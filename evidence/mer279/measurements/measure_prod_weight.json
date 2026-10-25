@@ -1,0 +1,110 @@
+{
+ "weight": {
+  "/@1440": {
+   "n": 10,
+   "bytes": 1891131,
+   "byType": {
+    "text/html": 53605,
+    "text/css": 58856,
+    "image/svg+xml": 1862,
+    "image/webp": 708472,
+    "image/png": 975249,
+    "text/javascript": 93087
+   }
+  },
+  "/@390": {
+   "n": 8,
+   "bytes": 552397,
+   "byType": {
+    "text/html": 53605,
+    "text/css": 58856,
+    "image/webp": 344730,
+    "image/svg+xml": 1862,
+    "image/png": 257,
+    "text/javascript": 93087
+   }
+  },
+  "/solutions/@1440": {
+   "n": 7,
+   "bytes": 984855,
+   "byType": {
+    "text/html": 11874,
+    "text/css": 58856,
+    "image/svg+xml": 1862,
+    "text/javascript": 93087,
+    "image/webp": 819176
+   }
+  },
+  "/solutions/@390": {
+   "n": 8,
+   "bytes": 522379,
+   "byType": {
+    "text/html": 11874,
+    "text/css": 58856,
+    "image/svg+xml": 1862,
+    "text/javascript": 93087,
+    "image/webp": 356700
+   }
+  },
+  "/solutions/geothermal/@1440": {
+   "n": 6,
+   "bytes": 191059,
+   "byType": {
+    "text/html": 14731,
+    "image/svg+xml": 24385,
+    "text/css": 58856,
+    "text/javascript": 93087
+   }
+  },
+  "/solutions/geothermal/@390": {
+   "n": 6,
+   "bytes": 191059,
+   "byType": {
+    "text/css": 58856,
+    "image/svg+xml": 24385,
+    "text/html": 14731,
+    "text/javascript": 93087
+   }
+  },
+  "/about/@1440": {
+   "n": 5,
+   "bytes": 164503,
+   "byType": {
+    "text/html": 10698,
+    "text/css": 58856,
+    "image/svg+xml": 1862,
+    "text/javascript": 93087
+   }
+  },
+  "/about/@390": {
+   "n": 5,
+   "bytes": 164503,
+   "byType": {
+    "text/html": 10698,
+    "text/css": 58856,
+    "image/svg+xml": 1862,
+    "text/javascript": 93087
+   }
+  },
+  "/partner/@1440": {
+   "n": 5,
+   "bytes": 161291,
+   "byType": {
+    "text/css": 58856,
+    "image/svg+xml": 1862,
+    "text/html": 7486,
+    "text/javascript": 93087
+   }
+  },
+  "/partner/@390": {
+   "n": 5,
+   "bytes": 161291,
+   "byType": {
+    "text/css": 58856,
+    "image/svg+xml": 1862,
+    "text/html": 7486,
+    "text/javascript": 93087
+   }
+  }
+ }
+}

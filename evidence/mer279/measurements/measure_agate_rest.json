@@ -1,0 +1,700 @@
+{
+ "contrast": {
+  "/@1440": {
+   "checked": 56,
+   "skippedOverMedia": 17,
+   "skippedBgImage": 20,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/@390": {
+   "checked": 49,
+   "skippedOverMedia": 17,
+   "skippedBgImage": 20,
+   "min": 5.01,
+   "failures": []
+  },
+  "/solutions/@1440": {
+   "checked": 52,
+   "skippedOverMedia": 9,
+   "skippedBgImage": 2,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/solutions/@390": {
+   "checked": 45,
+   "skippedOverMedia": 9,
+   "skippedBgImage": 2,
+   "min": 5.62,
+   "failures": []
+  },
+  "/solutions/geothermal/@1440": {
+   "checked": 132,
+   "skippedOverMedia": 21,
+   "skippedBgImage": 6,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/solutions/geothermal/@390": {
+   "checked": 125,
+   "skippedOverMedia": 21,
+   "skippedBgImage": 6,
+   "min": 4.87,
+   "failures": []
+  },
+  "/about/@1440": {
+   "checked": 62,
+   "skippedOverMedia": 3,
+   "skippedBgImage": 2,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/about/@390": {
+   "checked": 55,
+   "skippedOverMedia": 3,
+   "skippedBgImage": 2,
+   "min": 4.87,
+   "failures": []
+  },
+  "/partner/@1440": {
+   "checked": 37,
+   "skippedOverMedia": 3,
+   "skippedBgImage": 0,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/partner/@390": {
+   "checked": 30,
+   "skippedOverMedia": 3,
+   "skippedBgImage": 0,
+   "min": 6.76,
+   "failures": []
+  },
+  "/sources/@1440": {
+   "checked": 157,
+   "skippedOverMedia": 0,
+   "skippedBgImage": 0,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/sources/@390": {
+   "checked": 150,
+   "skippedOverMedia": 0,
+   "skippedBgImage": 0,
+   "min": 4.87,
+   "failures": []
+  },
+  "/tr/@1440": {
+   "checked": 56,
+   "skippedOverMedia": 17,
+   "skippedBgImage": 20,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/tr/@390": {
+   "checked": 49,
+   "skippedOverMedia": 17,
+   "skippedBgImage": 20,
+   "min": 5.01,
+   "failures": []
+  },
+  "/tr/cozumler/@1440": {
+   "checked": 52,
+   "skippedOverMedia": 9,
+   "skippedBgImage": 2,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/tr/cozumler/@390": {
+   "checked": 45,
+   "skippedOverMedia": 9,
+   "skippedBgImage": 2,
+   "min": 5.62,
+   "failures": []
+  },
+  "/tr/cozumler/jeotermal/@1440": {
+   "checked": 132,
+   "skippedOverMedia": 21,
+   "skippedBgImage": 6,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/tr/cozumler/jeotermal/@390": {
+   "checked": 125,
+   "skippedOverMedia": 21,
+   "skippedBgImage": 6,
+   "min": 4.87,
+   "failures": []
+  },
+  "/tr/hakkimizda/@1440": {
+   "checked": 62,
+   "skippedOverMedia": 3,
+   "skippedBgImage": 2,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/tr/hakkimizda/@390": {
+   "checked": 55,
+   "skippedOverMedia": 3,
+   "skippedBgImage": 2,
+   "min": 4.87,
+   "failures": []
+  },
+  "/tr/is-birligi/@1440": {
+   "checked": 37,
+   "skippedOverMedia": 3,
+   "skippedBgImage": 0,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/tr/is-birligi/@390": {
+   "checked": 30,
+   "skippedOverMedia": 3,
+   "skippedBgImage": 0,
+   "min": 6.76,
+   "failures": []
+  },
+  "/tr/kaynaklar/@1440": {
+   "checked": 157,
+   "skippedOverMedia": 0,
+   "skippedBgImage": 0,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/tr/kaynaklar/@390": {
+   "checked": 150,
+   "skippedOverMedia": 0,
+   "skippedBgImage": 0,
+   "min": 4.87,
+   "failures": []
+  },
+  "/404.html@1440": {
+   "checked": 22,
+   "skippedOverMedia": 0,
+   "skippedBgImage": 0,
+   "min": 1.63,
+   "failures": [
+    {
+     "text": "|",
+     "cls": "lang-sep",
+     "fg": "rgba(183, 192, 189, 0.22)",
+     "ratio": 1.63,
+     "need": 4.5,
+     "size": 11,
+     "ok": false
+    }
+   ]
+  },
+  "/404.html@390": {
+   "checked": 15,
+   "skippedOverMedia": 0,
+   "skippedBgImage": 0,
+   "min": 6.76,
+   "failures": []
+  }
+ },
+ "states": {
+  "/": {
+   "tabStops": 58,
+   "minOutlineRatio": 2.37,
+   "weak": [
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": false
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": false
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    }
+   ]
+  },
+  "/solutions/": {
+   "tabStops": 58,
+   "minOutlineRatio": 2.37,
+   "weak": [
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    }
+   ]
+  },
+  "/solutions/geothermal/": {
+   "tabStops": 58,
+   "minOutlineRatio": 2.37,
+   "weak": [
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    }
+   ]
+  },
+  "/about/": {
+   "tabStops": 58,
+   "minOutlineRatio": 2.37,
+   "weak": [
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": false
+    }
+   ]
+  },
+  "/partner/": {
+   "tabStops": 58,
+   "minOutlineRatio": 2.37,
+   "weak": [
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    }
+   ]
+  },
+  "/sources/": {
+   "tabStops": 59,
+   "minOutlineRatio": 2.37,
+   "weak": [
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "Skip to content",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    }
+   ]
+  },
+  "/tr/": {
+   "tabStops": 58,
+   "minOutlineRatio": 2.37,
+   "weak": [
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "İçeriğe geç",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": false
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "İçeriğe geç",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    },
+    {
+     "tag": "a",
+     "cls": "skip-link",
+     "text": "İçeriğe geç",
+     "outlineWidth": 2,
+     "outlineStyle": "solid",
+     "outlineColor": "rgb(88, 174, 178)",
+     "pseudo": false,
+     "ratio": 2.37,
+     "visible": true,
+     "onScreen": true
+    }
+   ]
+  }
+ },
+ "hover": {
+  ".main-nav > a:nth-of-type(2)": "not found",
+  ".main-nav .nav-trigger": {
+   "before": "rgb(183, 192, 189)",
+   "after": "rgb(227, 229, 228)"
+  },
+  ".lang-switch button, .lang-switch a": {
+   "before": "rgb(88, 174, 178)",
+   "after": "rgb(88, 174, 178)"
+  },
+  ".site-footer a": {
+   "before": "rgb(183, 192, 189)",
+   "after": "rgb(227, 229, 228)"
+  }
+ },
+ "nav": {
+  "/": {
+   "toggleVisible": true,
+   "navHiddenInitially": true,
+   "expandedAfterClick": "true",
+   "navVisible": true,
+   "linkHeights": [
+    46,
+    46,
+    46,
+    44,
+    44
+   ],
+   "navBg": "rgb(23, 26, 27)",
+   "closedByEscape": true,
+   "expandedAfterEscape": "false",
+   "closedByToggle": true,
+   "headerLogoPx": [
+    141,
+    24
+   ]
+  },
+  "/solutions/": {
+   "toggleVisible": true,
+   "navHiddenInitially": true,
+   "expandedAfterClick": "true",
+   "navVisible": true,
+   "linkHeights": [
+    46,
+    46,
+    46,
+    44,
+    44
+   ],
+   "navBg": "rgb(23, 26, 27)",
+   "closedByEscape": true,
+   "expandedAfterEscape": "false",
+   "closedByToggle": true,
+   "headerLogoPx": [
+    141,
+    24
+   ]
+  },
+  "/tr/": {
+   "toggleVisible": true,
+   "navHiddenInitially": true,
+   "expandedAfterClick": "true",
+   "navVisible": true,
+   "linkHeights": [
+    46,
+    46,
+    46,
+    44,
+    44
+   ],
+   "navBg": "rgb(23, 26, 27)",
+   "closedByEscape": true,
+   "expandedAfterEscape": "false",
+   "closedByToggle": true,
+   "headerLogoPx": [
+    141,
+    24
+   ]
+  }
+ },
+ "motion": {
+  "/": {
+   "runningAnimations": 0,
+   "elementsWithMotion": 50,
+   "videoSources": 0,
+   "videoPaused": true
+  },
+  "/solutions/": {
+   "runningAnimations": 0,
+   "elementsWithMotion": 24,
+   "videoSources": null,
+   "videoPaused": null
+  },
+  "/solutions/geothermal/": {
+   "runningAnimations": 0,
+   "elementsWithMotion": 26,
+   "videoSources": null,
+   "videoPaused": null
+  }
+ }
+}

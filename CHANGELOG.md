@@ -2,6 +2,17 @@
 
 Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
 
+## MER-279 — Agate brand adoption on the existing site — 2026-10-25 (`REVIEW_READY`, not published)
+
+The CTO approved the Agate identity and asked for it on the existing website, as a brand adoption and not a replacement. Branched from the Atlas integration `4bbbe0ee`. Spec: `docs/WEB_AGATE_BRAND_AUTHORITY.md`; evidence: `tasks/MER-279_EVIDENCE.md`.
+
+- **Palette:** the Atlas cyan-on-navy palette is replaced by Graphite `#202629`, Mineral Gray `#69716F`, Agate Teal `#18777A`, Mineral Gold `#C49A5A` and their dark-ground equivalents `#E3E5E4`, `#B7C0BD`, `#58AEB2`, `#D8B173`, with derived neutrals (Ground `#171A1B`, Ground lift, Limestone, Graphite soft, Gold ink). Teal is the interactive accent, gold a restrained highlight that is never a fill; no copper, no navy surface. Grounds keep their structural class names.
+- **Marks:** new horizontal logo in the header and footer of every page (141–225 px wide), SVG and `.ico` favicon, touch icon, manifest icons and theme colour. Hash-named files under `assets/brand/`, recorded in `brand.json`; `scripts/build_brand_assets.py` rebuilds them from the package. `logo.svg` and `mark.svg` are retired. The package's `illustrative-map.jpg` is not used.
+- **Locator map:** `scripts/build_locator_map.py` applies the brand map rule (no teal, gold callout with a dark halo, Graphite neutrals); new checksum-named file.
+- **Caption tone:** `script.js` flips light and dark captions at 0.1885, the luminance where Mist and Graphite contrast equally.
+- **Validator:** the colour guard now pins the Agate tokens and 14 contrast pairs, rejects every Atlas token, any gold fill and any colour outside the palette, and `agate_brand_checks` verifies the recorded files and hashes, every SVG paint, every page head, the header and footer markup, the 120 px logo minimum, the manifest and the map. `negative_tests_agate_brand.py` adds 32 cases; the Atlas and earlier suites follow the new tokens and files.
+- **Unchanged:** page set, navigation, URLs, the four-act homepage, imagery, scientific rasters (not recoloured), the hero video, copy, type and fonts. The hero's baked navy-black space remains render content (a re-render is a separate decision). The Atlas open items are untouched.
+
 ## MER-255 review revision — 2026-10-19 (same branch; `REVIEW_READY` again, not published)
 
 The independent review of `cffadf8a` returned FAIL on three defects. Fixed, with the card remark:

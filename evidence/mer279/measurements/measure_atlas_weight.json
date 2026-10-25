@@ -1,0 +1,128 @@
+{
+ "weight": {
+  "/@1440": {
+   "n": 13,
+   "bytes": 2018283,
+   "byType": {
+    "text/html": 53747,
+    "image/webp": 708472,
+    "text/css": 100454,
+    "image/svg+xml": 1862,
+    "image/png": 975249,
+    "font/woff2": 60156,
+    "text/javascript": 118343
+   }
+  },
+  "/@390": {
+   "n": 11,
+   "bytes": 679549,
+   "byType": {
+    "text/html": 53747,
+    "text/css": 100454,
+    "image/webp": 344730,
+    "image/svg+xml": 1862,
+    "image/png": 257,
+    "font/woff2": 60156,
+    "text/javascript": 118343
+   }
+  },
+  "/solutions/@1440": {
+   "n": 10,
+   "bytes": 1397137,
+   "byType": {
+    "text/html": 14446,
+    "font/woff2": 60156,
+    "text/css": 100454,
+    "image/svg+xml": 1862,
+    "text/javascript": 118343,
+    "image/webp": 1101876
+   }
+  },
+  "/solutions/@390": {
+   "n": 12,
+   "bytes": 1410113,
+   "byType": {
+    "text/html": 14446,
+    "font/woff2": 60156,
+    "image/svg+xml": 1862,
+    "text/css": 100454,
+    "text/javascript": 118343,
+    "image/webp": 1114852
+   }
+  },
+  "/solutions/geothermal/@1440": {
+   "n": 13,
+   "bytes": 867487,
+   "byType": {
+    "text/html": 30316,
+    "font/woff2": 60156,
+    "text/css": 100454,
+    "image/svg+xml": 24385,
+    "image/webp": 533576,
+    "image/png": 257,
+    "text/javascript": 118343
+   }
+  },
+  "/solutions/geothermal/@390": {
+   "n": 11,
+   "bytes": 626983,
+   "byType": {
+    "text/html": 30316,
+    "text/css": 100454,
+    "font/woff2": 60156,
+    "image/svg+xml": 24385,
+    "image/webp": 293072,
+    "image/png": 257,
+    "text/javascript": 118343
+   }
+  },
+  "/about/@1440": {
+   "n": 9,
+   "bytes": 483016,
+   "byType": {
+    "text/html": 13661,
+    "image/svg+xml": 1862,
+    "text/css": 100454,
+    "font/woff2": 60156,
+    "text/javascript": 118343,
+    "image/webp": 188540
+   }
+  },
+  "/about/@390": {
+   "n": 14,
+   "bytes": 2832530,
+   "byType": {
+    "text/html": 13661,
+    "text/css": 100454,
+    "font/woff2": 60156,
+    "image/svg+xml": 1862,
+    "text/javascript": 118343,
+    "image/webp": 2538054
+   }
+  },
+  "/partner/@1440": {
+   "n": 9,
+   "bytes": 414608,
+   "byType": {
+    "text/css": 100454,
+    "font/woff2": 60156,
+    "image/svg+xml": 1862,
+    "image/webp": 124900,
+    "text/html": 8893,
+    "text/javascript": 118343
+   }
+  },
+  "/partner/@390": {
+   "n": 9,
+   "bytes": 414608,
+   "byType": {
+    "text/html": 8893,
+    "image/svg+xml": 1862,
+    "font/woff2": 60156,
+    "text/css": 100454,
+    "image/webp": 124900,
+    "text/javascript": 118343
+   }
+  }
+ }
+}
