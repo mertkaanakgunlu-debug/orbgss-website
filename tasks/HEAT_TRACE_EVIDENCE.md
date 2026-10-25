@@ -2,7 +2,7 @@
 
 **Status:** `REVIEW_READY`, preview only. Not merged, not deployed, no DNS or domain action.
 **Branch:** `claude/project-thread-r4bx3f`, branched from the light-theme head `claude/project-thread-75kouq@7be2907` (the Agate adoption and the Atlas integration are below it). The pull request is against the light-theme branch.
-**Tested commit:** `f33164a` (the commit before this file). Every check below ran on that commit in a detached worktree, one suite at a time; the branch HEAD is the tested commit plus one commit that adds only this file and the records (`STATUS.md`, `CHANGELOG.md`); `git diff f33164a..HEAD` shows nothing else.
+**Tested commit:** `f33164a` (the commit before this file). Every check below ran on that commit in a detached worktree, one suite at a time; the branch HEAD is the tested commit plus records commits that touch only `CHANGELOG.md`, `STATUS.md`, this file and `evidence/heat_trace/` (none is deployed); `git diff --stat f33164a..HEAD` shows nothing else.
 **Authority:** `docs/WEB_HEAT_TRACE_BRAND_AUTHORITY.md`. **Screenshots:** the project Library, folder `heat-trace/screenshots/` (indexed in §5).
 **Decision:** the CTO, 2026-10-25, on the package `OrbGSS Logo Tasarım4.zip` (SHA-256 `cc5f769be1007a4929618237203218b94319454325188b8ea409fd53ee625635`): "bu son tasarım kararı uygula". The package holds `Final_v2/` and `Final_v3/`; `Final_v3/` is the revision of `Final_v2/` ("the 5c symbol and wordmark in the 6a Heat Trace palette, with the Magma and Amber orbits swapped, a single orb at the focal point and the app icon on Night") and is the one applied. This reading is the thread's assumption and was reported to the CTO.
 
