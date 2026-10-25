@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Build the deployed brand assets (Heat Trace identity, brand package Final_v3).
+"""Build the deployed brand assets (Violet identity, brand package Final_v4).
 
-The CTO decided on this identity on 2026-10-25 (palette 6a "Heat Trace": Plum #371641, Magma #CD1B74, Amber #FFA323,
-Glow #FEF1A1; dark-background values Violet #854AA6, Magma #E43386, Amber #FFAA2E, Glow #FFF4A5; ground Night #160A19,
-wordmark Mist #F5EFF7). The supplied package ("OrbGSS Logo Tasarım4.zip", folder Final_v3/) is the source of every file
-written here (it replaces the Agate package of MER-279):
+The CTO approved this identity on 2026-10-25 ("Violet vurgu", package folder Final_v4/, which replaces the Heat Trace pink
+interface accent of Final_v3): Plum #371641, Violet #854AA6 (the one interactive accent), Magma #E43386 (the logo's vertical
+orbit only), Amber #FFA323, ground Night #160A19, wordmark on dark Mist #F5EFF7. The supplied package
+("OrbGSS_Brand_Tasarim_Final.zip", folder Final_v4/) is the source of every file written here:
 
-    python scripts/build_brand_assets.py --source <unpacked Final_v3/ folder>           # write
-    python scripts/build_brand_assets.py --source <unpacked Final_v3/ folder> --check   # compare with the record
+    python scripts/build_brand_assets.py --source <unpacked Final_v4/ folder>           # write
+    python scripts/build_brand_assets.py --source <unpacked Final_v4/ folder> --check   # compare with the record
 
 What it does, and nothing more:
   * copies the horizontal logo for light grounds, the favicon tile, the 180 px touch icon and the 192 / 512 px
@@ -50,11 +50,11 @@ ICO = ("favicon/favicon.ico", "favicon.ico")  # shipped at the site root, unchan
 
 # The package the files were taken from (SHA-256 of the zip as supplied). The per-file source hashes in brand.json are
 # what the validator pins; this one only names the delivery they came from.
-PACKAGE = {"name": "OrbGSS Logo Tasarım4.zip", "sha256": "cc5f769be1007a4929618237203218b94319454325188b8ea409fd53ee625635"}
+PACKAGE = {"name": "OrbGSS_Brand_Tasarim_Final.zip", "sha256": "b8869634badba9a62479bce86db7ab5ab0ad3b0648993dbc78006bca0740c675"}
 
 PALETTE = {
-    "light": {"plum": "#371641", "magma": "#CD1B74", "amber": "#FFA323", "glow": "#FEF1A1"},
-    "dark": {"violet": "#854AA6", "magma": "#E43386", "amber": "#FFAA2E", "glow": "#FFF4A5", "night": "#160A19", "mist": "#F5EFF7"},
+    "brand": {"plum": "#371641", "violet": "#854AA6", "magma": "#E43386", "amber": "#FFA323", "night": "#160A19", "mist": "#F5EFF7"},
+    "ui_accent": {"light": "#854AA6", "dark": "#AB7CC7"},
 }
 
 METADATA = re.compile(r"<metadata>.*?</metadata>", re.S)
@@ -86,7 +86,7 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
             "purpose": purpose,
             "bytes": len(data),
             "sha256": digest,
-            "source": {"path": f"Final_v3/{rel}", "bytes": len(raw), "sha256": sha256(raw)},
+            "source": {"path": f"Final_v4/{rel}", "bytes": len(raw), "sha256": sha256(raw)},
             "transform": ("metadata element and its xmlns:c2pa declaration removed; drawing unchanged"
                           if ext == "svg" else "none (byte for byte)"),
         }
@@ -97,23 +97,23 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
         "purpose": "multi-size favicon (16, 32, 48 px) at the site root, where browsers ask for it",
         "bytes": len(raw),
         "sha256": sha256(raw),
-        "source": {"path": f"Final_v3/{ICO[0]}", "bytes": len(raw), "sha256": sha256(raw)},
+        "source": {"path": f"Final_v4/{ICO[0]}", "bytes": len(raw), "sha256": sha256(raw)},
         "transform": "none (byte for byte)",
     }
     record = {
-        "identity": "Heat Trace",
-        "approved": "CTO, 2026-10-25 (brand package Final_v3)",
-        "package": f"{PACKAGE['name']}, folder Final_v3/ (Final_v2/ and the older Agate folder final/ are superseded and not used)",
+        "identity": "Violet",
+        "approved": "CTO, 2026-10-25 (brand package Final_v4, Violet accent)",
+        "package": f"{PACKAGE['name']}, folder Final_v4/ (Final_v2/, Final_v3/ and the older Agate folder final/ are superseded and not used)",
         "package_sha256": PACKAGE["sha256"],
         "palette": PALETTE,
         "rules": {
-            "magma": "the interactive accent: links, active navigation, focus",
+            "violet": "the only interactive accent: links, active navigation, focus (#854AA6 on light grounds, #AB7CC7 on dark grounds)",
             "amber": "a restrained highlight and a non-text mark; never a button fill and never body text on a light ground",
-            "glow": "the logo's orb only; never a UI colour",
-            "map": "the area of interest is a dashed Magma #E43386 callout with a Night halo; Amber and Glow are never drawn on a map",
+            "magma": "the logo's vertical orbit only; never a UI colour",
+            "map": "no brand colour is drawn on a map: the area of interest is a white dashed line with a dark halo",
             "minimum_sizes": "horizontal logo 120 px wide, symbol 32 px; below that the app icon",
         },
-        "not_used": "Final_v3/assets/illustrative-map.jpg is a generated illustration and is not placed on any page",
+        "not_used": "Final_v4/assets/illustrative-map.jpg is a generated illustration and is not placed on any page",
         "files": entries,
     }
     files[RECORD] = (json.dumps(record, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
@@ -122,7 +122,7 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--source", required=True, type=pathlib.Path, help="the unpacked Final_v3/ folder of the brand package")
+    ap.add_argument("--source", required=True, type=pathlib.Path, help="the unpacked Final_v4/ folder of the brand package")
     ap.add_argument("--check", action="store_true", help="compare with the committed files instead of writing")
     args = ap.parse_args()
     files, _ = build(args.source)

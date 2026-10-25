@@ -187,7 +187,7 @@ EXPECTED_HOMEPAGE_SLOTS = ["context", "terrain", "thermal", "alteration", "prior
 HERO_DRAPE_STATE_CEILING = 1.25 * 1024 * 1024
 HERO_DRAPE_LAYERS = ["terrain", "thm01", "alt01", "priority"]
 # WEB-005A relief rise (docs/web-005-polish-authority@0e87675): 6-12 lossless states, 0.45-0.70 s.
-# The product palette that WEB-005B pinned here (--orb-*) is superseded by the Atlas palette (MER-275), then by the Agate palette and now by the Heat Trace palette (BRAND_TOKENS, atlas:foundation).
+# The product palette that WEB-005B pinned here (--orb-*) is superseded by the Atlas palette (MER-275), then by the Agate and Heat Trace palettes and now by the Violet palette (BRAND_TOKENS, atlas:foundation).
 # MER-108 governed-source pins and website-derivative bounds (B-VIS-04). The source SHA-256s are
 # the MER-113 identities in the terminal authority; normalization is d3a163bd's canonical kind per
 # layer; analytical opacity is 11c32e8d section 6. None of these may drift without Science.
@@ -793,23 +793,25 @@ def check_deploy_set(errors: list[str]) -> tuple[set[str], int]:
 # Naming: "Orbit", "Lift" and "Paper" stay the structural names of the dark ground, its step and the light ground (the classes
 # ground-orbit, ground-lift and ground-paper, and the messages of the page-group regions); their colours are --night, --night-lift
 # and --pumice.
-# Heat Trace (CTO, 2026-10-25, brand package Final_v3) replaces the Agate palette, which replaced the Atlas five-colour system.
-# The four brand colours as they read on a light surface (Ink stands for the wordmark's Plum as the text colour), the same
-# on a dark surface, and the neutral grounds and two text tones of the brand token file (Final_v3/tokens/orbgss-tokens.css).
-# Nothing else is a UI colour.
+# Violet (CTO, 2026-10-25, brand package Final_v4) replaces the Heat Trace palette (pink interface accent), which replaced the Agate
+# palette, which replaced the Atlas five-colour system. The brand colours as they read on a light surface (Ink stands for the
+# wordmark's Plum as the text colour; Violet is the one interactive accent), the same on a dark surface (Violet light is the
+# Obsidian accent), and the neutral grounds and two text tones of the brand token file (Final_v4/tokens/orbgss-tokens.css).
+# Magma is the logo's vertical orbit only and is not a UI colour. Nothing else is a UI colour.
 BRAND_TOKENS = {
-    "--ink": "#2D1B30", "--muted": "#756D76", "--magma": "#CD1B74", "--amber": "#FFA323",
-    "--mist": "#F5EFF7", "--mist-soft": "#C3BAC5", "--magma-light": "#F94997", "--amber-light": "#FFAA2E",
+    "--ink": "#2D1B30", "--muted": "#756D76", "--violet": "#854AA6", "--amber": "#FFA323",
+    "--mist": "#F5EFF7", "--mist-soft": "#C3BAC5", "--violet-light": "#AB7CC7", "--amber-light": "#FFA323",
     "--night": "#160A19", "--night-lift": "#241E25", "--pumice": "#F7F5F8", "--white": "#FFFFFF",
     "--ink-soft": "#5D525F", "--amber-ink": "#A15C13",
     "--rule": "rgba(195,186,197,.22)", "--rule-soft": "rgba(195,186,197,.11)",
     "--rule-paper": "rgba(117,109,118,.30)", "--rule-paper-soft": "rgba(117,109,118,.15)",
 }
 # Tokens that belonged to the superseded palettes (WEB-005B, the MER-255 greys, the Atlas five roles and the Agate names).
-# They may not come back. The look-behind keeps --night-lift and --rule-paper from matching; --muted is a Heat Trace token again.
+# They may not come back. The look-behind keeps --night-lift and --rule-paper from matching; --muted is a brand token again. The
+# Heat Trace accent (--magma, --magma-light) is retired: Magma is in the logo only.
 ATLAS_RETIRED_TOKEN = re.compile(r"(?<![\w-])--(?:orb-[\w-]+|accent(?:-soft)?|line(?:-soft)?|bg(?:-deep)?|beam|text|dim|"
                                  r"orbit|lift|paper|steel|slate|signal(?:-deep)?|caution(?:-deep)?|"
-                                 r"graphite(?:-soft)?|mineral(?:-light)?|teal(?:-light)?|gold(?:-light|-ink)?|ground(?:-lift)?|limestone)(?![\w-])")
+                                 r"graphite(?:-soft)?|mineral(?:-light)?|teal(?:-light)?|gold(?:-light|-ink)?|ground(?:-lift)?|limestone|magma(?:-light)?)(?![\w-])")
 ATLAS_CSS_REGIONS = ["foundation", "home", "shell", "geothermal", "solutions-about", "partner-sources"]
 ATLAS_PAGE_GROUPS = ["geothermal", "solutions-about", "partner-sources"]
 # Filled in by each page group's own region further down: {"prefixes": (...), "type_ready": bool}.
@@ -855,7 +857,7 @@ def atlas_strip_css(css: str) -> str:
 
 
 def atlas_colour_violations(css: str) -> list[str]:
-    """Every colour literal that is not one of the Heat Trace palette values (or a palette colour with alpha).
+    """Every colour literal that is not one of the Violet palette values (or a palette colour with alpha).
 
     Allowed: the fourteen palette hexes, rgba() of a palette triple at any alpha (an alpha is the same
     colour, not a new one), transparent and currentColor. Refused: any other hex, rgb()/hsl()/color-mix()
@@ -926,20 +928,20 @@ def atlas_contrast(a: str, b: str) -> float:
     return (hi + 0.05) / (lo + 0.05)
 
 
-# Text pairs the system promises (docs/WEB_HEAT_TRACE_BRAND_AUTHORITY.md section 2): name, text, ground, minimum. Reading text
-# keeps 7:1 on the dark grounds and on light ones; the accent and the small labels keep AA (4.5:1). Magma light on Night lift
-# is the one pair that sits just above AA (4.99:1); it is the hover and active colour of a link on a raised dark surface.
+# Text pairs the system promises (docs/WEB_VIOLET_BRAND_AUTHORITY.md section 1): name, text, ground, minimum. Reading text
+# keeps 7:1 on the dark grounds and on light ones; the accent and the small labels keep AA (4.5:1). Violet light on Night lift
+# is the one pair that sits just above AA (5.00:1); it is the hover and active colour of a link on a raised dark surface.
 ATLAS_CONTRAST_PAIRS = [
     ("mist on night", "--mist", "--night", 7.0), ("mist-soft on night", "--mist-soft", "--night", 7.0),
-    ("magma-light on night", "--magma-light", "--night", 4.5), ("amber-light on night", "--amber-light", "--night", 7.0),
+    ("violet-light on night", "--violet-light", "--night", 4.5), ("amber-light on night", "--amber-light", "--night", 7.0),
     ("mist on night-lift", "--mist", "--night-lift", 7.0), ("mist-soft on night-lift", "--mist-soft", "--night-lift", 7.0),
-    ("magma-light on night-lift", "--magma-light", "--night-lift", 4.5), ("amber-light on night-lift", "--amber-light", "--night-lift", 7.0),
+    ("violet-light on night-lift", "--violet-light", "--night-lift", 4.5), ("amber-light on night-lift", "--amber-light", "--night-lift", 7.0),
     ("ink on mist", "--ink", "--mist", 7.0), ("ink on pumice", "--ink", "--pumice", 7.0),
     ("ink-soft on pumice", "--ink-soft", "--pumice", 4.5), ("muted on pumice", "--muted", "--pumice", 4.5),
-    ("magma on pumice", "--magma", "--pumice", 4.5), ("amber-ink on pumice", "--amber-ink", "--pumice", 4.5),
+    ("violet on pumice", "--violet", "--pumice", 4.5), ("amber-ink on pumice", "--amber-ink", "--pumice", 4.5),
     # The light header, the footer and the light cards sit on white (the brand token --ogs-bg-surface).
     ("ink on white", "--ink", "--white", 7.0), ("ink-soft on white", "--ink-soft", "--white", 4.5),
-    ("muted on white", "--muted", "--white", 4.5), ("magma on white", "--magma", "--white", 4.5),
+    ("muted on white", "--muted", "--white", 4.5), ("violet on white", "--violet", "--white", 4.5),
     ("amber-ink on white", "--amber-ink", "--white", 4.5),
 ]
 
@@ -964,7 +966,7 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
         if len(defs) != 1 or f"{name}:{value}" not in root_text:
             fail(f"palette token {name} must be defined once in :root as {value}", errors)
     for m in sorted(set(ATLAS_RETIRED_TOKEN.findall(stripped))):
-        fail(f"styles.css still uses the retired colour token {m}; the Heat Trace palette (docs/WEB_HEAT_TRACE_BRAND_AUTHORITY.md) replaced it", errors)
+        fail(f"styles.css still uses the retired colour token {m}; the Violet palette (docs/WEB_VIOLET_BRAND_AUTHORITY.md) replaced it", errors)
     for name, text, ground, floor in ATLAS_CONTRAST_PAIRS:
         ratio = atlas_contrast(BRAND_TOKENS[text], BRAND_TOKENS[ground])
         if ratio < floor:
@@ -973,7 +975,7 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
     # -- 2. no other colour anywhere: the stylesheet, <style> blocks and inline styles --------------------
     for label, text in [("styles.css", css)] + [(rel, atlas_inline_css(h)) for rel, h in sorted(page_html.items())]:
         for item in atlas_colour_violations(text):
-            fail(f"{label}: colour {item} is not in the Heat Trace palette (images are exempt, UI colours are not)", errors)
+            fail(f"{label}: colour {item} is not in the Violet palette (images are exempt, UI colours are not)", errors)
     # Amber is a mark, a line and a label, never a fill (brand rule); scientific colours never go in a figure frame.
     for selector, body in atlas_rule_blocks(stripped):
         for prop, value in re.findall(r"([\w-]+)\s*:\s*([^;]+)", body):
@@ -1147,14 +1149,14 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
         if "background:var(--white)" not in rule(ground).replace(" ", ""):
             fail(f"{ground} must sit on white (--white): the approved logo is the light-ground version", errors)
     paper = rule(".ground-paper").replace(" ", "")
-    for need in ("--fg:var(--ink)", "--fg-2:var(--ink-soft)", "--link:var(--magma)", "--limit:var(--amber-ink)",
+    for need in ("--fg:var(--ink)", "--fg-2:var(--ink-soft)", "--link:var(--violet)", "--limit:var(--amber-ink)",
                  "--limit-line:var(--amber)", "background:var(--pumice)"):
         if need not in paper:
             fail(f"the paper ground must carry {need}", errors)
-    # The frame marks the area of interest on the priority figure; the brand's area-of-interest colour on a map or a figure is
-    # Magma, and Amber and Glow are never drawn on one (Final_v3/README.md, usage rules).
-    if "border:0solidvar(--magma-light)" not in rule(".target-frame i").replace(" ", ""):
-        fail("the homepage target frame must be Magma (--magma-light): the brand's area-of-interest colour", errors)
+    # The frame marks the area of interest on the priority figure; the brand draws no brand colour on a map or a figure (the
+    # scientific ramps run through violet and yellow): the area of interest is a white line (Final_v4/README.md, UI themes).
+    if "border:0solidvar(--white)" not in rule(".target-frame i").replace(" ", ""):
+        fail("the homepage target frame must be white (--white): the brand's area-of-interest line; no brand colour is drawn on a figure", errors)
     return {"regions": len(ATLAS_CSS_REGIONS), "fonts_bytes": sum((ROOT / ATLAS_FONT_DIR / f).stat().st_size for f in face_files.values() if (ROOT / ATLAS_FONT_DIR / f).exists())}
 
 
@@ -1212,8 +1214,8 @@ def light_theme_checks(errors: list[str], page_html: dict[str, str]) -> None:
     # Review of the light theme (2026-10-25): the skip link sits outside the light scope, so its focus ring would take the
     # pale dark-scope link colour (2.4:1 on the white header); and the desktop dropdown's shadow must not follow the sublist
     # into the mobile menu.
-    if ".skip-link:focus-visible{outline-color:var(--magma)}" not in flat:
-        bad("the skip link's focus ring must be Magma (at least 3:1 on the white header), not the pale dark-scope link colour")
+    if ".skip-link:focus-visible{outline-color:var(--violet)}" not in flat:
+        bad("the skip link's focus ring must be Violet (at least 3:1 on the white header), not the pale dark-scope link colour")
     if not re.search(r"\.submenuul\{min-width:0;[^}]*box-shadow:none", flat):
         bad("the mobile Solutions sublist must reset the desktop dropdown's box-shadow")
     dark = re.search(r"\.ground-orbit,\.ground-lift,\.domain-card,\.domain-band\{([^}]*)\}", flat)
@@ -1249,25 +1251,31 @@ def light_theme_checks(errors: list[str], page_html: dict[str, str]) -> None:
                 bad(f"{rel}: #{sid} is a photographic or result act and stays dark (no ground-paper)")
 
 
-# --- The Heat Trace brand assets and where the site wears them (CTO, 2026-10-25; MER-279 built the Agate version) ---------
+# --- The Violet brand assets and where the site wears them (CTO, 2026-10-25; MER-279 built the Agate version, then Heat Trace) ---
 BRAND_DIR = "assets/brand"
 BRAND_ROLES = {"logo-light": ("orbgss-logo-light", "svg"), "favicon": ("orbgss-favicon", "svg"),
                      "apple-touch-icon": ("orbgss-apple-touch-icon", "png"), "icon-192": ("orbgss-icon-192", "png"),
                      "icon-512": ("orbgss-icon-512", "png")}
 BRAND_PNG_SIZES = {"apple-touch-icon": 180, "icon-192": 192, "icon-512": 512}
-# The brand colours as the approved package states them (Final_v3/README.md), light and dark-background values.
-BRAND_LIGHT = {"plum": "#371641", "magma": "#CD1B74", "amber": "#FFA323", "glow": "#FEF1A1"}
-BRAND_DARK = {"violet": "#854AA6", "magma": "#E43386", "amber": "#FFAA2E", "glow": "#FFF4A5", "night": "#160A19", "mist": "#F5EFF7"}
+# The brand colours as the approved package states them (Final_v4/README.md): the six brand colours and the two UI forms of Violet.
+BRAND_COLOURS = {"plum": "#371641", "violet": "#854AA6", "magma": "#E43386", "amber": "#FFA323", "night": "#160A19", "mist": "#F5EFF7"}
+BRAND_UI_ACCENT = {"light": "#854AA6", "dark": "#AB7CC7"}
+BRAND_RECORD_PALETTE = {"brand": BRAND_COLOURS, "ui_accent": BRAND_UI_ACCENT}
 # What a shipped logo or icon may paint, by role. The horizontal logo is the light-ground version (the header and the footer
-# are white): Plum, Magma and Amber, and the black/white a mask needs. The favicon tile is Night with the dark-ground symbol.
+# are white): Plum, Amber and Magma (the vertical orbit), and the black/white a mask needs. The favicon tile is Night with the
+# dark-ground symbol (its outer orbit is Mist at 32 px and below, Violet above).
+BRAND_LOGO_LIGHT_PAINT = {BRAND_COLOURS[k] for k in ("plum", "magma", "amber")}
 BRAND_SVG_PAINT_OK = {
-    "logo-light": {v.upper() for v in BRAND_LIGHT.values()} | {"BLACK", "WHITE", "NONE"},
-    "favicon": {v.upper() for v in BRAND_DARK.values()} | {"BLACK", "WHITE", "NONE"},
+    "logo-light": {v.upper() for v in BRAND_LOGO_LIGHT_PAINT} | {"BLACK", "WHITE", "NONE"},
+    "favicon": {BRAND_COLOURS[k].upper() for k in ("night", "mist", "violet", "magma", "amber")} | {"BLACK", "WHITE", "NONE"},
 }
-# The locator map is a class-A illustration: Night-family neutrals of the brand token file plus one brand colour, the dashed
-# Magma area-of-interest callout (with a Night halo). Amber and Glow are never drawn on a map.
-BRAND_MAP_PAINT_OK = {"#110C12", "#1C161D", "#241E25", "#69646A", "#160A19", "#E43386"}
-BRAND_MAP_FORBIDDEN = {"#FFA323", "#FFAA2E", "#FEF1A1", "#FFF4A5"}
+# The locator map is a class-A illustration: Night-family neutrals of the brand token file, and the brand's map rule, which draws
+# no brand colour on a map (the scientific ramps run through violet and yellow): the area of interest is a white dashed line
+# (--ogs-map-callout) inside a dark halo (--ogs-map-callout-halo, Night at 70 %).
+BRAND_MAP_CALLOUT = "#FFFFFF"
+BRAND_MAP_HALO_OPACITY = ".7"
+BRAND_MAP_PAINT_OK = {"#110C12", "#1C161D", "#241E25", "#69646A", "#160A19", BRAND_MAP_CALLOUT}
+BRAND_MAP_FORBIDDEN = {BRAND_COLOURS[k] for k in ("plum", "violet", "magma", "amber")} | {BRAND_UI_ACCENT["dark"]}
 BRAND_LOGO_VIEWBOX = "0 0 619.41 144"     # the approved horizontal lock-up, as the SVG states it
 BRAND_LOGO_IMG = (619, 144)               # the width / height attributes the pages carry (the same ratio, whole pixels)
 BRAND_LOGO_MIN_WIDTH = 120  # the brand's minimum for the horizontal logo, in CSS px
@@ -1288,7 +1296,7 @@ def brand_svg_paints(text: str) -> set[str]:
 
 
 def brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str, int]:
-    """The approved Heat Trace identity: record, files, SVG paints, icon sizes, page heads, header and footer, manifest."""
+    """The approved Violet identity: record, files, SVG paints, icon sizes, page heads, header and footer, manifest."""
     def bad(msg: str) -> None:
         fail(f"brand: {msg}", errors)
 
@@ -1299,16 +1307,16 @@ def brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str, int]
     except (OSError, ValueError):
         bad(f"{BRAND_DIR}/brand.json is missing or is not JSON")
         return {"brand_files": 0}
-    if record.get("identity") != "Heat Trace":
-        bad("brand.json must record the Heat Trace identity")
-    if record.get("palette") != {"light": BRAND_LIGHT, "dark": BRAND_DARK}:
-        bad("brand.json must record the approved palette exactly (Plum #371641, Magma #CD1B74, Amber #FFA323, Glow #FEF1A1; "
-            "dark Violet #854AA6, Magma #E43386, Amber #FFAA2E, Glow #FFF4A5, Night #160A19, Mist #F5EFF7)")
+    if record.get("identity") != "Violet":
+        bad("brand.json must record the Violet identity")
+    if record.get("palette") != BRAND_RECORD_PALETTE:
+        bad("brand.json must record the approved palette exactly (Plum #371641, Violet #854AA6, Magma #E43386, Amber #FFA323, "
+            "Night #160A19, Mist #F5EFF7; interface accent #854AA6 on light grounds, #AB7CC7 on dark grounds)")
     # The stylesheet carries the brand values under the brand's own names. Plum is the wordmark's colour and Ink the text
-    # colour of the light theme; Glow and Violet live in the logo files only.
-    for token, value in (("--magma", BRAND_LIGHT["magma"]), ("--amber", BRAND_LIGHT["amber"]),
-                         ("--mist", BRAND_DARK["mist"]), ("--night", BRAND_DARK["night"]),
-                         ("--magma-light", "#F94997"), ("--amber-light", BRAND_DARK["amber"])):
+    # colour of the light theme; Plum and Magma live in the logo files only.
+    for token, value in (("--violet", BRAND_UI_ACCENT["light"]), ("--amber", BRAND_COLOURS["amber"]),
+                         ("--mist", BRAND_COLOURS["mist"]), ("--night", BRAND_COLOURS["night"]),
+                         ("--violet-light", BRAND_UI_ACCENT["dark"]), ("--amber-light", BRAND_COLOURS["amber"])):
         if BRAND_TOKENS.get(token, "").upper() != value:
             bad(f"{token} must be the approved brand value {value}")
     files = record.get("files", {})
@@ -1340,9 +1348,9 @@ def brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str, int]
             paints = brand_svg_paints(text)
             extra = paints - BRAND_SVG_PAINT_OK[role]
             if extra:
-                bad(f"{role}: {name} paints {sorted(extra)}, which are not Heat Trace brand colours for that ground")
-            if role == "logo-light" and not {BRAND_LIGHT["plum"], BRAND_LIGHT["magma"], BRAND_LIGHT["amber"]} <= paints:
-                bad(f"{role}: the logo must carry the light-background brand colours (Plum, Magma, Amber)")
+                bad(f"{role}: {name} paints {sorted(extra)}, which are not Violet-identity brand colours for that ground")
+            if role == "logo-light" and not {c.upper() for c in BRAND_LOGO_LIGHT_PAINT} <= paints:
+                bad(f"{role}: the logo must carry the light-background brand colours (Plum, Amber, Magma)")
             if role == "logo-light" and f'viewBox="{BRAND_LOGO_VIEWBOX}"' not in text:
                 bad(f"{role}: the logo's viewBox is not the approved {BRAND_LOGO_VIEWBOX} horizontal lock-up")
         else:
@@ -1419,7 +1427,7 @@ def brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str, int]
         if icons != want:
             bad(f"site.webmanifest icons must be exactly the recorded 192, 512 and SVG icons; found {sorted(map(str, icons))}")
 
-    # The locator map follows the brand's map rule: Night-family neutrals, one dashed Magma callout, no Amber or Glow.
+    # The locator map follows the brand's map rule: Night-family neutrals and a white dashed callout in a dark halo; no brand colour.
     try:
         locator = json.loads(MANIFEST.read_text(encoding="utf-8"))["web_m6"]["locator_map"]["path"]
         map_text = (ROOT / locator).read_text(encoding="utf-8")
@@ -1429,11 +1437,14 @@ def brand_checks(errors: list[str], page_html: dict[str, str]) -> dict[str, int]
     if map_text:
         paints = {x for x in brand_svg_paints(map_text) if x != "NONE"}
         if paints - BRAND_MAP_PAINT_OK:
-            bad(f"the locator map paints {sorted(paints - BRAND_MAP_PAINT_OK)}; a map uses Night-family neutrals and the Magma callout only")
-        if paints & BRAND_MAP_FORBIDDEN or "#E43386" not in paints:
-            bad("the locator map must carry the Magma area-of-interest callout (#E43386) and no Amber or Glow")
-        if not re.search(r'stroke="#E43386"[^>]*stroke-dasharray="[^"]+"|stroke-dasharray="[^"]+"[^>]*stroke="#E43386"', map_text):
+            bad(f"the locator map paints {sorted(paints - BRAND_MAP_PAINT_OK)}; a map uses Night-family neutrals and the white callout only")
+        if paints & BRAND_MAP_FORBIDDEN or BRAND_MAP_CALLOUT not in paints:
+            bad(f"the locator map must carry the white area-of-interest callout ({BRAND_MAP_CALLOUT}) and no brand colour (no Violet, Amber, Magma or Plum)")
+        callout = re.escape(BRAND_MAP_CALLOUT)
+        if not re.search(rf'stroke="{callout}"[^>]*stroke-dasharray="[^"]+"|stroke-dasharray="[^"]+"[^>]*stroke="{callout}"', map_text):
             bad("the locator map's area-of-interest callout must be dashed")
+        if not re.search(rf'stroke="#160A19"[^>]*stroke-opacity="{re.escape(BRAND_MAP_HALO_OPACITY)}"|stroke-opacity="{re.escape(BRAND_MAP_HALO_OPACITY)}"[^>]*stroke="#160A19"', map_text):
+            bad("the locator map's callout needs the brand's dark halo (Night at 70 % opacity)")
     # The caption crossover in script.js is derived from Mist and Ink; a palette change that forgets it fails here.
     script_text = (ROOT / "script.js").read_text(encoding="utf-8")
     cross = re.search(r"const CAPTION_TONE_CROSSOVER = ([0-9.]+);", script_text)

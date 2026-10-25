@@ -244,7 +244,7 @@ case("the locator map loses the kind line of its caption", GEOTHERMAL,
      "must carry the bottom-right caption")
 case("the locator map is shown on another page", ABOUT,
      regex(r'(<section class="[^"]*" id="principles"[^>]*>\s*)',
-           r'\1<img src="/assets/maps/kizildere-locator-006fcf1f.svg" alt="" data-i18n-alt="alt.locator" width="1200" height="574" />'),
+           r'\1<img src="/assets/maps/kizildere-locator-19b40fa0.svg" alt="" data-i18n-alt="alt.locator" width="1200" height="574" />'),
      "its home is the Geothermal page")
 
 # ---- Partner with us is the one home of the conversations -----------------------------------------------

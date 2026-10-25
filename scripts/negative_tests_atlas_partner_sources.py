@@ -98,7 +98,7 @@ suite.case("capitals get a third size in the region", CSS,
            swap(".route-go{flex:none;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);", ".route-go{flex:none;font-family:var(--mono);font-variant-ligatures:none;font-size:13px;"),
            ".route-go sets capitals at 13px")
 suite.case("a stray colour in the region", CSS, swap(".route-list a:hover{background:var(--wash)}", ".route-list a:hover{background:#112233}"),
-           "is not in the Heat Trace palette")
+           "is not in the Violet palette")
 suite.case("a medium weight in the region", CSS, swap(".route-title{flex:1 1 240px;font-size:var(--t-section);font-weight:300;", ".route-title{flex:1 1 240px;font-size:var(--t-section);font-weight:500;"),
            "font-weight 500")
 

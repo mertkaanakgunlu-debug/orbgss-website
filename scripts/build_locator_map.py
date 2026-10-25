@@ -36,16 +36,17 @@ AOI_HALF_KM = 18.0
 KM_PER_DEG_LAT = 111.32
 
 FOCUS_A3 = "TUR"
-# Heat Trace map colours (brand package Final_v3). The brand rule is that the area of interest on a map is a dashed Magma
-# callout (#E43386, the dark-ground Magma) with a Night halo, and that Amber and Glow are never drawn on a map; everything
-# else is a neutral of the brand's dark theme (Obsidian: orbgss-tokens.css, bg-app, bg-surface, bg-raised, border-strong).
+# Violet map colours (brand package Final_v4). The brand rule is that no brand colour is drawn on a map (the scientific
+# ramps run through violet and yellow, so Violet or Amber there would read as data): the area of interest is a white dashed
+# line (--ogs-map-callout, #FFFFFF) with a dark halo (--ogs-map-callout-halo, Night at 70 %); everything else is a neutral
+# of the brand's dark theme (Obsidian: orbgss-tokens.css, bg-app, bg-surface, bg-raised, border-strong).
 SEA = "#110C12"
 LAND = "#1C161D"
 FOCUS_FILL = "#241E25"
 FOCUS_LINE = "#69646A"
-AOI_LINE = "#E43386"
+AOI_LINE = "#FFFFFF"
 AOI_HALO = "#160A19"
-AOI_HALO_OPACITY = ".6"
+AOI_HALO_OPACITY = ".7"
 AOI_FILL_OPACITY = ".14"
 AOI_DASH = "6 3"
 

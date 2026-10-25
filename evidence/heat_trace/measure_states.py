@@ -1,4 +1,4 @@
-"""Focus, hover and rest states of the Heat Trace palette in a real browser.
+"""Focus, hover and rest states of the brand palette (Heat Trace, then Violet) in a real browser.
 
     python evidence/heat_trace/measure_states.py [--base http://127.0.0.1:8766] [--out measurements/states.json]
 
@@ -31,6 +31,8 @@ def rgb(s):
 
 
 WHITE, NIGHT = (255, 255, 255), (22, 10, 25)
+# The ring colour of the dark scope: Violet light (the Violet palette; it was Magma light rgb(249, 73, 151) in Heat Trace).
+DARK_RING = "rgb(171, 124, 199)"
 out = {"focus_stops": [], "states": {}}
 with sync_playwright() as p:
     b = p.chromium.launch(executable_path=args.chrome)
@@ -44,7 +46,7 @@ with sync_playwright() as p:
             const r = e.getBoundingClientRect();
             return {tag: e.tagName, target: (e.getAttribute('href') || e.id || e.className).toString().slice(0, 40),
                     outline: c.outlineStyle, width: c.outlineWidth, colour: c.outlineColor, top: Math.round(r.top)}}""")
-        d["ground"] = "night" if d["colour"] == "rgb(249, 73, 151)" else "light"
+        d["ground"] = "night" if d["colour"] == DARK_RING else "light"
         d["ring_contrast"] = ratio(rgb(d["colour"]), NIGHT if d["ground"] == "night" else WHITE)
         out["focus_stops"].append(d)
 

@@ -2,7 +2,17 @@
 
 Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
 
-## Heat Trace brand adoption on the existing site — 2026-10-25 (`REVIEW_READY`, not published)
+## Violet brand adoption on the existing site — 2026-10-25 (`REVIEW_READY`, not published)
+
+The CTO approved the final brand identity "Violet vurgu" (package `OrbGSS_Brand_Tasarim_Final.zip`, folder `Final_v4/`) and asked for it on the website. It replaces the Heat Trace pink accent of the previous entry; a brand adoption, not a redesign. Branched from the Heat Trace head `a213731`. Spec: `docs/WEB_VIOLET_BRAND_AUTHORITY.md`; evidence: `tasks/VIOLET_EVIDENCE.md`.
+
+- **Palette:** Magma `#CD1B74` / `#F94997` are replaced by Violet `#854AA6` (light grounds) and Violet light `#AB7CC7` (dark grounds) as the one interactive accent; Amber is `#FFA323` on both grounds (the package dropped `#FFAA2E`). Ink, Muted, Mist, Mist soft, Night, Night lift, Pumice, white, Ink soft and Amber ink are unchanged. Plum and Magma live in the logo only; the `--magma` tokens are retired.
+- **Marks:** new horizontal logo, favicon SVG, `favicon.ico`, touch icon and 192 / 512 manifest icons from `Final_v4/`, hash-named under `assets/brand/` and recorded in `brand.json`; `scripts/build_brand_assets.py` rebuilds them. The Heat Trace files are deleted.
+- **Locator map and target frame:** the package's map rule: no brand colour on a map, the area of interest is a white dashed line in a dark halo (Night at 70 %); new checksum-named map file. The Act 4 target frame is white.
+- **Validator and tests:** `BRAND_TOKENS`, the contrast pairs (violet), the retired list (`--magma`, `--magma-light`), `brand_checks` (record, logo and favicon paints, map rule with halo) and `negative_tests_brand.py` follow the new identity; the other suites moved to the new tokens and messages.
+- **Unchanged:** page set, navigation, URLs, the four-act homepage, imagery, scientific rasters (not recoloured), the hero video, copy, type and fonts (the package names Mona Sans / Martian Mono; open for the CTO), `CAPTION_TONE_CROSSOVER` (0.1967; Mist and Ink did not change).
+
+## Heat Trace brand adoption on the existing site — 2026-10-25 (`REVIEW_READY`, not published; superseded by Violet)
 
 The CTO decided on the final brand identity (package `OrbGSS Logo Tasarım4.zip`, folder `Final_v3/`, "Heat Trace") and asked for it on the website. It replaces the Agate identity of MER-279; a brand adoption, not a redesign. Branched from the light-theme head `7be2907`. Spec: `docs/WEB_HEAT_TRACE_BRAND_AUTHORITY.md`; evidence: `tasks/HEAT_TRACE_EVIDENCE.md`.
 
