@@ -36,16 +36,16 @@ AOI_HALF_KM = 18.0
 KM_PER_DEG_LAT = 111.32
 
 FOCUS_A3 = "TUR"
-# Violet map colours (brand package Final_v4). The brand rule is that no brand colour is drawn on a map (the scientific
-# ramps run through violet and yellow, so Violet or Amber there would read as data): the area of interest is a white dashed
+# v6 map colours (brand package Final_v6). The brand rule is that no brand colour is drawn on a map (the scientific
+# ramps run through violet and yellow, so an Ocean or Gold mark there would read as data): the area of interest is a white dashed
 # line (--ogs-map-callout, #FFFFFF) with a dark halo (--ogs-map-callout-halo, Night at 70 %); everything else is a neutral
-# of the brand's dark theme (Obsidian: orbgss-tokens.css, bg-app, bg-surface, bg-raised, border-strong).
-SEA = "#110C12"
-LAND = "#1C161D"
-FOCUS_FILL = "#241E25"
-FOCUS_LINE = "#69646A"
+# of the brand's dark theme (Obsidian: orbgss-tokens.css, bg-sunken, bg-app, bg-raised, border-strong).
+SEA = "#0A0F17"
+LAND = "#10161F"
+FOCUS_FILL = "#222934"
+FOCUS_LINE = "#6A707A"
 AOI_LINE = "#FFFFFF"
-AOI_HALO = "#160A19"
+AOI_HALO = "#0D1626"
 AOI_HALO_OPACITY = ".7"
 AOI_FILL_OPACITY = ".14"
 AOI_DASH = "6 3"

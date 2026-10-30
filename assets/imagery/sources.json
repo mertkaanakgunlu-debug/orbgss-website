@@ -4107,10 +4107,10 @@
     "locator_map": {
       "id": "kizildere-locator",
       "asset_class": "A (cartographic illustration from public-domain vector data); not Earth-observation imagery and not product proof",
-      "path": "assets/maps/kizildere-locator-19b40fa0.svg",
+      "path": "assets/maps/kizildere-locator-3c3c49fd.svg",
       "format": "image/svg+xml",
       "bytes": 22671,
-      "sha256": "19b40fa0ab032d3810a2361d957a8a60273fdc83f66c5af647377474bfd58c83",
+      "sha256": "3c3c49fd73850c2a7379f533f380077535f804e4180ca33dfa5929ef675c6edd",
       "viewbox": [
         1200,
         574
@@ -4149,7 +4149,7 @@
         "clip": "Sutherland-Hodgman, 24 units outside the frame so no clip edge is visible",
         "simplify": "a vertex closer than 0.7 viewBox units to the last kept one is dropped; rings under 1.5 square units are dropped",
         "drawn": "Turkiye filled and outlined; every other country filled and stroked in one colour, so no third-country border is drawn; no text in the file",
-        "colours": "Violet (Final_v4): neutrals of the brand's dark theme from the token file (sea #110C12, other countries #1C161D, Turkiye #241E25 with a #69646A outline) and the brand's map rule, which draws no brand colour on a map: the area of interest is a white #FFFFFF dashed 2 px line over a 14 % white fill inside a 5 px Night #160A19 halo at 70 % opacity, because the scientific ramps run through violet and yellow and a brand hue on the map would read as data. The geometry is byte-identical to the Heat Trace build (same source, same generator); only the colour constants changed."
+        "colours": "v6 (Final_v6): neutrals of the brand's dark theme (Obsidian) from the token file (sea #0A0F17, other countries #10161F, Turkiye #222934 with a #6A707A outline) and the brand's map rule, which draws no brand colour on a map: the area of interest is a white #FFFFFF dashed 2 px line over a 14 % white fill inside a 5 px Night #0D1626 halo at 70 % opacity, because the scientific ramps run through violet and yellow and a brand hue on the map would read as data. The geometry is byte-identical to the Violet build (same source, same generator); only the colour constants changed."
       },
       "aoi": {
         "centre": "37.9794 N, 28.7907 E",

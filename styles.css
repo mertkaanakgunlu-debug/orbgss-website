@@ -24,45 +24,45 @@
    block or in an inline style. Images are exempt: rasters, the legend ramp, the hero video and poster,
    the logo. A scientific colour map is never a UI colour and no UI colour goes inside a figure frame. */
 :root{
-  /* The brand colours as they read on a light surface (Violet, Final_v4, approved by the CTO on 2026-10-25): Ink (the text colour of
-     the Pumice theme), Muted (lines only), Violet (the one interactive accent) and Amber. Plum is the wordmark's colour and lives in
-     the logo file only; Magma is the logo's vertical orbit and is not a UI colour. */
-  --ink:#2D1B30;
-  --muted:#756D76;
-  --violet:#854AA6;
-  --amber:#FFA323;
-  /* The same on a dark surface, the brand's own dark-background values (Mist and Mist soft are the Obsidian text colours, Violet light
-     is the Obsidian accent, Amber light its highlight). Violet is the interactive accent; amber is a restrained highlight and never a
+  /* The brand colours as they read on a light surface (v6, Final_v6, chosen by the team and the CTO on 2026-10-30): Ink (the text colour
+     of the Pumice theme), Muted (lines only), Ocean (the one interactive accent) and Gold. Navy is the wordmark's colour, Maroon the
+     logo's vertical orbit and Deep Gold its inner orbit on light grounds; all three live in the logo file only and are not UI colours. */
+  --ink:#142435;
+  --muted:#6A7178;
+  --ocean:#006CCA;
+  --gold:#F8AD24;
+  /* The same on a dark surface, the brand's own dark-background values (Mist and Mist soft are the Obsidian text colours, Ocean light
+     is the Obsidian accent, Gold light its highlight). Ocean is the interactive accent; gold is a restrained highlight and never a
      button fill or body text. */
-  --mist:#F5EFF7;
-  --mist-soft:#C3BAC5;
-  --violet-light:#AB7CC7;
-  --amber-light:#FFA323;
+  --mist:#EDF2F9;
+  --mist-soft:#B7BEC8;
+  --ocean-light:#54A4FB;
+  --gold-light:#F8AD24;
   /* Neutral grounds and two text tones, all from the brand token file (orbgss-tokens.css): Night (the dark ground), Night lift
-     (the Obsidian raised surface), Pumice (the light ground) and Amber ink, the amber text tone for light surfaces. */
-  --night:#160A19;
-  --night-lift:#241E25;
-  --pumice:#F7F5F8;
+     (the Obsidian raised surface), Pumice (the light ground) and Gold ink, the gold text tone for light surfaces. */
+  --night:#0D1626;
+  --night-lift:#222934;
+  --pumice:#F4F6F8;
   --white:#FFFFFF;
-  --ink-soft:#5D525F;
-  --amber-ink:#A15C13;
-  --rule:rgba(195,186,197,.22);
-  --rule-soft:rgba(195,186,197,.11);
-  --rule-paper:rgba(117,109,118,.30);
-  --rule-paper-soft:rgba(117,109,118,.15);
+  --ink-soft:#4E5762;
+  --gold-ink:#9C5F00;
+  --rule:rgba(183,190,200,.22);
+  --rule-soft:rgba(183,190,200,.11);
+  --rule-paper:rgba(106,113,120,.30);
+  --rule-paper-soft:rgba(106,113,120,.15);
   /* Roles on the current ground. The dark ground is the default; .ground-paper, the header and the footer are the light
      ground and change them. --surface is a panel on the ground, --matte what shows behind a loading image, --wash the
      hover and selection tint. */
   --fg:var(--mist);
   --fg-2:var(--mist-soft);
-  --link:var(--violet-light);
-  --limit:var(--amber-light);
-  --limit-line:var(--amber-light);
+  --link:var(--ocean-light);
+  --limit:var(--gold-light);
+  --limit-line:var(--gold-light);
   --hair:var(--rule);
   --hair-soft:var(--rule-soft);
   --surface:var(--night-lift);
   --matte:var(--night);
-  --wash:rgba(171,124,199,.07);
+  --wash:rgba(84,164,251,.07);
   --sans:"OrbGSS Sans","OrbGSS Sans Fallback",sans-serif;
   --mono:"OrbGSS Mono","OrbGSS Mono Fallback",monospace;
   /* The type scale (1440 px down to 390 px, clamped at both ends). Mono caps come in exactly two sizes
@@ -91,7 +91,7 @@ img{display:block;max-width:100%}
 button,a{-webkit-tap-highlight-color:transparent}
 :focus-visible{outline:2px solid var(--link);outline-offset:4px}
 .skip-link{position:fixed;left:16px;top:16px;z-index:999;transform:translateY(-160%);background:var(--pumice);color:var(--ink);padding:10px 14px;border-radius:0;font-size:13px;transition:transform .2s ease}.skip-link:focus{transform:none}
-.skip-link:focus-visible{outline-color:var(--violet)}
+.skip-link:focus-visible{outline-color:var(--ocean)}
 
 /* === atlas:foundation === MER-275. Shared components. Page threads compose these and never edit them;
    a change needed here goes back to the foundation owner. */
@@ -110,7 +110,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 .lede{margin:0;font-size:var(--t-lede);line-height:1.62;color:var(--fg);text-wrap:pretty}
 .body{margin:0;font-size:var(--t-body);line-height:1.65;color:var(--fg-2)}
 
-/* The text link: caps, underline, arrow. Violet light on dark, Violet on paper. */
+/* The text link: caps, underline, arrow. Ocean light on dark, Ocean on paper. */
 .text-link{display:inline-flex;align-items:center;gap:14px;padding:6px 0 7px;font-size:var(--t-label);font-weight:400;letter-spacing:var(--track);text-transform:uppercase;color:var(--link);border-bottom:1px solid var(--link);transition:color .2s ease;white-space:nowrap}
 .text-link:hover{color:var(--fg)}
 
@@ -121,17 +121,17 @@ button,a{-webkit-tap-highlight-color:transparent}
    names are structural, not colour names: orbit and lift are the dark grounds, paper the light one. */
 .ground{position:relative;padding:clamp(64px,7vw,112px) var(--pad)}
 .ground-in{width:min(var(--shell),100%);margin-inline:auto}
-.ground-orbit,.ground-lift,.domain-card,.domain-band{--fg:var(--mist);--fg-2:var(--mist-soft);--link:var(--violet-light);--limit:var(--amber-light);--limit-line:var(--amber-light);--hair:var(--rule);--hair-soft:var(--rule-soft);--surface:var(--night-lift);--matte:var(--night);--wash:rgba(171,124,199,.07)}
+.ground-orbit,.ground-lift,.domain-card,.domain-band{--fg:var(--mist);--fg-2:var(--mist-soft);--link:var(--ocean-light);--limit:var(--gold-light);--limit-line:var(--gold-light);--hair:var(--rule);--hair-soft:var(--rule-soft);--surface:var(--night-lift);--matte:var(--night);--wash:rgba(84,164,251,.07)}
 .ground-orbit{background:var(--night);color:var(--fg)}
 .ground-lift{background:var(--night-lift);color:var(--fg)}
-.ground-paper,.site-header,.site-footer{--fg:var(--ink);--fg-2:var(--ink-soft);--link:var(--violet);--limit:var(--amber-ink);--limit-line:var(--amber);--hair:var(--rule-paper);--hair-soft:var(--rule-paper-soft);--surface:var(--white);--matte:var(--pumice);--wash:rgba(133,74,166,.07)}
+.ground-paper,.site-header,.site-footer{--fg:var(--ink);--fg-2:var(--ink-soft);--link:var(--ocean);--limit:var(--gold-ink);--limit-line:var(--gold);--hair:var(--rule-paper);--hair-soft:var(--rule-paper-soft);--surface:var(--white);--matte:var(--pumice);--wash:rgba(0,108,202,.07)}
 .ground-paper{background:var(--pumice);color:var(--fg)}
 
 /* ---------- caption: location and coordinates directly on the image, bottom-right, bare mono ----------
    No card, box or band: legibility comes from a tight halo, and the tone is chosen per panel from the
    measured luminance of the region the caption sits over (data-label-tone, script.js). Light is Paper
    with an Orbit halo, dark is Orbit with a Paper halo. */
-.scene-label{position:absolute;right:var(--pad);bottom:22px;z-index:3;margin:0;text-align:right;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-caption);font-weight:400;line-height:1.8;text-transform:uppercase;letter-spacing:var(--track);color:var(--mist);text-shadow:0 1px 2px rgba(22,10,25,.65),0 0 14px rgba(22,10,25,.5);pointer-events:none}
+.scene-label{position:absolute;right:var(--pad);bottom:22px;z-index:3;margin:0;text-align:right;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-caption);font-weight:400;line-height:1.8;text-transform:uppercase;letter-spacing:var(--track);color:var(--mist);text-shadow:0 1px 2px rgba(13,22,38,.65),0 0 14px rgba(13,22,38,.5);pointer-events:none}
 .scene-label span{display:block}
 .scene-label span+span{color:var(--mist-soft)}
 /* The scientific rasters and the score colour ramp are published exactly as the accepted GEO-039 export
@@ -139,15 +139,15 @@ button,a{-webkit-tap-highlight-color:transparent}
    scientific content. Do not remove this guard. */
 [data-visual-status="product-proof"] img{filter:none;opacity:1}
 [data-label-tone="light"] .scene-label{color:var(--mist);
-  text-shadow:0 0 1px rgba(22,10,25,1),0 0 2px rgba(22,10,25,1),0 0 3px rgba(22,10,25,1),
-              0 0 5px rgba(22,10,25,1),0 0 9px rgba(22,10,25,.95),0 0 18px rgba(22,10,25,.85),
-              0 1px 2px rgba(22,10,25,1)}
+  text-shadow:0 0 1px rgba(13,22,38,1),0 0 2px rgba(13,22,38,1),0 0 3px rgba(13,22,38,1),
+              0 0 5px rgba(13,22,38,1),0 0 9px rgba(13,22,38,.95),0 0 18px rgba(13,22,38,.85),
+              0 1px 2px rgba(13,22,38,1)}
 /* All three lines carry the full tone colour: hierarchy comes from content, not from opacity, and the
    third line is the one that says what the visual actually is. */
 [data-label-tone="light"] .scene-label span+span,
 [data-label-tone="light"] .scene-label .scene-kind{color:var(--mist)}
 [data-label-tone="dark"] .scene-label{color:var(--ink);
-  text-shadow:0 0 1px rgba(245,239,247,.95),0 0 3px rgba(245,239,247,.8),0 1px 2px rgba(245,239,247,.85)}
+  text-shadow:0 0 1px rgba(237,242,249,.95),0 0 3px rgba(237,242,249,.8),0 1px 2px rgba(237,242,249,.85)}
 [data-label-tone="dark"] .scene-label span+span,
 [data-label-tone="dark"] .scene-label .scene-kind{color:var(--ink)}
 
@@ -177,7 +177,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 
 /* ---------- header / navigation ---------- */
 .site-header{height:var(--header-h);padding:0 var(--pad);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--hair);background:var(--white);position:relative;z-index:40}
-/* The approved Violet-identity logo (Final_v4, light-ground version): the symbol and the OrbGSS wordmark in the Plum, Amber and Magma
+/* The approved v6-identity logo (Final_v6, light-ground version): the symbol and the OrbGSS wordmark in the Navy, Deep Gold, Maroon and Gold
    of a light surface, an SVG at 619:144. The brand's minimum is 120 px wide, so the header never goes under 28 px high (120 px wide), and is 32 px high (138 px wide) above 560 px;
    the vertical padding keeps a real activation box (WCAG 2.5.8) around it. */
 .brand{display:inline-flex;align-items:center;padding:6px 0}
@@ -193,7 +193,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 .has-menu{position:relative}
 .submenu{position:absolute;top:100%;left:-18px;padding-top:22px;display:none;z-index:50}
 .has-menu.open .submenu{display:block}
-.submenu ul{list-style:none;margin:0;padding:8px 0;min-width:250px;background:var(--white);border:1px solid var(--hair);box-shadow:0 12px 32px rgba(45,27,48,.12)}
+.submenu ul{list-style:none;margin:0;padding:8px 0;min-width:250px;background:var(--white);border:1px solid var(--hair);box-shadow:0 12px 32px rgba(20,36,53,.12)}
 .submenu a{display:block;padding:11px 18px;transition:color .15s ease,background .15s ease;white-space:nowrap}
 .submenu a:hover,.submenu a:focus-visible{color:var(--fg);background:var(--wash)}
 .submenu a:focus-visible{outline-offset:-3px}
@@ -267,7 +267,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 .hero[data-hero-state="playing"] .hero-video,
 .hero[data-hero-state="held"] .hero-video{opacity:1}
 @property --hs50{syntax:'<number>';inherits:false;initial-value:.48}@property --hs52{syntax:'<number>';inherits:false;initial-value:.4467}@property --hs54{syntax:'<number>';inherits:false;initial-value:.4133}@property --hs56{syntax:'<number>';inherits:false;initial-value:.38}@property --hs58{syntax:'<number>';inherits:false;initial-value:.3467}@property --hs61{syntax:'<number>';inherits:false;initial-value:.2967}@property --hs74{syntax:'<number>';inherits:false;initial-value:.08}@property --hs100{syntax:'<number>';inherits:false;initial-value:.04}@property --hv24{syntax:'<number>';inherits:false;initial-value:.292}@property --hv30{syntax:'<number>';inherits:false;initial-value:.163}@property --hv32{syntax:'<number>';inherits:false;initial-value:.12}@property --hv33{syntax:'<number>';inherits:false;initial-value:.114}
-.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,10,25,.97) 0%,rgba(22,10,25,.88) 27%,rgba(22,10,25,.5496) 46%,rgba(22,10,25,var(--hs50)) 50%,rgba(22,10,25,var(--hs52)) 52%,rgba(22,10,25,var(--hs54)) 54%,rgba(22,10,25,var(--hs56)) 56%,rgba(22,10,25,var(--hs58)) 58%,rgba(22,10,25,var(--hs61)) 61%,rgba(22,10,25,var(--hs74)) 74%,rgba(22,10,25,var(--hs100)) 100%),linear-gradient(0deg,rgba(22,10,25,.82) 0%,rgba(22,10,25,.55) 12%,rgba(22,10,25,var(--hv24)) 24%,rgba(22,10,25,var(--hv30)) 30%,rgba(22,10,25,var(--hv32)) 32%,rgba(22,10,25,var(--hv33)) 33%,transparent 52%);transition:--hs50 .9s ease,--hs52 .9s ease,--hs54 .9s ease,--hs56 .9s ease,--hs58 .9s ease,--hs61 .9s ease,--hs74 .9s ease,--hs100 .9s ease,--hv24 .9s ease,--hv30 .9s ease,--hv32 .9s ease,--hv33 .9s ease}
+.hero-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,22,38,.97) 0%,rgba(13,22,38,.88) 27%,rgba(13,22,38,.5496) 46%,rgba(13,22,38,var(--hs50)) 50%,rgba(13,22,38,var(--hs52)) 52%,rgba(13,22,38,var(--hs54)) 54%,rgba(13,22,38,var(--hs56)) 56%,rgba(13,22,38,var(--hs58)) 58%,rgba(13,22,38,var(--hs61)) 61%,rgba(13,22,38,var(--hs74)) 74%,rgba(13,22,38,var(--hs100)) 100%),linear-gradient(0deg,rgba(13,22,38,.82) 0%,rgba(13,22,38,.55) 12%,rgba(13,22,38,var(--hv24)) 24%,rgba(13,22,38,var(--hv30)) 30%,rgba(13,22,38,var(--hv32)) 32%,rgba(13,22,38,var(--hv33)) 33%,transparent 52%);transition:--hs50 .9s ease,--hs52 .9s ease,--hs54 .9s ease,--hs56 .9s ease,--hs58 .9s ease,--hs61 .9s ease,--hs74 .9s ease,--hs100 .9s ease,--hv24 .9s ease,--hv30 .9s ease,--hv32 .9s ease,--hv33 .9s ease}
 .hero-content{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;height:100%;padding:30px var(--pad) 56px;width:min(780px,62vw)}
 
 /* The analytical payoff (WEB-005A final production): lossless full-frame drape states on the held
@@ -297,7 +297,7 @@ button,a{-webkit-tap-highlight-color:transparent}
 .hero h1{font-size:var(--t-page);font-weight:300;letter-spacing:-.03em;line-height:1;margin:0 0 30px;max-width:11ch;text-wrap:balance}
 .hero-copy{max-width:600px;color:var(--mist);line-height:1.62;font-size:var(--t-lede);margin:0 0 38px;text-wrap:pretty}
 .hero-actions{display:flex;align-items:center;flex-wrap:wrap;gap:clamp(22px,3vw,44px)}
-.button{width:max-content;display:inline-flex;align-items:center;gap:34px;border:1px solid rgba(245,239,247,.68);border-radius:11px;padding:15px 21px;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;background:rgba(22,10,25,.38);backdrop-filter:blur(8px);transition:background .2s ease,color .2s ease}.button:hover{background:var(--mist);color:var(--ink)}
+.button{width:max-content;display:inline-flex;align-items:center;gap:34px;border:1px solid rgba(237,242,249,.68);border-radius:11px;padding:15px 21px;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;background:rgba(13,22,38,.38);backdrop-filter:blur(8px);transition:background .2s ease,color .2s ease}.button:hover{background:var(--mist);color:var(--ink)}
 
 /* ================================================================================
    WEB-005B R11 — the homepage after the hero (accepted final Claude Design).
@@ -383,7 +383,7 @@ body.home{background:var(--pumice)}
    is the bottom edge: enough for the caption, and enough that the image dissolves into the page
    ground instead of ending on a hard line (R10 section 5). */
 .context-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:
-  linear-gradient(0deg,rgba(22,10,25,.98) 0%,rgba(22,10,25,.72) 8%,rgba(22,10,25,.3) 20%,rgba(22,10,25,.05) 34%,transparent 48%)}
+  linear-gradient(0deg,rgba(13,22,38,.98) 0%,rgba(13,22,38,.72) 8%,rgba(13,22,38,.3) 20%,rgba(13,22,38,.05) 34%,transparent 48%)}
 .place-copy{grid-row:2;position:relative;z-index:2;display:flex;flex-direction:column;gap:18px;
   padding:clamp(34px,6vw,56px) var(--pad) clamp(44px,7vw,72px);width:100%}
 .place-copy h2{max-width:14ch;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08}
@@ -500,7 +500,7 @@ body.home{background:var(--pumice)}
    below can move which cells carry one without restating where it sits. */
 .result-defs>div::before{content:none;position:absolute;left:calc(var(--defs-gap) / -2);top:24px;bottom:8px;width:1px;background:var(--rule-soft)}
 .result-defs>div+div::before{content:""}
-.result-defs dt{font-size:var(--t-label);font-family:var(--mono);letter-spacing:var(--track);text-transform:uppercase;color:var(--violet-light);margin-bottom:10px}
+.result-defs dt{font-size:var(--t-label);font-family:var(--mono);letter-spacing:var(--track);text-transform:uppercase;color:var(--ocean-light);margin-bottom:10px}
 .result-defs dd{margin:0;font-size:var(--t-body);line-height:1.65;color:var(--mist-soft)}
 .result-actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(22px,3vw,44px);margin-top:clamp(26px,2.8vw,40px)}
 
@@ -525,14 +525,14 @@ body.home{background:var(--pumice)}
 .inspect-base>img{position:absolute;left:-45.0835%;top:-25%;width:266.6667%;height:150%;max-width:none;object-fit:cover}
 .inspect-layer{position:absolute;left:0;top:0;bottom:0;width:var(--pos);overflow:hidden;opacity:0;visibility:hidden}
 .inspect-layer>img{position:absolute;left:0;top:0;height:100%;width:auto;max-width:none}
-.inspect-divider{position:absolute;top:0;bottom:0;left:var(--pos);width:1px;background:rgba(245,239,247,.72);pointer-events:none}
-.inspect-divider::after{content:"";position:absolute;left:-6px;top:calc(50% - 13px);width:13px;height:26px;border:1px solid rgba(245,239,247,.72);background:rgba(22,10,25,.5)}
+.inspect-divider{position:absolute;top:0;bottom:0;left:var(--pos);width:1px;background:rgba(237,242,249,.72);pointer-events:none}
+.inspect-divider::after{content:"";position:absolute;left:-6px;top:calc(50% - 13px);width:13px;height:26px;border:1px solid rgba(237,242,249,.72);background:rgba(13,22,38,.5)}
 .inspect-tags{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;margin:0;padding:9px 11px;font-family:var(--mono);font-size:var(--t-caption);letter-spacing:var(--track);text-transform:uppercase;color:var(--mist);
-  text-shadow:0 0 2px rgba(22,10,25,1),0 0 5px rgba(22,10,25,.95),0 0 12px rgba(22,10,25,.85);pointer-events:none}
+  text-shadow:0 0 2px rgba(13,22,38,1),0 0 5px rgba(13,22,38,.95),0 0 12px rgba(13,22,38,.85);pointer-events:none}
 /* Hidden until script.js takes the range over: an input nothing listens to is worse than none. */
 .inspect-range{position:absolute;inset:0;width:100%;height:100%;margin:0;background:transparent;opacity:0;cursor:ew-resize;display:none}
 .inspect-frame.is-live .inspect-range{display:block}
-.inspect-range:focus-visible+.inspect-divider{background:var(--violet-light);width:2px}
+.inspect-range:focus-visible+.inspect-divider{background:var(--ocean-light);width:2px}
 .inspect-note{max-width:none}
 #cp-thermal:checked~.inspect-figure .inspect-layer[data-pair="thermal"],
 #cp-alteration:checked~.inspect-figure .inspect-layer[data-pair="alteration"],
@@ -559,7 +559,7 @@ body.home{background:var(--pumice)}
 .domains{--domain-copy-h:140px}
 .domain-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .25s ease}
 .domain-card:hover>img{opacity:.92}
-.domain-shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(22,10,25,.94) 0%,rgba(22,10,25,.6) 34%,rgba(22,10,25,.06) 76%)}
+.domain-shade{position:absolute;inset:0;background:linear-gradient(0deg,rgba(13,22,38,.94) 0%,rgba(13,22,38,.6) 34%,rgba(13,22,38,.06) 76%)}
 /* R14: one composition on all three cards — title, sentence, status, lower-left, identical
    padding. The asymmetric right gutter and the secondary cards' extra bottom padding both existed
    only to keep the copy clear of the per-card technical caption, and that caption is gone. */
@@ -570,12 +570,12 @@ body.home{background:var(--pumice)}
 .domain-copy p{margin:0;max-width:46ch;font-size:var(--t-body);line-height:1.6;color:var(--fg)}
 .domain-status{margin:2px 0 0;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);text-transform:uppercase;color:var(--fg-2)}
 .domain-status.is-active{color:var(--link)}
-/* The "Active" label sits on a photograph (the homepage lead card, the Geothermal band of /solutions/). Violet light
+/* The "Active" label sits on a photograph (the homepage lead card, the Geothermal band of /solutions/). Ocean light
    type needs a ground darker than the lightest pixels of a photograph for 4.5:1, and the gradient shade alone left
    3.1-3.4:1 over the Yellowstone snow (measured in a browser). A feathered Night scrim sits under the label itself, no
    box, no edge: 95 % Night at its core, which keeps the label above 4.5:1 over any pixel, white included. */
 .domain-card .domain-status.is-active,.domain-band .domain-status.is-active{position:relative;isolation:isolate;width:fit-content}
-.domain-card .domain-status.is-active::before,.domain-band .domain-status.is-active::before{content:"";position:absolute;z-index:-1;inset:-28px -72px;pointer-events:none;background:radial-gradient(closest-side,rgba(22,10,25,.95) 0,rgba(22,10,25,.95) 66%,rgba(22,10,25,0) 100%)}
+.domain-card .domain-status.is-active::before,.domain-band .domain-status.is-active::before{content:"";position:absolute;z-index:-1;inset:-28px -72px;pointer-events:none;background:radial-gradient(closest-side,rgba(13,22,38,.95) 0,rgba(13,22,38,.95) 66%,rgba(13,22,38,0) 100%)}
 /* WEB-005C R2: each card is a native link to its own /solutions/ row. The anchor wraps the copy
    block and stays STATIC on purpose -- that is what lets its ::after resolve against the card
    instead of the copy block, so one transparent overlay makes the whole card the click target
@@ -612,8 +612,8 @@ body.home{background:var(--pumice)}
      than spread across the frame: further right it would dim the analysis square's own corners,
      and the square is Product-owned geometry that has to stay legible. */
   .context-shade{background:
-    linear-gradient(0deg,rgba(22,10,25,.98) 0%,rgba(22,10,25,.78) 10%,rgba(22,10,25,.34) 26%,rgba(22,10,25,.06) 46%,transparent 62%),
-    linear-gradient(90deg,rgba(22,10,25,.95) 0%,rgba(22,10,25,.88) 26%,rgba(22,10,25,.62) 42%,rgba(22,10,25,.18) 56%,rgba(22,10,25,.02) 72%,transparent 84%)}
+    linear-gradient(0deg,rgba(13,22,38,.98) 0%,rgba(13,22,38,.78) 10%,rgba(13,22,38,.34) 26%,rgba(13,22,38,.06) 46%,transparent 62%),
+    linear-gradient(90deg,rgba(13,22,38,.95) 0%,rgba(13,22,38,.88) 26%,rgba(13,22,38,.62) 42%,rgba(13,22,38,.18) 56%,rgba(13,22,38,.02) 72%,transparent 84%)}
 }
 /* A laptop is short before it is narrow. Everything above the result map gives up a little height so the
    headline and the map read as one object rather than two scroll positions; the map itself is sized
@@ -630,7 +630,7 @@ body.home{background:var(--pumice)}
   .inspect-switch{justify-self:start}
 }
 @media(max-width:980px){
-  .hero-content{width:100%;max-width:680px}.hero-shade{background:linear-gradient(90deg,rgba(22,10,25,.94),rgba(22,10,25,.66) 58%,rgba(22,10,25,.16)),linear-gradient(0deg,rgba(22,10,25,.86) 0%,rgba(22,10,25,.62) 14%,rgba(22,10,25,.16) 36%,rgba(22,10,25,0) 56%)}
+  .hero-content{width:100%;max-width:680px}.hero-shade{background:linear-gradient(90deg,rgba(13,22,38,.94),rgba(13,22,38,.66) 58%,rgba(13,22,38,.16)),linear-gradient(0deg,rgba(13,22,38,.86) 0%,rgba(13,22,38,.62) 14%,rgba(13,22,38,.16) 36%,rgba(13,22,38,0) 56%)}
   .hero h1{max-width:none}
   /* Below the desktop layout the copy spans the frame, so the analytical drape stays off (it is a
      bright surface and would sit behind the copy): the hero ends on the held frame, and Acts 3
@@ -646,7 +646,7 @@ body.home{background:var(--pumice)}
   .domain-card,.domain-card.is-lead{min-height:clamp(280px,38svh,360px)}
   /* A one-column card is taller, so the heading sits further up the photograph than it does on
      desktop; the shade has to reach it. */
-  .domain-shade{background:linear-gradient(0deg,rgba(22,10,25,.96) 0%,rgba(22,10,25,.84) 38%,rgba(22,10,25,.42) 66%,rgba(22,10,25,.06) 90%)}
+  .domain-shade{background:linear-gradient(0deg,rgba(13,22,38,.96) 0%,rgba(13,22,38,.84) 38%,rgba(13,22,38,.42) 66%,rgba(13,22,38,.06) 90%)}
 }
 @media(max-width:700px){
   .evidence-tabs{grid-template-columns:1fr}
@@ -754,8 +754,8 @@ body.page-geothermal .tone{color:var(--fg-2)}
 body.page-geothermal .page-hero.is-stage .page-hero-copy{max-width:52ch;font-size:var(--t-lede);line-height:1.62;color:var(--fg)}
 .stage-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%}
 .stage-shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:
-  linear-gradient(90deg,rgba(22,10,25,.93) 0%,rgba(22,10,25,.8) 32%,rgba(22,10,25,.3) 62%,rgba(22,10,25,0) 86%),
-  linear-gradient(0deg,rgba(22,10,25,.94) 0%,rgba(22,10,25,.5) 18%,transparent 42%)}
+  linear-gradient(90deg,rgba(13,22,38,.93) 0%,rgba(13,22,38,.8) 32%,rgba(13,22,38,.3) 62%,rgba(13,22,38,0) 86%),
+  linear-gradient(0deg,rgba(13,22,38,.94) 0%,rgba(13,22,38,.5) 18%,transparent 42%)}
 .page-hero.is-stage .scene-label{right:var(--edge);bottom:18px}
 
 .geo-no{color:var(--link)}
@@ -832,7 +832,7 @@ body.page-geothermal .page-section-head.geo-head .lede{margin:0}
      under it on the page ground (the same two-row composition as Act 02 on the homepage). */
   body.interior .page-hero.is-stage{display:grid;grid-template-columns:minmax(0,1fr);min-height:0;padding:0;background:var(--night)}
   .stage-media{position:relative;inset:auto;grid-area:1/1;height:auto;aspect-ratio:3/2}
-  .stage-shade{position:relative;inset:auto;grid-area:1/1;background:linear-gradient(0deg,rgba(22,10,25,1) 0%,rgba(22,10,25,.55) 16%,transparent 44%)}
+  .stage-shade{position:relative;inset:auto;grid-area:1/1;background:linear-gradient(0deg,rgba(13,22,38,1) 0%,rgba(13,22,38,.55) 16%,transparent 44%)}
   body.interior .page-hero.is-stage .page-hero-inner{grid-area:2/1;padding:clamp(24px,6vw,36px) var(--pad) 52px}
   .page-hero.is-stage .scene-label{grid-area:1/1;position:relative;right:auto;bottom:auto;align-self:end;justify-self:end;margin:0 var(--pad) 14px 0}
   .geo-where{grid-template-columns:minmax(0,1fr);gap:8px}
@@ -885,20 +885,20 @@ body.interior .page-hero h1 .tone{display:block}
 /* Capped at 1440 CSS px, which a 2x display fills from the 2880 px master width (sources.json -> scenes -> web_m6_placement). */
 .domain-band{position:relative;overflow:hidden;display:flex;align-items:flex-end;max-width:1440px;margin-inline:auto;min-height:clamp(340px,44vw,620px);background:var(--night)}
 .domain-band>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.domain-band-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(22,10,25,0) 38%,rgba(22,10,25,.84) 100%)}
+.domain-band-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,22,38,0) 38%,rgba(13,22,38,.84) 100%)}
 .domain-band-copy{position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:0 var(--pad) clamp(28px,3.2vw,48px)}
 .domain-band-copy h2{margin:0;font-size:var(--t-section);font-weight:300;letter-spacing:-.025em;line-height:1.08;color:var(--mist)}
 .domain-band-copy .domain-status{margin:0}
 .domain-band-copy .kicker{margin:0}
 .domain-band.is-feature{min-height:clamp(480px,50vw,720px)}
 .domain-band.is-feature .domain-band-shade{background:
-  linear-gradient(90deg,rgba(22,10,25,.86) 0%,rgba(22,10,25,.5) 38%,rgba(22,10,25,.04) 70%),
-  linear-gradient(0deg,rgba(22,10,25,.92) 0%,rgba(22,10,25,.3) 34%,transparent 62%)}
+  linear-gradient(90deg,rgba(13,22,38,.86) 0%,rgba(13,22,38,.5) 38%,rgba(13,22,38,.04) 70%),
+  linear-gradient(0deg,rgba(13,22,38,.92) 0%,rgba(13,22,38,.3) 34%,transparent 62%)}
 .domain-band.is-feature .domain-band-copy{gap:16px;padding-left:var(--edge);padding-right:var(--edge);padding-bottom:clamp(86px,calc(120px - 2.4vw),112px)}
 .domain-band.is-feature h2{font-size:var(--t-page);letter-spacing:-.03em;line-height:.98}
 .band-lede{margin:0;max-width:34ch;font-size:var(--t-lede);line-height:1.55;color:var(--fg)}
-.domain-band.is-feature .text-link{margin-top:6px;color:var(--mist);border-bottom-color:rgba(245,239,247,.4)}
-.domain-band.is-feature .text-link:hover{color:var(--violet-light);border-bottom-color:var(--violet-light)}
+.domain-band.is-feature .text-link{margin-top:6px;color:var(--mist);border-bottom-color:rgba(237,242,249,.4)}
+.domain-band.is-feature .text-link:hover{color:var(--ocean-light);border-bottom-color:var(--ocean-light)}
 .domain-band.is-feature .scene-label{right:var(--edge);bottom:20px}
 
 /* ----- Solutions: the two expansion directions, on Lift ----- */

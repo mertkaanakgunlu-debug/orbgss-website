@@ -1035,11 +1035,11 @@ document.querySelectorAll('.panel-image, .story-panel > img, .evidence-plate img
 /* the authored WEB-002 tone stays exactly as it is.                    */
 /* ------------------------------------------------------------------ */
 
-/* Relative luminance at which the light caption (Mist, #F5EFF7) and the dark caption
-   (Ink, #2D1B30) contrast equally against their backdrop. Above it the dark tone wins,
+/* Relative luminance at which the light caption (Mist, #EDF2F9) and the dark caption
+   (Ink, #142435) contrast equally against their backdrop. Above it the dark tone wins,
    below it the light tone does. Derived from the WCAG contrast formula for those two exact colours
-   (0.1967); it was 0.1885 for the Agate pair and 0.185 for the white and near-black captions of the Atlas build. */
-const CAPTION_TONE_CROSSOVER = 0.1967;
+   (0.1995); it was 0.1967 for the Violet pair, 0.1885 for the Agate pair and 0.185 for the white and near-black captions of the Atlas build. */
+const CAPTION_TONE_CROSSOVER = 0.1995;
 
 function backdropLuminance(label, image) {
   if (!image || !image.naturalWidth || !image.naturalHeight) return null;

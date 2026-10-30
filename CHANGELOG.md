@@ -2,6 +2,17 @@
 
 Each entry records the state at its date. Later acceptance and publication of a task appear in the newer entries above it.
 
+## v6 brand adoption on the existing site — 2026-10-30 (branch `claude/project-thread-v7zedp`, built on the missing-visuals head `claude/project-thread-sqytba@4223f58`; reviewed, then published on the CTO's instruction)
+
+The team reviewed the candidate identities and the CTO chose package `OrbGSS_Logo_Tasarim_Last.zip`, folder `Final_v6/` ("brighter Navy, Ocean, Maroon and Gold, lifted dark grounds"), and asked for it on the website and for the site to be published; polish follows in a team review of the published site. It replaces the Violet accent; a brand adoption, not a redesign. Spec: `docs/WEB_V6_BRAND_AUTHORITY.md`; evidence: `tasks/V6_EVIDENCE.md`.
+
+- **Palette:** Violet `#854AA6` / `#AB7CC7` is replaced by Ocean `#006CCA` (light grounds) and Ocean light `#54A4FB` (dark grounds) as the one interactive accent; Gold is `#F8AD24` on both grounds (gold ink `#9C5F00` for text on light grounds). Night is `#0D1626`, Night lift `#222934`, Pumice `#F4F6F8`, Ink `#142435`, Ink soft `#4E5762`, Muted `#6A7178`, Mist `#EDF2F9`, Mist soft `#B7BEC8`. Navy, Maroon and Deep Gold live in the logo only. Token names follow the brand: `--ocean`, `--ocean-light`, `--gold`, `--gold-light`, `--gold-ink`; `--violet*` and `--amber*` are retired.
+- **Marks:** new horizontal logo, favicon SVG, `favicon.ico`, touch icon and 192 / 512 manifest icons from `Final_v6/`, hash-named under `assets/brand/` and recorded in `brand.json`; `scripts/build_brand_assets.py` rebuilds them. The Violet files are deleted.
+- **Locator map and target frame:** the map keeps the package's rule (no brand colour, a white dashed line in a dark halo) on Obsidian neutrals; geometry byte-identical, new checksum-named file `kizildere-locator-3c3c49fd.svg`. The Act 4 target frame stays white.
+- **Caption tone:** `CAPTION_TONE_CROSSOVER` 0.1967 → 0.1995 (derived from Mist and Ink; the validator recomputes it).
+- **Validator and tests:** `BRAND_TOKENS`, the 19 contrast pairs, the brand record, the SVG paint sets, the map constants and the Active-label scrim follow the v6 values; `negative_tests_brand.py` has 60 cases (was 52); every other suite follows the new tokens, files and messages (640 of 640 deliberate regressions caught over 15 suites).
+- **Unchanged:** page set, navigation, URLs, redirects, four-act homepage, imagery, scientific rasters, hero video, copy, fonts and type.
+
 ## Missing visuals — 2026-10-25 (branch `claude/project-thread-sqytba`, built on the Violet branch `claude/project-thread-osxzu4@5c97842`; `REVIEW_READY`, preview only)
 
 CTO-approved plan "Eksik görseller planı" (website part; the two Geothermal figures are Science's, MER-242).

@@ -67,8 +67,8 @@ suite.case("the Turkish sentence on how the score is built returns to the dictio
                 "Kanıt katmanları 0 ile 100 arası tek bir deneysel skorda birleştirilir."),
            "a sentence on how the score is built")
 suite.case("the skip link's focus ring goes back to the pale link colour", CSS,
-           swap(".skip-link:focus-visible{outline-color:var(--violet)}\n", ""),
-           "the skip link's focus ring must be Violet")
+           swap(".skip-link:focus-visible{outline-color:var(--ocean)}\n", ""),
+           "the skip link's focus ring must be Ocean")
 suite.case("the mobile Solutions sublist takes the dropdown shadow again", CSS,
            swap("border:0;box-shadow:none;padding:0 0 10px 18px", "border:0;padding:0 0 10px 18px"),
            "must reset the desktop dropdown's box-shadow")
@@ -100,7 +100,7 @@ suite.case("the dark scope loses its lifted surface", CSS,
 suite.case("the dark scope loses its light text", CSS,
            swap(".ground-orbit,.ground-lift,.domain-card,.domain-band{--fg:var(--mist);", ".ground-orbit,.ground-lift,.domain-card,.domain-band{--fg:var(--ink);"),
            "the dark scope (.ground-orbit, .ground-lift, the domain bands) must carry --fg:var(--mist)")
-suite.case("the ink for limits drifts toward the amber fill", CSS, swap("--amber-ink:#A15C13;", "--amber-ink:#FFA323;"), "palette token --amber-ink")
+suite.case("the ink for limits drifts toward the amber fill", CSS, swap("--gold-ink:#9C5F00;", "--gold-ink:#F8AD24;"), "palette token --gold-ink")
 
 if __name__ == "__main__":
     raise SystemExit(suite.run())
