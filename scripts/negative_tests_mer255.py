@@ -159,7 +159,7 @@ case("a thumbnail is declared larger than 160 CSS px", SOURCES_PAGE,
      swap('width="160" height="90"', 'width="240" height="135"'), "at most 160 x 160 CSS px")
 case("a thumbnail is not a recorded image", SOURCES_PAGE,
      swap('src="/assets/imagery/yellowstone-2013-900.webp" alt="Thumbnail of the Yellowstone',
-          'src="/assets/brand/orbgss-logo-light.f613dc85.svg" alt="Thumbnail of the Yellowstone'),
+          'src="/assets/brand/orbgss-logo-light.00811851.svg" alt="Thumbnail of the Yellowstone'),
      "is not a recorded image in sources.json")
 case("a thumbnail stops being lazy", SOURCES_PAGE,
      swap('width="160" height="90" loading="lazy"', 'width="160" height="90"'), "must be loaded lazily")

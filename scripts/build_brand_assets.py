@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Build the deployed brand assets (Violet identity, brand package Final_v4).
+"""Build the deployed brand assets (v6 identity, brand package Final_v6).
 
-The CTO approved this identity on 2026-10-25 ("Violet vurgu", package folder Final_v4/, which replaces the Heat Trace pink
-interface accent of Final_v3): Plum #371641, Violet #854AA6 (the one interactive accent), Magma #E43386 (the logo's vertical
-orbit only), Amber #FFA323, ground Night #160A19, wordmark on dark Mist #F5EFF7. The supplied package
-("OrbGSS_Brand_Tasarim_Final.zip", folder Final_v4/) is the source of every file written here:
+The team and the CTO chose this identity on 2026-10-30 (package folder Final_v6/, the brighter Final_v5 with lifted dark
+grounds, which replaces the Violet accent of Final_v4): Navy #08336C (wordmark and outer orbit on light grounds), Ocean #006CCA
+(the one interactive accent), Maroon #C0303B (the logo's vertical orbit only), Gold #F8AD24, Deep Gold #D48200 (the inner orbit on
+light grounds), ground Night #0D1626, wordmark on dark Mist #EDF2F9. The supplied package ("OrbGSS_Logo_Tasarim_Last.zip",
+folder Final_v6/) is the source of every file written here:
 
-    python scripts/build_brand_assets.py --source <unpacked Final_v4/ folder>           # write
-    python scripts/build_brand_assets.py --source <unpacked Final_v4/ folder> --check   # compare with the record
+    python scripts/build_brand_assets.py --source <unpacked Final_v6/ folder>           # write
+    python scripts/build_brand_assets.py --source <unpacked Final_v6/ folder> --check   # compare with the record
 
 What it does, and nothing more:
   * copies the horizontal logo for light grounds, the favicon tile, the 180 px touch icon and the 192 / 512 px
@@ -50,11 +51,12 @@ ICO = ("favicon/favicon.ico", "favicon.ico")  # shipped at the site root, unchan
 
 # The package the files were taken from (SHA-256 of the zip as supplied). The per-file source hashes in brand.json are
 # what the validator pins; this one only names the delivery they came from.
-PACKAGE = {"name": "OrbGSS_Brand_Tasarim_Final.zip", "sha256": "b8869634badba9a62479bce86db7ab5ab0ad3b0648993dbc78006bca0740c675"}
+PACKAGE = {"name": "OrbGSS_Logo_Tasarim_Last.zip", "sha256": "9f1d0383314d980c1e542d7006b2ff8b1af3715cfe73d4ed58ceff6b111981b5"}
 
 PALETTE = {
-    "brand": {"plum": "#371641", "violet": "#854AA6", "magma": "#E43386", "amber": "#FFA323", "night": "#160A19", "mist": "#F5EFF7"},
-    "ui_accent": {"light": "#854AA6", "dark": "#AB7CC7"},
+    "brand": {"navy": "#08336C", "ocean": "#006CCA", "maroon": "#C0303B", "gold": "#F8AD24", "deep_gold": "#D48200",
+              "night": "#0D1626", "mist": "#EDF2F9"},
+    "ui_accent": {"light": "#006CCA", "dark": "#54A4FB"},
 }
 
 METADATA = re.compile(r"<metadata>.*?</metadata>", re.S)
@@ -86,7 +88,7 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
             "purpose": purpose,
             "bytes": len(data),
             "sha256": digest,
-            "source": {"path": f"Final_v4/{rel}", "bytes": len(raw), "sha256": sha256(raw)},
+            "source": {"path": f"Final_v6/{rel}", "bytes": len(raw), "sha256": sha256(raw)},
             "transform": ("metadata element and its xmlns:c2pa declaration removed; drawing unchanged"
                           if ext == "svg" else "none (byte for byte)"),
         }
@@ -97,23 +99,23 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
         "purpose": "multi-size favicon (16, 32, 48 px) at the site root, where browsers ask for it",
         "bytes": len(raw),
         "sha256": sha256(raw),
-        "source": {"path": f"Final_v4/{ICO[0]}", "bytes": len(raw), "sha256": sha256(raw)},
+        "source": {"path": f"Final_v6/{ICO[0]}", "bytes": len(raw), "sha256": sha256(raw)},
         "transform": "none (byte for byte)",
     }
     record = {
-        "identity": "Violet",
-        "approved": "CTO, 2026-10-25 (brand package Final_v4, Violet accent)",
-        "package": f"{PACKAGE['name']}, folder Final_v4/ (Final_v2/, Final_v3/ and the older Agate folder final/ are superseded and not used)",
+        "identity": "v6",
+        "approved": "Team review and CTO, 2026-10-30 (brand package Final_v6, brighter Navy, Ocean, Maroon and Gold)",
+        "package": f"{PACKAGE['name']}, folder Final_v6/ (Final_v2/ to Final_v5/, the Violet package and the older Agate folder final/ are superseded and not used)",
         "package_sha256": PACKAGE["sha256"],
         "palette": PALETTE,
         "rules": {
-            "violet": "the only interactive accent: links, active navigation, focus (#854AA6 on light grounds, #AB7CC7 on dark grounds)",
-            "amber": "a restrained highlight and a non-text mark; never a button fill and never body text on a light ground",
-            "magma": "the logo's vertical orbit only; never a UI colour",
+            "ocean": "the only interactive accent: links, active navigation, focus (#006CCA on light grounds, #54A4FB on dark grounds)",
+            "gold": "a restrained highlight and a non-text mark; never a button fill and never body text on a light ground",
+            "logo_only": "Navy (wordmark and outer orbit), Maroon (vertical orbit) and Deep Gold (inner orbit on light grounds) live in the logo files only; never UI colours",
             "map": "no brand colour is drawn on a map: the area of interest is a white dashed line with a dark halo",
             "minimum_sizes": "horizontal logo 120 px wide, symbol 32 px; below that the app icon",
         },
-        "not_used": "Final_v4/assets/illustrative-map.jpg is a generated illustration and is not placed on any page",
+        "not_used": "Final_v6/assets/illustrative-map.jpg is a generated illustration and is not placed on any page",
         "files": entries,
     }
     files[RECORD] = (json.dumps(record, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
@@ -122,7 +124,7 @@ def build(source: pathlib.Path) -> tuple[dict[pathlib.Path, bytes], dict]:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--source", required=True, type=pathlib.Path, help="the unpacked Final_v4/ folder of the brand package")
+    ap.add_argument("--source", required=True, type=pathlib.Path, help="the unpacked Final_v6/ folder of the brand package")
     ap.add_argument("--check", action="store_true", help="compare with the committed files instead of writing")
     args = ap.parse_args()
     files, _ = build(args.source)

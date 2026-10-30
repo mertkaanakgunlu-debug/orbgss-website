@@ -176,7 +176,7 @@ suite.case("the Active label loses its scrim", STYLES,
            swap(".domain-card .domain-status.is-active::before,.domain-band .domain-status.is-active::before{", ".domain-card .domain-status.is-active::after,.domain-band .domain-status.is-active::after{"),
            "the Active status label lost its scrim")
 suite.case("the Active label's scrim is too weak", STYLES,
-           lambda t: re.sub(r"(\.domain-band \.domain-status\.is-active::before\{[^}]*?)rgba\(22,10,25,\.95\) 0,rgba\(22,10,25,\.95\) 66%", r"\g<1>rgba(22,10,25,.6) 0,rgba(22,10,25,.6) 66%", t, count=1),
+           lambda t: re.sub(r"(\.domain-band \.domain-status\.is-active::before\{[^}]*?)rgba\(13,22,38,\.95\) 0,rgba\(13,22,38,\.95\) 66%", r"\g<1>rgba(13,22,38,.6) 0,rgba(13,22,38,.6) 66%", t, count=1),
            "the Active status label's scrim must be a radial Night gradient")
 suite.case("the Active label's scrim is no longer behind the text", STYLES,
            swap("content:\"\";position:absolute;z-index:-1;inset:-28px -72px", "content:\"\";position:absolute;z-index:1;inset:-28px -72px"),

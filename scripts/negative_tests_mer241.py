@@ -185,8 +185,8 @@ case("a Turkish page shows a different image", TR_SOLUTIONS,
      swap("/assets/imagery/chuquicamata-2024-1400.webp", "/assets/imagery/yellowstone-2013-1400.webp"),
      "references different assets")
 case("a Turkish page drops back to a document-relative asset URL", TR_HOME,
-     swap('<link rel="icon" href="/assets/brand/orbgss-favicon.03c5e667.svg"', '<link rel="icon" href="assets/brand/orbgss-favicon.03c5e667.svg"'),
-     "tr/assets/brand/orbgss-favicon.03c5e667.svg")
+     swap('<link rel="icon" href="/assets/brand/orbgss-favicon.84b79d56.svg"', '<link rel="icon" href="assets/brand/orbgss-favicon.84b79d56.svg"'),
+     "tr/assets/brand/orbgss-favicon.84b79d56.svg")
 
 # ---- the retired scientific warnings stay retired in Turkish (CTO, 2026-10-25) -------------------
 case("the Turkish homepage renders a retired warning again", TR_HOME,

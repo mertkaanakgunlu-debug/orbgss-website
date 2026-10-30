@@ -1,0 +1,58 @@
+{
+ "widths": [
+  320,
+  360,
+  390,
+  768,
+  1024,
+  1440
+ ],
+ "routes": 13,
+ "overflow": [],
+ "console_errors": [],
+ "failed_requests": [],
+ "header": {
+  "320": {
+   "logo": [
+    120.4,
+    28
+   ],
+   "header_height": 76
+  },
+  "360": {
+   "logo": [
+    120.4,
+    28
+   ],
+   "header_height": 76
+  },
+  "390": {
+   "logo": [
+    120.4,
+    28
+   ],
+   "header_height": 76
+  },
+  "768": {
+   "logo": [
+    137.6,
+    32
+   ],
+   "header_height": 76
+  },
+  "1024": {
+   "logo": [
+    137.6,
+    32
+   ],
+   "header_height": 88
+  },
+  "1440": {
+   "logo": [
+    137.6,
+    32
+   ],
+   "header_height": 88
+  }
+ }
+}

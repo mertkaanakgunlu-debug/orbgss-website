@@ -1,0 +1,167 @@
+{
+ "focus_stops": [
+  {
+   "tag": "A",
+   "target": "#main",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": -1,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "A",
+   "target": "/",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 22,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "A",
+   "target": "/",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 31,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "BUTTON",
+   "target": "nav-trigger",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 31,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "A",
+   "target": "/solutions/geothermal/",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 88,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "A",
+   "target": "/solutions/#mining",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 124,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "A",
+   "target": "/solutions/#marine",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 160,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "A",
+   "target": "/about/",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 31,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "A",
+   "target": "/partner/",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 31,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "A",
+   "target": "/",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 31,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "A",
+   "target": "/tr/",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 31,
+   "ground": "light",
+   "ring_contrast": 5.25
+  },
+  {
+   "tag": "A",
+   "target": "#context",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(84, 164, 251)",
+   "top": 655,
+   "ground": "night",
+   "ring_contrast": 6.97
+  },
+  {
+   "tag": "A",
+   "target": "/partner/",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(84, 164, 251)",
+   "top": 664,
+   "ground": "night",
+   "ring_contrast": 6.97
+  },
+  {
+   "tag": "INPUT",
+   "target": "ev-terrain",
+   "outline": "solid",
+   "width": "2px",
+   "colour": "rgb(0, 108, 202)",
+   "top": 1786,
+   "ground": "light",
+   "ring_contrast": 5.25
+  }
+ ],
+ "states": {
+  "nav_rest": {
+   "color": "rgb(78, 87, 98)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "borderBottomColor": "rgb(78, 87, 98)"
+  },
+  "nav_hover": {
+   "color": "rgb(20, 36, 53)",
+   "backgroundColor": "rgba(0, 0, 0, 0)",
+   "borderBottomColor": "rgb(20, 36, 53)"
+  },
+  "ghost_rest": {
+   "color": "rgb(237, 242, 249)",
+   "backgroundColor": "rgba(13, 22, 38, 0.38)",
+   "borderBottomColor": "rgba(237, 242, 249, 0.68)"
+  },
+  "ghost_hover": {
+   "color": "rgb(20, 36, 53)",
+   "backgroundColor": "rgb(237, 242, 249)",
+   "borderBottomColor": "rgba(237, 242, 249, 0.68)",
+   "label_contrast": 14.0
+  }
+ }
+}

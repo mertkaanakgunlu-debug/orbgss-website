@@ -8,19 +8,19 @@
   "theme_color": "#FFFFFF",
   "icons": [
     {
-      "src": "/assets/brand/orbgss-icon-192.59e724fd.png",
+      "src": "/assets/brand/orbgss-icon-192.3e9a3871.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/brand/orbgss-icon-512.e0404e64.png",
+      "src": "/assets/brand/orbgss-icon-512.219a6ca6.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/brand/orbgss-favicon.03c5e667.svg",
+      "src": "/assets/brand/orbgss-favicon.84b79d56.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

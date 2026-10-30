@@ -132,7 +132,7 @@ case("an AOI overlay returns to Act 2 with no recorded geometry behind it", INDE
 # The WEB-005B product palette (--orb-*) was superseded by the Atlas palette (MER-275), which the Agate palette replaced (MER-279), then the Heat Trace palette, and the Violet palette now replaces; the same two
 # properties -- pinned once, never redefined -- now hold for its tokens.
 case("Violet (dark-ground) token drifts", STYLES,
-     lambda t: t.replace("--violet-light:#AB7CC7;", "--violet-light:#43BFF0;", 1), "palette token --violet-light")
+     lambda t: t.replace("--ocean-light:#54A4FB;", "--ocean-light:#43BFF0;", 1), "palette token --ocean-light")
 case("a palette token is redefined a second time", STYLES,
      lambda t: t.replace(".sec{position:relative;", ".sec{--night-lift:#101010;position:relative;", 1),
      "palette token --night-lift")

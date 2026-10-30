@@ -1,100 +1,101 @@
 {
-  "identity": "Violet",
-  "approved": "CTO, 2026-10-25 (brand package Final_v4, Violet accent)",
-  "package": "OrbGSS_Brand_Tasarim_Final.zip, folder Final_v4/ (Final_v2/, Final_v3/ and the older Agate folder final/ are superseded and not used)",
-  "package_sha256": "b8869634badba9a62479bce86db7ab5ab0ad3b0648993dbc78006bca0740c675",
+  "identity": "v6",
+  "approved": "Team review and CTO, 2026-10-30 (brand package Final_v6, brighter Navy, Ocean, Maroon and Gold)",
+  "package": "OrbGSS_Logo_Tasarim_Last.zip, folder Final_v6/ (Final_v2/ to Final_v5/, the Violet package and the older Agate folder final/ are superseded and not used)",
+  "package_sha256": "9f1d0383314d980c1e542d7006b2ff8b1af3715cfe73d4ed58ceff6b111981b5",
   "palette": {
     "brand": {
-      "plum": "#371641",
-      "violet": "#854AA6",
-      "magma": "#E43386",
-      "amber": "#FFA323",
-      "night": "#160A19",
-      "mist": "#F5EFF7"
+      "navy": "#08336C",
+      "ocean": "#006CCA",
+      "maroon": "#C0303B",
+      "gold": "#F8AD24",
+      "deep_gold": "#D48200",
+      "night": "#0D1626",
+      "mist": "#EDF2F9"
     },
     "ui_accent": {
-      "light": "#854AA6",
-      "dark": "#AB7CC7"
+      "light": "#006CCA",
+      "dark": "#54A4FB"
     }
   },
   "rules": {
-    "violet": "the only interactive accent: links, active navigation, focus (#854AA6 on light grounds, #AB7CC7 on dark grounds)",
-    "amber": "a restrained highlight and a non-text mark; never a button fill and never body text on a light ground",
-    "magma": "the logo's vertical orbit only; never a UI colour",
+    "ocean": "the only interactive accent: links, active navigation, focus (#006CCA on light grounds, #54A4FB on dark grounds)",
+    "gold": "a restrained highlight and a non-text mark; never a button fill and never body text on a light ground",
+    "logo_only": "Navy (wordmark and outer orbit), Maroon (vertical orbit) and Deep Gold (inner orbit on light grounds) live in the logo files only; never UI colours",
     "map": "no brand colour is drawn on a map: the area of interest is a white dashed line with a dark halo",
     "minimum_sizes": "horizontal logo 120 px wide, symbol 32 px; below that the app icon"
   },
-  "not_used": "Final_v4/assets/illustrative-map.jpg is a generated illustration and is not placed on any page",
+  "not_used": "Final_v6/assets/illustrative-map.jpg is a generated illustration and is not placed on any page",
   "files": {
     "logo-light": {
-      "file": "orbgss-logo-light.f613dc85.svg",
+      "file": "orbgss-logo-light.00811851.svg",
       "purpose": "horizontal logo for light grounds: header and footer on every page",
       "bytes": 6018,
-      "sha256": "f613dc85d100c12e00175776d0ecafa462ea5d43dbd3f176500e2a0046d59207",
+      "sha256": "00811851609d194344536fd1b931d969c4d70ca67ff9256415acaf9656217526",
       "source": {
-        "path": "Final_v4/logo/orbgss-logo-light.svg",
+        "path": "Final_v6/logo/orbgss-logo-light.svg",
         "bytes": 13792,
-        "sha256": "f25915c10ed7d8f2049e16d1c7d6a7fb790318330ec757ba439ab2f323dad2b5"
+        "sha256": "2b0eb4ae3ed4c48e7e83a44b0e06c3fcff623ca45bb669db8b9b3a85dfe31251"
       },
       "transform": "metadata element and its xmlns:c2pa declaration removed; drawing unchanged"
     },
     "favicon": {
-      "file": "orbgss-favicon.03c5e667.svg",
+      "file": "orbgss-favicon.84b79d56.svg",
       "purpose": "favicon tile, Night with the dark-ground symbol (32 px design size)",
       "bytes": 2455,
-      "sha256": "03c5e667c9d8a46bd53e469930494c3b9b3cd80d405b27eff35e2ae891b2fde2",
+      "sha256": "84b79d56439b08928acee250e473e5f059a950d2761d9999ec9cdd7d83d26da4",
       "source": {
-        "path": "Final_v4/favicon/favicon.svg",
+        "path": "Final_v6/favicon/favicon.svg",
         "bytes": 10229,
-        "sha256": "51e84ed756e68ade5a5c4105b51ab9c086da79d0a7309ed385376feddacf36af"
+        "sha256": "c2b6680a32e63629402a02ff77a12c4df90a21492c4d5271e3a3a604b8bab993"
       },
       "transform": "metadata element and its xmlns:c2pa declaration removed; drawing unchanged"
     },
     "apple-touch-icon": {
-      "file": "orbgss-apple-touch-icon.57501a4a.png",
+      "file": "orbgss-apple-touch-icon.d9438a09.png",
       "purpose": "180 px full-bleed touch icon",
-      "bytes": 6248,
-      "sha256": "57501a4ac0481e63d1498b31a0da823760f42ac0d74af2f7028f2b816494dbc1",
+      "bytes": 6314,
+      "sha256": "d9438a09812867bb9fa2f1c60a297b5d263195e85cf4c591ec74ef3a86e408a6",
       "source": {
-        "path": "Final_v4/favicon/apple-touch-icon.png",
-        "bytes": 6248,
-        "sha256": "57501a4ac0481e63d1498b31a0da823760f42ac0d74af2f7028f2b816494dbc1"
+        "path": "Final_v6/favicon/apple-touch-icon.png",
+        "bytes": 6314,
+        "sha256": "d9438a09812867bb9fa2f1c60a297b5d263195e85cf4c591ec74ef3a86e408a6"
       },
       "transform": "none (byte for byte)"
     },
     "icon-192": {
-      "file": "orbgss-icon-192.59e724fd.png",
+      "file": "orbgss-icon-192.3e9a3871.png",
       "purpose": "192 px web-app manifest icon",
-      "bytes": 7563,
-      "sha256": "59e724fd338767af4eea74a21cf4e51cc15c11d4974a006ed423d73376239648",
+      "bytes": 7587,
+      "sha256": "3e9a38718961a0df3c6182e711ecfc04f28c93a9fea7e8b620ea7344994af4d0",
       "source": {
-        "path": "Final_v4/favicon/icon-192.png",
-        "bytes": 7563,
-        "sha256": "59e724fd338767af4eea74a21cf4e51cc15c11d4974a006ed423d73376239648"
+        "path": "Final_v6/favicon/icon-192.png",
+        "bytes": 7587,
+        "sha256": "3e9a38718961a0df3c6182e711ecfc04f28c93a9fea7e8b620ea7344994af4d0"
       },
       "transform": "none (byte for byte)"
     },
     "icon-512": {
-      "file": "orbgss-icon-512.e0404e64.png",
+      "file": "orbgss-icon-512.219a6ca6.png",
       "purpose": "512 px web-app manifest icon",
-      "bytes": 34719,
-      "sha256": "e0404e6403845974efd0de9ca07ad8fd72601b5f6158af18497a133d2cebf904",
+      "bytes": 34350,
+      "sha256": "219a6ca602fd9dd478c875b6bf7e5d2277a150d0bb9a97ecd636706f9a25beba",
       "source": {
-        "path": "Final_v4/favicon/icon-512.png",
-        "bytes": 34719,
-        "sha256": "e0404e6403845974efd0de9ca07ad8fd72601b5f6158af18497a133d2cebf904"
+        "path": "Final_v6/favicon/icon-512.png",
+        "bytes": 34350,
+        "sha256": "219a6ca602fd9dd478c875b6bf7e5d2277a150d0bb9a97ecd636706f9a25beba"
       },
       "transform": "none (byte for byte)"
     },
     "favicon-ico": {
       "file": "../../favicon.ico",
       "purpose": "multi-size favicon (16, 32, 48 px) at the site root, where browsers ask for it",
-      "bytes": 3249,
-      "sha256": "6dcd7d92288eecbf4f5f0dd4d2816f4f778a809288121848df624a2d9ceaff1e",
+      "bytes": 3238,
+      "sha256": "4843ced550309721c226dbe8f2d3951d600b7cd2af5a8ec5b00f5c1c359844a4",
       "source": {
-        "path": "Final_v4/favicon/favicon.ico",
-        "bytes": 3249,
-        "sha256": "6dcd7d92288eecbf4f5f0dd4d2816f4f778a809288121848df624a2d9ceaff1e"
+        "path": "Final_v6/favicon/favicon.ico",
+        "bytes": 3238,
+        "sha256": "4843ced550309721c226dbe8f2d3951d600b7cd2af5a8ec5b00f5c1c359844a4"
       },
       "transform": "none (byte for byte)"
     }
