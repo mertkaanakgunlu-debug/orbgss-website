@@ -39,11 +39,20 @@ Palette tokens and their names, `rgba()` triples (Night, Mist, Mist soft, Muted,
 
 ## 5. Independent review
 
-Recorded in Linear and in the project Library (`v6-brand/review/REVIEW.md`); the reviewed commit is named there. A later push voids an earlier acceptance.
+Opus reviewer who did not implement, on `d435f7e1fdf5100a8dd9056c94cf4bab578fafd7`: **PASS WITH NON-BLOCKING NOTES, 0 blocking.** Report and screenshots: project Library, `v6-brand/review/`. Notes to carry into the polish round: the keyboard focus ring on the homepage Solutions cards is 2.40:1 against Pumice (draw it outside the card in Ocean); the second headline line over the photograph on the Geothermal page is about 2.1:1 (pre-existing); the Light theme and Atlas documents still quote Violet values; two comments cite a map-halo token that the v6 token file does not have; the validator does not catch gold as body text on a light ground or Ocean as a fill (the rendered site does neither).
 
 ## 6. Publication
 
-Recorded in Linear and in the project Library after the fast-forward: head, production deployment, smoke and browser checks, rollback target.
+Published on 2026-10-30 on the CTO's instruction ("v6 ya karar verildi. uygulayalım ve web sitesini yayınlayalım"): guards passed (`origin/main` was `81d1f911`, the head a descendant of it, the remote branch equal to the reviewed commit), then one non-force fast-forward `81d1f911` → `d435f7e1`. This published the whole unpublished chain (Atlas, Agate, light theme, Heat Trace, Violet, missing visuals, MER-242, v6; 53 commits).
+
+| Check | Result |
+| --- | --- |
+| `evidence/mer219/smoke_production.py --expect-sha d435f7e1…` | 74 of 75; the one miss is the harness reading the redirect header case-sensitively (`curl -I http://orbgss.com/` answers `308` with `location: https://orbgss.com/`); served `index.html`, `script.js`, `styles.css` and `tr/index.html` are byte-identical to the commit |
+| `evidence/mer219/browser_checks_production.py` | 20 of 20 |
+| `/sources/`, `/tr/kaynaklar/`, `favicon.ico` | 200 |
+| `/platform/`, `/pilot/`, `/company/`, `/contact/` | 301 to `/`, `/solutions/geothermal/`, `/about/`, `/partner/` |
+
+Rollback target: the previous production deployment (`orbgss-website-o3rzsv0pl`, `main` at `81d1f911`), Instant Rollback in the Vercel dashboard (CTO action). The Vercel connector needs team re-authorization before it can list deployments.
 
 ## 7. Not run, and limits
 
