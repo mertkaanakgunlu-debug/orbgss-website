@@ -228,8 +228,11 @@ WEB005B_HERO_ONLY = ("ai_super_resolution", "scalar_space_interpolation", "gauss
 
 HERO_RISE_STATE_CEILING = 512 * 1024
 HERO_RISE_TOTAL_CEILING = int(2.5 * 1024 * 1024)
-HERO_STATIC_POSTER_MEDIA = "(prefers-reduced-motion: reduce), (max-width: 780px)"
-HERO_MOTION_POSTER_MEDIA = "(prefers-reduced-motion: no-preference) and (min-width: 781px)"
+# Phone hero (CTO, 2026-11-04): a phone plays the sequence in its own 16:9 window, so the screen width no
+# longer decides which still the visitor is shown; only reduced motion does (the held frame, since the
+# motion never plays). The opening frame is the startup poster for everyone else, phones included.
+HERO_STATIC_POSTER_MEDIA = "(prefers-reduced-motion: reduce)"
+HERO_MOTION_POSTER_MEDIA = "(prefers-reduced-motion: no-preference)"
 # MER-216: the WEB-004 / WEB-005 envelope (WebM <= 3.0 MiB, MP4 <= 4.5 MiB) binds the 1920 tier; the
 # 1280 tier exists to cost less and carries smaller ceilings of its own.
 HERO_MEDIA_CEILINGS = {
@@ -3596,6 +3599,40 @@ def main() -> int:
     if script_hero.count("setAttribute('src'") != 1:
         fail("script.js must attach a hero video source in exactly one place: a tier is chosen once, "
              "before playback, and never swapped mid-play", errors)
+
+    # Phone hero (CTO, 2026-11-04). Up to 780 px the hero is a 16:9 video window with the copy below it,
+    # not a portrait crop under the copy; the screen width is no longer a reason to play nothing.
+    # Reduced motion, Save-Data, a slow network and a refused autoplay still end in the held still.
+    if re.search(r"small-screen|smallScreen|max-width: ?780px", script_hero):
+        fail("script.js must not settle the hero static (or branch at all) on screen size: a phone plays the "
+             "sequence in its own 16:9 window (small-screen / max-width: 780px found)", errors)
+    if "video.clientWidth" not in script_hero or re.search(r"hero\.client(?:Width|Height)\s*\*?\s*16", script_hero) \
+            or "Math.max(hero.clientWidth" in script_hero:
+        fail("script.js demandPx must size the tier from the video's own box (video.clientWidth / "
+             "video.clientHeight), not the hero's: on a phone the video sits in a 16:9 window and must be "
+             "served the 1280 encode, never the 1920 one", errors)
+    if not re.search(r"if \(hero\.getAttribute\('data-hero-state'\) === 'held'\) return;\s*\n\s*if \(!video\.paused[^\n]*\n\s*settleStatic\('stalled'\)",
+                     script_hero):
+        fail("script.js: the 15 s fallback must treat a sequence that played to its end ('held') as settled; "
+             "below the desktop layout nothing is revealed and the hero would otherwise end 'stalled'", errors)
+    phone_css = re.search(r"@media\(max-width:780px\)\{\s*\.hero\{([^}]*)\}\s*\.hero-visual\{([^}]*)\}"
+                          r"[^@]*?\.hero-content\{([^}]*)\}\s*\.scene-label\{([^}]*)\}", css_text)
+    if not phone_css:
+        fail("styles.css: the phone hero block (@media(max-width:780px) with .hero, .hero-visual, .hero-content "
+             "and .scene-label, in that order) is missing", errors)
+    else:
+        p_hero, p_visual, p_content, p_label = phone_css.groups()
+        if "display:grid" not in p_hero or "height:auto" not in p_hero:
+            fail("styles.css: on a phone the hero is a grid that grows with its copy (display:grid; height:auto)", errors)
+        if "aspect-ratio:16/9" not in p_visual or "position:relative" not in p_visual or "grid-area:1/1" not in p_visual:
+            fail("styles.css: on a phone .hero-visual is the 16:9 window in grid cell 1/1 (position:relative; "
+                 "aspect-ratio:16/9), so the whole frame is shown and the copy never sits on the video", errors)
+        if "grid-area:2/1" not in p_content:
+            fail("styles.css: on a phone .hero-content sits below the window (grid-area:2/1)", errors)
+        if "position:static" not in p_label or "grid-area:1/1" not in p_label or "align-self:end" not in p_label \
+                or "justify-self:end" not in p_label:
+            fail("styles.css: on a phone the render caption stays on the window at its bottom-right "
+                 "(.scene-label: grid-area:1/1; align-self:end; justify-self:end)", errors)
 
     # Sensing lines are attention, not physics (A-HERO-04): the hero's own copy may not claim an
     # instrument. Checked on the dictionary in both languages and on the static markup.

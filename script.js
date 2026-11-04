@@ -1162,10 +1162,11 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
 /* soon as it is parsed and that is a decision this file should own,    */
 /* not the markup:                                                      */
 /*                                                                      */
-/*   - reduced motion, small screens, Save-Data and slow connections    */
-/*     never attach a source at all, so they cost zero video bytes and  */
-/*     get the poster as an intentional still hero rather than a        */
-/*     degraded one;                                                    */
+/*   - reduced motion, Save-Data and slow connections never attach a  */
+/*     source at all, so they cost zero video bytes and get the still   */
+/*     as an intentional hero rather than a degraded one (a phone plays */
+/*     the sequence in its own 16:9 window since 2026-11-04, under the  */
+/*     same gates);                                                     */
 /*   - everyone else gets exactly ONE encode, chosen by canPlayType,    */
 /*     so no browser is ever asked to download both;                    */
 /*   - with JavaScript off, the poster is the hero.                     */
@@ -1441,13 +1442,12 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   const slowNetwork = typeof connection.effectiveType === 'string'
     && /^(slow-2g|2g|3g)$/.test(connection.effectiveType);
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  /* A phone-sized viewport is the reduced-data case in practice, and the hero reads as a still
-     composition there anyway once the copy takes most of the frame. */
-  const smallScreen = window.matchMedia('(max-width: 780px)');
 
+  /* A phone is not a still-only profile any more (CTO, 2026-11-04): up to 780 px the sequence plays
+     whole in its own 16:9 window with the copy below it (styles.css, "Phone hero"). The gates that
+     remain are the ones that are about the visitor's data and motion settings, not the screen. */
   if (!video || typeof video.canPlayType !== 'function') return settleStatic('unsupported');
   if (reduceMotion.matches) return settleStatic('reduced-motion');
-  if (smallScreen.matches) return settleStatic('small-screen');
   if (saveData) return settleStatic('save-data');
   if (slowNetwork) return settleStatic('slow-network');
 
@@ -1475,12 +1475,15 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   }
   const tiers = readTiers();
 
-  /* Device pixels the frame has to cover: the hero is a cover-fit of a 16:9 frame, so the binding
-     axis is whichever of the width or the (height x 16/9) is larger. A tier may undershoot by 8%
-     (a 1366 px laptop is served the 1280 encode) but is never asked to stand in for a wider screen. */
+  /* Device pixels the frame has to cover: the video box is a cover-fit of a 16:9 frame, so the binding
+     axis is whichever of the width or the (height x 16/9) is larger. The box is the video's own, not
+     the hero's: they are the same box on a desktop, and on a phone the video sits in a 16:9 window
+     (a 390 px phone at 3x needs 1170 px and is served the 1280 encode, never the 1920 one). A tier may
+     undershoot by 8% (a 1366 px laptop is served the 1280 encode) but is never asked to stand in for a
+     wider screen. */
   function demandPx() {
     const dpr = window.devicePixelRatio || 1;
-    return Math.max(hero.clientWidth, hero.clientHeight * 16 / 9) * dpr;
+    return Math.max(video.clientWidth, video.clientHeight * 16 / 9) * dpr;
   }
   function firstTierIndex() {
     const need = demandPx() * 0.92;
@@ -1690,6 +1693,9 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
      register with the held frame only. settleStatic covers everything with the held base first. */
   window.setTimeout(() => {
     if (revealed) return;
+    /* A sequence that played to its end is settled, not stalled: below the desktop layout there is no
+       payoff to reveal, and the last frame already is the held frame. */
+    if (hero.getAttribute('data-hero-state') === 'held') return;
     if (!video.paused && !video.ended && video.readyState > 2) return;
     settleStatic('stalled');
   }, 15000);

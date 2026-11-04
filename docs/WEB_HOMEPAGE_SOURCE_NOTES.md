@@ -22,9 +22,11 @@ preloaded and never eagerly fetched — script.js attaches its sources only afte
 painted, and only where motion and data policy allow, so the poster is the only hero image
 request on first paint and mobile/reduced-data never pays for an encode at all.
 WEB-005A: two posters, two jobs, one request. Where the motion is about to play the poster is
-the OPENING frame, so poster -> video is continuous; where it never plays (reduced motion,
-phone widths) the poster is the HELD frame the sequence ends on. The media queries here are the
-<picture> below, exactly, so each visitor preloads the one still they will be shown.
+the OPENING frame, so poster -> video is continuous; where it never plays (reduced motion) the
+poster is the HELD frame the sequence ends on. The media queries here are the <picture> below,
+exactly, so each visitor preloads the one still they will be shown. Phone widths are no longer a
+still-only profile (CTO, 2026-11-04): up to 780 px the sequence plays whole in its own 16:9 window
+with the copy below it (styles.css, "Phone hero"), so a phone is shown the opening frame too.
 ```
 
 ### 2. WEB-005 FOUR-ACT HOMEPAGE (docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md).
@@ -78,8 +80,9 @@ as a reverse-story flash (held target -> Earth establish). Where the motion neve
 
 ```text
 preload="none" and no <source> children on purpose. script.js attaches the encodes only
-when the visitor is not on a reduced-motion, reduced-data or small-screen profile, so
-exactly one encode is ever fetched and often none is. With JavaScript disabled the
+when the visitor is not on a reduced-motion or reduced-data profile (Save-Data, a slow network, a
+refused autoplay), so exactly one encode is ever fetched and often none is. A phone is not such a
+profile: its 16:9 window is served the 1280 encode (the tier is sized from the video's own box). With JavaScript disabled the
 poster is the hero, which is an intentional state rather than a failure.
 ```
 

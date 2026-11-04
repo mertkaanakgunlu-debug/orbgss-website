@@ -667,6 +667,21 @@ body.home{background:var(--pumice)}
   .priority-stage{--stage-pad:14px}
   .target-frame{inset:-6px}.target-frame i{width:16px;height:16px}
 }
+/* Phone hero (CTO, 2026-11-04). Up to 780 px the copy would cover most of a portrait crop of the 16:9
+   sequence, and the crop shows under a third of it (satellite and beam fall outside it, the footprint sits
+   behind the headline). So the sequence gets its own full-width 16:9 window, shown whole, and the copy
+   sits below it on Night: nothing is drawn over the video except the render caption, which stays on the
+   image at its bottom-right (grid cell 1/1 shared with the window). Same boxes for poster, held base and
+   video, so the opening frame, the playback and the held frame register exactly. The analytical drape
+   stays desktop-only (>= 981 px), so a phone never fetches it. Above 780 px nothing here applies. */
+@media(max-width:780px){
+  .hero{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;height:auto;min-height:max(560px,calc(100svh - var(--header-h)))}
+  .hero-visual{position:relative;inset:auto;grid-area:1/1;width:100%;aspect-ratio:16/9;overflow:hidden}
+  .hero-poster,.hero-held,.hero-video{object-position:center}
+  .hero-shade{background:linear-gradient(0deg,rgba(13,22,38,.66) 0%,rgba(13,22,38,.28) 26%,rgba(13,22,38,0) 52%)}
+  .hero-content{grid-area:2/1;height:auto;width:100%;max-width:none;justify-content:center;padding:28px var(--pad) 48px}
+  .scene-label{position:static;grid-area:1/1;align-self:end;justify-self:end;margin:0 var(--pad) 8px;line-height:1.45;max-width:calc(100% - 2 * var(--pad))}
+}
 /* Reduced motion: no crossfade, no rise. script.js also refuses to attach a video source at all,
    so this is the belt to that braces: the hero is a still image and the payoff simply exists. */
 @media(prefers-reduced-motion:reduce){

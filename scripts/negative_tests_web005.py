@@ -324,13 +324,51 @@ case("startup poster put back on the held frame (the ending flashes before the E
      site, "must be the recorded startup poster")
 
 case("held frame no longer swapped in where the motion never plays", INDEX,
-     lambda t: t.replace('media="(prefers-reduced-motion: reduce), (max-width: 780px)"\n            srcset=',
+     lambda t: t.replace('media="(prefers-reduced-motion: reduce)"\n            srcset=',
                          'media="(max-width: 780px)"\n            srcset=', 1),
      site, "must swap in the held frame exactly where the motion never plays")
 
+case("held frame swapped in on phone widths again (the phone is a still, the 2026-11-04 decision undone)", INDEX,
+     lambda t: t.replace('media="(prefers-reduced-motion: reduce)"\n            srcset=',
+                         'media="(prefers-reduced-motion: reduce), (max-width: 780px)"\n            srcset=', 1),
+     site, "must swap in the held frame exactly where the motion never plays")
+
 case("startup poster preload loses its media query (a still the visitor is never shown gets preloaded)", INDEX,
-     lambda t: t.replace('    media="(prefers-reduced-motion: no-preference) and (min-width: 781px)"\n', '', 1),
+     lambda t: t.replace('    media="(prefers-reduced-motion: no-preference)"\n', '', 1),
      site, "startup poster preload must exist once")
+
+# ---- Phone hero (CTO, 2026-11-04): the sequence plays whole in its own 16:9 window up to 780 px ------
+case("script.js settles the hero static on small screens again (the phone gets a still)", SCRIPT,
+     lambda t: t.replace("  if (reduceMotion.matches) return settleStatic('reduced-motion');\n",
+                         "  if (reduceMotion.matches) return settleStatic('reduced-motion');\n"
+                         "  if (window.matchMedia('(max-width: 780px)').matches) return settleStatic('small-screen');\n", 1),
+     site, "must not settle the hero static")
+
+case("tier sized from the hero box again (a portrait phone box would be served the 1920 encode)", SCRIPT,
+     lambda t: t.replace("Math.max(video.clientWidth, video.clientHeight * 16 / 9)",
+                         "Math.max(hero.clientWidth, hero.clientHeight * 16 / 9)", 1),
+     site, "demandPx must size the tier from the video's own box")
+
+case("15 s fallback ends a played-through phone sequence as 'stalled'", SCRIPT,
+     lambda t: t.replace("    if (hero.getAttribute('data-hero-state') === 'held') return;\n", "", 1),
+     site, "15 s fallback must treat a sequence that played to its end")
+
+case("phone video window loses its 16:9 box (a portrait crop under the copy)", STYLES,
+     lambda t: t.replace("grid-area:1/1;width:100%;aspect-ratio:16/9;overflow:hidden}",
+                         "grid-area:1/1;width:100%;aspect-ratio:3/4;overflow:hidden}", 1),
+     site, "on a phone .hero-visual is the 16:9 window")
+
+case("phone copy goes back over the video window", STYLES,
+     lambda t: t.replace(".hero-content{grid-area:2/1;", ".hero-content{grid-area:1/1;", 1),
+     site, "sits below the window")
+
+case("phone render caption leaves the window", STYLES,
+     lambda t: t.replace(".scene-label{position:static;grid-area:1/1;", ".scene-label{position:absolute;grid-area:1/1;", 1),
+     site, "render caption stays on the window")
+
+case("phone hero block no longer applies up to 780 px", STYLES,
+     lambda t: t.replace("@media(max-width:780px){\n  .hero{display:grid", "@media(max-width:781px){\n  .hero{display:grid", 1),
+     site, "phone hero block")
 
 case("held base removed (static payoff would sit on the opening Earth)", INDEX,
      lambda t: re.sub(r'\s*<img\s+class="hero-held"\s+data-hero-held.*?/>', '', t, count=1, flags=re.S),
