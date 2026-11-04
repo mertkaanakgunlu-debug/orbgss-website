@@ -3706,12 +3706,14 @@ def main() -> int:
         fail("script.js must attach a hero video source in exactly one place: a tier is chosen once, "
              "before playback, and never swapped mid-play", errors)
 
-    # Phone hero (CTO, 2026-11-04). Up to 780 px the hero is a 16:9 video window with the copy below it,
-    # not a portrait crop under the copy; the screen width is no longer a reason to play nothing.
-    # Reduced motion, Save-Data, a slow network and a refused autoplay still end in the held still.
-    if re.search(r"small-screen|smallScreen|max-width: ?780px", script_hero):
+    # Phone hero (CTO, 2026-11-04) and its payoff (CTO, 2026-11-05). Up to 980 px the hero is a 16:9 video
+    # window with the copy below it, not a portrait crop under the copy; the screen width is no longer a
+    # reason to play nothing or to cut the story before the result. Reduced motion, Save-Data, a slow network
+    # and a refused autoplay still end in the held still.
+    if re.search(r"small-screen|smallScreen", script_hero) \
+            or re.search(r"matchMedia\([^)]*max-width[^)]*\)[\s\S]{0,200}?return settleStatic", script_hero):
         fail("script.js must not settle the hero static (or branch at all) on screen size: a phone plays the "
-             "sequence in its own 16:9 window (small-screen / max-width: 780px found)", errors)
+             "sequence in its own 16:9 window (small-screen gate found)", errors)
     if "video.clientWidth" not in script_hero or re.search(r"hero\.client(?:Width|Height)\s*\*?\s*16", script_hero) \
             or "Math.max(hero.clientWidth" in script_hero:
         fail("script.js demandPx must size the tier from the video's own box (video.clientWidth / "
@@ -3719,32 +3721,60 @@ def main() -> int:
              "served the 1280 encode, never the 1920 one", errors)
     if not re.search(r"if \(hero\.getAttribute\('data-hero-state'\) === 'held'\) return;\s*\n\s*if \(!video\.paused[^\n]*\n\s*settleStatic\('stalled'\)",
                      script_hero):
-        fail("script.js: the 15 s fallback must treat a sequence that played to its end ('held') as settled; "
-             "below the desktop layout nothing is revealed and the hero would otherwise end 'stalled'", errors)
-    phone_css = re.search(r"@media\(max-width:780px\)\{\s*\.hero\{([^}]*)\}\s*\.hero-visual\{([^}]*)\}"
-                          r"[^@]*?\.hero-content\{([^}]*)\}[^@]*?\.hero > \.scene-label\{([^}]*)\}\s*\}", css_text)
-    if not phone_css:
-        fail("styles.css: the phone hero block (@media(max-width:780px) with .hero, .hero-visual, .hero-content "
+        fail("script.js: the 15 s fallback must treat a sequence that played to its end ('held') as settled, "
+             "or the hero would end 'stalled' after a sequence that played whole", errors)
+    # The payoff in the stacked layout: it plays after the video on a phone and a tablet, with no relief
+    # rise on a phone, and a visitor who does not play the sequence (data saver, slow link, reduced motion)
+    # fetches no drape state there.
+    if "const stackedLayout = window.matchMedia('(max-width: 980px)');" not in script_hero \
+            or "const phoneLayout = window.matchMedia('(max-width: 780px)');" not in script_hero:
+        fail("script.js must declare stackedLayout (max-width: 980px) and phoneLayout (max-width: 780px) "
+             "for the payoff of the stacked hero", errors)
+    reveal_fn = re.search(r"function revealPayoff\(instant\) \{([\s\S]*?)\n  \}\n", script_hero)
+    if not reveal_fn:
+        fail("script.js: revealPayoff is missing", errors)
+    else:
+        if "desktopLayout" in reveal_fn.group(1):
+            fail("script.js: revealPayoff must not be gated on the desktop layout: the sequence ends on the "
+                 "result on a phone and a tablet too (CTO, 2026-11-05)", errors)
+        if "if (instant && stackedLayout.matches) return;" not in reveal_fn.group(1):
+            fail("script.js: in the stacked layout only a sequence that played reveals the payoff; "
+                 "revealPayoff(true) (a static visitor) must return there ('if (instant && stackedLayout.matches) "
+                 "return;'), so a data-saver or reduced-motion visitor fetches no drape state", errors)
+    warm_fn = re.search(r"function warmLayers\(\) \{([\s\S]*?)\n  \}\n", script_hero)
+    if not warm_fn or "if (!phoneLayout.matches) riseImages().forEach(promote);" not in warm_fn.group(1) \
+            or "desktopLayout" in warm_fn.group(1):
+        fail("script.js: warmLayers must skip the relief rise states on a phone ('if (!phoneLayout.matches) "
+             "riseImages().forEach(promote);', 1.6 MiB a 16:9 phone window cannot show) and must not be gated "
+             "on the desktop layout", errors)
+    if "function warmAfterVideoLoaded" not in script_hero \
+            or "if (stackedLayout.matches) warmAfterVideoLoaded(); else warmLayers();" not in script_hero:
+        fail("script.js: in the stacked layout the drape states are fetched only after the video has "
+             "downloaded (warmAfterVideoLoaded), so they never compete with the encode for a phone's link", errors)
+    stacked_css = re.search(r"@media\(max-width:980px\)\{\s*\.hero\{([^}]*)\}\s*\.hero-visual\{([^}]*)\}"
+                            r"[^@]*?\.hero-content\{([^}]*)\}[^@]*?\.hero > \.scene-label\{([^}]*)\}\s*\}", css_text)
+    if not stacked_css:
+        fail("styles.css: the stacked hero block (@media(max-width:980px) with .hero, .hero-visual, .hero-content "
              "and .hero > .scene-label, in that order) is missing", errors)
     else:
-        p_hero, p_visual, p_content, p_label = phone_css.groups()
+        p_hero, p_visual, p_content, p_label = stacked_css.groups()
         if "display:grid" not in p_hero or "height:auto" not in p_hero:
-            fail("styles.css: on a phone the hero is a grid that grows with its copy (display:grid; height:auto)", errors)
+            fail("styles.css: in the stacked layout the hero is a grid that grows with its copy (display:grid; height:auto)", errors)
         if "aspect-ratio:16/9" not in p_visual or "position:relative" not in p_visual or "grid-area:1/1" not in p_visual:
-            fail("styles.css: on a phone .hero-visual is the 16:9 window in grid cell 1/1 (position:relative; "
+            fail("styles.css: in the stacked layout .hero-visual is the 16:9 window in grid cell 1/1 (position:relative; "
                  "aspect-ratio:16/9), so the whole frame is shown and the copy never sits on the video", errors)
         if "grid-area:2/1" not in p_content:
-            fail("styles.css: on a phone .hero-content sits below the window (grid-area:2/1)", errors)
+            fail("styles.css: in the stacked layout .hero-content sits below the window (grid-area:2/1)", errors)
         if "position:static" not in p_label or "grid-area:1/1" not in p_label or "align-self:end" not in p_label \
                 or "justify-self:end" not in p_label:
-            fail("styles.css: on a phone the render caption stays on the window at its bottom-right "
+            fail("styles.css: in the stacked layout the render caption stays on the window at its bottom-right "
                  "(.hero > .scene-label: grid-area:1/1; align-self:end; justify-self:end)", errors)
-    # The phone block may touch the hero and nothing else: a selector that does not start with .hero (a bare
-    # .scene-label, say) would move every image caption, header and band on the site below 780 px (the first
+    # The stacked block may touch the hero and nothing else: a selector that does not start with .hero (a bare
+    # .scene-label, say) would move every image caption, header and band on the site below 980 px (the first
     # review of the phone hero failed on exactly that).
-    phone_start = re.search(r"@media\(max-width:780px\)\{\s*\.hero\{", css_text)
-    if phone_start:
-        open_at = css_text.index("{", phone_start.start())
+    stacked_start = re.search(r"@media\(max-width:980px\)\{\s*\.hero\{", css_text)
+    if stacked_start:
+        open_at = css_text.index("{", stacked_start.start())
         depth, close_at = 0, open_at
         for close_at in range(open_at, len(css_text)):
             if css_text[close_at] == "{":
@@ -3753,12 +3783,18 @@ def main() -> int:
                 depth -= 1
                 if depth == 0:
                     break
-        phone_body = re.sub(r"/\*.*?\*/", "", css_text[open_at + 1:close_at], flags=re.S)
-        for selector_list in re.findall(r"([^{}]+)\{[^{}]*\}", phone_body):
+        stacked_body = re.sub(r"/\*.*?\*/", "", css_text[open_at + 1:close_at], flags=re.S)
+        drape_on = re.search(r"(?:^|\})\s*\.hero-drape\{([^}]*)\}", stacked_body)
+        drape_off = re.search(r"(?:^|\})\s*\.hero-drape\[hidden\]\{([^}]*)\}", stacked_body)
+        if not drape_on or "display:block" not in drape_on.group(1) \
+                or not drape_off or "display:none" not in drape_off.group(1):
+            fail("styles.css: in the stacked layout the payoff drape is shown inside the 16:9 window "
+                 "(.hero-drape{display:block}, and .hero-drape[hidden]{display:none} until it is revealed)", errors)
+        for selector_list in re.findall(r"([^{}]+)\{[^{}]*\}", stacked_body):
             for selector in selector_list.split(","):
                 if not selector.strip().startswith(".hero"):
-                    fail(f"styles.css: the phone hero block may only style the hero; selector {selector.strip()!r} "
-                         "does not start with .hero and would apply to every page and image on a phone", errors)
+                    fail(f"styles.css: the stacked hero block may only style the hero; selector {selector.strip()!r} "
+                         "does not start with .hero and would apply to every page and image below 980 px", errors)
 
     # Phone captions (CTO, 2026-11-04). The desktop caption (12 px on the interior pages, line height 1.8) was
     # carried to the phone unchanged and covered a third to a half of a 260-370 px map. Up to 780 px every

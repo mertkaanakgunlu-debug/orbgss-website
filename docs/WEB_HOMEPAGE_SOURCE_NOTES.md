@@ -25,8 +25,8 @@ WEB-005A: two posters, two jobs, one request. Where the motion is about to play 
 the OPENING frame, so poster -> video is continuous; where it never plays (reduced motion) the
 poster is the HELD frame the sequence ends on. The media queries here are the <picture> below,
 exactly, so each visitor preloads the one still they will be shown. Phone widths are no longer a
-still-only profile (CTO, 2026-11-04): up to 780 px the sequence plays whole in its own 16:9 window
-with the copy below it (styles.css, "Phone hero"), so a phone is shown the opening frame too.
+still-only profile (CTO, 2026-11-04): up to 980 px the sequence plays whole in its own 16:9 window
+with the copy below it (styles.css, "Stacked hero"), so a phone or a tablet is shown the opening frame too.
 ```
 
 ### 2. WEB-005 FOUR-ACT HOMEPAGE (docs/WEB_PUBLIC_VISUAL_NARRATIVE_AUTHORITY.md).
@@ -113,10 +113,12 @@ shows the priority surface at once. Where a layer has no analytical support the 
 context shows through; nothing is filled in. There is deliberately no colour bar, legend,
 card or label here (Product decision b9579ef section 4): Acts 3 and 4 carry the exact
 public labels and mandatory warnings. Every state is data-src: script.js promotes the
-priority state on the desktop reveal and the transitional states only when motion plays,
-so a phone fetches none of them and a static desktop visitor fetches one. With JavaScript
-off the noscript image is the payoff. Desktop layout only: below 981 px the copy spans the frame and
-a bright surface behind it would cost the copy its contrast.
+priority state on the static desktop reveal and the transitional states only when motion plays,
+so a static desktop visitor fetches one and a static visitor up to 980 px fetches none. With
+JavaScript off the noscript image is the payoff. Up to 980 px (CTO, 2026-11-05) the payoff plays after
+the sequence inside the 16:9 window, where the copy sits below the video and a bright surface cannot
+cost it its contrast; a phone (up to 780 px) skips the relief rise, and the states are fetched only
+once the video has downloaded.
 
 The relief RISES into the Terrain state (docs/web-005-polish-authority@0e87675): the hero-drape-rise
 images are the scene's own frames between the held frame (276) and Terrain (292), rendered

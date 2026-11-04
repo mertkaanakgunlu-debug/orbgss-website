@@ -337,11 +337,18 @@ case("startup poster preload loses its media query (a still the visitor is never
      lambda t: t.replace('    media="(prefers-reduced-motion: no-preference)"\n', '', 1),
      site, "startup poster preload must exist once")
 
-# ---- Phone hero (CTO, 2026-11-04): the sequence plays whole in its own 16:9 window up to 780 px ------
+# ---- Stacked hero (CTO, 2026-11-04 / 2026-11-05): the sequence plays whole in its own 16:9 window up to
+# ---- 980 px and ends on the payoff (layers and score) like the desktop ---------------------------------
 case("script.js settles the hero static on small screens again (the phone gets a still)", SCRIPT,
      lambda t: t.replace("  if (reduceMotion.matches) return settleStatic('reduced-motion');\n",
                          "  if (reduceMotion.matches) return settleStatic('reduced-motion');\n"
                          "  if (window.matchMedia('(max-width: 780px)').matches) return settleStatic('small-screen');\n", 1),
+     site, "must not settle the hero static")
+
+case("script.js settles the hero static on a narrow screen under another reason name", SCRIPT,
+     lambda t: t.replace("  if (reduceMotion.matches) return settleStatic('reduced-motion');\n",
+                         "  if (reduceMotion.matches) return settleStatic('reduced-motion');\n"
+                         "  if (window.matchMedia('(max-width: 600px)').matches) return settleStatic('narrow');\n", 1),
      site, "must not settle the hero static")
 
 case("tier sized from the hero box again (a portrait phone box would be served the 1920 encode)", SCRIPT,
@@ -353,31 +360,69 @@ case("15 s fallback ends a played-through phone sequence as 'stalled'", SCRIPT,
      lambda t: t.replace("    if (hero.getAttribute('data-hero-state') === 'held') return;\n", "", 1),
      site, "15 s fallback must treat a sequence that played to its end")
 
-case("phone video window loses its 16:9 box (a portrait crop under the copy)", STYLES,
+case("stacked video window loses its 16:9 box (a portrait crop under the copy)", STYLES,
      lambda t: t.replace("grid-area:1/1;width:100%;aspect-ratio:16/9;overflow:hidden}",
                          "grid-area:1/1;width:100%;aspect-ratio:3/4;overflow:hidden}", 1),
-     site, "on a phone .hero-visual is the 16:9 window")
+     site, "in the stacked layout .hero-visual is the 16:9 window")
 
-case("phone copy goes back over the video window", STYLES,
+case("stacked copy goes back over the video window", STYLES,
      lambda t: t.replace(".hero-content{grid-area:2/1;", ".hero-content{grid-area:1/1;", 1),
      site, "sits below the window")
 
-case("phone render caption leaves the window", STYLES,
+case("stacked render caption leaves the window", STYLES,
      lambda t: t.replace(".hero > .scene-label{position:static;grid-area:1/1;", ".hero > .scene-label{position:absolute;grid-area:1/1;", 1),
      site, "render caption stays on the window")
 
-case("phone caption rule unscoped (it would move every image caption on the site below 780 px)", STYLES,
+case("stacked caption rule unscoped (it would move every image caption on the site below 980 px)", STYLES,
      lambda t: t.replace("  .hero > .scene-label{position:static", "  .scene-label{position:static", 1),
      site, "may only style the hero")
 
-case("a second unscoped rule inside the phone hero block (any selector not starting with .hero)", STYLES,
+case("a second unscoped rule inside the stacked hero block (any selector not starting with .hero)", STYLES,
      lambda t: t.replace("  .hero-poster,.hero-held,.hero-video{object-position:center}",
                          "  .hero-poster,.hero-held,.hero-video{object-position:center}\n  .site-header{position:static}", 1),
      site, "may only style the hero")
 
-case("phone hero block no longer applies up to 780 px", STYLES,
-     lambda t: t.replace("@media(max-width:780px){\n  .hero{display:grid", "@media(max-width:781px){\n  .hero{display:grid", 1),
-     site, "phone hero block")
+case("stacked hero block narrowed back to 780 px (a tablet is cut off at the screen's edge again)", STYLES,
+     lambda t: t.replace("@media(max-width:980px){\n  .hero{display:grid", "@media(max-width:780px){\n  .hero{display:grid", 1),
+     site, "stacked hero block")
+
+case("stacked hero block widened past 980 px (the desktop hero would stack)", STYLES,
+     lambda t: t.replace("@media(max-width:980px){\n  .hero{display:grid", "@media(max-width:981px){\n  .hero{display:grid", 1),
+     site, "stacked hero block")
+
+case("payoff drape not shown in the stacked layout (the sequence ends at the AOI box again)", STYLES,
+     lambda t: t.replace("rgba(13,22,38,0) 52%)}\n  .hero-drape{display:block}\n  .hero-drape[hidden]{display:none}\n",
+                         "rgba(13,22,38,0) 52%)}\n", 1),
+     site, "payoff drape is shown inside the 16:9 window")
+
+case("drape [hidden] rule dropped in the stacked layout (the drape would show before the payoff)", STYLES,
+     lambda t: t.replace("rgba(13,22,38,0) 52%)}\n  .hero-drape{display:block}\n  .hero-drape[hidden]{display:none}\n",
+                         "rgba(13,22,38,0) 52%)}\n  .hero-drape{display:block}\n", 1),
+     site, "payoff drape is shown inside the 16:9 window")
+
+case("revealPayoff gated on the desktop layout again (a phone never sees the layers or the score)", SCRIPT,
+     lambda t: t.replace("    if (instant && stackedLayout.matches) return;\n", "    if (!desktopLayout.matches) return;\n", 1),
+     site, "revealPayoff must not be gated on the desktop layout")
+
+case("a static visitor in the stacked layout reveals the payoff (a data-saver phone would fetch the drape)", SCRIPT,
+     lambda t: t.replace("    if (instant && stackedLayout.matches) return;\n", "", 1),
+     site, "only a sequence that played reveals the payoff")
+
+case("relief rise promoted on a phone (1.6 MiB the 16:9 window cannot show)", SCRIPT,
+     lambda t: t.replace("    if (!phoneLayout.matches) riseImages().forEach(promote);\n", "    riseImages().forEach(promote);\n", 1),
+     site, "warmLayers must skip the relief rise states on a phone")
+
+case("warmLayers gated on the desktop layout again", SCRIPT,
+     lambda t: t.replace("  function warmLayers() {\n    if (!drape) return;\n", "  function warmLayers() {\n    if (!drape || !desktopLayout.matches) return;\n", 1),
+     site, "warmLayers must skip the relief rise states on a phone")
+
+case("drape fetched alongside the video in the stacked layout (it would compete with the encode)", SCRIPT,
+     lambda t: t.replace("      if (stackedLayout.matches) warmAfterVideoLoaded(); else warmLayers();\n", "      warmLayers();\n", 1),
+     site, "fetched only after the video has downloaded")
+
+case("stackedLayout widened to a desktop-sized query", SCRIPT,
+     lambda t: t.replace("const stackedLayout = window.matchMedia('(max-width: 980px)');", "const stackedLayout = window.matchMedia('(max-width: 1100px)');", 1),
+     site, "must declare stackedLayout")
 
 case("phone caption rule removed (a caption would cover a third of a phone image again)", STYLES,
      lambda t: t.replace("  .scene-label{--t-caption:10px;line-height:1.2}\n", "", 1),

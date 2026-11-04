@@ -1172,6 +1172,13 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   try { anchor = JSON.parse(hero.getAttribute('data-hero-anchor') || 'null'); } catch (e) { anchor = null; }
   if (anchor && !(Array.isArray(anchor.corners) && anchor.corners.length === 4)) anchor = null;
   const desktopLayout = window.matchMedia('(min-width: 981px)');
+  /* Up to 980 px the hero is the stacked layout (styles.css, "Stacked hero"): the sequence in its own
+     16:9 window, the copy below it. The payoff plays there too, over the same 16:9 box, but a phone
+     (up to 780 px) skips the relief rise (1.6 MiB the small window cannot show) and only a sequence
+     that actually played reveals it: a static visitor (data saver, slow link, reduced motion) pays
+     for no drape state. */
+  const stackedLayout = window.matchMedia('(max-width: 980px)');
+  const phoneLayout = window.matchMedia('(max-width: 780px)');
 
   function frameGeometry() {
     const W = hero.clientWidth;
@@ -1227,9 +1234,32 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   /* Warm the states while the sequence plays so they are decoded by the time the hold arrives. The
      rise states are motion-path only: nothing else ever calls this before the payoff. */
   function warmLayers() {
-    if (!drape || !desktopLayout.matches) return;
-    riseImages().forEach(promote);
+    if (!drape) return;
+    /* No rise states on a phone: riseReady() stays false and the accepted cross-fade from the held
+       frame plays instead. */
+    if (!phoneLayout.matches) riseImages().forEach(promote);
     LAYER_ORDER.forEach((name) => promote(layerImage(name)));
+  }
+  /* In the stacked layout the states are fetched only once the video has downloaded, so 3.6 MiB of
+     drape never competes with the encode for a phone's link (a starved video is a stalled hero). */
+  function warmAfterVideoLoaded() {
+    let done = false;
+    function go() {
+      if (done) return;
+      done = true;
+      video.removeEventListener('progress', check);
+      video.removeEventListener('timeupdate', check);
+      warmLayers();
+    }
+    function check() {
+      const buffered = video.buffered;
+      const loaded = isFinite(video.duration) && buffered.length > 0
+        && buffered.end(buffered.length - 1) >= video.duration - 0.25;
+      if (loaded || video.currentTime >= 5) go();
+    }
+    video.addEventListener('progress', check);
+    video.addEventListener('timeupdate', check);
+    check();
   }
 
   /* The held base covers the startup poster before any static payoff: the drape states register
@@ -1318,9 +1348,10 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   let revealed = false;
   function revealPayoff(instant) {
     if (revealed || !drape) return;
-    /* Desktop layout only (see styles.css). If the viewport becomes one later, the listener below
-       comes back here. */
-    if (!desktopLayout.matches) return;
+    /* Stacked layout: only a sequence that played reveals the payoff. A static visitor there keeps
+       the plain held frame and fetches no drape state. If the viewport becomes the desktop layout
+       later, the listener below comes back here. */
+    if (instant && stackedLayout.matches) return;
     revealed = true;
     drape.hidden = false;
     hero.setAttribute('data-hero-payoff', 'on');
@@ -1395,9 +1426,10 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
     && /^(slow-2g|2g|3g)$/.test(connection.effectiveType);
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  /* A phone is not a still-only profile any more (CTO, 2026-11-04): up to 780 px the sequence plays
-     whole in its own 16:9 window with the copy below it (styles.css, "Phone hero"). The gates that
-     remain are the ones that are about the visitor's data and motion settings, not the screen. */
+  /* A phone is not a still-only profile any more (CTO, 2026-11-04): up to 980 px the sequence plays
+     whole in its own 16:9 window with the copy below it (styles.css, "Stacked hero"), and ends on the
+     analytical payoff like the desktop. The gates that remain are the ones that are about the
+     visitor's data and motion settings, not the screen. */
   if (!video || typeof video.canPlayType !== 'function') return settleStatic('unsupported');
   if (reduceMotion.matches) return settleStatic('reduced-motion');
   if (saveData) return settleStatic('save-data');
@@ -1558,7 +1590,7 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
       shown = true;
       if (!(video.videoWidth > 0)) { settleStatic('no-video-frame'); return; }
       hero.setAttribute('data-hero-state', 'playing');
-      warmLayers();
+      if (stackedLayout.matches) warmAfterVideoLoaded(); else warmLayers();
       watchPlayback();
     }
     video.addEventListener('playing', () => {
