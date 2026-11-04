@@ -3722,10 +3722,10 @@ def main() -> int:
         fail("script.js: the 15 s fallback must treat a sequence that played to its end ('held') as settled; "
              "below the desktop layout nothing is revealed and the hero would otherwise end 'stalled'", errors)
     phone_css = re.search(r"@media\(max-width:780px\)\{\s*\.hero\{([^}]*)\}\s*\.hero-visual\{([^}]*)\}"
-                          r"[^@]*?\.hero-content\{([^}]*)\}\s*\.scene-label\{([^}]*)\}", css_text)
+                          r"[^@]*?\.hero-content\{([^}]*)\}[^@]*?\.hero > \.scene-label\{([^}]*)\}\s*\}", css_text)
     if not phone_css:
         fail("styles.css: the phone hero block (@media(max-width:780px) with .hero, .hero-visual, .hero-content "
-             "and .scene-label, in that order) is missing", errors)
+             "and .hero > .scene-label, in that order) is missing", errors)
     else:
         p_hero, p_visual, p_content, p_label = phone_css.groups()
         if "display:grid" not in p_hero or "height:auto" not in p_hero:
@@ -3738,7 +3738,27 @@ def main() -> int:
         if "position:static" not in p_label or "grid-area:1/1" not in p_label or "align-self:end" not in p_label \
                 or "justify-self:end" not in p_label:
             fail("styles.css: on a phone the render caption stays on the window at its bottom-right "
-                 "(.scene-label: grid-area:1/1; align-self:end; justify-self:end)", errors)
+                 "(.hero > .scene-label: grid-area:1/1; align-self:end; justify-self:end)", errors)
+    # The phone block may touch the hero and nothing else: a selector that does not start with .hero (a bare
+    # .scene-label, say) would move every image caption, header and band on the site below 780 px (the first
+    # review of the phone hero failed on exactly that).
+    phone_start = re.search(r"@media\(max-width:780px\)\{\s*\.hero\{", css_text)
+    if phone_start:
+        open_at = css_text.index("{", phone_start.start())
+        depth, close_at = 0, open_at
+        for close_at in range(open_at, len(css_text)):
+            if css_text[close_at] == "{":
+                depth += 1
+            elif css_text[close_at] == "}":
+                depth -= 1
+                if depth == 0:
+                    break
+        phone_body = re.sub(r"/\*.*?\*/", "", css_text[open_at + 1:close_at], flags=re.S)
+        for selector_list in re.findall(r"([^{}]+)\{[^{}]*\}", phone_body):
+            for selector in selector_list.split(","):
+                if not selector.strip().startswith(".hero"):
+                    fail(f"styles.css: the phone hero block may only style the hero; selector {selector.strip()!r} "
+                         "does not start with .hero and would apply to every page and image on a phone", errors)
 
     # Sensing lines are attention, not physics (A-HERO-04): the hero's own copy may not claim an
     # instrument. Checked on the dictionary in both languages and on the static markup.

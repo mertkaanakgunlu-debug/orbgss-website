@@ -363,8 +363,17 @@ case("phone copy goes back over the video window", STYLES,
      site, "sits below the window")
 
 case("phone render caption leaves the window", STYLES,
-     lambda t: t.replace(".scene-label{position:static;grid-area:1/1;", ".scene-label{position:absolute;grid-area:1/1;", 1),
+     lambda t: t.replace(".hero > .scene-label{position:static;grid-area:1/1;", ".hero > .scene-label{position:absolute;grid-area:1/1;", 1),
      site, "render caption stays on the window")
+
+case("phone caption rule unscoped (it would move every image caption on the site below 780 px)", STYLES,
+     lambda t: t.replace("  .hero > .scene-label{position:static", "  .scene-label{position:static", 1),
+     site, "may only style the hero")
+
+case("a second unscoped rule inside the phone hero block (any selector not starting with .hero)", STYLES,
+     lambda t: t.replace("  .hero-poster,.hero-held,.hero-video{object-position:center}",
+                         "  .hero-poster,.hero-held,.hero-video{object-position:center}\n  .site-header{position:static}", 1),
+     site, "may only style the hero")
 
 case("phone hero block no longer applies up to 780 px", STYLES,
      lambda t: t.replace("@media(max-width:780px){\n  .hero{display:grid", "@media(max-width:781px){\n  .hero{display:grid", 1),

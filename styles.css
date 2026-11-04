@@ -682,7 +682,9 @@ body.home{background:var(--pumice)}
   .hero-poster,.hero-held,.hero-video{object-position:center}
   .hero-shade{background:linear-gradient(0deg,rgba(13,22,38,.66) 0%,rgba(13,22,38,.28) 26%,rgba(13,22,38,0) 52%)}
   .hero-content{grid-area:2/1;height:auto;width:100%;max-width:none;justify-content:center;padding:28px var(--pad) 48px}
-  .scene-label{position:static;grid-area:1/1;align-self:end;justify-self:end;margin:0 var(--pad) 8px;line-height:1.45;max-width:calc(100% - 2 * var(--pad))}
+  /* Only the hero's own caption (a direct child of .hero) joins the window. Every other .scene-label on the
+     site keeps its own rule at every width: a bare .scene-label here would move all of them. */
+  .hero > .scene-label{position:static;grid-area:1/1;align-self:end;justify-self:end;margin:0 var(--pad) 8px;line-height:1.45;max-width:calc(100% - 2 * var(--pad))}
 }
 /* Reduced motion: no crossfade, no rise. script.js also refuses to attach a video source at all,
    so this is the belt to that braces: the hero is a still image and the payoff simply exists. */
