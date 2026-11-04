@@ -159,7 +159,7 @@ case("an English page gains text with no i18n key", ABOUT,
           '<p class="kicker mono" data-i18n="aboutPage.kicker">About</p><p>Hello</p>'),
      "has no i18n key")
 case("an image gains an alt text with no i18n key", SOLUTIONS,
-     swap('data-i18n-alt="alt.yellowstone"', 'data-i18n-aria-label="alt.yellowstone"'),
+     swap('data-i18n-alt="alt.chuquicamata"', 'data-i18n-aria-label="alt.chuquicamata"'),
      "has no data-i18n-* key")
 case("an English page text drifts from the English dictionary", ABOUT,
      swap('data-i18n="aboutPage.kicker">About<', 'data-i18n="aboutPage.kicker">About us<'),

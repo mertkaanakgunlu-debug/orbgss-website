@@ -215,8 +215,8 @@ case("a table comes back on an interior page", GEOTHERMAL,
           '<figure class="geo-atlas" data-lead-visual>'),
      "a <table> is back")
 case("only the Turkish copy runs past the budget", SCRIPT,
-     swap("üzerinde durduğu vadi ve sırtlarla birlikte görülebilir.",
-          "üzerinde durduğu vadi ve sırtlarla birlikte görülebilir. "
+     swap("Yüksek değer “önce buraya bakın” der.",
+          "Yüksek değer “önce buraya bakın” der. "
           + " ".join(["ek"] * 40) + "."),
      "in tr (at most")
 case("a page runs past its total budget", ABOUT,
