@@ -1,4 +1,4 @@
-"""Negative tests of the Atlas redesign: Solutions and About (MER-277).
+"""Negative tests of the Atlas redesign: Solutions and About (MER-277), updated for the interior cleanup of 2026-11-04.
 
     python scripts/negative_tests_atlas_solutions_about.py
 
@@ -34,10 +34,9 @@ suite.case("the Mining and Marine pair leaves paper", SOL,
 suite.case("the pair is repainted by its own rule", CSS,
            swap(".domain-pair{position:relative;padding:", ".domain-pair{position:relative;background:var(--night);padding:"),
            ".domain-pair paints its own background")
-suite.case("the footnote leaves the pair's paper ground", CSS,
-           swap(".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--pumice)}",
-                ".page-solutions .page-note{padding:0 var(--pad) clamp(56px,6vw,88px);background:var(--night)}"),
-           "must sit on the pair's paper ground")
+suite.case("the pilot map outgrows its cap", CSS,
+           swap(".pilot-map{margin:0;width:100%;max-width:600px}", ".pilot-map{margin:0;width:100%;max-width:640px}"),
+           ".pilot-map must cap the priority map at 600 CSS px")
 suite.case("a dark band appears on Solutions", SOL,
            swap('<section class="domain-feature" id="geothermal"', '<section class="domain-feature ground ground-orbit" id="geothermal"'),
            "Solutions is a light page")
@@ -71,9 +70,13 @@ suite.case("the Geothermal row loses its thumbnail", SOL,
            regex(r'<span class="index-thumb"><img class="thumb row-thumb"[^>]*/></span>', '<span class="index-thumb"></span>'),
            "leads with a thumbnail")
 suite.case("an expansion direction row gains an image", SOL,
-           swap('<span class="index-thumb is-none" aria-hidden="true"><span data-i18n="solutionsPage.thumb.none">None yet</span></span>',
-                '<span class="index-thumb is-none" aria-hidden="true"><img class="thumb row-thumb" src="/assets/proof/web005b/priority-600.webp" alt="x" data-i18n-alt="solutionsPage.thumb.priority" width="112" height="112" loading="lazy" /></span>'),
-           "shows no image, only the 'none yet' frame")
+           swap('<span class="index-name" data-i18n="app.marine.title">Marine</span>',
+                '<span class="index-thumb"><img class="thumb row-thumb" src="/assets/proof/web005b/priority-600.webp" alt="x" width="112" height="112" loading="lazy" /></span><span class="index-name" data-i18n="app.marine.title">Marine</span>'),
+           "is its name and its status label only")
+suite.case("a 'none yet' frame returns on an expansion row", SOL,
+           swap('<span class="index-name" data-i18n="app.mining.title">Mining</span>',
+                '<span class="index-thumb is-none"><span>None yet</span></span><span class="index-name" data-i18n="app.mining.title">Mining</span>'),
+           "is its name and its status label only")
 suite.case("a domain row loses its status label", SOL,
            regex(r'\s*<span class="domain-status mono" data-i18n="app\.marine\.status">Expansion direction</span>', ""),
            "every domain index row carries its name and its status label")
@@ -81,25 +84,49 @@ suite.case("the pilot index bar returns on the Geothermal band", SOL,
            regex(r'(<section class="domain-feature" id="geothermal"[^>]*>)', r'\g<1><nav class="pilot-index" aria-label="x"></nav>'),
            "the pilot index bar is back")
 suite.case("the Geothermal band stops linking the Geothermal page", SOL,
-           swap('<a class="text-link" href="/solutions/geothermal/"><span data-i18n="solutionsPage.band.pilot">', '<a class="text-link" href="/about/"><span data-i18n="solutionsPage.band.pilot">'),
-           "the Geothermal band must link the Geothermal page")
+           swap('<a class="text-link is-primary" href="/solutions/geothermal/"><span data-i18n="solutionsPage.band.pilot">', '<a class="text-link is-primary" href="/about/"><span data-i18n="solutionsPage.band.pilot">'),
+           "the Geothermal band holds the page's one filled link")
+suite.case("a second link to the pilot returns on the band", SOL,
+           swap('<p class="kicker mono" data-i18n="solutionsPage.band.kicker">Now</p>', '<a class="text-link is-primary" href="/solutions/geothermal/">x</a><p class="kicker mono" data-i18n="solutionsPage.band.kicker">Now</p>'),
+           "the Geothermal band holds the page's one filled link")
 suite.case("a section bar returns on About", ABOUT,
            swap("</main>", '<nav class="page-index" aria-label="x"></nav></main>'),
            "an in-page section bar")
-suite.case("the Geothermal band loses its lead photograph", SOL,
-           swap("<img\n          data-lead-visual\n          src=\"/assets/imagery/yellowstone-2013-1400.webp\"", "<img\n          src=\"/assets/imagery/yellowstone-2013-1400.webp\""),
+suite.case("the Geothermal band loses its lead map", SOL,
+           swap('<figure class="plate pilot-map" data-lead-visual>', '<figure class="plate pilot-map">'),
            "#geothermal must be the Geothermal band")
-suite.case("the footnote no longer follows the pair", SOL,
-           swap('<div class="page-note ground-paper">', '<section class="page-section"></section>\n    <div class="page-note ground-paper">'),
-           "the illustrative footnote (div.page-note) must follow the pair directly and close the page")
-suite.case("a block follows the footnote, so the page no longer ends on it", SOL,
+suite.case("the Geothermal band shows the Yellowstone photograph again", SOL,
+           swap('<figure class="plate pilot-map" data-lead-visual>', '<img data-lead-visual src="/assets/imagery/yellowstone-2013-1400.webp" alt="" width="1400" height="875" /><figure class="plate pilot-map" data-lead-visual>'),
+           "#geothermal must be the Geothermal band")
+suite.case("the pilot map is declared at the wrong grid", SOL,
+           regex(r'(<figure class="plate pilot-map".*?)width="1200"', r'\g<1>width="1000"', __import__("re").S),
+           "the priority map is declared 1200 x 1200")
+suite.case("the illustrative footnote returns after the pair", SOL,
+           swap("  </main>", '    <div class="page-note ground-paper"><p>x</p></div>\n  </main>'),
+           "the page ends on the Mining and Marine pair")
+suite.case("a closing link returns after the pair", SOL,
+           swap("  </main>", '    <p class="page-next"><a class="text-link" href="/solutions/geothermal/">See the Kızıldere pilot</a></p>\n  </main>'),
+           "the page ends on the Mining and Marine pair")
+suite.case("a block follows the pair, so the page no longer ends on it", SOL,
            swap("  </main>", '    <section class="page-section"></section>\n  </main>'),
-           "the illustrative footnote (div.page-note) must follow the pair directly and close the page")
+           "the page ends on the Mining and Marine pair")
+suite.case("the priority map is drawn full size on a third page", ABOUT,
+           swap("</main>", '<section class="page-section"><img src="/assets/proof/web005b/priority-1200.webp" alt="" width="1200" height="1200" /></section></main>'),
+           "web_005b asset 'priority' is published beyond the homepage")
 suite.case("the Solutions title loses its tone clause", SOL,
            swap('<span class="tone" data-i18n="solutionsPage.title.tail">', '<span data-i18n="solutionsPage.title.tail">'),
            "the page title is two clauses")
 
 # ---- governed rasters: an index thumbnail and nothing else ---------------------------------------------
+suite.case("the pilot map has no recorded placement", "assets/imagery/sources.json",
+           swap('"solutions_placement": {', '"solutions_placement_x": {'),
+           "has no solutions_placement record")
+suite.case("the pilot map's record is measured past the cap", "assets/imagery/sources.json",
+           regex(r'("solutions_placement": \{.*?"max_css_width": )\d+', r"\g<1>640", __import__("re").S),
+           "the priority map is drawn up to")
+suite.case("the pilot map's second home on the Geothermal page is recorded again", "assets/imagery/sources.json",
+           swap('"solutions_placement": {', '"geothermal_placement": {"status": "preview"},\n        "solutions_placement": {'),
+           "geothermal_placement is stale")
 suite.case("a layer thumbnail loses its thumbnail class", ABOUT,
            swap('<img class="thumb row-thumb" src="/assets/proof/web005b/thm01-600.webp"', '<img class="row-thumb" src="/assets/proof/web005b/thm01-600.webp"'),
            "it may appear only as an index thumbnail")
@@ -144,14 +171,9 @@ suite.case("the Turkish data link points at the English Sources page", TR_ABOUT,
            "links to the Sources page")
 
 # ---- the group opts into the type rules --------------------------------------------------------------------
-suite.case("a caption-size rule drops under 10px in the Solutions and About region", CSS,
-           swap(".index-thumb.is-none{display:flex;align-items:center;justify-content:center;border:1px dashed var(--hair);font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-caption);",
-                ".index-thumb.is-none{display:flex;align-items:center;justify-content:center;border:1px dashed var(--hair);font-family:var(--mono);font-variant-ligatures:none;font-size:9px;"),
+suite.case("a rule drops under 10px in the Solutions and About region", CSS,
+           swap(".band-lede{margin:0;max-width:34ch;font-size:var(--t-lede);", ".band-lede{margin:0;max-width:34ch;font-size:9px;"),
            "nothing is set under 10px")
-suite.case("capitals in the region take a second tracking", CSS,
-           swap(".domain-pair .page-section-head .none-note{grid-area:note;max-width:none;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:var(--track);",
-                ".domain-pair .page-section-head .none-note{grid-area:note;max-width:none;font-family:var(--mono);font-variant-ligatures:none;font-size:var(--t-label);letter-spacing:.24em;"),
-           "caps use one tracking")
 suite.case("a Solutions string loses its Turkish value", JS,
            regex(r"\n    'solutionsPage\.title\.tail': 'sırada ne var\.',", ""),
            "has no Turkish value")
