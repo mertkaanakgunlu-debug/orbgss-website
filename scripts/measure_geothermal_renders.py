@@ -34,6 +34,7 @@ ROUTE_FILE = "solutions/geothermal/index.html"
 SOLUTIONS_ROUTE = "/solutions/"
 SOLUTIONS_FILE = "solutions/index.html"
 PLATES = {"terrain": "elevation", "thm01": "thermal", "alt01": "alteration"}
+DESKTOP_MIN = 1180  # the narrowest measured viewport on which the Solutions band sets its copy beside the map
 MER242 = {"alt02": "iron", "relief": "relief"}  # surface -> the plate or section that shows it
 
 
@@ -74,7 +75,7 @@ def main(argv: list[str]) -> int:
                 page.wait_for_function("[...document.images].every(i => i.complete)", timeout=20000)
                 rows = page.evaluate("""() => [...document.images].map(i => {
                     const r = i.getBoundingClientRect();
-                    return {src: i.currentSrc, css: r.width, nat: i.naturalWidth,
+                    return {src: i.currentSrc, css: r.width, nat: i.naturalWidth, inMap: !!i.closest('figure.pilot-map'),
                             fit: getComputedStyle(i).objectFit, xform: getComputedStyle(i).transform,
                             filter: getComputedStyle(i).filter}; })""")
                 for row in rows:
@@ -87,6 +88,11 @@ def main(argv: list[str]) -> int:
                     upscale = row["css"] * dpr / pixels
                     rec = worst.setdefault(layer, {"max_css": 0.0, "max_upscale": 0.0, "at": "", "selected": "",
                                                    "selected_at_max": "", "at_max_css": ""})
+                    # The two-column Geothermal band of /solutions/ holds from 1101 CSS px up. The smallest drawn width there is
+                    # recorded as well: the band once squeezed the map to 225 px at 1920 and to nothing at 2560 (review, 2026-11-04).
+                    if width >= DESKTOP_MIN and row["inMap"] and row["css"] < rec.get("min_css_desktop", 1e9):
+                        rec["min_css_desktop"] = row["css"]
+                        rec["at_min_css_desktop"] = f"{width}x{height} @{dpr}x"
                     if row["css"] > rec["max_css"]:
                         rec["max_css"] = row["css"]
                         rec["selected_at_max"] = urllib.parse.urlsplit(row["src"]).path.lstrip("/")
@@ -116,7 +122,8 @@ def main(argv: list[str]) -> int:
 
     for layer, rec in sorted(solutions_worst.items()):
         print(f"{layer:9} max {rec['max_css']:.1f} CSS px on {SOLUTIONS_ROUTE} ({rec['at_max_css']}), "
-              f"worst upscale {rec['max_upscale']:.3f}x at {rec['at']}")
+              f"worst upscale {rec['max_upscale']:.3f}x at {rec['at']}, "
+              f"min from {DESKTOP_MIN} px up {rec.get('min_css_desktop', 0):.1f} CSS px ({rec.get('at_min_css_desktop', '-')})")
     for layer, rec in sorted(worst.items()):
         print(f"{layer:9} max {rec['max_css']:.1f} CSS px ({rec['at_max_css']}), "
               f"worst upscale {rec['max_upscale']:.3f}x at {rec['at']}")
@@ -191,6 +198,10 @@ def main(argv: list[str]) -> int:
             "selected_derivative": prec["selected_at_max"],
             "max_upscale_factor": round(prec["max_upscale"], 3),
             "max_upscale_at": prec["at"],
+            "min_css_width_desktop": math.floor(prec.get("min_css_desktop", 0)),
+            "min_css_width_desktop_at": prec.get("at_min_css_desktop", ""),
+            "min_css_width_desktop_note": f"The smallest drawn width of the map at the measured viewports of {DESKTOP_MIN} CSS px and "
+                                          "wider, where the copy sits beside the map. It must not shrink with the window.",
         },
     }
     MANIFEST.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

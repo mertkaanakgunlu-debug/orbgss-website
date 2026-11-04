@@ -66,6 +66,16 @@ suite.case("the Turkish sentence on how the score is built returns to the dictio
            swap("0 ile 100 arası tek bir deneysel sıralama, zemini yalnızca bu alanın içinde sıralar.",
                 "Kanıt katmanları 0 ile 100 arası tek bir deneysel skorda birleştirilir."),
            "a sentence on how the score is built")
+suite.case("the illustrative note returns on About under a new key", ABOUT,
+           swap("</main>", '<p class="page-note">A public-domain Landsat scene of another place, not an OrbGSS result.</p></main>'),
+           "copy removed in the interior cleanup of 2026-11-04; it may not come back")
+suite.case("the structure-and-geology gap sentence returns on Solutions under a new key", "solutions/index.html",
+           swap("</main>", '<p class="page-note">No public-safe fault or lithology layer.</p></main>'),
+           "copy removed in the interior cleanup of 2026-11-04; it may not come back")
+suite.case("the Turkish illustrative note returns to the dictionary", JS,
+           swap("0 ile 100 arası tek bir deneysel sıralama, zemini yalnızca bu alanın içinde sıralar.",
+                "Başka bir yere ait, kamuya açık bir Landsat sahnesi; OrbGSS sonucu değildir."),
+           "may not come back under any key")
 suite.case("the skip link's focus ring goes back to the pale link colour", CSS,
            swap(".skip-link:focus-visible{outline-color:var(--ocean)}\n", ""),
            "the skip link's focus ring must be Ocean")

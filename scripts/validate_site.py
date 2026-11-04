@@ -1008,6 +1008,29 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
         fail("styles.css atlas:interior must set --t-label and --t-caption to 12px for the header, the footer and the interior pages", errors)
     if "@media(max-width:387px){body.interior.header-cta-full{display:none}body.interior.header-cta-short{display:inline}}" not in interior_flat:
         fail("styles.css atlas:interior: the phone header pill must read its short label at 387px and below (R4: 'Partner with us' needs 10 px beside the logo at the 12 px label)", errors)
+    # Review, 2026-11-04: the older opening rules (stage, split, register) set the page headline to 300 with a lower specificity
+    # than the Medium rule had, so three pages kept the thin weight. One rule must name all three openings and win over them.
+    if "body.interiormain.page-hero.is-stageh1,body.interiormain.page-hero.is-splith1,body.interiormain.page-hero.is-registerh1{font-weight:500}" not in interior_flat:
+        fail("styles.css atlas:interior must set font-weight 500 on the page headline of the stage, split and register openings "
+             "with a selector more specific than the older 300 rules (Geothermal, Partner and Sources kept the thin weight)", errors)
+    # Review, 2026-11-04: a Medium rule written for the interior region must not reach the homepage (its headlines stay 300), and the
+    # Sources chapter numerals (D1) stay off: the counter rule is still in the stylesheet, so its switch-off is pinned.
+    for sel_text, decl_text in re.findall(r"([^{}]+)\{([^{}]*)\}", interior_flat):
+        if "font-weight:500" not in decl_text:
+            continue
+        depth, start, parts = 0, 0, []
+        for pos, ch in enumerate(sel_text):
+            depth += (ch == "(") - (ch == ")")
+            if ch == "," and depth == 0:
+                parts.append(sel_text[start:pos])
+                start = pos + 1
+        parts.append(sel_text[start:])
+        for part in parts:
+            if not part.startswith("body.interior"):
+                fail(f"styles.css atlas:interior: the selector {part!r} sets font-weight 500 but does not start with body.interior; "
+                     f"the Medium weight is for the interior pages only and would reach the homepage", errors)
+    if "body.page-sources.chapter.page-section-head::before{content:none;display:none}" not in interior_flat:
+        fail("styles.css atlas:interior must switch off the Sources chapter numerals (CTO, 2026-11-04, D1: no design-stage numbering)", errors)
     if not re.search(r":root\{[^}]*--t-label:11px;", re.sub(r"\s+", "", stripped)):
         fail("styles.css :root must keep --t-label at 11px (the homepage's four acts and the hero boxes stay as published)", errors)
     if not re.search(r"body\{[^}]*font-synthesis-weight:none", stripped):
@@ -1204,6 +1227,14 @@ RETIRED_CLEANUP_KEYS = [
     "geothermalPage.role.support", "scene.illustrative", "scene.yellowstone.coords", "solutionsPage.published.none",
     "solutionsPage.thumb.none",
 ]
+# The same copy by its words, not its key (review of the interior cleanup, 2026-11-04: the notes came back under a new key and
+# the key list did not see them). Matched without regard to case, in the dictionary and in every page, in both languages.
+RETIRED_CLEANUP_PHRASES = [
+    "another place, not an OrbGSS result", "Başka bir yere ait, kamuya açık", "scenes of other places, chosen to show",
+    "başka yerlere ait kamuya açık Landsat sahneleridir", "public-safe fault or lithology", "kullanıma uygun fay veya litoloji",
+    "The gaps are part of the record", "Boşluklar kaydın parçasıdır", "What is missing", "Eksik olanlar",
+    "None yet",
+]
 # Sentences removed after review because they said how the score is built, in both languages. A key may stay (the
 # Geothermal result copy) while its wording may not return.
 RETIRED_METHOD_PHRASES = ["combined into one experimental score", "deneysel skorda birleştirilir"]
@@ -1237,6 +1268,12 @@ def light_theme_checks(errors: list[str], page_html: dict[str, str]) -> None:
         for rel, text in sorted(page_html.items()):
             if phrase in text:
                 bad(f"{rel}: says {phrase!r}, a sentence on how the score is built; it was removed on request")
+    for phrase in RETIRED_CLEANUP_PHRASES:
+        if phrase.casefold() in script.casefold():
+            bad(f"script.js says {phrase!r}, copy removed in the interior cleanup of 2026-11-04; it may not come back under any key")
+        for rel, text in sorted(page_html.items()):
+            if phrase.casefold() in text.casefold():
+                bad(f"{rel}: says {phrase!r}, copy removed in the interior cleanup of 2026-11-04; it may not come back")
     css = (ROOT / "styles.css").read_text(encoding="utf-8")
     flat = re.sub(r"\s+", "", atlas_strip_css(css))
     # The role variables the light scope and the dark scope both define, so a component reads right on either ground.
@@ -1966,6 +2003,11 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
     pilot_px = re.search(r"max-width:(\d+)px", pilot_rule.group(1)) if pilot_rule else None
     if not pilot_px or int(pilot_px.group(1)) > 600:
         fail("styles.css atlas:interior: .pilot-map must cap the priority map at 600 CSS px", errors)
+    # The Geothermal band is capped at 1440 CSS px, so its inner edge is measured against the band itself. With the window's
+    # edge the padding grew with the screen and the 600 px map shrank to 225 px at 1920 and to nothing at 2560 (review, 2026-11-04).
+    if "body.page-solutions.domain-band.is-feature{--edge:max(var(--pad),calc((min(100%,1440px)-var(--shell))/2))}" not in interior_css:
+        fail("styles.css atlas:interior: the Geothermal band of /solutions/ must measure its --edge against the band (min(100%, 1440px)), "
+             "not the window, or the priority map shrinks on wide screens", errors)
     # The one named R2 exception is recorded: web_005b.placement.priority.solutions_placement holds the measured placement,
     # the old second home on the Geothermal page is gone, and the map never exceeds 600 CSS px or its native 1200 px grid.
     sources = json.loads(MANIFEST.read_text(encoding="utf-8"))
@@ -1988,6 +2030,10 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
         else:
             if css_w * dpr > native or css_w > 600:
                 fail(f"the priority map is drawn up to {css_w} CSS px = {int(css_w * dpr)} device px on /solutions/, above its {native} px native grid or the 600 CSS px cap", errors)
+            min_w = r.get("min_css_width_desktop")
+            if not isinstance(min_w, (int, float)) or min_w < 480:
+                fail(f"web_005b.placement.priority.solutions_placement.rendered.min_css_width_desktop is {min_w}: from 1180 CSS px up the "
+                     f"priority map must stay drawn at 480 CSS px or more on /solutions/ (it must not shrink with a wide window)", errors)
             if len(r.get("viewports_measured", [])) < 12 or not isinstance(r.get("max_upscale_factor"), (int, float)) or r["max_upscale_factor"] > 1.0:
                 fail(f"web_005b.placement.priority.solutions_placement.rendered was measured at fewer than 12 viewports or upscales ({r.get('max_upscale_factor')})", errors)
 # === /atlas:solutions-about ===

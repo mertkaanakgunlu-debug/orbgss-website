@@ -124,6 +124,15 @@ suite.case("the pilot map has no recorded placement", "assets/imagery/sources.js
 suite.case("the pilot map's record is measured past the cap", "assets/imagery/sources.json",
            regex(r'("solutions_placement": \{.*?"max_css_width": )\d+', r"\g<1>640", __import__("re").S),
            "the priority map is drawn up to")
+suite.case("the Geothermal band measures its edge against the window again", CSS,
+           swap("body.page-solutions .domain-band.is-feature{--edge:max(var(--pad),calc((min(100%,1440px) - var(--shell)) / 2))}", "body.page-solutions .domain-band.is-feature{--edge:max(var(--pad),calc((100% - var(--shell)) / 2))}"),
+           "must measure its --edge against the band")
+suite.case("the pilot map is recorded as shrinking on wide screens", "assets/imagery/sources.json",
+           regex(r'("min_css_width_desktop": )\d+', r"\g<1>225"),
+           "must stay drawn at 480 CSS px or more")
+suite.case("the pilot map's wide-screen width is no longer recorded", "assets/imagery/sources.json",
+           swap('"min_css_width_desktop": ', '"min_css_width_desktop_x": '),
+           "min_css_width_desktop is None")
 suite.case("the pilot map's second home on the Geothermal page is recorded again", "assets/imagery/sources.json",
            swap('"solutions_placement": {', '"geothermal_placement": {"status": "preview"},\n        "solutions_placement": {'),
            "geothermal_placement is stale")

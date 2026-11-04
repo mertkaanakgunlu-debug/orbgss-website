@@ -4009,7 +4009,10 @@
             "native_px": 1200,
             "selected_derivative": "assets/proof/web005b/priority-600.webp",
             "max_upscale_factor": 1.0,
-            "max_upscale_at": "768x1112 @1x"
+            "max_upscale_at": "768x1112 @1x",
+            "min_css_width_desktop": 569,
+            "min_css_width_desktop_at": "1180x900 @1x",
+            "min_css_width_desktop_note": "The smallest drawn width of the map at the measured viewports of 1180 CSS px and wider, where the copy sits beside the map. It must not shrink with the window."
           }
         }
       }

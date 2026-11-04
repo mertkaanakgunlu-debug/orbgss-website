@@ -42,6 +42,10 @@ in the header, footer and interior pages (the homepage's four acts keep 11 px, s
   `scripts/measure_geothermal_renders.py`.
 - R4 (the lead visual opens the section): the Geothermal band on `/solutions/` sets its copy beside its map (map second in the DOM, so
   on a phone the copy comes first, as reviewed).
+- The 2026-10-25 decision that no page carries an in-page index: the Sources page opens with a contents list (`ol.source-toc`,
+  four links to its chapters, label `sourcesPage.toc`). It is in the CTO-reviewed prototype and so counts as decided. The older
+  check looked for the earlier class names, which is why it did not notice. The Sources contents list is the one in-page index
+  on the site; the other pages stay without one.
 - Atlas design, "two weights": there is a third face, **OrbGSS Sans 500** (IBM Plex Sans Medium subset, self-hosted, rebuilt by
   `scripts/build_fonts.py`). It is used for the interior headlines and the About numerals only, inside the `atlas:interior` region.
 - Atlas design, type floor: labels are 12 px in header, footer and interior pages (11 px stays on the homepage acts).
@@ -55,6 +59,19 @@ in the header, footer and interior pages (the homepage's four acts keep 11 px, s
   printing, a hidden tab and no JavaScript all show everything. The RISE and LINES selector lists exist in CSS and JS: change both.
 - The TR switch, `nav.partnerShort` and the Sources contents label (`sourcesPage.toc`) have Turkish strings; the new Turkish wording is
   pending the CTO's language review like the other new Turkish blocks.
+
+## Review of the preview (2026-11-04)
+
+An independent review of the first preview found two defects, both fixed in `styles.css` and now pinned by the validator and the
+negative suites: the headlines of the Geothermal, Partner and Sources pages kept the thin weight 300 because the older opening
+rules were more specific than the Medium rule (one rule now names all three openings), and the priority map in the Geothermal
+band of `/solutions/` shrank to 225 px at 1920 px and vanished at 2560 px because the band's inner edge was measured against the
+window while the band stops growing at 1440 px (the edge is now measured against the band; the map stays 600 CSS px from
+about 1240 px up and is never narrower than 520 px in the two-column layout; the smallest width measured from 1180 px up is recorded
+as `min_css_width_desktop` and the validator holds it at 480 px or more). Retired copy is now
+also matched by its words (`RETIRED_CLEANUP_PHRASES`), the Sources chapter numerals' switch-off is pinned, and a Medium rule that
+does not start with `body.interior` is refused. The 12 px labels make "Partner with us" in the footer wrap to a second line at 390 px;
+that is a known consequence of the 12 px decision, accepted.
 
 ## Open
 
