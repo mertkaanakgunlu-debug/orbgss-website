@@ -145,6 +145,9 @@ case("the hero's Partner call becomes a mailto again", INDEX,
 case("the closing Partner line returns to the homepage (CTO removed it, 2026-10-25)", INDEX,
      swap("  </main>", '    <div id="contact" class="sec sec-contact">\n      <div class="shell"><a class="text-link" href="/partner/">Partner With Us</a></div>\n    </div>\n  </main>'),
      "the closing Partner band is back")
+case("the second link pair returns under the Act 4 result map (retired 2026-11-04)", INDEX,
+     swap("</main>", '<div class="result-actions"><a class="text-link" href="/solutions/geothermal/">x</a></div></main>'),
+     "second link pair under the Act 4 result map is retired")
 case("the Act 3 deep link goes back to the build story", INDEX,
      swap('href="/solutions/geothermal/#layers"', 'href="/solutions/geothermal/"'),
      "must point to /solutions/geothermal/#layers")
@@ -184,11 +187,11 @@ case("a headline runs past eight words", SOLUTIONS,
           'data-i18n="solutionsPage.title.tail">and where it is going next year.</span>'),
      "R5: solutions/index.html: headline")
 case("the page intro runs past thirty words", GEOTHERMAL,
-     swap("and what is still missing.</p>", "and what is still missing, " + " ".join(["more"] * 12) + ".</p>"),
+     swap("where it is and which layers it holds.</p>", "where it is and which layers it holds, " + " ".join(["more"] * 20) + ".</p>"),
      "the page intro is")
 case("a section body runs past forty words", GEOTHERMAL,
-     swap("against the valleys and ridges it sits on.</p>",
-          "against the valleys and ridges it sits on. " + " ".join(["more"] * 30) + ".</p>"),
+     swap("A higher value says look here first.</p>",
+          "A higher value says look here first. " + " ".join(["more"] * 30) + ".</p>"),
      "body is")
 case("a list line runs past twelve words (the cell budget now holds the ruled lists)", PARTNER,
      swap(">A partnership or collaboration with OrbGSS.</span>",
@@ -262,9 +265,9 @@ case("a hub band loses its placement record", SOURCES,
 case("a hub band is laid out wider than its pixels allow", SOURCES,
      as_json(lambda d: scene(d, "chuquicamata-2024")["web_m6_placement"]["rendered"].update(max_css_width=1800)),
      "above its widest 2880 px candidate")
-case("the hub loses the illustrative footnote", SOLUTIONS,
-     regex(r'\s*<div class="page-note ground-paper">.*?</div>\s*</div>', ""),
-     "framing key 'domains.illustrative' is not rendered there")
+case("the hub regains the illustrative footnote (retired 2026-11-04)", SOLUTIONS,
+     swap("</main>", '<div class="page-note ground-paper"><p data-i18n="domains.illustrative">x</p></div></main>'),
+     "copy removed in the interior cleanup")
 
 
 def main() -> int:

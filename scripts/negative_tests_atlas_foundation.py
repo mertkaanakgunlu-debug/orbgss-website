@@ -35,7 +35,9 @@ suite.case("the old Orbit navy returns as a rule colour", CSS, swap(".record-lis
 suite.case("white is used as a literal instead of its token", "about/index.html", swap("</head>", "<style>a{color:#FFFFFE}</style></head>"), "about/index.html: colour #FFFFFE")
 
 # ---- the type system -----------------------------------------------------------------------------
-suite.case("a medium weight appears", CSS, swap(".t-figure{margin:0;font-size:var(--t-figure);font-weight:400;", ".t-figure{margin:0;font-size:var(--t-figure);font-weight:500;"), "font-weight 500")
+suite.case("the 12 px label rule is lost", CSS, swap(".site-header,.site-footer,body.interior main{--t-label:12px;--t-caption:12px}", ".site-header,.site-footer,body.interior main{--t-label:11px;--t-caption:11px}"), "to 12px for the header, the footer and the interior pages")
+suite.case("the root label token grows to 12px", CSS, swap("--t-label:11px;", "--t-label:12px;"), ":root must keep --t-label at 11px")
+suite.case("a medium weight appears", CSS, swap(".t-figure{margin:0;font-size:var(--t-figure);font-weight:400;", ".t-figure{margin:0;font-size:var(--t-figure);font-weight:500;"), "font-weight 500 belongs to the atlas:interior region only")
 suite.case("a third family appears", CSS, swap(".t-figure{margin:0;", ".t-figure{font-family:\"Space Grotesk\";margin:0;"), "only var(--sans)")
 suite.case("a font shorthand appears", CSS, swap(".lede{margin:0;", ".lede{font:400 19px/1.5 serif;margin:0;"), "font shorthand")
 suite.case("font synthesis is switched back on", CSS, swap("font-synthesis-weight:none;", ""), "font-synthesis-weight:none")

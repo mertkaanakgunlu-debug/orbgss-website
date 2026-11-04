@@ -1001,6 +1001,13 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
     outside_interior = re.sub(r"@font-face\{[^}]*\}", " ", re.sub(r"/\*.*?\*/", "", outside_interior, flags=re.S))
     if re.search(r"font-weight\s*:\s*500", outside_interior):
         fail("styles.css: font-weight 500 belongs to the atlas:interior region only (the interior headlines and the About numerals)", errors)
+    # Interior cleanup (CTO, 2026-11-04, decision 3): labels and captions are 12 px in the header, the footer and the interior
+    # pages; the root tokens stay 11 px / 10.5 px so the homepage's four acts (and the hero boxes) are unchanged.
+    interior_flat = re.sub(r"\s+", "", re.sub(r"/\*.*?\*/", "", interior_region.group(0) if interior_region else "", flags=re.S))
+    if ".site-header,.site-footer,body.interiormain{--t-label:12px;--t-caption:12px}" not in interior_flat:
+        fail("styles.css atlas:interior must set --t-label and --t-caption to 12px for the header, the footer and the interior pages", errors)
+    if not re.search(r":root\{[^}]*--t-label:11px;", re.sub(r"\s+", "", stripped)):
+        fail("styles.css :root must keep --t-label at 11px (the homepage's four acts and the hero boxes stay as published)", errors)
     if not re.search(r"body\{[^}]*font-synthesis-weight:none", stripped):
         fail("body must set font-synthesis-weight:none (emphasis is tone, never a synthesised bold)", errors)
     for name in ("Space Grotesk", "Inter", "Segoe", "Roboto", "Helvetica", "Menlo", "Consolas", "system-ui", "ui-sans-serif", "ui-monospace"):

@@ -148,9 +148,9 @@ case("a Turkish page keeps an English string", TR_ABOUT,
      swap('data-i18n="aboutPage.kicker">Hakkımızda<', 'data-i18n="aboutPage.kicker">About<'),
      "'aboutPage.kicker' reads 'About', not its 'tr' dictionary value")
 case("a Turkish image keeps its English alt text", TR_SOLUTIONS,
-     swap('alt="Yellowstone Ulusal Parkı çevresindeki jeotermal arazinin uydu görüntüsü"',
-          'alt="Satellite view of the geothermal landscape around Yellowstone National Park"'),
-     "alt= of 'alt.yellowstone'")
+     swap('alt="Kuzey Şili Chuquicamata madencilik bölgesinin uydu görüntüsü"',
+          'alt="Satellite view of the Chuquicamata mining district in northern Chile"'),
+     "alt= of 'alt.chuquicamata'")
 case("a Turkish mail link keeps the English subject", TR_PARTNER,
      swap("mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Talebi",
           "mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Inquiry"), "href= of 'mail.pilot'")
