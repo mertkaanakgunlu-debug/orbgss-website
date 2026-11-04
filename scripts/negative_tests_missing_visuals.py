@@ -105,16 +105,16 @@ suite.case("a figure is described by another scene's description", PARTNER,
            swap('data-i18n-alt="alt.aluto"', 'data-i18n-alt="alt.deathvalley"'),
            "the image is described by")
 
-# ---- framing: another place, not an OrbGSS result --------------------------------------------------------------------
-suite.case("About loses the illustrative framing", ABOUT,
-           swap('data-i18n="scene.illustrative"', 'data-i18n="scene.illustrativeX"'),
-           "does not carry the illustrative framing scene.illustrative")
-suite.case("Partner loses the illustrative framing", PARTNER,
-           regex(r'<p class="act-footnote scene-note">.*?</p>', "", DOT),
-           "does not carry the illustrative framing scene.illustrative")
-suite.case("the framing stops saying it is another place", SCRIPT,
-           swap("'scene.illustrative': 'A public-domain Landsat scene of another place, not an OrbGSS result.',", "'scene.illustrative': 'Shown for illustration.',"),
-           "must say, in both languages, that the scene is of another place")
+# ---- framing: the "Illustrative ... another place" notes are retired (CTO, 2026-11-04, D5) and must not return ------------
+suite.case("About regains the illustrative note", ABOUT,
+           swap("</main>", '<p class="act-footnote scene-note" data-i18n="scene.illustrative">x</p></main>'),
+           "copy removed in the interior cleanup")
+suite.case("Partner regains the illustrative note", PARTNER,
+           swap("</main>", '<p class="act-footnote scene-note" data-i18n="scene.illustrative">x</p></main>'),
+           "copy removed in the interior cleanup")
+suite.case("the illustrative key returns to the dictionary", SCRIPT,
+           swap("    'label.priority':", "    'scene.illustrative': 'A public-domain Landsat scene of another place, not an OrbGSS result.',\n    'label.priority':"),
+           "script.js carries 'scene.illustrative'")
 suite.case("the Marine panel is shown on a second page", PARTNER,
            swap("</main>", '<img src="/assets/imagery/menderes-delta-2025-34e35c2d-900.webp" alt="" width="900" height="562">\n  </main>'),
            "recorded for ['', 'solutions'] alone")

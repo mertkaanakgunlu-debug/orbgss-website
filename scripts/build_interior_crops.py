@@ -67,8 +67,11 @@ CROPS = (
         "box": (541, 300, 1741, 1500),
         "widths": (1200, 800),
         "role": "Geothermal page, the analysis area: the 36 x 36 km grid (1,200 x 1,200 cells) in natural colour.",
-        "caption": ("scene.aoi.place", "scene.aoi.coords"),
-        "label": (PILOT_CENTRE_PX, PILOT_BASIS),
+        # Interior cleanup (CTO, 2026-11-04, D4 / R1): the atlas plates carry no text on the image. The plate's
+        # name and "role · source" sit under it; the place and the coordinates live in the opening stage and
+        # on the locator, which keep their captions.
+        "caption": None,
+        "label": None,
     },
 )
 
@@ -155,8 +158,12 @@ def build(root: pathlib.Path = ROOT) -> tuple[dict[str, bytes], list[dict]]:
             "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no "
                             "restrictions on use or redistribution. Only the crop, tone rendering (in the parent) and encoding are OrbGSS work.",
             "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
-            "caption_i18n_keys": [*spec["caption"], "scene.kind.naturalColor"],
-            "label_point": label_point(spec["box"], *spec["label"]),
+            **({"caption_i18n_keys": [*spec["caption"], "scene.kind.naturalColor"],
+                "label_point": label_point(spec["box"], *spec["label"])} if spec["caption"] else
+               {"caption_on_image": False,
+                "caption_retired": "Interior cleanup (CTO, 2026-11-04, D4 and R1): this crop is an atlas plate on "
+                                   "/solutions/geothermal/ and carries no text on the image; the plate name and "
+                                   "role/source are set under it."}),
             "rendered": None,
         })
     return files, records

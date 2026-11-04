@@ -29,15 +29,19 @@
   <meta property="og:image" content="https://orbgss.com/assets/hero/hero-poster-1600.webp" />
   <link rel="preload" href="/assets/fonts/orbgss-sans-300.d8ab34ee.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/orbgss-sans-400.39dbd03f.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/orbgss-sans-500.1663c80e.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/styles.css" />
+  <script>(function(d,w){var h=d.documentElement;if(w.matchMedia&&w.matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver"in w))return;h.classList.add("page-motion");w.setTimeout(function(){if(!h.classList.contains("page-live"))h.classList.remove("page-motion")},3000)})(document,window)</script>
 </head>
-<body class="interior">
+<body class="interior page-sources">
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
 
   <header class="site-header" id="top">
     <a href="/" class="brand" aria-label="OrbGSS home" data-i18n-aria-label="nav.brand">
       <img class="brand-logo" src="/assets/brand/orbgss-logo-light.00811851.svg" alt="" width="619" height="144" />
     </a>
+
+    <a class="header-cta" href="/partner/"><span class="header-cta-full" data-i18n="nav.partner">Partner with us</span><span class="header-cta-short" data-i18n="nav.partnerShort">Partner</span></a>
 
     <button class="menu-toggle" type="button" aria-label="Open navigation" data-i18n-aria-label="nav.open" aria-controls="primary-nav" aria-expanded="false">
       <span></span><span></span>
@@ -75,6 +79,12 @@
         <p class="kicker" data-i18n="sourcesPage.kicker">Sources</p>
         <h1 id="sources-page-title"><span class="t1" data-i18n="sourcesPage.title.a">Sources, credits</span> <span class="t2" data-i18n="sourcesPage.title.b">and licences.</span></h1>
         <p class="page-hero-copy" data-i18n="sourcesPage.intro">Four kinds of information, kept apart: the data behind the maps, the credit for each image, the papers to cite, and the licence notices that travel with the work.</p>
+        <ol class="source-toc" aria-label="On this page" data-i18n-aria-label="sourcesPage.toc">
+          <li><a href="#data"><span data-i18n="sourcesPage.index.data">Source data</span> <span aria-hidden="true">↓</span></a></li>
+          <li><a href="#images"><span data-i18n="sourcesPage.index.images">Image credits</span> <span aria-hidden="true">↓</span></a></li>
+          <li><a href="#references"><span data-i18n="sourcesPage.index.references">References</span> <span aria-hidden="true">↓</span></a></li>
+          <li><a href="#licences"><span data-i18n="sourcesPage.index.licences">Licences and notices</span> <span aria-hidden="true">↓</span></a></li>
+        </ol>
       </div>
     </section>
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build the self-hosted fonts (Atlas redesign, MER-275).
 
-OrbGSS Sans 300 / 400 and OrbGSS Mono 400 are Latin + Latin-1 + Turkish subsets of IBM Plex Sans Light,
-IBM Plex Sans Regular and IBM Plex Mono Regular, taken unmodified from IBM's npm releases
+OrbGSS Sans 300 / 400 / 500 and OrbGSS Mono 400 are Latin + Latin-1 + Turkish subsets of IBM Plex Sans Light,
+IBM Plex Sans Regular, IBM Plex Sans Medium and IBM Plex Mono Regular, taken unmodified from IBM's npm releases
 (@ibm/plex-sans 1.1.0, @ibm/plex-mono 1.1.0; SIL Open Font License 1.1). IBM reserves the font name
 "Plex", so the name table of every subset is renamed to "OrbGSS Sans" / "OrbGSS Mono"; the copyright,
 trademark and licence strings stay (assets/fonts/OFL.txt carries the full licence).
@@ -34,6 +34,8 @@ UPSTREAM = {
                  "769209c2a0dbf2e3f012c22e4c604100cb3f1e7b8beb0ef77bc7d982d85509cc"),
     "sans-400": ("@ibm/plex-sans@1.1.0/fonts/complete/woff2/IBMPlexSans-Regular.woff2",
                  "ba711a3085ff9f27440b6b9c4550cfc47c97bf36591d5da958b975bb3add8c1a"),
+    "sans-500": ("@ibm/plex-sans@1.1.0/fonts/complete/woff2/IBMPlexSans-Medium.woff2",
+                 "5660f8a658f8bb50dbc005232f885eadffd2bc1c235c4f6fbb63469d1f9cde6d"),
     "mono-400": ("@ibm/plex-mono@1.1.0/fonts/complete/woff2/IBMPlexMono-Regular.woff2",
                  "49ce58b41a0e1cb921c0f58d9a5b8b96a2cc21437c7066f3ba4f24873076d131"),
 }
@@ -41,6 +43,7 @@ UPSTREAM = {
 FACES = {
     "sans-300": ("OrbGSS Sans", "Light", "OrbGSS Sans Light", "OrbGSSSans-Light", 300),
     "sans-400": ("OrbGSS Sans", "Regular", "OrbGSS Sans Regular", "OrbGSSSans-Regular", 400),
+    "sans-500": ("OrbGSS Sans", "Medium", "OrbGSS Sans Medium", "OrbGSSSans-Medium", 500),
     "mono-400": ("OrbGSS Mono", "Regular", "OrbGSS Mono Regular", "OrbGSSMono-Regular", 400),
 }
 # The design package's Latin-TR range plus the four diagonal arrows (U+2196-2199) that the Sources

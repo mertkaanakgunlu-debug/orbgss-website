@@ -244,18 +244,13 @@ case("a domain card names a derivative that is not its own", SOURCES,
            lambda s: s["web_005b_placement"]["rendered"].update(
                selected_derivative="assets/imagery/yellowstone-2013-1400.webp")),
      "selected derivative that is not its own")
-# R14 removed the per-card captions, so the section footnote is the only thing left telling a
-# reader these photographs are of other places. It is checked harder than the captions were.
-case("the illustrative footnote is dropped from the page", INDEX,
-     lambda t: t.replace('data-i18n="domains.illustrative"', 'data-i18n="domains.illustrativeX"', 1),
-     "framing key 'domains.illustrative' is not rendered")
-case("the illustrative footnote stops saying these are not results", SCRIPT,
-     lambda t: t.replace('They are not OrbGSS analytical outputs, not results, and not the '
-                         'Kızıldere pilot area.', 'Shown for illustration.', 1),
-     "lost required wording")
-case("the illustrative-photography footnote is dropped from the dictionary", SCRIPT,
-     lambda t: t.replace("    'domains.illustrative': 'The three photographs", "    'x.removed': 'The three photographs", 1),
-     "domain photography footnote is missing")
+# The "Illustrative ... another place" footnote is retired (CTO, 2026-11-04, D5); neither the key nor the wording may return.
+case("the illustrative footnote returns to the page", INDEX,
+     lambda t: t.replace('</main>', '<p data-i18n="domains.illustrative">x</p></main>', 1),
+     "copy removed in the interior cleanup")
+case("the illustrative-photography footnote returns to the dictionary", SCRIPT,
+     lambda t: t.replace("    'label.priority':", "    'domains.illustrative': 'The three photographs are of other places.',\n    'label.priority':", 1),
+     "script.js carries 'domains.illustrative'")
 
 
 def main() -> int:

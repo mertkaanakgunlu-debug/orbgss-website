@@ -58,7 +58,7 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Production source product: `LC08_L2SP_045030_20230318_02_T1` (WRS-2 path 045 row 030, Tier 1)
 - Reference page: https://science.nasa.gov/earth/earth-observatory/a-clear-view-of-crater-lake-151161/
 
-### Yellowstone — geothermal (illustrative domain photograph: homepage card, `/solutions/` hub band)
+### Yellowstone — geothermal (domain photograph of another place: homepage card only; retired from `/solutions/` on 2026-11-04, where the Geothermal band shows the Kızıldere priority map)
 - Location: Yellowstone National Park, USA
 - Coordinates displayed: 44.4604° N, 110.8282° W
 - Acquisition: 9 June 2013
@@ -67,7 +67,7 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Reference page: https://science.nasa.gov/earth/earth-observatory/yellowstone-national-park-87881/
 - Note: the NASA reference rendering also used ASTER GDEM terrain. The production composite is a plain orthographic Landsat view with no ASTER data.
 
-### Chuquicamata — mining (illustrative domain photograph: homepage card, `/solutions/` hub band)
+### Chuquicamata — mining (domain photograph of another place: homepage card, `/solutions/` Mining panel)
 - Location: Chuquicamata, Antofagasta, Chile
 - Coordinates displayed: 22.3150° S, 68.9010° W
 - Acquisition: 4 January 2024
@@ -107,6 +107,8 @@ No NASA-rendered pixels, NASA logos or identifiers are served. The NASA Earth Ob
 - Sensor: Landsat 8 OLI
 - Production source products: `LC08_L2SP_152029_20200307_02_T1` and `LC08_L2SP_152028_20200307_02_T1` (path 152 rows 029 + 028, same overpass, mosaicked)
 - Reference page: https://earthobservatory.nasa.gov/images/146552/a-delta-oasis-in-southeastern-kazakhstan
+
+**Interior cleanup (CTO, 2026-11-04).** The "Illustrative … another place" notes are retired on every page (`domains.illustrative`, `domains.illustrativeLabel`, `scene.illustrative`); the photographs of other places are still public-domain Landsat scenes, still never captioned as the pilot, and their provenance stays in `sources.json`, in this file and on `/sources/`. The Yellowstone photograph no longer appears on `/solutions/` (the Geothermal band there shows the priority map, the one named R2 exception); the homepage Geothermal card keeps it. See `docs/WEB_INTERIOR_CLEANUP_AUTHORITY.md`.
 
 **Hub bands (MER-240).** The `/solutions/` hub shows the three photographs at full size, in bands capped at 1440 CSS px, so a 2× display is served the 2880 px master width and nothing is upscaled. Chuquicamata and the Ili Delta gained 2400 and 2880 px WebP derivatives for this, built by `scripts/build_domain_derivatives.py` with the same resize-and-encode operation as their existing ones (no crop, colour, tone or gamma change); the existing derivatives were kept byte for byte. Each scene records the placement in `sources.json` → `web_m6_placement`, and the page footnote frames the photographs as other places, not OrbGSS results.
 **Update (2026-10-25).** The Ili Delta is retired: the Marine panel of `/solutions/` and the homepage Marine card both show `menderes-delta-2025`. Its `web_m6_placement` and `web_005b_placement` records are marked retired in `sources.json`; its provenance, rights, files and checksums are retained unchanged.

@@ -148,9 +148,9 @@ case("a Turkish page keeps an English string", TR_ABOUT,
      swap('data-i18n="aboutPage.kicker">Hakkımızda<', 'data-i18n="aboutPage.kicker">About<'),
      "'aboutPage.kicker' reads 'About', not its 'tr' dictionary value")
 case("a Turkish image keeps its English alt text", TR_SOLUTIONS,
-     swap('alt="Yellowstone Ulusal Parkı çevresindeki jeotermal arazinin uydu görüntüsü"',
-          'alt="Satellite view of the geothermal landscape around Yellowstone National Park"'),
-     "alt= of 'alt.yellowstone'")
+     swap('alt="Kuzey Şili Chuquicamata madencilik bölgesinin uydu görüntüsü"',
+          'alt="Satellite view of the Chuquicamata mining district in northern Chile"'),
+     "alt= of 'alt.chuquicamata'")
 case("a Turkish mail link keeps the English subject", TR_PARTNER,
      swap("mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Talebi",
           "mailto:contact@orbgss.com?subject=OrbGSS%20Pilot%20Inquiry"), "href= of 'mail.pilot'")
@@ -159,7 +159,7 @@ case("an English page gains text with no i18n key", ABOUT,
           '<p class="kicker mono" data-i18n="aboutPage.kicker">About</p><p>Hello</p>'),
      "has no i18n key")
 case("an image gains an alt text with no i18n key", SOLUTIONS,
-     swap('data-i18n-alt="alt.yellowstone"', 'data-i18n-aria-label="alt.yellowstone"'),
+     swap('data-i18n-alt="alt.chuquicamata"', 'data-i18n-aria-label="alt.chuquicamata"'),
      "has no data-i18n-* key")
 case("an English page text drifts from the English dictionary", ABOUT,
      swap('data-i18n="aboutPage.kicker">About<', 'data-i18n="aboutPage.kicker">About us<'),

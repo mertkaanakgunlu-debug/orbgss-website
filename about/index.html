@@ -29,7 +29,9 @@
   <meta property="og:image" content="https://orbgss.com/assets/hero/hero-poster-1600.webp" />
   <link rel="preload" href="/assets/fonts/orbgss-sans-300.d8ab34ee.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/assets/fonts/orbgss-sans-400.39dbd03f.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/orbgss-sans-500.1663c80e.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/styles.css" />
+  <script>(function(d,w){var h=d.documentElement;if(w.matchMedia&&w.matchMedia("(prefers-reduced-motion: reduce)").matches||!("IntersectionObserver"in w))return;h.classList.add("page-motion");w.setTimeout(function(){if(!h.classList.contains("page-live"))h.classList.remove("page-motion")},3000)})(document,window)</script>
 </head>
 <body class="interior page-about">
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
@@ -38,6 +40,8 @@
     <a href="/" class="brand" aria-label="OrbGSS home" data-i18n-aria-label="nav.brand">
       <img class="brand-logo" src="/assets/brand/orbgss-logo-light.00811851.svg" alt="" width="619" height="144" />
     </a>
+
+    <a class="header-cta" href="/partner/"><span class="header-cta-full" data-i18n="nav.partner">Partner with us</span><span class="header-cta-short" data-i18n="nav.partnerShort">Partner</span></a>
 
     <button class="menu-toggle" type="button" aria-label="Open navigation" data-i18n-aria-label="nav.open" aria-controls="primary-nav" aria-expanded="false">
       <span></span><span></span>
@@ -100,7 +104,6 @@
           />
           <figcaption class="scene-label"><span data-i18n="scene.deathvalley.place">Death Valley, California, USA</span><span data-i18n="scene.deathvalley.coords">36.3000° N, 116.7500° W</span><span class="scene-kind" data-i18n="scene.kind.naturalColor">Natural-color composite</span></figcaption>
         </figure>
-        <p class="act-footnote scene-note"><span class="mono" data-i18n="domains.illustrativeLabel">Illustrative</span><span data-i18n="scene.illustrative">A public-domain Landsat scene of another place, not an OrbGSS result.</span></p>
       </div>
     </section>
 
@@ -146,7 +149,6 @@
           <li>
             <h3 data-i18n="proof.gaps.title">Explicit data gaps</h3>
             <p data-i18n="aboutPage.principle.gaps">A missing layer is published as missing, never invented.</p>
-            <a class="see-link text-link" href="/solutions/geothermal/#gap"><span data-i18n="aboutPage.see.gap">Structure and geology</span> <span aria-hidden="true">→</span></a>
           </li>
           <li>
             <h3 data-i18n="proof.aoi.title">AOI-first analysis</h3>
@@ -184,6 +186,7 @@
           </ul>
           <p class="chapter-link"><a class="text-link" href="/sources/"><span data-i18n="footer.sources">Data sources and attributions</span> <span aria-hidden="true">→</span></a></p>
         </div>
+        <p class="page-next"><a class="text-link is-primary" href="/solutions/geothermal/"><span data-i18n="solutionsPage.band.pilot">See the Kızıldere pilot</span> <span aria-hidden="true">→</span></a></p>
       </div>
     </section>
   </main>

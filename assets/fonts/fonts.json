@@ -24,6 +24,17 @@
         "sha256": "ba711a3085ff9f27440b6b9c4550cfc47c97bf36591d5da958b975bb3add8c1a"
       }
     },
+    "sans-500": {
+      "file": "orbgss-sans-500.1663c80e.woff2",
+      "family": "OrbGSS Sans",
+      "weight": 500,
+      "bytes": 22020,
+      "sha256": "1663c80e69655e6b695c37bdbd04827c9dd623957a5ca9532a50ffa37f674628",
+      "upstream": {
+        "package_file": "@ibm/plex-sans@1.1.0/fonts/complete/woff2/IBMPlexSans-Medium.woff2",
+        "sha256": "5660f8a658f8bb50dbc005232f885eadffd2bc1c235c4f6fbb63469d1f9cde6d"
+      }
+    },
     "mono-400": {
       "file": "orbgss-mono-400.62ab771d.woff2",
       "family": "OrbGSS Mono",
