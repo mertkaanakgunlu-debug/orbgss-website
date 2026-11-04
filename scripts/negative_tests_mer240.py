@@ -232,14 +232,14 @@ case("the company sentence is repeated on Partner", PARTNER,
           "<p>It exists to make exploration and land decisions evidence-based, traceable and easier to prioritize.</p>"),
      "R1:")
 case("a principle is restated on the Geothermal page", GEOTHERMAL,
-     swap("against the valleys and ridges it sits on.</p>",
-          "against the valleys and ridges it sits on. A missing layer is published as missing, never invented.</p>"),
+     swap("A higher value says look here first.</p>",
+          "A higher value says look here first. A missing layer is published as missing, never invented.</p>"),
      "R1: 'a missing layer is published as missing, never invented'")
 
 # ---- R2 one full-size appearance per visual ------------------------------------------------------------
 case("a hub photograph is shown full size on another page", GEOTHERMAL,
-     swap("  </main>", '    <section class="page-section"><img data-lead-visual src="/assets/imagery/yellowstone-2013-1400.webp" alt="" data-i18n-alt="alt.yellowstone" /></section>\n  </main>'),
-     "R2: scene:yellowstone-2013 appears at full size")
+     swap("  </main>", '    <section class="page-section"><img data-lead-visual src="/assets/imagery/chuquicamata-2024-1400.webp" alt="" data-i18n-alt="alt.chuquicamata" /></section>\n  </main>'),
+     "R2: scene:chuquicamata-2024 appears at full size")
 
 # ---- R3 no software detail ----------------------------------------------------------------------------------
 case("the About page talks about the workflow", ABOUT,

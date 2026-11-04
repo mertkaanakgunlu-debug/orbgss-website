@@ -21,7 +21,7 @@ little more weight in the type. Nothing about the science, the claims or the hom
 | D7 | "Partner with us" text links are dropped from page closings; the header pill carries it. | all pages |
 | R2 | Homepage evidence tabs lose the 01 / 02 / 03 numerals. | `index.html` |
 | R3 | `/solutions/` has one link to the pilot (the filled button in the Geothermal band); it ends on the Mining and Marine pair. | `solutions/index.html` |
-| R4 | The header pill reads "Partner" at 374 px and below ("İş Birliği" in Turkish, `nav.partnerShort`), "Partner with us" from 375 px, the navigation pill from 981 px. Logo never under 120 px. | header, `styles.css` |
+| R4 | The header pill reads "Partner" at **387 px** and below ("İş Birliği" in Turkish, `nav.partnerShort`), "Partner with us" from 388 px, the navigation pill from 981 px. Logo never under 120 px. The prototype's 374 px threshold was measured with 11 px labels; at the 12 px label size "Partner with us" touched the logo at 375 px, so the threshold moved to 387 px (10.8 px gap at 388 px). Below 340 px the short label gives up 4 px of padding and some tracking so the Turkish pill keeps 14 px beside the logo at 320 px. Measured: pill 44 px tall, one line, no horizontal scroll at 320 to 980 px in both languages. | header, `styles.css`, validator |
 | R5 | About principle 03 ("Explicit data gaps") is unchanged by decision. | `about/` |
 
 Three decisions made on cards, same day: the Turkish short label is **"İş Birliği"**; the priority map is drawn at full size on the
