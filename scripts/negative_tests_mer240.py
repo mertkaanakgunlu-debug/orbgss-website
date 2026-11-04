@@ -145,6 +145,18 @@ case("the hero's Partner call becomes a mailto again", INDEX,
 case("the closing Partner line returns to the homepage (CTO removed it, 2026-10-25)", INDEX,
      swap("  </main>", '    <div id="contact" class="sec sec-contact">\n      <div class="shell"><a class="text-link" href="/partner/">Partner With Us</a></div>\n    </div>\n  </main>'),
      "the closing Partner band is back")
+case("a page loses its phone header pill", ABOUT,
+     regex(r'\s*<a class="header-cta" href="/partner/">.*?</a>', ""),
+     "the phone header lost its filled Partner pill")
+case("the Partner page gets a phone header pill", PARTNER,
+     swap('<nav class="main-nav"', '<a class="header-cta" href="/partner/"><span class="header-cta-full" data-i18n="nav.partner">Partner with us</span><span class="header-cta-short" data-i18n="nav.partnerShort">Partner</span></a>\n    <nav class="main-nav"'),
+     "belongs on Solutions, Geothermal, About and Sources only")
+case("the header pill loses its short label", SOLUTIONS,
+     regex(r'<span class="header-cta-short" data-i18n="nav.partnerShort">Partner</span>', ""),
+     "must link /partner/ and hold nav.partner (long) and nav.partnerShort (short)")
+case("the header pill switches to its short label too late", STYLES,
+     swap("@media(max-width:387px){", "@media(max-width:374px){"),
+     "must read its short label at 387px and below")
 case("the second link pair returns under the Act 4 result map (retired 2026-11-04)", INDEX,
      swap("</main>", '<div class="result-actions"><a class="text-link" href="/solutions/geothermal/">x</a></div></main>'),
      "second link pair under the Act 4 result map is retired")

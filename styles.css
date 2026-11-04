@@ -1259,8 +1259,9 @@ body.interior main .text-link.is-primary:hover{transform:translateY(-2px);color:
   body.interior .main-nav .nav-list>li>a[data-i18n="nav.partner"][aria-current="page"]{background:transparent;color:var(--link);box-shadow:inset 0 0 0 1px var(--link)}
 }
 /* Phone header: the same filled pill beside the menu button, on one line. The logo never shrinks below its 120 px
-   minimum. At 374 px and below, where "Partner with us" does not fit beside logo and menu button, the pill reads
-   "Partner" (R4). Not on the Partner page itself. */
+   minimum. At 387 px and below, where "Partner with us" (12 px label) does not leave 10 px beside the logo, the pill
+   reads "Partner" (R4; İş Birliği in Turkish). Below 340 px the short label gives up a little padding and tracking so
+   the Turkish pill keeps 10 px beside the logo at 320 px. Not on the Partner page itself. */
 .header-cta{display:none}
 .header-cta-short{display:none}
 body.interior .site-header .brand{flex:none}
@@ -1268,9 +1269,13 @@ body.interior .site-header .brand{flex:none}
   body.interior .header-cta{display:inline-flex;align-items:center;justify-content:center;flex:none;min-height:44px;margin:0 clamp(8px,2.4vw,18px) 0 auto;padding:0 clamp(12px,3.6vw,18px);border-radius:999px;background:var(--ocean);color:var(--white);font-size:var(--t-label);font-weight:400;line-height:1;letter-spacing:var(--track);text-transform:uppercase;white-space:nowrap;transition:transform .2s ease}
   body.interior .header-cta:hover{transform:translateY(-2px);color:var(--white)}
 }
-@media(max-width:374px){
+@media(max-width:387px){
   body.interior .header-cta-full{display:none}
   body.interior .header-cta-short{display:inline}
+}
+@media(max-width:339px){
+  body.interior .header-cta{padding:0 10px}
+  body.interior .header-cta-short{letter-spacing:.06em}
 }
 /* Closing step: one page-specific link inside the last content section, under one hairline. No band. */
 body.interior .page-next{display:flex;flex-wrap:wrap;align-items:center;gap:14px clamp(28px,3.6vw,56px);margin:clamp(48px,5vw,72px) 0 0;padding-top:clamp(22px,2.4vw,30px);border-top:1px solid var(--hair)}

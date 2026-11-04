@@ -1006,6 +1006,8 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
     interior_flat = re.sub(r"\s+", "", re.sub(r"/\*.*?\*/", "", interior_region.group(0) if interior_region else "", flags=re.S))
     if ".site-header,.site-footer,body.interiormain{--t-label:12px;--t-caption:12px}" not in interior_flat:
         fail("styles.css atlas:interior must set --t-label and --t-caption to 12px for the header, the footer and the interior pages", errors)
+    if "@media(max-width:387px){body.interior.header-cta-full{display:none}body.interior.header-cta-short{display:inline}}" not in interior_flat:
+        fail("styles.css atlas:interior: the phone header pill must read its short label at 387px and below (R4: 'Partner with us' needs 10 px beside the logo at the 12 px label)", errors)
     if not re.search(r":root\{[^}]*--t-label:11px;", re.sub(r"\s+", "", stripped)):
         fail("styles.css :root must keep --t-label at 11px (the homepage's four acts and the hero boxes stay as published)", errors)
     if not re.search(r"body\{[^}]*font-synthesis-weight:none", stripped):
@@ -3865,6 +3867,22 @@ def main() -> int:
             if inner is not None:
                 return inner
         return None
+
+    # Interior cleanup (CTO, 2026-11-04, R4): the filled "Partner with us" pill sits in the phone header of Solutions,
+    # Geothermal, About and Sources (never on the homepage and never on the Partner page itself). It carries both labels,
+    # the long one for wider phones and the short one ("Partner", "İş Birliği") from 387 px down.
+    for name, dom in doms.items():
+        pill = first(dom, lambda n: n.tag == "a" and "header-cta" in n.classes)
+        want = name in ("solutions", "solutions/geothermal", "about", "sources")
+        if want and pill is None:
+            fail(f"{m6_label(name)}: the phone header lost its filled Partner pill (a.header-cta)", errors)
+        elif not want and pill is not None:
+            fail(f"{m6_label(name)}: the phone header pill belongs on Solutions, Geothermal, About and Sources only", errors)
+        elif pill is not None:
+            kids = [(c.attrs.get("data-i18n"), sorted(c.classes)) for c in pill.children if isinstance(c, DomNode)]
+            if kids != [("nav.partner", ["header-cta-full"]), ("nav.partnerShort", ["header-cta-short"])] \
+                    or pill.attrs.get("href") != "/partner/":
+                fail(f"{m6_label(name)}: the header pill must link /partner/ and hold nav.partner (long) and nav.partnerShort (short)", errors)
 
     # Navigation: the same four entries and the Solutions menu on every page, in order, with the
     # current page marked; the footer lists the same pages.
