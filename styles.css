@@ -1,10 +1,10 @@
 /* OrbGSS website styles.
 
-   Atlas redesign (MER-274 / MER-275, preview, pending CTO acceptance): five UI colours, two families
-   (OrbGSS Sans 300 / 400 and OrbGSS Mono 400, self-hosted subsets of IBM Plex), no other weight.
+   Atlas redesign (MER-274 / MER-275): five UI colours, two families (OrbGSS Sans 300 / 400 / 500 and OrbGSS Mono 400,
+   self-hosted subsets of IBM Plex), no other weight. The 500 is for interior headlines only (CTO, 2026-11-04).
    The file is cut into marked regions so the page threads of the redesign each own one and never
    touch another: fonts and tokens, atlas:foundation, atlas:home, atlas:shell, atlas:geothermal,
-   atlas:solutions-about, atlas:partner-sources. scripts/validate_site.py reads the region markers. */
+   atlas:solutions-about, atlas:partner-sources, atlas:interior. scripts/validate_site.py reads the region markers. */
 
 /* ---------- fonts ----------
    One Latin-TR subset per face serves English and Turkish alike (assets/fonts/fonts.json records the
@@ -13,9 +13,11 @@
    where they are until the webfont arrives (font-display: swap). */
 @font-face{font-family:"OrbGSS Sans";font-style:normal;font-weight:300;font-display:swap;src:url("assets/fonts/orbgss-sans-300.d8ab34ee.woff2") format("woff2");unicode-range:U+0020-007E, U+00A0-00FF, U+011E-011F, U+0130-0131, U+0152-0153, U+015E-015F, U+2007, U+2009, U+2011, U+2013-2014, U+2018-201A, U+201C-201E, U+2022, U+2026, U+2030, U+2032-2033, U+2039-203A, U+2070, U+2074-2079, U+20AC, U+2122, U+2190-2193, U+2196-2199, U+2212, U+2248, U+2260, U+2264-2265, U+FFFD}
 @font-face{font-family:"OrbGSS Sans";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/orbgss-sans-400.39dbd03f.woff2") format("woff2");unicode-range:U+0020-007E, U+00A0-00FF, U+011E-011F, U+0130-0131, U+0152-0153, U+015E-015F, U+2007, U+2009, U+2011, U+2013-2014, U+2018-201A, U+201C-201E, U+2022, U+2026, U+2030, U+2032-2033, U+2039-203A, U+2070, U+2074-2079, U+20AC, U+2122, U+2190-2193, U+2196-2199, U+2212, U+2248, U+2260, U+2264-2265, U+FFFD}
+@font-face{font-family:"OrbGSS Sans";font-style:normal;font-weight:500;font-display:swap;src:url("assets/fonts/orbgss-sans-500.1663c80e.woff2") format("woff2");unicode-range:U+0020-007E, U+00A0-00FF, U+011E-011F, U+0130-0131, U+0152-0153, U+015E-015F, U+2007, U+2009, U+2011, U+2013-2014, U+2018-201A, U+201C-201E, U+2022, U+2026, U+2030, U+2032-2033, U+2039-203A, U+2070, U+2074-2079, U+20AC, U+2122, U+2190-2193, U+2196-2199, U+2212, U+2248, U+2260, U+2264-2265, U+FFFD}
 @font-face{font-family:"OrbGSS Mono";font-style:normal;font-weight:400;font-display:swap;src:url("assets/fonts/orbgss-mono-400.62ab771d.woff2") format("woff2");unicode-range:U+0020-007E, U+00A0-00FF, U+011E-011F, U+0130-0131, U+0152-0153, U+015E-015F, U+2007, U+2009, U+2011, U+2013-2014, U+2018-201A, U+201C-201E, U+2022, U+2026, U+2030, U+2032-2033, U+2039-203A, U+2070, U+2074-2079, U+20AC, U+2122, U+2190-2193, U+2196-2199, U+2212, U+2248, U+2260, U+2264-2265, U+FFFD}
 @font-face{font-family:"OrbGSS Sans Fallback";src:local("Arial"),local("ArialMT"),local("Liberation Sans"),local("Arimo");font-weight:300;size-adjust:99.09%;ascent-override:103.95%;descent-override:28.26%;line-gap-override:0%}
 @font-face{font-family:"OrbGSS Sans Fallback";src:local("Arial"),local("ArialMT"),local("Liberation Sans"),local("Arimo");font-weight:400;size-adjust:100.69%;ascent-override:102.29%;descent-override:27.81%;line-gap-override:0%}
+@font-face{font-family:"OrbGSS Sans Fallback";src:local("Arial"),local("ArialMT"),local("Liberation Sans"),local("Arimo");font-weight:500;size-adjust:100.69%;ascent-override:102.29%;descent-override:27.81%;line-gap-override:0%}
 @font-face{font-family:"OrbGSS Mono Fallback";src:local("Courier New"),local("CourierNewPSMT"),local("Liberation Mono"),local("Cousine");font-weight:400;size-adjust:99.98%;ascent-override:103.02%;descent-override:28.00%;line-gap-override:0%}
 
 /* ---------- tokens ----------
@@ -1121,3 +1123,267 @@ body.interior .page-section.ground-paper::before{display:none}
 }
 /* === /atlas:partner-sources === */
 
+/* === atlas:interior === The simplification of 2026-11-04 (CTO): sticky header with the filled Partner button, the entrance motion,
+   hover and focus, the 500 weight, the 12 px labels and the page compositions of the interior routes. It loads after every other
+   region on purpose: it refines their rules and must win the cascade. Page rules stay scoped by the body classes. */
+
+/* ---------- shared ----------  Every page, homepage included: the header becomes sticky. position:sticky keeps the header
+   in the normal flow, so the homepage hero (height: 100svh minus the header) keeps exactly the same box at rest.
+   The open phone menu scrolls inside itself, because a sticky header's menu can no longer scroll away. */
+.site-header{position:sticky;top:0}
+@media(max-width:980px){
+  .main-nav.open{max-height:calc(100svh - var(--header-h));overflow-y:auto;overscroll-behavior:contain}
+}
+
+/* ---------- motion ----------  Entrance motion, interior pages only. html.page-motion is set by the one-line script in each
+   interior page's head, before first paint; the hidden starting state below is what it shows until script.js
+   (interiorEntrance) plays every element once. Opacity and translation of wrappers and text only; a figure moves as a
+   whole and its pixels are never scaled or filtered. The two selector lists below are the same two lists as RISE and
+   LINES in script.js: change them together. */
+.page-motion body.interior :is(
+  .page-hero .kicker,
+  .page-hero .page-hero-copy,
+  .page-hero .mail-address,
+  .page-hero .split-figure,
+  .domain-index>li,
+  .domain-band-copy>*,
+  .pilot-map,
+  .domain-pair .page-section-head>*,
+  .domain-panel,
+  .geo-record .page-section-head>*,
+  .record-list>div,
+  .geo-locator,
+  .geo-head>:not(.anchor-alias),
+  .geo-atlas-grid>*,
+  .geo-result-head>*,
+  .geo-priority,
+  .geo-result-text,
+  .problem-grid .page-section-head>*,
+  .wide-figure,
+  .about-position .page-section-head>*,
+  .lead-statement,
+  .layer-index,
+  .about-principles .page-section-head>*,
+  .principle-list>li,
+  .principles-foot,
+  .sources-grid .page-section-head>*,
+  .source-names>li,
+  .sources-index .chapter-link,
+  .route-section h2,
+  .route-list>li,
+  .chapter .page-section-head,
+  .source-register>.source-record,
+  .credit-list>.credit-row,
+  .reference-list>li,
+  .terms-list>li,
+  .licence-block,
+  .source-toc>li,
+  .page-next
+):not(.pr-in){opacity:0;transform:translate3d(0,24px,0)}
+.page-motion body.interior :is(
+  .domain-index,
+  .domain-index>li,
+  .panel-line,
+  .record-list,
+  .record-list>div,
+  .atlas-note,
+  .hero-foot,
+  .lead-statement,
+  .about-principles>.ground-in,
+  .principle-list>li,
+  .principles-foot,
+  .source-names,
+  .source-names>li,
+  .route-list,
+  .route-list>li,
+  .source-record,
+  .credit-list,
+  .credit-row,
+  .reference-list,
+  .reference-list>li,
+  .terms-list,
+  .terms-list>li,
+  .licence-text,
+  .source-toc>li,
+  .page-next
+):not(.pr-drawn){border-top-color:transparent!important;border-bottom-color:transparent!important}
+.page-motion body.interior .page-hero h1:not(.pr-split):not(.pr-done){opacity:0}
+.page-motion body.interior .pr-in{transition:opacity .9s cubic-bezier(.2,.7,.2,1) var(--pr-d,0ms),transform .9s cubic-bezier(.2,.7,.2,1) var(--pr-d,0ms)}
+.page-motion body.interior .pr-in.pr-settled{transition:none}
+/* The page headline enters line by line: script.js wraps words for the duration of the entrance, then restores the markup. */
+.page-motion body.interior .page-hero h1.pr-split .pr-w{display:inline-block;opacity:0;transform:translate3d(0,28px,0)}
+.page-motion body.interior .page-hero h1.pr-split.pr-go .pr-w{opacity:1;transform:none;transition:opacity .9s cubic-bezier(.2,.7,.2,1) var(--pr-d,0ms),transform .9s cubic-bezier(.2,.7,.2,1) var(--pr-d,0ms)}
+/* Hairline rules draw on from the left (scaleX on a pseudo-element laid over the hidden border, which returns afterwards). */
+.page-motion body.interior .pr-pos:not(.pr-drawn){position:relative}
+.page-motion body.interior .pr-t1:not(.pr-drawn)::before,
+.page-motion body.interior .pr-t2:not(.pr-drawn)::after{content:"";position:absolute;z-index:1;left:calc(0px - var(--pr-bl,0px));right:calc(0px - var(--pr-br,0px));top:calc(0px - var(--pr-tw,1px));height:var(--pr-tw,1px);background:var(--pr-tc,var(--hair));transform:scaleX(0);transform-origin:left center;pointer-events:none;transition:transform 1s cubic-bezier(.2,.7,.2,1) var(--pr-d,0ms)}
+.page-motion body.interior .pr-b2:not(.pr-drawn)::after,
+.page-motion body.interior .pr-b1:not(.pr-drawn)::before{content:"";position:absolute;z-index:1;left:calc(0px - var(--pr-bl,0px));right:calc(0px - var(--pr-br,0px));bottom:calc(0px - var(--pr-bw,1px));height:var(--pr-bw,1px);background:var(--pr-bc,var(--hair-soft));transform:scaleX(0);transform-origin:left center;pointer-events:none;transition:transform 1s cubic-bezier(.2,.7,.2,1) var(--pr-d,0ms)}
+.page-motion body.interior .pr-t1.pr-draw:not(.pr-drawn)::before,
+.page-motion body.interior .pr-t2.pr-draw:not(.pr-drawn)::after,
+.page-motion body.interior .pr-b2.pr-draw:not(.pr-drawn)::after,
+.page-motion body.interior .pr-b1.pr-draw:not(.pr-drawn)::before{transform:scaleX(1)}
+/* Solutions: the 2 px Ocean accent over the first index row draws with its row. */
+.page-motion body.interior .domain-index>li:first-child:not(.pr-drawn)::before{transform:scaleX(0);transform-origin:left center;transition:transform 1.1s cubic-bezier(.2,.7,.2,1) var(--pr-d,0ms)}
+.page-motion body.interior .domain-index>li:first-child.pr-draw:not(.pr-drawn)::before{transform:scaleX(1)}
+@media(prefers-reduced-motion:reduce){
+  .page-motion body.interior .pr-in,.page-motion body.interior .pr-w{transition:none!important;opacity:1!important;transform:none!important}
+}
+
+/* ---------- interaction ----------  Hover and focus, interior pages only (the homepage keeps its own). Colour, underline,
+   a 4 px arrow nudge, the existing 7 % wash on rows, a 2 px lift on the filled buttons; figure plates get nothing. */
+body.interior main .text-link{transition:color .2s ease,border-color .2s ease}
+body.interior main .text-link:hover{border-bottom-color:currentColor}
+body.interior main :is(.text-link,.index-note,.route-go,.layer-index-link,.mail-address a,.source-toc a)>[aria-hidden="true"]{display:inline-block;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+body.interior main :is(.text-link:hover,.text-link:focus-visible,.index-row:hover .index-note,.route-list a:hover .route-go,.layer-index:hover .layer-index-link,.mail-address a:hover,.source-toc a:hover)>[aria-hidden="true"]{transform:translateX(4px)}
+body.interior .index-row,body.interior .route-list a{transition:background-color .2s ease,box-shadow .2s ease}
+body.interior .index-row:hover,body.interior .route-list a:hover{background:var(--wash);box-shadow:-16px 0 0 var(--wash),16px 0 0 var(--wash)}
+body.interior .route-title{transition:color .2s ease}
+body.interior .route-list a:hover .route-title{color:var(--link)}
+/* Inline links in the source records and references: underline offset instead of a fixed border. */
+body.interior .source-record dd a,body.interior .doi-link{border-bottom:0;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em;transition:color .2s ease,text-underline-offset .25s ease}
+body.interior .source-record dd a:hover,body.interior .doi-link:hover{text-underline-offset:.46em}
+/* The filled primary button (B3): one per page at most, on the page's main next step. White on Ocean is 5.3:1. */
+body.interior main .text-link.is-primary{gap:16px;padding:15px 22px 16px;border:0;border-radius:11px;background:var(--ocean);color:var(--white);transition:transform .2s ease}
+body.interior main .text-link.is-primary:hover{transform:translateY(-2px);color:var(--white)}
+/* Desktop navigation: a hairline draws under the hovered item; "Partner with us" is the filled pill (B3). */
+@media(min-width:981px) and (hover:hover){
+  body.interior .nav-list>li>a:not([aria-current="page"])::after,
+  body.interior .nav-trigger:not([aria-current="page"])::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left center;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+  body.interior .nav-list>li>a:not([aria-current="page"]):hover::after,
+  body.interior .nav-trigger:not([aria-current="page"]):hover::after,
+  body.interior .has-menu.open .nav-trigger:not([aria-current="page"])::after{transform:scaleX(1)}
+}
+@media(min-width:981px){
+  body.interior .main-nav .nav-list>li>a[data-i18n="nav.partner"]{padding:11px 18px;border-radius:999px;background:var(--ocean);color:var(--white);transition:transform .2s ease}
+  body.interior .main-nav .nav-list>li>a[data-i18n="nav.partner"]:hover{transform:translateY(-2px);color:var(--white)}
+  body.interior .main-nav .nav-list>li>a[data-i18n="nav.partner"]::after{display:none}
+  body.interior .main-nav .nav-list>li>a[data-i18n="nav.partner"][aria-current="page"]{background:transparent;color:var(--link);box-shadow:inset 0 0 0 1px var(--link)}
+}
+/* Phone header: the same filled pill beside the menu button, on one line. The logo never shrinks below its 120 px
+   minimum. At 374 px and below, where "Partner with us" does not fit beside logo and menu button, the pill reads
+   "Partner" (R4). Not on the Partner page itself. */
+.header-cta{display:none}
+.header-cta-short{display:none}
+body.interior .site-header .brand{flex:none}
+@media(max-width:980px){
+  body.interior .header-cta{display:inline-flex;align-items:center;justify-content:center;flex:none;min-height:44px;margin:0 clamp(8px,2.4vw,18px) 0 auto;padding:0 clamp(12px,3.6vw,18px);border-radius:999px;background:var(--ocean);color:var(--white);font-size:var(--t-label);font-weight:400;line-height:1;letter-spacing:var(--track);text-transform:uppercase;white-space:nowrap;transition:transform .2s ease}
+  body.interior .header-cta:hover{transform:translateY(-2px);color:var(--white)}
+}
+@media(max-width:374px){
+  body.interior .header-cta-full{display:none}
+  body.interior .header-cta-short{display:inline}
+}
+/* Closing step: one page-specific link inside the last content section, under one hairline. No band. */
+body.interior .page-next{display:flex;flex-wrap:wrap;align-items:center;gap:14px clamp(28px,3.6vw,56px);margin:clamp(48px,5vw,72px) 0 0;padding-top:clamp(22px,2.4vw,30px);border-top:1px solid var(--hair)}
+@media(prefers-reduced-motion:reduce){
+  body.interior main :is(.text-link,.index-note,.route-go,.layer-index-link,.mail-address a,.source-toc a)>[aria-hidden="true"]{transition:none;transform:none!important}
+  body.interior :is(.text-link.is-primary,.nav-list a[data-i18n="nav.partner"],.header-cta):hover{transform:none}
+}
+
+/* ---------- type ---------- A third weight (500) for headlines and the About numerals, and a 12 px floor for mono labels and
+   captions (CTO, 2026-11-04). The 12 px applies to the interior content and to the shared header and footer; the homepage's
+   four acts keep the foundation's 11 px so the hero boxes stay exactly where they are. OrbGSS Sans 500 is self-hosted
+   beside the other faces (see the @font-face rules at the top of this file). */
+.site-header,.site-footer,body.interior main{--t-label:12px;--t-caption:12px}
+body.interior main :is(.page-hero h1,h2,.index-name,.route-title,.panel-copy h3,.lead-statement p,.mail-address a){font-weight:500}
+body.interior main .principle-list>li::before{font-weight:500}
+
+/* ---------- composition ----------  Grounds: Pumice, white and one Night band per page; weights 300, 400 and 500.
+   Five different openings: Solutions a ledger beside its title, Geothermal the Landsat stage, About a name and a
+   statement, Partner the split with the address as the action, Sources a register with its contents on Night. */
+
+/* ----- Solutions: title and intro on the left, the domain ledger on the right, on white ----- */
+body.page-solutions .page-hero.is-ledger{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);column-gap:clamp(40px,6vw,104px);align-items:end;padding:clamp(72px,8vw,128px) var(--edge) clamp(64px,7vw,112px);background:var(--white)}
+body.page-solutions .page-hero.is-ledger .page-hero-inner{width:auto;margin:0}
+body.page-solutions .page-hero .hero-lead{flex-direction:column;align-items:flex-start;gap:clamp(20px,2.4vw,30px)}
+body.page-solutions .page-hero .hero-lead h1{flex:none;max-width:15ch;font-size:var(--t-section);line-height:1.06;letter-spacing:-.025em}
+body.page-solutions .page-hero .hero-lead .page-hero-copy{flex:none;max-width:40ch;color:var(--fg-2)}
+body.page-solutions .domain-index{width:auto;margin:0}
+body.page-solutions .index-row{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name status";gap:10px clamp(20px,2.4vw,36px);padding:clamp(20px,2vw,26px) 0}
+body.page-solutions .index-row.is-lead{grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"name status thumb" "name note thumb";row-gap:10px;padding:clamp(26px,2.6vw,36px) 0}
+body.page-solutions .index-row>.index-name{grid-area:name}
+body.page-solutions .index-row>.domain-status{grid-area:status;align-self:end}
+body.page-solutions .index-row:not(.is-lead)>.domain-status{align-self:center}
+body.page-solutions .index-row>.index-note{grid-area:note;align-self:start}
+body.page-solutions .index-row>.index-thumb{grid-area:thumb;width:clamp(64px,6vw,96px)}
+body.page-solutions .index-row.is-lead .index-name{font-size:var(--t-section);letter-spacing:-.025em}
+@media(max-width:1000px){
+  body.page-solutions .page-hero.is-ledger{grid-template-columns:minmax(0,1fr);row-gap:clamp(48px,7vw,72px)}
+}
+@media(max-width:560px){
+  body.page-solutions .index-row.is-lead{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name thumb" "status thumb" "note thumb"}
+  body.page-solutions .index-row:not(.is-lead){grid-template-columns:minmax(0,1fr);grid-template-areas:"name" "status";row-gap:6px}
+  body.page-solutions .index-row>.domain-status{align-self:start}
+}
+/* The Geothermal band (B5, approved): its copy beside the governed priority map, at no more than 600 CSS px and
+   unmodified. The copy column never gets narrower than its longest word, so the map gives way instead. */
+body.page-solutions .domain-band.is-feature{display:grid;grid-template-columns:minmax(min-content,1fr) minmax(0,600px);align-items:center;gap:clamp(40px,6vw,104px);min-height:0;padding:clamp(72px,8vw,128px) var(--edge)}
+body.page-solutions .domain-band.is-feature .domain-band-copy{padding:0}
+body.page-solutions .pilot-map{margin:0;width:100%;max-width:600px}
+body.page-solutions .pilot-map .plate-frame .scene-label{right:12px;bottom:10px}
+body.page-solutions .pilot-map .geo-legend{margin-top:22px}
+body.page-solutions .domain-pair{padding-bottom:clamp(72px,8vw,120px)}
+@media(max-width:1100px){
+  body.page-solutions .domain-band.is-feature{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ----- Geothermal: the record on white; the atlas keeps two context plates, its note and three evidence plates ----- */
+body.page-geothermal #glance{background:var(--white)}
+.geo-head{position:relative}
+body.page-geothermal .atlas-note{display:flex;flex-direction:column;align-items:flex-start;gap:clamp(22px,2.4vw,32px);padding-top:clamp(18px,2vw,26px);border-top:1px solid var(--hair)}
+body.page-geothermal .atlas-note .lede{max-width:28ch;font-size:var(--t-figure);line-height:1.4;color:var(--fg)}
+body.page-geothermal .atlas-note .geo-link{margin:0}
+/* D1: plates carry no number, so the caption is one column: the name over "role · source". */
+body.page-geothermal .geo-plate .plate-cap{grid-template-columns:minmax(0,1fr)}
+/* B1's 12 px labels: the legend words keep one line each. The ramp image and its 0 / 100 row stay at 256 px; only the
+   word row may run wider. Where even that does not fit (narrow phones), "Look here first" moves to a second line,
+   still at the 100 end. */
+body.page-geothermal #result .geo-ramp{width:auto;flex:0 1 auto;min-width:min(256px,100%);max-width:100%}
+body.page-geothermal #result .geo-ramp>img,
+body.page-geothermal #result .geo-ramp>.geo-ends.mono-caption{width:min(256px,100%)}
+body.page-geothermal #result .geo-ends-words{flex-wrap:wrap;column-gap:24px;row-gap:2px}
+body.page-geothermal #result .geo-ends-words>span{white-space:nowrap}
+body.page-geothermal #result .geo-ends-words>span:last-child{margin-left:auto}
+@media(max-width:1000px){
+  body.page-geothermal .atlas-note{grid-column:1 / -1}
+}
+
+/* ----- About: the name on one line (weight 500 via B1), the statement under its rule (300, statement size) ----- */
+body.page-about .page-hero h1{font-size:var(--t-section);line-height:1.08;letter-spacing:-.02em}
+body.page-about .page-hero h1 .tone{display:inline}
+body.page-about .hero-foot{justify-content:flex-start}
+body.page-about .page-hero .hero-foot .page-hero-copy{flex:0 1 auto;max-width:31ch;font-size:var(--t-statement);font-weight:300;line-height:1.16;letter-spacing:-.02em;color:var(--fg);text-wrap:pretty}
+body.page-about #position,body.page-about #principles{background:var(--white)}
+body.page-about .sources-grid .page-next{flex:1 0 100%}
+
+/* ----- Partner: the split on white; the address is the action ----- */
+body.page-partner .page-hero.is-split{background:var(--white)}
+@media(min-width:700px){
+  body.page-partner .mail-address a{font-size:var(--t-section)}
+}
+
+/* ----- Sources: the register opens on Night with its four chapters as contents; chapters alternate white and Pumice.
+   D1: no chapter, contents or reference numerals. ----- */
+body.page-sources .page-hero.is-register h1{max-width:12ch;font-size:var(--t-section);line-height:1.04;letter-spacing:-.025em}
+body.page-sources .source-toc{grid-column:1 / -1;list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 clamp(20px,2.4vw,36px);margin:clamp(48px,5.4vw,84px) 0 0;padding:0}
+body.page-sources .source-toc>li{border-top:1px solid var(--hair)}
+body.page-sources .source-toc a{display:flex;align-items:baseline;justify-content:space-between;gap:12px;min-height:44px;padding:18px 0 6px;color:var(--fg);transition:color .2s ease}
+body.page-sources .source-toc a>span:first-child{font-size:var(--t-figure);line-height:1.25;letter-spacing:-.01em}
+body.page-sources .source-toc a:hover{color:var(--link)}
+body.page-sources .source-toc a:focus-visible{outline-offset:2px}
+body.page-sources .source-toc a>[aria-hidden="true"]{color:var(--link)}
+body.page-sources .chapter .page-section-head::before{content:none;display:none}
+body.page-sources .reference-list>li::before{content:none;display:none}
+body.page-sources .reference-list>li{grid-template-columns:minmax(0,1fr) auto}
+body.page-sources #data,body.page-sources #references{background:var(--white)}
+body.page-sources .page-section.chapter{padding-bottom:clamp(64px,7vw,104px)}
+@media(max-width:860px){
+  body.page-sources .source-toc{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.page-sources .reference-list>li{grid-template-columns:minmax(0,1fr)}
+  body.page-sources .reference-list>li>.doi-link{grid-column:1}
+}
+@media(max-width:420px){
+  body.page-sources .source-toc{grid-template-columns:minmax(0,1fr)}
+}
+/* === /atlas:interior === */

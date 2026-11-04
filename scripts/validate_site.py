@@ -215,12 +215,6 @@ WEB005B_GAMMA_BOUNDS = {"terrain": (0.75, 1.35), "alt01": (0.75, 1.35),
                         "priority": (0.75, 1.35), "thm01": (0.80, 1.25)}
 # MER-151 section 4: the homepage profile does NOT inherit these from the hero amendment, and
 # percentile/window clipping stays prohibited for priority specifically (section 3).
-# WEB-005B R14: the wording the domain-photography footnote may not lose. The per-card captions
-# that used to carry this are gone, so this footnote is the whole of the honesty now.
-DOMAIN_FOOTNOTE_TERMS = {
-    "en": ["not OrbGSS analytical outputs", "not results", "not the Kızıldere pilot area"],
-    "tr": ["OrbGSS analitik çıktısı değildir", "sonuç değildir", "Kızıldere pilot alanı değildir"],
-}
 # Transforms the terminal amendment allows for the hero surface only; a homepage derivative that
 # records using one of them is outside 11c32e8d.
 WEB005B_HERO_ONLY = ("ai_super_resolution", "scalar_space_interpolation", "gaussian smoothing",
@@ -814,15 +808,17 @@ ATLAS_RETIRED_TOKEN = re.compile(r"(?<![\w-])--(?:orb-[\w-]+|accent(?:-soft)?|li
                                  r"orbit|lift|paper|steel|slate|signal(?:-deep)?|caution(?:-deep)?|"
                                  r"graphite(?:-soft)?|mineral(?:-light)?|teal(?:-light)?|ground(?:-lift)?|limestone|magma(?:-light)?|"
                                  r"violet(?:-light)?|amber(?:-light|-ink)?|plum|navy|maroon|deep-gold)(?![\w-])")
-ATLAS_CSS_REGIONS = ["foundation", "home", "shell", "geothermal", "solutions-about", "partner-sources"]
+ATLAS_CSS_REGIONS = ["foundation", "home", "shell", "geothermal", "solutions-about", "partner-sources", "interior"]
 ATLAS_PAGE_GROUPS = ["geothermal", "solutions-about", "partner-sources"]
 # Filled in by each page group's own region further down: {"prefixes": (...), "type_ready": bool}.
 ATLAS_GROUPS: dict[str, dict] = {}
 # Regions whose CSS already holds to the type scale. A page group switches itself on in its own region.
 ATLAS_TYPE_READY = {"foundation", "home", "shell"}
 ATLAS_FONT_DIR = "assets/fonts"
-ATLAS_FONT_BUDGET = 64 * 1024
+ATLAS_FONT_BUDGET = 88 * 1024
 ATLAS_FONT_PRELOAD = ("sans-300", "sans-400")
+# The interior pages set their headlines in Sans 500 (CTO, 2026-11-04); the homepage never loads it.
+ATLAS_FONT_PRELOAD_INTERIOR = ("sans-300", "sans-400", "sans-500")
 ATLAS_HEAD_PAGES = ["index.html", "404.html", "solutions/index.html", "solutions/geothermal/index.html",
                     "about/index.html", "partner/index.html", "sources/index.html"]
 ATLAS_NAMED_COLOURS = set("""aliceblue antiquewhite aqua aquamarine azure beige bisque black blanchedalmond blue blueviolet brown
@@ -998,8 +994,13 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
         if decl.strip() != "inherit":
             fail(f"styles.css: font shorthand {decl.strip()!r}; set the family and size separately", errors)
     for w in re.findall(r"font-weight\s*:\s*([^;}]+)", stripped):
-        if w.strip() not in ("300", "400", "normal", "inherit"):
-            fail(f"styles.css: font-weight {w.strip()}; the site has Sans 300, Sans 400 and Mono 400 and no other weight", errors)
+        if w.strip() not in ("300", "400", "500", "normal", "inherit"):
+            fail(f"styles.css: font-weight {w.strip()}; the site has Sans 300, Sans 400, Sans 500 (interior headlines) and Mono 400 and no other weight", errors)
+    interior_region = re.search(r"/\* === atlas:interior ===.*?/\* === /atlas:interior === \*/", css, re.S)
+    outside_interior = css.replace(interior_region.group(0), "") if interior_region else css
+    outside_interior = re.sub(r"@font-face\{[^}]*\}", " ", re.sub(r"/\*.*?\*/", "", outside_interior, flags=re.S))
+    if re.search(r"font-weight\s*:\s*500", outside_interior):
+        fail("styles.css: font-weight 500 belongs to the atlas:interior region only (the interior headlines and the About numerals)", errors)
     if not re.search(r"body\{[^}]*font-synthesis-weight:none", stripped):
         fail("body must set font-synthesis-weight:none (emphasis is tone, never a synthesised bold)", errors)
     for name in ("Space Grotesk", "Inter", "Segoe", "Roboto", "Helvetica", "Menlo", "Consolas", "system-ui", "ui-sans-serif", "ui-monospace"):
@@ -1014,8 +1015,8 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
     else:
         record = json.loads(record_path.read_text(encoding="utf-8"))
         faces = record.get("faces", {})
-        if sorted(faces) != sorted(["sans-300", "sans-400", "mono-400"]):
-            fail("fonts.json must record exactly sans-300, sans-400 and mono-400", errors)
+        if sorted(faces) != sorted(["sans-300", "sans-400", "sans-500", "mono-400"]):
+            fail("fonts.json must record exactly sans-300, sans-400, sans-500 and mono-400", errors)
         total = 0
         for key, face in sorted(faces.items()):
             path = ROOT / ATLAS_FONT_DIR / face.get("file", "")
@@ -1034,7 +1035,7 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
             if not str(face.get("upstream", {}).get("sha256", "")):
                 fail(f"font {key}: the upstream file hash is not recorded", errors)
         if total > ATLAS_FONT_BUDGET:
-            fail(f"the three font files weigh {total} bytes, over the {ATLAS_FONT_BUDGET} bytes budget per page", errors)
+            fail(f"the four font files weigh {total} bytes, over the {ATLAS_FONT_BUDGET} bytes budget", errors)
         css_urls = re.findall(r"@font-face\{[^}]*?src:url\(\"?([^\")]+)", css)
         want = sorted(f"{ATLAS_FONT_DIR}/{f}" for f in face_files.values())
         if sorted(css_urls) != want:
@@ -1056,14 +1057,16 @@ def atlas_foundation_checks(errors: list[str], page_html: dict[str, str]) -> dic
             for need in ("SIL OPEN FONT LICENSE Version 1.1", "Copyright 2018 IBM Corp.", "Copyright 2017 IBM Corp.", "Reserved Font Name"):
                 if need not in lt:
                     fail(f"{ATLAS_FONT_DIR}/OFL.txt lost {need!r}", errors)
-        wanted = [f'<link rel="preload" href="/{ATLAS_FONT_DIR}/{face_files.get(k, "?")}" as="font" type="font/woff2" crossorigin />'
-                  for k in ATLAS_FONT_PRELOAD]
         for rel, text in sorted(page_html.items()):
             head = text.split("</head>", 1)[0]
+            keys = ATLAS_FONT_PRELOAD_INTERIOR if re.search(r'<body class="interior\b', text) else ATLAS_FONT_PRELOAD
+            wanted = [f'<link rel="preload" href="/{ATLAS_FONT_DIR}/{face_files.get(k, "?")}" as="font" type="font/woff2" crossorigin />'
+                      for k in keys]
             pos = [head.find(w) for w in wanted]
             sheet = head.find('rel="stylesheet"')
-            if min(pos) < 0 or not (pos[0] < pos[1] < sheet):
-                fail(f"{rel}: must preload the Sans 300 and Sans 400 fonts (as=font, type, crossorigin) before the stylesheet", errors)
+            if min(pos) < 0 or pos != sorted(pos) or not (pos[-1] < sheet):
+                names = " and ".join(k.replace("sans-", "Sans ") for k in keys)
+                fail(f"{rel}: must preload the {names} fonts (as=font, type, crossorigin) before the stylesheet", errors)
 
     # -- 5. the regions: styles.css, the dictionary, this validator, the negative tests -----------------
     regions = atlas_regions(css)
@@ -1179,6 +1182,19 @@ RETIRED_EXPLANATION_KEYS = [
     "solutionsPage.pilotnav.label", "solutionsPage.pilotnav.lead", "solutionsPage.pilotnav.record", "solutionsPage.pilotnav.atlas",
     "solutionsPage.pilotnav.result", "sourcesPage.index.label",
 ]
+# Interior cleanup (CTO, 2026-11-04, decisions D1-D7 and R1-R5; docs/WEB_INTERIOR_CLEANUP_AUTHORITY.md). The design-stage
+# numerals, the "what is missing" and structure-and-geology gap statements, the place and coordinates on the atlas plates, the
+# "Illustrative ... another place" notes, the second link pair under the result map and the "None yet" notes were removed on
+# request. These keys named that copy; none may come back, in either language or on any page.
+RETIRED_CLEANUP_KEYS = [
+    "aboutPage.see.gap", "act.evidence.alteration.index", "act.evidence.gapLabel", "act.evidence.terrain.index",
+    "act.evidence.thermal.index", "act.priority.deeper", "contact.cta", "domains.illustrative", "domains.illustrativeLabel",
+    "geothermalPage.fact.gap", "geothermalPage.from.none", "geothermalPage.gap.frame", "geothermalPage.index.missing",
+    "geothermalPage.kind.iron", "geothermalPage.layer.structure", "geothermalPage.missing.title", "geothermalPage.outputs.link",
+    "geothermalPage.plate.abbr", "geothermalPage.relief.copy", "geothermalPage.relief.kicker", "geothermalPage.relief.title",
+    "geothermalPage.role.support", "scene.illustrative", "scene.yellowstone.coords", "solutionsPage.published.none",
+    "solutionsPage.thumb.none",
+]
 # Sentences removed after review because they said how the score is built, in both languages. A key may stay (the
 # Geothermal result copy) while its wording may not return.
 RETIRED_METHOD_PHRASES = ["combined into one experimental score", "deneysel skorda birleştirilir"]
@@ -1200,6 +1216,12 @@ def light_theme_checks(errors: list[str], page_html: dict[str, str]) -> None:
         if re.search(r"^\s+'" + re.escape(key) + r"':", script, re.M):
             bad(f"script.js carries {key!r}, copy that explained how the work is done or warned beside a layer; "
                 f"it was removed on request and may not come back")
+    for key in RETIRED_CLEANUP_KEYS:
+        if re.search(r"^\s+'" + re.escape(key) + r"':", script, re.M):
+            bad(f"script.js carries {key!r}, copy removed in the interior cleanup of 2026-11-04; it may not come back")
+        for rel, text in sorted(page_html.items()):
+            if re.search(r'data-i18n(?:-alt|-aria-label)?="' + re.escape(key) + '"', text):
+                bad(f"{rel}: uses {key!r}, copy removed in the interior cleanup of 2026-11-04; it may not come back")
     for phrase in RETIRED_METHOD_PHRASES:
         if phrase in script:
             bad(f"script.js says {phrase!r}, a sentence on how the score is built; it was removed on request")
@@ -1467,28 +1489,36 @@ ATLAS_GROUPS["geothermal"] = {"prefixes": ("geothermalPage.",), "type_ready": Tr
 ATLAS_GEOTHERMAL_EN = "solutions/geothermal/index.html"
 ATLAS_GEOTHERMAL_TR = "tr/cozumler/jeotermal/index.html"
 # A1: the four MER-151 presentation derivatives the Geothermal page shows beside the homepage (preview).
-ATLAS_GEOTHERMAL_A1_LAYERS = ("terrain", "thm01", "alt01", "priority")
+ATLAS_GEOTHERMAL_A1_LAYERS = ("terrain", "thm01", "alt01")
 ATLAS_GEOTHERMAL_A1_ROUTES = {layer: ("solutions/geothermal",) for layer in ATLAS_GEOTHERMAL_A1_LAYERS}
+# Interior cleanup (CTO, 2026-11-04): the priority surface has exactly two named places beyond the homepage.
+# /solutions/ shows the priority map as the Geothermal band's lead visual (the one R2 exception, 600 CSS px at
+# most), and /solutions/geothermal/ borrows only its legend ramp for the priority-over-relief figure. The map
+# itself (priority-600/900/1200) is never drawn on the Geothermal page.
+PRIORITY_EXTRA_ROUTES = {"priority": ("solutions", "solutions/geothermal")}
+PRIORITY_MAP_ROUTES = ("", "solutions")
 # Language-neutral text no dictionary key owns (the scale bar's far end).
 ATLAS_GEOTHERMAL_LOOSE_OK = {"10 km"}
-# The atlas, in reading order: (plate id, state, the key naming the layer on the image, the MER-151 layer it shows).
-# One figure of small multiples (A6), six plates, two states (the data gap and the evidence); since MER-242 the iron plate is a delivered figure. A plate carries no warning: the per-layer notes were
-# removed on the CTO's request (2026-10-25), because what a layer is for and is not is the work's own business.
+# The atlas, in reading order: (plate id, state, unused, the MER-151 layer it shows).
+# One figure of small multiples (A6), five plates (CTO, 2026-11-04: the site no longer says what is missing, so there is no gap plate).
+# A plate carries no warning (CTO, 2026-10-25) and no text on the image (CTO, 2026-11-04): its name and its "role · source" line sit
+# under the plate, because the name under the plate already says what the image is.
 ATLAS_GEOTHERMAL_PLATES = [
-    ("natural", "evidence", "scene.kind.naturalColor", None),
-    ("elevation", "evidence", "act.evidence.terrain.name", "terrain"),
-    ("gap", "gap", None, None),
-    ("thermal", "evidence", "act.evidence.thermal.name", "thm01"),
-    ("alteration", "evidence", "act.evidence.alteration.name", "alt01"),
-    ("iron", "evidence", "geothermalPage.kind.iron", "alt02"),
+    ("natural", "evidence", None, None),
+    ("elevation", "evidence", None, "terrain"),
+    ("thermal", "evidence", None, "thm01"),
+    ("alteration", "evidence", None, "alt01"),
+    ("iron", "evidence", None, "alt02"),
 ]
 # The light theme (2026-10-25): the opening, the atlas and the record sit on paper; the priority result and its relief
 # slot keep the dark ground, so the page still turns dark once, where the one coloured figure is.
-ATLAS_GEOTHERMAL_GROUNDS = {"glance": "ground-paper", "layers": "ground-paper", "result": "ground-orbit",
-                            "relief": "ground-orbit", "missing": "ground-paper"}
+ATLAS_GEOTHERMAL_GROUNDS = {"glance": "ground-paper", "layers": "ground-paper", "result": "ground-orbit"}
+# #gap, #relief and #pilot-structure are invisible anchors since 2026-11-04 (their sections are gone); old links land on the atlas and the result.
 ATLAS_GEOTHERMAL_IDS = ["glance", "layers", "natural", "elevation", "gap", "thermal", "alteration", "iron", "result",
-                        "outputs", "relief", "missing", "pilot-observe", "pilot-terrain", "pilot-evidence",
+                        "outputs", "relief", "pilot-observe", "pilot-terrain", "pilot-evidence",
                         "pilot-priority", "pilot-geothermal", "pilot-structure"]
+# The invisible anchors (span.anchor-alias) and where each must sit: inside a container that styles.css positions.
+ATLAS_GEOTHERMAL_ANCHORS = ("gap", "pilot-structure", "relief")
 # What would make a governed raster something other than the accepted derivative.
 ATLAS_GEOTHERMAL_RASTER_BANNED = re.compile(r"filter|transform|opacity|mix-blend-mode|scale|zoom|clip-path|mask|backdrop")
 
@@ -1545,10 +1575,17 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
         bad("the in-page chapter bar is back (nav.geo-index-list); it was removed on request, the page is read by scrolling")
     if find(dom, lambda n: "geo-ledger" in classes(n) or "geo-ledger-set" in classes(n)):
         bad("the ledger of what the result does not establish is back (geo-ledger); it was removed on request")
-    missing = one(dom, lambda n: "geo-missing-list" in classes(n))
-    gaps = [str(a.attrs.get("href")) for a in find(missing, lambda n: n.tag == "a")] if missing is not None else []
-    if gaps != ["#gap"]:
-        bad(f"the index of what is missing links {gaps}, expected only #gap (the iron layer and the relief figure are delivered since MER-242)")
+    # The site no longer says what is missing (CTO, 2026-11-04): no section, no index, no gap plate, no frame, no sentence.
+    if "missing" in ids or find(dom, lambda n: classes(n) & {"geo-missing-list", "geo-missing", "plate-gap", "plate-pending"}):
+        bad("the page says what is missing again (#missing, geo-missing-list, plate-gap or plate-pending); the CTO removed every gap statement on 2026-11-04")
+    if find(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief"):
+        bad("#relief is an invisible anchor on the result section; the relief figure is the result, not a section of its own")
+    for anchor in ATLAS_GEOTHERMAL_ANCHORS:
+        node = one(dom, lambda n, a=anchor: n.attrs.get("id") == a)
+        if node is not None and "anchor-alias" not in classes(node):
+            bad(f"#{anchor} must be an invisible anchor (span.anchor-alias), not a visible element")
+    if re.search(r"what is (?:still )?missing|data gap|not available|no public-safe", text, re.I):
+        bad("gap wording is back on the page (what is missing, data gap, not available, no public-safe ...)")
     if re.search(r"prototype|to be supplied by science", text, re.I):
         bad("prototype wording is back on the page; an asset still to come is labelled with the site's own words")
 
@@ -1573,9 +1610,12 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
         imgs = find(frame, lambda n: n.tag == "img")
         if find(cap, lambda n: classes(n) & {"beam-note", "plate-note", "warning-label"}):
             bad(f"plate #{pid} carries a warning note under its caption; the per-layer warnings were removed on request")
-        if one(cap, lambda n: "plate-no" in classes(n)) is None or one(cap, lambda n: n.tag == "h3" and "plate-name" in classes(n)) is None \
-                or one(cap, lambda n: "plate-role" in classes(n)) is None:
-            bad(f"plate #{pid} must show its number, name, and role · source")
+        if one(cap, lambda n: "plate-no" in classes(n)) is not None:
+            bad(f"plate #{pid} shows a plate number; numbering was removed on 2026-11-04")
+        if one(cap, lambda n: n.tag == "h3" and "plate-name" in classes(n)) is None or one(cap, lambda n: "plate-role" in classes(n)) is None:
+            bad(f"plate #{pid} must show its name and role · source under the plate")
+        if one(plate, lambda n: "scene-label" in classes(n)) is not None:
+            bad(f"plate #{pid} carries text on the image; the name under the plate says what the image is (CTO, 2026-11-04)")
         if state == "evidence":
             if len(imgs) != 1 or not str(imgs[0].attrs.get("alt", "")).strip() or not imgs[0].attrs.get("data-i18n-alt"):
                 bad(f"plate #{pid} must hold exactly one described image")
@@ -1585,11 +1625,6 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
                 bad(f"plate #{pid}: the image is declared {img.attrs.get('width')} x {img.attrs.get('height')}, the governed grid is 1200 x 1200")
             if img.attrs.get("style"):
                 bad(f"plate #{pid}: an inline style on a plate image; no filter, transform or scaling may touch it")
-            label = one(frame, lambda n: "scene-label" in classes(n))
-            spans = [c for c in (label.children if label else []) if hasattr(c, "attrs")]
-            keys = [str(c.attrs.get("data-i18n")) for c in spans]
-            if keys != ["scene.aoi.place", "scene.aoi.coords", str(kind_key)] or "scene-kind" not in classes(spans[-1]):
-                bad(f"plate #{pid}: the bottom-right caption must read place, coordinates, layer; it reads {keys}")
             if "data-label-tone" not in frame.attrs:
                 bad(f"plate #{pid}: the frame lost its data-label-tone (caption tone is chosen per panel)")
             urls = [str(img.attrs.get("src", ""))] + [c.strip().split()[0] for c in str(img.attrs.get("srcset", "")).split(",") if c.strip()]
@@ -1603,9 +1638,6 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
                     bad(f"plate #{pid} must offer the 600, 900 and 1200 px derivatives")
             elif not all(u.lstrip("/").startswith("assets/imagery/kizildere-aoi-") for u in urls):
                 bad(f"plate #{pid} must show the recorded natural-colour analysis-grid crop")
-        elif state == "gap":
-            if imgs or one(frame, lambda n: "plate-gap" in classes(n)) is None or frame.attrs.get("data-visual-status") != "data-gap":
-                bad(f"plate #{pid} is the data gap: a dashed frame with no image, data-visual-status=\"data-gap\"")
         else:
             bad(f"plate #{pid} has an unknown state {state!r}")
     # Governed rasters on this page: exactly the four MER-151 layers and the legend ramp, nothing from the
@@ -1626,52 +1658,44 @@ def atlas_geothermal_checks(errors: list[str], page_html: dict[str, str]) -> Non
     if not cap_px or int(cap_px.group(1)) > 600:
         bad("the .plate rule must cap a plate at 600 CSS px (the native 1200 px grid at 2x)")
 
-    # -- 3. the result: the priority plate with its legend and scale; no warning, no ledger -------------------------------
+    # -- 3. the result: one figure, the priority over shaded relief, with its legend and scale; no warning, no ledger --------
+    # CTO, 2026-11-04: the Geothermal page shows one result figure. The plain priority map is the homepage result and the Solutions
+    # lead; this page shows the priority over relief (MER-242), under the heading "One ranking".
     result = one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "result")
     pri = one(result, lambda n: n.tag == "figure" and "geo-priority" in classes(n)) if result is not None else None
     if pri is None:
-        bad("the result lost its priority plate (figure.geo-priority)")
+        bad("the result lost its figure (figure.geo-priority)")
     else:
-        pimg = one(pri, lambda n: n.tag == "img" and "priority-1200" in str(n.attrs.get("src", "")))
-        if pimg is None or "priority-600" not in str(pimg.attrs.get("srcset", "")) or str(pimg.attrs.get("width")) != "1200":
-            bad("the priority plate must show priority-1200.webp with the 600 and 900 px candidates")
-        keys = [str(c.attrs.get("data-i18n")) for c in (one(pri, lambda n: "scene-label" in classes(n)).children if one(pri, lambda n: "scene-label" in classes(n)) else []) if hasattr(c, "attrs")]
-        if keys != ["scene.priority.place", "scene.priority.coords", "label.priority"]:
-            bad(f"the priority plate's caption must read place, coordinates, the accepted public label; it reads {keys}")
-        legend = one(pri, lambda n: n.tag == "img" and str(n.attrs.get("src", "")).lstrip("/") == ramp)
-        if legend is None or one(pri, lambda n: "geo-bar" in classes(n) and n.attrs.get("role") == "img") is None:
-            bad("the priority plate must keep its legend ramp and its 10 km scale bar")
-    for where, node in (("result", result), ("relief", one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief"))):
-        if node is not None and find(node, lambda n: classes(n) & {"beam-note", "plate-note", "warning-label"}):
-            bad(f"the {where} block carries a warning note; the result and its limits warning was removed on request")
-    relief = one(dom, lambda n: n.tag == "section" and n.attrs.get("id") == "relief")
-    if relief is None:
-        bad("the relief section (#relief) is missing")
-    else:
-        rframe = one(relief, lambda n: "plate-frame" in classes(n))
-        rimgs = find(relief, lambda n: n.tag == "img" and "plate-frame" not in classes(n) and n.attrs.get("data-i18n-alt") == "alt.relief")
+        rframe = one(pri, lambda n: "plate-frame" in classes(n))
+        rimgs = find(pri, lambda n: n.tag == "img" and n.attrs.get("data-i18n-alt") == "alt.relief")
         if rframe is None or len(rimgs) != 1:
-            bad("the relief figure must hold one plate frame with one described image (alt.relief), the priority over NASADEM relief of MER-242")
+            bad("the result figure must hold one plate frame with one described image (alt.relief), the priority over NASADEM relief of MER-242")
         else:
             rimg = rimgs[0]
             if rframe.attrs.get("data-visual-status") != "product-proof" or rframe.attrs.get("data-visual-slot") != "relief":
-                bad("the relief frame must say data-visual-slot=\"relief\" and data-visual-status=\"product-proof\" (the CSS guard that keeps filters off it)")
+                bad("the result frame must say data-visual-slot=\"relief\" and data-visual-status=\"product-proof\" (the CSS guard that keeps filters off it)")
             if "data-label-tone" not in rframe.attrs:
-                bad("the relief frame lost its data-label-tone (caption tone is chosen per panel)")
+                bad("the result frame lost its data-label-tone (caption tone is chosen per panel)")
             if str(rimg.attrs.get("width")) != "1200" or str(rimg.attrs.get("height")) != "1200" or rimg.attrs.get("style"):
-                bad("the relief image must be declared 1200 x 1200 with no inline style")
+                bad("the result image must be declared 1200 x 1200 with no inline style")
             rurls = [str(rimg.attrs.get("src", ""))] + [c.strip().split()[0] for c in str(rimg.attrs.get("srcset", "")).split(",") if c.strip()]
             if len(rurls) < 4 or any(u.lstrip("/") not in layer_derivs["relief"] for u in rurls):
-                bad(f"the relief image must show only the recorded MER-242 relief derivatives (600, 900, 1200 px); it shows {rurls}")
+                bad(f"the result image must show only the recorded MER-242 relief derivatives (600, 900, 1200 px); it shows {rurls}")
             rlabel = one(rframe, lambda n: "scene-label" in classes(n))
             rkeys = [str(c.attrs.get("data-i18n")) for c in (rlabel.children if rlabel else []) if hasattr(c, "attrs")]
-            if rkeys != ["scene.priority.place", "scene.priority.coords", "label.priority"]:
-                bad(f"the relief caption must read place, coordinates, the accepted public label; it reads {rkeys}")
-            if one(relief, lambda n: n.tag == "img" and str(n.attrs.get("src", "")).lstrip("/") == ramp) is None \
-                    or one(relief, lambda n: "geo-bar" in classes(n) and n.attrs.get("role") == "img") is None:
-                bad("the relief figure must keep the priority legend ramp and the 10 km scale bar")
-        if one(relief, lambda n: "plate-pending" in classes(n)):
-            bad("the relief figure is a delivered MER-242 derivative; a pending frame has no place on the page")
+            if rkeys != ["label.priority"]:
+                bad(f"the result's on-image caption must read the accepted public label alone (no place, no coordinates); it reads {rkeys}")
+        if one(pri, lambda n: n.tag == "img" and str(n.attrs.get("src", "")).lstrip("/") == ramp) is None \
+                or one(pri, lambda n: "geo-bar" in classes(n) and n.attrs.get("role") == "img") is None:
+            bad("the result figure must keep the priority legend ramp and the 10 km scale bar")
+    for where, node in (("result", result),):
+        if node is not None and find(node, lambda n: classes(n) & {"beam-note", "plate-note", "warning-label"}):
+            bad(f"the {where} block carries a warning note; the result and its limits warning was removed on request")
+    # The page ends on one link, at the end of the result section (CTO, 2026-11-04).
+    if result is not None:
+        last_links = [str(a.attrs.get("href")) for a in find(result, lambda n: n.tag == "a")]
+        if last_links != ["/sources/"]:
+            bad(f"the result section must end the page with one link, to /sources/; it holds {last_links}")
     # -- 4. every Turkish string exists, and every key the page uses is in the Geothermal or shared dictionary -------------
     for key in {str(n.attrs[a]) for n in dom.iter() for a in ("data-i18n", "data-i18n-alt", "data-i18n-aria-label", "data-i18n-content") if n.attrs.get(a)}:
         if key.startswith("geothermalPage.") and (key not in dictionary["en"] or key not in dictionary["tr"]):
@@ -1807,6 +1831,9 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
     def grounds(node: DomNode | None) -> set[str]:
         return {c for c in (node.classes if node else set()) if c.startswith("ground-")}
 
+    def classes_of(node: DomNode) -> set[str]:
+        return set(node.classes)
+
     def thumb_ok(img: DomNode) -> bool:
         w, h = str(img.attrs.get("width", "")), str(img.attrs.get("height", ""))
         return "thumb" in img.classes and w.isdigit() and h.isdigit() and int(w) <= THUMB_MAX_CSS_PX and int(h) <= THUMB_MAX_CSS_PX
@@ -1832,10 +1859,16 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
             fail(f"{rel}: the page title is two clauses, the second in tone (span.tone)", errors)
 
         # Governed rasters: an index thumbnail and nothing else (the CTO accepts this widening of MER-151 with the preview).
+        # The one named exception (CTO, 2026-11-04, decision 2): on Solutions the priority map and its legend ramp lead the
+        # Geothermal band at no more than 600 CSS px, in figure.pilot-map. Nothing else widens R2.
         for img in dom.find_all(lambda n: n.tag == "img" and "assets/proof/" in str(n.attrs.get("src", ""))):
-            if not thumb_ok(img):
-                fail(f"{rel}: {img.attrs.get('src')} is a governed raster; on this page it may appear only as an index "
-                     f"thumbnail (class thumb, at most {THUMB_MAX_CSS_PX} x {THUMB_MAX_CSS_PX} CSS px)", errors)
+            if thumb_ok(img):
+                continue
+            in_pilot_map = any("pilot-map" in a.classes for a in img.ancestors())
+            if kind == "solutions" and in_pilot_map and "/assets/proof/web005b/priority" in str(img.attrs.get("src", "")):
+                continue
+            fail(f"{rel}: {img.attrs.get('src')} is a governed raster; on this page it may appear only as an index "
+                 f"thumbnail (class thumb, at most {THUMB_MAX_CSS_PX} x {THUMB_MAX_CSS_PX} CSS px)", errors)
 
         if kind == "solutions":
             if grounds(main) or main.find_all(lambda n: "ground-orbit" in n.classes or "ground-lift" in n.classes):
@@ -1851,20 +1884,26 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
                 if "is-lead" not in lead.classes or not find(lead, lambda n: n.tag == "img" and thumb_ok(n)):
                     fail(f"{rel}: the Geothermal index row leads with a thumbnail of at most {THUMB_MAX_CSS_PX} CSS px", errors)
                 for row in (none_a, none_b):
-                    if find(row, lambda n: n.tag == "img") or not find(row, lambda n: "is-none" in n.classes):
-                        fail(f"{rel}: an expansion-direction index row shows no image, only the 'none yet' frame", errors)
+                    # CTO, 2026-11-04: no "none yet" frame, no "nothing published yet" line; the row is a name and a status.
+                    if find(row, lambda n: n.tag == "img") or find(row, lambda n: classes_of(n) & {"is-none", "index-thumb", "index-note"}):
+                        fail(f"{rel}: an expansion-direction index row is its name and its status label only (no image, no 'none yet' frame)", errors)
                 for row in links:
                     if not find(row, lambda n: "domain-status" in n.classes) or not find(row, lambda n: "index-name" in n.classes):
                         fail(f"{rel}: every domain index row carries its name and its status label", errors)
             feature = find(main, lambda n: n.tag == "section" and n.attrs.get("id") == "geothermal")
             band = find(feature, lambda n: "domain-band" in n.classes) if feature else None
-            if feature is None or "domain-feature" not in feature.classes or band is None or not find(band, lambda n: n.tag == "img" and "data-lead-visual" in n.attrs):
-                fail(f"{rel}: #geothermal must be the Geothermal band with its lead photograph", errors)
+            map_fig = find(band, lambda n: n.tag == "figure" and "pilot-map" in n.classes and "data-lead-visual" in n.attrs) if band else None
+            map_img = find(map_fig, lambda n: n.tag == "img" and "priority-1200" in str(n.attrs.get("srcset", ""))) if map_fig else None
+            if feature is None or "domain-feature" not in feature.classes or band is None or map_img is None:
+                fail(f"{rel}: #geothermal must be the Geothermal band with the priority map as its lead visual (figure.pilot-map)", errors)
             else:
                 if find(feature, lambda n: n.tag == "nav" and "pilot-index" in n.classes):
                     fail(f"{rel}: the pilot index bar is back on the Geothermal band; it was removed on request (the band links the page once)", errors)
-                if not find(band, lambda n: n.tag == "a" and str(n.attrs.get("href")) == geo_prefix):
-                    fail(f"{rel}: the Geothermal band must link the Geothermal page ({geo_prefix})", errors)
+                pilot_links = [a_ for a_ in band.find_all(lambda n: n.tag == "a") if str(a_.attrs.get("href")) == geo_prefix]
+                if len(pilot_links) != 1 or "is-primary" not in pilot_links[0].classes:
+                    fail(f"{rel}: the Geothermal band holds the page's one filled link to the Geothermal page ({geo_prefix})", errors)
+                if str(map_img.attrs.get("width")) != "1200" or map_img.attrs.get("style"):
+                    fail(f"{rel}: the priority map is declared 1200 x 1200 with no inline style (the governed grid, never drawn above 600 CSS px)", errors)
             pair = find(main, lambda n: n.tag == "section" and "domain-pair" in n.classes)
             if pair is None or grounds(pair) != {"ground-paper"}:
                 fail(f"{rel}: the Mining and Marine pair must sit on paper", errors)
@@ -1874,9 +1913,8 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
                     fail(f"{rel}: the pair holds exactly the Mining and Marine panels", errors)
                 siblings = [c for c in main.children if isinstance(c, DomNode)]
                 names = [(c.tag, " ".join(sorted(c.classes))) for c in siblings]
-                at = siblings.index(pair)
-                if not (len(siblings) == at + 2 and "page-note" in siblings[at + 1].classes):
-                    fail(f"{rel}: the illustrative footnote (div.page-note) must follow the pair directly and close the page; found {names}", errors)
+                if siblings.index(pair) != len(siblings) - 1 or find(main, lambda n: "page-note" in n.classes):
+                    fail(f"{rel}: the page ends on the Mining and Marine pair, with no footnote and no closing link; found {names}", errors)
         else:
             order = [("problem", "ground-orbit"), ("position", "ground-paper"), ("principles", "ground-paper"), ("sources", "ground-paper")]
             for sid, ground in order:
@@ -1913,9 +1951,36 @@ def atlas_solutions_about_checks(errors: list[str], page_html: dict[str, str]) -
                 for px in re.findall(r"(\d+(?:\.\d+)?)px", m.group(1)):
                     if float(px) > THUMB_MAX_CSS_PX:
                         fail(f"styles.css atlas:solutions-about: {selector} sizes a thumbnail at {px}px; an index thumbnail is at most {THUMB_MAX_CSS_PX} CSS px (R2)", errors)
-    note_rule = re.search(r"\.page-solutions\.page-note\{([^}]*)\}", flat)
-    if not note_rule or "background:var(--pumice)" not in note_rule.group(1):
-        fail("styles.css atlas:solutions-about: the footnote (.page-solutions .page-note) must sit on the pair's paper ground", errors)
+    # The pilot map is drawn at no more than its 600 CSS px (the native 1200 px grid at 2x), in the interior region.
+    interior_css = re.sub(r"\s+", "", atlas_strip_css((atlas_regions(css) or {}).get("interior", "")))
+    pilot_rule = re.search(r"\.pilot-map\{([^}]*)\}", interior_css)
+    pilot_px = re.search(r"max-width:(\d+)px", pilot_rule.group(1)) if pilot_rule else None
+    if not pilot_px or int(pilot_px.group(1)) > 600:
+        fail("styles.css atlas:interior: .pilot-map must cap the priority map at 600 CSS px", errors)
+    # The one named R2 exception is recorded: web_005b.placement.priority.solutions_placement holds the measured placement,
+    # the old second home on the Geothermal page is gone, and the map never exceeds 600 CSS px or its native 1200 px grid.
+    sources = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    prio = (sources.get("web_005b", {}).get("placement", {}) or {}).get("priority") or {}
+    if prio.get("geothermal_placement"):
+        fail("web_005b.placement.priority.geothermal_placement is stale: the Geothermal page no longer draws the priority map (it shows the priority over shaded relief)", errors)
+    srec = prio.get("solutions_placement")
+    if not srec:
+        fail("web_005b.placement.priority has no solutions_placement record (the one named R2 exception: the pilot map on /solutions/)", errors)
+    else:
+        for field in ("status", "acceptance", "route", "plate", "rendered"):
+            if not srec.get(field):
+                fail(f"web_005b.placement.priority.solutions_placement is missing {field}", errors)
+        if srec.get("route") != "solutions/index.html":
+            fail("web_005b.placement.priority.solutions_placement must name solutions/index.html", errors)
+        r = srec.get("rendered") or {}
+        css_w, dpr, native = r.get("max_css_width"), r.get("device_pixel_ratio_considered"), r.get("native_px")
+        if not all(isinstance(v, (int, float)) for v in (css_w, dpr, native)):
+            fail("web_005b.placement.priority.solutions_placement.rendered is incomplete", errors)
+        else:
+            if css_w * dpr > native or css_w > 600:
+                fail(f"the priority map is drawn up to {css_w} CSS px = {int(css_w * dpr)} device px on /solutions/, above its {native} px native grid or the 600 CSS px cap", errors)
+            if len(r.get("viewports_measured", [])) < 12 or not isinstance(r.get("max_upscale_factor"), (int, float)) or r["max_upscale_factor"] > 1.0:
+                fail(f"web_005b.placement.priority.solutions_placement.rendered was measured at fewer than 12 viewports or upscales ({r.get('max_upscale_factor')})", errors)
 # === /atlas:solutions-about ===
 
 # === atlas:partner-sources ===
@@ -2994,7 +3059,8 @@ def main() -> int:
                 fail(f"web_005b asset {key!r} claims a homepage placement but is not on the homepage", errors)
             # A1 (MER-276, preview, pending CTO acceptance): the Geothermal page shows these layers too,
             # each recorded under placement[key].geothermal_placement (atlas:geothermal checks it).
-            beyond = [r for r in shown_on if r != "" and r not in ATLAS_GEOTHERMAL_A1_ROUTES.get(key, ())]
+            beyond = [r for r in shown_on if r != "" and r not in ATLAS_GEOTHERMAL_A1_ROUTES.get(key, ())
+                      and r not in PRIORITY_EXTRA_ROUTES.get(key, ())]
             if beyond:
                 fail(f"web_005b asset {key!r} is published beyond the homepage: "
                      f"{[ROUTES[r] for r in beyond]}", errors)
@@ -3108,28 +3174,13 @@ def main() -> int:
                  f"{dpr}x, above its widest {widest} px candidate", errors)
         if str(rendered.get("selected_derivative", "")) not in own:
             fail(f"scene {sid!r} names a selected derivative that is not its own", errors)
-        # An illustrative photograph that loses its "this is not a result" framing is exactly the
-        # kind of drift the imagery policy exists to stop. WEB-005B R14 removed the per-card
-        # location/coordinate/kind captions at Product's instruction, which makes the section
-        # footnote the SOLE carrier of that framing — so it is checked harder than the captions
-        # were: it must be rendered on the page, it must be in both dictionaries, and it must still
-        # say the three things that make it work.
-        for key in placement.get("visible_framing_i18n_keys", []):
-            for route in shown_on:
-                if key not in route_parsers[route].i18n_keys:
-                    fail(f"scene {sid!r} is shown on {ROUTES[route]} but its framing key {key!r} is "
-                         f"not rendered there", errors)
-        for lang in ("en", "tr"):
-            note = dictionary_value(lang, "domains.illustrative")
-            if note is None:
-                fail(f"the domain photography footnote is missing from the {lang!r} dictionary",
-                     errors)
-                continue
-            for term in DOMAIN_FOOTNOTE_TERMS[lang]:
-                if term not in note:
-                    fail(f"the {lang!r} domain photography footnote lost required wording "
-                         f"{term!r}; it is the only thing left telling a reader these photographs "
-                         f"are not OrbGSS results from the pilot area", errors)
+        # Interior cleanup (CTO, 2026-11-04, D5): the "Illustrative ... another place" notes and the card framing keys
+        # are retired on every page. The records keep visible_framing_i18n_keys empty, and RETIRED_CLEANUP_KEYS
+        # (light_theme_checks) fails if the wording or a key returns. Provenance stays in the manifest, in the
+        # scene records, in IMAGERY_RIGHTS.md and on /sources/.
+        if placement.get("visible_framing_i18n_keys"):
+            fail(f"scene {sid!r} still names visible_framing_i18n_keys {placement['visible_framing_i18n_keys']}; "
+                 f"the illustrative notes were retired on 2026-11-04", errors)
 
         if dictionary_value("en", "label.priority") != "Remote-Sensing Relative Priority — Experimental Baseline":
             fail("the priority public label changed", errors)
@@ -3914,12 +3965,15 @@ def main() -> int:
     if "mailto:" in html:
         fail("index.html carries a mailto: link; the homepage's Partner calls point to /partner/", errors)
     home_dom = doms[""]
-    for key, href in (("act.evidence.deeper", "/solutions/geothermal/#layers"),
-                      ("act.priority.deeper", "/solutions/geothermal/")):
+    for key, href in (("act.evidence.deeper", "/solutions/geothermal/#layers"),):
         span = first(home_dom, lambda n, k=key: n.attrs.get("data-i18n") == k)
         link = next((a for a in span.ancestors() if a.tag == "a"), None) if span else None
         if link is None or link.attrs.get("href") != href:
             fail(f"index.html: the {key!r} link must point to {href}", errors)
+    # Interior cleanup (CTO, 2026-11-04, D6): the second "See the pilot / Partner with us" pair under the
+    # result map is gone; the hero pair is the only one. It must not return.
+    if "result-actions" in m6_pages[""] or "act.priority.deeper" in m6_pages[""]:
+        fail("index.html: the second link pair under the Act 4 result map is retired (the hero keeps its own pair)", errors)
     for card in home_dom.find_all(lambda n: n.tag == "li" and "domain-card" in n.classes):
         copy = first(card, lambda n: "domain-copy" in n.classes)
         extra = [c for c in (copy.children if copy else []) if isinstance(c, DomNode)
@@ -3974,6 +4028,15 @@ def main() -> int:
                 continue
             found = first_content(block)
             section_name = block.attrs.get("id") or block.attrs.get("aria-labelledby") or block.tag
+            # Interior cleanup (CTO, 2026-11-04, B5): the Geothermal band on /solutions/ sets its copy beside
+            # its lead visual (the priority map). The visual is a child of the band next to the copy, so it is
+            # met in the same glance on desktop; on a phone the copy comes first, as reviewed in the prototype.
+            if (found is None or found[0] != "lead") and "domain-feature" in block.classes:
+                band = first(block, lambda n: "domain-band" in n.classes)
+                kids = [c for c in (band.children if band else []) if isinstance(c, DomNode)]
+                if (any("domain-band-copy" in c.classes for c in kids)
+                        and any("data-lead-visual" in c.attrs and c.tag == "figure" for c in kids)):
+                    continue
             if found is None or found[0] != "lead":
                 what = f"<{found[1].tag}>" if found and found[1] is not None else "nothing"
                 fail(f"R4: {label}: section {section_name!r} opens with {what}, not a marked lead "
@@ -4106,6 +4169,11 @@ def main() -> int:
             for vid in ids:
                 # A1 (MER-276, preview): the four MER-151 layers have a second recorded home on the Geothermal page.
                 if vid.startswith("web005b:") and name in ATLAS_GEOTHERMAL_A1_ROUTES.get(vid.split(":", 1)[1], ()):
+                    continue
+                # Interior cleanup (CTO, 2026-11-04): the one named exception. The priority map is drawn at full
+                # size on the homepage and on /solutions/ (the Geothermal band), at most 600 CSS px; the
+                # Geothermal page only borrows its legend ramp (checked in atlas_geothermal_checks).
+                if vid == "web005b:priority" and name in PRIORITY_EXTRA_ROUTES["priority"]:
                     continue
                 if not is_thumb:
                     full_size.setdefault(vid, set()).add(name)
@@ -4263,9 +4331,12 @@ def main() -> int:
         for field in ("id", "page", "role", "asset_class", "parent", "crop_box_px", "crop_size_px",
                       "pixel_hash8", "operations", "operations_not_used", "derivatives",
                       "max_safe_rendered_px", "rights_basis", "attribution_requirement",
-                      "caption_i18n_keys", "rendered", "analysis_grid_overlap_px2"):
+                      "rendered", "analysis_grid_overlap_px2"):
             if crop.get(field) in (None, "", []):
                 fail(f"web_m6.interior_crops[{cid}] is missing {field}", errors)
+        if crop.get("caption_on_image") is not False and not crop.get("caption_i18n_keys"):
+            fail(f"web_m6.interior_crops[{cid}] is missing caption_i18n_keys (or the recorded retirement "
+                 f"caption_on_image: false)", errors)
         if not str(crop.get("asset_class", "")).startswith("A"):
             fail(f"web_m6.interior_crops[{cid}] must be class A (natural-colour photography); a "
                  f"scientific raster is never an interior crop", errors)
@@ -4311,7 +4382,24 @@ def main() -> int:
         # must fall inside the crop box; the record, both dictionaries and the figure's own caption agree.
         label = crop.get("label_point") or {}
         ckeys = [str(k) for k in (crop.get("caption_i18n_keys") or [])]
-        if len(ckeys) < 2 or not label:
+        if crop.get("caption_on_image") is False:
+            # Interior cleanup (CTO, 2026-11-04, D4 / R1): a crop recorded as an atlas plate carries no text on
+            # the image. The record says so, names no caption, and the figure that shows it has no scene-label.
+            if ckeys or label or not crop.get("caption_retired"):
+                fail(f"web_m6.interior_crops[{cid}] records caption_on_image: false but still names a caption or "
+                     f"lacks the caption_retired note", errors)
+            retired_dom = doms.get(str(crop.get("page")))
+            retired_paths = {str(d.get("path")) for d in derivs}
+            for img_node in (retired_dom.find_all(lambda n_: n_.tag == "img") if retired_dom else []):
+                if str(img_node.attrs.get("src", "")).lstrip("/") not in retired_paths:
+                    continue
+                frame = next((a_ for a_ in img_node.ancestors() if "plate-frame" in a_.classes), None)
+                if frame is None or first(frame, lambda n_: "scene-label" in n_.classes) is not None:
+                    fail(f"MER-255: crop {cid} is recorded without a caption but its frame on "
+                         f"{crop.get('page')} still carries text on the image", errors)
+            shown = []
+            captioned = 1  # nothing to caption
+        elif len(ckeys) < 2 or not label:
             fail(f"MER-255: web_m6.interior_crops[{cid}] records no caption keys or no label_point", errors)
         else:
             nums: dict[str, tuple[float, float]] = {}
@@ -4487,7 +4575,7 @@ def main() -> int:
                     fail(f"{where}: {ckeys[0]} in the {lang!r} dictionary is empty or names the pilot area; these are scenes of other places", errors)
         if len(bounds) == 4 and bounds[0] - 0.25 <= pilot_lon <= bounds[2] + 0.25 and bounds[1] - 0.2 <= pilot_lat <= bounds[3] + 0.2:
             fail(f"{where}: the scene's ground {bounds} reaches the Kızıldere pilot area; these must be other places", errors)
-        # The page: shown on its own page only, captioned, described, framed as illustrative.
+        # The page: shown on its own page only, captioned and described.
         page = str(scene.get("page"))
         page_dom = doms.get(page)
         deriv_paths = {str(d.get("path")) for d in derivs}
@@ -4495,7 +4583,7 @@ def main() -> int:
             str(i.attrs.get("src", "")).lstrip("/") in deriv_paths and "thumb" not in i.classes
             for i in d.find_all(lambda n_: n_.tag == "img"))}
         # The homepage Marine card is the one accepted second appearance (rule R2: a card that links to the domain, authority 4.2);
-        # it is recorded in card_pages, carries no caption of its own (WEB-005B R14) and is framed by domains.illustrative.
+        # it is recorded in card_pages and carries no caption of its own (WEB-005B R14).
         card_pages = [str(c) for c in (scene.get("card_pages") or [])]
         if shown_where != {page, *card_pages}:
             fail(f"{where} is shown on {sorted(shown_where)}, recorded for {sorted({page, *card_pages})!r} alone", errors)
@@ -4505,8 +4593,6 @@ def main() -> int:
                          if str(i_.attrs.get("src", "")).lstrip("/") in deriv_paths]
             if card_dom is None or not card_imgs or any(i_.attrs.get("data-i18n-alt") != scene.get("alt_i18n_key") for i_ in card_imgs):
                 fail(f"{where}: the card on {card_page or 'the homepage'!r} must show the scene with its own description {scene.get('alt_i18n_key')}", errors)
-            if card_dom is not None and not card_dom.find_all(lambda n_: n_.attrs.get("data-i18n") == "domains.illustrative"):
-                fail(f"{where}: the card on {card_page or 'the homepage'!r} lost the illustrative framing domains.illustrative", errors)
         shown = [i_ for i_ in (page_dom.find_all(lambda n_: n_.tag == "img") if page_dom else [])
                  if str(i_.attrs.get("src", "")).lstrip("/") in deriv_paths and "thumb" not in i_.classes]
         for img_node in shown:
@@ -4522,13 +4608,12 @@ def main() -> int:
             alt = dictionary_value(lang, str(scene.get("alt_i18n_key"))) or ""
             if len(alt.split()) < 8 or re.search(r"k[ıi]z[ıi]ldere", alt, re.I):
                 fail(f"{where}: the {lang!r} description {scene.get('alt_i18n_key')} is missing, too short or names the pilot area", errors)
-        frame_key = "domains.illustrative" if page == "solutions" else "scene.illustrative"
-        if page_dom is None or not page_dom.find_all(lambda n_: n_.attrs.get("data-i18n") == frame_key):
-            fail(f"{where}: its page does not carry the illustrative framing {frame_key}", errors)
-        framing = dictionary_value("en", frame_key) or ""
-        if not re.search(r"(another|other) place", framing) or not re.search(r"\bnot\b", framing) \
-                or not (dictionary_value("tr", frame_key) or "").strip():
-            fail(f"{where}: {frame_key} must say, in both languages, that the scene is of another place and not an OrbGSS result", errors)
+        # Interior cleanup (CTO, 2026-11-04, D5): the "Illustrative ... another place" framing is retired on every
+        # page (RETIRED_CLEANUP_KEYS). A scene of another place still names its own place on the image, is never
+        # captioned as the pilot, and its ground never reaches the pilot area; provenance lives on /sources/.
+        for retired_key in ("domains.illustrative", "domains.illustrativeLabel", "scene.illustrative"):
+            if page_dom is not None and page_dom.find_all(lambda n_, k=retired_key: n_.attrs.get("data-i18n") == k):
+                fail(f"{where}: its page still carries the retired illustrative framing {retired_key}", errors)
         rendered = scene.get("rendered") or {}
         for field in ("tool", "max_css_width", "device_pixel_ratio_considered", "widest_candidate_px",
                       "selected_derivative", "max_upscale_factor", "viewports_measured"):

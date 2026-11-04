@@ -233,65 +233,14 @@
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measured_max_css_width": 1278
         },
-        "visible_framing_i18n_keys": [
-          "domains.illustrativeLabel",
-          "domains.illustrative"
-        ],
-        "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record."
+        "visible_framing_i18n_keys": [],
+        "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record.",
+        "visible_framing_retired": "Interior cleanup (CTO, 2026-11-04, D5): the illustrative-note keys domains.illustrativeLabel and domains.illustrative are retired on every page. The scene stays a public-domain Landsat scene of another place; provenance is recorded here, in IMAGERY_RIGHTS.md and on /sources/."
       },
-      "web_m6_placement": {
-        "task": "MER-240",
-        "status": "placed",
-        "section": "Solutions feature band (Geothermal)",
-        "anchor": "geothermal",
-        "routes": [
-          "solutions/index.html"
-        ],
-        "public_role": "illustrative photography",
-        "r2_home": "The feature band is this photograph's one full-size appearance (M6 rule R2). The homepage card is the accepted exception: a card that links to the domain (authority 4.2). The Sources page lists it as a 160 px thumbnail.",
-        "caption_i18n_keys": [
-          "scene.yellowstone.place",
-          "scene.yellowstone.coords",
-          "scene.kind.naturalColor"
-        ],
-        "rendered": {
-          "max_css_width": 1440,
-          "device_pixel_ratio_considered": 2,
-          "max_device_px": 2880,
-          "widest_candidate_px": 2880,
-          "selected_derivative": "assets/imagery/yellowstone-2013-1800.webp",
-          "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
-          "tool": "scripts/measure_interior_renders.py",
-          "viewports_measured": [
-            "360x844",
-            "390x844",
-            "414x844",
-            "600x1112",
-            "768x1112",
-            "834x1112",
-            "1024x900",
-            "1180x900",
-            "1280x900",
-            "1366x900",
-            "1440x900",
-            "1536x900",
-            "1680x900",
-            "1920x900",
-            "2200x900",
-            "2560x900",
-            "3000x900",
-            "3440x900",
-            "3840x900"
-          ],
-          "device_pixel_ratios_measured": [
-            1,
-            2
-          ],
-          "max_upscale_factor": 1.0,
-          "max_upscale_at": "1440x900 @2x"
-        },
-        "note": "The band is capped at 1440 CSS px, so a 2x display is served the 2880 px master width and a wider screen gets a contained band, never an upscaled photograph. The page footnote (domains.illustrative) frames the three photographs as other places, not OrbGSS results.",
-        "mer255_note": "MER-255 redesign: the Mining and Marine photographs moved from full-width bands to the two expansion-direction panels; the measured width is in rendered."
+      "web_m6_retired": {
+        "task": "interior cleanup, B5 (CTO, 2026-11-04)",
+        "note": "The Yellowstone photograph no longer appears on /solutions/: the Geothermal band there shows the Kizildere priority map instead (web_005b.placement.priority.solutions_placement). The homepage Geothermal card keeps it as the accepted second appearance. Provenance, rights and checksums are retained unchanged.",
+        "previous_placement_status": "placed"
       }
     },
     {
@@ -423,11 +372,9 @@
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measured_max_css_width": 727.81
         },
-        "visible_framing_i18n_keys": [
-          "domains.illustrativeLabel",
-          "domains.illustrative"
-        ],
-        "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record."
+        "visible_framing_i18n_keys": [],
+        "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record.",
+        "visible_framing_retired": "Interior cleanup (CTO, 2026-11-04, D5): the illustrative-note keys domains.illustrativeLabel and domains.illustrative are retired on every page. The scene stays a public-domain Landsat scene of another place; provenance is recorded here, in IMAGERY_RIGHTS.md and on /sources/."
       },
       "web_m6_placement": {
         "task": "MER-240",
@@ -614,12 +561,10 @@
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measured_max_css_width": 727.81
         },
-        "visible_framing_i18n_keys": [
-          "domains.illustrativeLabel",
-          "domains.illustrative"
-        ],
+        "visible_framing_i18n_keys": [],
         "framing_note": "WEB-005B R14 removed the per-card location / coordinates / kind caption from the domain cards at Product instruction. The section footnote (domains.illustrative) is now the sole visible statement that these photographs are of other places and are not OrbGSS outputs, results or the Kizildere pilot area. Full provenance stays in this record.",
-        "retired_by": "missing-visuals plan (2026-10-25)"
+        "retired_by": "missing-visuals plan (2026-10-25)",
+        "visible_framing_retired": "Interior cleanup (CTO, 2026-11-04, D5): the illustrative-note keys domains.illustrativeLabel and domains.illustrative are retired on every page. The scene stays a public-domain Landsat scene of another place; provenance is recorded here, in IMAGERY_RIGHTS.md and on /sources/."
       },
       "web_m6_retired": {
         "task": "missing-visuals plan (2026-10-25)",
@@ -4024,12 +3969,12 @@
           "measurement_method": "Headless Chrome, getBoundingClientRect across 360-3840 CSS px viewports at DPR 1 and 2 on the built page (19 widths x 2 DPRs); the drawn width of the object-fit image is recorded, never the sizes attribute.",
           "measurement_note": "WEB-005B R15 sizes the result map against the viewport as well as the native-density cap (--result-map = max(340px, min(600px, 100svh - 356px))), so the map is SMALLER than 600 CSS px on a laptop-height window and reaches the 600 px cap only on a tall one. 598 is the widest it is ever drawn, measured at 1920x1080; shorter viewports draw it smaller, which is always safe for density."
         },
-        "geothermal_placement": {
+        "solutions_placement": {
           "status": "preview",
-          "consumer": "MER-276 / Atlas Geothermal page",
-          "acceptance": "A1 - preview only, pending the CTO's acceptance before any publish",
-          "route": "solutions/geothermal/index.html",
-          "plate": "priority",
+          "consumer": "Interior cleanup B5 / the Geothermal band of /solutions/",
+          "acceptance": "CTO decision of 2026-11-04: the one named R2 exception. The priority map is drawn at full size on the homepage and on /solutions/ (600 CSS px at most) and nowhere else; the Geothermal page borrows only its legend ramp.",
+          "route": "solutions/index.html",
+          "plate": "pilot-map",
           "rendered": {
             "tool": "scripts/measure_geothermal_renders.py",
             "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
@@ -4368,20 +4313,6 @@
         },
         "rights_basis": "USGS Landsat data are in the public domain; permission is not required and there are no restrictions on use or redistribution. Only the crop, tone rendering (in the parent) and encoding are OrbGSS work.",
         "attribution_requirement": "Landsat data courtesy of the U.S. Geological Survey.",
-        "caption_i18n_keys": [
-          "scene.aoi.place",
-          "scene.aoi.coords",
-          "scene.kind.naturalColor"
-        ],
-        "label_point": {
-          "master_px": [
-            1141.0,
-            900.0
-          ],
-          "lat": 37.9794,
-          "lon": 28.7907,
-          "basis": "the declared pilot (AOI) centre, which lies inside this crop"
-        },
         "rendered": {
           "tool": "scripts/measure_interior_renders.py",
           "measurement_method": "Headless Chromium on the English route at 19 viewport widths from 360 to 3840 CSS px at DPR 1 and 2; the drawn width of the image (for object-fit: cover, the larger of the box width and the box height times the image aspect) and the candidate the browser selected (currentSrc) are recorded, never the sizes attribute.",
@@ -4417,7 +4348,9 @@
           "selected_derivative": "assets/imagery/kizildere-aoi-1a7d0c36-800.webp",
           "max_upscale_factor": 0.987,
           "max_upscale_at": "1440x900 @2x"
-        }
+        },
+        "caption_on_image": false,
+        "caption_retired": "Interior cleanup (CTO, 2026-11-04, D4 and R1): this crop is an atlas plate on /solutions/geothermal/ and carries no text on the image; the plate name and role/source are set under it."
       }
     ],
     "licence_notices": {

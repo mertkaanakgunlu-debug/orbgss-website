@@ -60,11 +60,9 @@ const I18N = {
     'act.evidence.terrain.role': 'Context',
     'act.evidence.thermal.role': 'Evidence',
     'act.evidence.alteration.role': 'Evidence',
-    'act.evidence.gapLabel': 'Data gap',
     'act.evidence.deeper': 'See every layer',
     'act.priority.title': 'Where to look first.',
     'act.priority.copy': 'One ranking across the area of interest, so a team can order the ground instead of guessing at it.',
-    'act.priority.deeper': 'See the Kızıldere pilot',
     'scene.hero.place': 'Kızıldere — Büyük Menderes graben, Denizli, Türkiye',
     'scene.hero.coords': '37.9794° N, 28.7907° E',
     'scene.hero.kind': 'Rendered orbital sequence — not sensor imagery',
@@ -85,9 +83,7 @@ const I18N = {
     'app.marine.status': 'Expansion direction',
     'company.title': 'OrbGSS — Orbital Geo-Spatial Solutions',
     'company.copy': 'OrbGSS is a geospatial-intelligence platform. It exists to make exploration and land decisions evidence-based, traceable and easier to prioritize.',
-    'contact.cta': 'Partner With Us',
     'scene.yellowstone.place': 'Yellowstone National Park, USA',
-    'scene.yellowstone.coords': '44.4604° N, 110.8282° W',
     'scene.chuquicamata.place': 'Chuquicamata, Antofagasta, Chile',
     'scene.chuquicamata.coords': '22.3150° S, 68.9010° W',
     'scene.ili.place': 'Ili River Delta & Lake Balkhash, Kazakhstan',
@@ -104,7 +100,6 @@ const I18N = {
     'alt.deathvalley': 'Natural-colour Landsat 9 view of Death Valley: a pale salt floor between steep, dark, barren mountain ranges',
     'alt.aluto': 'Natural-colour Landsat 9 view of Aluto volcano in the Main Ethiopian Rift: a dark volcanic massif between two lakes, with the rift escarpment on the right',
     'alt.menderes': 'Natural-colour Landsat 9 view of the Büyük Menderes delta and the Aegean coast near Söke, Türkiye: green farmland, a lake, a long shoreline and the open sea',
-    'scene.illustrative': 'A public-domain Landsat scene of another place, not an OrbGSS result.',
     'footer.attribution': 'Landsat data courtesy of the U.S. Geological Survey. Contains modified Copernicus Sentinel data (2025).',
     'footer.copyright': '© 2026 OrbGSS. All rights reserved.',
 
@@ -114,13 +109,10 @@ const I18N = {
 
     /* WEB-005B R11 — the accepted final homepage design. */
     'act.evidence.shown': 'Shown',
-    'act.evidence.terrain.index': '01',
     'act.evidence.terrain.tab': 'Terrain',
     'act.evidence.terrain.meta': 'From NASADEM elevation data',
-    'act.evidence.thermal.index': '02',
     'act.evidence.thermal.tab': 'Thermal',
     'act.evidence.thermal.meta': 'From Landsat thermal bands',
-    'act.evidence.alteration.index': '03',
     'act.evidence.alteration.tab': 'Alteration',
     'act.evidence.alteration.meta': 'From Sentinel-2 reflectance',
     'act.priority.def.why.term': 'Why it matters',
@@ -142,8 +134,6 @@ const I18N = {
     'alt.inspectThermal': 'Thermal anomaly map of the same area of interest, revealed over the natural-colour view',
     'alt.inspectAlteration': 'Alteration proxy map of the same area of interest, revealed over the natural-colour view',
     'alt.inspectPriority': 'Relative priority map of the same area of interest, revealed over the natural-colour view',
-    'domains.illustrativeLabel': 'Illustrative',
-    'domains.illustrative': 'The three photographs above are public-domain Landsat scenes of other places, chosen to show the kind of ground each domain reads. They are not OrbGSS analytical outputs, not results, and not the Kızıldere pilot area.',
     'proof.evidence.title': 'Evidence-backed screening',
     'proof.provenance.title': 'Traceable provenance',
     'proof.gaps.title': 'Explicit data gaps',
@@ -171,6 +161,7 @@ const I18N = {
     'nav.home': 'Home',
     'nav.about': 'About',
     'nav.partner': 'Partner with us',
+    'nav.partnerShort': 'Partner',
     'footer.sources': 'Data sources and attributions',
     'alt.locator': 'Map of Türkiye with the 36 km Kızıldere pilot area marked in Denizli',
     'scene.kind.locator': 'Locator map — Natural Earth',
@@ -182,15 +173,14 @@ const I18N = {
 
     // === atlas:geothermal === MER-276 owns this region: the Geothermal page strings (geothermalPage.*).
     'geothermalPage.meta.title': 'Geothermal — Kızıldere pilot — OrbGSS',
-    'geothermalPage.meta.description': 'The Kızıldere geothermal pilot in Denizli, Türkiye: where it is, every published layer, and what is still missing.',
+    'geothermalPage.meta.description': 'The Kızıldere geothermal pilot in Denizli, Türkiye: where it is and every published layer.',
     'geothermalPage.meta.ogDescription': 'Kızıldere: the first published OrbGSS pilot.',
     'geothermalPage.title.lead': 'Kızıldere:',
     'geothermalPage.title.tail': 'the first published pilot.',
-    'geothermalPage.intro': 'Everything published for the pilot, in one place: where it is, which layers it holds, and what is still missing.',
+    'geothermalPage.intro': 'Everything published for the pilot, in one place: where it is and which layers it holds.',
     'geothermalPage.index.record': 'The pilot record',
     'geothermalPage.index.atlas': 'The layer atlas',
     'geothermalPage.index.result': 'The result',
-    'geothermalPage.index.missing': 'What is missing',
     'geothermalPage.glance.title': 'One area, one grid',
     'geothermalPage.fact.place': 'Place',
     'geothermalPage.fact.placeValue': 'Büyük Menderes graben, Denizli, Türkiye',
@@ -203,36 +193,24 @@ const I18N = {
     'geothermalPage.fact.layersValue': '2 context, 3 evidence, 1 priority surface',
     'geothermalPage.fact.score': 'Score',
     'geothermalPage.fact.scoreValue': 'Remote-Sensing Relative Priority — Experimental Baseline, 0–100 within the area',
-    'geothermalPage.fact.gap': 'Not available',
     'geothermalPage.where.label': 'Where',
     'geothermalPage.where.copy': 'Kızıldere lies in the Büyük Menderes graben, Denizli, Türkiye. It is the one area OrbGSS has published end to end.',
     'geothermalPage.layers.title': 'Every layer',
     'geothermalPage.layers.copy': 'Two context layers orient the reader and three evidence layers carry the signal.',
     'geothermalPage.layers.link': 'Open the layers on the homepage',
-    'geothermalPage.plate.abbr': 'Pl.',
     'geothermalPage.layer.natural': 'Natural colour',
-    'geothermalPage.layer.structure': 'Structure and geology',
     'geothermalPage.layer.iron': 'Second alteration signal (iron)',
-    'geothermalPage.kind.iron': 'Alteration signal — iron',
     'geothermalPage.from.natural': 'Landsat 8 OLI, 2025-05-05',
     'geothermalPage.from.elevation': 'NASADEM',
     'geothermalPage.from.thermal': 'Landsat thermal bands',
     'geothermalPage.from.sentinel': 'Sentinel-2',
-    'geothermalPage.from.none': 'Not available',
     'geothermalPage.role.context': 'Context',
     'geothermalPage.role.evidence': 'Evidence',
-    'geothermalPage.role.support': 'Support',
-    'geothermalPage.gap.frame': 'No public-safe fault or lithology layer',
     'geothermalPage.outputs.title': 'One ranking',
     'geothermalPage.outputs.copy': 'One experimental ranking, 0 to 100, orders ground inside this area only. A higher value says look here first.',
-    'geothermalPage.outputs.link': 'See the result on the homepage',
     'geothermalPage.scale.low': 'Look here later',
     'geothermalPage.scale.high': 'Look here first',
     'geothermalPage.scale.bar': 'Scale bar: 10 kilometres',
-    'geothermalPage.relief.kicker': 'The result over relief',
-    'geothermalPage.relief.title': 'Priority over relief',
-    'geothermalPage.relief.copy': 'The priority surface read over NASADEM relief, so ranked ground can be seen against the valleys and ridges it sits on.',
-    'geothermalPage.missing.title': 'The gaps are part of the record.',
     // === /atlas:geothermal ===
 
     // === atlas:solutions-about === MER-277 owns this region: the Solutions and About page strings (solutionsPage.*, aboutPage.*).
@@ -247,12 +225,10 @@ const I18N = {
     'solutionsPage.ground.mining': 'Mineral exploration targets',
     'solutionsPage.ground.marine': 'Coastal and marine ground',
     'solutionsPage.published.geothermal': 'The Kızıldere pilot',
-    'solutionsPage.published.none': 'Nothing published yet',
     'solutionsPage.band.pilot': 'See the Kızıldere pilot',
     'solutionsPage.band.kicker': 'Now',
     'solutionsPage.expansion.kicker': 'Next',
     'solutionsPage.thumb.priority': 'Thumbnail of the Kızıldere relative priority map',
-    'solutionsPage.thumb.none': 'None yet',
     'aboutPage.meta.title': 'About — OrbGSS',
     'aboutPage.meta.description': 'OrbGSS — Orbital Geo-Spatial Solutions: what it is for, how it publishes and where its data comes from.',
     'aboutPage.meta.ogDescription': 'OrbGSS — Orbital Geo-Spatial Solutions: what it is for, how it publishes and where its data comes from.',
@@ -269,7 +245,6 @@ const I18N = {
     'aboutPage.principle.decision': 'Helps decide where to investigate; field investigation remains necessary.',
     'aboutPage.see.evidence': 'The three layers',
     'aboutPage.see.sources': 'Data sources',
-    'aboutPage.see.gap': 'Structure and geology',
     'aboutPage.see.glance': 'The pilot area',
     'aboutPage.see.priority': 'Where to look first',
     'solutionsPage.ledger.label': 'Domains at a glance',
@@ -297,7 +272,7 @@ const I18N = {
     'partnerPage.meta.ogDescription': 'For pilot, partnership and technical conversations.',
     'partnerPage.title.a': 'Let’s talk about',
     'partnerPage.title.b': 'where to look next.',
-    'partnerPage.intro': 'OrbGSS is available for pilot, partnership and technical conversations. Reach out directly by email — there is no form to fill in.',
+    'partnerPage.intro': 'OrbGSS is available for pilot, partnership and technical conversations. Reach out directly by email.',
     'partnerPage.conversations.title': 'Which conversation',
     'partnerPage.write': 'Write',
     'partnerPage.pilot.title': 'Pilot',
@@ -316,6 +291,7 @@ const I18N = {
     'sourcesPage.title.a': 'Sources, credits',
     'sourcesPage.title.b': 'and licences.',
     'sourcesPage.intro': 'Four kinds of information, kept apart: the data behind the maps, the credit for each image, the papers to cite, and the licence notices that travel with the work.',
+    'sourcesPage.toc': 'On this page',
     'sourcesPage.index.data': 'Source data',
     'sourcesPage.index.images': 'Image credits',
     'sourcesPage.index.references': 'References',
@@ -461,11 +437,9 @@ const I18N = {
     'act.evidence.terrain.role': 'Bağlam',
     'act.evidence.thermal.role': 'Kanıt',
     'act.evidence.alteration.role': 'Kanıt',
-    'act.evidence.gapLabel': 'Veri boşluğu',
     'act.evidence.deeper': 'Tüm katmanları görün',
     'act.priority.title': 'Önce nereye bakmalı.',
     'act.priority.copy': 'İlgi alanı genelinde tek bir sıralama; böylece bir ekip araziyi tahmin etmek yerine sıralayabilir.',
-    'act.priority.deeper': 'Kızıldere pilotunu görün',
     'scene.hero.place': 'Kızıldere — Büyük Menderes grabeni, Denizli, Türkiye',
     'scene.hero.coords': '37.9794° K, 28.7907° D',
     'scene.hero.kind': 'Görselleştirilmiş yörünge sekansı — sensör görüntüsü değildir',
@@ -486,9 +460,7 @@ const I18N = {
     'app.marine.status': 'Genişleme yönü',
     'company.title': 'OrbGSS — Orbital Geo-Spatial Solutions',
     'company.copy': 'OrbGSS bir coğrafi zekâ platformudur. Arama ve arazi kararlarını kanıta dayalı, izlenebilir ve önceliklendirilmesi kolay hâle getirmek için vardır.',
-    'contact.cta': 'İş Birliği Kurun',
     'scene.yellowstone.place': 'Yellowstone Ulusal Parkı, ABD',
-    'scene.yellowstone.coords': '44.4604° K, 110.8282° B',
     // Pre-uppercased: Turkish locale casing would otherwise render the Spanish name as "CHUQUİCAMATA".
     'scene.chuquicamata.place': 'Chuquicamata, Antofagasta, Şili',
     'scene.chuquicamata.coords': '22.3150° G, 68.9010° B',
@@ -506,7 +478,6 @@ const I18N = {
     'alt.deathvalley': 'Ölüm Vadisi’nin doğal renkli Landsat 9 görünümü: dik, koyu ve çıplak dağ sıraları arasında soluk renkli bir tuz tabanı',
     'alt.aluto': 'Ana Etiyopya Rifti’ndeki Aluto yanardağının doğal renkli Landsat 9 görünümü: iki göl arasında koyu bir volkanik kütle, sağda rift şevi',
     'alt.menderes': 'Söke yakınlarında Büyük Menderes deltasının ve Ege kıyısının doğal renkli Landsat 9 görünümü: yeşil tarım alanları, bir göl, uzun bir kıyı şeridi ve açık deniz',
-    'scene.illustrative': 'Başka bir yere ait, kamuya açık bir Landsat sahnesi; OrbGSS sonucu değildir.',
     'footer.attribution': 'Landsat verileri ABD Jeoloji Araştırmaları Kurumu (USGS) kaynaklıdır. Değiştirilmiş Copernicus Sentinel verileri (2025) içerir.',
     'footer.copyright': '© 2026 OrbGSS. Tüm hakları saklıdır.',
 
@@ -516,13 +487,10 @@ const I18N = {
 
     /* WEB-005B R11 — the accepted final homepage design. */
     'act.evidence.shown': 'Gösteriliyor',
-    'act.evidence.terrain.index': '01',
     'act.evidence.terrain.tab': 'Arazi',
     'act.evidence.terrain.meta': 'NASADEM yükselti verisinden',
-    'act.evidence.thermal.index': '02',
     'act.evidence.thermal.tab': 'Termal',
     'act.evidence.thermal.meta': 'Landsat termal bantlarından',
-    'act.evidence.alteration.index': '03',
     'act.evidence.alteration.tab': 'Alterasyon',
     'act.evidence.alteration.meta': 'Sentinel-2 yansıtımından',
     'act.priority.def.why.term': 'Neden önemli',
@@ -544,8 +512,6 @@ const I18N = {
     'alt.inspectThermal': 'Aynı ilgi alanının termal anomali haritası, doğal renkli görünümün üzerinde açılmış',
     'alt.inspectAlteration': 'Aynı ilgi alanının alterasyon vekili haritası, doğal renkli görünümün üzerinde açılmış',
     'alt.inspectPriority': 'Aynı ilgi alanının göreli öncelik haritası, doğal renkli görünümün üzerinde açılmış',
-    'domains.illustrativeLabel': 'Örnekleme',
-    'domains.illustrative': 'Yukarıdaki üç fotoğraf, her alanın okuduğu zemin türünü göstermek için seçilmiş, başka yerlere ait kamuya açık Landsat sahneleridir. OrbGSS analitik çıktısı değildir, sonuç değildir ve Kızıldere pilot alanı değildir.',
     'proof.evidence.title': 'Kanıta dayalı ön eleme',
     'proof.provenance.title': 'İzlenebilir kaynak',
     'proof.gaps.title': 'Açık veri boşlukları',
@@ -573,6 +539,7 @@ const I18N = {
     'nav.home': 'Ana Sayfa',
     'nav.about': 'Hakkımızda',
     'nav.partner': 'İş Birliği',
+    'nav.partnerShort': 'İş Birliği',
     'footer.sources': 'Veri kaynakları ve atıflar',
     'alt.locator': "Denizli'de 36 km'lik Kızıldere pilot alanının işaretlendiği Türkiye haritası",
     'scene.kind.locator': 'Konum haritası — Natural Earth',
@@ -585,15 +552,14 @@ const I18N = {
     // === atlas:geothermal === MER-276 owns this region: the Geothermal page strings (geothermalPage.*).
     // MER-276: the Turkish strings that are new in the Atlas design are pending the CTO's language review (listed in docs/WEB_ATLAS_GEOTHERMAL_AUTHORITY.md).
     'geothermalPage.meta.title': 'Jeotermal — Kızıldere pilotu — OrbGSS',
-    'geothermalPage.meta.description': "Denizli, Türkiye'deki Kızıldere jeotermal pilotu: nerede olduğu, yayımlanan her katman ve neyin hâlâ eksik olduğu.",
+    'geothermalPage.meta.description': "Denizli, Türkiye'deki Kızıldere jeotermal pilotu: nerede olduğu ve yayımlanan her katman.",
     'geothermalPage.meta.ogDescription': 'Kızıldere: yayımlanan ilk OrbGSS pilotu.',
     'geothermalPage.title.lead': 'Kızıldere:',
     'geothermalPage.title.tail': 'yayımlanan ilk pilot.',
-    'geothermalPage.intro': 'Pilot için yayımlanan her şey tek yerde: nerede olduğu, hangi katmanları içerdiği ve neyin hâlâ eksik olduğu.',
+    'geothermalPage.intro': 'Pilot için yayımlanan her şey tek yerde: nerede olduğu ve hangi katmanları içerdiği.',
     'geothermalPage.index.record': 'Pilot kaydı',
     'geothermalPage.index.atlas': 'Katman atlası',
     'geothermalPage.index.result': 'Sonuç',
-    'geothermalPage.index.missing': 'Eksik olanlar',
     'geothermalPage.glance.title': 'Tek alan, tek ızgara',
     'geothermalPage.fact.place': 'Yer',
     'geothermalPage.fact.placeValue': 'Büyük Menderes grabeni, Denizli, Türkiye',
@@ -606,36 +572,24 @@ const I18N = {
     'geothermalPage.fact.layersValue': '2 bağlam, 3 kanıt, 1 öncelik yüzeyi',
     'geothermalPage.fact.score': 'Skor',
     'geothermalPage.fact.scoreValue': 'Uzaktan Algılama Göreli Önceliği — Deneysel Temel, alan içinde 0–100',
-    'geothermalPage.fact.gap': 'Mevcut değil',
     'geothermalPage.where.label': 'Konum',
     'geothermalPage.where.copy': 'Kızıldere, Türkiye’nin Denizli ilinde, Büyük Menderes grabenindedir. OrbGSS’in baştan sona yayımladığı tek alandır.',
     'geothermalPage.layers.title': 'Her katman',
     'geothermalPage.layers.copy': 'İki bağlam katmanı okuru yönlendirir, üç kanıt katmanı sinyali taşır.',
     'geothermalPage.layers.link': 'Katmanları ana sayfada açın',
-    'geothermalPage.plate.abbr': 'Lev.',
     'geothermalPage.layer.natural': 'Doğal renk',
-    'geothermalPage.layer.structure': 'Yapı ve jeoloji',
     'geothermalPage.layer.iron': 'İkinci alterasyon işareti (demir)',
-    'geothermalPage.kind.iron': 'Alterasyon işareti — demir',
     'geothermalPage.from.natural': 'Landsat 8 OLI, 2025-05-05',
     'geothermalPage.from.elevation': 'NASADEM',
     'geothermalPage.from.thermal': 'Landsat termal bantları',
     'geothermalPage.from.sentinel': 'Sentinel-2',
-    'geothermalPage.from.none': 'Mevcut değil',
     'geothermalPage.role.context': 'Bağlam',
     'geothermalPage.role.evidence': 'Kanıt',
-    'geothermalPage.role.support': 'Destek',
-    'geothermalPage.gap.frame': 'Kamuya açık kullanıma uygun fay veya litoloji katmanı yok',
     'geothermalPage.outputs.title': 'Tek sıralama',
     'geothermalPage.outputs.copy': '0 ile 100 arası tek bir deneysel sıralama, zemini yalnızca bu alanın içinde sıralar. Yüksek değer “önce buraya bakın” der.',
-    'geothermalPage.outputs.link': 'Sonucu ana sayfada görün',
     'geothermalPage.scale.low': 'Sonra bakın',
     'geothermalPage.scale.high': 'Önce bakın',
     'geothermalPage.scale.bar': 'Ölçek çubuğu: 10 kilometre',
-    'geothermalPage.relief.kicker': 'Rölyef üzerinde sonuç',
-    'geothermalPage.relief.title': 'Rölyef üzerinde öncelik',
-    'geothermalPage.relief.copy': 'Öncelik yüzeyi NASADEM rölyefi üzerinde okunur; böylece sıralanan zemin, üzerinde durduğu vadi ve sırtlarla birlikte görülebilir.',
-    'geothermalPage.missing.title': 'Boşluklar kaydın parçasıdır.',
     // === /atlas:geothermal ===
 
     // === atlas:solutions-about === MER-277 owns this region: the Solutions and About page strings (solutionsPage.*, aboutPage.*).
@@ -650,12 +604,10 @@ const I18N = {
     'solutionsPage.ground.mining': 'Maden arama hedefleri',
     'solutionsPage.ground.marine': 'Kıyı ve deniz zemini',
     'solutionsPage.published.geothermal': 'Kızıldere pilotu',
-    'solutionsPage.published.none': 'Henüz yayımlanmış bir şey yok',
     'solutionsPage.band.pilot': 'Kızıldere pilotunu görün',
     'solutionsPage.band.kicker': 'Şimdi',
     'solutionsPage.expansion.kicker': 'Sırada',
     'solutionsPage.thumb.priority': 'Kızıldere göreli öncelik haritasının küçük görseli',
-    'solutionsPage.thumb.none': 'Henüz yok',
     'aboutPage.meta.title': 'Hakkımızda — OrbGSS',
     'aboutPage.meta.description': 'OrbGSS — Orbital Geo-Spatial Solutions: ne için var olduğu, nasıl yayımladığı ve verilerinin nereden geldiği.',
     'aboutPage.meta.ogDescription': 'OrbGSS — Orbital Geo-Spatial Solutions: ne için var olduğu, nasıl yayımladığı ve verilerinin nereden geldiği.',
@@ -672,7 +624,6 @@ const I18N = {
     'aboutPage.principle.decision': 'Nerede araştırma yapılacağına karar vermeye yardımcı olur; saha araştırması yine gereklidir.',
     'aboutPage.see.evidence': 'Üç katman',
     'aboutPage.see.sources': 'Veri kaynakları',
-    'aboutPage.see.gap': 'Yapı ve jeoloji',
     'aboutPage.see.glance': 'Pilot alanı',
     'aboutPage.see.priority': 'Önce nereye bakılmalı',
     'solutionsPage.ledger.label': 'Alanlara genel bakış',
@@ -700,7 +651,7 @@ const I18N = {
     'partnerPage.meta.ogDescription': 'Pilot, iş birliği ve teknik görüşmeler için.',
     'partnerPage.title.a': 'Sırada nereye bakacağımızı',
     'partnerPage.title.b': 'konuşalım.',
-    'partnerPage.intro': 'OrbGSS; pilot, iş birliği ve teknik görüşmeler için ulaşılabilir durumdadır. Doğrudan e-posta ile yazın — doldurulacak bir form yok.',
+    'partnerPage.intro': 'OrbGSS; pilot, iş birliği ve teknik görüşmeler için ulaşılabilir durumdadır. Doğrudan e-posta ile yazın.',
     'partnerPage.conversations.title': 'Hangi görüşme',
     'partnerPage.write': 'Yazın',
     'partnerPage.pilot.title': 'Pilot',
@@ -719,6 +670,7 @@ const I18N = {
     'sourcesPage.title.a': 'Kaynaklar, atıflar',
     'sourcesPage.title.b': 've lisanslar.',
     'sourcesPage.intro': 'Dört tür bilgi birbirinden ayrı tutulur: haritaların ardındaki veriler, her görselin atfı, anılacak yayınlar ve çalışmayla birlikte taşınan lisans bildirimleri.',
+    'sourcesPage.toc': 'Bu sayfada',
     'sourcesPage.index.data': 'Kaynak veriler',
     'sourcesPage.index.images': 'Görsel atıfları',
     'sourcesPage.index.references': 'Kaynakça',
@@ -1754,4 +1706,221 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   range.addEventListener('change', schedule);
   frame.classList.add('is-live');
   paint();
+})();
+
+/* ---------- interior pages: entrance motion ----------
+   Once per element, nothing loops, reduced motion = nothing moves, and a page that cannot play is simply complete.
+   Opacity and translation of wrappers and text only; figures move as a whole and their pixels are never scaled or
+   filtered. html.page-motion comes from the one-line script in the head of each interior page (before first paint)
+   and the hidden starting state is CSS (styles.css, atlas:interior). RISE and LINES are the same two lists as the
+   selectors there: change them together. If this code never starts, the head script removes the class after 3 s. */
+(function interiorEntrance() {
+  'use strict';
+  var d = document, w = window, html = d.documentElement, body = d.body;
+  var STEP = 110, LINE_STEP = 120, MAX_STEPS = 6, MAX_DELAY = 900, DUR = 900, LINE_DUR = 1000;
+  var RISE = [
+      '.page-hero .kicker',
+      '.page-hero .page-hero-copy',
+      '.page-hero .mail-address',
+      '.page-hero .split-figure',
+      '.domain-index>li',
+      '.domain-band-copy>*',
+      '.pilot-map',
+      '.domain-pair .page-section-head>*',
+      '.domain-panel',
+      '.geo-record .page-section-head>*',
+      '.record-list>div',
+      '.geo-locator',
+      '.geo-head>:not(.anchor-alias)',
+      '.geo-atlas-grid>*',
+      '.geo-result-head>*',
+      '.geo-priority',
+      '.geo-result-text',
+      '.problem-grid .page-section-head>*',
+      '.wide-figure',
+      '.about-position .page-section-head>*',
+      '.lead-statement',
+      '.layer-index',
+      '.about-principles .page-section-head>*',
+      '.principle-list>li',
+      '.principles-foot',
+      '.sources-grid .page-section-head>*',
+      '.source-names>li',
+      '.sources-index .chapter-link',
+      '.route-section h2',
+      '.route-list>li',
+      '.chapter .page-section-head',
+      '.source-register>.source-record',
+      '.credit-list>.credit-row',
+      '.reference-list>li',
+      '.terms-list>li',
+      '.licence-block',
+      '.source-toc>li',
+      '.page-next'
+  ].join(',');
+  var LINES = [
+      '.domain-index',
+      '.domain-index>li',
+      '.panel-line',
+      '.record-list',
+      '.record-list>div',
+      '.atlas-note',
+      '.hero-foot',
+      '.lead-statement',
+      '.about-principles>.ground-in',
+      '.principle-list>li',
+      '.principles-foot',
+      '.source-names',
+      '.source-names>li',
+      '.route-list',
+      '.route-list>li',
+      '.source-record',
+      '.credit-list',
+      '.credit-row',
+      '.reference-list',
+      '.reference-list>li',
+      '.terms-list',
+      '.terms-list>li',
+      '.licence-text',
+      '.source-toc>li',
+      '.page-next'
+  ].join(',');
+
+  if (!body.classList.contains('interior') || !html.classList.contains('page-motion')) return;
+  html.classList.add('page-live');
+  var reduceMq = w.matchMedia('(prefers-reduced-motion: reduce)');
+  var riseEls = Array.prototype.slice.call(d.querySelectorAll('main :is(' + RISE + ')'));
+  var lineEls = Array.prototype.slice.call(d.querySelectorAll('main :is(' + LINES + ')'));
+  var riseSet = new Set(riseEls);
+  var lineSet = new Set();
+  var headline = d.querySelector('main .page-hero h1');
+  var headlineHTML = headline ? headline.innerHTML : '';
+  var timers = [];
+
+  function visibleColor(c) { return c && c !== 'transparent' && !/rgba\([^)]*,\s*0\)$/.test(c); }
+  function pseudoFree(el, which) {
+    var c = w.getComputedStyle(el, which).content;
+    return !c || c === 'none' || c === 'normal';
+  }
+  function prepLine(el) {
+    el.classList.add('pr-drawn');
+    var cs = w.getComputedStyle(el);
+    var tw = parseFloat(cs.borderTopWidth) || 0, bw = parseFloat(cs.borderBottomWidth) || 0;
+    var tc = cs.borderTopColor, bc = cs.borderBottomColor;
+    var bl = parseFloat(cs.borderLeftWidth) || 0, br = parseFloat(cs.borderRightWidth) || 0;
+    var isStatic = cs.position === 'static';
+    var freeBefore = pseudoFree(el, '::before'), freeAfter = pseudoFree(el, '::after');
+    el.classList.remove('pr-drawn');
+    var needT = tw > 0 && visibleColor(tc), needB = bw > 0 && visibleColor(bc);
+    var cls = [];
+    if (needT) { if (freeBefore) { cls.push('pr-t1'); freeBefore = false; } else if (freeAfter) { cls.push('pr-t2'); freeAfter = false; } else needT = null; }
+    if (needB) { if (freeAfter) { cls.push('pr-b2'); freeAfter = false; } else if (freeBefore) { cls.push('pr-b1'); freeBefore = false; } else needB = null; }
+    if (needT === null || needB === null || !cls.length) { el.classList.add('pr-drawn'); return; }
+    el.style.setProperty('--pr-tw', tw + 'px'); el.style.setProperty('--pr-tc', tc);
+    el.style.setProperty('--pr-bw', bw + 'px'); el.style.setProperty('--pr-bc', bc);
+    el.style.setProperty('--pr-bl', bl + 'px'); el.style.setProperty('--pr-br', br + 'px');
+    if (isStatic) cls.push('pr-pos');
+    for (var i = 0; i < cls.length; i++) el.classList.add(cls[i]);
+    lineSet.add(el);
+  }
+  lineEls.forEach(prepLine);
+
+  /* The headline: wrap each word for the entrance, group words by rendered line, restore the markup after. */
+  var headlineLines = 0;
+  function wrapWords(node) {
+    var kids = Array.prototype.slice.call(node.childNodes);
+    kids.forEach(function (k) {
+      if (k.nodeType === 3) {
+        var parts = k.nodeValue.split(/(\s+)/);
+        if (parts.length < 2 && !parts[0]) return;
+        var frag = d.createDocumentFragment();
+        parts.forEach(function (p) {
+          if (!p) return;
+          if (/^\s+$/.test(p)) frag.appendChild(d.createTextNode(p));
+          else { var s = d.createElement('span'); s.className = 'pr-w'; s.textContent = p; frag.appendChild(s); }
+        });
+        node.replaceChild(frag, k);
+      } else if (k.nodeType === 1) wrapWords(k);
+    });
+  }
+  if (headline) {
+    wrapWords(headline);
+    headline.classList.add('pr-split');
+    var words = headline.querySelectorAll('.pr-w');
+    var tops = [];
+    for (var i = 0; i < words.length; i++) {
+      var top = Math.round(words[i].getBoundingClientRect().top);
+      var idx = -1;
+      for (var j = 0; j < tops.length; j++) if (Math.abs(tops[j] - top) < 8) { idx = j; break; }
+      if (idx === -1) { tops.push(top); idx = tops.length - 1; }
+      words[i].setAttribute('data-line', idx);
+    }
+    headlineLines = Math.max(1, tops.length);
+  }
+  function finishHeadline() {
+    if (!headline || headline.classList.contains('pr-done')) return;
+    headline.innerHTML = headlineHTML;
+    headline.classList.remove('pr-split', 'pr-go');
+    headline.classList.add('pr-done');
+  }
+  function playHeadline(start) {
+    var words = headline.querySelectorAll('.pr-w');
+    for (var i = 0; i < words.length; i++) {
+      words[i].style.setProperty('--pr-d', (start + Number(words[i].getAttribute('data-line')) * LINE_STEP) + 'ms');
+    }
+    void headline.offsetWidth;
+    headline.classList.add('pr-go');
+    timers.push(w.setTimeout(finishHeadline, start + (headlineLines - 1) * LINE_STEP + DUR + 80));
+  }
+
+  function play(el, delay) {
+    el.style.setProperty('--pr-d', delay + 'ms');
+    if (riseSet.has(el)) {
+      el.classList.add('pr-in');
+      timers.push(w.setTimeout(function () { el.classList.add('pr-settled'); }, delay + DUR + 60));
+    }
+    if (lineSet.has(el)) {
+      el.classList.add('pr-draw');
+      timers.push(w.setTimeout(function () { el.classList.add('pr-drawn'); }, delay + LINE_DUR + 80));
+    }
+  }
+
+  var observed = riseEls.concat(lineEls.filter(function (el) { return lineSet.has(el) && !riseSet.has(el); }));
+  if (headline) observed.push(headline);
+  var delivered = false;
+  var io = new IntersectionObserver(function (entries) {
+    delivered = true;
+    var batch = entries.filter(function (e) { return e.isIntersecting; }).map(function (e) { return e.target; });
+    batch.sort(function (a, b) { return a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1; });
+    var clock = 0, lastParent = null, inGroup = 0;
+    batch.forEach(function (el) {
+      io.unobserve(el);
+      if (el === headline) {
+        playHeadline(Math.min(clock, MAX_DELAY));
+        clock += headlineLines * LINE_STEP;
+        lastParent = null;
+        return;
+      }
+      if (el.parentElement !== lastParent) { lastParent = el.parentElement; inGroup = 0; }
+      play(el, Math.min(clock, MAX_DELAY));
+      inGroup++;
+      if (inGroup < MAX_STEPS) clock += STEP;
+    });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+  observed.forEach(function (el) { io.observe(el); });
+
+  /* Reduced motion switched on mid-visit, or printing: everything is simply there. */
+  function finishAll() {
+    io.disconnect();
+    timers.forEach(function (id) { w.clearTimeout(id); });
+    finishHeadline();
+    riseEls.forEach(function (el) { el.classList.add('pr-in', 'pr-settled'); });
+    lineEls.forEach(function (el) { el.classList.add('pr-drawn'); });
+    html.classList.remove('page-motion');
+  }
+  if (typeof reduceMq.addEventListener === 'function') reduceMq.addEventListener('change', function (e) { if (e.matches) finishAll(); });
+  w.addEventListener('beforeprint', finishAll);
+  /* A document rendered while hidden (background tab, headless capture) gets no observer callbacks: show it complete. */
+  if (d.visibilityState === 'hidden') finishAll();
+  else timers.push(w.setTimeout(function () { if (!delivered) finishAll(); }, 1200));
 })();
