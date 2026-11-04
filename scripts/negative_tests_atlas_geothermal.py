@@ -69,7 +69,7 @@ suite.case("the page ends on a second link", PAGE, swap('<p class="geo-link"><a 
 suite.case("a retired ledger key returns to the dictionary", JS, swap("    'geothermalPage.glance.title':", "    'geothermalPage.ledger.not': 'Does not establish',\n    'geothermalPage.glance.title':"), "copy that explained how the work is done")
 
 # ---- the dictionary ------------------------------------------------------------------------------
-suite.case("the page uses a key no language has", PAGE, swap('data-i18n="geothermalPage.relief.title"', 'data-i18n="geothermalPage.relief.nothing"'), "is used by the page but missing")
+suite.case("the page uses a key no language has", PAGE, swap('data-i18n="geothermalPage.outputs.title"', 'data-i18n="geothermalPage.relief.nothing"'), "is used by the page but missing")
 suite.case("the dictionary keeps a key nothing uses", JS, swap("    'geothermalPage.glance.title':", "    'geothermalPage.orphan': 'x',\n    'geothermalPage.glance.title':"), "no element of the page uses it")
 suite.case("the review note disappears from the Turkish block", JS, swap("pending the CTO's language review", "reviewed"), "pending the CTO's language review")
 

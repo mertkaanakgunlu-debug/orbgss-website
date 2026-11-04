@@ -97,7 +97,7 @@ suite.case("the Geothermal band loses its lead map", SOL,
            "#geothermal must be the Geothermal band")
 suite.case("the Geothermal band shows the Yellowstone photograph again", SOL,
            swap('<figure class="plate pilot-map" data-lead-visual>', '<img data-lead-visual src="/assets/imagery/yellowstone-2013-1400.webp" alt="" width="1400" height="875" /><figure class="plate pilot-map" data-lead-visual>'),
-           "#geothermal must be the Geothermal band")
+           "also appears on ['solutions/index.html']")
 suite.case("the pilot map is declared at the wrong grid", SOL,
            regex(r'(<figure class="plate pilot-map".*?)width="1200"', r'\g<1>width="1000"', __import__("re").S),
            "the priority map is declared 1200 x 1200")
