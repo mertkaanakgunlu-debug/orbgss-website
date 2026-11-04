@@ -152,6 +152,15 @@ button,a{-webkit-tap-highlight-color:transparent}
   text-shadow:0 0 1px rgba(237,242,249,.95),0 0 3px rgba(237,242,249,.8),0 1px 2px rgba(237,242,249,.85)}
 [data-label-tone="dark"] .scene-label span+span,
 [data-label-tone="dark"] .scene-label .scene-kind{color:var(--ink)}
+/* Phone captions (CTO, 2026-11-04). A caption is bare text on the image, so it must not outgrow the image:
+   on a phone the interior 12 px caption (and its 1.8 line height) covered a third to a half of a 260-370 px
+   map or photograph. Up to 780 px every caption takes the caption token's floor (10 px, the smallest size
+   the type system allows) and a 1.2 line height; the token is set on the element, so it holds inside the
+   interior's 12 px scope too. Position, tone, tracking and the text are untouched. From 781 px nothing
+   here applies. */
+@media(max-width:780px){
+  .scene-label{--t-caption:10px;line-height:1.2}
+}
 
 /* ---------- record list: label and value rows (the pilot record on paper) ---------- */
 .record-list{margin:0;border-top:1px solid var(--hair)}
@@ -683,8 +692,9 @@ body.home{background:var(--pumice)}
   .hero-shade{background:linear-gradient(0deg,rgba(13,22,38,.66) 0%,rgba(13,22,38,.28) 26%,rgba(13,22,38,0) 52%)}
   .hero-content{grid-area:2/1;height:auto;width:100%;max-width:none;justify-content:center;padding:28px var(--pad) 48px}
   /* Only the hero's own caption (a direct child of .hero) joins the window. Every other .scene-label on the
-     site keeps its own rule at every width: a bare .scene-label here would move all of them. */
-  .hero > .scene-label{position:static;grid-area:1/1;align-self:end;justify-self:end;margin:0 var(--pad) 8px;line-height:1.45;max-width:calc(100% - 2 * var(--pad))}
+     site keeps its own rule at every width: a bare .scene-label here would move all of them. The caption sits
+     8 px from the window's edge so its longest English line (340 px) fits a 360 px phone in one line. */
+  .hero > .scene-label{position:static;grid-area:1/1;align-self:end;justify-self:end;margin:0 8px 8px;max-width:calc(100% - 16px)}
 }
 /* Reduced motion: no crossfade, no rise. script.js also refuses to attach a video source at all,
    so this is the belt to that braces: the hero is a still image and the payoff simply exists. */

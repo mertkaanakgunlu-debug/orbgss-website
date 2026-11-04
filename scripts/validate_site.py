@@ -3760,6 +3760,28 @@ def main() -> int:
                     fail(f"styles.css: the phone hero block may only style the hero; selector {selector.strip()!r} "
                          "does not start with .hero and would apply to every page and image on a phone", errors)
 
+    # Phone captions (CTO, 2026-11-04). The desktop caption (12 px on the interior pages, line height 1.8) was
+    # carried to the phone unchanged and covered a third to a half of a 260-370 px map. Up to 780 px every
+    # caption takes the caption token's floor (10 px, nothing is set smaller) and a tight line height. The
+    # rule is one `.scene-label` rule alone in its media block (position, tone, tracking and text untouched),
+    # and nothing applies from 781 px.
+    phone_cap = re.search(r"@media\(max-width:780px\)\{\s*\.scene-label\{([^}]*)\}\s*\}", css_text)
+    if not phone_cap:
+        fail("styles.css: the phone caption rule (@media(max-width:780px){.scene-label{--t-caption:10px;"
+             "line-height:1.2}}) is missing: a caption must not outgrow its image on a phone", errors)
+    else:
+        cap_size = re.search(r"--t-caption:\s*(\d+(?:\.\d+)?)px", phone_cap.group(1))
+        cap_line = re.search(r"(?:^|;)\s*line-height:\s*(\d+(?:\.\d+)?)\s*(?:;|$)", phone_cap.group(1))
+        if not cap_size or not 10 <= float(cap_size.group(1)) <= 11:
+            fail("styles.css: the phone caption takes the caption token's floor on the element itself "
+                 "(--t-caption between 10 and 11 px, never under 10 px, which the type system forbids)", errors)
+        if not cap_line or not 1.1 <= float(cap_line.group(1)) <= 1.4:
+            fail("styles.css: the phone caption line height is a unitless 1.1-1.4 (the desktop 1.8 makes a "
+                 "three-line caption cover a third of a phone image)", errors)
+        if re.search(r"(?:^|;)\s*(?:position|right|bottom|left|top|letter-spacing|font-size)\s*:", phone_cap.group(1)):
+            fail("styles.css: the phone caption rule changes size and line height only; position, tracking and "
+                 "font-size belong to the caption's own rules", errors)
+
     # Sensing lines are attention, not physics (A-HERO-04): the hero's own copy may not claim an
     # instrument. Checked on the dictionary in both languages and on the static markup.
     physics = ("radar", "lidar", "hyperspectral", "multispectral", "spectrometer", "swath",

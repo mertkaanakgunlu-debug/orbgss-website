@@ -379,6 +379,30 @@ case("phone hero block no longer applies up to 780 px", STYLES,
      lambda t: t.replace("@media(max-width:780px){\n  .hero{display:grid", "@media(max-width:781px){\n  .hero{display:grid", 1),
      site, "phone hero block")
 
+case("phone caption rule removed (a caption would cover a third of a phone image again)", STYLES,
+     lambda t: t.replace("  .scene-label{--t-caption:10px;line-height:1.2}\n", "", 1),
+     site, "phone caption rule")
+
+case("phone caption set under the 10 px floor", STYLES,
+     lambda t: t.replace("--t-caption:10px;line-height:1.2", "--t-caption:9px;line-height:1.2", 1),
+     site, "caption token's floor")
+
+case("phone caption keeps the interior 12 px", STYLES,
+     lambda t: t.replace("--t-caption:10px;line-height:1.2", "--t-caption:12px;line-height:1.2", 1),
+     site, "caption token's floor")
+
+case("phone caption keeps the desktop 1.8 line height", STYLES,
+     lambda t: t.replace("--t-caption:10px;line-height:1.2", "--t-caption:10px;line-height:1.8", 1),
+     site, "phone caption line height")
+
+case("phone caption rule moves the caption (position change)", STYLES,
+     lambda t: t.replace("--t-caption:10px;line-height:1.2", "--t-caption:10px;line-height:1.2;position:static", 1),
+     site, "size and line height only")
+
+case("phone caption rule widens past 780 px", STYLES,
+     lambda t: t.replace("@media(max-width:780px){\n  .scene-label{--t-caption:10px", "@media(max-width:981px){\n  .scene-label{--t-caption:10px", 1),
+     site, "phone caption rule")
+
 case("held base removed (static payoff would sit on the opening Earth)", INDEX,
      lambda t: re.sub(r'\s*<img\s+class="hero-held"\s+data-hero-held.*?/>', '', t, count=1, flags=re.S),
      site, "needs a deferred held base")
