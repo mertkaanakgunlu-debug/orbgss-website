@@ -3726,7 +3726,7 @@ def main() -> int:
     # The payoff in the stacked layout: it plays after the video on a phone and a tablet, with no relief
     # rise on a phone; a visitor who does not play the sequence (refused autoplay, in-app browser,
     # low-power mode, reduced motion) is shown the priority state like the desktop, and only a data saver
-    # or a slow link fetches no drape state there.
+    # or a 2G link fetches no drape state there.
     if "const stackedLayout = window.matchMedia('(max-width: 980px)');" not in script_hero \
             or "const phoneLayout = window.matchMedia('(max-width: 780px)');" not in script_hero:
         fail("script.js must declare stackedLayout (max-width: 980px) and phoneLayout (max-width: 780px) "
@@ -3738,11 +3738,15 @@ def main() -> int:
         if "desktopLayout" in reveal_fn.group(1):
             fail("script.js: revealPayoff must not be gated on the desktop layout: the sequence ends on the "
                  "result on a phone and a tablet too (CTO, 2026-11-05)", errors)
-        if "if (instant && stackedLayout.matches && (saveData || slowNetwork)) return;" not in reveal_fn.group(1):
+        if "if (instant && stackedLayout.matches && (saveData || thinLink)) return;" not in reveal_fn.group(1):
             fail("script.js: in the stacked layout a static visitor is shown the priority state like the desktop, "
-                 "except on a data saver or a slow link, which fetch no drape state "
-                 "('if (instant && stackedLayout.matches && (saveData || slowNetwork)) return;'); a browser that "
-                 "refuses autoplay must not end on the held frame without the result", errors)
+                 "except on a data saver or a 2G link, which fetch no drape state "
+                 "('if (instant && stackedLayout.matches && (saveData || thinLink)) return;'); a browser that "
+                 "refuses autoplay or a 3G link must not end on the held frame without the result", errors)
+    if not re.search(r"const thinLink = typeof connection\.effectiveType === 'string'\s*&& /\^\(slow-2g\|2g\)\$/\.test\(connection\.effectiveType\);",
+                     script_hero):
+        fail("script.js: thinLink must be the 2G links only (/^(slow-2g|2g)$/): a 3G link is not asked to play "
+             "the video but is shown the result", errors)
     warm_fn = re.search(r"function warmLayers\(\) \{([\s\S]*?)\n  \}\n", script_hero)
     if not warm_fn or "if (!phoneLayout.matches) riseImages().forEach(promote);" not in warm_fn.group(1) \
             or "desktopLayout" in warm_fn.group(1):
@@ -3788,6 +3792,24 @@ def main() -> int:
         stacked_body = re.sub(r"/\*.*?\*/", "", css_text[open_at + 1:close_at], flags=re.S)
         drape_on = re.search(r"(?:^|\})\s*\.hero-drape\{([^}]*)\}", stacked_body)
         drape_off = re.search(r"(?:^|\})\s*\.hero-drape\[hidden\]\{([^}]*)\}", stacked_body)
+        # Analysis-safe shade, stacked: no tint may lie over the settled footprint (its lowest corner is at
+        # 35 % of the window's height) once the payoff is on, as on the desktop (Product decision c7c6cb1 section 7).
+        shade_rest = re.search(r"(?:^|\})\s*\.hero-shade\{([^}]*)\}", stacked_body)
+        shade_on = re.search(r'(?:^|\})\s*\.hero\[data-hero-payoff="on"\] \.hero-shade\{([^}]*)\}', stacked_body)
+        if not shade_rest or "var(--hv33)) 33%" not in shade_rest.group(1) \
+                or not re.search(r"rgba\(13,22,38,0\) (?:3[3-5]|[4-5]\d)%\)", shade_rest.group(1)):
+            fail("styles.css: the stacked shade must end its gradient at a stop of the desktop's own "
+                 "(--hv33 at 33 %) so the payoff rule can feather it out before the footprint", errors)
+        else:
+            vals = {}
+            if shade_on:
+                for name, num in re.findall(r"--(hv24|hv30|hv32|hv33):\s*(\d*\.?\d+)", shade_on.group(1)):
+                    vals[name] = float(num)
+            if set(vals) != {"hv24", "hv30", "hv32", "hv33"} or vals["hv33"] != 0 \
+                    or not (vals["hv24"] >= vals["hv30"] >= vals["hv32"] >= vals["hv33"]) or vals["hv32"] > 0.05:
+                fail("styles.css: in the stacked layout, once the payoff is on (.hero[data-hero-payoff=\"on\"] "
+                     ".hero-shade) the shade must reach 0 by 33 % of the window's height (--hv33:0, non-increasing "
+                     "stops, --hv32 at most .05): it must not darken the governed priority surface", errors)
         if not drape_on or "display:block" not in drape_on.group(1) \
                 or not drape_off or "display:none" not in drape_off.group(1):
             fail("styles.css: in the stacked layout the payoff drape is shown inside the 16:9 window "

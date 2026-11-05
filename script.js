@@ -1129,7 +1129,8 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
 /* interpolated on the scene's own clock) into four lossless full-frame */
 /* drape states that share the poster's fit rule, cross-faded in the    */
 /* accepted order and ending on the priority surface alone — or the     */
-/* priority surface at once, on the held base, in every static state,   */
+/* priority surface at once, on the held base, in every static state   */
+/* (up to 980 px a data saver and a 2G link keep the plain held frame), */
 /* so a visitor who never sees the motion still sees the answer. The    */
 /* startup poster is the OPENING frame; the held base is a separate     */
 /* still. No legend, card or label: Acts 3 and 4 carry those.           */
@@ -1176,7 +1177,7 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
      16:9 window, the copy below it. The payoff plays there too, over the same 16:9 box, but a phone
      (up to 780 px) skips the relief rise (1.6 MiB the small window cannot show) and only a sequence
      that actually played reveals it with the rise and the layers; a static visitor is shown the one
-     priority state, except on a data saver or a slow link, where nothing is fetched. */
+     priority state, except on a data saver or a 2G link, where nothing is fetched. */
   const stackedLayout = window.matchMedia('(max-width: 980px)');
   const phoneLayout = window.matchMedia('(max-width: 780px)');
 
@@ -1348,11 +1349,12 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   let revealed = false;
   function revealPayoff(instant) {
     if (revealed || !drape) return;
-    /* Stacked layout: a visitor who asked to save data keeps the plain held frame and fetches no drape
-       state. Every other static visitor (a browser that refuses autoplay, an in-app browser, low-power
-       mode, reduced motion) is shown the result like the desktop, the one priority state. If the
-       viewport becomes the desktop layout later, the listener below comes back here. */
-    if (instant && stackedLayout.matches && (saveData || slowNetwork)) return;
+    /* Stacked layout: a visitor who asked to save data, or whose link reports 2G, keeps the plain held
+       frame and fetches no drape state. Every other static visitor (a browser that refuses autoplay, an
+       in-app browser, low-power mode, reduced motion, a 3G link that is not asked to play the video) is
+       shown the result like the desktop, the one priority state, one file. If the viewport becomes the
+       desktop layout later, the listener below comes back here. */
+    if (instant && stackedLayout.matches && (saveData || thinLink)) return;
     revealed = true;
     drape.hidden = false;
     hero.setAttribute('data-hero-payoff', 'on');
@@ -1425,6 +1427,10 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   const saveData = connection.saveData === true;
   const slowNetwork = typeof connection.effectiveType === 'string'
     && /^(slow-2g|2g|3g)$/.test(connection.effectiveType);
+  /* The links too thin to be sent even the one priority state in the stacked layout (see revealPayoff);
+     a 3G link is not asked to play the video, but is shown the result. */
+  const thinLink = typeof connection.effectiveType === 'string'
+    && /^(slow-2g|2g)$/.test(connection.effectiveType);
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* A phone is not a still-only profile any more (CTO, 2026-11-04): up to 980 px the sequence plays

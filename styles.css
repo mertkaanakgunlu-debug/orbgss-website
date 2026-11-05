@@ -685,7 +685,12 @@ body.home{background:var(--pumice)}
   .hero{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr;height:auto;min-height:max(560px,calc(100svh - var(--header-h)))}
   .hero-visual{position:relative;inset:auto;grid-area:1/1;width:100%;aspect-ratio:16/9;overflow:hidden}
   .hero-poster,.hero-held,.hero-video{object-position:center}
-  .hero-shade{background:linear-gradient(0deg,rgba(13,22,38,.66) 0%,rgba(13,22,38,.28) 26%,rgba(13,22,38,0) 52%)}
+  .hero-shade{--hv24:.309;--hv30:.237;--hv32:.215;--hv33:.205;background:linear-gradient(0deg,rgba(13,22,38,.66) 0%,rgba(13,22,38,var(--hv24)) 24%,rgba(13,22,38,var(--hv30)) 30%,rgba(13,22,38,var(--hv32)) 32%,rgba(13,22,38,var(--hv33)) 33%,rgba(13,22,38,0) 52%)}
+  /* Analysis-safe shade (Product decision c7c6cb1 section 7), stacked: the resting curve above is the same
+     line as before (.66 at the bottom, .28 at 26%, 0 at 52%); once the payoff is on it is feathered to
+     nothing by 33% of the window's height, before the settled footprint's lowest corner (35%), and is
+     unchanged below 24%, where the caption sits. The stops transition like the desktop's. */
+  .hero[data-hero-payoff="on"] .hero-shade{--hv24:.309;--hv30:.103;--hv32:.034;--hv33:0}
   .hero-drape{display:block}
   .hero-drape[hidden]{display:none}
   .hero-content{grid-area:2/1;height:auto;width:100%;max-width:none;justify-content:center;padding:28px var(--pad) 48px}

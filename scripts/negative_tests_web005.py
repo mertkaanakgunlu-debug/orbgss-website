@@ -391,26 +391,26 @@ case("stacked hero block widened past 980 px (the desktop hero would stack)", ST
      site, "stacked hero block")
 
 case("payoff drape not shown in the stacked layout (the sequence ends at the AOI box again)", STYLES,
-     lambda t: t.replace("rgba(13,22,38,0) 52%)}\n  .hero-drape{display:block}\n  .hero-drape[hidden]{display:none}\n",
-                         "rgba(13,22,38,0) 52%)}\n", 1),
+     lambda t: t.replace("--hv33:0}\n  .hero-drape{display:block}\n  .hero-drape[hidden]{display:none}\n",
+                         "--hv33:0}\n", 1),
      site, "payoff drape is shown inside the 16:9 window")
 
 case("drape [hidden] rule dropped in the stacked layout (the drape would show before the payoff)", STYLES,
-     lambda t: t.replace("rgba(13,22,38,0) 52%)}\n  .hero-drape{display:block}\n  .hero-drape[hidden]{display:none}\n",
-                         "rgba(13,22,38,0) 52%)}\n  .hero-drape{display:block}\n", 1),
+     lambda t: t.replace("--hv33:0}\n  .hero-drape{display:block}\n  .hero-drape[hidden]{display:none}\n",
+                         "--hv33:0}\n  .hero-drape{display:block}\n", 1),
      site, "payoff drape is shown inside the 16:9 window")
 
 case("revealPayoff gated on the desktop layout again (a phone never sees the layers or the score)", SCRIPT,
-     lambda t: t.replace("    if (instant && stackedLayout.matches && (saveData || slowNetwork)) return;\n", "    if (!desktopLayout.matches) return;\n", 1),
+     lambda t: t.replace("    if (instant && stackedLayout.matches && (saveData || thinLink)) return;\n", "    if (!desktopLayout.matches) return;\n", 1),
      site, "revealPayoff must not be gated on the desktop layout")
 
-case("a data-saver or slow-link visitor in the stacked layout is shown the payoff (it would fetch the drape)", SCRIPT,
-     lambda t: t.replace("    if (instant && stackedLayout.matches && (saveData || slowNetwork)) return;\n", "", 1),
-     site, "except on a data saver or a slow link")
+case("a data-saver or 2G visitor in the stacked layout is shown the payoff (it would fetch the drape)", SCRIPT,
+     lambda t: t.replace("    if (instant && stackedLayout.matches && (saveData || thinLink)) return;\n", "", 1),
+     site, "except on a data saver or a 2G link")
 
 case("a browser that refuses autoplay ends on the held frame without the result (every static visitor gated)", SCRIPT,
-     lambda t: t.replace("(saveData || slowNetwork)) return;\n", "true) return;\n", 1),
-     site, "except on a data saver or a slow link")
+     lambda t: t.replace("(saveData || thinLink)) return;\n", "true) return;\n", 1),
+     site, "except on a data saver or a 2G link")
 
 case("relief rise promoted on a phone (1.6 MiB the 16:9 window cannot show)", SCRIPT,
      lambda t: t.replace("    if (!phoneLayout.matches) riseImages().forEach(promote);\n", "    riseImages().forEach(promote);\n", 1),
@@ -423,6 +423,24 @@ case("warmLayers gated on the desktop layout again", SCRIPT,
 case("drape fetched alongside the video in the stacked layout (it would compete with the encode)", SCRIPT,
      lambda t: t.replace("      if (stackedLayout.matches) warmAfterVideoLoaded(); else warmLayers();\n", "      warmLayers();\n", 1),
      site, "fetched only after the video has downloaded")
+
+case("a 3G link treated as thin (it would end on the held frame without the result)", SCRIPT,
+     lambda t: t.replace("&& /^(slow-2g|2g)$/.test(connection.effectiveType);", "&& /^(slow-2g|2g|3g)$/.test(connection.effectiveType);", 1),
+     site, "thinLink must be the 2G links only")
+
+case("stacked payoff leaves the shade on over the governed priority surface", STYLES,
+     lambda t: t.replace('  .hero[data-hero-payoff="on"] .hero-shade{--hv24:.309;--hv30:.103;--hv32:.034;--hv33:0}\n', "", 1),
+     site, "it must not darken the governed priority surface")
+
+case("stacked payoff shade only thinned, not removed, at 33 %", STYLES,
+     lambda t: t.replace('.hero[data-hero-payoff="on"] .hero-shade{--hv24:.309;--hv30:.103;--hv32:.034;--hv33:0}',
+                         '.hero[data-hero-payoff="on"] .hero-shade{--hv24:.309;--hv30:.2;--hv32:.15;--hv33:.1}', 1),
+     site, "it must not darken the governed priority surface")
+
+case("stacked shade stops no longer the desktop's own (the payoff rule would not reach the footprint)", STYLES,
+     lambda t: t.replace("rgba(13,22,38,var(--hv33)) 33%,rgba(13,22,38,0) 52%)}\n  /* Analysis-safe shade (Product decision c7c6cb1 section 7), stacked",
+                         "rgba(13,22,38,0) 52%)}\n  /* Analysis-safe shade (Product decision c7c6cb1 section 7), stacked", 1),
+     site, "must end its gradient at a stop of the desktop's own")
 
 case("stackedLayout widened to a desktop-sized query", SCRIPT,
      lambda t: t.replace("const stackedLayout = window.matchMedia('(max-width: 980px)');", "const stackedLayout = window.matchMedia('(max-width: 1100px)');", 1),
