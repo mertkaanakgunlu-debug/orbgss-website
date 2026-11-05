@@ -1175,8 +1175,8 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   /* Up to 980 px the hero is the stacked layout (styles.css, "Stacked hero"): the sequence in its own
      16:9 window, the copy below it. The payoff plays there too, over the same 16:9 box, but a phone
      (up to 780 px) skips the relief rise (1.6 MiB the small window cannot show) and only a sequence
-     that actually played reveals it: a static visitor (data saver, slow link, reduced motion) pays
-     for no drape state. */
+     that actually played reveals it with the rise and the layers; a static visitor is shown the one
+     priority state, except on a data saver or a slow link, where nothing is fetched. */
   const stackedLayout = window.matchMedia('(max-width: 980px)');
   const phoneLayout = window.matchMedia('(max-width: 780px)');
 
@@ -1348,10 +1348,11 @@ if (captionPanels.length && typeof IntersectionObserver === 'function') {
   let revealed = false;
   function revealPayoff(instant) {
     if (revealed || !drape) return;
-    /* Stacked layout: only a sequence that played reveals the payoff. A static visitor there keeps
-       the plain held frame and fetches no drape state. If the viewport becomes the desktop layout
-       later, the listener below comes back here. */
-    if (instant && stackedLayout.matches) return;
+    /* Stacked layout: a visitor who asked to save data keeps the plain held frame and fetches no drape
+       state. Every other static visitor (a browser that refuses autoplay, an in-app browser, low-power
+       mode, reduced motion) is shown the result like the desktop, the one priority state. If the
+       viewport becomes the desktop layout later, the listener below comes back here. */
+    if (instant && stackedLayout.matches && (saveData || slowNetwork)) return;
     revealed = true;
     drape.hidden = false;
     hero.setAttribute('data-hero-payoff', 'on');

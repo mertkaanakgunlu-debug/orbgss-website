@@ -114,7 +114,7 @@ context shows through; nothing is filled in. There is deliberately no colour bar
 card or label here (Product decision b9579ef section 4): Acts 3 and 4 carry the exact
 public labels and mandatory warnings. Every state is data-src: script.js promotes the
 priority state on the static desktop reveal and the transitional states only when motion plays,
-so a static desktop visitor fetches one and a static visitor up to 980 px fetches none. With
+so a static visitor fetches one (the priority state), except a data saver or a slow link up to 980 px, which fetches none. With
 JavaScript off the noscript image is the payoff. Up to 980 px (CTO, 2026-11-05) the payoff plays after
 the sequence inside the 16:9 window, where the copy sits below the video and a bright surface cannot
 cost it its contrast; a phone (up to 780 px) skips the relief rise, and the states are fetched only

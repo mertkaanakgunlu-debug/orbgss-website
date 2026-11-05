@@ -401,12 +401,16 @@ case("drape [hidden] rule dropped in the stacked layout (the drape would show be
      site, "payoff drape is shown inside the 16:9 window")
 
 case("revealPayoff gated on the desktop layout again (a phone never sees the layers or the score)", SCRIPT,
-     lambda t: t.replace("    if (instant && stackedLayout.matches) return;\n", "    if (!desktopLayout.matches) return;\n", 1),
+     lambda t: t.replace("    if (instant && stackedLayout.matches && (saveData || slowNetwork)) return;\n", "    if (!desktopLayout.matches) return;\n", 1),
      site, "revealPayoff must not be gated on the desktop layout")
 
-case("a static visitor in the stacked layout reveals the payoff (a data-saver phone would fetch the drape)", SCRIPT,
-     lambda t: t.replace("    if (instant && stackedLayout.matches) return;\n", "", 1),
-     site, "only a sequence that played reveals the payoff")
+case("a data-saver or slow-link visitor in the stacked layout is shown the payoff (it would fetch the drape)", SCRIPT,
+     lambda t: t.replace("    if (instant && stackedLayout.matches && (saveData || slowNetwork)) return;\n", "", 1),
+     site, "except on a data saver or a slow link")
+
+case("a browser that refuses autoplay ends on the held frame without the result (every static visitor gated)", SCRIPT,
+     lambda t: t.replace("(saveData || slowNetwork)) return;\n", "true) return;\n", 1),
+     site, "except on a data saver or a slow link")
 
 case("relief rise promoted on a phone (1.6 MiB the 16:9 window cannot show)", SCRIPT,
      lambda t: t.replace("    if (!phoneLayout.matches) riseImages().forEach(promote);\n", "    riseImages().forEach(promote);\n", 1),

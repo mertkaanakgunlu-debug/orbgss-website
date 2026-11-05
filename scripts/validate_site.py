@@ -3724,8 +3724,9 @@ def main() -> int:
         fail("script.js: the 15 s fallback must treat a sequence that played to its end ('held') as settled, "
              "or the hero would end 'stalled' after a sequence that played whole", errors)
     # The payoff in the stacked layout: it plays after the video on a phone and a tablet, with no relief
-    # rise on a phone, and a visitor who does not play the sequence (data saver, slow link, reduced motion)
-    # fetches no drape state there.
+    # rise on a phone; a visitor who does not play the sequence (refused autoplay, in-app browser,
+    # low-power mode, reduced motion) is shown the priority state like the desktop, and only a data saver
+    # or a slow link fetches no drape state there.
     if "const stackedLayout = window.matchMedia('(max-width: 980px)');" not in script_hero \
             or "const phoneLayout = window.matchMedia('(max-width: 780px)');" not in script_hero:
         fail("script.js must declare stackedLayout (max-width: 980px) and phoneLayout (max-width: 780px) "
@@ -3737,10 +3738,11 @@ def main() -> int:
         if "desktopLayout" in reveal_fn.group(1):
             fail("script.js: revealPayoff must not be gated on the desktop layout: the sequence ends on the "
                  "result on a phone and a tablet too (CTO, 2026-11-05)", errors)
-        if "if (instant && stackedLayout.matches) return;" not in reveal_fn.group(1):
-            fail("script.js: in the stacked layout only a sequence that played reveals the payoff; "
-                 "revealPayoff(true) (a static visitor) must return there ('if (instant && stackedLayout.matches) "
-                 "return;'), so a data-saver or reduced-motion visitor fetches no drape state", errors)
+        if "if (instant && stackedLayout.matches && (saveData || slowNetwork)) return;" not in reveal_fn.group(1):
+            fail("script.js: in the stacked layout a static visitor is shown the priority state like the desktop, "
+                 "except on a data saver or a slow link, which fetch no drape state "
+                 "('if (instant && stackedLayout.matches && (saveData || slowNetwork)) return;'); a browser that "
+                 "refuses autoplay must not end on the held frame without the result", errors)
     warm_fn = re.search(r"function warmLayers\(\) \{([\s\S]*?)\n  \}\n", script_hero)
     if not warm_fn or "if (!phoneLayout.matches) riseImages().forEach(promote);" not in warm_fn.group(1) \
             or "desktopLayout" in warm_fn.group(1):
